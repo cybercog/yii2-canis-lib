@@ -41,11 +41,17 @@ abstract class TestCase extends \yii\test\TestCase
 	 */
 	protected function mockApplication($config = [], $appClass = '\yii\console\Application')
 	{
+
+		if (empty($config)) {
+			$config = [];
+		}
+		$config = array_merge($config, require(__DIR__ . '/data/config.php'));
+
 		static $defaultConfig = [
 			'id' => 'testapp',
 			'basePath' => __DIR__,
 		];
-
+		//var_dump(array_merge($defaultConfig, $config));exit;
 		new $appClass(array_merge($defaultConfig, $config));
 	}
 

@@ -1,5 +1,8 @@
 <?php
 return [
-	'databases' => [
-	],
+	'components' => [
+		'fileStorage' => [
+			'class' => 'infinite\helpers\FileStorage',
+		],
+	]
 ];
