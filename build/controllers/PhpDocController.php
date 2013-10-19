@@ -141,6 +141,7 @@ class PhpDocController extends Controller
 
 		if (!$seenSince) {
 			$this->stderr("[ERR] No @since found in class doc in file: $file\n", Console::FG_RED);
+			var_dump($newDoc);exit;
 		}
 		if (!$seenAuthor) {
 			$this->stderr("[ERR] No @author found in class doc in file: $file\n", Console::FG_RED);
