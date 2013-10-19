@@ -1,9 +1,14 @@
 <?php
 /**
+ *
+ *
  * @link http://www.yiiframework.com/
  * @copyright Copyright (c) 2008 Yii Software LLC
  * @license http://www.yiiframework.com/license/
+ * @author Jacob Morrison <jacob@infinitecascade.com>
+ * @package infinite
  */
+
 
 namespace yii\build\controllers;
 
@@ -11,6 +16,8 @@ use yii\console\Controller;
 use yii\helpers\FileHelper;
 
 /**
+ *
+ *
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
@@ -20,11 +27,12 @@ class ClassmapController extends Controller
 
 	/**
 	 * Creates a class map for the core Yii classes.
-	 * @param string $root the root path of Yii framework. Defaults to YII_PATH.
-	 * @param string $mapFile the file to contain the class map. Defaults to YII_PATH . '/classes.php'.
+	 *
+	 * @param string  $root    (optional) the root path of Yii framework. Defaults to YII_PATH.
+	 * @param string  $mapFile (optional) the file to contain the class map. Defaults to YII_PATH . '/classes.php'.
+	 * @return unknown
 	 */
-	public function actionCreate($root = null, $mapFile = null)
-	{
+	public function actionCreate($root = null, $mapFile = null) {
 		if ($root === null) {
 			$root = dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'library';
 		}
@@ -33,6 +41,10 @@ class ClassmapController extends Controller
 			$mapFile = dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'classes.php';
 		}
 		$options = [
+
+			/**
+			 *
+			 */
 			'filter' => function ($path) {
 				if (is_file($path)) {
 					$file = basename($path);
@@ -80,4 +92,6 @@ EOD;
 			echo "Class map saved in $mapFile\n";
 		}
 	}
+
+
 }

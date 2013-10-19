@@ -1,9 +1,14 @@
 <?php
 /**
+ *
+ *
  * @link http://www.yiiframework.com/
  * @copyright Copyright (c) 2008 Yii Software LLC
  * @license http://www.yiiframework.com/license/
+ * @author Jacob Morrison <jacob@infinitecascade.com>
+ * @package infinite
  */
+
 
 namespace yii\build\controllers;
 
@@ -23,6 +28,8 @@ class PhpDocController extends Controller
 	public $defaultAction = 'property';
 
 	/**
+	 *
+	 *
 	 * @var bool whether to update class docs directly. Setting this to false will just output docs
 	 * for copy and paste.
 	 */
@@ -36,15 +43,19 @@ class PhpDocController extends Controller
 	 *
 	 * See https://github.com/yiisoft/yii2/wiki/Core-framework-code-style#documentation for details.
 	 *
-	 * @param null $root the directory to parse files from. Defaults to YII_PATH.
+	 * @param null    $root (optional) the directory to parse files from. Defaults to YII_PATH.
+	 * @return unknown
 	 */
-	public function actionProperty($root=null)
-	{
+	public function actionProperty($root=null) {
 		if ($root === null) {
 			$root = dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'library';
 		}
 		$root = FileHelper::normalizePath($root);
 		$options = [
+
+			/**
+			 *
+			 */
 			'filter' => function ($path) {
 				if (is_file($path)) {
 					$file = basename($path);
@@ -79,13 +90,26 @@ class PhpDocController extends Controller
 		$this->stdout("Updated $nFilesUpdated files.\n");
 	}
 
-	public function globalOptions()
-	{
+
+	/**
+	 *
+	 *
+	 * @return unknown
+	 */
+	public function globalOptions() {
 		return array_merge(parent::globalOptions(), ['updateFiles']);
 	}
 
-	protected function updateClassPropertyDocs($file, $className, $propertyDoc)
-	{
+
+	/**
+	 *
+	 *
+	 * @param unknown $file
+	 * @param unknown $className
+	 * @param unknown $propertyDoc
+	 * @return unknown
+	 */
+	protected function updateClassPropertyDocs($file, $className, $propertyDoc) {
 		$ref = new \ReflectionClass($className);
 		if ($ref->getFileName() != $file) {
 			$this->stderr("[ERR] Unable to create ReflectionClass for class: $className loaded class is not from file: $file\n", Console::FG_RED);
@@ -107,7 +131,7 @@ class PhpDocController extends Controller
 		if (trim($lines[1]) == '*' || substr(trim($lines[1]), 0, 3) == '* @') {
 			$this->stderr("[WARN] Class $className has no short description.\n", Console::FG_YELLOW, Console::BOLD);
 		}
-		foreach($lines as $line) {
+		foreach ($lines as $line) {
 			if (substr(trim($line), 0, 9) == '* @since ') {
 				$seenSince = true;
 			} elseif (substr(trim($line), 0, 10) == '* @author ') {
@@ -130,7 +154,7 @@ class PhpDocController extends Controller
 
 			$newFileContent = [];
 			$n = count($fileContent);
-			for($i = 0; $i < $n; $i++) {
+			for ($i = 0; $i < $n; $i++) {
 				if ($i > $start || $i < $docStart) {
 					$newFileContent[] = $fileContent[$i];
 				} else {
@@ -146,17 +170,17 @@ class PhpDocController extends Controller
 		return false;
 	}
 
+
 	/**
 	 * remove multi empty lines and trim trailing whitespace
 	 *
-	 * @param $doc
+	 * @param unknown $doc
 	 * @return string
 	 */
-	protected function cleanDocComment($doc)
-	{
+	protected function cleanDocComment($doc) {
 		$lines = explode("\n", $doc);
 		$n = count($lines);
-		for($i = 0; $i < $n; $i++) {
+		for ($i = 0; $i < $n; $i++) {
 			$lines[$i] = rtrim($lines[$i]);
 			if (trim($lines[$i]) == '*' && trim($lines[$i + 1]) == '*') {
 				unset($lines[$i]);
@@ -165,18 +189,19 @@ class PhpDocController extends Controller
 		return implode("\n", $lines);
 	}
 
+
 	/**
 	 * replace property annotations in doc comment
-	 * @param $doc
-	 * @param $properties
+	 *
+	 * @param unknown $doc
+	 * @param unknown $properties
 	 * @return string
 	 */
-	protected function updateDocComment($doc, $properties)
-	{
+	protected function updateDocComment($doc, $properties) {
 		$lines = explode("\n", $doc);
 		$propertyPart = false;
 		$propertyPosition = false;
-		foreach($lines as $i => $line) {
+		foreach ($lines as $i => $line) {
 			if (substr(trim($line), 0, 12) == '* @property ') {
 				$propertyPart = true;
 			} elseif ($propertyPart && trim($line) == '*') {
@@ -192,7 +217,7 @@ class PhpDocController extends Controller
 			}
 		}
 		$finalDoc = '';
-		foreach($lines as $i => $line) {
+		foreach ($lines as $i => $line) {
 			$finalDoc .= $line . "\n";
 			if ($i == $propertyPosition) {
 				$finalDoc .= $properties;
@@ -201,8 +226,14 @@ class PhpDocController extends Controller
 		return $finalDoc;
 	}
 
-	protected function generateClassPropertyDocs($fileName)
-	{
+
+	/**
+	 *
+	 *
+	 * @param unknown $fileName
+	 * @return unknown
+	 */
+	protected function generateClassPropertyDocs($fileName) {
 		$phpdoc = "";
 		$file = str_replace("\r", "", str_replace("\t", " ", file_get_contents($fileName, true)));
 		$ns = $this->match('#\nnamespace (?<name>[\w\\\\]+);\n#', $file);
@@ -267,14 +298,14 @@ class PhpDocController extends Controller
 					if (isset($prop['get']) && isset($prop['set'])) {
 						if ($prop['get']['type'] != $prop['set']['type']) {
 							$note = ' Note that the type of this property differs in getter and setter.'
-								  . ' See [[get'.ucfirst($propName).'()]] and [[set'.ucfirst($propName).'()]] for details.';
+								. ' See [[get'.ucfirst($propName).'()]] and [[set'.ucfirst($propName).'()]] for details.';
 						}
 					} elseif (isset($prop['get'])) {
 						$note = ' This property is read-only.';
-//						$docline .= '-read';
+						//      $docline .= '-read';
 					} elseif (isset($prop['set'])) {
 						$note = ' This property is write-only.';
-//						$docline .= '-write';
+						//      $docline .= '-write';
 					} else {
 						continue;
 					}
@@ -293,27 +324,49 @@ class PhpDocController extends Controller
 		return [$className, $phpdoc];
 	}
 
-	protected function match($pattern, $subject)
-	{
+
+	/**
+	 *
+	 *
+	 * @param unknown $pattern
+	 * @param unknown $subject
+	 * @return unknown
+	 */
+	protected function match($pattern, $subject) {
 		$sets = [];
 		preg_match_all($pattern . 'suU', $subject, $sets, PREG_SET_ORDER);
 		foreach ($sets as &$set)
 			foreach ($set as $i => $match)
 				if (is_numeric($i) /*&& $i != 0*/)
 					unset($set[$i]);
-		return $sets;
+				return $sets;
 	}
 
-	protected function fixSentence($str)
-	{
+
+	/**
+	 *
+	 *
+	 * @param unknown $str
+	 * @return unknown
+	 */
+	protected function fixSentence($str) {
 		// TODO fix word wrap
 		if ($str == '')
 			return '';
 		return strtoupper(substr($str, 0, 1)) . substr($str, 1) . ($str[strlen($str) - 1] != '.' ? '.' : '');
 	}
 
-	protected function getPropParam($prop, $param)
-	{
+
+	/**
+	 *
+	 *
+	 * @param unknown $prop
+	 * @param unknown $param
+	 * @return unknown
+	 */
+	protected function getPropParam($prop, $param) {
 		return isset($prop['property']) ? $prop['property'][$param] : (isset($prop['get']) ? $prop['get'][$param] : $prop['set'][$param]);
 	}
+
+
 }

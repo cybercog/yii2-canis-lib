@@ -1,3 +1,13 @@
+<?php
+/**
+ * library/setup/views/layout.php
+ *
+ * @author Jacob Morrison <jacob@infinitecascade.com>
+ * @package infinite
+ */
+
+
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -130,24 +140,24 @@ div.flash-success a {
 	<div id="container">
 	  <h1><?php echo $this->name; ?> Installation</h1>
 <?php
-	if (isset($_GET['message'])) {
-		echo '<div class="flash-success">';
-		echo $_GET['message'];
-		echo '</div>';
-	}
+if (isset($_GET['message'])) {
+	echo '<div class="flash-success">';
+	echo $_GET['message'];
+	echo '</div>';
+}
 
-	if (isset($task)) {
-		echo '<div class="section">';
-		echo '<h2>Set Up '. $task->title .'</h2>';
-	}
-	echo $content;
-	if (isset($task)) {
-		echo '</div>';
-	}
+if (isset($task)) {
+	echo '<div class="section">';
+	echo '<h2>Set Up '. $task->title .'</h2>';
+}
+echo $content;
+if (isset($task)) {
+	echo '</div>';
+}
 
-	if ($this->isAvailable OR !empty($forceContinue)) {
-		echo '<a class="visit-app" href="/">Go to Application &gt;&gt;</a>';
-	}
+if ($this->isAvailable or !empty($forceContinue)) {
+	echo '<a class="visit-app" href="/">Go to Application &gt;&gt;</a>';
+}
 ?>
 
 	</div>

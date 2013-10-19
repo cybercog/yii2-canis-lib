@@ -8,8 +8,12 @@
  * @link http://www.infinitecascade.com/
  * @copyright Copyright (c) 2013 Infinite Cascade
  * @license http://www.infinitecascade.com/license
+ * @author Jacob Morrison <jacob@infinitecascade.com>
+ * @package infinite
  */
-defined('INFINITE_CORE_PATH') OR define('INFINITE_CORE_PATH', dirname(__FILE__) . DIRECTORY_SEPARATOR . 'library');
+
+
+defined('INFINITE_CORE_PATH') or define('INFINITE_CORE_PATH', dirname(__FILE__) . DIRECTORY_SEPARATOR . 'library');
 return [
 	'infinite\Infinite' => INFINITE_CORE_PATH . '/Infinite.php',
 	'infinite\base\Component' => INFINITE_CORE_PATH . '/base/Component.php',
