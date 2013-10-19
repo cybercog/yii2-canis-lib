@@ -1,0 +1,14 @@
+{
+	"name": "infiniteCascade/yii2-infinite-core",
+	"description": "Core libraries used in Infinite Cascade Yii2 based products",
+	"keywords": ["yii", "libraries"],
+	"homepage": "http://www.infinitecascade.com",
+	"type": "project",
+	"license": "GPL -2.0",
+	"minimum-stability": "dev",
+	"require": {
+		"php": ">=5.4.0",
+		"yiisoft/yii2": "dev-master",
+		"yiisoft/yii2-composer": "dev-master"
+	}
+}
