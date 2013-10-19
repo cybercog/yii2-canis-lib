@@ -1,7 +1,7 @@
 <?php
 namespace infinite\security\role;
 
-class Engine extends infinite\base\Engine {
+class Engine extends \infinite\base\Engine {
 
 }
 ?>

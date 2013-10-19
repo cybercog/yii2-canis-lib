@@ -1,7 +1,7 @@
 <?php
 namespace infinite\base;
 
-class Object extends yii\base\Object {
+class Object extends \yii\base\Object {
 
 }
 ?>

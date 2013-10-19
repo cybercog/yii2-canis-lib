@@ -26,7 +26,7 @@ class PhpDocController extends Controller
 	 * @var bool whether to update class docs directly. Setting this to false will just output docs
 	 * for copy and paste.
 	 */
-	public $updateFiles = false;
+	public $updateFiles = true;
 
 	/**
 	 * Generates @property annotations in class files from getters and setters

@@ -1,7 +1,7 @@
 <?php
 namespace infinite\web;
 
-class DbSession extends yii\base\DbSession {
+class DbSession extends \yii\web\DbSession {
 
 }
 ?>

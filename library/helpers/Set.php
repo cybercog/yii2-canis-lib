@@ -1,7 +1,7 @@
 <?php
 namespace infinite\helpers;
 
-class Set extends infinite\base\Component {
+class Set extends \infinite\base\Component {
 
 }
 ?>

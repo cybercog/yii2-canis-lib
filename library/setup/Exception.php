@@ -1,7 +1,7 @@
 <?php
 namespace infinite\setup;
 
-class Exception extends infinite\base\Exception {
+class Exception extends \infinite\base\exceptions\Exception {
 	
 }
 ?>

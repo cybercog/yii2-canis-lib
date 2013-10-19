@@ -11,7 +11,9 @@
  */
 defined('INFINITE_CORE_PATH') OR define('INFINITE_CORE_PATH', dirname(__FILE__) . DIRECTORY_SEPARATOR . 'library');
 return [
+	'infinite\Infinite' => INFINITE_CORE_PATH . '/Infinite.php',
 	'infinite\base\Component' => INFINITE_CORE_PATH . '/base/Component.php',
+	'infinite\base\Engine' => INFINITE_CORE_PATH . '/base/Engine.php',
 	'infinite\base\Object' => INFINITE_CORE_PATH . '/base/Object.php',
 	'infinite\base\exceptions\AccessException' => INFINITE_CORE_PATH . '/base/exceptions/AccessException.php',
 	'infinite\base\exceptions\Exception' => INFINITE_CORE_PATH . '/base/exceptions/Exception.php',
@@ -23,7 +25,7 @@ return [
 	'infinite\db\ActiveRecord' => INFINITE_CORE_PATH . '/db/ActiveRecord.php',
 	'infinite\db\Connection' => INFINITE_CORE_PATH . '/db/Connection.php',
 	'infinite\db\behaviors\Access' => INFINITE_CORE_PATH . '/db/behaviors/Access.php',
-	'infinite\db\behaviors\ActiveRecordBehavior' => INFINITE_CORE_PATH . '/db/behaviors/ActiveRecordBehavior.php',
+	'infinite\db\behaviors\ActiveRecord' => INFINITE_CORE_PATH . '/db/behaviors/ActiveRecord.php',
 	'infinite\db\behaviors\Blame' => INFINITE_CORE_PATH . '/db/behaviors/Blame.php',
 	'infinite\db\behaviors\Date' => INFINITE_CORE_PATH . '/db/behaviors/Date.php',
 	'infinite\db\behaviors\Registry' => INFINITE_CORE_PATH . '/db/behaviors/Registry.php',
@@ -46,7 +48,6 @@ return [
 	'infinite\security\role\Role' => INFINITE_CORE_PATH . '/security/role/Role.php',
 	'infinite\setup\Exception' => INFINITE_CORE_PATH . '/setup/Exception.php',
 	'infinite\setup\Migrator' => INFINITE_CORE_PATH . '/setup/Migrator.php',
-	'infinite\setup\Object' => INFINITE_CORE_PATH . '/setup/Object.php',
 	'infinite\setup\Setup' => INFINITE_CORE_PATH . '/setup/Setup.php',
 	'infinite\setup\Task' => INFINITE_CORE_PATH . '/setup/Task.php',
 	'infinite\web\Color' => INFINITE_CORE_PATH . '/web/Color.php',

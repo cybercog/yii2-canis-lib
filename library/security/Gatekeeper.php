@@ -1,7 +1,7 @@
 <?php
 namespace infinite\security;
 
-class Gatekeeper extends infinite\base\Component {
+class Gatekeeper extends \infinite\base\Component {
 
 }
 ?>
