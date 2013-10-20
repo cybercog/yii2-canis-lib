@@ -11,7 +11,7 @@ namespace infinite;
 
 use Yii;
 
-Yii::setAlias('infinite', __DIR__);
+//Yii::setAlias('infinite', __DIR__ . DIRECTORY_SEPARATOR . 'infinite');
 
 class Infinite {
 
