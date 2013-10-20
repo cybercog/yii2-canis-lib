@@ -9,7 +9,7 @@
 
 namespace infinite\security\role;
 
-class Role extends \infinite\base\Component {
+class RoleItem extends \infinite\base\Component {
 
 }
 
