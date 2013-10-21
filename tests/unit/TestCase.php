@@ -7,59 +7,59 @@ namespace infiniteunit;
  */
 abstract class TestCase extends \yii\test\TestCase
 {
-	public static $params;
+    public static $params;
 
-	/**
-	 * Clean up after test.
-	 * By default the application created with [[mockApplication]] will be destroyed.
-	 */
-	protected function tearDown()
-	{
-		parent::tearDown();
-		$this->destroyApplication();
-	}
+    /**
+     * Clean up after test.
+     * By default the application created with [[mockApplication]] will be destroyed.
+     */
+    protected function tearDown()
+    {
+        parent::tearDown();
+        $this->destroyApplication();
+    }
 
-	/**
-	 * Returns a test configuration param from /data/config.php
-	 * @param string $name params name
-	 * @param mixed $default default value to use when param is not set.
-	 * @return mixed the value of the configuration param
-	 */
-	public function getParam($name, $default = null)
-	{
-		if (self::$params === null) {
-			self::$params = require(__DIR__ . '/data/config.php');
-		}
-		return isset(self::$params[$name]) ? self::$params[$name] : $default;
-	}
+    /**
+     * Returns a test configuration param from /data/config.php
+     * @param string $name params name
+     * @param mixed $default default value to use when param is not set.
+     * @return mixed the value of the configuration param
+     */
+    public function getParam($name, $default = null)
+    {
+        if (self::$params === null) {
+            self::$params = require(__DIR__ . '/data/config.php');
+        }
+        return isset(self::$params[$name]) ? self::$params[$name] : $default;
+    }
 
-	/**
-	 * Populates Yii::$app with a new application
-	 * The application will be destroyed on tearDown() automatically.
-	 * @param array $config The application configuration, if needed
-	 * @param string $appClass name of the application class to create
-	 */
-	protected function mockApplication($config = [], $appClass = '\yii\console\Application')
-	{
+    /**
+     * Populates Yii::$app with a new application
+     * The application will be destroyed on tearDown() automatically.
+     * @param array $config The application configuration, if needed
+     * @param string $appClass name of the application class to create
+     */
+    protected function mockApplication($config = [], $appClass = '\yii\console\Application')
+    {
 
-		if (empty($config)) {
-			$config = [];
-		}
-		$config = array_merge($config, require(__DIR__ . '/data/config.php'));
+        if (empty($config)) {
+            $config = [];
+        }
+        $config = array_merge($config, require(__DIR__ . '/data/config.php'));
 
-		static $defaultConfig = [
-			'id' => 'testapp',
-			'basePath' => __DIR__,
-		];
-		//var_dump(array_merge($defaultConfig, $config));exit;
-		new $appClass(array_merge($defaultConfig, $config));
-	}
+        static $defaultConfig = [
+            'id' => 'testapp',
+            'basePath' => __DIR__,
+        ];
+        //var_dump(array_merge($defaultConfig, $config));exit;
+        new $appClass(array_merge($defaultConfig, $config));
+    }
 
-	/**
-	 * Destroys application in Yii::$app by setting it to null.
-	 */
-	protected function destroyApplication()
-	{
-		\Yii::$app = null;
-	}
+    /**
+     * Destroys application in Yii::$app by setting it to null.
+     */
+    protected function destroyApplication()
+    {
+        \Yii::$app = null;
+    }
 }

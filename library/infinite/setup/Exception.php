@@ -9,9 +9,6 @@
 
 namespace infinite\setup;
 
-class Exception extends \infinite\base\exceptions\Exception {
-
+class Exception extends \infinite\base\exceptions\Exception
+{
 }
-
-
-?>

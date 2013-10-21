@@ -9,18 +9,17 @@
 
 namespace infinite\db\behaviors;
 
-class Access extends \infinite\db\behaviors\ActiveRecord {
-	public function events()
-	{
-		return [
-			\infinite\db\ActiveQuery::EVENT_BEFORE_QUERY => 'beforeQuery',
-		];
-	}
+class Access extends \infinite\db\behaviors\ActiveRecord
+{
+    public function events()
+    {
+        return [
+            \infinite\db\ActiveQuery::EVENT_BEFORE_QUERY => 'beforeQuery',
+        ];
+    }
 
-	public function beforeQuery($query) {
-		//throw new \Exception("boom2");
-	}
+    public function beforeQuery($query)
+    {
+        //throw new \Exception("boom2");
+    }
 }
-
-
-?>

@@ -7,6 +7,6 @@ use Infinite;
 
 class DummyObject extends \infinite\base\Object
 {
-	public $id;
-	public $name;
+    public $id;
+    public $name;
 }

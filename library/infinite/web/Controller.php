@@ -9,9 +9,6 @@
 
 namespace infinite\web;
 
-class Controller extends \yii\base\Controller {
-
+class Controller extends \yii\base\Controller
+{
 }
-
-
-?>

@@ -9,9 +9,6 @@
 
 namespace infinite\helpers;
 
-class Purifier extends \infinite\base\Component {
-
+class Purifier extends \infinite\base\Component
+{
 }
-
-
-?>

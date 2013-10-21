@@ -9,9 +9,6 @@
 
 namespace infinite\base\exceptions;
 
-class Exception extends \yii\base\Exception {
-
+class Exception extends \yii\base\Exception
+{
 }
-
-
-?>

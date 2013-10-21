@@ -9,9 +9,6 @@
 
 namespace infinite\web;
 
-class User extends \yii\web\User {
-
+class User extends \yii\web\User
+{
 }
-
-
-?>

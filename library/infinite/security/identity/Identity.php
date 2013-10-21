@@ -9,9 +9,6 @@
 
 namespace infinite\security\identity;
 
-class Identity extends \infinite\base\Component {
-
+class Identity extends \infinite\base\Component
+{
 }
-
-
-?>

@@ -9,9 +9,6 @@
 
 namespace infinite\web;
 
-class Color extends \infinite\base\Component {
-
+class Color extends \infinite\base\Component
+{
 }
-
-
-?>

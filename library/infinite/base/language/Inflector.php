@@ -9,9 +9,6 @@
 
 namespace infinite\base\language;
 
-class Inflector extends \infinite\base\Object {
-
+class Inflector extends \infinite\base\Object
+{
 }
-
-
-?>

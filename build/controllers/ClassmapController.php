@@ -23,51 +23,52 @@ use yii\helpers\FileHelper;
  */
 class ClassmapController extends Controller
 {
-	public $defaultAction = 'create';
+    public $defaultAction = 'create';
 
-	/**
-	 * Creates a class map for the core Yii classes.
-	 *
-	 * @param string  $root    (optional) the root path of Yii framework. Defaults to YII_PATH.
-	 * @param string  $mapFile (optional) the file to contain the class map. Defaults to YII_PATH . '/classes.php'.
-	 * @return unknown
-	 */
-	public function actionCreate($root = null, $mapFile = null) {
-		if ($root === null) {
-			$root = dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'library';
-		}
-		$root = FileHelper::normalizePath($root);
-		if ($mapFile === null) {
-			$mapFile = dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'classes.php';
-		}
-		$options = [
+    /**
+     * Creates a class map for the core Yii classes.
+     *
+     * @param string  $root    (optional) the root path of Yii framework. Defaults to YII_PATH.
+     * @param string  $mapFile (optional) the file to contain the class map. Defaults to YII_PATH . '/classes.php'.
+     * @return unknown
+     */
+    public function actionCreate($root = null, $mapFile = null)
+    {
+        if ($root === null) {
+            $root = dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'library';
+        }
+        $root = FileHelper::normalizePath($root);
+        if ($mapFile === null) {
+            $mapFile = dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'classes.php';
+        }
+        $options = [
 
-			/**
-			 *
-			 */
-			'filter' => function ($path) {
-				if (is_file($path)) {
-					$file = basename($path);
-					if ($file[0] < 'A' || $file[0] > 'Z') {
-						return false;
-					}
-				}
-				return null;
-			},
-			'only' => ['.php']
-		];
-		$files = FileHelper::findFiles($root, $options);
-		$map = [];
-		foreach ($files as $file) {
-			if (($pos = strpos($file, $root)) !== 0) {
-				die("Something wrong: $file\n");
-			}
-			$path = substr($file, strlen($root));
-			$map[$path] = "\t'infinite" . substr(str_replace('/', '\\', $path), 0, -4) . "' => INFINITE_CORE_PATH . '$path',";
-		}
-		ksort($map);
-		$map = implode("\n", $map);
-		$output = <<<EOD
+            /**
+             *
+             */
+            'filter' => function ($path) {
+                if (is_file($path)) {
+                    $file = basename($path);
+                    if ($file[0] < 'A' || $file[0] > 'Z') {
+                        return false;
+                    }
+                }
+                return null;
+            },
+            'only' => ['.php']
+        ];
+        $files = FileHelper::findFiles($root, $options);
+        $map = [];
+        foreach ($files as $file) {
+            if (($pos = strpos($file, $root)) !== 0) {
+                die("Something wrong: $file\n");
+            }
+            $path = substr($file, strlen($root));
+            $map[$path] = "\t'infinite" . substr(str_replace('/', '\\', $path), 0, -4) . "' => INFINITE_CORE_PATH . '$path',";
+        }
+        ksort($map);
+        $map = implode("\n", $map);
+        $output = <<<EOD
 <?php
 /**
  * Infinite core class map.
@@ -85,13 +86,13 @@ $map
 ];
 
 EOD;
-		if (is_file($mapFile) && file_get_contents($mapFile) === $output) {
-			echo "Nothing changed.\n";
-		} else {
-			file_put_contents($mapFile, $output);
-			echo "Class map saved in $mapFile\n";
-		}
-	}
+        if (is_file($mapFile) && file_get_contents($mapFile) === $output) {
+            echo "Nothing changed.\n";
+        } else {
+            file_put_contents($mapFile, $output);
+            echo "Class map saved in $mapFile\n";
+        }
+    }
 
 
 }

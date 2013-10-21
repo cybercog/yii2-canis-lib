@@ -9,9 +9,6 @@
 
 namespace infinite\db\models;
 
-class Registry extends \infinite\db\ActiveRecord {
-
+class Registry extends \infinite\db\ActiveRecord
+{
 }
-
-
-?>

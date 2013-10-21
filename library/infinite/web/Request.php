@@ -9,9 +9,6 @@
 
 namespace infinite\web;
 
-class Request extends \yii\web\Request {
-
+class Request extends \yii\web\Request
+{
 }
-
-
-?>

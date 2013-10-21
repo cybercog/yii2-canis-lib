@@ -9,9 +9,6 @@
 
 namespace infinite\db\models;
 
-class AclRole extends \infinite\db\ActiveRecord {
-
+class AclRole extends \infinite\db\ActiveRecord
+{
 }
-
-
-?>

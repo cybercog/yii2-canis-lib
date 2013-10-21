@@ -10,19 +10,18 @@
 namespace infinite\base;
 use Yii;
 
-abstract class Engine extends \infinite\base\Object {
+abstract class Engine extends \infinite\base\Object
+{
+    /**
+     *
+     */
+    public function init()
+    {
+        Yii::$app->on(\yii\base\Application::EVENT_BEFORE_REQUEST, array($this, 'beforeRequest'));
+    }
 
-	/**
-	 *
-	 */
-	public function init() {
-		Yii::$app->on(\yii\base\Application::EVENT_BEFORE_REQUEST, array($this, 'beforeRequest'));
-	}
-
-	public function beforeRequest() {
-		return true;
-	}
+    public function beforeRequest()
+    {
+        return true;
+    }
 }
-
-
-?>
