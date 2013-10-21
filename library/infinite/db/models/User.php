@@ -1,5 +1,5 @@
 <?php
-namespace common\models;
+namespace infinite\db\models;
 
 use infinite\db\ActiveRecord;
 use yii\helpers\Security;
