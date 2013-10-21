@@ -154,10 +154,6 @@ class Setup extends \infinite\base\Object {
 		if ($this->version > $this->instanceVersion) { return false; }
 		return true;
 	}
-	
-	public function getMigrator() {
-		return self::getMigratorInstance($this);
-	}
 
 	public function getConfirmLink($task) {
 		return $_SERVER['REQUEST_URI'] . '?task='.$task.'&confirm='. $this->getConfirmSalt($task);
@@ -179,16 +175,6 @@ class Setup extends \infinite\base\Object {
 			return true;
 		}
 		return false;
-	}
-
-	public static function getMigratorInstance($setupApp = null) {
-		if (is_null(self::$_migrator)) {
-			if (is_null($setupApp)) {
-				$setupApp = self::createSetupApplication();
-			}
-			self::$_migrator = new RSetupMigrator($setupApp);
-		}
-		return self::$_migrator;
 	}
 
 	public function getVersion() {

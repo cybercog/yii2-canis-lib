@@ -14,8 +14,7 @@ class MigrateController extends \yii\console\controllers\MigrateController {
 
 	protected $migrationsMap = [];
 
-	public $templateFile = '@app/views/system/migration.php';
-
+	public $templateFile = '@infinite/views/system/migration.php';
 
 	protected function createMigration($class)
 	{

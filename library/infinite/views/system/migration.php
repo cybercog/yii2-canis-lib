@@ -12,7 +12,7 @@ class <?=$className; ?> extends \yii\db\Migration
 {
 	public function up()
 	{
-		\$sql = <<< END
+		$sql = <<< END
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -31,14 +31,14 @@ class <?=$className; ?> extends \yii\db\Migration
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
 END;
-		return \$this-execute(\$sql);
+		return $this->execute($sql);
 	}
 
 
 
 	public function down()
 	{
-		echo "<?=$className; ?> does not support migration down.\\n";
+		echo "<?=$className; ?> does not support migration down.\n";
 		return false;
 	}
 }
