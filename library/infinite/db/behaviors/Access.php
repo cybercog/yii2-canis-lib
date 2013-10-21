@@ -18,7 +18,7 @@ class Access extends \infinite\db\behaviors\ActiveRecord {
 	}
 
 	public function beforeQuery($query) {
-		throw new \Exception("boom");
+		//throw new \Exception("boom2");
 	}
 }
 

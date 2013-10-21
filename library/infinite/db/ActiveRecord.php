@@ -65,6 +65,13 @@ class ActiveRecord extends \yii\db\ActiveRecord {
 		return false;
 	}
 
+	public function checkExistence() {
+		if (empty($this->primaryKey)) {
+			return false;
+		}
+		return self::find()->where([$this->primaryKey() => $this->primaryKey])->count > 0;
+	}
+
 	/**
 	 *
 	 *
