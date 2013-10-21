@@ -22,7 +22,8 @@ class ActiveRecord extends \yii\db\ActiveRecord {
 	public $descriptorField;
 	
 
-	public static function queryBehaviors() {
+	public static function queryBehaviors()
+	{
 		return [];
 	}
 
