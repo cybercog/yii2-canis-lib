@@ -8,18 +8,18 @@
 
 
 namespace infinite\db\behaviors;
+use Yii;
 use \yii\db\Expression;
 use \infinite\base\Exception;
 
 class Registry extends \infinite\db\behaviors\ActiveRecord
 {
-    const REGISTRY_MODEL = 'Registry';
+    const REGISTRY_MODEL = '\app\models\Registry';
     public static $_table;
 
     public function events()
     {
         return [
-            \infinite\db\ActiveRecord::EVENT_BEFORE_VALIDATE=> '_toDatabase',
             \infinite\db\ActiveRecord::EVENT_BEFORE_INSERT => 'beforeInsert',
             \infinite\db\ActiveRecord::EVENT_AFTER_DELETE => 'afterDelete',
             \infinite\db\ActiveRecord::EVENT_AFTER_SAVE_FAIL => 'afterSaveFail'
@@ -41,12 +41,12 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
         if ($this->owner->isNewRecord && $this->owner->primaryKey == NULL) {
             $_registryModel = self::REGISTRY_MODEL;
             $fields = ['id' => $this->uuid(), 'object_model' => get_class($this->owner), 'created' =>  new Expression('NOW()')];
-            $lastDbId = Yii::app()->db->lastInsertId;
-            if (!Yii::$app->db->createCommand()->insert($this->table, $fields)) {
+            $lastDbId = Yii::$app->db->lastInsertId;
+            if (!Yii::$app->db->createCommand()->insert($this->table, $fields)->execute()) {
                 throw new Exception("Unable to create registry item!");
             }
-
-            $this->owner->{$this->owner->primaryKey()} = $fields['id'];
+            $pk = $this->owner->primaryKey();
+            $this->owner->{$pk[0]} = $fields['id'];
         }
     }
 

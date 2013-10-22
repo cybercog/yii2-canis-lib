@@ -77,6 +77,23 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
+	 *
+	 *
+	 * @param unknown $value
+	 * @return unknown
+	 */
+	public function quote($value) {
+		if (is_array($value)) {
+			foreach ($value as $k => $v) {
+				$value[$k] = $this->quote($v);
+			}
+			return $value;
+		}
+		if (is_null($value)) { return $value; }
+		return $this->db->quoteValue($value);
+	}
+
+    /**
      *
      *
      * @todo see if they added an event in the final version of Yii2

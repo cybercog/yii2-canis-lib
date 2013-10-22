@@ -33,6 +33,14 @@ class User extends ActiveRecord implements IdentityInterface
     const ROLE_USER = 10;
 
     /**
+     * @inheritdoc
+     */
+    public static function tableName()
+    {
+        return 'user';
+    }
+
+    /**
      * Finds an identity by the given ID.
      *
      * @param string|integer $id the ID to be looked for
@@ -127,5 +135,13 @@ class User extends ActiveRecord implements IdentityInterface
             return true;
         }
         return false;
+    }
+    
+    /**
+     * @return \yii\db\ActiveRelation
+     */
+    public function getRegistry()
+    {
+        return $this->hasOne('Registry', ['id' => 'id']);
     }
 }

@@ -55,7 +55,7 @@ class Blame extends \infinite\db\behaviors\ActiveRecord
         $fields = $this->fields;
         if ($this->owner->isNewRecord) {
             if (isset($this->fields['createdField'])) {
-                $this->owner->{$this->fields['createdField']} = new Expression('NOW();');
+                $this->owner->{$this->fields['createdField']} = new Expression('NOW()');
             }
             if (isset($this->fields['createdByField'])) {
                 $this->owner->{$this->fields['createdByField']} = self::_getUserId();
@@ -63,7 +63,7 @@ class Blame extends \infinite\db\behaviors\ActiveRecord
         }
 
         if (isset($this->fields['modifiedField'])) {
-            $this->owner->{$this->fields['modifiedField']} = new Expression('NOW();');
+            $this->owner->{$this->fields['modifiedField']} = new Expression('NOW()');
         }
         if (isset($this->fields['modifiedByField'])) {
             $this->owner->{$this->fields['modifiedByField']} = self::_getUserId();
