@@ -3,7 +3,7 @@
 	"description": "Core libraries used in Infinite Cascade Yii2 based products",
 	"keywords": ["yii", "libraries"],
 	"homepage": "http://www.infinitecascade.com",
-	"type": "project",
+	"type": "yii2-extension",
 	"license": "GPL -2.0",
 	"minimum-stability": "dev",
 	"require": {
@@ -22,5 +22,8 @@
 	},
 	"autoload": {
 		"psr-0": { "infinite\\": "/library" }
-	}
+	},
+    "extra": {
+            "bootstrap": "infinite\\Infinite"
+    }
 }

@@ -11,8 +11,13 @@ namespace infinite;
 
 use Yii;
 
-Yii::setAlias('infinite', __DIR__);
-
-class Infinite
+class Extension extends \yii\base\Extension
 {
+        /**
+         * @inheritdoc
+         */
+        public static function init()
+        {
+                Yii::setAlias('@infinite', __DIR__);
+        }
 }
