@@ -11,4 +11,5 @@ namespace infinite\base;
 
 class Object extends \yii\base\Object
 {
+	use \infinite\base\ObjectTrait;
 }
