@@ -136,7 +136,7 @@ class Setup extends \infinite\base\Object
     {
         $self = $this;
         $tasks = array();
-        $tasksPath = $this->basePath .DIRECTORY_SEPARATOR .'app'.DIRECTORY_SEPARATOR .'setup'.DIRECTORY_SEPARATOR.'tasks';
+        $tasksPath = $this->applicationPath.DIRECTORY_SEPARATOR .'setup'.DIRECTORY_SEPARATOR.'tasks';
         if (!is_dir($tasksPath)) {
             return $tasks;
         }

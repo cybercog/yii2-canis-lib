@@ -15,7 +15,7 @@
 		"components/underscore": "1.5.*"
 	},
 	"config": {
-        "component-dir": "library/infinite/assets/js"
+        "component-dir": "library/infinite/assets/libraries"
     },
 	"require-dev": {
 		"phpunit/phpunit": "3.7.*"

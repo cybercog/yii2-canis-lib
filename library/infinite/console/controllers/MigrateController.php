@@ -2,7 +2,7 @@
 
 namespace infinite\console\controllers;
 use Yii;
-use infinite\base\Exception;
+use infinite\base\exceptions\Exception;
 
 class MigrateController extends \yii\console\controllers\MigrateController
 {
@@ -10,7 +10,7 @@ class MigrateController extends \yii\console\controllers\MigrateController
      * @var array the directories storing the migration classes. This can contain either
      * a path alias or a directory.
      */
-    public $migrationPaths = ['@app/migrations'];
+    public $migrationPaths = [];
 
 
     protected $migrationsMap = [];
@@ -39,7 +39,7 @@ class MigrateController extends \yii\console\controllers\MigrateController
         }
 
         $migrations = [];
-        foreach ($this->migrationPaths as $migrationPath) {
+        foreach (array_merge($this->migrationPaths, Yii::$app->params['migrationPaths']) as $migrationPath) {
             $migrationPath = Yii::getAlias($migrationPath);
             if (!is_dir($migrationPath)) { throw new Exception("Bad migration path {$migrationPath}!"); continue; }
             $handle = opendir($migrationPath);
