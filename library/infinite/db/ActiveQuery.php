@@ -29,4 +29,10 @@ class ActiveQuery extends \yii\db\ActiveQuery
         $this->trigger(self::EVENT_BEFORE_QUERY, $modelEvent);
         return parent::createCommand($db);
     }
+
+    public function getIsAco()
+    {
+        $class = $this->modelClass;
+        return $class::$isAco;
+    }
 }

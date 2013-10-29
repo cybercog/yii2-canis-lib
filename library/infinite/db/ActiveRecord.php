@@ -14,6 +14,8 @@ use infinite\db\ActiveQuery;
 
 class ActiveRecord extends \yii\db\ActiveRecord
 {
+    static public $isAco = true;
+
     /**
      * @event Event an event that is triggered after a failed save.
      */
@@ -23,10 +25,6 @@ class ActiveRecord extends \yii\db\ActiveRecord
     public $descriptorField;
 
 
-    public static function queryBehaviors()
-    {
-        return [];
-    }
 
     /**
      * Creates an [[ActiveQuery]] instance.
@@ -50,6 +48,16 @@ class ActiveRecord extends \yii\db\ActiveRecord
             ],
             'Blame' => [
                 'class' => '\infinite\db\behaviors\Blame',
+            ]
+        ];
+    }
+
+
+    public static function queryBehaviors()
+    {
+        return [
+            'Access' => [
+                'class' => '\infinite\db\behaviors\Access',
             ]
         ];
     }

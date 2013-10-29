@@ -189,7 +189,7 @@ class Gatekeeper extends \infinite\base\Component
 			$innerOnConditions[] = $alias.'.controlled_object_id IN ('.implode(',', $cos).')';
 
 		}
-		$query->select = $alias.'.aca_id, '.$alias.'.access';
+		$query->select = [$alias.'.aca_id, '.$alias.'.access'];
 		$innerOnConditions[] = $alias.'.controlled_object_id IS NULL AND '.$alias.'.object_model IS NULL';
 		$aclOnConditions[] = '('. implode(') OR (', $innerOnConditions) .')';
 
@@ -198,7 +198,7 @@ class Gatekeeper extends \infinite\base\Component
 		}
 
 		$query->where = '('. implode(') AND (', $aclOnConditions) .')';
-		$query->order = implode(', ', $aclOrder);
+		$query->orderBy($aclOrder);
     	return $query;
     }
 
@@ -274,15 +274,15 @@ class Gatekeeper extends \infinite\base\Component
 			$aclClass = $this->aclClass;
 
 			$innerAclQuery = new Query;
-			$innerAclQuery->from($aclClass->tableName() .' t');
-			$this->generateAclCheckCriteria($innerAclQuery, null, $accessingObject, $model);
+			$innerAclQuery->from($aclClass::tableName() .' t');
+			$this->generateAclCheckCriteria($innerAclQuery, null, $accessingObject);
 			$innerAclCommand = $innerAclQuery->createCommand();
 
 			$outerAclQuery = new Query;
 			$outerAclQuery->from('('. $innerAclCommand->sql .') `outer`');
 			$outerAclQuery->params($innerAclQuery->params);
-			$outerAclQuery->select('outer.aca_id, outer.access');
-			$outerAclQuery->group('(`outer`.aca_id)');
+			$outerAclQuery->select(['outer.aca_id, outer.access']);
+			$outerAclQuery->groupBy('(`outer`.aca_id)');
 			$raw = $outerAclQuery->all();
 
 			$nullValue = null;

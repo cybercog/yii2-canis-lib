@@ -71,7 +71,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 		$_relationModel = self::RELATION_MODEL;
 		$_relation = new $_relationModel;
 		$_relationTable = $_relation->tableName();
-		$_relationFields = array_keys($_relationModel::::getTableSchema()->columns);
+		$_relationFields = array_keys($_relationModel::getTableSchema()->columns);
 		
 
 		$_registryModel = \infinite\db\behaviors\Registry::REGISTRY_MODEL;
@@ -205,7 +205,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 	public function searchRelatives($activeQuery, $type, $ownerId, $relationOptions = []) {
 		$_relationModel = self::RELATION_MODEL;
 		$_relation = new $_relationModel;
-		$_relationFields = array_keys($_relation->getMetaData()->columns);
+		$_relationFields = array_keys($_relationModel::getTableSchema()->columns);
 
 		if (!isset($relationOptions['fields'])) {
 			$relationAttr = [];
@@ -304,7 +304,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 	function relatives($type, $model, $relationOptions = [], $modelOptions = []) {
 		$_relationModel = self::RELATION_MODEL;
 		$_relation = new $_relationModel;
-		$_relationFields = array_keys($_relation->getMetaData()->columns);
+		$_relationFields = array_keys($_relationModel::getTableSchema()->columns);
 		
 		if (!isset($relationOptions['fields'])) {
 			$relationAttr = [];
@@ -354,7 +354,8 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 		$_relationTable = $_relation->tableName();
 		// $this->getDbCriteria()->params[':object_id'] = $this->owner->id;
 		$relationOn = '';
-		$relationAttr[$primaryKey] = 't.id';
+		$_relationAlias = 'relation';
+		$relationAttr[$primaryKey] = $model::tableName() . '.id';
 		foreach ($relationAttr as $key => $tests) {
 			if (empty($relationOn)) {
 				$partOn = '(';
@@ -362,7 +363,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 				$partOn = ' AND (';
 			}
 			if (is_array($tests)) {
-				$key = $_relationModel.'.'.$key;
+				$key = $_relationAlias.'.'.$key;
 				$partOn2 = '';
 				foreach ($tests as $t) {
 					if (!empty($partOn2)) {
@@ -377,7 +378,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 				}
 				$partOn .= $partOn2;
 			} else {
-				$key = '`'.$_relationModel.'`.`'.$key.'`';
+				$key = '`'.$_relationAlias.'`.`'.$key.'`';
 				$partOn .= $key;
 				if (in_array(substr($tests, 0, 2), ['> ', '< ', '>=', '<=', '<>', '!=', 'IS'])) {
 					$partOn .= ' '. $tests;
@@ -388,12 +389,12 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 			$partOn .= ')';
 			$relationOn .= $partOn;
 		}
-		$o->join('LEFT JOIN', $_relationTable.' AS '.$_relationModel, '('.$relationOn.')');
+		$o->join('LEFT JOIN', $_relationTable.' AS '.$_relationAlias, '('.$relationOn.')');
 		// then connect the join to the model
 		if (isset($relationOptions['params'])) {
 			$o->params = array_merge($o->getDbCriteria()->params, $relationOptions['params']);
 		}
-		$o->where([$_relationModel .'.'.$foreignKey => $this->owner->id]);
+		$o->where([$_relationAlias .'.'.$foreignKey => $this->owner->id]);
 
 		// then add in model attributes (if there are any)
 		foreach ($modelOptions as $k => $v) {

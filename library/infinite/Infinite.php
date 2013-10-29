@@ -19,6 +19,6 @@ class Infinite extends \yii\base\Extension
     public static function init()
     {
             Yii::setAlias('@infinite', __DIR__);
-            Yii::$app->params['migrationPaths'][] = '\infinite\db\migrations';
+            Yii::$app->params['migrationPaths'][] = '@infinite/db/migrations';
     }
 }

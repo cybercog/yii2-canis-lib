@@ -72,37 +72,45 @@ class Setup extends \infinite\base\Object
                 return false;
             }
 
-            $tasksLeft--;
-            if ($task->test()) {
-                continue;
-            }
-
-            if (!empty($task->verification) AND !$this->getConfirmed($task->id)) {
-                // show confirm link
-                $this->params['question'] = $task->verification;
-                $this->params['task'] = $task;
-                $this->render('confirm');
-            } elseif(!empty($task->fields) AND (empty($_POST[$task->id]) OR !$this->getConfirmed($task->id) OR !$task->loadInput($_POST[$task->id]))) {
-                // show form
-                $this->params['fields'] = $task->fields;
-                $this->params['task'] = $task;
-                $this->render('form');
-            } else {
-                // do it
-                if (!$task->run()) {
-                    $this->params['message'] = "An error occurred while running the task <em>{$task->title}</em>";
-                    $this->params['errors'] = $task->errors;
-                    $this->params['error'] = true;
-                    $this->render('message');
-                } else {
-                    $this->afterRun();
-                    $tasksDone++;
-                    if (!empty($task->verification) OR !empty($task->fields)) {
-                        $this->refresh("Successfully completed the task <em>{$task->title}</em>");
-                        break;
-                    }
+            // try {
+                $tasksLeft--;
+                if ($task->test()) {
+                    continue;
                 }
-            }
+                if (!empty($task->verification) AND !$this->getConfirmed($task->id)) {
+                    // show confirm link
+                    $this->params['question'] = $task->verification;
+                    $this->params['task'] = $task;
+                    $this->render('confirm');
+                } elseif(!empty($task->fields) AND (empty($_POST[$task->id]) OR !$this->getConfirmed($task->id) OR !$task->loadInput($_POST[$task->id]))) {
+                    // show form
+                    $this->params['fields'] = $task->fields;
+                    $this->params['task'] = $task;
+                    $this->render('form');
+                } else {
+                    // do it
+                    if (!$task->run()) {
+                        $this->params['message'] = "An error occurred while running the task <em>{$task->title}</em>";
+                        $this->params['errors'] = $task->errors;
+                        $this->params['error'] = true;
+                        $this->render('message');
+                    } else {
+                        $this->afterRun();
+                        $tasksDone++;
+                        if (!empty($task->verification) OR !empty($task->fields)) {
+                            $this->refresh("Successfully completed the task <em>{$task->title}</em>");
+                            break;
+                        }
+                    }
+                 }
+            // } catch (Exception $e) {
+
+            //     $message = 'Fatal error: '. $e->getFile() .':'. $e->getLine() .' '. $e->getMessage();
+            //     $this->params['message'] = $message;
+            //     $this->params['error'] = true;
+            //     $this->render('message');
+            //     break;
+            // }
         }
 
         $this->params['message'] = "Your application has been {$message}!";
@@ -212,7 +220,7 @@ class Setup extends \infinite\base\Object
                     throw new Exception("Couldn't find environment config {$configPath}!");
                 }
                 $_SERVER['argv'] = array();
-                $config = require_once($configPath);
+                $config = include($configPath);
                 self::$_app = new \yii\console\Application($config);
             }
             return self::$_app;
