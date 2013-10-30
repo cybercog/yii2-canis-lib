@@ -15,10 +15,12 @@ use \infinite\helpers\ArrayHelper;
 
 class Relatable extends \infinite\db\behaviors\ActiveRecord
 {
+	public $relationClass = '\app\models\Relation';
+	public $registryClass = '\app\models\Registry';
+
 	public $child_object_id;
 	public $parent_object_id;
 	static $_tree_segments = [];
-	const RELATION_MODEL = '\app\models\Relation';
 
 
 	/**
@@ -68,13 +70,13 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 	}
 
 	public function relativeIds($type, $models = null, $relationOptions = []) {
-		$_relationModel = self::RELATION_MODEL;
+		$_relationModel = $this->relationClass;
 		$_relation = new $_relationModel;
 		$_relationTable = $_relation->tableName();
 		$_relationFields = array_keys($_relationModel::getTableSchema()->columns);
 		
 
-		$_registryModel = \infinite\db\behaviors\Registry::REGISTRY_MODEL;
+		$_registryModel = $this->registryClass;
 		$_registry = new $_registryModel;
 		$_registryTable = $_registry->tableName();
 
@@ -203,7 +205,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 	 * @return unknown
 	 */
 	public function searchRelatives($activeQuery, $type, $ownerId, $relationOptions = []) {
-		$_relationModel = self::RELATION_MODEL;
+		$_relationModel = $this->relationClass;
 		$_relation = new $_relationModel;
 		$_relationFields = array_keys($_relationModel::getTableSchema()->columns);
 
@@ -302,7 +304,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 	 * @return unknown
 	 */
 	function relatives($type, $model, $relationOptions = [], $modelOptions = []) {
-		$_relationModel = self::RELATION_MODEL;
+		$_relationModel = $this->relationClass;
 		$_relation = new $_relationModel;
 		$_relationFields = array_keys($_relationModel::getTableSchema()->columns);
 		
@@ -520,7 +522,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 	 * @return unknown
 	 */
 	public function getRelations($type = null, $activeOnly = true, $relationAttr = []) {
-		$_relationModel = self::RELATION_MODEL;
+		$_relationModel = $this->relationClass;
 		$relations = $_relationModel::find();
 		$where = [];
 		switch ($type) {

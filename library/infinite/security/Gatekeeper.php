@@ -10,8 +10,10 @@
 namespace infinite\security;
 
 use \infinite\base\exceptions\Exception;
+use \infinite\helpers\ArrayHelper;
 
 use \yii\db\Query;
+use \yii\db\Expression;
 
 class Gatekeeper extends \infinite\base\Component
 {
@@ -125,7 +127,7 @@ class Gatekeeper extends \infinite\base\Component
 		$aroIn = array();
 
 		// I'm not sure about this, but I think we want it to inherit.... NEVERMIND
-		$aclOrder[] = 'IF('.$alias.'.access IS NULL, 0, 1) DESC';
+		$aclOrder['IF('.$alias.'.access IS NULL, 0, 1)'] = Query::SORT_DESC;
 
 		// if ($allowInherit) {
 		// 	$aclOnConditions[] = $alias.'.access IN (0, 1)';
@@ -133,7 +135,7 @@ class Gatekeeper extends \infinite\base\Component
 		// 	$aclOnConditions[] = $alias.'.access = 1';
 		// }
 
-		$aclOrder[] = 'IF('.$alias.'.accessing_object_id IS NULL, 0, 1) DESC';
+		$aclOrder['IF('.$alias.'.accessing_object_id IS NULL, 0, 1)'] = Query::SORT_DESC;
 		foreach ($aros as $aro) {
 			if (is_array($aro)) {
 				$subInIf = array();
@@ -143,11 +145,11 @@ class Gatekeeper extends \infinite\base\Component
 					$subInIf[] = ':aro_'.$aroN;
 					$aroN++;
 				}
-				$aclOrder[] = 'IF('.$alias.'.accessing_object_id IN ('.implode(', ', $subInIf).'), 1, 0) DESC';
+				$aclOrder['IF('.$alias.'.accessing_object_id IN ('.implode(', ', $subInIf).'), 1, 0)'] = Query::SORT_DESC;
 			} else {
 				$query->params[':aro_'.$aroN] = $aro;
 				$aroIn[] = ':aro_'.$aroN;
-				$aclOrder[] = 'IF('.$alias.'.accessing_object_id = :aro_'.$aroN.', 1, 0) DESC';
+				$aclOrder['IF('.$alias.'.accessing_object_id = :aro_'.$aroN.', 1, 0)'] = Query::SORT_DESC;
 				$aroN++;
 			}
 		}
@@ -160,8 +162,8 @@ class Gatekeeper extends \infinite\base\Component
 
 
 
-		$aclOrder[] = 'IF('.$alias.'.aca_id IS NULL, 0, 1) DESC';
-		$aclOrder[] = 'IF('.$alias.'.controlled_object_id IS NULL, 0, 1) DESC';
+		$aclOrder['IF('.$alias.'.aca_id IS NULL, 0, 1)'] = Query::SORT_DESC;
+		$aclOrder['IF('.$alias.'.controlled_object_id IS NULL, 0, 1)'] = Query::SORT_DESC;
 		
 		$innerOnConditions = array();
 
@@ -170,14 +172,14 @@ class Gatekeeper extends \infinite\base\Component
 			$query->params[':controlled_object_id'] = $controlledObject->id;
 			$innerOnConditions[] = $alias.'.controlled_object_id=:controlled_object_id';
 			$innerOnConditions[] = $alias.'.controlled_object_id IS NULL AND '.$alias.'.object_model=:object_model';
-			$aclOrder[] = 'IF('.$alias.'.object_model IS NULL, 0, 1) DESC';
+			$aclOrder['IF('.$alias.'.object_model IS NULL, 0, 1)'] =  Query::SORT_DESC;
 		} elseif (!is_null($model)) {
 			$query->params[':object_model'] = $model;
-			$aclOrder[] = 'IF('.$alias.'.object_model IS NULL, 0, 1) DESC';
+			$aclOrder['IF('.$alias.'.object_model IS NULL, 0, 1)'] =  Query::SORT_DESC;
 			$innerOnConditions[] = $alias.'.controlled_object_id IS NULL AND '.$alias.'.object_model=:object_model';
 		}elseif(is_null($controlledObject)) {
 			$query->params[':object_model'] = $model;
-			$aclOrder[] = 'IF('.$alias.'.object_model IS NULL, 0, 1) DESC';
+			$aclOrder['IF('.$alias.'.object_model IS NULL, 0, 1)'] =  Query::SORT_DESC;
 			$innerOnConditions[] = $alias.'.controlled_object_id IS NULL AND '.$alias.'.object_model IS NULL';
 		} else {
 			$cos = array();
@@ -189,7 +191,7 @@ class Gatekeeper extends \infinite\base\Component
 			$innerOnConditions[] = $alias.'.controlled_object_id IN ('.implode(',', $cos).')';
 
 		}
-		$query->select = [$alias.'.aca_id, '.$alias.'.access'];
+		$query->select = [$alias.'.aca_id', $alias.'.access'];
 		$innerOnConditions[] = $alias.'.controlled_object_id IS NULL AND '.$alias.'.object_model IS NULL';
 		$aclOnConditions[] = '('. implode(') OR (', $innerOnConditions) .')';
 
@@ -279,16 +281,15 @@ class Gatekeeper extends \infinite\base\Component
 			$innerAclCommand = $innerAclQuery->createCommand();
 
 			$outerAclQuery = new Query;
-			$outerAclQuery->from('('. $innerAclCommand->sql .') `outer`');
+			$outerAclQuery->from(['('. $innerAclCommand->sql .') `outer`']);
 			$outerAclQuery->params($innerAclQuery->params);
-			$outerAclQuery->select(['outer.aca_id, outer.access']);
+			$outerAclQuery->select(['outer.aca_id', 'outer.access']);
 			$outerAclQuery->groupBy('(`outer`.aca_id)');
 			$raw = $outerAclQuery->all();
 
 			$nullValue = null;
 			$discoverParents = array();
 			foreach ($raw as $r) {
-
 				// @todo not sure if this needs to be done in another loop
 				if (is_null($r['aca_id']) AND is_null($nullValue)) {
 					$nullValue = $r['access'];
@@ -305,7 +306,8 @@ class Gatekeeper extends \infinite\base\Component
 				}
 			}
 			if (!is_null($nullValue)) {
-				foreach (Aca::find()->all() as $aca) {
+				$acaClass = $this->acaClass;
+				foreach ($acaClass::find()->all() as $aca) {
 					if (!isset($this->_objectCanCache[$accessKey][$aca->primaryKey])) {
 						if ($nullValue === '0') {
 							$discoverParents[] = $aca->primaryKey;
@@ -616,6 +618,8 @@ class Gatekeeper extends \infinite\base\Component
 			if ($acl->isNewRecord OR $acl->access != $access OR $acl->acl_role_id !== $aclRole) {
 				$acl->access = $access;
 				$acl->acl_role_id = $aclRole;
+				$acl->save();
+				//\infinite\base\Debug::d($acl->attributes);exit;
 				return $acl->save();
 			}
 		}

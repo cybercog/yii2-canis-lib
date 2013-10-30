@@ -9,20 +9,23 @@
 
 namespace infinite\base;
 
+use Yii;
+
 use \yii\helpers\VarDumper;
 use \infinite\db\ActiveRecord;
 
 class Debug extends \infinite\base\Object
 {
-    public static function db($command)
+    public static function db($query)
     {
-            $text = $command->text;
-            $values = array_values($command->params);
-            array_walk($values, function (&$value) { $value = Yii::app()->db->quoteValue($value); });
-            $text = str_replace(array_keys($command->params), $values, $text);
-            echo '<pre>';
-            echo $text;
-            echo '</pre>';
+        if (is_null($query->params)) { $query->params = array(); }
+        $text = $query->createCommand()->sql;
+        $values = array_values($query->params);
+        array_walk($values, function (&$value) { $value = Yii::$app->db->quoteValue($value); });
+        $text = str_replace(array_keys($query->params), $values, $text);
+        echo '<pre>';
+        echo $text;
+        echo '</pre>';
 
     }
 

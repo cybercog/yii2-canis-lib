@@ -37,7 +37,7 @@ class Acl extends \infinite\db\ActiveRecord
 		return [
 			['acl_role_id', 'integer'],
 			['accessing_object_id', 'required'],
-			['access', 'boolean'],
+			['access', 'integer'],
 			['created, modified', 'safe'],
 			['accessing_object_id, controlled_object_id, aca_id', 'string', 'max' => 36],
 			['object_model', 'string', 'max' => 100]

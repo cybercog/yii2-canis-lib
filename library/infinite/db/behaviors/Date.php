@@ -23,9 +23,10 @@ class Date extends \infinite\db\behaviors\ActiveRecord
     {
         return [
             \infinite\db\ActiveRecord::EVENT_BEFORE_VALIDATE=> '_toDatabase',
+            \infinite\db\ActiveRecord::EVENT_AFTER_VALIDATE=> '_toHumanErrorCheck',
             \infinite\db\ActiveRecord::EVENT_AFTER_UPDATE => '_toHuman',
             \infinite\db\ActiveRecord::EVENT_AFTER_INSERT => '_toHuman',
-            \infinite\db\ActiveRecord::EVENT_AFTER_SAVE_FAIL => '_toHuman'
+            // \infinite\db\ActiveRecord::EVENT_AFTER_SAVE_FAIL => '_toHuman'
         ];
     }
 
@@ -35,6 +36,12 @@ class Date extends \infinite\db\behaviors\ActiveRecord
             $this->owner->{$field} = $this->_formatForDatabase($this->owner->{$field}, $format);
         }
         return true;
+    }
+
+    public function _toHumanErrorCheck($event) {
+        if ($this->owner->hasErrors()) {
+            $this->_toHuman($event);
+        }
     }
 
     public function _toHuman($event)

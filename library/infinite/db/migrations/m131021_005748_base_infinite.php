@@ -42,7 +42,7 @@ CREATE TABLE `acl` (
   `controlled_object_id` char(36) CHARACTER SET ascii COLLATE ascii_bin DEFAULT NULL,
   `aca_id` char(36) CHARACTER SET ascii COLLATE ascii_bin DEFAULT NULL,
   `object_model` varchar(255) DEFAULT NULL,
-  `access` tinyint(1) DEFAULT NULL,
+  `access` tinyint(4) DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -215,9 +215,6 @@ CREATE TABLE `role` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-# Dump of table user
-# ------------------------------------------------------------
-
 DROP TABLE IF EXISTS `user`;
 
 CREATE TABLE `user` (
@@ -226,24 +223,26 @@ CREATE TABLE `user` (
   `object_individual_id` char(36) CHARACTER SET ascii COLLATE ascii_bin DEFAULT NULL,
   `first_name` varchar(255) DEFAULT NULL,
   `last_name` varchar(255) DEFAULT NULL,
-  `username` varchar(255) NOT NULL,
-  `password` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
-  `active` tinyint(1) NOT NULL DEFAULT '0',
-  `is_administrator` tinyint(1) NOT NULL DEFAULT '0',
+  `username` varchar(255) NOT NULL,
+  `password_hash` varchar(255) DEFAULT NULL,
+  `password_reset_token` varchar(32) DEFAULT NULL,
+  `auth_key` varchar(32) NOT NULL,
+  `status` tinyint(2) NOT NULL DEFAULT '0',
   `last_login` datetime DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   `created_user_id` char(36) CHARACTER SET ascii COLLATE ascii_bin DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   `modified_user_id` char(36) CHARACTER SET ascii COLLATE ascii_bin DEFAULT NULL,
+  `deleted` datetime DEFAULT NULL,
+  `deleted_user_id` char(36) CHARACTER SET ascii COLLATE ascii_bin DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `ldap_id` (`ldap_id`),
+  KEY `userIdentityPrivider` (`primary_identity_id`),
   KEY `userIndividual` (`object_individual_id`),
   CONSTRAINT `userIndividual` FOREIGN KEY (`object_individual_id`) REFERENCES `object_individual` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `userIdentity` FOREIGN KEY (`primary_identity_id`) REFERENCES `identity` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `userRegistry` FOREIGN KEY (`id`) REFERENCES `registry` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

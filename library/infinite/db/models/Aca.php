@@ -19,7 +19,7 @@ class Aca extends \infinite\db\ActiveRecord
 	 */
 	public static function tableName()
 	{
-		return 'Aca';
+		return 'aca';
 	}
 
 	/**

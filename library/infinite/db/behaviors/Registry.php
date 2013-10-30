@@ -14,7 +14,7 @@ use \infinite\base\Exception;
 
 class Registry extends \infinite\db\behaviors\ActiveRecord
 {
-    const REGISTRY_MODEL = '\app\models\Registry';
+    public $registryClass = '\app\models\Registry';
     public static $_table;
 
     public function events()
@@ -29,7 +29,7 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
     public function getTable()
     {
         if (is_null(self::$_table)) {
-            $_registryModel = self::REGISTRY_MODEL;
+            $_registryModel = $this->registryClass;
             $r = new $_registryModel;
             self::$_table = $r->tableName();
         }
@@ -39,7 +39,7 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
     public function beforeInsert($event)
     {
         if ($this->owner->isNewRecord && $this->owner->primaryKey == NULL) {
-            $_registryModel = self::REGISTRY_MODEL;
+            $_registryModel = $this->registryClass;
             $fields = ['id' => $this->uuid(), 'object_model' => get_class($this->owner), 'created' =>  new Expression('NOW()')];
             $lastDbId = Yii::$app->db->lastInsertId;
             if (!Yii::$app->db->createCommand()->insert($this->table, $fields)->execute()) {
@@ -112,7 +112,7 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
             return true;
         }
 
-        $_registryModel = self::REGISTRY_MODEL;
+        $_registryModel = $this->registryClass;
         $_registry = $_registryModel::find($pk);
         if (!empty($_registry)) {
             return $_registry->delete();

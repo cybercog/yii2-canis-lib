@@ -27,8 +27,9 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public $password;
 
-    const STATUS_DELETED = 0;
-    const STATUS_ACTIVE = 10;
+    const STATUS_INACTIVE = 0;
+    const STATUS_ACTIVE = 1;
+    const STATUS_RESET = 2;
 
     const ROLE_USER = 10;
 
@@ -38,6 +39,16 @@ class User extends ActiveRecord implements IdentityInterface
     public static function tableName()
     {
         return 'user';
+    }
+
+    public function behaviors()
+    {
+        return array_merge(parent::behaviors(),
+            [
+                'Registry' => '\infinite\db\behaviors\Registry',
+                'Relatable' => '\infinite\db\behaviors\Relatable',
+            ]
+        );
     }
 
     /**
@@ -102,9 +113,10 @@ class User extends ActiveRecord implements IdentityInterface
             ['username', 'filter', 'filter' => 'trim'],
             ['username', 'required'],
             ['username', 'string', 'min' => 2, 'max' => 255],
+            ['first_name, last_name, email', 'string', 'min' => 1, 'max' => 255],
 
             ['email', 'filter', 'filter' => 'trim'],
-            ['email', 'required'],
+            // ['email', 'required'],
             ['email', 'email'],
             ['email', 'unique', 'message' => 'This email address has already been taken.', 'on' => 'signup'],
             ['email', 'exist', 'message' => 'There is no user with such email.', 'on' => 'requestPasswordResetToken'],
@@ -117,7 +129,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function scenarios()
     {
         return [
-            'signup' => ['username', 'email', 'password'],
+            'creation' => ['username', 'email', 'first_name', 'last_name', 'password'],
             'resetPassword' => ['password'],
             'requestPasswordResetToken' => ['email'],
         ];
