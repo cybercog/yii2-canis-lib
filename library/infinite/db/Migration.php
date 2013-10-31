@@ -19,7 +19,7 @@ class Migration extends \yii\db\Migration
 	{
 		echo "    > drop table $table if exists ...";
 		$time = microtime(true);
-		$this->db->createCommand('DROP TABLE IF EXISTS :table', [':table' => $table])->execute();
+		$this->db->createCommand('DROP TABLE IF EXISTS `'.$table.'`')->execute();
 		echo " done (time: " . sprintf('%.3f', microtime(true) - $time) . "s)\n";
 	}
 }

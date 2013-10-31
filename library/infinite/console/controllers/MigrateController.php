@@ -35,12 +35,12 @@ class MigrateController extends \yii\console\controllers\MigrateController
     {
         $applied = array();
         foreach($this->getMigrationHistory(-1) as $version=>$time) {
-            $applied[substr($version,1,13)] = true;
+            $applied[$version] = true;
         }
 
         $migrations = [];
-        foreach (array_merge($this->migrationPaths, Yii::$app->params['migrationPaths']) as $migrationPath) {
-            $migrationPath = Yii::getAlias($migrationPath);
+        foreach (array_merge($this->migrationPaths, Yii::$app->params['migrationPaths']) as $migrationPathAlias) {
+            $migrationPath = Yii::getAlias($migrationPathAlias);
             if (!is_dir($migrationPath)) { throw new Exception("Bad migration path {$migrationPath}!"); continue; }
             $handle = opendir($migrationPath);
             while(($file = readdir($handle))!==false) {
@@ -48,9 +48,12 @@ class MigrateController extends \yii\console\controllers\MigrateController
                     continue;
                 }
                 $path = $migrationPath . DIRECTORY_SEPARATOR . $file;
-                if(preg_match('/^(m(\d{6}_\d{6})_.*?)\.php$/',$file,$matches) AND is_file($path) AND !isset($applied[$matches[2]])) {
-                    $migrations[] = $matches[1];
-                    $this->migrationsMap[$matches[1]] = $path;
+                if(preg_match('/^(m(\d{6}_\d{6})_.*?)\.php$/',$file,$matches) AND is_file($path)) {
+                    $migrationClassName = str_replace('/', '\\', substr($migrationPathAlias, 1)) .'\\'.  $matches[1];
+                    if (!isset($applied[$migrationClassName])) {
+                        $migrations[] = $migrationClassName;
+                        $this->migrationsMap[$migrationClassName] = $path;
+                    }
                 }
             }
             closedir($handle);
