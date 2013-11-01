@@ -27,6 +27,19 @@ class Role extends \infinite\db\ActiveRecord
 	/**
 	 * @inheritdoc
 	 */
+    public function behaviors()
+    {
+        return array_merge(parent::behaviors(),
+            [
+                'Registry' => '\infinite\db\behaviors\Registry',
+                'Relatable' => '\infinite\db\behaviors\Relatable',
+            ]
+        );
+    }
+    
+	/**
+	 * @inheritdoc
+	 */
 	public function rules()
 	{
 		return [

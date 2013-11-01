@@ -11,8 +11,9 @@ namespace infinite\base;
 use Yii;
 use \yii\base\Application;
 
-abstract class Engine extends \infinite\base\Object
+abstract class Engine extends \infinite\base\Component
 {
+
     /**
      *
      */

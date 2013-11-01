@@ -221,7 +221,7 @@ class Setup extends \infinite\base\Object
                 }
                 $_SERVER['argv'] = array();
                 $config = include($configPath);
-                self::$_app = new \yii\console\Application($config);
+                self::$_app = new \infinite\console\Application($config);
             }
             return self::$_app;
         }

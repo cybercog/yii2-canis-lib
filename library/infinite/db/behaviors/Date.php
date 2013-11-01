@@ -8,6 +8,7 @@
 
 
 namespace infinite\db\behaviors;
+
 use \infinite\helpers\Date as DateHelper;
 
 class Date extends \infinite\db\behaviors\ActiveRecord

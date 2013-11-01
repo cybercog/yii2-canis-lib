@@ -10,11 +10,10 @@
 namespace infinite\security\role;
 
 use infinite\helpers\ArrayHelper;
-use RoleItem;
 
 class Engine extends \infinite\base\Engine
 {
-    const MODEL = 'Role';
+    const MODEL = '\app\models\Role';
     const GLOBAL_MODEL = '__GLOBAL__';
 
     protected $_registry = array();
@@ -56,7 +55,7 @@ class Engine extends \infinite\base\Engine
     {
         if (is_null($this->_role_models)) {
             $model = self::MODEL;
-            $raw = $model::tempModel()->findAll();
+            $raw = $model::find()->all();
             $this->_role_models = ArrayHelper::map(array_values($raw), 'system_id');
         }
         return $this->_role_models;

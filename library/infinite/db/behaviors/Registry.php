@@ -8,7 +8,9 @@
 
 
 namespace infinite\db\behaviors;
+
 use Yii;
+
 use \yii\db\Expression;
 use \infinite\base\Exception;
 

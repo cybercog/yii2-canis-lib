@@ -446,7 +446,8 @@ class Gatekeeper extends \infinite\base\Component
 	}
 
 	protected function _getActions() {
-		$actions = Aca::tempModel()->findAll();
+		$acaClass = $this->acaClass;
+		$actions = $acaClass::find()->all();
 		$this->_actionsByName = ArrayHelper::index($actions, 'name');
 		$this->_actionsById = ArrayHelper::index($actions, 'id');
 		return true;
