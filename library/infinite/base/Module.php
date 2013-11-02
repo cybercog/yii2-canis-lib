@@ -1,11 +1,12 @@
 <?php
 namespace infinite\base;
 
-class Module extends \yii\base\Module {
+abstract class Module extends \yii\base\Module {
 	use \infinite\base\ObjectTrait;
 
 	protected $_shortName;
 
+	abstract public function getModuleType();
 	/**
 	 *
 	 *
@@ -34,7 +35,11 @@ class Module extends \yii\base\Module {
 		if (!is_null($this->_shortName)) {
 			return $this->_shortName;
 		}
-		return $this->_shortName = preg_replace('/('.ucfirst($this->id).')([A-Za-z]+)(Module)/', '\\2', self::baseClassName());
+		preg_match('/'.ucfirst($this->moduleType).'([A-Za-z]+)\\\Module/', get_class($this), $matches);
+		if (!isset($matches[1])) {
+			throw new Exception(get_class($this). " is not set up correctly!");
+		}
+		return $this->_shortName = $matches[1];
 	}
 }
 ?>
