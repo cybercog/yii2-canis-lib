@@ -14,23 +14,8 @@ abstract class Collector extends \infinite\base\Component
 	const EVENT_AFTER_COLLECTOR_INIT = 'afterCollectorInit';
 	
 	protected $_buckets = [];
+	protected $_distributedFields = [];
 
-	 /**
-     *
-     */
-    public function init()
-    {
-        parent::init();
-        Yii::$app->collectors->on(Component::EVENT_AFTER_LOAD, array($this, 'beforeRequest'));
-    }
-
-
-	public function beforeRequest(Event $event) {
-		foreach ($this->getBucket(self::DEFAULT_BUCKET)->toArray() as $item) {
-			$this->distribute($item);
-		}
-		return true;
-	}
 
 	public function isReady() {
 		return true;	
@@ -44,25 +29,27 @@ abstract class Collector extends \infinite\base\Component
 		return '\infinite\base\collector\Item';
 	}
 
-	public function getDistributionFields() {
-		return [];
-	}
-
 	public function prepareComponent($component) {
 		return $component;
 	}
 
-	public function distribute(Item $item) {
-		foreach ($this->distributionFields as $field) {
-			if (!isset($item->{$field})) { continue; }
-			$this->getBucket($field)->add($item->{$field}, $item);
+	public function distribute($field) {
+		if (isset($this->_distributedFields[$field])) {
+			foreach ($this->getBucket(self::DEFAULT_BUCKET)->toArray() as $item) {
+				if (!isset($item->{$field})) { continue; }
+				$this->getBucket($field)->add($item->{$field}, $item);
+			}
+			$this->_distributedFields[$field] = true;
 		}
 		return true;
 	}
 
-	protected function getBucket($name) {
+	protected function getBucket($name, $distribute = true) {
 		if (!isset($this->_buckets[$name])) {
 			$this->_buckets[$name] = new Bucket($this);
+			if ($distribute && $name !== self::DEFAULT_BUCKET) {
+				$this->distribute($name);
+			}
 		}
 		return $this->_buckets[$name];
 	}
@@ -76,7 +63,7 @@ abstract class Collector extends \infinite\base\Component
 	}
 
 	public function get($item, $bucket = null) {
-		if (!is_null($bucket)) {
+		if (is_null($bucket)) {
 			$bucket = self::DEFAULT_BUCKET;
 		}
 		$bucket = $this->getBucket($bucket);

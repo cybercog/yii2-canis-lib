@@ -10,11 +10,11 @@ class Item extends \infinite\base\Object {
 	protected $_settings;
 	protected $_object;
 
-	public function __construct($collector, $name, $itemComponent = null) {
+	public function __construct($collector, $name, $itemObject = null) {
 		$this->_name = $name;
 		$this->_collector = $collector;
-		if (!is_null($itemComponent)) {
-			$this->object = $itemComponent;
+		if (!is_null($itemObject)) {
+			$this->object = $itemObject;
 		}
 	}
 

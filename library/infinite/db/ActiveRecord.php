@@ -15,6 +15,7 @@ use infinite\db\ActiveQuery;
 class ActiveRecord extends \yii\db\ActiveRecord
 {
     static public $isAco = true;
+    static protected $_cache = [];
 
     /**
      * @event Event an event that is triggered after a failed save.
@@ -24,7 +25,44 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
     public $descriptorField;
 
+    public static function clearCache($model = null) {
+        if (is_null($model)) {
+            self::$_cache = [];
+        } elseif(isset(self::$_cache[$model])) {
+            self::$_cache[$model] = [];
+        }
+        return true;
+    }
 
+    public static function findOne($where, $access = true) {
+        return self::_findCache('one', $where, $access);
+    }
+
+
+    public static function findAll($where, $access = true) {
+        return self::_findCache('all', $where, $access);
+    }
+
+    protected static function _findCache($type, $where, $access = true)
+    {
+        ksort($where);
+        $model = self::className();
+        $key = md5(serialize(['type' => $type, 'where' => $where, 'access' => $access]));
+        if (!isset(self::$_cache[$model])) {
+            self::$_cache[$model] = [];
+        }
+        if (!isset(self::$_cache[$model][$key])) {
+            $r = self::find()->where($where);
+            if (!$access AND $r->hasBehavior('Access')) {
+                $r->disableAccess();
+            }
+            $r = $r->$type();
+            if ($r) {
+                self::$_cache[$model][$key] = $r;
+            }
+        }
+        return self::$_cache[$model][$key];
+    }
 
     /**
      * Creates an [[ActiveQuery]] instance.

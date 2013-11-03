@@ -25,12 +25,12 @@ class Access extends \infinite\db\behaviors\ActiveRecord
     }
 
 
-    public function enableAcl() {
+    public function enableAccess() {
         $this->_aclEnabled = true;
         return $this->owner;
     }
 
-    public function disableAcl() {
+    public function disableAccess() {
         $this->_aclEnabled = false;
         return $this->owner;
     }

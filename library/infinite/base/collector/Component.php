@@ -25,12 +25,17 @@ class Component extends \infinite\base\Component  implements IteratorAggregate, 
 
 	public function beforeRequest($event) {
 		if (empty($this->_init_collectors)) { return; }
+		// load
 		Yii::beginProfile(__CLASS__.'::'.__FUNCTION__);
 		foreach ($this->_init_collectors as $id => $collector) {
 			$this->internalRegisterCollector($id, $collector);
 		}
 		$this->_init_collectors = null;
+
+		// initialize
 		$this->trigger(self::EVENT_AFTER_LOAD);
+
+		// final round
 		$this->trigger(self::EVENT_AFTER_INIT);
 		Yii::endProfile(__CLASS__.'::'.__FUNCTION__);
 	}
