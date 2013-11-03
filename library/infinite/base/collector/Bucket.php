@@ -1,12 +1,12 @@
 <?php
-namespace infinite\base;
+namespace infinite\base\collector;
 
 use ArrayAccess;
 use ArrayIterator;
 use IteratorAggregate;
 use \yii\base\Arrayable;
 
-class CollectorBucket extends \infinite\base\Object implements IteratorAggregate, ArrayAccess, Arrayable {
+class Bucket extends \infinite\base\Object implements IteratorAggregate, ArrayAccess, Arrayable {
 	protected $_bucket = [];
 	protected $_collector;
 
@@ -14,7 +14,7 @@ class CollectorBucket extends \infinite\base\Object implements IteratorAggregate
 		$this->_collector = $collector;
 	}
 
-	public function add($offset, CollectorItem $item) {
+	public function add($offset, Item $item) {
 		$this->_bucket[$offset] = $item;
 	}
 

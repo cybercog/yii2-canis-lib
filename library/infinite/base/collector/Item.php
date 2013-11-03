@@ -1,9 +1,9 @@
 <?php
-namespace infinite\base;
+namespace infinite\base\collector;
 
 use \infinite\base\Component;
 
-class CollectorItem extends \infinite\base\Object {
+class Item extends \infinite\base\Object {
 	protected $_name;
 	protected $_owner;
 	protected $_collector;

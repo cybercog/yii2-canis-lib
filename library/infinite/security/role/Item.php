@@ -13,7 +13,7 @@ use Yii;
 
 use \infinite\base\exceptions\Exception;
 
-class RoleItem extends \infinite\base\Object
+class Item extends \infinite\base\Object
 {
 	protected $_name;
 	protected $_model;

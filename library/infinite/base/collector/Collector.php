@@ -1,12 +1,37 @@
 <?php
-namespace infinite\base;
+namespace infinite\base\collector;
+
+use Yii;
 
 use \infinite\base\Component;
+use \infinite\base\exceptions\Exception;
 
-abstract class Collector extends \infinite\base\Component {
-	public $primaryBucketField = 'systemId';
+use \yii\base\Application;
+use \yii\base\Event;
+
+abstract class Collector extends \infinite\base\Component 
+{
+	const DEFAULT_BUCKET = '__default';
+	const EVENT_AFTER_COLLECTOR_INIT = 'afterCollectorInit';
+	
 	protected $_buckets = [];
 
+	 /**
+     *
+     */
+    public function init()
+    {
+        Yii::$app->on(Application::EVENT_BEFORE_REQUEST, array($this, 'beforeRequest'));
+        parent::init();
+    }
+
+
+	public function beforeRequest(Event $event) {
+		foreach ($this->getBucket(self::DEFAULT_BUCKET)->toArray() as $item) {
+			$this->distribute($item);
+		}
+		return true;
+	}
 
 	public function isReady() {
 		return true;	
@@ -17,18 +42,18 @@ abstract class Collector extends \infinite\base\Component {
 	}
 
 	public function getCollectorItemClass() {
-		return '\infinite\base\CollectorItem';
+		return '\infinite\base\collector\Item';
 	}
 
 	public function getDistributionFields() {
-		return [$this->primaryBucketField];
+		return [];
 	}
 
 	public function prepareComponent($component) {
 		return $component;
 	}
 
-	public function distribute(CollectorItem $item) {
+	public function distribute(Item $item) {
 		foreach ($this->distributionFields as $field) {
 			if (!isset($item->{$field})) { continue; }
 			$this->getBucket($field)->add($item->{$field}, $item);
@@ -38,14 +63,14 @@ abstract class Collector extends \infinite\base\Component {
 
 	protected function getBucket($name) {
 		if (!isset($this->_buckets[$name])) {
-			$this->_buckets[$name] = new CollectorBucket($this);
+			$this->_buckets[$name] = new Bucket($this);
 		}
 		return $this->_buckets[$name];
 	}
 
 	public function all($bucket = null) {
 		if (!is_null($bucket)) {
-			$bucket = $this->primaryBucketField;
+			$bucket = self::DEFAULT_BUCKET;
 		}
 		$bucket = $this->getBucket($bucket);
 		return $bucket->toArray();
@@ -53,7 +78,7 @@ abstract class Collector extends \infinite\base\Component {
 
 	public function get($item, $bucket = null) {
 		if (!is_null($bucket)) {
-			$bucket = $this->primaryBucketField;
+			$bucket = self::DEFAULT_BUCKET;
 		}
 		$bucket = $this->getBucket($bucket);
 		if (!isset($bucket[$item])) {
@@ -65,20 +90,16 @@ abstract class Collector extends \infinite\base\Component {
 	protected function _createBlankItem($itemSystemId) {
 		$collectorItemClass = $this->collectorItemClass;
 		$item = new $collectorItemClass($this, $itemSystemId);
-		if ($this->distribute($item)) {
-			return $item;
-		}
-		return false;
+		$this->getBucket(self::DEFAULT_BUCKET)->add($itemSystemId, $item);
+		return $item;
 	}
 
 	public function register($itemComponent) {
 		$itemComponent = $this->prepareComponent($itemComponent);
 		$collectorItemClass = $this->collectorItemClass;
 		$item = new $collectorItemClass($this, $itemComponent->systemId, $itemComponent);
-		if ($this->distribute($item)) {
-			return $item;
-		}
-		return false;
+		$this->getBucket(self::DEFAULT_BUCKET)->add($itemComponent->systemId, $item);
+		return $item;
 	}
 
 	public function registerMultiple($itemComponentSet) {
