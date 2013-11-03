@@ -8,7 +8,6 @@ use \infinite\base\Collector;
 trait ApplicationTrait {
 	protected $_migrationAliases = [];
 
-
 	public function registerMigrationAlias($alias) {
 		if (!in_array($alias, $this->_migrationAliases)) {
 			$this->_migrationAliases[] = $alias;

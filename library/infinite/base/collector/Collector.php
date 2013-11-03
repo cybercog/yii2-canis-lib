@@ -3,7 +3,6 @@ namespace infinite\base\collector;
 
 use Yii;
 
-use \infinite\base\Component;
 use \infinite\base\exceptions\Exception;
 
 use \yii\base\Application;
@@ -21,8 +20,8 @@ abstract class Collector extends \infinite\base\Component
      */
     public function init()
     {
-        Yii::$app->on(Application::EVENT_BEFORE_REQUEST, array($this, 'beforeRequest'));
         parent::init();
+        Yii::$app->collectors->on(Component::EVENT_AFTER_LOAD, array($this, 'beforeRequest'));
     }
 
 
@@ -69,7 +68,7 @@ abstract class Collector extends \infinite\base\Component
 	}
 
 	public function all($bucket = null) {
-		if (!is_null($bucket)) {
+		if (is_null($bucket)) {
 			$bucket = self::DEFAULT_BUCKET;
 		}
 		$bucket = $this->getBucket($bucket);
@@ -94,18 +93,19 @@ abstract class Collector extends \infinite\base\Component
 		return $item;
 	}
 
-	public function register($itemComponent) {
+	public function register($owner, $itemComponent) {
 		$itemComponent = $this->prepareComponent($itemComponent);
 		$collectorItemClass = $this->collectorItemClass;
 		$item = new $collectorItemClass($this, $itemComponent->systemId, $itemComponent);
+		$item->owner = $owner;
 		$this->getBucket(self::DEFAULT_BUCKET)->add($itemComponent->systemId, $item);
 		return $item;
 	}
 
-	public function registerMultiple($itemComponentSet) {
+	public function registerMultiple($owner, $itemComponentSet) {
 		$results = [true];
 		foreach ($itemComponentSet as $itemComponent) {
-			$results[] = $this->register($itemComponent);
+			$results[] = $this->register($parent, $itemComponent);
 		}
 		return min($results);
 	}

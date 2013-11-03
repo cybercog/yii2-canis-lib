@@ -34,6 +34,14 @@ class Item extends \infinite\base\Object {
 		$this->_object = $object;
 	}
 
+	public function setOwner($owner) {
+		$this->_owner = $owner;
+	}
+
+	public function getOwner() {
+		return $this->_owner;
+	}
+
 	public function getCollector() {
 		return $this->_collector;
 	}

@@ -6,16 +6,33 @@ use ArrayAccess;
 use ArrayIterator;
 use IteratorAggregate;
 
+use \infinite\base\exceptions\Exception;
+
 use \yii\base\Arrayable;
 
 class Component extends \infinite\base\Component  implements IteratorAggregate, ArrayAccess, Arrayable 
 {
 	const EVENT_AFTER_LOAD = 'afterLoad';
+	const EVENT_AFTER_INIT = 'afterInit';
 
 	protected $_collectors = [];
+	protected $_init_collectors = [];
 
 	public function init() {
+		Yii::$app->on(\yii\base\Application::EVENT_BEFORE_REQUEST, array($this, 'beforeRequest'));
 		parent::init();
+	}
+
+	public function beforeRequest($event) {
+		if (empty($this->_init_collectors)) { return; }
+		Yii::beginProfile(__CLASS__.'::'.__FUNCTION__);
+		foreach ($this->_init_collectors as $id => $collector) {
+			$this->internalRegisterCollector($id, $collector);
+		}
+		$this->_init_collectors = null;
+		$this->trigger(self::EVENT_AFTER_LOAD);
+		$this->trigger(self::EVENT_AFTER_INIT);
+		Yii::endProfile(__CLASS__.'::'.__FUNCTION__);
 	}
 
 	public function areReady() {
@@ -43,20 +60,15 @@ class Component extends \infinite\base\Component  implements IteratorAggregate, 
 	}
 
 	public function setCollectors($collectors) {
-		Yii::beginProfile(__CLASS__.'::'.__FUNCTION__);
-		foreach ($collectors as $id => $collector) {
-			$this->internalRegisterCollector($id, $collector);
-		}
-		
-		Yii::beginProfile(__CLASS__.'::'.__FUNCTION__.':afterLoad');
-		$this->trigger(self::EVENT_AFTER_LOAD);
-		Yii::endProfile(__CLASS__.'::'.__FUNCTION__.':afterLoad');
-
-		Yii::endProfile(__CLASS__.'::'.__FUNCTION__);
+		$this->_init_collectors = $collectors;
 	}
 
 	public function onAfterLoad($action) {
 		return $this->on(self::EVENT_AFTER_LOAD, $action);
+	}
+
+	public function onAfterInit($action) {
+		return $this->on(self::EVENT_AFTER_INIT, $action);
 	}
 
 	protected function internalRegisterCollector($id, $collector) {
