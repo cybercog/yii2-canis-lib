@@ -1,7 +1,6 @@
 <?php
 namespace infinite\base\collector;
 
-use \infinite\base\Component;
 use \infinite\base\exceptions\Exception;
 
 class Item extends \infinite\base\Object {

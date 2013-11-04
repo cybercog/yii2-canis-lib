@@ -70,6 +70,18 @@ class ActiveRecord extends \yii\db\ActiveRecord
         return self::$_cache[$model][$key];
     }
 
+
+
+    public static function tableExists()
+    {
+        try {
+            self::getTableSchema();
+        } catch (\Exception $e) {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Creates an [[ActiveQuery]] instance.
      * This method is called by [[find()]], [[findBySql()]] and [[count()]] to start a SELECT query.
