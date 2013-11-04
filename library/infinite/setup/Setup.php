@@ -13,6 +13,8 @@ use Task;
 use Migrator;
 use Yii;
 
+defined('STDOUT') OR define('STDOUT', fopen('php://stdout', 'w'));
+
 class Setup extends \infinite\base\Object
 {
     public static $_instance;
