@@ -111,13 +111,13 @@ class Group extends \infinite\db\ActiveRecord
 	 * @param unknown $id
 	 * @return unknown
 	 */
-	static function getById($id, $disableAcl = false) {
+	static function getById($id, $disableAccess = false) {
 		if (isset(self::$_cache['id'][$id])) {
 			return self::$_cache['id'][$id];
 		}
 		$group = self::model();
-		if ($disableAcl) {
-			$group->disableAcl();
+		if ($disableAccess) {
+			$group->disableAccess();
 		}
 		$group = $group->findByPk($id);
 		if (empty($group)) { return false; }
@@ -140,8 +140,8 @@ class Group extends \infinite\db\ActiveRecord
 			return self::$_cache['system'][$id];
 		}
 		$group = $groupQuery = self::find()->where(['system' => $id]);
-		if ($disableAcl) {
-			$group->disableAcl();
+		if ($disableAcl AND $group->hasBehavior("Access")) {
+			$group->disableAccess();
 		}
 		$group = $group->one();
 		if (!$group OR $group->system !== $id) {

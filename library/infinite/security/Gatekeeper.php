@@ -367,7 +367,7 @@ class Gatekeeper extends \infinite\base\Component
     			$this->_primaryAro = Yii::$app->user->identity;
     		} elseif (Yii::$app instanceof \yii\console\Application) {
     			$userClass = $this->userClass;
-    			$systemUser = $userClass::find()->disableAcl()->where(['username' => 'system'])->one();
+    			$systemUser = $userClass::find()->disableAccess()->where(['username' => 'system'])->one();
     			if ($systemUser) {
     				$this->_primaryAro = $systemUser;
     			}
@@ -410,7 +410,7 @@ class Gatekeeper extends \infinite\base\Component
 				$accessingObject = $this->primaryAro;
 			}
 	    	$groups = array();
-	    	$parents = $accessingObject->parents($this->groupClass, array(), array('disableAcl' => 1));
+	    	$parents = $accessingObject->parents($this->groupClass, array(), array('disableAccess' => 1));
 			if (!empty($parents)) {
 				$children = ArrayHelper::getColumn($parents, 'primaryKey');
 				if ($flatten) {

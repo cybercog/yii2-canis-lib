@@ -17,6 +17,7 @@ class Component extends \infinite\base\Component  implements IteratorAggregate, 
 
 	protected $_collectors = [];
 	protected $_init_collectors = [];
+	protected $_loaded = false;
 
 	public function init() {
 		Yii::$app->on(\yii\base\Application::EVENT_BEFORE_REQUEST, array($this, 'beforeRequest'));
@@ -26,24 +27,33 @@ class Component extends \infinite\base\Component  implements IteratorAggregate, 
 	public function beforeRequest($event) {
 		if (empty($this->_init_collectors)) { return; }
 		// load
-		Yii::beginProfile(__CLASS__.'::'.__FUNCTION__);
-		foreach ($this->_init_collectors as $id => $collector) {
-			$this->internalRegisterCollector($id, $collector);
+		$this->load();
+	}
+
+	public function load() {
+		if (!$this->_loaded) {
+			Yii::beginProfile(__CLASS__.'::'.__FUNCTION__);
+			foreach ($this->_init_collectors as $id => $collector) {
+				$this->internalRegisterCollector($id, $collector);
+			}
+			$this->_init_collectors = null;
+
+			// initialize
+			$this->trigger(self::EVENT_AFTER_LOAD);
+
+			// final round
+			$this->trigger(self::EVENT_AFTER_INIT);
+			Yii::endProfile(__CLASS__.'::'.__FUNCTION__);
+			$this->_loaded = true;
 		}
-		$this->_init_collectors = null;
-
-		// initialize
-		$this->trigger(self::EVENT_AFTER_LOAD);
-
-		// final round
-		$this->trigger(self::EVENT_AFTER_INIT);
-		Yii::endProfile(__CLASS__.'::'.__FUNCTION__);
 	}
 
 	public function areReady() {
+		$this->load();
 		Yii::beginProfile(__CLASS__.'::'.__FUNCTION__);
 		foreach ($this->_collectors as $collector) {
 			if (!$collector->isReady()) {
+				Yii::endProfile(__CLASS__.'::'.__FUNCTION__);
 				return false;
 			}
 		}

@@ -12,6 +12,7 @@ use \yii\base\ModelEvent;
 
 class ActiveQuery extends \yii\db\ActiveQuery
 {
+    use \infinite\base\ComponentTrait;
     /**
      * @event Event an event that is triggered before a query
      */

@@ -28,7 +28,7 @@ class Item extends \infinite\base\Object
 	
 	public function getModel() {
 		if (is_null($this->_model)) {
-			$this->_model = Yii::$app->roleEngine->getRoleModel($this->system_id);
+			$this->_model = Yii::$app->collectors['roles']->getOne($this->system_id);
 			if (empty($this->_model) AND !empty($this->name)) {
 				$modelName = Engine::MODEL;
 				$this->_model = new $modelName;

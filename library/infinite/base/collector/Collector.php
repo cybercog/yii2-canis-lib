@@ -16,6 +16,15 @@ abstract class Collector extends \infinite\base\Component
 	protected $_buckets = [];
 	protected $_distributedFields = [];
 
+	public function init()
+	{
+		parent::init();
+		Yii::$app->collectors->on(Component::EVENT_AFTER_LOAD, array($this, 'beforeRequest'));
+	}
+
+	public function beforeRequest(Event $event) {
+		return true;
+	}
 
 	public function isReady() {
 		return true;	
@@ -34,17 +43,29 @@ abstract class Collector extends \infinite\base\Component
 	}
 
 	public function distribute($field) {
-		if (isset($this->_distributedFields[$field])) {
-			foreach ($this->getBucket(self::DEFAULT_BUCKET)->toArray() as $item) {
+		if (strpos($field, ':')) {
+			$field = strstr($field, ':', true);
+		}
+		if (!isset($this->_distributedFields[$field])) {
+			foreach ($this->bucket as $item) {
 				if (!isset($item->{$field})) { continue; }
-				$this->getBucket($field)->add($item->{$field}, $item);
+				if (is_array($item->{$field})) {
+					foreach ($item->{$field} as $itemField) {
+						$this->getBucket($field .':'. $itemField)->add($item->systemId, $item);
+					}
+				} else {
+					$this->getBucket($field)->add($item->{$field}, $item);
+				}
 			}
 			$this->_distributedFields[$field] = true;
 		}
 		return true;
 	}
 
-	protected function getBucket($name, $distribute = true) {
+	protected function getBucket($name = null, $distribute = true) {
+		if (is_null($name)) {
+			$name = self::DEFAULT_BUCKET;
+		}
 		if (!isset($this->_buckets[$name])) {
 			$this->_buckets[$name] = new Bucket($this);
 			if ($distribute && $name !== self::DEFAULT_BUCKET) {
@@ -54,17 +75,18 @@ abstract class Collector extends \infinite\base\Component
 		return $this->_buckets[$name];
 	}
 
-	public function all($bucket = null) {
-		if (is_null($bucket)) {
-			$bucket = self::DEFAULT_BUCKET;
-		}
+	public function bucket($name = null) {
+		return $this->getBucket($name);
+	}
+
+	public function getAll($bucket = null) {
 		$bucket = $this->getBucket($bucket);
 		return $bucket->toArray();
 	}
 
-	public function get($item, $bucket = null) {
-		if (is_null($bucket)) {
-			$bucket = self::DEFAULT_BUCKET;
+	public function getOne($item, $bucket = null) {
+		if (is_null($item)) {
+			throw new Exception("boom");
 		}
 		$bucket = $this->getBucket($bucket);
 		if (!isset($bucket[$item])) {
@@ -75,24 +97,45 @@ abstract class Collector extends \infinite\base\Component
 
 	protected function _createBlankItem($itemSystemId) {
 		$collectorItemClass = $this->collectorItemClass;
-		$item = new $collectorItemClass($this, $itemSystemId);
-		$this->getBucket(self::DEFAULT_BUCKET)->add($itemSystemId, $item);
+
+		$itemComponent = [];
+		$itemComponent['class'] = $collectorItemClass;
+		$itemComponent['collector'] = $this;
+		$itemComponent['systemId'] = $itemSystemId;
+		$item = Yii::createObject($itemComponent);
+		$this->bucket->add($item->systemId, $item);
 		return $item;
 	}
 
-	public function register($owner, $itemComponent) {
+	public function register($owner, $itemComponent, $systemId = null) {
 		$itemComponent = $this->prepareComponent($itemComponent);
 		$collectorItemClass = $this->collectorItemClass;
-		$item = new $collectorItemClass($this, $itemComponent->systemId, $itemComponent);
-		$item->owner = $owner;
-		$this->getBucket(self::DEFAULT_BUCKET)->add($itemComponent->systemId, $item);
+		if (is_array($itemComponent) && !is_null($systemId)) {
+			$itemComponent['systemId'] = $systemId;
+		}
+
+		if (is_object($itemComponent)) {
+			$itemComponent = ['object' => $itemComponent];
+		}
+
+		$itemComponent['class'] = $collectorItemClass;
+		$itemComponent['collector'] = $this;
+		$itemComponent['owner'] = $owner;
+
+		$item = Yii::createObject($itemComponent);
+		Yii::trace(get_called_class() . ": Registering {$item->systemId}");
+		$this->bucket->add($item->systemId, $item);
 		return $item;
 	}
 
 	public function registerMultiple($owner, $itemComponentSet) {
 		$results = [true];
-		foreach ($itemComponentSet as $itemComponent) {
-			$results[] = $this->register($parent, $itemComponent);
+		foreach ($itemComponentSet as $itemSystemId => $itemComponent) {
+			$systemId = null;
+			if (!is_numeric($itemSystemId)) {
+				$systemId = $itemSystemId;
+			}
+			$results[] = $this->register($owner, $itemComponent, $systemId);
 		}
 		return min($results);
 	}
