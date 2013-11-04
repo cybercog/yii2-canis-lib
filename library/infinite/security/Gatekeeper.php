@@ -9,6 +9,8 @@
 
 namespace infinite\security;
 
+use Yii;
+
 use \infinite\base\exceptions\Exception;
 use \infinite\helpers\ArrayHelper;
 
@@ -216,12 +218,11 @@ class Gatekeeper extends \infinite\base\Component
 			$innerAclQuery->from($aclClass::tableName() .' t');
 			$this->generateAclCheckCriteria($innerAclQuery, null, $accessingObject, $model);
 			$innerAclCommand = $innerAclQuery->createCommand();
-
 			$outerAclQuery = new Query;
-			$outerAclQuery->from('('. $innerAclCommand->sql .') `outer`');
+			$outerAclQuery->from(['('. $innerAclCommand->sql .') `outer`']);
 			$outerAclQuery->params($innerAclQuery->params);
 			$outerAclQuery->select('outer.aca_id, outer.access');
-			$outerAclQuery->group('(`outer`.aca_id)');
+			$outerAclQuery->groupBy('(`outer`.aca_id)');
 			$raw = $outerAclQuery->all();
 			$nullValue = null;
 			$discoverParents = array();
