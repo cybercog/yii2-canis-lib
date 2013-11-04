@@ -57,4 +57,31 @@ class Registry extends \infinite\db\ActiveRecord
 		];
 	}
 
+	/**
+	 *
+	 *
+	 * @param unknown $id
+	 * @return unknown
+	 */
+	public static function getObject($id, $disableAccess = false) {
+		$requestKey = md5(serialize(array(__FUNCTION__, func_get_args())));
+		$classKey = self::className();
+		if (!isset(self::$_cache[$classKey])) {
+			self::$_cache[$classKey] = [];
+		}
+		if (!isset(self::$_cache[$classKey][$requestKey])) {
+			self::$_cache[$classKey][$requestKey] = false;
+			$registry = self::get($id);
+			if (empty($registry)) { return false; }
+			$model = $registry->object_model;
+			$object = $model::find();
+			if ($disableAccess && $object->hasBehavior('Access')) {
+				$object->disableAccess();
+			}
+			$object = $object->where(['id' => $registry->primaryKey])->one();
+			self::$_cache[$classKey][$requestKey] = $object;
+		}
+		return self::$_cache[$classKey][$requestKey];
+	}
+
 }

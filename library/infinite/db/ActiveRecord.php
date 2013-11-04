@@ -34,6 +34,10 @@ class ActiveRecord extends \yii\db\ActiveRecord
         return true;
     }
 
+    public static function get($id, $access = true) {
+        return self::findOne(['id' => $id], $access);
+    }
+
     public static function findOne($where, $access = true) {
         return self::_findCache('one', $where, $access);
     }
@@ -59,6 +63,8 @@ class ActiveRecord extends \yii\db\ActiveRecord
             $r = $r->$type();
             if ($r) {
                 self::$_cache[$model][$key] = $r;
+            } else {
+                return false;
             }
         }
         return self::$_cache[$model][$key];

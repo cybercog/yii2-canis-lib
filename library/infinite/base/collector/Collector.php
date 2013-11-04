@@ -124,7 +124,14 @@ abstract class Collector extends \infinite\base\Component
 
 		$item = Yii::createObject($itemComponent);
 		Yii::trace(get_called_class() . ": Registering {$item->systemId}");
-		$this->bucket->add($item->systemId, $item);
+		if (isset($this->bucket[$item->systemId])) {
+			if (isset($itemComponent['object'])) {
+				$this->bucket[$item->systemId]->object = $itemComponent['object'];
+			}
+			$item = $this->bucket[$item->systemId];
+		} else {
+			$this->bucket->add($item->systemId, $item);
+		}
 		return $item;
 	}
 

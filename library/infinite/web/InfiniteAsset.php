@@ -16,7 +16,7 @@ use yii\web\AssetBundle;
 class InfiniteAsset extends AssetBundle
 {
     public $sourcePath = '@infinite/assets';
-    public $css = ['css/site.css', 'css/infinite.bootstrap.css'];
+    public $css = ['css/infinite.bootstrap.css'];
     public $js = ['libraries/jquery/jquery.js', 'libraries/jquery-ui/ui/jquery-ui.js', 'libraries/underscore/underscore-min.js', 'js/infinite.bootstrap.js'];
     public $depends = ['yii\bootstrap\BootstrapAsset'];
 }
