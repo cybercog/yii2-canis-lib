@@ -480,17 +480,17 @@ jQuery.fn.usableObjectHeight = function(){
     };
 
     
-    $.extend($.ui.dialog.prototype.options, {
-        focus: function(event, ui) {
-            var dialog = $(this).parents(".ui-dialog:first").first();
-            var dialogZindex = parseInt(dialog.css("zIndex"), 10);
-            $(this).find("select[multiple='multiple']").each(function() {
-                if (!$(this).data('multiselect')) {
-                    return;
-                }
-                var menu = $(this).multiselect('widget');
-                menu.css('zIndex', dialogZindex + 1);
-            });
-        }
-    });
+    // $.extend($.ui.dialog.prototype.options, {
+    //     focus: function(event, ui) {
+    //         var dialog = $(this).parents(".ui-dialog:first").first();
+    //         var dialogZindex = parseInt(dialog.css("zIndex"), 10);
+    //         $(this).find("select[multiple='multiple']").each(function() {
+    //             if (!$(this).data('multiselect')) {
+    //                 return;
+    //             }
+    //             var menu = $(this).multiselect('widget');
+    //             menu.css('zIndex', dialogZindex + 1);
+    //         });
+    //     }
+    // });
 });

@@ -17,6 +17,6 @@ class InfiniteAsset extends AssetBundle
 {
     public $sourcePath = '@infinite/assets';
     public $css = ['css/infinite.bootstrap.css'];
-    public $js = ['libraries/jquery/jquery.js', 'libraries/jquery-ui/ui/jquery-ui.js', 'libraries/underscore/underscore-min.js', 'js/infinite.bootstrap.js'];
-    public $depends = ['yii\bootstrap\BootstrapAsset'];
+    public $js = ['js/infinite.bootstrap.js'];
+    public $depends = ['yii\bootstrap\BootstrapAsset', 'yii\web\JqueryAsset', 'yii\jui\CoreAsset', 'infinite\web\UnderscoreAsset'];
 }
