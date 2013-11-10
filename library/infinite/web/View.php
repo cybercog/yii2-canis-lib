@@ -7,9 +7,9 @@
  */
 
 
-namespace infinite\base;
+namespace infinite\web;
 
-class View extends \yii\base\View
+class View extends \yii\web\View
 {
     public function registerJsFile($url, $options = [], $key = null)
     {
