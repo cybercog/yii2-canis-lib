@@ -13,6 +13,8 @@ abstract class Collector extends \infinite\base\Component
 	const DEFAULT_BUCKET = '__default';
 	const EVENT_AFTER_COLLECTOR_INIT = 'afterCollectorInit';
 	
+	public $id;
+	
 	protected $_buckets = [];
 	protected $_distributedFields = [];
 

@@ -9,6 +9,8 @@
 
 namespace infinite\base\language;
 
+
+
 class Noun extends \infinite\base\language\Word
 {
 	protected $_singular;
@@ -49,6 +51,9 @@ class Noun extends \infinite\base\language\Word
 		return $this->_singular;
 	}
 
+	public function getUpperSingular() {
+		return $this->getSingular(true);
+	}
 
 	/**
 	 *
@@ -60,6 +65,10 @@ class Noun extends \infinite\base\language\Word
 		return $this->prepare($this->_singular, $upper);
 	}
 
+
+	public function getUpperPlural() {
+		return $this->getPlural(true);
+	}
 
 	/**
 	 *
