@@ -40,10 +40,10 @@ class Aca extends \infinite\db\ActiveRecord
 	public function rules()
 	{
 		return [
-			['name', 'required'],
-			['created, modified', 'safe'],
-			['id', 'string', 'max' => 36],
-			['name', 'string', 'max' => 100]
+			[['name'], 'required'],
+			[['created', 'modified'], 'safe'],
+			[['id'], 'string', 'max' => 36],
+			[['name'], 'string', 'max' => 100]
 		];
 	}
 

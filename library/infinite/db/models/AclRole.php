@@ -33,9 +33,9 @@ class AclRole extends \infinite\db\ActiveRecord
 	public function rules()
 	{
 		return [
-			['accessing_object_id, controlled_object_id, role_id', 'required'],
-			['created, modified', 'safe'],
-			['accessing_object_id, controlled_object_id, role_id', 'string', 'max' => 36]
+			[['accessing_object_id', 'controlled_object_id', 'role_id'], 'required'],
+			[['created', 'modified'], 'safe'],
+			[['accessing_object_id', 'controlled_object_id', 'role_id'], 'string', 'max' => 36]
 		];
 	}
 

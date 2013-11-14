@@ -46,12 +46,12 @@ class Group extends \infinite\db\ActiveRecord
 	public function rules()
 	{
 		return [
-			['name', 'required'],
-			['level', 'integer'],
-			['created, modified', 'safe'],
-			['id', 'string', 'max' => 36],
-			['name', 'string', 'max' => 100],
-			['system', 'string', 'max' => 20]
+			[['name'], 'required'],
+			[['level'], 'integer'],
+			[['created', 'modified'], 'safe'],
+			[['id'], 'string', 'max' => 36],
+			[['name'], 'string', 'max' => 100],
+			[['system'], 'string', 'max' => 20]
 		];
 	}
 

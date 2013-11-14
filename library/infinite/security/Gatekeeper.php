@@ -129,7 +129,7 @@ class Gatekeeper extends \infinite\base\Component
 		$aroIn = array();
 
 		// I'm not sure about this, but I think we want it to inherit.... NEVERMIND
-		$aclOrder['IF('.$alias.'.access IS NULL, 0, 1)'] = Query::SORT_DESC;
+		$aclOrder['IF('.$alias.'.access IS NULL, 0, 1)'] = SORT_DESC;
 
 		// if ($allowInherit) {
 		// 	$aclOnConditions[] = $alias.'.access IN (0, 1)';
@@ -137,7 +137,7 @@ class Gatekeeper extends \infinite\base\Component
 		// 	$aclOnConditions[] = $alias.'.access = 1';
 		// }
 
-		$aclOrder['IF('.$alias.'.accessing_object_id IS NULL, 0, 1)'] = Query::SORT_DESC;
+		$aclOrder['IF('.$alias.'.accessing_object_id IS NULL, 0, 1)'] = SORT_DESC;
 		foreach ($aros as $aro) {
 			if (is_array($aro)) {
 				$subInIf = array();
@@ -147,11 +147,11 @@ class Gatekeeper extends \infinite\base\Component
 					$subInIf[] = ':aro_'.$aroN;
 					$aroN++;
 				}
-				$aclOrder['IF('.$alias.'.accessing_object_id IN ('.implode(', ', $subInIf).'), 1, 0)'] = Query::SORT_DESC;
+				$aclOrder['IF('.$alias.'.accessing_object_id IN ('.implode(', ', $subInIf).'), 1, 0)'] = SORT_DESC;
 			} else {
 				$query->params[':aro_'.$aroN] = $aro;
 				$aroIn[] = ':aro_'.$aroN;
-				$aclOrder['IF('.$alias.'.accessing_object_id = :aro_'.$aroN.', 1, 0)'] = Query::SORT_DESC;
+				$aclOrder['IF('.$alias.'.accessing_object_id = :aro_'.$aroN.', 1, 0)'] = SORT_DESC;
 				$aroN++;
 			}
 		}
@@ -164,8 +164,8 @@ class Gatekeeper extends \infinite\base\Component
 
 
 
-		$aclOrder['IF('.$alias.'.aca_id IS NULL, 0, 1)'] = Query::SORT_DESC;
-		$aclOrder['IF('.$alias.'.controlled_object_id IS NULL, 0, 1)'] = Query::SORT_DESC;
+		$aclOrder['IF('.$alias.'.aca_id IS NULL, 0, 1)'] = SORT_DESC;
+		$aclOrder['IF('.$alias.'.controlled_object_id IS NULL, 0, 1)'] = SORT_DESC;
 		
 		$innerOnConditions = array();
 
@@ -174,14 +174,14 @@ class Gatekeeper extends \infinite\base\Component
 			$query->params[':controlled_object_id'] = $controlledObject->id;
 			$innerOnConditions[] = $alias.'.controlled_object_id=:controlled_object_id';
 			$innerOnConditions[] = $alias.'.controlled_object_id IS NULL AND '.$alias.'.object_model=:object_model';
-			$aclOrder['IF('.$alias.'.object_model IS NULL, 0, 1)'] =  Query::SORT_DESC;
+			$aclOrder['IF('.$alias.'.object_model IS NULL, 0, 1)'] =  SORT_DESC;
 		} elseif (!is_null($model)) {
 			$query->params[':object_model'] = $model;
-			$aclOrder['IF('.$alias.'.object_model IS NULL, 0, 1)'] =  Query::SORT_DESC;
+			$aclOrder['IF('.$alias.'.object_model IS NULL, 0, 1)'] =  SORT_DESC;
 			$innerOnConditions[] = $alias.'.controlled_object_id IS NULL AND '.$alias.'.object_model=:object_model';
 		}elseif(is_null($controlledObject)) {
 			$query->params[':object_model'] = $model;
-			$aclOrder['IF('.$alias.'.object_model IS NULL, 0, 1)'] =  Query::SORT_DESC;
+			$aclOrder['IF('.$alias.'.object_model IS NULL, 0, 1)'] =  SORT_DESC;
 			$innerOnConditions[] = $alias.'.controlled_object_id IS NULL AND '.$alias.'.object_model IS NULL';
 		} else {
 			$cos = array();

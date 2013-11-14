@@ -35,12 +35,12 @@ class Acl extends \infinite\db\ActiveRecord
 	public function rules()
 	{
 		return [
-			['acl_role_id', 'integer'],
-			['accessing_object_id', 'required'],
-			['access', 'integer'],
-			['created, modified', 'safe'],
-			['accessing_object_id, controlled_object_id, aca_id', 'string', 'max' => 36],
-			['object_model', 'string', 'max' => 100]
+			[['acl_role_id'], 'integer'],
+			[['accessing_object_id'], 'required'],
+			[['access'], 'integer'],
+			[['created', 'modified'], 'safe'],
+			[['accessing_object_id', 'controlled_object_id', 'aca_id'], 'string', 'max' => 36],
+			[['object_model'], 'string', 'max' => 100]
 		];
 	}
 

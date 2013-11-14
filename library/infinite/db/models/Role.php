@@ -43,10 +43,10 @@ class Role extends \infinite\db\ActiveRecord
 	public function rules()
 	{
 		return [
-			['system_version', 'number'],
-			['created, modified', 'safe'],
-			['id', 'string', 'max' => 36],
-			['name, system_id', 'string', 'max' => 100]
+			[['system_version'], 'number'],
+			[['created', 'modified'], 'safe'],
+			[['id'], 'string', 'max' => 36],
+			[['name', 'system_id'], 'string', 'max' => 100]
 		];
 	}
 

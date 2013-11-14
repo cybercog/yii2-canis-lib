@@ -38,10 +38,10 @@ class Registry extends \infinite\db\ActiveRecord
 	public function rules()
 	{
 		return [
-			['id', 'required'],
-			['created', 'safe'],
-			['id', 'string', 'max' => 36],
-			['object_model', 'string', 'max' => 100]
+			[['id'], 'required'],
+			[['created'], 'safe'],
+			[['id'], 'string', 'max' => 36],
+			[['object_model'], 'string', 'max' => 100]
 		];
 	}
 
