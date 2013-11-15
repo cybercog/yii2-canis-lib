@@ -1,7 +1,7 @@
 <?php
 namespace infinite\web;
 
-class FontAwesomeAsset extends \yii\web\AssetBundle
+class FontAwesomeAsset extends AssetBundle
 {
 	public $sourcePath = '@vendor/fortawesome/font-awesome';
 	public $css = [
