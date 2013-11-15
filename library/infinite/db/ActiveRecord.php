@@ -9,11 +9,16 @@
 
 namespace infinite\db;
 
+use Yii;
+use ReflectionClass;
+
 use yii\base\ModelEvent;
 use infinite\db\ActiveQuery;
 
 class ActiveRecord extends \yii\db\ActiveRecord
 {
+    use \infinite\base\ObjectTrait;
+
     static public $isAco = true;
     static protected $_cache = [];
 
@@ -24,6 +29,42 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
 
     public $descriptorField;
+
+    public static function parseModelAlias($alias) {
+        if (strncmp($alias, ':', 1)) {
+            // not an alias
+            return $alias;
+        }
+        $pos = strpos($alias, '\\');
+        $root = $pos === false ? $alias : substr($alias, 0, $pos);
+        if ($root === ':app') {
+            return 'app\models' . substr($alias, $pos);
+        } elseif (isset(Yii::$app->modelAliases[$root])) {
+            return Yii::$app->modelAliases[$root] . substr($alias, $pos);
+        }
+        return $alias;
+    }
+    
+    public function getModelAlias() {
+        return self::modelAlias();
+    }
+
+    public static function modelAlias($className = null) {
+        if (is_null($className)) {
+            $className = get_called_class();
+        }
+         if (!strncmp($className, ':', 1)) {
+            // already an alias
+            return $className;
+        }
+        $class = new ReflectionClass($className);
+        if ($class->getNamespaceName() === 'app\models') {
+            return ':app\\' . $class->getShortName();
+        } elseif (($alias = array_search($class->getNamespaceName(), Yii::$app->modelAliases)) !== false) {
+            return $alias .'\\' . $class->getShortName();
+        }
+        return $className;
+    }
 
     public static function clearCache($model = null) {
         if (is_null($model)) {

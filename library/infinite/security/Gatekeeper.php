@@ -13,6 +13,7 @@ use Yii;
 
 use \infinite\base\exceptions\Exception;
 use \infinite\helpers\ArrayHelper;
+use \infinite\db\ActiveRecord;
 
 use \yii\db\Query;
 use \yii\db\Expression;
@@ -128,6 +129,10 @@ class Gatekeeper extends \infinite\base\Component
 		$aroN = 0;
 		$aroIn = array();
 
+		if (!is_null($model)) {
+			$model = ActiveRecord::modelAlias($model);
+		}
+
 		// I'm not sure about this, but I think we want it to inherit.... NEVERMIND
 		$aclOrder['IF('.$alias.'.access IS NULL, 0, 1)'] = SORT_DESC;
 
@@ -170,7 +175,7 @@ class Gatekeeper extends \infinite\base\Component
 		$innerOnConditions = array();
 
 		if (is_object($controlledObject)) {
-			$query->params[':object_model'] = get_class($controlledObject);
+			$query->params[':object_model'] = $controlledObject->modelAlias;
 			$query->params[':controlled_object_id'] = $controlledObject->id;
 			$innerOnConditions[] = $alias.'.controlled_object_id=:controlled_object_id';
 			$innerOnConditions[] = $alias.'.controlled_object_id IS NULL AND '.$alias.'.object_model=:object_model';
@@ -208,6 +213,10 @@ class Gatekeeper extends \infinite\base\Component
 
 
 	public function getGeneralAccess($model, $accessingObject = null) {
+		if (!is_null($model)) {
+			$model = ActiveRecord::modelAlias($model);
+		}
+
 		$accessKey = md5(serialize(array(__FUNCTION__, $model, $accessingObject)));
 		if (!array_key_exists($accessKey, $this->_objectCanCache)) {
 			$this->_objectCanCache[$accessKey] = array();
@@ -533,7 +542,7 @@ class Gatekeeper extends \infinite\base\Component
 			}
 			return $this->assignRole(null, $controlledObject, $accessingObject);
 		} else {
-			return $this->allow(null, $controlledObject, $accessingObject, get_class($controlledObject));
+			return $this->allow(null, $controlledObject, $accessingObject, $controlledObject->modelAlias);
 		}
 		
 	}
@@ -560,6 +569,10 @@ class Gatekeeper extends \infinite\base\Component
 
 
 	public function setAccess($action, $access, $controlledObject = null, $accessingObject = null, $controlledObjectModel = null, $aclRole = null) {
+		if (!is_null($controlledObjectModel)) {
+			$controlledObjectModel = ActiveRecord::modelAlias($controlledObjectModel);
+		}
+
 		$fields = array();
 		if (is_array($action)) {
 			//$action = implode('.', $action);

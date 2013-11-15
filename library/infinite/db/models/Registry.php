@@ -73,7 +73,7 @@ class Registry extends \infinite\db\ActiveRecord
 			self::$_cache[$classKey][$requestKey] = false;
 			$registry = self::get($id);
 			if (empty($registry)) { return false; }
-			$model = $registry->object_model;
+			$model = self::parseModelAlias($registry->object_model);
 			$object = $model::find();
 			if ($disableAccess && $object->hasBehavior('Access')) {
 				$object->disableAccess();

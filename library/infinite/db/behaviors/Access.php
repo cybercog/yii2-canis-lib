@@ -37,7 +37,6 @@ class Access extends \infinite\db\behaviors\ActiveRecord
 
     public function getIsAclEnabled() {
         if (!isset(Yii::$app->gk)) { return false; }
-        $ownerModel = get_class($this->owner);
         return $this->_aclEnabled AND $this->owner->isAco;
     }
 
@@ -79,7 +78,7 @@ class Access extends \infinite\db\behaviors\ActiveRecord
 
         $acaOriginal = $aca;
         $alias = 'acl';
-        $aclModel = RGatekeeper::ACL_MODEL;
+        $aclModel = Gatekeeper::ACL_MODEL;
         $aclModel = $aclModel::tempModel();
         // get aro's 
         $aros = Yii::$app->gk->aros;
@@ -132,7 +131,7 @@ class Access extends \infinite\db\behaviors\ActiveRecord
                 $aclConditions .= ' OR '.$alias.'.access = 0';
             }
         }
-        $criteria->params[':object_model'] = get_class($this->owner);
+        $criteria->params[':object_model'] = $this->owner->modelAlias;
         if ($acaOriginal) {
             $criteria->params[':aca_id'] = $aca->primaryKey;
             $aclOnConditions[] = ''.$alias.'.aca_id=:aca_id OR '.$alias.'.aca_id IS NULL';

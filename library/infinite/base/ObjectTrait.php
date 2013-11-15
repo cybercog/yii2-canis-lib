@@ -1,19 +1,27 @@
 <?php
 namespace infinite\base;
 
+use Yii;
+use ReflectionClass;
+
 trait ObjectTrait
 {
 	public static function classNamespace()
 	{
-		$baseClass = explode('\\', self::className());
-		array_pop($baseClass);
-		return implode('\\', $baseClass);
+		$reflector = new ReflectionClass(get_called_class());
+		return $reflector->getNamespaceName();
+	}
+
+	public static function classFilePath()
+	{
+		$reflector = new ReflectionClass(get_called_class());
+		return $reflector->getFileName();
 	}
 
 	public static function baseClassName()
 	{
-		$baseClass = explode('\\', self::className());
-		return array_pop($baseClass);
+		$reflector = new ReflectionClass(get_called_class());
+		return $reflector->getShortName();
 	}
 
 	/**
