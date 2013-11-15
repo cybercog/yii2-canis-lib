@@ -1,0 +1,48 @@
+
+/* Panels */
+
+.panel {
+}
+
+.panel .panel-heading {
+	height: 38px;
+    line-height: 16px;
+    margin-bottom: -1px;
+    padding: 10px;
+}
+
+.panel .panel-heading h2 {
+	float: left;
+    margin-top: 0;
+    font-size: 16px;
+    line-height: 16px;
+    font-weight: 300;
+}
+
+.panel-heading h2 i {
+    margin: 0 3px 0 4px;
+    opacity: 0.8;
+    float: left;
+}
+
+.panel-heading .break {
+    border-left: 1px solid rgba(0, 0, 0, 0.05);
+    margin: -12px 10px -10px;
+    padding: 12px 0 10px;
+}
+
+.panel-heading .nav {
+    margin: -10px -10px -10px 0px;
+}
+
+.panel-heading .nav-pills > li + li {
+	margin: 0;
+}
+
+.panel-heading .nav > li > a {
+	padding: 10px 5px;
+}
+
+.panel-heading .nav .dropdown b.caret {
+	display: none;
+}

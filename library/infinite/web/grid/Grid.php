@@ -22,6 +22,9 @@ class Grid extends \infinite\base\Object {
 	public function addCells($items) {
 		while (!empty($items)) {
 			$this->currentRow->addCells($items);
+			if (!empty($items)) {
+				$this->_currentRow = null;
+			}
 		}
 	}
 
