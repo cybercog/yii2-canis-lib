@@ -240,7 +240,7 @@ class Gatekeeper extends \infinite\base\Component
 				if (is_null($r['aca_id']) AND is_null($nullValue)) {
 					$nullValue = $r['access'];
 					if (empty($this->_objectCanCache[$accessKey])) {
-						foreach ($acaClass::find()->all() as $aca) {
+						foreach ($acaClass::findAll() as $aca) {
 							$this->_objectCanCache[$accessKey][$aca->id] = in_array($r['access'], array('0', '1'));
 						}
 					}
@@ -317,7 +317,7 @@ class Gatekeeper extends \infinite\base\Component
 			}
 			if (!is_null($nullValue)) {
 				$acaClass = $this->acaClass;
-				foreach ($acaClass::find()->all() as $aca) {
+				foreach ($acaClass::findAll() as $aca) {
 					if (!isset($this->_objectCanCache[$accessKey][$aca->primaryKey])) {
 						if ($nullValue === '0') {
 							$discoverParents[] = $aca->primaryKey;
@@ -457,7 +457,7 @@ class Gatekeeper extends \infinite\base\Component
 
 	protected function _getActions() {
 		$acaClass = $this->acaClass;
-		$actions = $acaClass::find()->all();
+		$actions = $acaClass::findAll();
 		$this->_actionsByName = ArrayHelper::index($actions, 'name');
 		$this->_actionsById = ArrayHelper::index($actions, 'id');
 		return true;

@@ -1,6 +1,8 @@
 <?php
 namespace infinite\web\grid;
 
+use Yii;
+
 class Grid extends \infinite\base\Object {
 	//public $fillPreviousRows = true;
 
@@ -20,12 +22,14 @@ class Grid extends \infinite\base\Object {
 	}
 
 	public function addCells($items) {
+		Yii::beginProfile(__CLASS__ . ':'. __FUNCTION__);
 		while (!empty($items)) {
 			$this->currentRow->addCells($items);
 			if (!empty($items)) {
 				$this->_currentRow = null;
 			}
 		}
+		Yii::endProfile(__CLASS__ . ':'. __FUNCTION__);
 	}
 
 	public function getCurrentRow() {

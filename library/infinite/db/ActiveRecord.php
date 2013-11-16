@@ -84,20 +84,25 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
 
-    public static function findAll($where, $access = true) {
+    public static function findAll($where = false, $access = true) {
         return self::_findCache('all', $where, $access);
     }
 
-    protected static function _findCache($type, $where, $access = true)
+    protected static function _findCache($type, $where = false, $access = true)
     {
-        ksort($where);
+        if (is_array($where)) {
+            ksort($where);
+        }
         $model = self::className();
         $key = md5(serialize(['type' => $type, 'where' => $where, 'access' => $access]));
         if (!isset(self::$_cache[$model])) {
             self::$_cache[$model] = [];
         }
         if (!isset(self::$_cache[$model][$key])) {
-            $r = self::find()->where($where);
+            $r = self::find();
+            if ($where) {
+                $r->where($where);
+            }
             if (!$access AND $r->hasBehavior('Access')) {
                 $r->disableAccess();
             }
