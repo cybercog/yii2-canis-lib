@@ -110,7 +110,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
             if ($r) {
                 self::$_cache[$model][$key] = $r;
             } else {
-                return false;
+                return [];
             }
         }
         return self::$_cache[$model][$key];
