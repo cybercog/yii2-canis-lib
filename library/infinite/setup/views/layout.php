@@ -155,7 +155,7 @@ if (isset($task)) {
     echo '</div>';
 }
 
-if ($this->isAvailable or !empty($forceContinue)) {
+if (empty($error) AND ($this->isAvailable or !empty($forceContinue))) {
     echo '<a class="visit-app" href="/">Go to Application &gt;&gt;</a>';
 }
 ?>
