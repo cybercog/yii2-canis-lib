@@ -7,7 +7,7 @@ use \infinite\base\View;
 
 class Html extends \yii\helpers\Html {
 	// public static function onLoadJsBlock($script, $key = null) {
-	// 	if (Yii::$app->request->isAjaxRequest) {
+	// 	if (Yii::$app->request->isAjax) {
 	// 		echo self::script($script);
 	// 	} else {
 	// 		self::registerJsBlock($script, View::POS_READY, $key);

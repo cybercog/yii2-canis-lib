@@ -96,7 +96,7 @@ class Blame extends \infinite\db\behaviors\ActiveRecord
         if (is_null(self::$_userID)) {
             self::$_userID = null;
             if (isset(Yii::$app->user) AND !empty(Yii::$app->user->id)) {
-                self::$_userID = Yii::app()->user->id;
+                self::$_userID = Yii::$app->user->id;
             }
         }
         return self::$_userID;

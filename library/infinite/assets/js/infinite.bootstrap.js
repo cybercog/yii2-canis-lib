@@ -5,7 +5,8 @@ $(document).on('click.infinite-api', '[data-handler="background"]', function (e)
     
 	var options = {
 		'data': {},
-		'type': 'GET'
+		'type': 'GET',
+		'dataType': 'json'
 	};
 	if ($this.hasClass('disabled')) {
 		e.stopPropagation();
