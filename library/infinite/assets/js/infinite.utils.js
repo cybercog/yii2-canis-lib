@@ -1,7 +1,3 @@
-if (_debug === 'undefined') {
-    var _debug = true;
-}
-
 function Timer(callback, delay) {
     var timerId, start, remaining = delay;
 
@@ -25,6 +21,10 @@ RegExp.quote = function(str) {
 String.prototype.stripTags = function() {
     return this.replace(/(<([^>]+)>)/ig,"");
 };
+
+String.prototype.capitalize = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+}
 
 if (typeof JSON === 'undefined') {
     JSON = {};
@@ -120,7 +120,7 @@ $.fn.serializeHash = function() {
 };
 
 jQuery.debug = function(message){
-    if(!_debug){ return true; }
+    if (!$("body").hasClass('development')) { return; }
     if(console !== undefined){
         console.debug(message);
     }

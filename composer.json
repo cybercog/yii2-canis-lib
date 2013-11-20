@@ -11,7 +11,9 @@
 		"yiisoft/yii2": "dev-master",
 		"yiisoft/yii2-composer": "dev-master",
 		"components/underscore": "1.5.*",
-		"fortawesome/font-awesome": "*"
+		"fortawesome/font-awesome": "*",
+		"fortawesome/font-awesome": "*",
+		"malsup/form": "3.*"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "3.7.*"
