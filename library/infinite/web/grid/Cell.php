@@ -4,21 +4,28 @@ namespace infinite\web\grid;
 use \infinite\helpers\Html;
 use \infinite\base\exceptions\Exception;
 
-use \yii\bootstrap\Widget;
 
 class Cell extends \infinite\base\Object {
-	public $maxColumns = 3;
-	public $content;
-
 	public $phoneSize = false;
 	public $tabletSize = 'auto';
 	public $mediumDesktopSize = 'auto'; // baseline
 	public $largeDesktopSize = false;
+	public $baseSize = 'mediumDesktop';
 
+	protected $_content;
 	protected $_id;
 	protected $_columns;
 	protected $_defaultColumns = 3;
+	protected $_maxColumns = 3;
 
+
+	public function getContent() {
+		return $this->_content;
+	}
+
+	public function setContent($content) {
+		$this->_content = $content;
+	}
 
 	public function render() {
 		echo $this->generate();
@@ -26,35 +33,67 @@ class Cell extends \infinite\base\Object {
 	
 	public function generate() {
 		$content = $this->content;
-		if ($content instanceof Widget) {
+		if ($content instanceof CellContentInterface) {
 			$content = $content->generate();
+		} else {
+			echo "holla";
+			var_dump($content);exit;
 		}
 		return Html::tag('div', $content, ['class' => $this->classes]);
 	}
+
+	public function generatePhoneSize() {
+		if ($this->baseSize === 'phoneSize') {
+			return $this->columns;
+		}
+		return 12;
+	}
+
+	public function generateTabletSize() {
+		if ($this->baseSize === 'tabletSize') {
+			return $this->columns;
+		}
+		return 6;
+	}
+
+	public function generateMediumDesktopSize() {
+		if ($this->baseSize === 'mediumDesktop') {
+			return $this->columns;
+		}
+		return 6;
+	}
+
+	public function generateLargeDesktopSize() {
+		if ($this->baseSize === 'largeDesktop') {
+			return $this->columns;
+		}
+		return 3;
+	}
+
 
 	public function getClasses() {
 		$classes = [];
 		if ($this->phoneSize) {
 			if ($this->phoneSize === 'auto') {
-				$this->phoneSize = 12;
+				$this->phoneSize = $this->generatePhoneSize();
 			}
 			$classes[] = 'col-xs-'. $this->phoneSize;
 		}
 		if ($this->tabletSize) {
 			if ($this->tabletSize === 'auto') {
-				$this->tabletSize = 6;
+				$this->tabletSize = $this->generateTabletSize();
 			}
 			$classes[] = 'col-sm-'. $this->tabletSize;
 		}
 		if ($this->mediumDesktopSize) {
 			if ($this->mediumDesktopSize === 'auto') {
-				$this->mediumDesktopSize = $this->columns;
+				$this->mediumDesktopSize = $this->generateMediumDesktopSize();
 			}
 			$classes[] = 'col-md-'. $this->mediumDesktopSize;
 		}
 		if ($this->largeDesktopSize) {
 			if ($this->largeDesktopSize === 'auto') {
-				$this->largeDesktopSize = $this->columns;
+				$this->largeDesktopSize = $this->generateLargeDesktopSize();
 			}
 			$classes[] = 'col-lg-'. $this->largeDesktopSize;
 		}
@@ -81,15 +120,25 @@ class Cell extends \infinite\base\Object {
 		return true;
 	}
 
-	public function setColumns($columns) {
-		if (!isset($this->_columns)) {
-			$this->_columns = $columns;
-		} else {
-			throw new Exception("Unable to re-set column size to {$columns}");
+	public function getMaxColumns() {
+		if (property_exists($this->content, 'maxColumns') && !is_null($this->content->maxColumns)) {
+			return $this->content->maxColumns;
 		}
+		return $this->_maxColumns;
+	}
+
+	public function setMaxColumns($columns) {
+		$this->_maxColumns = $columns;
+	}
+
+	public function setColumns($columns) {
+		$this->_columns = $columns;
 	}
 
 	public function getColumns() {
+		if (property_exists($this->content, 'columns') && !is_null($this->content->columns)) {
+			return $this->content->columns;
+		}
 		if (is_null($this->_columns)) {
 			return $this->_defaultColumns;
 		}

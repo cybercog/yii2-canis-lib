@@ -1,11 +1,19 @@
 <?php
 namespace infinite\web\grid;
 
+use \infinite\helpers\Html;
+
 class Row extends \infinite\base\Object {
 	const TOTAL_COLUMNS = 12;
 
 	protected $_cells = [];
 	protected $_fillAttempted = false;
+
+	public function __construct($cells = null) {
+		if (!is_null($cells)) {
+			$this->_cells = $cells;
+		}
+	}
 
 	public function render() {
 		echo $this->generate();
@@ -17,8 +25,8 @@ class Row extends \infinite\base\Object {
 		foreach ($this->_cells as $item) {
 			$content[] = $item->generate();
 		}
-		return implode('', $content);
-		// return Html::tag('div', implode('', $content), ['class' => 'row']);
+		//return implode('', $content);
+		return Html::tag('div', implode('', $content), ['class' => 'row']);
 	}
 
 	public function fill() {

@@ -1,7 +1,6 @@
 <?php
 namespace infinite\base;
 
-interface WidgetInterface {
-	public function generate();
+interface WidgetInterface extends \infinite\web\grid\CellContentInterface {
 }
 ?>

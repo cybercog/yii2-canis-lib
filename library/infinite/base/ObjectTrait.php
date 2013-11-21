@@ -6,6 +6,14 @@ use ReflectionClass;
 
 trait ObjectTrait
 {
+	public function configure($settings)
+	{
+		foreach ($settings as $key => $value) {
+			$this->{$key} = $value;
+		}
+		return $this;
+	}
+
 	public static function classNamespace()
 	{
 		$reflector = new ReflectionClass(get_called_class());
