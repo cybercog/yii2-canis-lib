@@ -5,7 +5,7 @@
  * @license http://www.yiiframework.com/license/
  */
 
-namespace infinite\web;
+namespace infinite\web\assetBundles;
 
 /**
  * @author Qiang Xue <qiang.xue@gmail.com>
@@ -16,5 +16,5 @@ class InfiniteAsset extends AssetBundle
     public $sourcePath = '@infinite/assets';
     public $css = ['css/infinite.bootstrap.css'];
     public $js = ['js/infinite.bootstrap.js', 'js/infinite.utils.js', 'js/infinite.ajax.instructions.js', 'js/infinite.ajax.js'];
-    public $depends = ['yii\bootstrap\BootstrapAsset', 'yii\web\JqueryAsset', 'yii\jui\CoreAsset', 'infinite\web\UnderscoreAsset', 'infinite\web\FontAwesomeAsset'];
+    public $depends = ['yii\bootstrap\BootstrapAsset', 'yii\web\JqueryAsset', 'yii\jui\CoreAsset', 'infinite\web\assetBundles\UnderscoreAsset', 'infinite\web\assetBundles\FontAwesomeAsset'];
 }

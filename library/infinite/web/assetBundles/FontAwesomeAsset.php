@@ -1,5 +1,5 @@
 <?php
-namespace infinite\web;
+namespace infinite\web\assetBundles;
 
 class FontAwesomeAsset extends AssetBundle
 {

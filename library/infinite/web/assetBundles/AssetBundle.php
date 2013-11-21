@@ -1,5 +1,5 @@
 <?php
-namespace infinite\web;
+namespace infinite\web\assetBundles;
 
 class AssetBundle extends \yii\web\AssetBundle
 {

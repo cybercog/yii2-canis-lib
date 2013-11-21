@@ -5,7 +5,7 @@
  * @license http://www.yiiframework.com/license/
  */
 
-namespace infinite\web;
+namespace infinite\web\assetBundles;
 
 /**
  * @author Qiang Xue <qiang.xue@gmail.com>
