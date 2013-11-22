@@ -4,6 +4,7 @@ namespace infinite\base\collector;
 use Yii;
 
 use \infinite\base\exceptions\Exception;
+use \infinite\helpers\ArrayHelper;
 
 use \yii\base\Application;
 use \yii\base\Event;
@@ -50,13 +51,14 @@ abstract class Collector extends \infinite\base\Component
 		}
 		if (!isset($this->_distributedFields[$field])) {
 			foreach ($this->bucket as $item) {
-				if (!isset($item->object->{$field})) { continue; }
-				if (is_array($item->object->{$field})) {
-					foreach ($item->object->{$field} as $itemField) {
+				$value = ArrayHelper::getValue($item, $field);
+				if (!isset($value)) { continue; }
+				if (is_array($value)) {
+					foreach ($value as $itemField) {
 						$this->getBucket($field .':'. $itemField)->add($item->systemId, $item);
 					}
 				} else {
-					$this->getBucket($field)->add($item->object->{$field}, $item);
+					$this->getBucket($field)->add($value, $item);
 				}
 			}
 			$this->_distributedFields[$field] = true;

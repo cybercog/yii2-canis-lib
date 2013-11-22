@@ -11,6 +11,20 @@ namespace infinite\helpers;
 
 class ArrayHelper extends \yii\helpers\ArrayHelper
 {
+    public static function getValue($array, $key, $default = null)
+    {
+        if (strstr($key, '.') !== false) {
+            $path = explode('.', $key);
+            $topValue = self::getValue($array, array_shift($path), $default);
+            if (!is_object($topValue) && !is_array($topValue)) {
+                return $default;
+            } else {
+                return parent::getValue($topValue, implode('.', $path));
+            }
+        }
+        return parent::getValue($array, $key, $default);
+    }
+
     /**
     * 	Extends ArrayHelper's map capability by letting it map to its parent object
     * 	@see \yii\helpers\ArrayHelper:map
