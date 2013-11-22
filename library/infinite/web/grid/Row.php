@@ -9,11 +9,6 @@ class Row extends \infinite\base\Object {
 	protected $_cells = [];
 	protected $_fillAttempted = false;
 
-	public function __construct($cells = null) {
-		if (!is_null($cells)) {
-			$this->_cells = $cells;
-		}
-	}
 
 	public function render() {
 		echo $this->generate();
@@ -29,12 +24,22 @@ class Row extends \infinite\base\Object {
 		return Html::tag('div', implode('', $content), ['class' => 'row']);
 	}
 
+
 	public function fill() {
 		if (!$this->_fillAttempted) {
 			$toFill = self::TOTAL_COLUMNS - $this->columnCount;
-			if (!empty($toFill)) {
+			$toDistribute = $this->getDistributionColumns();
+			if (!empty($toDistribute)) {
+				$columnSize = max(1, floor($toFill/count($toDistribute)));
+				foreach ($toDistribute as $cell) {
+					$cell->columns = $columnSize;
+					$toFill -= $columnSize;
+				}
+			}
+
+			if ($toFill > 0) {
 				foreach ($this->columnFlex as $columnId => $flex) {
-					if (empty($toFill)) { break; }
+					if ($toFill <= 0) { break; }
 					if (empty($flex)) { continue; }
 					$columnItem = $this->_cells[$columnId];
 					$addColumns = min($toFill, $columnItem->flex);
@@ -55,6 +60,16 @@ class Row extends \infinite\base\Object {
 		return $flex;
 	}
 
+	public function getDistributionColumns() {
+		$auto = [];
+		foreach ($this->_cells as $cell) {
+			if ($cell->columns === 'auto') {
+				$auto[$cell->id] = $cell;
+			}
+		}
+		return $auto;
+	}
+
 	public function isFilled() {
 		return $this->columnCount === self::TOTAL_COLUMNS;
 	}
@@ -62,6 +77,7 @@ class Row extends \infinite\base\Object {
 	public function getColumnCount() {
 		$columnCount = 0;
 		foreach ($this->_cells as $item) {
+			if ($item->columns === 'auto') { continue; }
 			$columnCount += $item->columns;
 		}
 		return $columnCount;
@@ -89,6 +105,12 @@ class Row extends \infinite\base\Object {
 			} else {
 				break;
 			}
+		}
+	}
+
+	public function setCells($cells) {
+		foreach ($cells as $cell) {
+			$this->addCell($cell);
 		}
 	}
 }

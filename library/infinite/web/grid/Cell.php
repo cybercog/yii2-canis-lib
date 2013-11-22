@@ -33,11 +33,8 @@ class Cell extends \infinite\base\Object {
 	
 	public function generate() {
 		$content = $this->content;
-		if ($content instanceof CellContentInterface) {
+		if (is_object($content) && $content instanceof CellContentInterface) {
 			$content = $content->generate();
-		} else {
-			echo "holla";
-			var_dump($content);exit;
 		}
 		return Html::tag('div', $content, ['class' => $this->classes]);
 	}

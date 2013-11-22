@@ -50,13 +50,13 @@ abstract class Collector extends \infinite\base\Component
 		}
 		if (!isset($this->_distributedFields[$field])) {
 			foreach ($this->bucket as $item) {
-				if (!isset($item->{$field})) { continue; }
-				if (is_array($item->{$field})) {
-					foreach ($item->{$field} as $itemField) {
+				if (!isset($item->object->{$field})) { continue; }
+				if (is_array($item->object->{$field})) {
+					foreach ($item->object->{$field} as $itemField) {
 						$this->getBucket($field .':'. $itemField)->add($item->systemId, $item);
 					}
 				} else {
-					$this->getBucket($field)->add($item->{$field}, $item);
+					$this->getBucket($field)->add($item->object->{$field}, $item);
 				}
 			}
 			$this->_distributedFields[$field] = true;
@@ -95,6 +95,18 @@ abstract class Collector extends \infinite\base\Component
 			return $this->_createBlankItem($item);
 		}
 		return $bucket[$item];
+	}
+
+
+	public function has($item, $bucket = null) {
+		if (is_null($item)) {
+			throw new Exception("boom");
+		}
+		$bucket = $this->getBucket($bucket);
+		if (!isset($bucket[$item])) {
+			return false;
+		}
+		return true;
 	}
 
 	protected function _createBlankItem($itemSystemId) {
