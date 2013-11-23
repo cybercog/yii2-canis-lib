@@ -18,9 +18,95 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 	public $relationClass = '\app\models\Relation';
 	public $registryClass = '\app\models\Registry';
 
+	public $defaultRelation = [
+		'active' => 1
+	];
+
 	public $child_object_id;
 	public $parent_object_id;
 	static $_tree_segments = [];
+
+	protected $_relationModels;
+	protected $_relationModelsOld;
+
+
+    public function events()
+    {
+        return [
+            \infinite\db\ActiveRecord::EVENT_AFTER_INSERT => 'afterSave',
+            \infinite\db\ActiveRecord::EVENT_AFTER_UPDATE => 'afterSave',
+        ];
+    }
+
+    public function afterSave($event) {
+    	if (!empty($this->owner->primaryKey) && !is_null($this->_relationModels)) {
+    		foreach ($this->_relationModels as $key => $model) {
+    			unset($this->_relationModelsOld[$key]);
+    			if (!is_object($model)) { continue; }
+    			if (empty($model->parent_object_id) && empty($model->child_object_id)) {
+    				continue;
+    			}
+    			if (empty($model->parent_object_id)) {
+    				$model->parent_object_id = $this->owner->primaryKey;
+    			} elseif (empty($model->child_object_id)) {
+    				$model->child_object_id = $this->owner->primaryKey;
+    			}
+    			if ($model->isNewRecord) {
+    				$dirty = $model->getDirtyAttributes(array_keys($this->defaultRelation));
+    				foreach ($this->defaultRelation as $dkey => $dvalue) {
+    					if (!isset($dirty[$dkey])) {
+    						$model->{$dkey} = $dvalue;
+    					}
+    				}
+    			}
+    			if (!$model->save()) {
+    				$event->handled = false;
+    			}
+    		}
+    		foreach ($this->_relationModelsOld as $relationId) {
+    			$relationClass = $this->relationClass;
+    			$relation = $relationClass::getOne($relationId);
+    			if ($relation && !$relation->delete()) {
+    				$event->handled = false;
+    			}
+    		}
+    	}
+    }
+
+    public function getRelationModels() {
+    	if (is_null($this->_relationModels)) {
+    		if ($this->owner->isNewRecord) {
+    			$this->_relationModels = $this->_relationModelsOld = [];
+    		} else {
+    			$relationClass = $this->relationClass;
+    			$relationQuery = $relationClass::createQuery();
+    			$relationQuery->select(['id'])->where(['or', 'parent_object_id=:object_id', 'child_object_id=:object_id'])->params([':object_id' => $this->owner->primaryKey]);
+    			$relations = $relationQuery->column();
+    			$this->_relationModels = $this->_relationModelsOld = array_combine($relations, $relations);
+    		}
+    	}
+    	return $this->_relationModels;
+    }
+
+	public function getRelationModel($id) {
+		$idParts = explode(':', $id);
+
+		// if we're working with an existing relation in the database, pull it
+		if (isset($idParts[3]) && isset($this->relationModels[$idParts[3]])) {
+			$id = $idParts[3];
+		}
+		// for lazy loading relations
+		if (isset($this->relationModels[$id]) && !is_object($this->relationModels[$id])) {
+			$relationClass = $this->relationClass;
+			$this->_relationModels[$id] = $relationClass::getOne($this->relationModels[$id]);
+		}
+
+		if (empty($this->relationModels[$id])) {
+			$this->_relationModels[$id] = new $this->relationClass;
+		}
+
+		return $this->relationModels[$id];
+	}
 
 
 	/**

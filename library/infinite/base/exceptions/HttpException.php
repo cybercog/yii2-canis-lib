@@ -9,6 +9,6 @@
 
 namespace infinite\base\exceptions;
 
-class HttpException extends \infinite\base\exceptions\Exception
+class HttpException extends \yii\web\HttpException
 {
 }

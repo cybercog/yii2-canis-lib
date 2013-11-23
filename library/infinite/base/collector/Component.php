@@ -52,13 +52,13 @@ class Component extends \infinite\base\Component  implements IteratorAggregate, 
 		$this->load();
 		Yii::beginProfile(__CLASS__.'::'.__FUNCTION__);
 		foreach ($this->_collectors as $collector) {
-			Yii::beginProfile(__CLASS__.'::'.__FUNCTION__ .'::'.$collector->id);
+			Yii::beginProfile(__CLASS__.'::'.__FUNCTION__ .'::'.$collector->systemId);
 			if (!$collector->isReady()) {
-				Yii::endProfile(__CLASS__.'::'.__FUNCTION__ .'::'.$collector->id);
+				Yii::endProfile(__CLASS__.'::'.__FUNCTION__ .'::'.$collector->systemId);
 				Yii::endProfile(__CLASS__.'::'.__FUNCTION__);
 				return false;
 			}
-			Yii::endProfile(__CLASS__.'::'.__FUNCTION__ .'::'.$collector->id);
+			Yii::endProfile(__CLASS__.'::'.__FUNCTION__ .'::'.$collector->systemId);
 		}
 		Yii::endProfile(__CLASS__.'::'.__FUNCTION__);
 		return true;
@@ -94,7 +94,7 @@ class Component extends \infinite\base\Component  implements IteratorAggregate, 
 		if (is_array($collector)) {
 			$collector = Yii::createObject($collector);
 		}
-		$collector->id = $id;
+		$collector->systemId = $id;
 		$this->_collectors[$id] = $collector;
 		Yii::endProfile(__CLASS__.'::'.__FUNCTION__.'::'.$id);
 		return $collector;

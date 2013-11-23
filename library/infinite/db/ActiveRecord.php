@@ -22,6 +22,8 @@ class ActiveRecord extends \yii\db\ActiveRecord
     static public $isAco = true;
     static protected $_cache = [];
 
+    const FORM_PRIMARY_MODEL = 'primary';
+
     /**
      * @event Event an event that is triggered after a failed save.
      */
@@ -29,6 +31,24 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
 
     public $descriptorField;
+
+    public static function generateTabularId($id) {
+        return substr(md5($id), 0, 10);
+    }
+
+    public static function getPrimaryTabularId() {
+        return self::generateTabularId(self::FORM_PRIMARY_MODEL);
+    }
+
+    public static function getPrimaryModel($models) {
+        if (empty($models)) { return false; }
+        foreach ($models as $tabKey => $model) {
+            if ($tabKey === self::getPrimaryTabularId()) {
+                return $model;
+            }
+        }
+        return false;
+    }
 
     public static function parseModelAlias($alias) {
         if (strncmp($alias, ':', 1)) {

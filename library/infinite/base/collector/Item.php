@@ -4,7 +4,7 @@ namespace infinite\base\collector;
 use \infinite\base\exceptions\Exception;
 
 class Item extends \infinite\base\Object {
-	public $name;
+	//public $name;
 	protected $_owner;
 	protected $_collector;
 	protected $_settings;
