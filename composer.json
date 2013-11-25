@@ -10,8 +10,8 @@
 		"php": ">=5.4.0",
 		"yiisoft/yii2": "dev-master",
 		"yiisoft/yii2-composer": "dev-master",
+		"yiisoft/yii2-redis": "dev-master",
 		"components/underscore": "1.5.*",
-		"fortawesome/font-awesome": "*",
 		"fortawesome/font-awesome": "*",
 		"malsup/form": "3.*"
 	},
