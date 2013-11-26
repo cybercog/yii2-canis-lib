@@ -87,15 +87,15 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
 
 
         // http_session
-        $this->dropExistingTable('http_session');
+        // $this->dropExistingTable('http_session');
         
-        $this->createTable('http_session', [
-            'id' => 'string NOT NULL PRIMARY KEY',
-            'expire' => 'integer DEFAULT NULL',
-            'data' => 'text DEFAULT NULL'
-        ]);
+        // $this->createTable('http_session', [
+        //     'id' => 'string NOT NULL PRIMARY KEY',
+        //     'expire' => 'integer DEFAULT NULL',
+        //     'data' => 'text DEFAULT NULL'
+        // ]);
 
-        $this->createIndex('httpSessionExpire', 'http_session', 'expire', false);
+        // $this->createIndex('httpSessionExpire', 'http_session', 'expire', false);
 
 
         // identity_provider

@@ -187,7 +187,17 @@ class ActiveRecord extends \yii\db\ActiveRecord
     public function getDescriptor()
     {
         if (isset($this->descriptorField)) {
-            return $this->{$this->descriptorField};
+            if (is_array($this->descriptorField)) {
+                $descriptor = [];
+                foreach ($this->descriptorField as $field) {
+                    if (!empty($this->{$field})) {
+                        $descriptor[] = $this->{$field};
+                    }
+                }
+                return implode(' ', $descriptor);
+            } else {
+                return $this->{$this->descriptorField};
+            }
         }
         $try = ['name', 'title', 'created'];
         foreach ($try as $t) {
