@@ -57,3 +57,29 @@ input[type="submit"].disabled {
 .panel-heading .nav .dropdown b.caret {
 	display: none;
 }
+
+/* Sub-Navbar /*
+
+/* object view dashboard */
+.sub-navbar {
+    margin-top: 50px;
+    z-index: 1020;
+    min-height: 40px;
+}
+
+.sub-navbar .navbar-brand {
+    font-size: 16px;
+    line-height: 18px;
+    padding: 10px;
+}
+
+.sub-navbar .navbar-toggle {
+    padding: 4px 3px;
+    margin-top: 9px;
+}
+
+.sub-navbar .navbar-nav > li > a {
+    line-height: 18px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}

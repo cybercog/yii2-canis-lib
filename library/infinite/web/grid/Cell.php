@@ -5,7 +5,7 @@ use \infinite\helpers\Html;
 use \infinite\base\exceptions\Exception;
 
 
-class Cell extends \infinite\base\Object {
+class Cell extends \infinite\base\Object implements \infinite\web\RenderInterface {
 	public $phoneSize = false;
 	public $tabletSize = 'auto';
 	public $mediumDesktopSize = 'auto'; // baseline

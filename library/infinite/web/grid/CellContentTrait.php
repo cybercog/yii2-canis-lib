@@ -1,7 +1,8 @@
 <?php
 namespace infinite\web\grid;
 
-trait CellContentTrait {
+trait CellContentTrait
+{
 	public $columns;
 	public $maxColumns;
 }

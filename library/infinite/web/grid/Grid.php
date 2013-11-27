@@ -53,7 +53,7 @@ class Grid extends \infinite\base\Object {
 		$this->_currentRow = null;
 	}
 
-	public function addCells($items) {
+	public function setCells($items) {
 		Yii::beginProfile(__CLASS__ . ':'. __FUNCTION__);
 		while (!empty($items)) {
 			$this->currentRow->addCells($items);

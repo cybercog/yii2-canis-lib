@@ -1,6 +1,7 @@
 <?php
 namespace infinite\web\grid;
 
-interface CellContentInterface {
-	public function generate();
+interface CellContentInterface extends \infinite\web\RenderInterface
+{
+
 }
