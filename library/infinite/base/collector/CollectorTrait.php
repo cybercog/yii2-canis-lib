@@ -17,7 +17,17 @@ trait CollectorTrait
 	public function init()
 	{
 		parent::init();
+		$this->registerMultiple($this->baseOwner, $this->initialItems);
 		Yii::$app->collectors->on(Component::EVENT_AFTER_LOAD, array($this, 'beforeRequest'));
+	}
+
+	public function getBaseOwner()
+	{
+		return null;
+	}
+
+	public function getInitialItems() {
+		return [];
 	}
 
 	public function beforeRequest(Event $event) {

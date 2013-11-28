@@ -27,34 +27,56 @@ class Row extends \infinite\base\Object {
 
 	public function fill() {
 		if (!$this->_fillAttempted) {
-			$toFill = self::TOTAL_COLUMNS - $this->columnCount;
+			$fillSizes = ['phone' => self::TOTAL_COLUMNS, 'tablet' => self::TOTAL_COLUMNS, 'mediumDesktop' => self::TOTAL_COLUMNS, 'largeDesktop' => self::TOTAL_COLUMNS];
 			$toDistribute = $this->getDistributionColumns();
 			if (!empty($toDistribute)) {
 				$columnSize = max(1, floor($toFill/count($toDistribute)));
 				foreach ($toDistribute as $cell) {
 					$cell->columns = $columnSize;
-					$toFill -= $columnSize;
 				}
 			}
 
-			if ($toFill > 0) {
-				foreach ($this->columnFlex as $columnId => $flex) {
+			foreach ($this->_cells as $cell) {
+				$sizes = $cell->sizes;
+				foreach ($fillSizes as $size => $left) {
+					if (!isset($sizes[$size])) {
+						unset($fillSizes[$size]);
+					} else {
+						$fillSizes[$size] = $left - $sizes[$size];
+					}
+				}
+			}
+
+			foreach ($fillSizes as $size => $toFill) {
+				if ($toFill <= 0) { continue; }
+				foreach ($this->getColumnFlex($size) as $columnId => $flex) {
 					if ($toFill <= 0) { break; }
 					if (empty($flex)) { continue; }
 					$columnItem = $this->_cells[$columnId];
-					$addColumns = min($toFill, $columnItem->flex);
-					$columnItem->addColumns($addColumns);
+					$addColumns = min($toFill, $columnItem->getFlex($size));
+					$columnItem->addColumns($addColumns, $size);
 					$toFill = $toFill - $addColumns;
 				}
 			}
+
+			// if ($toFill > 0) {
+			// 	foreach ($this->columnFlex as $columnId => $flex) {
+			// 		if ($toFill <= 0) { break; }
+			// 		if (empty($flex)) { continue; }
+			// 		$columnItem = $this->_cells[$columnId];
+			// 		$addColumns = min($toFill, $columnItem->flex);
+			// 		$columnItem->addColumns($addColumns);
+			// 		$toFill = $toFill - $addColumns;
+			// 	}
+			// }
 			$this->_fillAttempted = true;
 		}
 	}
 
-	public function getColumnFlex() {
+	public function getColumnFlex($size = 'phone') {
 		$flex = [];
 		foreach ($this->_cells as $column) {
-			$flex[$column->id] = $column->flex;
+			$flex[$column->id] = $column->getFlex($size);
 		}
 		arsort($flex, SORT_NUMERIC);
 		return $flex;
