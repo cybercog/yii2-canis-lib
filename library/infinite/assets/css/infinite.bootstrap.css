@@ -15,11 +15,17 @@ input[type="submit"].disabled {
 .panel {
 }
 
+.panel .panel-icon {
+    width: 16px;
+    text-align: center;
+}
+
 .panel .panel-heading {
 	height: 38px;
     line-height: 16px;
     margin-bottom: -1px;
     padding: 10px;
+
 }
 
 .panel .panel-heading h2 {
@@ -38,8 +44,8 @@ input[type="submit"].disabled {
 
 .panel-heading .break {
     border-left: 1px solid rgba(0, 0, 0, 0.05);
-    margin: -12px 10px -10px;
-    padding: 12px 0 10px;
+    margin: -9px 10px -9px;
+    padding: 9px 0 9px;
 }
 
 .panel-heading .nav {
@@ -56,6 +62,15 @@ input[type="submit"].disabled {
 
 .panel-heading .nav .dropdown b.caret {
 	display: none;
+}
+
+/* Embedded Panels */
+.embedded-panel .panel-heading {
+    background-color: transparent;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    border-bottom-color: rgba(0, 0, 0, 0.05);
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
 }
 
 /* Sub-Navbar /*

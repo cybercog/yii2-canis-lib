@@ -58,17 +58,6 @@ class Row extends \infinite\base\Object {
 					$toFill = $toFill - $addColumns;
 				}
 			}
-
-			// if ($toFill > 0) {
-			// 	foreach ($this->columnFlex as $columnId => $flex) {
-			// 		if ($toFill <= 0) { break; }
-			// 		if (empty($flex)) { continue; }
-			// 		$columnItem = $this->_cells[$columnId];
-			// 		$addColumns = min($toFill, $columnItem->flex);
-			// 		$columnItem->addColumns($addColumns);
-			// 		$toFill = $toFill - $addColumns;
-			// 	}
-			// }
 			$this->_fillAttempted = true;
 		}
 	}
