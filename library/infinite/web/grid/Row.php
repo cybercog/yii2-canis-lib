@@ -28,21 +28,26 @@ class Row extends \infinite\base\Object {
 	public function fill() {
 		if (!$this->_fillAttempted) {
 			$fillSizes = ['phone' => self::TOTAL_COLUMNS, 'tablet' => self::TOTAL_COLUMNS, 'mediumDesktop' => self::TOTAL_COLUMNS, 'largeDesktop' => self::TOTAL_COLUMNS];
-			$toDistribute = $this->getDistributionColumns();
-			if (!empty($toDistribute)) {
-				$columnSize = max(1, floor($toFill/count($toDistribute)));
-				foreach ($toDistribute as $cell) {
-					$cell->columns = $columnSize;
-				}
-			}
 
 			foreach ($this->_cells as $cell) {
 				$sizes = $cell->sizes;
 				foreach ($fillSizes as $size => $left) {
 					if (!isset($sizes[$size])) {
 						unset($fillSizes[$size]);
-					} else {
+					} elseif($sizes[$size] !== 'auto') {
 						$fillSizes[$size] = $left - $sizes[$size];
+					}
+				}
+			}
+
+
+			foreach ($fillSizes as $size => $toFill) {
+				$toDistribute = $this->getDistributionColumns($size);
+				if (!empty($toDistribute)) {
+					$columnSize = max(1, floor($toFill/count($toDistribute)));
+					foreach ($toDistribute as $cell) {
+						$fillSizes[$size] = $fillSizes[$size] - ($columnSize - $cell->getColumns($size));
+						$cell->setColumns($columnSize, $size);
 					}
 				}
 			}
@@ -52,6 +57,7 @@ class Row extends \infinite\base\Object {
 				foreach ($this->getColumnFlex($size) as $columnId => $flex) {
 					if ($toFill <= 0) { break; }
 					if (empty($flex)) { continue; }
+
 					$columnItem = $this->_cells[$columnId];
 					$addColumns = min($toFill, $columnItem->getFlex($size));
 					$columnItem->addColumns($addColumns, $size);
@@ -71,10 +77,10 @@ class Row extends \infinite\base\Object {
 		return $flex;
 	}
 
-	public function getDistributionColumns() {
+	public function getDistributionColumns($size = null) {
 		$auto = [];
 		foreach ($this->_cells as $cell) {
-			if ($cell->columns === 'auto') {
+			if ($cell->getColumns($size) === 'auto') {
 				$auto[$cell->id] = $cell;
 			}
 		}

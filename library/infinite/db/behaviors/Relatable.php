@@ -118,7 +118,8 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 	 * @return unknown
 	 */
 	function children($model, $relationOptions = [], $modelOptions = []) {
-		return $this->relatives('children', $model, $relationOptions, $modelOptions);
+		$query = $this->relativesQuery('children', $model, $relationOptions, $modelOptions);
+		return $query->all();
 	}
 
 
@@ -131,7 +132,9 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 	 * @return unknown
 	 */
 	function parent($model, $relationOptions = [], $modelOptions = []) {
-		return $this->relatives('parent', $model, $relationOptions, $modelOptions);
+		$query = $this->relativesQuery('parent', $model, $relationOptions, $modelOptions);
+		if (!$query) { return false; }
+		return $query->one();
 	}
 
 
@@ -143,8 +146,10 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 	 * @param unknown $modelOptions    (optional)
 	 * @return unknown
 	 */
-	function parents($model, $relationOptions = [], $modelOptions = []) {
-		return $this->relatives('parents', $model, $relationOptions, $modelOptions);
+	public function parents($model, $relationOptions = [], $modelOptions = []) {
+		$query = $this->relativesQuery('parents', $model, $relationOptions, $modelOptions);
+		if (!$query) { return false; }
+		return $query->all();
 	}
 
 	public function getParentIds($models = null, $relationOptions = []) {
@@ -255,130 +260,6 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 		return $results;
 	}
 
-	/**
-	 *
-	 *
-	 * @param unknown $activeQuery
-	 * @param unknown $ownerId
-	 * @param unknown $relationOptions (optional)
-	 * @return unknown
-	 */
-	public function searchChildren($activeQuery, $ownerId, $relationOptions = []) {
-		return $this->searchRelatives($activeQuery, 'children', $ownerId, $relationOptions);
-	}
-
-
-	/**
-	 *
-	 *
-	 * @param unknown $activeQuery
-	 * @param unknown $ownerId
-	 * @param unknown $relationOptions (optional)
-	 * @return unknown
-	 */
-	public function searchParents($activeQuery, $ownerId, $relationOptions = []) {
-		return $this->searchRelatives($activeQuery, 'parents', $ownerId, $relationOptions);
-	}
-
-
-	/**
-	 *
-	 *
-	 * @param unknown $activeQuery
-	 * @param unknown $type
-	 * @param unknown $ownerId
-	 * @param unknown $relationOptions (optional)
-	 * @return unknown
-	 */
-	public function searchRelatives($activeQuery, $type, $ownerId, $relationOptions = []) {
-		$_relationModel = $this->relationClass;
-		$_relation = new $_relationModel;
-		$_relationFields = array_keys($_relationModel::getTableSchema()->columns);
-
-		if (!isset($relationOptions['fields'])) {
-			$relationAttr = [];
-		} else {
-			$relationAttr = $relationOptions['fields'];
-		}
-
-			if (in_array('active', $_relationFields)) {
-			if (!array_key_exists('active', $relationAttr)) {
-				$relationAttr['active'] = 1;
-			}
-		}
-		if (in_array('start', $_relationFields)) {
-			if (!array_key_exists('start', $relationAttr)) {
-				$relationAttr['start'] = ['IS NULL', '< NOW()'];
-			}
-		}
-		if (in_array('end', $_relationFields)) {
-			if (!array_key_exists('end', $relationAttr)) {
-				$relationAttr['end'] = ['IS NULL', '> NOW()'];
-			}
-		}
-
-		if ($type === 'parents') {
-			$primaryKey = 'parent_object_id';
-			$foreignKey = 'child_object_id';
-		}
-		elseif ($type === 'parent') {
-			$primaryKey = 'parent_object_id';
-			$foreignKey = 'child_object_id';
-			$modelOptions['limit'] = 1;
-		}
-		else {
-			$primaryKey = 'child_object_id';
-			$foreignKey = 'parent_object_id';
-		}
-
-		// first build the join
-		$_relationTable = $_relation->tableName();
-		// $this->getDbCriteria()->params[':object_id'] = $this->owner->id;
-		$relationOn = '';
-		$relationAttr[$primaryKey] = 't.id';
-		foreach ($relationAttr as $key => $tests) {
-			if (empty($relationOn)) {
-				$partOn = '(';
-			} else {
-				$partOn = ' AND (';
-			}
-			if (is_array($tests)) {
-				$key = $_relationModel.'.'.$key;
-				$partOn2 = '';
-				foreach ($tests as $t) {
-					if (!empty($partOn2)) {
-						$partOn2 .= ' OR ';
-					}
-					$partOn2 .= $key;
-					if (in_array(substr($t, 0, 2), ['> ', '< ', '>=', '<=', '<>', '!=', 'IS'])) {
-						$partOn2 .= ' '. $t;
-					} else {
-						$partOn2 .= ' = '. $t;
-					}
-				}
-				$partOn .= $partOn2;
-			} else {
-				$key = '`'.$_relationModel.'`.`'.$key.'`';
-				$partOn .= $key;
-				if (in_array(substr($tests, 0, 2), ['> ', '< ', '>=', '<=', '<>', '!=', 'IS'])) {
-					$partOn .= ' '. $tests;
-				} else {
-					$partOn .= ' = '. $tests;
-				}
-			}
-			$partOn .= ')';
-			$relationOn .= $partOn;
-		}
-		$activeQuery->join('LEFT JOIN', $_relationTable.' AS '.$_relationModel, '('.$relationOn.')');
-		// then connect the join to the model
-		if (isset($relationOptions['params'])) {
-			$activeQuery->params = $relationOptions['params'];
-		}
-		$activeQuery->where([$_relationModel .'.'.$foreignKey => $ownerId]);
-
-		return $activeQuery;
-	}
-
 
 	/**
 	 *
@@ -389,7 +270,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 	 * @param unknown $modelOptions    (optional)
 	 * @return unknown
 	 */
-	function relatives($type, $model, $relationOptions = [], $modelOptions = []) {
+	function relativesQuery($type, $model, $relationOptions = [], $modelOptions = []) {
 		$_relationModel = $this->relationClass;
 		$_relation = new $_relationModel;
 		$_relationFields = array_keys($_relationModel::getTableSchema()->columns);
@@ -490,11 +371,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 				$o->$k($v);
 			}
 		}
-		$results = $o->all();
-		if ($type === 'parent' AND isset($results[0])) {
-			return $results[0];
-		}
-		return $results;
+		return $o;
 	}
 
 
