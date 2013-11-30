@@ -19,9 +19,10 @@
 		"phpunit/phpunit": "3.7.*"
 	},
 	"autoload": {
+		"classmap": ["library/Infinite.php"],
 		"psr-0": { "infinite\\": "/library" }
 	},
     "extra": {
-            "bootstrap": "infinite\\Infinite"
+            "bootstrap": "Infinite"
     }
 }
