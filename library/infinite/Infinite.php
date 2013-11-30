@@ -16,7 +16,6 @@ class Infinite extends \yii\base\Extension
      */
     public static function init()
     {
-    	throw new \Exception("boom");
     	parent::init();
         Yii::setAlias('@infinite', __DIR__);
         Yii::$app->registerMigrationAlias('@infinite/db/migrations');

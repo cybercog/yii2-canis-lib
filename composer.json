@@ -19,7 +19,7 @@
 		"phpunit/phpunit": "3.7.*"
 	},
 	"autoload": {
-		"classmap": ["library/infinite/Infinite.php"],
+		"classmap": ["library/infinite/Infinite.php", "library/infinite/ICD.php"],
 		"psr-0": { "infinite\\": "/library" }
 	},
     "extra": {
