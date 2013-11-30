@@ -71,8 +71,26 @@ input[type="submit"].disabled {
     border-bottom-color: rgba(0, 0, 0, 0.05);
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+    height: 30px;
+    padding: 7px;
 }
 
+.embedded-panel .panel-heading h2 {
+    font-size: 14px;
+    line-height: 14px;
+    margin-bottom: 6px;
+}
+.embedded-panel .panel-heading h2 .break {
+    margin: -6px 10px;
+    padding: 6px 0;
+}
+.embedded-panel .panel-heading .nav {
+    margin: -6px -6px -6px 0;
+}
+.embedded-panel .panel-heading .nav > li > a {
+    padding: 6px 5px;
+    line-height: 15px;
+}
 /* Sub-Navbar /*
 
 /* object view dashboard */
