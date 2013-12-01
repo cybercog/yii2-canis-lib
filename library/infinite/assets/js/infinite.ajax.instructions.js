@@ -55,7 +55,7 @@ InfiniteInstructionHandler.prototype.runHandler = function(task) {
 			$.debug(task + " task failed!");
 		}
 	} else {
-		$.debug("Unknown task passed to the AJAX instruction handler: "+ task +"("+typeof(this[handlerName])+")");
+		$.debug("Unknown task passed to the AJAX instruction handler: "+ task +" ("+typeof(this[handlerName])+")");
 	}
 };
 
@@ -97,6 +97,10 @@ InfiniteInstructionHandler.prototype.handleDialog = function() {
 				if (settings.state === 'default') {
 					settings.state = 'primary';
 				}
+				$button.click(function() {
+					$form.submit();
+				});
+				$button.attr('data-dismiss', 'modal');
 			} else if (settings.role === 'reset' && $form.length > 0) {
 				$button.click(function() {
 					$form.reset();

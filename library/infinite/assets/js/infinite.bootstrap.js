@@ -1,3 +1,10 @@
+// ajax form
+$(document).on('submit.infinite-api', 'form.ajax', function(e) {
+	$(this).ajaxSubmit();
+	e.stopPropagation();
+	return false;
+});
+
 // background link handling
 $(document).on('click.infinite-api', '[data-handler="background"]', function (e) {
 	var $this   = $(this), href;
