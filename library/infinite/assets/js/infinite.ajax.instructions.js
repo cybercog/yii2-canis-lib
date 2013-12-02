@@ -67,7 +67,6 @@ InfiniteInstructionHandler.prototype.handleTrigger = function() {
 	if (this.instructions.trigger !== undefined) {
 		jQuery.each(this.instructions.trigger, function(index, event) {
 			$(event[1]).trigger(event[0]);
-			console.log(event);
 		});
 	}
 	return true;
@@ -91,6 +90,13 @@ InfiniteInstructionHandler.prototype.handleDialog = function() {
 	}
 
 	var $body = $("<div />", {'class': 'modal-body'}).html(this.content).appendTo($dialogContent);
+	var $form = $body.find('form');
+	
+	if ($form.length > 0) {
+		$modal.on('shown.bs.modal', function() {
+			$body.find(':focusable').first().focus();
+		});
+	}	
 
 	if (this.options.buttons !== undefined) {
 		var $footer = $("<div />", {'class': 'modal-footer'}).appendTo($dialogContent);
@@ -99,7 +105,6 @@ InfiniteInstructionHandler.prototype.handleDialog = function() {
 			if (settings.role === undefined) {
 				settings.role = 'close';
 			}
-			var $form = $body.find('form');
 			if (settings.state === undefined) {
 				settings.state = 'default';
 			}

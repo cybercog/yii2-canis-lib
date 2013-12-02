@@ -9,7 +9,6 @@ $(document).on('submit.infinite-api', 'form.ajax', function(e) {
 $(document).on('click.infinite-api', '[data-handler="background"]', function (e) {
 	var $this   = $(this), href;
 	var $target = $this.attr('data-target') || false;
-    
 	var options = {
 		'data': {},
 		'type': 'GET',
@@ -19,12 +18,12 @@ $(document).on('click.infinite-api', '[data-handler="background"]', function (e)
 		e.stopPropagation();
 		return false;
 	}
-	$this.addClass('disabled');
 	options.url = $this.data('url') || $this.attr('href');
 	if (!options.url || options.url === '' || options.url === '#') {
 		return true;
 	}
 
+	$this.addClass('disabled');
 	if ($this.data('data')) {
 		options.data = $this.data('data');
 	}
