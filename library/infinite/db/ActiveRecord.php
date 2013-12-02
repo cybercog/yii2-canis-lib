@@ -72,6 +72,8 @@ class ActiveRecord extends \yii\db\ActiveRecord
     public static function modelAlias($className = null) {
         if (is_null($className)) {
             $className = get_called_class();
+        } elseif(is_object($className)) {
+            $className = get_class($className);
         }
          if (!strncmp($className, ':', 1)) {
             // already an alias

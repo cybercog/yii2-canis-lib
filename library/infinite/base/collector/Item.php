@@ -39,9 +39,10 @@ class Item extends \infinite\base\Object {
 		return $this->_object;
 	}
 
-	public function setObject($object)
+	public function setObject(CollectedObjectInterface $object)
 	{
 		$this->_object = $object;
+		$object->collectorItem = $this;
 	}
 
 	public function setOwner($owner) {

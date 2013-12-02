@@ -11,6 +11,8 @@ namespace infinite\web;
 
 class View extends \yii\web\View
 {
+	public $bodyHtmlOptions = [];
+	
     public function registerJsFile($url, $options = [], $key = null)
     {
         // @todo hopefully this won't be necessary in the future

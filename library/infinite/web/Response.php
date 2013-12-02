@@ -13,7 +13,9 @@ class Response extends \yii\web\Response
 	public $view = false;
 
 	public $task = 'fill';
+	public $staticTasks = ['status', 'trigger'];
 	public $taskOptions = [];
+	public $baseInstructions = [];
 	public $labels = [
 		'submit' => 'Save',
 		'cancel' => 'Cancel',
@@ -28,6 +30,8 @@ class Response extends \yii\web\Response
 
 	public $refresh = false;
 	public $redirect = false;
+
+	public $trigger = false;
 
 	public $forceInstructions = false;
 	public $disableInstructions = false;
@@ -55,7 +59,7 @@ class Response extends \yii\web\Response
 
 	protected function generateInstructions()
 	{
-		$i = [];
+		$i = $this->baseInstructions;
 		$keepProcessing = true; 
 
 		// high priority tasks
@@ -73,16 +77,27 @@ class Response extends \yii\web\Response
 			return $i;
 		}
 
-		if ($this->task !== 'status') {
-			$i['content'] = $this->renderContent(false);
+		if (!empty($this->trigger)) {
+			$i['trigger'] = $this->trigger;
 		}
 
-		$method = 'handle'.ucfirst($this->task);
-		if (method_exists($this, $method) && $this->$method($i)) {
-			$i['task'] = $this->task;
-			$i['taskOptions'] = $this->taskOptions;
-		} else {
-			throw new Exception("Invalid response task {$this->task}!");
+		if (!in_array($this->task, $this->staticTasks)) {
+			$i['content'] = $this->renderContent(false);
+
+			$method = 'handle'.ucfirst($this->task);
+			if (method_exists($this, $method) && $this->$method($i)) {
+				$i['task'] = $this->task;
+				$i['taskOptions'] = $this->taskOptions;
+			} else {
+				throw new Exception("Invalid response task {$this->task}!");
+			}
+		}
+
+		foreach ($this->staticTasks as $task) {
+			$method = 'handle'.ucfirst($task);
+			if (method_exists($this, $method) && !$this->$method($i)) {
+				throw new Exception("Invalid response task {$task}!");
+			}
 		}
 
 		return $i;
@@ -101,6 +116,14 @@ class Response extends \yii\web\Response
 		} elseif (!empty($this->success)) {
 			$i['success'] = true;
 			$i['message'] = $this->success;
+		}
+		return true;
+	}
+
+	protected function handleTrigger(&$i)
+	{
+		if (!empty($this->trigger)) {
+			$i['trigger'] = $this->trigger;
 		}
 		return true;
 	}

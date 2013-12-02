@@ -36,7 +36,7 @@ function InfiniteInstructionHandler (instructions, ajaxEvent, ajaxOptions) {
 	}
 }
 
-InfiniteInstructionHandler.prototype.staticPostTasks = ['status'];
+InfiniteInstructionHandler.prototype.staticPostTasks = ['status', 'trigger'];
 
 InfiniteInstructionHandler.prototype.handle = function() {
 	var self = this;
@@ -60,6 +60,16 @@ InfiniteInstructionHandler.prototype.runHandler = function(task) {
 };
 
 InfiniteInstructionHandler.prototype.handleStatus = function() {
+	return true;
+};
+
+InfiniteInstructionHandler.prototype.handleTrigger = function() {
+	if (this.instructions.trigger !== undefined) {
+		jQuery.each(this.instructions.trigger, function(index, event) {
+			$(event[1]).trigger(event[0]);
+			console.log(event);
+		});
+	}
 	return true;
 };
 
@@ -97,6 +107,9 @@ InfiniteInstructionHandler.prototype.handleDialog = function() {
 				if (settings.state === 'default') {
 					settings.state = 'primary';
 				}
+				$form.submit(function() {
+					$modal.modal('hide');
+				});
 				$button.click(function() {
 					$form.submit();
 				});
