@@ -94,9 +94,10 @@ InfiniteInstructionHandler.prototype.handleDialog = function() {
 	
 	if ($form.length > 0) {
 		$modal.on('shown.bs.modal', function() {
+			$preparer.fire($body);
 			$body.find(':focusable').first().focus();
 		});
-	}	
+	}
 
 	if (this.options.buttons !== undefined) {
 		var $footer = $("<div />", {'class': 'modal-footer'}).appendTo($dialogContent);

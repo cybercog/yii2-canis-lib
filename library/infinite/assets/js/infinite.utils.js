@@ -1,3 +1,24 @@
+$.fn.renderSelect = function(options, blank) {
+    var $this = $(this);
+    $this.html('');
+    if (blank !== undefined && blank) {
+        if (blank === true) {
+             $this.append($("<option />", {'value': ''}).html(''));
+        } else {
+             $this.append($("<option />", {'value': ''}).html(blank));
+        }
+    }
+    jQuery.each(options, function(index, value) {
+        if (typeof value === 'object') {
+            var $optgroup = $("<optgroup />", {'label' : index});
+            $optgroup.renderSelect(value, false);
+            $this.append($optgroup);
+        } else {
+            $this.append($("<option />", {'value': index}).html(value));
+        }
+    });
+};
+
 function Timer(callback, delay) {
     var timerId, start, remaining = delay;
 
