@@ -14,7 +14,8 @@
 		"components/underscore": "1.5.*",
 		"fortawesome/font-awesome": "*",
 		"malsup/form": "3.*",
-		"umpirsky/country-list": "*"
+		"umpirsky/country-list": "*",
+		"jom/php-subnational-division": "*"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "3.7.*"
