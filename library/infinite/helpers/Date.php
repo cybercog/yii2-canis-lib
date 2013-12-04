@@ -9,7 +9,7 @@
 
 namespace infinite\helpers;
 
-class Date extends \infinite\base\Component
+class Date extends \infinite\base\Object
 {
     /**
     * Override the current time of the application

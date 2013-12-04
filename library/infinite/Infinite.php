@@ -7,8 +7,6 @@
  */
 
 
-use Yii;
-
 class Infinite extends \yii\base\Extension
 {
     /**
@@ -17,7 +15,7 @@ class Infinite extends \yii\base\Extension
     public static function init()
     {
     	parent::init();
-        Yii::setAlias('@infinite', __DIR__);
-        Yii::$app->registerMigrationAlias('@infinite/db/migrations');
+        \Yii::setAlias('@infinite', __DIR__);
+        \Yii::$app->registerMigrationAlias('@infinite/db/migrations');
     }
 }
