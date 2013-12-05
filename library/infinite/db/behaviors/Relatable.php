@@ -15,8 +15,8 @@ use infinite\helpers\ArrayHelper;
 
 class Relatable extends \infinite\db\behaviors\ActiveRecord
 {
-	public $relationClass = '\app\models\Relation';
-	public $registryClass = '\app\models\Registry';
+	public $relationClass = 'app\models\Relation';
+	public $registryClass = 'app\models\Registry';
 
 	public $defaultRelation = [
 		'active' => 1

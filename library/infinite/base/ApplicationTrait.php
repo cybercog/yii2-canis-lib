@@ -9,6 +9,12 @@ trait ApplicationTrait {
 	protected $_migrationAliases = [];
 	protected $_modelAliases = [];
 
+	public function init() {
+		$start = microtime(true);
+		parent::init();
+		$duration = round((microtime(true) - $start) * 1000, 2);
+		Yii::trace("Init took ". $duration .'ms');
+	}
 
 	public function registerModelAlias($alias, $namespace) {
 		if (strncmp($alias, ':', 1)) {

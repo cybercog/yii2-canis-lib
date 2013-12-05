@@ -26,6 +26,8 @@ class Blame extends \infinite\db\behaviors\ActiveRecord
     public $modifiedByField = 'modified_user_id';
 
     public static $_userID;
+    protected $_fields;
+
 
     public function events()
     {
@@ -34,8 +36,6 @@ class Blame extends \infinite\db\behaviors\ActiveRecord
             \infinite\db\ActiveRecord::EVENT_BEFORE_UPDATE => 'beforeSave',
         ];
     }
-
-    protected $_fields;
 
     public function getFields()
     {

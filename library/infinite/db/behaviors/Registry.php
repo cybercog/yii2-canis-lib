@@ -16,7 +16,7 @@ use infinite\base\Exception;
 
 class Registry extends \infinite\db\behaviors\ActiveRecord
 {
-    public $registryClass = '\app\models\Registry';
+    public $registryClass = 'app\models\Registry';
     public static $_table;
 
     public function events()
@@ -43,8 +43,6 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
         if ($this->owner->isNewRecord && $this->owner->primaryKey == NULL) {
             $_registryModel = $this->registryClass;
             $fields = ['id' => $this->uuid(), 'object_model' => $this->owner->modelAlias, 'created' =>  new Expression('NOW()')];
-            //var_dump($fields);exit;
-            $lastDbId = Yii::$app->db->lastInsertId;
             if (!Yii::$app->db->createCommand()->insert($this->table, $fields)->execute()) {
                 throw new Exception("Unable to create registry item!");
             }
