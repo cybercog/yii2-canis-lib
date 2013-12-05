@@ -6,6 +6,8 @@ use Yii;
 use infinite\base\Collector;
 
 trait ApplicationTrait {
+	use ComponentTrait;
+	
 	protected $_migrationAliases = [];
 	protected $_modelAliases = [];
 
