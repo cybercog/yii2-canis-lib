@@ -123,3 +123,10 @@ input[type="submit"].disabled {
     padding-top: 10px;
     padding-bottom: 10px;
 }
+
+/* dropdowns */
+
+.dropleft .dropdown-menu {
+    left: auto;
+    right: 0;
+}
