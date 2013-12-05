@@ -23,6 +23,7 @@ class Setup extends \infinite\base\Object
     public $basePath;
     public $name = 'Application';
     public $pageTitle = 'Setup';
+    public $applicationNamespace = 'app';
     public $params = array();
     public $neededInformation = array();
 
@@ -157,7 +158,7 @@ class Setup extends \infinite\base\Object
             }
             $path = $tasksPath . DIRECTORY_SEPARATOR . $file;
             if(preg_match('/^Task_(\d{6}\_.*?)\.php$/',$file,$matches) AND is_file($path)) {
-                $className = '\app\setup\tasks\Task_'.$matches[1];
+                $className = $this->applicationNamespace . '\\setup\\tasks\\Task_'.$matches[1];
                 if (!include_once($path)) { continue; }
                 $task = new $className($this);
                 $tasks[$task->id] = $task;
