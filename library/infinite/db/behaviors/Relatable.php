@@ -9,7 +9,7 @@
 
 namespace infinite\db\behaviors;
 
-use \yii\db\Query;
+use yii\db\Query;
 use infinite\db\Tree;
 use infinite\helpers\ArrayHelper;
 

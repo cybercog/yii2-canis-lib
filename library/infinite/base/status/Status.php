@@ -9,7 +9,7 @@
 
 namespace infinite\base\status;
 
-use \yii\base\Event;
+use yii\base\Event;
 
 class Status extends \infinite\base\Component
 {

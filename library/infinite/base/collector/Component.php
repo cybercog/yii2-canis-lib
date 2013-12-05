@@ -8,7 +8,7 @@ use IteratorAggregate;
 
 use infinite\base\exceptions\Exception;
 
-use \yii\base\Arrayable;
+use yii\base\Arrayable;
 
 class Component extends \infinite\base\Component  implements IteratorAggregate, ArrayAccess, Arrayable 
 {

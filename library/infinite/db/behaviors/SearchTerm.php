@@ -9,7 +9,7 @@
 
 namespace infinite\db\behaviors;
 
-use \yii\db\Query;
+use yii\db\Query;
 
 class SearchTerm extends \infinite\db\behaviors\ActiveRecord
 {

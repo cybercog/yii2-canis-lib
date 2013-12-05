@@ -11,7 +11,7 @@ namespace infinite\db\behaviors;
 
 use Yii;
 
-use \yii\db\Expression;
+use yii\db\Expression;
 use infinite\base\Exception;
 
 class Registry extends \infinite\db\behaviors\ActiveRecord

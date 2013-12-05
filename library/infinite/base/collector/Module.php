@@ -5,8 +5,8 @@ use Yii;
 
 use infinite\base\exceptions\Exception;
 
-use \yii\base\Application;
-use \yii\base\Event;
+use yii\base\Application;
+use yii\base\Event;
 
 abstract class Module extends Collector {
 	const EVENT_AFTER_LOAD = 'afterLoad';

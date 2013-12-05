@@ -6,8 +6,8 @@ use Yii;
 use infinite\base\exceptions\Exception;
 use infinite\helpers\ArrayHelper;
 
-use \yii\base\Application;
-use \yii\base\Event;
+use yii\base\Application;
+use yii\base\Event;
 
 trait CollectorTrait
 {

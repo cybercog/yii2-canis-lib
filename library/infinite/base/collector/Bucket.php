@@ -4,7 +4,7 @@ namespace infinite\base\collector;
 use ArrayAccess;
 use ArrayIterator;
 use IteratorAggregate;
-use \yii\base\Arrayable;
+use yii\base\Arrayable;
 
 class Bucket extends \infinite\base\Object implements IteratorAggregate, ArrayAccess, Arrayable {
 	protected $_bucket = [];
