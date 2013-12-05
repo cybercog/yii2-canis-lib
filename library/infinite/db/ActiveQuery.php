@@ -8,11 +8,13 @@
 
 
 namespace infinite\db;
-use \yii\base\ModelEvent;
+
+use yii\base\ModelEvent;
+use infinite\base\ComponentTrait;
 
 class ActiveQuery extends \yii\db\ActiveQuery
 {
-    use \infinite\base\ComponentTrait;
+    use ComponentTrait;
     /**
      * @event Event an event that is triggered before a query
      */

@@ -3,7 +3,7 @@
 namespace infinite\console\components;
 
 
-use \infinite\base\exceptions\Exception;
+use infinite\base\exceptions\Exception;
 
 class CssSprite extends \infinite\base\Object {
 	public $sourceDirectory;

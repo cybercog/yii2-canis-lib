@@ -1,8 +1,10 @@
 <?php
 namespace infinite\base;
 
+use infinite\base\ObjectTrait;
+
 abstract class Module extends \yii\base\Module {
-	use \infinite\base\ObjectTrait;
+	use ObjectTrait;
 
 	protected $_systemId;
 

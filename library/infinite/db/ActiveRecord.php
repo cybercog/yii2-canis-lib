@@ -14,10 +14,11 @@ use ReflectionClass;
 
 use yii\base\ModelEvent;
 use infinite\db\ActiveQuery;
+use infinite\base\ObjectTrait;
 
 class ActiveRecord extends \yii\db\ActiveRecord
 {
-    use \infinite\base\ObjectTrait;
+    use ObjectTrait;
 
     static public $isAco = true;
     static protected $_cache = [];
@@ -168,10 +169,10 @@ class ActiveRecord extends \yii\db\ActiveRecord
     {
         return [
             'Date' => [
-                'class' => '\infinite\db\behaviors\Date',
+                'class' => 'infinite\db\behaviors\Date',
             ],
             'Blame' => [
-                'class' => '\infinite\db\behaviors\Blame',
+                'class' => 'infinite\db\behaviors\Blame',
             ]
         ];
     }
@@ -181,7 +182,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     {
         return [
             'Access' => [
-                'class' => '\infinite\db\behaviors\Access',
+                'class' => 'infinite\db\behaviors\Access',
             ]
         ];
     }

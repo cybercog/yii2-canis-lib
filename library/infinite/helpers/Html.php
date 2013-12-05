@@ -3,7 +3,7 @@ namespace infinite\helpers;
 
 use Yii;
 
-use \infinite\web\View;
+use infinite\web\View;
 
 class Html extends \yii\helpers\Html {
 	// public static function onLoadJsBlock($script, $key = null) {

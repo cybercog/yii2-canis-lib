@@ -6,7 +6,7 @@ use ArrayAccess;
 use ArrayIterator;
 use IteratorAggregate;
 
-use \infinite\base\exceptions\Exception;
+use infinite\base\exceptions\Exception;
 
 use \yii\base\Arrayable;
 

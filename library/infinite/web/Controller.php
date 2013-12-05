@@ -33,7 +33,7 @@ class Controller extends \yii\web\Controller
 	public function getResponse() {
 		$responseKey = self::className();
 		if (!isset(self::$_response[$responseKey])) {
-			self::$_response[$responseKey] = Yii::createObject(['class' => '\infinite\web\Response']);
+			self::$_response[$responseKey] = Yii::createObject(['class' => 'infinite\web\Response']);
 		}
 		self::$_response[$responseKey]->controller = $this;
 		return self::$_response[$responseKey];

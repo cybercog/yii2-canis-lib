@@ -3,7 +3,7 @@ namespace infinite\base\collector;
 
 use Yii;
 
-use \infinite\base\exceptions\Exception;
+use infinite\base\exceptions\Exception;
 
 use \yii\base\Application;
 use \yii\base\Event;

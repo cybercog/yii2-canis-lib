@@ -1,7 +1,7 @@
 <?php
 namespace infinite\web\grid;
 
-use \infinite\helpers\Html;
+use infinite\helpers\Html;
 
 class Row extends \infinite\base\Object {
 	const TOTAL_COLUMNS = 12;

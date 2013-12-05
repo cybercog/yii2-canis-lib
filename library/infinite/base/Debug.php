@@ -12,7 +12,7 @@ namespace infinite\base;
 use Yii;
 
 use \yii\helpers\VarDumper;
-use \infinite\db\ActiveRecord;
+use infinite\db\ActiveRecord;
 
 class Debug extends \infinite\base\Object
 {

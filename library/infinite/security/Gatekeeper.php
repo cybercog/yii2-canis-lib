@@ -11,12 +11,12 @@ namespace infinite\security;
 
 use Yii;
 
-use \infinite\base\exceptions\Exception;
-use \infinite\helpers\ArrayHelper;
-use \infinite\db\ActiveRecord;
+use infinite\base\exceptions\Exception;
+use infinite\helpers\ArrayHelper;
+use infinite\db\ActiveRecord;
 
-use \yii\db\Query;
-use \yii\db\Expression;
+use yii\db\Query;
+use yii\db\Expression;
 
 class Gatekeeper extends \infinite\base\Component
 {

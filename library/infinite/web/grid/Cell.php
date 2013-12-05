@@ -1,8 +1,8 @@
 <?php
 namespace infinite\web\grid;
 
-use \infinite\helpers\Html;
-use \infinite\base\exceptions\Exception;
+use infinite\helpers\Html;
+use infinite\base\exceptions\Exception;
 
 
 class Cell extends \infinite\base\Object implements \infinite\web\RenderInterface {

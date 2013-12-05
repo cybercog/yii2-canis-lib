@@ -5,7 +5,7 @@ use Yii;
 
 class Grid extends \infinite\base\Object {
 	//public $fillPreviousRows = true;
-	public $rowClass = '\infinite\web\grid\Row';
+	public $rowClass = 'infinite\web\grid\Row';
 
 	protected $_prepended = [];
 	protected $_appended = [];

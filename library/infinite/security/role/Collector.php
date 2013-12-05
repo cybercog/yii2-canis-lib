@@ -16,7 +16,7 @@ class Collector extends \infinite\base\collector\Collector
     public $initial = array();
 
     public function getCollectorItemClass() {
-		return '\infinite\security\role\Item';
+		return 'infinite\security\role\Item';
 	}
 
 

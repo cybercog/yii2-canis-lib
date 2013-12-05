@@ -10,8 +10,8 @@
 namespace infinite\db\behaviors;
 
 use \yii\db\Query;
-use \infinite\db\Tree;
-use \infinite\helpers\ArrayHelper;
+use infinite\db\Tree;
+use infinite\helpers\ArrayHelper;
 
 class Relatable extends \infinite\db\behaviors\ActiveRecord
 {

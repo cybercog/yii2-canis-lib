@@ -3,7 +3,7 @@ namespace infinite\base;
 
 use Yii;
 
-use \infinite\base\Collector;
+use infinite\base\Collector;
 
 trait ApplicationTrait {
 	protected $_migrationAliases = [];

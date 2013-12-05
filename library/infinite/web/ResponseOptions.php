@@ -3,9 +3,11 @@ namespace infinite\web;
 
 use Yii;
 
+use infinite\base\ObjectTrait;
+
 
 class ResponseOptions extends \infinite\base\Object {
-	use \infinite\base\ObjectTrait;
+	use ObjectTrait;
 	
 	public $justStatus = false;
 	public $error;

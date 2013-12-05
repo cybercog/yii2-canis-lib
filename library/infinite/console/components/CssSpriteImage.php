@@ -2,7 +2,7 @@
 
 namespace infinite\console\components;
 
-use \infinite\base\exceptions\Exception;
+use infinite\base\exceptions\Exception;
 
 class CssSpriteImage extends \infinite\base\Object {
 	public $path;

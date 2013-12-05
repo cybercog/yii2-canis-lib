@@ -3,11 +3,12 @@ namespace infinite\web;
 
 use Yii;
 
-use \infinite\base\exceptions\Exception;
+use infinite\base\exceptions\Exception;
+use infinite\base\ObjectTrait;
 
 class Response extends \yii\web\Response
 {
-	use \infinite\base\ObjectTrait;
+	use ObjectTrait;
 
 	public $controller;
 	public $view = false;

@@ -11,7 +11,7 @@ namespace infinite\security\role;
 
 use Yii;
 
-use \infinite\base\exceptions\Exception;
+use infinite\base\exceptions\Exception;
 
 class Item extends \infinite\base\Object
 {

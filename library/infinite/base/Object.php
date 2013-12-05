@@ -9,7 +9,9 @@
 
 namespace infinite\base;
 
+use infinite\base\ObjectTrait;
+
 class Object extends \yii\base\Object
 {
-	use \infinite\base\ObjectTrait;
+	use ObjectTrait;
 }

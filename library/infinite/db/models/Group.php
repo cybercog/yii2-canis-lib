@@ -31,10 +31,10 @@ class Group extends \infinite\db\ActiveRecord
         return array_merge(parent::behaviors(),
             [
                 'Registry' => [
-                	'class' => '\infinite\db\behaviors\Registry',
+                	'class' => 'infinite\db\behaviors\Registry',
                 ],
                 'Relatable' => [
-                	'class' => '\infinite\db\behaviors\Relatable',
+                	'class' => 'infinite\db\behaviors\Relatable',
                 ]
             ]
         );

@@ -3,8 +3,8 @@ namespace infinite\base\collector;
 
 use Yii;
 
-use \infinite\base\exceptions\Exception;
-use \infinite\helpers\ArrayHelper;
+use infinite\base\exceptions\Exception;
+use infinite\helpers\ArrayHelper;
 
 use \yii\base\Application;
 use \yii\base\Event;
@@ -43,7 +43,7 @@ trait CollectorTrait
 	}
 
 	public function getCollectorItemClass() {
-		return '\infinite\base\collector\Item';
+		return 'infinite\base\collector\Item';
 	}
 
 	public function prepareComponent($component) {

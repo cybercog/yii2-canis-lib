@@ -9,9 +9,12 @@
 
 namespace infinite\base;
 
+use infinite\base\ObjectTrait;
+use infinite\base\ComponentTrait;
+
 class Component extends \yii\base\Component
 {
-	use \infinite\base\ObjectTrait;
-	use \infinite\base\ComponentTrait;
+	use ObjectTrait;
+	use ComponentTrait;
 
 }
