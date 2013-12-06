@@ -107,7 +107,13 @@ InfiniteInstructionHandler.prototype.handleDialog = function() {
 	if ($form.length > 0) {
 		$modal.on('shown.bs.modal', function() {
 			$preparer.fire($body);
-			$body.find(':focusable').first().focus();
+			var $focus = $body.find('.has-error :focusable').first();
+			if ($focus.length === 0) {
+				$focus = $body.find(':focusable').first();
+			}
+			if ($focus.length > 0) {
+				$focus.focus();
+			}
 		});
 		$('input:not(.noEnterSubmit),select:not(.noEnterSubmit)', $form).keypress(function(e){
 			if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {

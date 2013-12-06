@@ -71,7 +71,7 @@ trait CollectorTrait
 		return true;
 	}
 
-	protected function getBucket($name = null, $distribute = true) {
+	public function getBucket($name = null, $distribute = true) {
 		if (is_null($name)) {
 			$name = Collector::DEFAULT_BUCKET;
 		}
@@ -140,14 +140,18 @@ trait CollectorTrait
 		$item = Yii::createObject($itemComponent);
 		Yii::trace(get_called_class() . ": Registering {$item->systemId}");
 		if (isset($this->bucket[$item->systemId])) {
-			if (isset($itemComponent['object'])) {
-				$this->bucket[$item->systemId]->object = $itemComponent['object'];
-			}
-			$item = $this->bucket[$item->systemId];
+			$item = $this->mergeExistingItems($this->bucket[$item->systemId], $item);
 		} else {
 			$this->bucket->add($item->systemId, $item);
 		}
 		return $item;
+	}
+
+	public function mergeExistingItems($originalItem, $newItem) {
+		if (isset($newItem->object)) {
+			$originalItem->object = $newItem->object;
+		}
+		return $originalItem;
 	}
 
 	public function registerMultiple($owner, $itemComponentSet) {
