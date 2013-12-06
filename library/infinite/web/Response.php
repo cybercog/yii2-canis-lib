@@ -5,6 +5,7 @@ use Yii;
 
 use infinite\base\exceptions\Exception;
 use infinite\base\ObjectTrait;
+use infinite\helpers\Html;
 
 class Response extends \yii\web\Response
 {
@@ -66,10 +67,11 @@ class Response extends \yii\web\Response
 		// high priority tasks
 		if ($this->redirect) {
 			$keepProcessing = false; 
-			$i['redirect'] = $this->redirect;
+			$i['redirect'] = Html::url($this->redirect);
+			$i['task'] = 'redirect';
 		} elseif ($this->refresh) {
-			$keepProcessing = false; 
-			$i['refresh'] = true;
+			$keepProcessing = false;
+			$i['task'] = 'refresh';
 		}
 
 		if (!$keepProcessing) {

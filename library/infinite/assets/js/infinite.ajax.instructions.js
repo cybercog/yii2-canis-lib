@@ -72,6 +72,18 @@ InfiniteInstructionHandler.prototype.handleTrigger = function() {
 	return true;
 };
 
+InfiniteInstructionHandler.prototype.handleRedirect = function() {
+	if (this.instructions.redirect !== undefined) {
+		window.location = this.instructions.redirect;
+	}
+	return true;
+};
+
+InfiniteInstructionHandler.prototype.handleRefresh = function() {
+	location.reload();
+	return true;
+};
+
 InfiniteInstructionHandler.prototype.handleDialog = function() {
 	var self = this;
 	$.debug("Handling dialog creation for AJAX request");
@@ -96,6 +108,14 @@ InfiniteInstructionHandler.prototype.handleDialog = function() {
 		$modal.on('shown.bs.modal', function() {
 			$preparer.fire($body);
 			$body.find(':focusable').first().focus();
+		});
+		$('input:not(.noEnterSubmit),select:not(.noEnterSubmit)', $form).keypress(function(e){
+			if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
+				$form.submit();
+				return false;
+			} else {
+				return true;
+			}
 		});
 	}
 
