@@ -21,6 +21,7 @@ class Setup extends \infinite\base\Object
     public static $_migrator;
     public static $_app;
     public $basePath;
+    public $applicationPath;
     public $name = 'Application';
     public $pageTitle = 'Setup';
     public $applicationNamespace = 'app';
@@ -237,7 +238,7 @@ class Setup extends \infinite\base\Object
             include_once($this->environmentFilePath);
         }
         if (isset($_GET['reset'])) {
-        //	return false; // don't want to let this just sit here. could be a big security risk.
+        //  return false; // don't want to let this just sit here. could be a big security risk.
         }
         return defined('INFINITE_APP_INSTANCE_VERSION');
     }
@@ -250,14 +251,6 @@ class Setup extends \infinite\base\Object
         return false;
     }
 
-    public function getApplicationPath()
-    {
-        $path = $this->basePath . DIRECTORY_SEPARATOR . 'app';
-        if (!is_dir($path)) {
-            throw new Exception("Application path does not exist: {$path}");
-        }
-        return $path;
-    }
 
     public function getConfigPath()
     {

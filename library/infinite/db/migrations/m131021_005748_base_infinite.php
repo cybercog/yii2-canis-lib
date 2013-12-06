@@ -4,8 +4,8 @@ namespace infinite\db\migrations;
 
 class m131021_005748_base_infinite extends \infinite\db\Migration
 {
-	public function up()
-	{
+    public function up()
+    {
         $this->db->createCommand()->checkIntegrity(false)->execute();
 
         // aca
@@ -153,7 +153,7 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
             'start' => 'date DEFAULT NULL',
             'end' => 'date DEFAULT NULL',
             'active' => 'bool NOT NULL',
-            'primary' => 'bool NOT NULL',
+            'primary' => 'bool NOT NULL DEFAULT 0',
             'special' => 'string DEFAULT NULL',
             'created' => 'datetime DEFAULT NULL',
             'modified' => 'datetime DEFAULT NULL'
@@ -214,12 +214,12 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
 
         $this->db->createCommand()->checkIntegrity(true)->execute();
 
-	}
+    }
 
 
 
-	public function down()
-	{
+    public function down()
+    {
       $this->db->createCommand()->checkIntegrity(false)->execute();
 
       $this->dropExistingTable('aca');
@@ -236,5 +236,5 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
 
       $this->db->createCommand()->checkIntegrity(true)->execute();
       return true;
-	}
+    }
 }
