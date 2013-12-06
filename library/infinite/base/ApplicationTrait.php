@@ -18,6 +18,13 @@ trait ApplicationTrait {
 		Yii::trace("Init took ". $duration .'ms');
 	}
 
+	public function getIsDbAvailable()
+	{
+		if (!isset($this->db)) { return false; }
+		if (defined('INFINITE_SETUP') && INFINITE_SETUP) { return false; }
+		return true;
+	}
+
 	public function registerModelAlias($alias, $namespace) {
 		if (strncmp($alias, ':', 1)) {
 			$alias = ':' . $alias;
