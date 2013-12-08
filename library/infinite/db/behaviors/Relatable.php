@@ -104,6 +104,8 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 		if (empty($this->relationModels[$id])) {
 			$this->_relationModels[$id] = new $this->relationClass;
 		}
+		$this->_relationModels[$id]->tabularId = $id;
+		var_dump([$id, $this->_relationModels[$id]->tabularId]);
 
 		return $this->relationModels[$id];
 	}

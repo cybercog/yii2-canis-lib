@@ -22,6 +22,8 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
     static public $isAco = true;
     static protected $_cache = [];
+    protected $_tabularId;
+
 
     const FORM_PRIMARY_MODEL = 'primary';
 
@@ -33,6 +35,15 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
     public $descriptorField;
 
+
+    public function setTabularId($value) {
+        $this->_tabularId = self::generateTabularId($value);
+    }
+
+    public function getTabularPrefix() {
+        return '['. $this->tabularId .']';
+    }
+    
     public static function generateTabularId($id) {
         return substr(md5($id), 0, 10);
     }
