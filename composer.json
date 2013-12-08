@@ -6,6 +6,20 @@
 	"type": "yii2-extension",
 	"license": "GPL -2.0",
 	"minimum-stability": "dev",
+	"repositories": [
+	 {
+            "type": "package",
+            "package": {
+                "name": "silviomoreto/bootstrap-select",
+                "version": "dev-master",
+                "source": {
+                    "url": "https://github.com/silviomoreto/bootstrap-select.git",
+                    "type": "git",
+                    "reference": "origin/master"
+                }
+            }
+        }
+	],
 	"require": {
 		"php": ">=5.4.0",
 		"yiisoft/yii2": "dev-master",
@@ -27,19 +41,5 @@
 	},
     "extra": {
             "bootstrap": "Infinite"
-    },
-	"repositories": [
-	   {
-            "type": "package",
-            "package": {
-                "name": "silviomoreto/bootstrap-select",
-                "version": "dev-master",
-                "source": {
-                    "url": "https://github.com/silviomoreto/bootstrap-select.git",
-                    "type": "git",
-                    "reference": "origin/master"
-                }
-            }
-        }
-	]
+    }
 }
