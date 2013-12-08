@@ -1,6 +1,7 @@
 var $preparer = $.Callbacks("memory");
 $preparer.fire(document);
 
+
 $(window).resize(function () {
     waitForFinalEvent(function(){
     	$(this).trigger("resizeDone");
@@ -8,6 +9,17 @@ $(window).resize(function () {
 });
 
 $preparer.add(function(context) {
+	$("form").submit(function(event) {
+		var e = jQuery.Event( "beforeSubmit" );
+		$(this).trigger(e);
+		if (e.isPropagationStopped()) {
+			event.stopPropagation();
+			return false;
+		} else {
+			return true;
+		}
+	});
+
 	$("[data-parent-height-watch]", context).each(function() {
 		var $this = $(this);
 		var offset = 0;
