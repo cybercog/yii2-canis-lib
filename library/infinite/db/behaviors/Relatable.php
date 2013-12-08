@@ -26,8 +26,8 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 	public $parent_object_id;
 	static $_tree_segments = [];
 
-	protected $_relationModels;
-	protected $_relationModelsOld;
+	protected static $_relationModels = [];
+	protected static $_relationModelsOld = [];
 
 
     public function events()
@@ -39,9 +39,10 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
 
     public function afterSave($event) {
-    	if (!empty($this->owner->primaryKey) && !is_null($this->_relationModels)) {
-    		foreach ($this->_relationModels as $key => $model) {
-    			unset($this->_relationModelsOld[$key]);
+    	$relationModelKey = '_';
+    	if (!empty($this->owner->primaryKey) && !empty(self::$_relationModels[$relationModelKey])) {
+    		foreach (self::$_relationModels[$relationModelKey] as $key => $model) {
+    			unset(self::$_relationModelsOld[$relationModelKey][$key]);
     			if (!is_object($model)) { continue; }
     			if (empty($model->parent_object_id) && empty($model->child_object_id)) {
     				continue;
@@ -63,7 +64,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     				$event->handled = false;
     			}
     		}
-    		foreach ($this->_relationModelsOld as $relationId) {
+    		foreach (self::$_relationModelsOld[$relationModelKey] as $relationId) {
     			$relationClass = $this->relationClass;
     			$relation = $relationClass::getOne($relationId);
     			if ($relation && !$relation->delete()) {
@@ -74,21 +75,25 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
 
     public function getRelationModels() {
-    	if (is_null($this->_relationModels)) {
+    	$relationModelKey = '_';
+    	if (!isset(self::$_relationModels[$relationModelKey])) {
     		if ($this->owner->isNewRecord) {
-    			$this->_relationModels = $this->_relationModelsOld = [];
+    			self::$_relationModels[$relationModelKey] = self::$_relationModelsOld[$relationModelKey] = [];
     		} else {
     			$relationClass = $this->relationClass;
     			$relationQuery = $relationClass::createQuery();
     			$relationQuery->select(['id'])->where(['or', 'parent_object_id=:object_id', 'child_object_id=:object_id'])->params([':object_id' => $this->owner->primaryKey]);
     			$relations = $relationQuery->column();
-    			$this->_relationModels = $this->_relationModelsOld = array_combine($relations, $relations);
+    			self::$_relationModels[$relationModelKey] = self::$_relationModelsOld[$relationModelKey] = array_combine($relations, $relations);
     		}
     	}
-    	return $this->_relationModels;
+    	return self::$_relationModels[$relationModelKey];
     }
 
 	public function getRelationModel($id) {
+    	$relationModelKey = '_';
+
+    	if (!isset($_relationModels[$relationModelKey])) { $_relationModels[$relationModelKey] = []; }
 		$idParts = explode(':', $id);
 
 		// if we're working with an existing relation in the database, pull it
@@ -98,14 +103,15 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 		// for lazy loading relations
 		if (isset($this->relationModels[$id]) && !is_object($this->relationModels[$id])) {
 			$relationClass = $this->relationClass;
-			$this->_relationModels[$id] = $relationClass::getOne($this->relationModels[$id]);
+			self::$_relationModels[$relationModelKey][$id] = $relationClass::getOne($this->relationModels[$id]);
 		}
 
-		if (empty($this->relationModels[$id])) {
-			$this->_relationModels[$id] = new $this->relationClass;
+		if (empty(self::$_relationModels[$relationModelKey][$id])) {
+			self::$_relationModels[$relationModelKey][$id] = new $this->relationClass;
+			self::$_relationModels[$relationModelKey][$id]->tabularId = $id;
+			//var_dump(['id' => $id, 'key' => $relationModelKey, 'tablularId' => self::$_relationModels[$relationModelKey][$id]->tabularId, 'current' => array_keys(self::$_relationModels[$relationModelKey])]);
 		}
-		$this->_relationModels[$id]->tabularId = $id;
-		var_dump([$id, $this->_relationModels[$id]->tabularId]);
+		//var_dump([$id, $this->_relationModels[$id]->tabularId]);
 
 		return $this->relationModels[$id];
 	}
