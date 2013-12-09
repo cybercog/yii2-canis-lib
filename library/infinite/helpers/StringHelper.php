@@ -26,13 +26,23 @@ class StringHelper extends \yii\helpers\StringHelper
 				$key = '/'.$v.'/';
 				$parse = $extracted[1][$k];
 				$replace[$key] = null;
-				if (isset($variables[$parse])) {
-					$replace[$key] = $variables[$parse];
-				}
 				$instructions = explode('.', $parse);
 				$top = array_shift($instructions);
 				if (isset($parseInstructionSet[$top])) {
 					$replace[$key] = $parseInstructionSet[$top]($instructions);
+				} elseif (isset($variables[$top])) {
+					$placementItem = $variables[$top];
+					while (!empty($placementItem) && is_object($placementItem) && !empty($instructions)) {
+						$nextInstruction = array_shift($instructions);
+						if (isset($placementItem->{$nextInstruction})) {
+							$placementItem = $placementItem->{$nextInstruction};
+						} else {
+							$placementItem = null;
+						}
+					}
+					if (!is_null($placementItem)) {
+						$replace[$key] = (string) $placementItem;
+					}
 				}
 			}
 		} else {
