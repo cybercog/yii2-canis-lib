@@ -83,6 +83,17 @@ input[type="submit"].disabled {
     width: 15px;
 }
 
+.list-group-item.active,
+.list-group-item.active > a,
+.list-group-item.active > h5 > a,
+.list-group-item.active a.dropdown-toggle {
+    color: #fff;
+}
+
+.list-group-item.active a {
+    text-shadow: none;
+}
+
 /* Embedded Panels */
 .embedded-panel .panel-heading {
     background-color: transparent;

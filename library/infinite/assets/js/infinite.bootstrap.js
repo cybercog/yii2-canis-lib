@@ -9,11 +9,17 @@ $(document).on('submit.infinite-api', 'form.ajax', function(e) {
 $(document).on('click.infinite-api', '[data-handler="background"]', function (e) {
 	var $this   = $(this), href;
 	var $target = $this.attr('data-target') || false;
+	var $dropdown = $this.parents('.dropdown-menu').first();
+	if ($dropdown.length > 0) {
+		$dropdown.dropdown('toggle');
+	}
+
 	var options = {
 		'data': {},
 		'type': 'GET',
 		'dataType': 'json'
 	};
+
 	if ($this.hasClass('disabled')) {
 		e.stopPropagation();
 		return false;

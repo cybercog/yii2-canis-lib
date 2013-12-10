@@ -6,6 +6,21 @@ use ReflectionClass;
 
 trait ObjectTrait
 {
+	protected $_memoryId;
+	protected $_backtrace;
+	public $watch = false;
+	public function init() {
+		parent::init();
+		if ($this->watch) {
+			$this->_backtrace = array_slice(debug_backtrace(), 1);
+		}
+	}
+	public function getMemoryId() {
+		if (is_null($this->_memoryId)) {
+			$this->_memoryId = self::classNamespace() .':'. md5(uniqid(md5(rand(0, 1000).microtime(true))));
+		}
+		return $this->_memoryId;
+	}
 	public function configure($settings)
 	{
 		foreach ($settings as $key => $value) {

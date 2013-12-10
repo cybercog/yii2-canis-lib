@@ -28,6 +28,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 
 	protected static $_relationModels = [];
 	protected static $_relationModelsOld = [];
+	protected $_relationsKey;
 
 
     public function events()
@@ -39,8 +40,12 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
 
     public function afterSave($event) {
-    	$relationModelKey = '_';
+    	$relationModelKey = $this->relationsKey;
     	if (!empty($this->owner->primaryKey) && !empty(self::$_relationModels[$relationModelKey])) {
+    		if (!isset(self::$_relationModelsOld[$relationModelKey])) {
+    			self::$_relationModelsOld[$relationModelKey] = [];
+    		}
+    		//\d([$relationModelKey, array_keys(self::$_relationModels[$relationModelKey])]);exit;
     		foreach (self::$_relationModels[$relationModelKey] as $key => $model) {
     			unset(self::$_relationModelsOld[$relationModelKey][$key]);
     			if (!is_object($model)) { continue; }
@@ -71,11 +76,45 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     				$event->handled = false;
     			}
     		}
+    		self::$_relationModels[$relationModelKey] = self::$_relationModelsOld[$relationModelKey] = null;
     	}
     }
 
+    public function getRelationsKey() {
+    	if (is_null($this->_relationsKey)) {
+    		if (!empty($this->owner->primaryKey)) {
+    			$this->_relationsKey = $this->owner->primaryKey;
+    		} else {
+    			$this->_relationsKey = $this->owner->memoryId;
+    		}
+    	}
+    	return $this->_relationsKey;
+    }
+
+    public function getParentRelationModels() {
+    	$relationModelKey = '_parent';
+    	if (!isset(self::$_relationModels[$relationModelKey])) {
+	    	$relationClass = $this->relationClass;
+			$relationQuery = $relationClass::createQuery();
+			$relationQuery->select(['id'])->where('child_object_id=:object_id')->params([':object_id' => $this->owner->primaryKey]);
+			self::$_relationModels[$relationModelKey] = $relationQuery->all();
+    	}
+    	return self::$_relationModels[$relationModelKey];
+    }
+
+    public function getChildRelationModels() {
+    	$relationModelKey = '_child';
+    	if (!isset(self::$_relationModels[$relationModelKey])) {
+	    	$relationClass = $this->relationClass;
+			$relationQuery = $relationClass::createQuery();
+			$relationQuery->select(['id'])->where('parent_object_id=:object_id')->params([':object_id' => $this->owner->primaryKey]);
+			self::$_relationModels[$relationModelKey] = $relationQuery->all();
+    	}
+    	return self::$_relationModels[$relationModelKey];
+    }
+
     public function getRelationModels() {
-    	$relationModelKey = '_';
+    	$relationModelKey = $this->relationsKey;
     	if (!isset(self::$_relationModels[$relationModelKey])) {
     		if ($this->owner->isNewRecord) {
     			self::$_relationModels[$relationModelKey] = self::$_relationModelsOld[$relationModelKey] = [];
@@ -90,14 +129,27 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     	return self::$_relationModels[$relationModelKey];
     }
 
-	public function getRelationModel($id) {
-    	$relationModelKey = '_';
-
+    public function registerRelationModel($model) {
+    	$relationModelKey = $this->relationsKey;
+    	$id = $model->tabularId;
     	if (!isset($_relationModels[$relationModelKey])) { $_relationModels[$relationModelKey] = []; }
 		$idParts = explode(':', $id);
 
 		// if we're working with an existing relation in the database, pull it
-		if (isset($idParts[3]) && isset($this->relationModels[$idParts[3]])) {
+		if (isset($idParts[3]) && substr($idParts[3], 0, 1) !== '_' && isset($this->relationModels[$idParts[3]])) {
+			$id = $idParts[3];
+		}
+		self::$_relationModels[$relationModelKey][$id] = $model;
+    }
+
+	public function getRelationModel($id) {
+    	$relationModelKey = $this->relationsKey;
+    	if (!isset($_relationModels[$relationModelKey])) { $_relationModels[$relationModelKey] = []; }
+
+		$idParts = explode(':', $id);
+
+		// if we're working with an existing relation in the database, pull it
+		if (isset($idParts[3]) && substr($idParts[3], 0, 1) !== '_' && isset($this->relationModels[$idParts[3]])) {
 			$id = $idParts[3];
 		}
 		// for lazy loading relations

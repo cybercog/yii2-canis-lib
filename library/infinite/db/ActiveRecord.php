@@ -23,9 +23,12 @@ class ActiveRecord extends \yii\db\ActiveRecord
     static public $isAco = true;
     static protected $_cache = [];
     protected $_tabularId;
+    public $tabularIdHuman;
 
 
     const FORM_PRIMARY_MODEL = 'primary';
+
+    const TABULAR_PREFIX = '0-';
 
     /**
      * @event Event an event that is triggered after a failed save.
@@ -37,6 +40,8 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
 
     public function setTabularId($value) {
+        $this->tabularIdHuman = $value;
+        //\d($value, ['showSteps' => 10]);
         $this->_tabularId = self::generateTabularId($value);
     }
 
@@ -44,8 +49,10 @@ class ActiveRecord extends \yii\db\ActiveRecord
         return '['. $this->tabularId .']';
     }
     
-    public static function generateTabularId($id) {
-        return substr(md5($id), 0, 10);
+    public static function generateTabularId($id) 
+    {
+        if (substr($id, 0, strlen(self::TABULAR_PREFIX)) === self::TABULAR_PREFIX) { return $id; }
+        return self::TABULAR_PREFIX.substr(md5($id), 0, 10);
     }
 
     public static function getPrimaryTabularId() {
@@ -55,7 +62,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     public static function getPrimaryModel($models) {
         if (empty($models)) { return false; }
         foreach ($models as $tabKey => $model) {
-            if ($tabKey === self::getPrimaryTabularId()) {
+            if ($tabKey === self::getPrimaryTabularId(self::baseClassName())) {
                 return $model;
             }
         }

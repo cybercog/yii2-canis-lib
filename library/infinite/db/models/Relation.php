@@ -21,6 +21,7 @@ namespace infinite\db\models;
  */
 class Relation extends \infinite\db\ActiveRecord
 {
+	static $_callCache = [];
 	/**
 	 * @inheritdoc
 	 */
@@ -75,5 +76,14 @@ class Relation extends \infinite\db\ActiveRecord
 	public function getParentObject()
 	{
 		return $this->hasOne('Registry', ['id' => 'parent_object_id']);
+	}
+
+	public function getSiblings()
+	{
+		$callCacheKey = md5(serialize([__FUNCTION__, 'id' => $this->id]));
+		if (!isset(self::$_callCache[$callCacheKey])) {
+			self::$_callCache[$callCacheKey] = self::findAll(['parent_object_id' => $this->parent_object_id]);
+		}
+		return self::$_callCache[$callCacheKey];
 	}
 }
