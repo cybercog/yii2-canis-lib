@@ -11,7 +11,11 @@ $(document).on('click.infinite-api', '[data-handler="background"]', function (e)
 	var $target = $this.attr('data-target') || false;
 	var $dropdown = $this.parents('.dropdown-menu').first();
 	if ($dropdown.length > 0) {
-		$dropdown.dropdown('toggle');
+		$dropdownParent = $dropdown.parent();
+		$dropdownParent.trigger(e = $.Event('hide.bs.dropdown'));
+		if (!e.isDefaultPrevented()) {
+			$dropdownParent.removeClass('open').trigger('hidden.bs.dropdown');
+		}
 	}
 
 	var options = {

@@ -9,6 +9,7 @@ $(window).resize(function () {
 });
 
 $preparer.add(function(context) {
+	console.log(context);
 	$("form").submit(function(event) {
 		var e = jQuery.Event( "beforeSubmit" );
 		$(this).trigger(e);

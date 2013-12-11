@@ -86,7 +86,6 @@ InfiniteInstructionHandler.prototype.handleRefresh = function() {
 
 InfiniteInstructionHandler.prototype.handleDialog = function() {
 	var self = this;
-	$.debug("Handling dialog creation for AJAX request");
 	if (!this.content) {
 		$.debug("No content provided!");
 		return false;
