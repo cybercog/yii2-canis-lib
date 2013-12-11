@@ -212,6 +212,12 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 		return $query->all();
 	}
 
+	public function parentsCount($model, $relationOptions = [], $modelOptions = []) {
+		$query = $this->relativesQuery('parents', $model, $relationOptions, $modelOptions);
+		if (!$query) { return false; }
+		return $query->count();
+	}
+
 	public function getParentIds($models = null, $relationOptions = []) {
 		return $this->relativeIds('parents', $models, $relationOptions);
 	}
