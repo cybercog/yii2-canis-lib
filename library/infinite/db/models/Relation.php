@@ -22,6 +22,15 @@ namespace infinite\db\models;
 class Relation extends \infinite\db\ActiveRecord
 {
 	static $_callCache = [];
+
+	public function events()
+    {
+        return array_merge(parent::events(), [
+            \infinite\db\ActiveRecord::EVENT_BEFORE_INSERT => 'beforeSave',
+            \infinite\db\ActiveRecord::EVENT_BEFORE_UPDATE => 'beforeSave',
+        ]);
+    }
+
 	/**
 	 * @inheritdoc
 	 */
@@ -62,28 +71,15 @@ class Relation extends \infinite\db\ActiveRecord
 		];
 	}
 
-	/**
-	 * @return \yii\db\ActiveRelation
-	 */
 	public function getChildObject()
 	{
-		return $this->hasOne('Registry', ['id' => 'child_object_id']);
+		return Registry::getObject($this->child_object_id);
 	}
 
-	/**
-	 * @return \yii\db\ActiveRelation
-	 */
 	public function getParentObject()
 	{
-		return $this->hasOne('Registry', ['id' => 'parent_object_id']);
+		return Registry::getObject($this->parent_object_id);
 	}
 
-	public function getSiblings()
-	{
-		$callCacheKey = md5(serialize([__FUNCTION__, 'id' => $this->id]));
-		if (!isset(self::$_callCache[$callCacheKey])) {
-			self::$_callCache[$callCacheKey] = self::findAll(['parent_object_id' => $this->parent_object_id]);
-		}
-		return self::$_callCache[$callCacheKey];
-	}
+	
 }

@@ -45,7 +45,6 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     		if (!isset(self::$_relationModelsOld[$relationModelKey])) {
     			self::$_relationModelsOld[$relationModelKey] = [];
     		}
-    		//\d([$relationModelKey, array_keys(self::$_relationModels[$relationModelKey])]);exit;
     		foreach (self::$_relationModels[$relationModelKey] as $key => $model) {
     			unset(self::$_relationModelsOld[$relationModelKey][$key]);
     			if (!is_object($model)) { continue; }
@@ -167,6 +166,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 
 		return $this->relationModels[$id];
 	}
+
 
 
 	/**
@@ -433,7 +433,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 
 		// then add in model attributes (if there are any)
 		foreach ($modelOptions as $k => $v) {
-			if (in_array($k, ['order', 'orderBy', 'limit', 'fields', 'field', 'notField', 'disableAcl', 'enableAcl'])) {
+			if (in_array($k, ['order', 'orderBy', 'limit', 'fields', 'field', 'notField', 'disableAccess', 'enableAccess'])) {
 				$o->$k($v);
 			}
 		}
@@ -579,23 +579,6 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 		$relations->where($where);
 		return $relations->findAll();
 	}
-
-
-	/**
-	 * lazy way of retrieving HAS_ONE related items
-	 *
-	 * @param unknown $model
-	 * @param unknown $modelAttr (optional)
-	 * @return unknown
-	 */
-	function item($model, $modelAttr = []) {
-		$item = $this->items($model, $modelAttr, 1);
-		if (!isset($item[0])) {
-			return false;
-		}
-		return $item[0];
-	}
-
 
 	public function buildTree($levels = 5, $model = null, $relationOptions = [], $modelOptions = []) {
 		$object = $this->owner;
