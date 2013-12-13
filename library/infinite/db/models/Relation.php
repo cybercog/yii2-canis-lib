@@ -21,6 +21,7 @@ namespace infinite\db\models;
  */
 class Relation extends \infinite\db\ActiveRecord
 {
+	public $registryClass = 'infinite\\models\\Registry';
 	static $_callCache = [];
 
 	public function events()
@@ -73,12 +74,14 @@ class Relation extends \infinite\db\ActiveRecord
 
 	public function getChildObject()
 	{
-		return Registry::getObject($this->child_object_id);
+		$registryClass = $this->registryClass;
+		return $registryClass::getObject($this->child_object_id);
 	}
 
 	public function getParentObject()
 	{
-		return Registry::getObject($this->parent_object_id);
+		$registryClass = $this->registryClass;
+		return $registryClass::getObject($this->parent_object_id);
 	}
 
 	

@@ -2,7 +2,6 @@
 namespace infinite\db\behaviors;
 
 use infinite\db\models\Relation;
-use infinite\db\behaviors\Relatable;
 
 class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
 {
@@ -43,7 +42,7 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
 		return true;
 	}
 
-	public function setPrimary($save = true)
+	public function setPrimary()
 	{
 		if (!$this->handlePrimary()) { return false; }
 		$primarySiblings = $this->getSiblings(true);
@@ -65,7 +64,7 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
 			$siblings = $this->getSiblings(false);
 			if (!empty($siblings)) {
 				$sibling = array_shift($siblings);
-
+				$sibling->setPrimary();
 			}
 		}
 	}

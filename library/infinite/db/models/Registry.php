@@ -57,6 +57,15 @@ class Registry extends \infinite\db\ActiveRecord
 		];
 	}
 
+	public function behaviors()
+    {
+        return array_merge(parent::behaviors(),
+            [
+                'Relatable' => 'infinite\db\behaviors\Relatable',
+            ]
+        );
+    }
+    
 	/**
 	 *
 	 *

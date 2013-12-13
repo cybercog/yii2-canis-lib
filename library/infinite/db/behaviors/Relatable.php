@@ -10,6 +10,8 @@
 namespace infinite\db\behaviors;
 
 use yii\db\Query;
+use yii\base\Event;
+
 use infinite\db\Tree;
 use infinite\helpers\ArrayHelper;
 
@@ -34,6 +36,8 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 	protected static $_relationModelsOld = [];
 	protected $_relationsKey;
 
+    static $_setGlobalEvents = false;
+
 	/*
 		Events stuff
 	*/
@@ -45,7 +49,26 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
         ];
     }
 
-    public function afterSave($event) {
+    public function init()
+    {
+        parent::init();
+        $registryClass = $this->registryClass;
+        if (!self::$_setGlobalEvents) {
+            self::$_setGlobalEvents = true;
+            Event::on($this->registryClass, $registryClass::EVENT_BEFORE_DELETE, array($this, 'cleanupRelations'));
+        }
+    }
+
+    public function cleanupRelations($event = null)
+    {
+        $relatedModels = $event->sender->relationModels;
+        foreach ($relatedModels as $model) {
+            $model->delete();
+        }   
+    }
+
+    public function afterSave($event)
+    {
     	$relationModelKey = $this->relationsKey;
     	if (!empty($this->owner->primaryKey) && !empty(self::$_relationModels[$relationModelKey])) {
     		if (!isset(self::$_relationModelsOld[$relationModelKey])) {
@@ -112,7 +135,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     		if ($this->owner->isNewRecord) {
     			self::$_relationModels[$relationModelKey] = self::$_relationModelsOld[$relationModelKey] = [];
     		} else {
-    			self::$_relationModels[$relationModelKey] = self::$_relationModelsOld[$relationModelKey] = ArrayHelper::index($this->queryAllRelations(false, ['activeOnly' => $activeOnly]), 'id');
+    			self::$_relationModels[$relationModelKey] = self::$_relationModelsOld[$relationModelKey] = ArrayHelper::index($this->queryAllRelations(false, ['activeOnly' => $activeOnly]), 'primaryKey');
     		}
     	}
     	return self::$_relationModels[$relationModelKey];
