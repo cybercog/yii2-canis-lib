@@ -24,20 +24,11 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 	public $startDateField = 'start';
 	public $endDateField = 'end';
 
-	public $registryModelField = 'model';
+	public $registryModelField = 'object_model';
 
 	public $objectAlias = 'o';
 	public $relationAlias = 'r';
 	public $registryAlias = 'x';
-
-
-	public $defaultRelation = [
-		$this->activeField => 1
-	];
-
-	public $child_object_id;
-	public $parent_object_id;
-	static $_tree_segments = [];
 
 	protected static $_relationModels = [];
 	protected static $_relationModelsOld = [];
@@ -63,13 +54,13 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     		foreach (self::$_relationModels[$relationModelKey] as $key => $model) {
     			unset(self::$_relationModelsOld[$relationModelKey][$key]);
     			if (!is_object($model)) { continue; }
-    			if (empty($model->parent_object_id) && empty($model->child_object_id)) {
+    			if (empty($model->{$this->parentObjectField}) && empty($model->{$this->childObjectField})) {
     				continue;
     			}
-    			if (empty($model->parent_object_id)) {
-    				$model->parent_object_id = $this->owner->primaryKey;
-    			} elseif (empty($model->child_object_id)) {
-    				$model->child_object_id = $this->owner->primaryKey;
+    			if (empty($model->{$this->parentObjectField})) {
+    				$model->{$this->parentObjectField} = $this->owner->primaryKey;
+    			} elseif (empty($model->{$this->childObjectField})) {
+    				$model->{$this->childObjectField} = $this->owner->primaryKey;
     			}
     			if ($model->isNewRecord) {
     				$dirty = $model->getDirtyAttributes(array_keys($this->defaultRelation));
@@ -94,6 +85,13 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     	}
     }
 
+    public function getDefaultRelation()
+    {
+    	return [
+    		$this->activeField => 1
+    	];
+    }
+
     public function getRelationsKey()
     {
     	if (is_null($this->_relationsKey)) {
@@ -107,12 +105,14 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
 
     public function getRelationModels($activeOnly = false) {
-    	$relationModelKey = md5(serialize(['key' => $this->relationsKey, 'activeOnly' => $activeOnly]));;
+    	$relationModelKey = $this->relationsKey;
+        $relationClass = $this->relationClass;
+        $relationPrimaryKey = $relationClass::primaryKey()[0];
     	if (!isset(self::$_relationModels[$relationModelKey])) {
     		if ($this->owner->isNewRecord) {
     			self::$_relationModels[$relationModelKey] = self::$_relationModelsOld[$relationModelKey] = [];
     		} else {
-    			self::$_relationModels[$relationModelKey] = self::$_relationModelsOld[$relationModelKey] = $this->queryAllRelations(false, ['activeOnly' => $activeOnly]);
+    			self::$_relationModels[$relationModelKey] = self::$_relationModelsOld[$relationModelKey] = ArrayHelper::index($this->queryAllRelations(false, ['activeOnly' => $activeOnly]), 'id');
     		}
     	}
     	return self::$_relationModels[$relationModelKey];
@@ -154,6 +154,20 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 		return $this->relationModels[$id];
 	}
 
+	public function parents($model, $relationOptions = [], $objectOptions = [])
+    {
+    	return $this->queryParentObjects($model, $relationOptions, $objectOptions)->all();
+    }
+
+    public function parent($model, $relationOptions = [], $objectOptions = [])
+    {
+    	return $this->queryParentObjects($model, $relationOptions, $objectOptions)->one();
+    }
+
+    public function children($model, $relationOptions = [], $objectOptions = [])
+    {
+    	return $this->queryChildObjects($model, $relationOptions, $objectOptions)->all();
+    }
 
     public function queryParentObjects($model, $relationOptions = [], $objectOptions = [])
     {
@@ -176,6 +190,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 		}
 
 		$query = $modelClass::createQuery();
+		$this->objectAlias = $modelClass::tableName();
 		$this->_prepareRelationQuery($query, $relationshipType, $model, $relationOptions);
 		$this->_prepareObjectQuery($query, $relationshipType, $model, $objectOptions);
     	return $query;
@@ -201,13 +216,15 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     {
     	$relationClass = $this->relationClass;
     	$query = $relationClass::createQuery();
+        $this->relationAlias = $relationClass::tableName();
     	$this->_prepareRelationQuery($query, $relationshipType, $model, $relationOptions);
-    	$this->_prepareRegistryModelCheck($query, $model);
+    	$this->_prepareRegistryModelCheck($query, $relationshipType, $model);
     	return $query;
     }
 
     public function siblingObjectQuery($parent, $relationOptions = [], $objectOptions = [])
     {
+        $objectClass = get_class($this->owner);
     	$this->_prepareSiblingOptions($relationOptions);
 		return $parent->queryChildObjects($objectClass, $relationOptions, $objectOptions);
     }
@@ -215,15 +232,21 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 
     public function siblingRelationQuery($parent, $relationOptions = [], $objectOptions = [])
     {
+        $objectClass = get_class($this->owner);
     	$this->_prepareSiblingOptions($relationOptions);
 		return $parent->queryChildRelations($objectClass, $relationOptions, $objectOptions);
     }
 
     protected function _prepareSiblingOptions(&$relationOptions)
     {
-    	if (!isset($relationOptions['where'])) { $relationOptions['where'] = []; }
+    	if (!isset($relationOptions['where'])) {
+            $relationOptions['where'] = [];
+        } else {
+            $relationOptions['where'] = ['and', $relationOptions['where']];
+        }
     	if (!isset($relationOptions['params'])) { $relationOptions['params'] = []; }
-    	$relationOptions['where'][] = $this->objectAlias .'.'. $objectClass::primaryKey() .' != :ownerPrimaryKey';
+        $objectClass = get_class($this->owner);
+    	$relationOptions['where'][] =  ['and', '%alias%.'. $this->parentObjectField .' != :ownerPrimaryKey'];
 		$relationOptions['params'][':ownerPrimaryKey'] = $this->owner->primaryKey;
     }
 
@@ -277,12 +300,27 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 		return $descendants;
 	}
 
+
+    protected function _aliasKeys($conditions, $alias)
+    {
+        if (is_array($conditions)) {
+            $newConditions = [];
+            foreach ($conditions as $k => $v) {
+                $newConditions[$this->_aliasKeys($k, $alias)] = $this->_aliasKeys($v, $alias);
+            }
+            return $newConditions;
+        } else {
+            return strtr($conditions, ['%alias%' => $alias]);
+        }
+    }
+
+
 	protected function _prepareObjectQuery(Query $query, $relationshipType = false, $model = false, $objectOptions = [])
     {
     	$relationClass = $this->relationClass;
     	$relationTableAlias = $relationClass::tableName() . ' ' . $this->relationAlias;
     	if (!empty($objectOptions['where'])) {
-    		$query->andWhere($objectOptions['where']);
+    		$query->andWhere($this->_aliasKeys($objectOptions['where'], $this->objectAlias));
     		unset($objectOptions['where']);
     	}
     	if (!empty($objectOptions['params'])) {
@@ -293,14 +331,22 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     	return $query;
     }
 
-    protected function _prepareRegistryModelCheck($query, $model)
+    protected function _prepareRegistryModelCheck($query, $relationshipType, $model)
     {
     	if ($model) {
     		$relationClass = $this->relationClass;
     		$registryClass = $this->registryClass;
     		$registryTableAlias = $registryClass::tableName() . ' ' . $this->registryAlias;
-    		$query->leftJoin($registryTableAlias, [$this->registryAlias . '.'. $registryClass::primaryKey() => $this->relationClass . '.'. $relationClass::primaryKey()]);
-    		$query->addWhere([$this->registryAlias .'.'. $this->registryModelField => $model]);
+            if ($relationshipType === 'children') {
+                $relationKey = $this->relationAlias . '.'. $this->childObjectField;
+            } else {
+                $relationKey = $this->relationAlias . '.'. $this->parentObjectField;
+            }
+            if (!is_object($model)) {
+                $model = new $model;
+            }
+    		$query->leftJoin($registryTableAlias, $this->registryAlias . '.'. $registryClass::primaryKey()[0] .'='.  $relationKey);
+    		$query->andWhere([$this->registryAlias .'.'. $this->registryModelField => $model::modelAlias()]);
     	}
     }
 
@@ -317,6 +363,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     	unset($relationOptions['params']);
     	unset($relationOptions['activeOnly']);
 
+
     	$modelClass = false;
     	if (isset($model) && $model) {
     		if (is_object($model)) {
@@ -325,6 +372,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     			$modelClass = $model;
     			$model = new $modelClass;
     		}
+    		$modelPrimaryKey = $modelClass::primaryKey()[0];
     	}
 
     	$relationQuery = $query->modelClass === $this->relationClass || !$model;
@@ -338,9 +386,9 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     	if ($model && $relationshipType === 'parents') {
 			$primaryKey = $this->parentObjectField;
 			$foreignKey = $this->childObjectField;
-    	} elseif ($model && $relationshipType === 'children') { {
-			$primaryKey = $this->parentObjectField;
-			$foreignKey = $this->childObjectField;
+    	} elseif ($model && $relationshipType === 'children') {
+			$primaryKey = $this->childObjectField;
+			$foreignKey = $this->parentObjectField;
     	} else {
     		$conditions[] = [
     			'or',
@@ -349,8 +397,8 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     		];
     	}
 
-    	if ($model && isset($primaryKey)) {
-			$conditions[] = [$this->relationAlias .'.'. $primaryKey => $this->objectAlias .'.'. $modelClass::primaryKey()];
+    	if (!$relationQuery && $model && isset($primaryKey)) {
+			$conditions[] = $this->relationAlias .'.'. $primaryKey .' = '. $this->objectAlias .'.'. $modelPrimaryKey;
 		}
 
     	if ($model && isset($foreignKey)) {
@@ -358,17 +406,17 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 		}
 
 		if ($activeOnly) {
-			$isActiveCondition = [$this->activeField => 1];
+			$isActiveCondition = [$this->relationAlias .'.'.$this->activeField => 1];
 			if (isset($activeConditions[$this->activeField])) {
 				$isActiveCondition = $activeConditions[$this->activeField];
 				unset($activeConditions[$this->activeField]);
 			}
-			$startDateCondition = ['or', $this->relationAlias .'.'. $this->startDateField . ' IS NULL', $this->relationAlias .'.'. $this->startDateField .' < NOW()'];
+			$startDateCondition = ['or', $this->relationAlias .'.'. $this->startDateField . ' IS NULL', $this->relationAlias .'.'. $this->startDateField .' > NOW()'];
 			if (isset($activeConditions[$this->startDateField])) {
 				$startDateCondition = $activeConditions[$this->startDateField];
 				unset($activeConditions[$this->startDateField]);
 			}
-			$endDateCondition = ['or', $this->relationAlias .'.'. $this->endDateField . ' IS NULL', $this->relationAlias .'.'. $this->endDateField .' > NOW()'];
+			$endDateCondition = ['or', $this->relationAlias .'.'. $this->endDateField . ' IS NULL', $this->relationAlias .'.'. $this->endDateField .' < NOW()'];
 			if (isset($activeConditions[$this->endDateField])) {
 				$endDateCondition = $activeConditions[$this->endDateField];
 				unset($activeConditions[$this->endDateField]);
@@ -377,12 +425,13 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 			foreach ($parts as $part) {
 				$var = $part .'Condition';
 				if (isset($$var) && $$var) {
-					$conditions[] = $$var;
+					$conditions[] = $this->_aliasKeys($$var, $this->relationAlias);
 				}
 			}
 		}
 
 		if (!empty($activeConditions)) {
+            $activeConditions = $this->_aliasKeys($activeConditions, $this->relationAlias);
 			$conditions[] = $activeConditions;
 		}
 
@@ -405,24 +454,4 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     	}
     	return true;
     }
-
-
-	// public function buildTree($levels = 5, $model = null, $relationOptions = [], $modelOptions = []) {
-	// 	$object = $this->owner;
-	// 	if (is_object($model)) {
-	// 		$object = $model;
-	// 	}
-	// 	$model = get_class($object);
-	// 	$key = md5(serialize(['object_model' => $model, 'object' => $object->primaryKey]));
-	// 	if (isset(self::$_tree_segments[$key])) {
-	// 		return self::$_tree_segments[$key];
-	// 	}
-	// 	$children = [];
-	// 	if ($levels > 0) {
-	// 		foreach ($object->children($model, $relationAttr, $modelOptions) as $child) {
-	// 			$children[] = $child->buildTree($levels - 1, $child, $relationAttr, $modelOptions);
-	// 		}
-	// 	}
-	// 	return self::$_tree_segments[$key] = new Tree($object, $children);
-	// }
 }

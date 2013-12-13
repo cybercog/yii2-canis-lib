@@ -2,6 +2,7 @@
 namespace infinite\db\behaviors;
 
 use infinite\db\models\Relation;
+use infinite\db\behaviors\Relatable;
 
 class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
 {
@@ -27,9 +28,9 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
 		if (empty($childObject)) { return []; }
 		$relationFields = [];
 		if ($primaryOnly) {
-			$relationFields[$this->primaryField] = 1;
+			$relationFields['%alias%.'. $this->primaryField] = 1;
 		}
-		return $this->owner->siblingRelations($parentObject, ['fields' => $relationFields], ['disableAccess' => true]);
+		return $childObject->siblingRelationQuery($parentObject, ['where' => $relationFields], ['disableAccess' => true])->all();
 	}
 
 	public function beforeInsert($event = null)
@@ -42,11 +43,24 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
 		return true;
 	}
 
+	public function setPrimary($save = true)
+	{
+		if (!$this->handlePrimary()) { return false; }
+		$primarySiblings = $this->getSiblings(true);
+		foreach ($primarySiblings as $sibling) {
+			$sibling->{$this->primaryField} = 0;
+			if (!$sibling->save()) {
+				return false;
+			}
+		}
+		$this->owner->{$this->primaryField} = 1;
+		return $this->owner->save();
+	}
 
 	public function afterDelete($event = null)
 	{
 		if (!$this->handlePrimary()) { return true; }
-		if ($this->isPrimary()) {
+		if ($this->isPrimary) {
 			// assign a new primary
 			$siblings = $this->getSiblings(false);
 			if (!empty($siblings)) {
