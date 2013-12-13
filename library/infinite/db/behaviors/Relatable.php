@@ -30,7 +30,9 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 	protected static $_relationModelsOld = [];
 	protected $_relationsKey;
 
-
+	/*
+		Events stuff
+	*/
     public function events()
     {
         return [
@@ -79,7 +81,8 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     	}
     }
 
-    public function getRelationsKey() {
+    public function getRelationsKey()
+    {
     	if (is_null($this->_relationsKey)) {
     		if (!empty($this->owner->primaryKey)) {
     			$this->_relationsKey = $this->owner->primaryKey;
@@ -90,457 +93,37 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     	return $this->_relationsKey;
     }
 
-    public function getParentRelationModels() {
-    	$relationModelKey = '_parent';
-    	if (!isset(self::$_relationModels[$relationModelKey])) {
-	    	$relationClass = $this->relationClass;
-			$relationQuery = $relationClass::createQuery();
-			$relationQuery->select(['id'])->where('child_object_id=:object_id')->params([':object_id' => $this->owner->primaryKey]);
-			self::$_relationModels[$relationModelKey] = $relationQuery->all();
-    	}
-    	return self::$_relationModels[$relationModelKey];
+    public function queryParentObjects($model, $relationOptions = [], $objectOptions = [])
+    {
+    	return $this->queryRelativeObjects('parents', $model, $relationOptions, $objectOptions);
     }
 
-    public function getChildRelationModels() {
-    	$relationModelKey = '_child';
-    	if (!isset(self::$_relationModels[$relationModelKey])) {
-	    	$relationClass = $this->relationClass;
-			$relationQuery = $relationClass::createQuery();
-			$relationQuery->select(['id'])->where('parent_object_id=:object_id')->params([':object_id' => $this->owner->primaryKey]);
-			self::$_relationModels[$relationModelKey] = $relationQuery->all();
-    	}
-    	return self::$_relationModels[$relationModelKey];
+    public function queryChildObjects($model, $relationOptions = [], $objectOptions = [])
+    {
+    	return $this->queryRelativeObjects('children', $model, $relationOptions, $objectOptions);
     }
 
-    public function getRelationModels() {
-    	$relationModelKey = $this->relationsKey;
-    	if (!isset(self::$_relationModels[$relationModelKey])) {
-    		if ($this->owner->isNewRecord) {
-    			self::$_relationModels[$relationModelKey] = self::$_relationModelsOld[$relationModelKey] = [];
-    		} else {
-    			$relationClass = $this->relationClass;
-    			$relationQuery = $relationClass::createQuery();
-    			$relationQuery->select(['id'])->where(['or', 'parent_object_id=:object_id', 'child_object_id=:object_id'])->params([':object_id' => $this->owner->primaryKey]);
-    			$relations = $relationQuery->column();
-    			self::$_relationModels[$relationModelKey] = self::$_relationModelsOld[$relationModelKey] = array_combine($relations, $relations);
-    		}
-    	}
-    	return self::$_relationModels[$relationModelKey];
+
+    public function queryParentRelations($model = false, $relationOptions = [])
+    {
+    	return $this->queryRelations('parents', $model, $relationOptions, $objectOptions);
     }
 
-    public function registerRelationModel($model) {
-    	$relationModelKey = $this->relationsKey;
-    	$id = $model->tabularId;
-    	if (!isset($_relationModels[$relationModelKey])) { $_relationModels[$relationModelKey] = []; }
-		$idParts = explode(':', $id);
 
-		// if we're working with an existing relation in the database, pull it
-		if (isset($idParts[3]) && substr($idParts[3], 0, 1) !== '_' && isset($this->relationModels[$idParts[3]])) {
-			$id = $idParts[3];
-		}
-		self::$_relationModels[$relationModelKey][$id] = $model;
+    public function queryChildRelations($model = false, $relationOptions = [])
+    {
+    	return $this->queryRelations('children', $model, $relationOptions);
     }
 
-	public function getRelationModel($id) {
-    	$relationModelKey = $this->relationsKey;
-    	if (!isset($_relationModels[$relationModelKey])) { $_relationModels[$relationModelKey] = []; }
+    protected function _prepareRelationQuery(Query $query, $relationOptions = [])
+    {
 
-		$idParts = explode(':', $id);
+    }
 
-		// if we're working with an existing relation in the database, pull it
-		if (isset($idParts[3]) && substr($idParts[3], 0, 1) !== '_' && isset($this->relationModels[$idParts[3]])) {
-			$id = $idParts[3];
-		}
-		// for lazy loading relations
-		if (isset($this->relationModels[$id]) && !is_object($this->relationModels[$id])) {
-			$relationClass = $this->relationClass;
-			self::$_relationModels[$relationModelKey][$id] = $relationClass::getOne($this->relationModels[$id]);
-		}
+    protected function _prepareObjectQuery(Query $query, $objectOptions = [])
+    {
 
-		if (empty(self::$_relationModels[$relationModelKey][$id])) {
-			self::$_relationModels[$relationModelKey][$id] = new $this->relationClass;
-			self::$_relationModels[$relationModelKey][$id]->tabularId = $id;
-			//var_dump(['id' => $id, 'key' => $relationModelKey, 'tablularId' => self::$_relationModels[$relationModelKey][$id]->tabularId, 'current' => array_keys(self::$_relationModels[$relationModelKey])]);
-		}
-		//var_dump([$id, $this->_relationModels[$id]->tabularId]);
-
-		return $this->relationModels[$id];
-	}
-
-
-
-	/**
-	 *
-	 *
-	 * @param unknown $model
-	 * @param unknown $relationOptions (optional)
-	 * @param unknown $modelOptions    (optional)
-	 * @return unknown
-	 */
-	function children($model, $relationOptions = [], $modelOptions = []) {
-		$query = $this->relativesQuery('children', $model, $relationOptions, $modelOptions);
-		return $query->all();
-	}
-
-
-	/**
-	 *
-	 *
-	 * @param unknown $model
-	 * @param unknown $relationOptions (optional)
-	 * @param unknown $modelOptions    (optional)
-	 * @return unknown
-	 */
-	function parent($model, $relationOptions = [], $modelOptions = []) {
-		$query = $this->relativesQuery('parent', $model, $relationOptions, $modelOptions);
-		if (!$query) { return false; }
-		return $query->one();
-	}
-
-
-	/**
-	 *
-	 *
-	 * @param unknown $model
-	 * @param unknown $relationOptions (optional)
-	 * @param unknown $modelOptions    (optional)
-	 * @return unknown
-	 */
-	public function parents($model, $relationOptions = [], $modelOptions = []) {
-		$query = $this->relativesQuery('parents', $model, $relationOptions, $modelOptions);
-		if (!$query) { return false; }
-		return $query->all();
-	}
-
-	public function parentsCount($model, $relationOptions = [], $modelOptions = []) {
-		$query = $this->relativesQuery('parents', $model, $relationOptions, $modelOptions);
-		if (!$query) { return false; }
-		return $query->count();
-	}
-
-	public function getParentIds($models = null, $relationOptions = []) {
-		return $this->relativeIds('parents', $models, $relationOptions);
-	}
-
-	public function getChildIds($models = null, $relationOptions = []) {
-		return $this->relativeIds('children', $models, $relationOptions);
-	}
-
-	public function relativeIds($type, $models = null, $relationOptions = []) {
-		$_relationModel = $this->relationClass;
-		$_relation = new $_relationModel;
-		$_relationTable = $_relation->tableName();
-		$_relationFields = array_keys($_relationModel::getTableSchema()->columns);
-		
-
-		$_registryModel = $this->registryClass;
-		$_registry = new $_registryModel;
-		$_registryTable = $_registry->tableName();
-
-		if (!isset($relationOptions['fields'])) {
-			$relationAttr = [];
-		} else {
-			$relationAttr = $relationOptions['fields'];
-		}
-
-		if (in_array('active', $_relationFields)) {
-			if (!array_key_exists('active', $relationAttr)) {
-				$relationAttr['active'] = 1;
-			}
-		}
-		if (in_array('start', $_relationFields)) {
-			if (!array_key_exists('start', $relationAttr)) {
-				$relationAttr['start'] = ['IS NULL', '< NOW()'];
-			}
-		}
-		if (in_array('end', $_relationFields)) {
-			if (!array_key_exists('end', $relationAttr)) {
-				$relationAttr['end'] = ['IS NULL', '> NOW()'];
-			}
-		}
-
-		if ($type === 'parents') {
-			$primaryKey = 'parent_object_id';
-			$foreignKey = 'child_object_id';
-		} elseif ($type === 'parent') {
-			$primaryKey = 'parent_object_id';
-			$foreignKey = 'child_object_id';
-			$modelOptions['limit'] = 1;
-		} else {
-			$primaryKey = 'child_object_id';
-			$foreignKey = 'parent_object_id';
-		}
-
-		$whereParts = ['AND'];
-		$relationAttr[$foreignKey] = $this->owner->quote($this->owner->id);
-		foreach ($relationAttr as $key => $tests) {
-			if (empty($relationOn)) {
-				$partOn = '(';
-			} else {
-				$partOn = ' AND (';
-			}
-			if (is_array($tests)) {
-				$key = $_relationModel.'.'.$key;
-				$partOn2 = '';
-				foreach ($tests as $t) {
-					if (!empty($partOn2)) {
-						$partOn2 .= ' OR ';
-					}
-					$partOn2 .= $key;
-					if (in_array(substr($t, 0, 2), ['> ', '< ', '>=', '<=', '<>', '!=', 'IS'])) {
-						$partOn2 .= ' '. $t;
-					} else {
-						$partOn2 .= ' = '. $t;
-					}
-				}
-				$partOn .= $partOn2;
-			} else {
-				$key = '`'.$_relationModel.'`.`'.$key.'`';
-				$partOn .= $key;
-				if (in_array(substr($tests, 0, 2), ['> ', '< ', '>=', '<=', '<>', '!=', 'IS'])) {
-					$partOn .= ' '. $tests;
-				} else {
-					$partOn .= ' = '. $tests;
-				}
-			}
-			$partOn .= ')';
-			$whereParts[] = $partOn;
-		}
-		$where = ['AND', 'Registry.id=:object_id'];
-		$relationOn = 'Registry.id = Relation.'. $primaryKey;
-		if (!is_null($models)) {
-			if (!is_array($models)) {
-				$models = [$models];
-			}
-			$models = $this->owner->quote($models);
-			$relationOn .= ' AND Registry.model IN ('.implode(',', $models).')';
-		}
-		// first build the join
-		$selectQuery = new Query;
-		$selectQuery->select('Relation.'. $primaryKey);
-		$selectQuery->from($_relationTable .' '. $_relationModel);
-		$selectQuery->innerJoin($_registryTable .' '. $_registryModel, $relationOn);
-		$selectQuery->where($whereParts);
-		$command = $selectQuery->createCommand();
-		$results = $command->queryColumn();
-		return $results;
-	}
-
-
-	/**
-	 *
-	 *
-	 * @param unknown $type
-	 * @param unknown $model
-	 * @param unknown $relationOptions (optional)
-	 * @param unknown $modelOptions    (optional)
-	 * @return unknown
-	 */
-	function relativesQuery($type, $model, $relationOptions = [], $modelOptions = []) {
-		$_relationModel = $this->relationClass;
-		$_relation = new $_relationModel;
-		$_relationFields = array_keys($_relationModel::getTableSchema()->columns);
-		
-		if (!isset($relationOptions['fields'])) {
-			$relationAttr = [];
-		} else {
-			$relationAttr = $relationOptions['fields'];
-		}
-
-		if (in_array('active', $_relationFields)) {
-			if (!array_key_exists('active', $relationAttr)) {
-				$relationAttr['active'] = 1;
-			}
-		}
-		if (in_array('start', $_relationFields)) {
-			if (!array_key_exists('start', $relationAttr)) {
-				$relationAttr['start'] = ['IS NULL', '< NOW()'];
-			} elseif ($relationAttr['start'] === true) {
-				unset($relationAttr['start']);
-			}
-		}
-		if (in_array('end', $_relationFields)) {
-			if (!array_key_exists('end', $relationAttr)) {
-				$relationAttr['end'] = ['IS NULL', '> NOW()'];
-			} elseif ($relationAttr['end'] === true) {
-				unset($relationAttr['end']);
-			}
-		}
-
-		if (!class_exists($model)) {
-			throw new Exception("Model {$model} does not exist!");
-		}
-
-		if ($type === 'parents') {
-			$primaryKey = 'parent_object_id';
-			$foreignKey = 'child_object_id';
-		}
-		elseif ($type === 'parent') {
-			$primaryKey = 'parent_object_id';
-			$foreignKey = 'child_object_id';
-			$modelOptions['limit'] = 1;
-		}
-		else {
-			$primaryKey = 'child_object_id';
-			$foreignKey = 'parent_object_id';
-		}
-		$o = $model::find();
-		// first build the join
-		$_relationTable = $_relation->tableName();
-		// $this->getDbCriteria()->params[':object_id'] = $this->owner->id;
-		$relationOn = '';
-		$_relationAlias = 'relation';
-		$relationAttr[$primaryKey] = $model::tableName() . '.id';
-		foreach ($relationAttr as $key => $tests) {
-			if (empty($relationOn)) {
-				$partOn = '(';
-			} else {
-				$partOn = ' AND (';
-			}
-			if (is_array($tests)) {
-				$key = $_relationAlias.'.'.$key;
-				$partOn2 = '';
-				foreach ($tests as $t) {
-					if (!empty($partOn2)) {
-						$partOn2 .= ' OR ';
-					}
-					$partOn2 .= $key;
-					if (in_array(substr($t, 0, 2), ['> ', '< ', '>=', '<=', '<>', '!=', 'IS'])) {
-						$partOn2 .= ' '. $t;
-					} else {
-						$partOn2 .= ' = '. $t;
-					}
-				}
-				$partOn .= $partOn2;
-			} else {
-				$key = '`'.$_relationAlias.'`.`'.$key.'`';
-				$partOn .= $key;
-				if (in_array(substr($tests, 0, 2), ['> ', '< ', '>=', '<=', '<>', '!=', 'IS'])) {
-					$partOn .= ' '. $tests;
-				} else {
-					$partOn .= ' = '. $tests;
-				}
-			}
-			$partOn .= ')';
-			$relationOn .= $partOn;
-		}
-		$o->join('LEFT JOIN', $_relationTable.' AS '.$_relationAlias, '('.$relationOn.')');
-		// then connect the join to the model
-		if (isset($relationOptions['params'])) {
-			$o->params = array_merge($o->getDbCriteria()->params, $relationOptions['params']);
-		}
-		$o->where([$_relationAlias .'.'.$foreignKey => $this->owner->id]);
-
-		// then add in model attributes (if there are any)
-		foreach ($modelOptions as $k => $v) {
-			if (in_array($k, ['order', 'orderBy', 'limit', 'fields', 'field', 'notField', 'disableAccess', 'enableAccess'])) {
-				$o->$k($v);
-			}
-		}
-		return $o;
-	}
-
-
-	public function siblings($parent, $relationOptions = [], $modelOptions = []) {
-
-		if (!isset($modelOptions['where'])) { $modelOptions['where'] = []; }
-		if (!isset($modelOptions['params'])) { $modelOptions['params'] = []; }
-		$modelOptions['where'] = array_merge(['id != :ownerPrimaryKey'], $modelOptions['where']);
-		$modelOptions['params'][':ownerPrimaryKey'] = $this->owner->primaryKey;
-
-		return $parent->children(get_class($this->owner), $relationOptions, $modelOptions);
-	}
-
-	public function siblingList($parent, $relationOptions = [], $modelOptions = []) {
-		return ArrayHelper::map($this->siblings($parent, $relationOptions, $modelOptions), 'id', 'descriptor');
-	}
-
-	/**
-	 *
-	 *
-	 * @param unknown $model
-	 * @param unknown $check           (optional)
-	 * @param unknown $relationOptions (optional)
-	 * @param unknown $modelOptions    (optional)
-	 * @return unknown
-	 */
-	public function hasParent($model, $check = null, $relationOptions = [], $modelOptions = []) {
-		return $this->owner->hasAncestor($model, $check, $relationOptions, $modelOptions, 1);
-	}
-
-
-	/**
-	 *
-	 *
-	 * @param unknown $model
-	 * @param unknown $check           (optional)
-	 * @param unknown $relationOptions (optional)
-	 * @param unknown $modelOptions    (optional)
-	 * @param unknown $maxLevels       (optional)
-	 * @return unknown
-	 */
-	public function hasAncestor($model, $check = null, $relationOptions = [], $modelOptions = [], $maxLevels = null) {
-		$ancestors = $this->owner->ancestors($model, $relationOptions, $modelOptions, $maxLevels);
-		if (is_null($check) and !empty($ancestors)) {
-			return true;
-		}
-		if (is_object($check)) {
-			$check = $check->primaryKey;
-		}
-		foreach ($ancestors as $a) {
-			if ($a->primaryKey == $check) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	
-	/**
-	 *
-	 *
-	 * @param unknown $model
-	 * @param unknown $relationOptions (optional)
-	 * @param unknown $modelOptions    (optional)
-	 * @param unknown $maxLevels       (optional)
-	 * @param unknown $currentLevel    (optional)
-	 * @return unknown
-	 */
-	public function ancestors($model, $relationOptions = [], $modelOptions = [], $maxLevels = null, $currentLevel = 0) {
-		$currentLevel++;
-		$ancestors = $this->owner->parents($model, $relationOptions, $modelOptions);
-		if (!is_null($maxLevels) and $currentLevel >= $maxLevels) { return $ancestors; }
-		foreach ($ancestors as $a) {
-			$superAncestors = $a->ancestors($model, $relationOptions, $modelOptions, $maxLevels, $currentLevel);
-			foreach ($superAncestors as $key => $aa) {
-				$ancestors[] = $aa;
-			}
-		}
-		return $ancestors;
-	}
-
-	/**
-	 *
-	 *
-	 * @param unknown $model
-	 * @param unknown $relationOptions (optional)
-	 * @param unknown $modelOptions    (optional)
-	 * @param unknown $maxLevels       (optional)
-	 * @param unknown $currentLevel    (optional)
-	 * @return unknown
-	 */
-	public function descendants($model, $relationOptions = [], $modelOptions = [], $maxLevels = null, $currentLevel = 0) {
-		$currentLevel++;
-		$descendants = $this->owner->children($model, $relationOptions, $modelOptions);
-		if (!is_null($maxLevels) and $currentLevel >= $maxLevels) { return $descendants; }
-		foreach ($descendants as $a) {
-			$superDescendants = $a->descendants($model, $relationOptions, $modelOptions, $maxLevels, $currentLevel);
-			foreach ($superDescendants as $key => $aa) {
-				$descendants[] = $aa;
-			}
-		}
-		return $descendants;
-	}
+    }
 
 	/**
 	 *
