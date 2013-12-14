@@ -10,7 +10,7 @@ class Row extends \infinite\base\Object {
 	protected $_fillAttempted = false;
 
 
-	public function render() {
+	public function output() {
 		echo $this->generate();
 	}
 	

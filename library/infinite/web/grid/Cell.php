@@ -41,7 +41,7 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
 		$this->_content = $content;
 	}
 
-	public function render() {
+	public function output() {
 		echo $this->generate();
 	}
 	

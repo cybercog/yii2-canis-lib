@@ -116,6 +116,7 @@ class User extends ActiveRecord implements IdentityInterface
             [['first_name', 'last_name', 'email'], 'string', 'min' => 1, 'max' => 255],
 
             [['email'], 'filter', 'filter' => 'trim'],
+            
             // ['email', 'required'],
             [['email'], 'email'],
             [['email'], 'unique', 'message' => 'This email address has already been taken.', 'on' => 'signup'],

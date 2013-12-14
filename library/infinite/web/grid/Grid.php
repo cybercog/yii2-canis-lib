@@ -12,7 +12,7 @@ class Grid extends \infinite\base\Object {
 	protected $_rows = [];
 	protected $_currentRow;
 
-	public function render() {
+	public function output() {
 		echo $this->generate();
 	}
 

@@ -3,7 +3,7 @@ namespace infinite\web;
 
 trait RenderTrait
 {
-	public function render() {
+	public function output() {
 		echo $this->generate();
 	}
 }

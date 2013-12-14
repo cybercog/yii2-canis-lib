@@ -207,5 +207,22 @@ class Response extends \yii\web\Response
 			}
 		}
 	}
+
+	public function redirect($url, $statusCode = 302)
+	{
+		if (is_array($url) && isset($url[0])) {
+			// ensure the route is absolute
+			$url[0] = '/' . ltrim($url[0], '/');
+		}
+		$url = Html::url($url);
+		if (strpos($url, '/') === 0 && strpos($url, '//') !== 0) {
+			$url = Yii::$app->getRequest()->getHostInfo() . $url;
+		}
+
+		$this->getHeaders()->set('Location', $url);
+		$this->setStatusCode($statusCode);
+
+		return $this;
+	}
 }
 ?>
