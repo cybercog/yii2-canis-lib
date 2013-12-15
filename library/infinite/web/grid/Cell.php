@@ -19,7 +19,9 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
 	public $baseSize = 'mediumDesktop';
 	public $htmlOptions = [];
 
+	protected $_prepend = [];
 	protected $_content;
+	protected $_append = [];
 	protected $_id;
 
 	protected $_phoneColumns = 12;
@@ -44,6 +46,16 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
 	public function output() {
 		echo $this->generate();
 	}
+
+	public function prepend($pre)
+	{
+		$this->_prepend[] = $pre;
+	}
+
+	public function append($append)
+	{
+		$this->_append[] = $append;
+	}
 	
 	public function generate() {
 		$content = $this->content;
@@ -51,7 +63,7 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
 			$content = $content->generate();
 		}
 		Html::addCssClass($this->htmlOptions, $this->classes);
-		return Html::tag('div', $content, $this->htmlOptions);
+		return Html::tag('div', implode($this->_prepend) . $content . implode($this->_append), $this->htmlOptions);
 	}
 
 	public function generatePhoneSize() {
@@ -73,6 +85,7 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
 
 	public function getClasses() {
 		$classes = [];
+		$classes[] = 'ic-column';
 		$sizes = $this->sizes;
 		if (isset($sizes['phone'])) {
 			$classes[] = 'col-xs-'. $sizes['phone'];

@@ -125,10 +125,6 @@ trait CollectorTrait
 	public function register($owner, $itemComponent, $systemId = null) {
 		$itemComponent = $this->prepareComponent($itemComponent);
 		$collectorItemClass = $this->collectorItemClass;
-		if (is_array($itemComponent) && !is_null($systemId)) {
-			$itemComponent['systemId'] = $systemId;
-		}
-
 		if (is_object($itemComponent)) {
 			$itemComponent = ['object' => $itemComponent];
 		}
@@ -136,6 +132,10 @@ trait CollectorTrait
 		$itemComponent['class'] = $collectorItemClass;
 		$itemComponent['collector'] = $this;
 		$itemComponent['owner'] = $owner;
+
+		if (is_array($itemComponent) && !is_null($systemId)) {
+			$itemComponent['systemId'] = $systemId;
+		}
 
 		$item = Yii::createObject($itemComponent);
 		Yii::trace(get_called_class() . ": Registering {$item->systemId}");

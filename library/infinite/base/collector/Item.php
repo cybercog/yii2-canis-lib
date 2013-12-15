@@ -18,7 +18,7 @@ class Item extends \infinite\base\Object {
 
 	public function getSystemId()
 	{
-		if (is_null($this->_systemId) && !is_null($this->object)) {
+		if (is_null($this->_systemId) && !is_null($this->object) && isset($this->object->systemId)) {
 			$this->_systemId = $this->object->systemId;
 		}
 		return $this->_systemId;

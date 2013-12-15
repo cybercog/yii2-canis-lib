@@ -13,4 +13,5 @@ trait CollectedObjectTrait
 		$this->_collectorItem = $item;
 		return $this;
 	}
+
 }
