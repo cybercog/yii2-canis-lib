@@ -254,7 +254,7 @@ class Setup extends \infinite\base\Object
 
     public function getConfigPath()
     {
-        $path = $this->applicationPath . DIRECTORY_SEPARATOR . 'config';
+        $path = $this->basePath . DIRECTORY_SEPARATOR . 'config';
         if (!is_dir($path)) {
             throw new Exception("Config path does not exist: {$path}");
         }
