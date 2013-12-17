@@ -28,7 +28,7 @@ abstract class Task extends \infinite\base\Object
 
     public function getId()
     {
-        return substr(get_class($this), 10);
+        return self::baseClassName();
     }
 
     public function loadInput($input)
