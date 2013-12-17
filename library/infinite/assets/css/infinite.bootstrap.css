@@ -136,7 +136,6 @@ input[type="submit"].disabled {
 
 /* object view dashboard */
 .sub-navbar {
-    margin-top: 50px;
     z-index: 1020;
     min-height: 40px;
 }
