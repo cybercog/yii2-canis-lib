@@ -163,3 +163,10 @@ input[type="submit"].disabled {
     left: auto;
     right: 0;
 }
+
+/* forms */
+label.required:after,
+div.required label:after {
+    content: ' *';
+    color: red;
+}
