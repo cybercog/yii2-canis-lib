@@ -19,6 +19,11 @@ span.empty {
     margin-bottom: 0;
 }
 
+.form-panel {
+    margin: -10px -3px -3px -3px;
+
+}
+
 /* Panels */
 
 .panel {
