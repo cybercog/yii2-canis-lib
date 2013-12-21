@@ -85,7 +85,6 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
 
 	public function getClasses() {
 		$classes = [];
-		$classes[] = 'ic-column';
 		$sizes = $this->sizes;
 		if (isset($sizes['phone'])) {
 			$classes[] = 'col-xs-'. $sizes['phone'];

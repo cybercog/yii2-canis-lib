@@ -44,6 +44,7 @@ class Grid extends \infinite\base\Object {
 		}
 		$this->_rows[] = $item;
 		$this->_currentRow = null;
+		return $item;
 	}
 
 	public function addRows($items) {

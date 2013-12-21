@@ -9,6 +9,15 @@ input[type="submit"].disabled {
 
 }
 
+span.empty {
+    color: #dbdbdb;
+}
+
+/* Forms */
+.form-vertical .control-label {
+    padding-top: 7px;
+    margin-bottom: 0;
+}
 
 /* Panels */
 

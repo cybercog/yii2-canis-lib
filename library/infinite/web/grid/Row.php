@@ -6,6 +6,7 @@ use infinite\helpers\Html;
 class Row extends \infinite\base\Object {
 	const TOTAL_COLUMNS = 12;
 
+	public $htmlOptions = ['class' => 'row'];
 	protected $_cells = [];
 	protected $_fillAttempted = false;
 
@@ -21,7 +22,7 @@ class Row extends \infinite\base\Object {
 			$content[] = $item->generate();
 		}
 		//return implode('', $content);
-		return Html::tag('div', implode('', $content), ['class' => 'row']);
+		return Html::tag('div', implode('', $content), $this->htmlOptions);
 	}
 
 
@@ -107,8 +108,8 @@ class Row extends \infinite\base\Object {
 		return true;
 	}
 
-	public function addCell(Cell $item) {
-		if ($this->hasRoom($item->columns)) {
+	public function addCell(Cell $item, $check = false) {
+		if (!$check || $this->hasRoom($item->columns)) {
 			$this->_cells[$item->id] = $item;
 			return true;
 		}
@@ -117,7 +118,7 @@ class Row extends \infinite\base\Object {
 
 	public function addCells(&$items) {
 		foreach ($items as $ikey => $item) {
-			if ($this->addCell($item)) {
+			if ($this->addCell($item, true)) {
 				unset($items[$ikey]);
 			} else {
 				break;
@@ -127,7 +128,7 @@ class Row extends \infinite\base\Object {
 
 	public function setCells($cells) {
 		foreach ($cells as $cell) {
-			$this->addCell($cell);
+			$this->addCell($cell, false);
 		}
 	}
 }
