@@ -36,9 +36,9 @@ class Word extends \infinite\base\Object
 	 */
 	public function vowel($l, $includeY = false) {
 		if ($includeY) {
-			return in_array($l, array('a', 'e', 'i', 'o', 'u', 'y'));
+			return in_array($l, ['a', 'e', 'i', 'o', 'u', 'y']);
 		}
-		return in_array($l, array('a', 'e', 'i', 'o', 'u'));
+		return in_array($l, ['a', 'e', 'i', 'o', 'u']);
 	}
 
 

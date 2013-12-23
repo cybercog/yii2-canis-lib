@@ -10,7 +10,7 @@ class CssSpriteImage extends \infinite\base\Object {
 	public $height;
 	public $image;
 	public $name;
-	public $outputs = array();
+	public $outputs = [];
 
 	public function __construct($path, $name) {
 		$this->path = $path;
@@ -37,7 +37,7 @@ class CssSpriteImage extends \infinite\base\Object {
 		$img = $this->imagecreatetransparent($size, $size);
 
 		//echo "{$newWidth} x {$newHeight}\n";exit;
-		if (!isset($this->outputs[$size])) { $this->outputs[$size] = array(); }
+		if (!isset($this->outputs[$size])) { $this->outputs[$size] = []; }
 		$this->outputs[$size]['height'] = $newHeight;
 		$this->outputs[$size]['width'] = $newWidth;
 		// Execute the resize

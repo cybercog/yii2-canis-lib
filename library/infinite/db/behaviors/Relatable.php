@@ -55,7 +55,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
         $registryClass = $this->registryClass;
         if (!self::$_setGlobalEvents) {
             self::$_setGlobalEvents = true;
-            Event::on($this->registryClass, $registryClass::EVENT_BEFORE_DELETE, array($this, 'cleanupRelations'));
+            Event::on($this->registryClass, $registryClass::EVENT_BEFORE_DELETE, [$this, 'cleanupRelations']);
         }
     }
 

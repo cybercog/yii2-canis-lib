@@ -73,7 +73,7 @@ class Registry extends \infinite\db\ActiveRecord
 	 * @return unknown
 	 */
 	public static function getObject($id, $disableAccess = false) {
-		$requestKey = md5(serialize(array(__FUNCTION__, func_get_args())));
+		$requestKey = md5(serialize([__FUNCTION__, func_get_args()]));
 		$classKey = self::className();
 		if (!isset(self::$_cache[$classKey])) {
 			self::$_cache[$classKey] = [];

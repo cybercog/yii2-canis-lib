@@ -34,16 +34,16 @@ class Gatekeeper extends \infinite\base\Component
 	protected $_actionsByName;
 	protected $_primaryAro;
 
-	static $_cache = array();
+	static $_cache = [];
 
-	protected $_objectCanCache = array();
+	protected $_objectCanCache = [];
 
 	public function canPublic($controlledObject, $action = 'read') {
-		$requestKey = md5(serialize(array(__FUNCTION__, func_get_args())));
+		$requestKey = md5(serialize([__FUNCTION__, func_get_args()]));
 		if (!array_key_exists($requestKey, self::$_cache)) {
 			self::$_cache[$requestKey] = false;
-			$accessGroups = array('guests', 'clients');
-			$accessObject = array();
+			$accessGroups = ['guests', 'clients'];
+			$accessObject = [];
 			$groupModel = $this->groupClass;
 			foreach ($accessGroups as $group) {
 				$groupObject = $groupModel::getBySystemName($group, true);
@@ -62,7 +62,7 @@ class Gatekeeper extends \infinite\base\Component
 	}
 
 	public function is($group, $accessingObject = null) {
-		$requestKey = md5(serialize(array(__FUNCTION__, func_get_args())));
+		$requestKey = md5(serialize([__FUNCTION__, func_get_args()]));
 		if (!array_key_exists($requestKey, self::$_cache)) {
 			if (is_null($accessingObject)) {
 				$accessingObject = $this->primaryAro;
@@ -124,10 +124,10 @@ class Gatekeeper extends \infinite\base\Component
 		// get aro's 
 		$aros = $this->getAros($accessingObject);
 
-		$aclOrder = array();
-		$aclOnConditions = array();
+		$aclOrder = [];
+		$aclOnConditions = [];
 		$aroN = 0;
-		$aroIn = array();
+		$aroIn = [];
 
 		if (!is_null($model)) {
 			$model = ActiveRecord::modelAlias($model);
@@ -145,7 +145,7 @@ class Gatekeeper extends \infinite\base\Component
 		$aclOrder['IF('.$alias.'.accessing_object_id IS NULL, 0, 1)'] = SORT_DESC;
 		foreach ($aros as $aro) {
 			if (is_array($aro)) {
-				$subInIf = array();
+				$subInIf = [];
 				foreach ($aro as $sa) {
 					$query->params[':aro_'.$aroN] = $sa;
 					$aroIn[] = ':aro_'.$aroN;
@@ -172,7 +172,7 @@ class Gatekeeper extends \infinite\base\Component
 		$aclOrder['IF('.$alias.'.aca_id IS NULL, 0, 1)'] = SORT_DESC;
 		$aclOrder['IF('.$alias.'.controlled_object_id IS NULL, 0, 1)'] = SORT_DESC;
 		
-		$innerOnConditions = array();
+		$innerOnConditions = [];
 
 		if (is_object($controlledObject)) {
 			$query->params[':object_model'] = $controlledObject->modelAlias;
@@ -189,7 +189,7 @@ class Gatekeeper extends \infinite\base\Component
 			$aclOrder['IF('.$alias.'.object_model IS NULL, 0, 1)'] =  SORT_DESC;
 			$innerOnConditions[] = $alias.'.controlled_object_id IS NULL AND '.$alias.'.object_model IS NULL';
 		} else {
-			$cos = array();
+			$cos = [];
 			foreach ($controlledObject as $co) {
 				$coKey = ':controlled_object_id_'.count($cos);
 				$cos[] = $coKey;
@@ -217,9 +217,9 @@ class Gatekeeper extends \infinite\base\Component
 			$model = ActiveRecord::modelAlias($model);
 		}
 
-		$accessKey = md5(serialize(array(__FUNCTION__, $model, $accessingObject)));
+		$accessKey = md5(serialize([__FUNCTION__, $model, $accessingObject]));
 		if (!array_key_exists($accessKey, $this->_objectCanCache)) {
-			$this->_objectCanCache[$accessKey] = array();
+			$this->_objectCanCache[$accessKey] = [];
 
 	    	$aclClass = $this->aclClass;
 
@@ -234,14 +234,14 @@ class Gatekeeper extends \infinite\base\Component
 			$outerAclQuery->groupBy('(`outer`.aca_id)');
 			$raw = $outerAclQuery->all();
 			$nullValue = null;
-			$discoverParents = array();
+			$discoverParents = [];
 			$acaClass = $this->acaClass;
 			foreach ($raw as $r) {
 				if (is_null($r['aca_id']) AND is_null($nullValue)) {
 					$nullValue = $r['access'];
 					if (empty($this->_objectCanCache[$accessKey])) {
 						foreach ($acaClass::findAll() as $aca) {
-							$this->_objectCanCache[$accessKey][$aca->id] = in_array($r['access'], array('0', '1'));
+							$this->_objectCanCache[$accessKey][$aca->id] = in_array($r['access'], ['0', '1']);
 						}
 					}
 					continue;
@@ -262,9 +262,9 @@ class Gatekeeper extends \infinite\base\Component
 	}
 
 	public function getParentActionTranslations() {
-		return array(
+		return [
 			$this->getActionObjectByName('delete')->primaryKey => $this->getActionObjectByName('update')
-		);
+		];
 	}
 
 	protected function _translateParentAction($action) {
@@ -280,9 +280,9 @@ class Gatekeeper extends \infinite\base\Component
 		if (is_object($controlledObject)) {
 			$controlledId = $controlledObject->id;
 		}
-		$accessKey = md5(serialize(array($controlledId, $accessingObject)));
+		$accessKey = md5(serialize([$controlledId, $accessingObject]));
 		if (!array_key_exists($accessKey, $this->_objectCanCache)) {
-			$this->_objectCanCache[$accessKey] = array();
+			$this->_objectCanCache[$accessKey] = [];
 			$aclClass = $this->aclClass;
 
 			$innerAclQuery = new Query;
@@ -298,7 +298,7 @@ class Gatekeeper extends \infinite\base\Component
 			$raw = $outerAclQuery->all();
 
 			$nullValue = null;
-			$discoverParents = array();
+			$discoverParents = [];
 			foreach ($raw as $r) {
 				// @todo not sure if this needs to be done in another loop
 				if (is_null($r['aca_id']) AND is_null($nullValue)) {
@@ -330,8 +330,8 @@ class Gatekeeper extends \infinite\base\Component
 				}
 			}
 			if (!empty($discoverParents)) {
-				$parents = array();
-				$parentIds = array();
+				$parents = [];
+				$parentIds = [];
 				if (is_object($controlledObject) AND $controlledObject->hasBehavior('Relatable')) {
 					$parentIds = $controlledObject->parentIds;
 				}
@@ -364,7 +364,7 @@ class Gatekeeper extends \infinite\base\Component
 
 	public function clearCanCache($controlledObject, $accessingObject = null) {
 		// @todo mix this in with the caching solution
-		$this->_objectCanCache = array();
+		$this->_objectCanCache = [];
 	}
 
 	public function getPrimaryAro() {
@@ -393,12 +393,12 @@ class Gatekeeper extends \infinite\base\Component
 			$accessingObject = $this->primaryAro;
 		}
     	if (is_object($accessingObject)) {
-			$arosKey = md5(serialize(array(__FUNCTION__, $accessingObject->primaryKey)));
+			$arosKey = md5(serialize([__FUNCTION__, $accessingObject->primaryKey]));
 		} else {
-			$arosKey = md5(serialize(array(__FUNCTION__, false)));
+			$arosKey = md5(serialize([__FUNCTION__, false]));
 		}
     	if (!isset($this->_aros[$arosKey])) {
-    		$this->_aros[$arosKey] = array();
+    		$this->_aros[$arosKey] = [];
     		if ($accessingObject) {
     			$this->_aros[$arosKey][] = $accessingObject->primaryKey;
     			$this->_aros[$arosKey] = array_merge($this->_aros[$arosKey], $this->getGroups($accessingObject, false));
@@ -413,14 +413,14 @@ class Gatekeeper extends \infinite\base\Component
     }
 
     public function getGroups($accessingObject = null, $flatten = false) {
-		$requestKey = md5(serialize(array(__FUNCTION__, func_get_args())));
+		$requestKey = md5(serialize([__FUNCTION__, func_get_args()]));
 
 		if (!isset(self::$_cache[$requestKey])) {
 			if (is_null($accessingObject)) {
 				$accessingObject = $this->primaryAro;
 			}
-	    	$groups = array();
-	    	$parents = $accessingObject->parents($this->groupClass, array(), array('disableAccess' => 1));
+	    	$groups = [];
+	    	$parents = $accessingObject->parents($this->groupClass, [], ['disableAccess' => 1]);
 			if (!empty($parents)) {
 				$children = ArrayHelper::getColumn($parents, 'primaryKey');
 				if ($flatten) {
@@ -501,7 +501,7 @@ class Gatekeeper extends \infinite\base\Component
 			$controlledObject = $controlledObject->primaryKey;
 		}
 		$aclRoleModel = $this->aclRoleClass;
-		$fields = array('controlled_object_id' => $controlledObject, 'accessing_object_id' => $accessingObject);
+		$fields = ['controlled_object_id' => $controlledObject, 'accessing_object_id' => $accessingObject];
 		$aclRole = $aclRoleModel::model()->field($fields)->find();
 		if ($aclRole) {
 			if (empty($role)) {
@@ -533,7 +533,7 @@ class Gatekeeper extends \infinite\base\Component
 			$creatorRole = $module->creatorRole;
 			if ($creatorRole === false) { return true; }
 			if (!is_array($creatorRole)) {
-				$creatorRole = array($creatorRole);
+				$creatorRole = [$creatorRole];
 			}
 			foreach ($creatorRole as $role) {
 				if (isset($possibleRoles[$role])) {
@@ -573,10 +573,10 @@ class Gatekeeper extends \infinite\base\Component
 			$controlledObjectModel = ActiveRecord::modelAlias($controlledObjectModel);
 		}
 
-		$fields = array();
+		$fields = [];
 		if (is_array($action)) {
 			//$action = implode('.', $action);
-			$results = array(true);
+			$results = [true];
 			foreach ($action as $a) {
 				$results[] = $this->setAccess($a, $access, $controlledObject, $accessingObject, $controlledObjectModel);
 			}

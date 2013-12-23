@@ -25,10 +25,10 @@ class Setup extends \infinite\base\Object
     public $name = 'Application';
     public $pageTitle = 'Setup';
     public $applicationNamespace = 'app';
-    public $params = array();
-    public $neededInformation = array();
+    public $params = [];
+    public $neededInformation = [];
 
-    public static function createSetupApplication($config = array())
+    public static function createSetupApplication($config = [])
     {
         defined('YII_DEBUG') OR define('YII_DEBUG', true);
         defined('INFINITE_APP_SETUP') OR define('INFINITE_APP_SETUP', true);
@@ -39,7 +39,7 @@ class Setup extends \infinite\base\Object
         return self::$_instance;
     }
 
-    public function __construct($config = array())
+    public function __construct($config = [])
     {
         foreach ($config as $k => $v) {
             $this->{$k} = $v;
@@ -139,7 +139,7 @@ class Setup extends \infinite\base\Object
         // if ($this->migrator->check()) { return false; }
         // if (!$this->app()) { return false; }
 
-        $steps = array();
+        $steps = [];
 
         return true;
     }
@@ -147,7 +147,7 @@ class Setup extends \infinite\base\Object
     public function getSetupTasks()
     {
         $self = $this;
-        $tasks = array();
+        $tasks = [];
         $tasksPath = $this->applicationPath.DIRECTORY_SEPARATOR .'setup'.DIRECTORY_SEPARATOR.'tasks';
         if (!is_dir($tasksPath)) {
             return $tasks;
@@ -223,7 +223,7 @@ class Setup extends \infinite\base\Object
                 if (!file_exists($configPath)) {
                     throw new Exception("Couldn't find environment config {$configPath}!");
                 }
-                $_SERVER['argv'] = array();
+                $_SERVER['argv'] = [];
                 $config = include($configPath);
                 self::$_app = new \infinite\console\Application($config);
             }

@@ -39,21 +39,21 @@ class ArrayHelper extends \yii\helpers\ArrayHelper
 
     public static function cartesian($arrays, $first = true)
     {
-        if (empty($arrays)) { return array(); }
+        if (empty($arrays)) { return []; }
         $arrayKeys = array_keys($arrays);
         $firstKey  = $arrayKeys[0];
         $arrayLength = count($arrays);
         if (!$first && $arrayLength === 1) { return $arrays[$firstKey]; }
         $restKeys = array_slice($arrayKeys, 1, $arrayLength);
-        $restKeyValues = array();
+        $restKeyValues = [];
         foreach ($restKeys as $v) {
             $restKeyValues[$v] = $arrays[$v];
         }
         $rest = self::cartesian($restKeyValues, false);
-        $result = array();
+        $result = [];
         if (empty($rest)) {
             foreach ($arrays[$firstKey] as $primary) {
-                $rp = array();
+                $rp = [];
                 if (is_numeric($firstKey)) {
                     array_push($rp, $primary);
                 } else {
@@ -66,7 +66,7 @@ class ArrayHelper extends \yii\helpers\ArrayHelper
                 if (is_array($variation)) {
                     $rp = $variation;
                 } else {
-                    $rp = array();
+                    $rp = [];
                     if (is_numeric($key)) {
                         if (is_numeric($restKeys[0])) {
                             array_push($rp, $variation);
@@ -84,7 +84,7 @@ class ArrayHelper extends \yii\helpers\ArrayHelper
                 if (is_array($variation)) {
                     $rpb = $variation;
                 } else {
-                    $rpb = array();
+                    $rpb = [];
                     if (is_numeric($key)) {
                         if (is_numeric($restKeys[0])) {
                             array_push($rpb, $variation);
@@ -111,11 +111,11 @@ class ArrayHelper extends \yii\helpers\ArrayHelper
 
     public static function permutations($array, $min = 1, $max = false)
     {
-        $results = array(array( ));
-        $ignoreKeys = array();
+        $results = [[ ]];
+        $ignoreKeys = [];
         foreach ($array as $key => $element) {
             foreach ($results as $rkey => $combination) {
-                $newSet = array_merge(array($key => $element), $combination);
+                $newSet = array_merge([$key => $element], $combination);
                 array_push($results, $newSet);
             }
         }

@@ -65,7 +65,7 @@ class Status extends \infinite\base\Component
         $this->currentTask = $this->_tasks[$system];
         $this->currentTask->error = $error;
         $this->currentTask->end();
-        $this->trigger('endTask', new Event($this, array('message' => $message)));
+        $this->trigger('endTask', new Event($this, ['message' => $message]));
         $this->levels--;
         $this->lastLevel = $this->levels;
     }

@@ -15,14 +15,14 @@ class FileStorage extends \infinite\base\Component
 {
     protected $_supportedImageTypes;
     protected $_tempPath;
-    protected $_tempFiles = array();
+    protected $_tempFiles = [];
 
     /**
      * Initializes the component
      */
     public function init()
     {
-        register_shutdown_function(array($this, 'deleteTempFiles'));
+        register_shutdown_function([$this, 'deleteTempFiles']);
         return parent::init();
     }
 

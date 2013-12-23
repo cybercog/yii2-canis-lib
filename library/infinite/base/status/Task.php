@@ -39,7 +39,7 @@ class Task extends \infinite\base\Component
 
     public function addMessage($message, $status = self::MESSAGE_INFO)
     {
-        $this->messages[] = array('time' => microtime(true), 'status' => $status, 'message' => $message);
+        $this->messages[] = ['time' => microtime(true), 'status' => $status, 'message' => $message];
         return true;
     }
 

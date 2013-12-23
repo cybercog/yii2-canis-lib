@@ -18,7 +18,7 @@ class Debug extends \infinite\base\Object
 {
     public static function db($query)
     {
-        if (is_null($query->params)) { $query->params = array(); }
+        if (is_null($query->params)) { $query->params = []; }
         $text = $query->createCommand()->sql;
         $values = array_values($query->params);
         array_walk($values, function (&$value) { $value = Yii::$app->db->quoteValue($value); });
@@ -54,7 +54,7 @@ class Debug extends \infinite\base\Object
 
     public static function ar($what, $print = true)
     {
-        $results = array();
+        $results = [];
         foreach ($what as $key => $value) {
             if (is_object($value) AND $value instanceof ActiveRecord) {
                 $a = $value->attributes;

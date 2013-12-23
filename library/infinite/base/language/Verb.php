@@ -21,7 +21,7 @@ class Verb extends \infinite\base\language\Word
 	 * @param unknown $base
 	 * @param unknown $variants (optional)
 	 */
-	public function __construct($base, $variants = array()) {
+	public function __construct($base, $variants = []) {
 		$this->_base = strtolower($singular);
 		foreach ($variants as $k => $v) {
 			switch ($k) {
@@ -75,7 +75,7 @@ class Verb extends \infinite\base\language\Word
 		if (is_null($this->_past)) {
 			if (substr($this->_base, -1) === 'y') {
 				$this->_past = substr($this->_base, 0, -1) .'ied';
-			} elseif ($this->isCVC($this->_base) and !in_array(substr($this->_base, -1), array('w', 'x', 'z'))) {
+			} elseif ($this->isCVC($this->_base) and !in_array(substr($this->_base, -1), ['w', 'x', 'z'])) {
 				$this->_active = $this->_base . substr($this->_base, -1) . 'ed';
 			} else {
 				$this->_past = $this->_base .'ed';

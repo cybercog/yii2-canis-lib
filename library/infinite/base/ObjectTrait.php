@@ -69,7 +69,7 @@ trait ObjectTrait
 	 * @return mixed the expression result
 	 * @since 1.1.0
 	 */
-	public function evaluateExpression($_expression_,$_data_=array())
+	public function evaluateExpression($_expression_,$_data_=[])
 	{
 		if(is_string($_expression_))
 		{

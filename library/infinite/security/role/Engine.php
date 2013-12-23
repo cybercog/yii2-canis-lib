@@ -16,13 +16,13 @@ class Engine extends \infinite\base\Engine
     const MODEL = '\app\models\Role';
     const GLOBAL_MODEL = '__GLOBAL__';
 
-    protected $_registry = array();
-    protected $_registryById = array();
-    protected $_registryByModel = array();
+    protected $_registry = [];
+    protected $_registryById = [];
+    protected $_registryByModel = [];
 
     protected $_role_models;
 
-    public $initial = array();
+    public $initial = [];
 
 
     public function beforeRequest()
@@ -77,7 +77,7 @@ class Engine extends \infinite\base\Engine
 
     public function getRoles($module)
     {
-        $roles = array();
+        $roles = [];
         if (isset($this->_registryByModel[$module->primaryModel])) {
             $roles = array_merge($roles, $this->_registryByModel[$module->primaryModel]);
         }
@@ -86,7 +86,7 @@ class Engine extends \infinite\base\Engine
             $roles = array_merge($roles, $this->_registryByModel[self::GLOBAL_MODEL]);
         }
 
-        $bad = array();
+        $bad = [];
         if (!$module->isOwnable) {
             $bad[] = 'owner';
         }
@@ -140,10 +140,10 @@ class Engine extends \infinite\base\Engine
                 $this->_registryById[$role->id] = $role;
             }
             if (is_null($owner)) {
-                if (!isset($this->_registryByModel[self::GLOBAL_MODEL])) { $this->_registryByModel[self::GLOBAL_MODEL] = array(); }
+                if (!isset($this->_registryByModel[self::GLOBAL_MODEL])) { $this->_registryByModel[self::GLOBAL_MODEL] = []; }
                 $this->_registryByModel[self::GLOBAL_MODEL][] = $this->_registry[$role->system_id];
             } else {
-                if (!isset($this->_registryByModel[$owner->primaryModel])) { $this->_registryByModel[$owner->primaryModel] = array(); }
+                if (!isset($this->_registryByModel[$owner->primaryModel])) { $this->_registryByModel[$owner->primaryModel] = []; }
                 $this->_registryByModel[$owner->primaryModel] = $this->_registry[$role->system_id];
             }
         }

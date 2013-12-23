@@ -24,7 +24,7 @@ class Noun extends \infinite\base\language\Word
 	 * @param unknown $singular
 	 * @param unknown $variants (optional)
 	 */
-	public function __construct($singular, $variants = array()) {
+	public function __construct($singular, $variants = []) {
 		$this->_singular = strtolower($singular);
 		foreach ($variants as $k => $v) {
 			switch ($k) {

@@ -13,7 +13,7 @@ use infinite\helpers\ArrayHelper;
 
 class Collector extends \infinite\base\collector\Collector
 {
-    public $initial = array();
+    public $initial = [];
 
     public function getCollectorItemClass() {
 		return 'infinite\security\role\Item';

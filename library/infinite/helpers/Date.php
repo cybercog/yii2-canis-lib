@@ -224,7 +224,7 @@ class Date extends \infinite\base\Object
     public static function niceDuration($seconds, $limitPeriods = 7, $zeros = false)
     {
         // Define time periods
-        $periods = array (
+        $periods = [
             'years'     => 31556926,
             'months'    => 2629743,
             //'weeks'     => 604800,
@@ -232,7 +232,7 @@ class Date extends \infinite\base\Object
             'hours'     => 3600,
             'minutes'   => 60,
             'seconds'   => 1
-        );
+        ];
 
         // Break into periods
         $seconds = (float) $seconds;

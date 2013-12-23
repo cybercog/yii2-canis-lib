@@ -33,7 +33,7 @@ class MigrateController extends \yii\console\controllers\MigrateController
      */
     protected function getNewMigrations()
     {
-        $applied = array();
+        $applied = [];
         foreach($this->getMigrationHistory(-1) as $version=>$time) {
             $applied[$version] = true;
         }

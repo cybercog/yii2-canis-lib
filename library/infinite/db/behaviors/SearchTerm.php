@@ -23,11 +23,11 @@ class SearchTerm extends \infinite\db\behaviors\ActiveRecord
 	 * @param unknown $term
 	 * @return unknown
 	 */
-	public function searchTerm($term, $params = array()) {
+	public function searchTerm($term, $params = []) {
 		throw new \Exception("Not implemented yet");
 		
-		$package = array('results' => array(), 'total' => 0);
-		$fields = array();
+		$package = ['results' => [], 'total' => 0];
+		$fields = [];
 		$oterm = $term;
 		foreach ($this->searchTermFields as $k => $v) {
 			if (is_numeric($k)) {
@@ -66,12 +66,12 @@ class SearchTerm extends \infinite\db\behaviors\ActiveRecord
 						$null_key = $this->_findNull($value);
 						if ($null_key !== false) {
 							unset($value[$null_key]);
-							$query->addCondition(array($fullField.' IS NULL', $fullField.' IN ('.implode(',', $value).')'), 'OR');
+							$query->addCondition([$fullField.' IS NULL', $fullField.' IN ('.implode(',', $value).')'], 'OR');
 						} else {
 							$query->addCondition($fullField.' IN ('.implode(',', $value).')', RActiveRecord::LOGINFINITE_APP_AND);
 						}
 					} elseif (is_null($value)) {
-						$query->addCondition(array($fullField.' IS NULL'), RActiveRecord::LOGINFINITE_APP_AND);
+						$query->addCondition([$fullField.' IS NULL'], RActiveRecord::LOGINFINITE_APP_AND);
 					} else {
 						$query->addCondition($fullField.' = '. $value.'', RActiveRecord::LOGINFINITE_APP_AND);
 					}
@@ -89,12 +89,12 @@ class SearchTerm extends \infinite\db\behaviors\ActiveRecord
 						$null_key = $this->_findNull($value);
 						if ($null_key !== false) {
 							unset($value[$null_key]);
-							$query->addCondition(array($fullField.' IS NOT NULL', $fullField.' NOT IN ('.implode(',', $value).')'), 'AND');
+							$query->addCondition([$fullField.' IS NOT NULL', $fullField.' NOT IN ('.implode(',', $value).')'], 'AND');
 						} else {
 							$query->addCondition($fullField.' NOT IN ('.implode(',', $value).')', RActiveRecord::LOGINFINITE_APP_AND);
 						}
 					} elseif (is_null($value)) {
-						$query->addCondition(array($fullField.' IS NOT NULL'), RActiveRecord::LOGINFINITE_APP_AND);
+						$query->addCondition([$fullField.' IS NOT NULL'], RActiveRecord::LOGINFINITE_APP_AND);
 					} else {
 						$query->addCondition($fullField.' != '. $value.'', RActiveRecord::LOGINFINITE_APP_AND);
 					}
@@ -103,15 +103,15 @@ class SearchTerm extends \infinite\db\behaviors\ActiveRecord
 
 			if (!empty($params['ignore'])) {
 				if (empty($params['ignore']['objects'])) {
-					$params['ignore']['objects'] = array();
+					$params['ignore']['objects'] = [];
 				}
 				if (!is_array($params['ignore']['objects'])) {
-					$params['ignore']['objects'] = array($params['ignore']['objects']);
+					$params['ignore']['objects'] = [$params['ignore']['objects']];
 				}
 
 				if (isset($params['ignore']['parents'])) { // ignore the parents of the following objects
 					if (!is_array($params['ignore']['parents'])) {
-						$params['ignore']['parents'] = array($params['ignore']['parents']);
+						$params['ignore']['parents'] = [$params['ignore']['parents']];
 					}
 					foreach ($params['ignore']['parents'] as $childId) {
 						$child = Registry::getObject($childId);
@@ -123,7 +123,7 @@ class SearchTerm extends \infinite\db\behaviors\ActiveRecord
 
 				if (isset($params['ignore']['children'])) { // ignore the children of the following objects
 					if (!is_array($params['ignore']['children'])) {
-						$params['ignore']['children'] = array($params['ignore']['children']);
+						$params['ignore']['children'] = [$params['ignore']['children']];
 					}
 					foreach ($params['ignore']['children'] as $parentId) {
 						$parent = Registry::getObject($parentId);
@@ -141,7 +141,7 @@ class SearchTerm extends \infinite\db\behaviors\ActiveRecord
 			$criteria->mergeWith($query);
 
 			
-			$orders = array();
+			$orders = [];
 			$weight = count($fields) * count($searchTerms);
 			foreach ($fields as $field) {
 				foreach ($searchTerms as $n => $term) {
@@ -152,7 +152,7 @@ class SearchTerm extends \infinite\db\behaviors\ActiveRecord
 				}
 			}
 			$relavance = implode('+', $orders);
-			$criteria->select = array("t.*", "({$relavance}) as searchScore");
+			$criteria->select = ["t.*", "({$relavance}) as searchScore"];
 			$criteria->order = $relavance . ' desc';
 
 			$schema = $this->owner->dbConnection->schema;
@@ -197,7 +197,7 @@ class SearchTerm extends \infinite\db\behaviors\ActiveRecord
 
 			return $package;
 		}
-		return array();
+		return [];
 	}
 
 

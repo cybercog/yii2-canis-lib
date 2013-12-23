@@ -9,8 +9,8 @@ class CssSprite extends \infinite\base\Object {
 	public $sourceDirectory;
 	public $imgOutputDirectory;
 	public $outputSizes;
-	public $outputColors = array();
-	public $outputColorsHover = array();
+	public $outputColors = [];
+	public $outputColorsHover = [];
 	public $sourceSize;
 	public $nameClean = false;
 	public $destinationImageDir;
@@ -36,10 +36,10 @@ class CssSprite extends \infinite\base\Object {
 	public $padding = 5; // pixels of padding
 	public $maxHeight = 2000;
 
-	protected $_images = array();
-	protected $_imagesRaw = array();
-	protected $_css = array();
-	protected $_css_footer = array();
+	protected $_images = [];
+	protected $_imagesRaw = [];
+	protected $_css = [];
+	protected $_css_footer = [];
 
 	public function process() {
 		$this->_openDirectory();
@@ -172,7 +172,7 @@ class CssSprite extends \infinite\base\Object {
 			}
 			imagecopy($img, $sprite, $posX+$xOffset, $posY+$yOffset, 0, 0, $size, $size);
 
-			if (!isset($image->outputs[$size])) { $image->outputs[$size] = array(); }
+			if (!isset($image->outputs[$size])) { $image->outputs[$size] = []; }
 			$image->outputs[$size]['x'] = (empty($posX) ? 0 : '-'.$posX .'px');
 			$image->outputs[$size]['y'] = (empty($posY) ? 0 : '-'.$posY .'px');
 			$posY += ($size + $this->padding);

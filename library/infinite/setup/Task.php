@@ -12,9 +12,9 @@ namespace infinite\setup;
 abstract class Task extends \infinite\base\Object
 {
     protected $_setup;
-    public $errors = array();
-    public $fieldErrors = array();
-    public $input = array();
+    public $errors = [];
+    public $fieldErrors = [];
+    public $input = [];
 
     public function __construct($setup)
     {
@@ -34,9 +34,9 @@ abstract class Task extends \infinite\base\Object
     public function loadInput($input)
     {
         $error = false;
-        $this->input = array();
+        $this->input = [];
         foreach ($this->fields as $fieldset => $fields) {
-            $this->input[$fieldset] = array();
+            $this->input[$fieldset] = [];
             foreach ($fields['fields'] as $key => $settings) {
                 $fieldId = 'field_'.$this->id. '_'.$fieldset .'_'. $key .'';
 
@@ -72,10 +72,10 @@ abstract class Task extends \infinite\base\Object
      * @param unknown $template
      * @return unknown
      */
-    public function templatize($template, $vars = array())
+    public function templatize($template, $vars = [])
     {
         global $setup;
-        $tmp = array();
+        $tmp = [];
         foreach ($setup->vars as $name => $value) {
             if (!is_string($value) and !is_numeric($value) and is_callable($value)) {
                 $value = $value();
@@ -94,11 +94,11 @@ abstract class Task extends \infinite\base\Object
         return $template;
     }
 
-    public static function parseText($text, $variables = array())
+    public static function parseText($text, $variables = [])
     {
         if (is_object($text)) { return $text; }
         preg_match_all("/\%\%([^\%]+)\%\%/i", $text, $extracted);
-        $replace = array();
+        $replace = [];
         if (!empty($extracted)) {
             foreach ($extracted[0] as $k => $v) {
                 $key = '/'.$v.'/';

@@ -16,7 +16,7 @@ namespace infinite\db\models;
  */
 class Group extends \infinite\db\ActiveRecord
 {
-	static protected $_cache = array('id' => array(), 'system' => array());
+	static protected $_cache = ['id' => [], 'system' => []];
 	static protected $_doCache = true;
 	/**
 	 * @inheritdoc

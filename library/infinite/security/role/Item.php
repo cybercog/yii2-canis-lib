@@ -24,7 +24,7 @@ class Item extends \infinite\base\Object
 	public $system_version = 1;
 	public $level = 0;
 
-	public $_acas = array();
+	public $_acas = [];
 	
 	public function getModel() {
 		if (is_null($this->_model)) {
@@ -61,7 +61,7 @@ class Item extends \infinite\base\Object
 			$this->_acas = null;
 			return true;
 		}
-		$this->_acas = array();
+		$this->_acas = [];
 		foreach ($value as $v) {
 			$aca = Yii::$app->gk->getActionObjectByName($v);
 			if (!$aca) { continue; }

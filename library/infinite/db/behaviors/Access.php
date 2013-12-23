@@ -49,7 +49,7 @@ class Access extends \infinite\db\behaviors\ActiveRecord
     }
 
     public function aclSummary() {
-        $summary = array();
+        $summary = [];
         if (!isset(Yii::$app->gk)) { return $summary; }
         $access = Yii::$app->gk->getAccess($this->owner);
         $actions = Yii::$app->gk->getActionsById();
@@ -91,16 +91,16 @@ class Access extends \infinite\db\behaviors\ActiveRecord
         }
 
         $tableAlias = $this->owner->tableAlias;
-        $aclOrder = array();
-        $aclOnConditions = array();
+        $aclOrder = [];
+        $aclOnConditions = [];
         $aroN = 0;
-        $aroIn = array();
+        $aroIn = [];
         $aclOrder[] = 'IF('.$alias.'.access IS NULL, 0, 1) DESC';
 
         $aclOrder[] = 'IF('.$alias.'.accessing_object_id IS NULL, 0, 1) DESC';
         foreach ($aros as $aro) {
             if (is_array($aro)) {
-                $subInIf = array();
+                $subInIf = [];
                 foreach ($aro as $sa) {
                     $criteria->params[':aro_'.$aroN] = $sa;
                     $aroIn[] = ':aro_'.$aroN;
@@ -148,7 +148,7 @@ class Access extends \infinite\db\behaviors\ActiveRecord
         $criteria->distinct = true;
         $join = ' INNER JOIN `'.$aclModel->tableName().'` AS '.$alias.' ON (('.implode(') AND (', $aclOnConditions).'))';
 
-        $criteria->mergeWith(array('join' => $join, 'order' => implode(', ', $aclOrder)), true);
+        $criteria->mergeWith(['join' => $join, 'order' => implode(', ', $aclOrder)], true);
         //RDebug::d($criteria)
         $this->owner->dbCriteria = new CDbCriteria;
         $this->owner->dbCriteria->mergeWith($criteria);

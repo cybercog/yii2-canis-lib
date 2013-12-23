@@ -15,11 +15,11 @@ class StringHelper extends \yii\helpers\StringHelper
 		return [];
 	}
 
-	static public function parseText($text, $variables = array())
+	static public function parseText($text, $variables = [])
 	{
 		if (is_object($text)) { return $text; }
 		preg_match_all("/\%\%([^\%]+)\%\%/i", $text, $extracted);
-		$replace = array();
+		$replace = [];
 		$parseInstructionSet = static::parseInstructions();
 		if (!empty($extracted)) {
 			foreach ($extracted[0] as $k => $v) {

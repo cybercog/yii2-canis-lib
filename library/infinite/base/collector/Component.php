@@ -20,7 +20,7 @@ class Component extends \infinite\base\Component  implements IteratorAggregate, 
 	protected $_loaded = false;
 
 	public function init() {
-		Yii::$app->on(\yii\base\Application::EVENT_BEFORE_REQUEST, array($this, 'beforeRequest'));
+		Yii::$app->on(\yii\base\Application::EVENT_BEFORE_REQUEST, [$this, 'beforeRequest']);
 		parent::init();
 	}
 
