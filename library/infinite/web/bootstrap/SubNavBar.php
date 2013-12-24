@@ -24,17 +24,4 @@ class SubNavBar extends \yii\bootstrap\NavBar {
 		parent::init();
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	protected function renderToggleButton()
-	{
-		$bar = Html::tag('span', '', ['class' => 'icon-bar']);
-		$screenReader = '<span class="sr-only">'.$this->screenReaderToggleText.'</span>';
-		return Html::button("{$screenReader}\n{$bar}\n{$bar}\n{$bar}", [
-			'class' => 'navbar-toggle',
-			'data-toggle' => 'collapse',
-			'data-target' => '#'. $this->options['id'].' .navbar-ex1-collapse',
-		]);
-	}
 }

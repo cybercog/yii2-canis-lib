@@ -31,5 +31,24 @@ class ActiveField extends \yii\widgets\ActiveField
 		}
 		return parent::render($content);
 	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function checkboxList($items, $options = [])
+	{
+		$options = array_merge($this->inputOptions, $options);
+		return parent::checkboxList($items, $options);
+	}
+
+	
+	/**
+	 * @inheritdoc
+	 */
+	public function radioList($items, $options = [])
+	{
+		$options = array_merge($this->inputOptions, $options);
+		return parent::radioList($items, $options);
+	}
 }
 ?>
