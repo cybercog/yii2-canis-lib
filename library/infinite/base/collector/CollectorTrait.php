@@ -125,8 +125,10 @@ trait CollectorTrait
 	public function register($owner, $itemComponent, $systemId = null) {
 		$itemComponent = $this->prepareComponent($itemComponent);
 		$collectorItemClass = $this->collectorItemClass;
-		if (is_object($itemComponent)) {
-			$itemComponent = ['object' => $itemComponent];
+		$itemComponentObject = null;
+		if (is_object($itemComponent) && ($itemComponent instanceof CollectedObjectInterface)) {
+			$itemComponentObject = $itemComponent;
+			$itemComponent = [];
 		}
 
 		$itemComponent['class'] = $collectorItemClass;
@@ -139,6 +141,9 @@ trait CollectorTrait
 
 		$item = Yii::createObject($itemComponent);
 		Yii::trace(get_called_class() . ": Registering {$item->systemId}");
+		if (isset($itemComponentObject)) {
+			$item->object = $itemComponentObject->getCollectedObject($item);
+		}
 		if (isset($this->bucket[$item->systemId])) {
 			$item = $this->mergeExistingItems($this->bucket[$item->systemId], $item);
 		} else {

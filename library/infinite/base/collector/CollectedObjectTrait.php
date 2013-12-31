@@ -9,9 +9,13 @@ trait CollectedObjectTrait
 		return $this->_collectorItem;
 	}
 
-	public function setCollectorItem($item) {
+	public function setCollectorItem(Item $item) {
 		$this->_collectorItem = $item;
 		return $this;
 	}
 
+	public function getCollectedObject(Item $item) {
+		$this->collectorItem = $item;
+		return $this;
+	}
 }
