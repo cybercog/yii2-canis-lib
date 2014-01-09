@@ -56,7 +56,7 @@ class Response extends \yii\web\Response
 				$this->disableInstructions = true;
 			}
 		}
-		return (!empty($this->data) || $this->forceInstructions || $isAjax) && !$this->disableInstructions;
+		return (is_array($this->data) || $this->forceInstructions || $isAjax) && !$this->disableInstructions;
 	}
 
 	protected function generateInstructions()
