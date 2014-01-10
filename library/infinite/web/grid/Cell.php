@@ -129,7 +129,7 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
 
 	public function getId() {
 		if (is_null($this->_id)) {
-			$this->_id = uniqid(md5(rand()), true);
+			$this->_id = md5(microtime() . mt_rand());
 		}
 		return $this->_id;
 	}

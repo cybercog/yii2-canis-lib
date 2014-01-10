@@ -17,7 +17,7 @@ trait ObjectTrait
 	}
 	public function getMemoryId() {
 		if (is_null($this->_memoryId)) {
-			$this->_memoryId = self::classNamespace() .':'. md5(uniqid(md5(rand(0, 1000).microtime(true))));
+			$this->_memoryId = self::classNamespace() .':'. md5(microtime() . mt_rand());
 		}
 		return $this->_memoryId;
 	}
