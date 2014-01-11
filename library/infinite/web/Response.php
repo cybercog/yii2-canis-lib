@@ -41,7 +41,7 @@ class Response extends \yii\web\Response
 	public function init()
 	{
 		parent::init();
-		$this->on(static::EVENT_BEFORE_SEND, [$this, 'beforeSend']);
+		//$this->on(static::EVENT_BEFORE_SEND, [$this, 'beforeSend']);
 	}
 
 	public function getIsInstructable()
@@ -186,8 +186,15 @@ class Response extends \yii\web\Response
 		}
 		return null;
 	}
+	public function send()
+	{
+		if (!$this->isSent && $this->statusCode !== 500) {
+			$this->beforeSend();
+		}
+		parent::send();
+	}
 
-	public function beforeSend($event)
+	public function beforeSend($event = null)
 	{
 		if (isset($this->controller)) {
 			if ($this->isInstructable) {
