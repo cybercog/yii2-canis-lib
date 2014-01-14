@@ -16,9 +16,13 @@ trait SearchTerm
 	public $searchTermFields;
 	public $searchScore;
 	public $rowTransactionSize = 1;
+	public $resultClass = 'infinite\\db\\behaviors\\SearchTermResult';
+
 	public static function searchTerm($term, $params = [])
 	{
-		return [];
+		$results = [];
+		
+		return $results;
 	}
 
 	/**
