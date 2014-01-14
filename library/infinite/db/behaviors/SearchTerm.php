@@ -11,11 +11,15 @@ namespace infinite\db\behaviors;
 
 use yii\db\Query;
 
-class SearchTerm extends \infinite\db\behaviors\ActiveRecord
+trait SearchTerm
 {
 	public $searchTermFields;
 	public $searchScore;
 	public $rowTransactionSize = 1;
+	public static function searchTerm($term, $params = [])
+	{
+		return [];
+	}
 
 	/**
 	 *
@@ -23,7 +27,7 @@ class SearchTerm extends \infinite\db\behaviors\ActiveRecord
 	 * @param unknown $term
 	 * @return unknown
 	 */
-	public function searchTerm($term, $params = []) {
+	public function searchTerm2($term, $params = []) {
 		throw new \Exception("Not implemented yet");
 		
 		$package = ['results' => [], 'total' => 0];

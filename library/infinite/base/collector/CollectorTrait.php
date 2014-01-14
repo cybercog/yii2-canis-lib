@@ -43,7 +43,7 @@ trait CollectorTrait
 	}
 
 	public function getCollectorItemClass() {
-		return 'infinite\base\collector\Item';
+		return 'infinite\\base\\collector\\Item';
 	}
 
 	public function prepareComponent($component) {

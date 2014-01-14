@@ -61,6 +61,10 @@ class Response extends \yii\web\Response
 
 	protected function generateInstructions()
 	{
+		if (is_array($this->data)) {
+			return $this->data;
+		}
+		
 		$i = $this->baseInstructions;
 		$keepProcessing = true; 
 
