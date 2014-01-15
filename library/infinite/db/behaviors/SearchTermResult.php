@@ -61,6 +61,16 @@ class SearchTermResult extends Object implements Arrayable
 		}
 		return $this->_terms;
 	}
+
+	public function mergeTerms($values)
+	{
+		$values = (array)$values;
+		foreach ($values as $v) {
+			if (!in_array($this->terms)) {
+				$this->_terms[] = $v;
+			}
+		}
+	}
 	
 	public function setSub($value)
 	{
@@ -77,7 +87,12 @@ class SearchTermResult extends Object implements Arrayable
 
 	public function setScore($value)
 	{
-		$this->_score = $value;
+		$this->_score = (float)$value;
+	}
+
+	public function mergeScore($value)
+	{
+		$this->_score = $this->score + (float)$value;
 	}
 
 	public function getScore()

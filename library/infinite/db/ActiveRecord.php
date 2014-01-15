@@ -24,6 +24,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     static protected $_cache = [];
     protected $_tabularId;
     public $tabularIdHuman;
+    public $descriptorField;
 
 
     const FORM_PRIMARY_MODEL = 'primary';
@@ -34,9 +35,6 @@ class ActiveRecord extends \yii\db\ActiveRecord
      * @event Event an event that is triggered after a failed save.
      */
     const EVENT_AFTER_SAVE_FAIL = 'afterSaveFail';
-
-
-    public $descriptorField;
 
 
     public function setTabularId($value) {

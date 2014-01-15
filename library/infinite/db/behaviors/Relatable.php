@@ -406,10 +406,10 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     		$conditionsDestination = 'on';
     	}
 
-    	if ($model && $relationshipType === 'parents') {
+    	if ($relationshipType === 'parents') {
 			$primaryKey = $this->parentObjectField;
 			$foreignKey = $this->childObjectField;
-    	} elseif ($model && $relationshipType === 'children') {
+    	} elseif ($relationshipType === 'children') {
 			$primaryKey = $this->childObjectField;
 			$foreignKey = $this->parentObjectField;
     	} else {
@@ -420,11 +420,11 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     		];
     	}
 
-    	if (!$relationQuery && $model && isset($primaryKey)) {
+    	if (!$relationQuery && isset($primaryKey)) {
 			$conditions[] = $this->relationAlias .'.'. $primaryKey .' = '. $this->objectAlias .'.'. $modelPrimaryKey;
 		}
 
-    	if ($model && isset($foreignKey)) {
+    	if (isset($foreignKey)) {
 			$query->andWhere([$this->relationAlias .'.'. $foreignKey => $this->owner->primaryKey]);
 		}
 
