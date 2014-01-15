@@ -106,9 +106,9 @@ class SearchTermResult extends Object implements Arrayable
 	public function toArray()
 	{
 		return [
-			'id' => $this->id,
+			'value' => $this->id,
 			'terms' => $this->terms,
-			'descriptor' => $this->descriptor,
+			'name' => $this->descriptor,
 			'sub' => $this->sub,
 			'score' => $this->score
 		];
