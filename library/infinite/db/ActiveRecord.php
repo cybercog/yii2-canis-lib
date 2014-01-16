@@ -25,6 +25,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     protected $_tabularId;
     public $tabularIdHuman;
     public $descriptorField;
+    public $subdescriptorFields = [];
 
 
     const FORM_PRIMARY_MODEL = 'primary';
@@ -225,6 +226,39 @@ class ActiveRecord extends \yii\db\ActiveRecord
             }
         }
         return false;
+    }
+
+    public function getSubdescriptor()
+    {
+        $sub = [];
+        foreach ($this->subdescriptorFields as $field) {
+            if ($this->isForeignField($field)) {
+                $value = $this->getForeignFieldValue($field);
+            } else {
+                $value = $this->getLocalFieldValue($field);
+            }
+            if (!empty($value)) {
+                $sub[] = $value;
+            }
+        }
+    }
+
+    public function isForeignField($field)
+    {
+        return !$this->hasAttribute($field);
+    }
+
+    public function getLocalFieldValue($field)
+    {
+        if ($this->hasAttribute($field)) {
+            return $this->{$field};
+        }
+        return null;
+    }
+
+    public function getForeignFieldValue()
+    {
+        return null;
     }
 
     public function checkExistence()

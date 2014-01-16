@@ -15,11 +15,11 @@ use infinite\base\Object;
 
 class SearchTermResult extends Object implements Arrayable
 {
-	public $object;
+	protected $_object;
 	protected $_id;
 	protected $_terms;
 	protected $_descriptor;
-	protected $_sub;
+	protected $_subdescriptor;
 	protected $_score;
 
 	public function setId($value)
@@ -34,6 +34,18 @@ class SearchTermResult extends Object implements Arrayable
 		}
 		return $this->_id;
 	}
+
+	public function setObject($value)
+	{
+		$this->_subdescriptor = $value->subdescriptor;
+		$this->_object = $value;
+	}
+
+	public function getObject()
+	{
+		return $this->_object;
+	}
+
 
 	public function setDescriptor($value)
 	{
@@ -72,17 +84,17 @@ class SearchTermResult extends Object implements Arrayable
 		}
 	}
 	
-	public function setSub($value)
+	public function setSubdescriptor($value)
 	{
-		$this->_sub = (array)$value;
+		$this->_subdescriptor = (array)$value;
 	}
 
-	public function getSub()
+	public function getSubdescriptor()
 	{
-		if (is_null($this->_sub) && isset($this->object)) {
-			$this->_sub = [];
+		if (is_null($this->_subdescriptor)) {
+			$this->_subdescriptor = [];
 		}
-		return $this->_sub;
+		return implode("<br />", $this->_subdescriptor);
 	}
 
 	public function setScore($value)
@@ -109,7 +121,7 @@ class SearchTermResult extends Object implements Arrayable
 			'value' => $this->id,
 			'terms' => $this->terms,
 			'name' => $this->descriptor,
-			'sub' => $this->sub,
+			'subdescriptor' => $this->subdescriptor,
 			'score' => $this->score
 		];
 	}
