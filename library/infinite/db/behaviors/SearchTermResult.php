@@ -37,7 +37,21 @@ class SearchTermResult extends Object implements Arrayable
 
 	public function setObject($value)
 	{
-		$this->_subdescriptor = $value->subdescriptor;
+		if (!isset($this->_subdescriptor)) {
+			$this->_subdescriptor = [];
+		}
+
+		foreach ($value->subdescriptor as $subValue) {
+			if (!empty($subValue)) {
+				if (is_array($subValue) && isset($subValue['plain'])) {
+					$this->_subdescriptor[] = $subValue['plain'];
+				} elseif (is_array($subValue) && isset($subValue['rich'])) {
+					$this->_subdescriptor[] = strip_tags($subValue['rich']);
+				} elseif (is_string($subValue) || is_numeric($subValue)) {
+					$this->_subdescriptor[] = strip_tags($subValue);
+				}
+			}
+		}
 		$this->_object = $value;
 	}
 
@@ -78,7 +92,7 @@ class SearchTermResult extends Object implements Arrayable
 	{
 		$values = (array)$values;
 		foreach ($values as $v) {
-			if (!in_array($this->terms)) {
+			if (!in_array($v, $this->terms)) {
 				$this->_terms[] = $v;
 			}
 		}
@@ -87,6 +101,32 @@ class SearchTermResult extends Object implements Arrayable
 	public function setSubdescriptor($value)
 	{
 		$this->_subdescriptor = (array)$value;
+	}
+
+	public function addSubdescriptorField($field)
+	{
+		if (is_null($this->_subdescriptor)) {
+			$this->_subdescriptor = [];
+		}
+		if (isset($this->object)) {
+			$fieldValue = $this->object->getFieldValue($field);
+			if (!empty($fieldValue)) {
+				$this->_subdescriptor[] = $fieldValue;
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public function addSubdescriptorValue($value)
+	{
+		if (is_null($this->_subdescriptor)) {
+			$this->_subdescriptor = [];
+		}
+		if (!empty($value)) {
+			$this->_subdescriptor[] = $value;
+		}
+		return false;
 	}
 
 	public function getSubdescriptor()

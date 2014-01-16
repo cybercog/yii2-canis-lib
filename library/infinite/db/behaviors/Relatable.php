@@ -184,12 +184,25 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 
     public function parent($model, $relationOptions = [], $objectOptions = [])
     {
+        if (!isset($relationOptions['order'])) {
+            $relationOptions['order'] = [];
+        }
+        array_unshift($relationOptions['order'], ['primary', SORT_DESC]);
     	return $this->queryParentObjects($model, $relationOptions, $objectOptions)->one();
     }
 
     public function children($model, $relationOptions = [], $objectOptions = [])
     {
     	return $this->queryChildObjects($model, $relationOptions, $objectOptions)->all();
+    }
+
+    public function child($model, $relationOptions = [], $objectOptions = [])
+    {
+        if (!isset($relationOptions['order'])) {
+            $relationOptions['order'] = [];
+        }
+        array_unshift($relationOptions['order'], ['primary', SORT_DESC]);
+        return $this->queryChildObjects($model, $relationOptions, $objectOptions)->one();
     }
 
     public function queryParentObjects($model, $relationOptions = [], $objectOptions = [])

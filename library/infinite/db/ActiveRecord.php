@@ -232,20 +232,36 @@ class ActiveRecord extends \yii\db\ActiveRecord
     {
         $sub = [];
         foreach ($this->subdescriptorFields as $field) {
-            if ($this->isForeignField($field)) {
-                $value = $this->getForeignFieldValue($field);
-            } else {
-                $value = $this->getLocalFieldValue($field);
-            }
+            $value = $this->getFieldValue($field);
             if (!empty($value)) {
                 $sub[] = $value;
             }
         }
+        return $sub;
     }
 
     public function isForeignField($field)
     {
         return !$this->hasAttribute($field);
+    }
+
+    public function getFieldValue($field)
+    {
+        if (is_array($field)) {
+            // first with a value is our winner
+            foreach ($field as $subfield) {
+                $value = $this->getFieldValue($subfield);
+                if (!empty($value)) {
+                    return $value;
+                }
+            }
+            return null;
+        }
+        if ($this->isForeignField($field)) {
+            return $this->getForeignFieldValue($field);
+        } else {
+            return $this->getLocalFieldValue($field);
+        }
     }
 
     public function getLocalFieldValue($field)
@@ -256,7 +272,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
         return null;
     }
 
-    public function getForeignFieldValue()
+    public function getForeignFieldValue($field)
     {
         return null;
     }
