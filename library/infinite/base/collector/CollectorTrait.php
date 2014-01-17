@@ -14,6 +14,9 @@ trait CollectorTrait
 	protected $_buckets = [];
 	protected $_distributedFields = [];
 
+	// Enabling lazyLoad forfeits collectors right to isReady checks 
+	public $lazyLoad = false;
+
 	public function init()
 	{
 		parent::init();

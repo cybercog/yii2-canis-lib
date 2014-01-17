@@ -11,6 +11,7 @@ use yii\base\Event;
 abstract class Module extends Collector {
 	const EVENT_AFTER_LOAD = 'afterLoad';
 
+	public $autoload = true;
 	protected $_loaded = false;
 
 	abstract public function getModulePrefix();
@@ -20,8 +21,9 @@ abstract class Module extends Collector {
 		return parent::beforeRequest($event);
 	}
 
-	public function load() {
-		if (!$this->_loaded) {
+	public function load($force = false) {
+		if (!$this->_loaded && ($force || $this->autoload)) {
+			$this->_loaded = true;
 			Yii::beginProfile($this->modulePrefix .'::load');
 			foreach (Yii::$app->modules as $module => $settings) {
 				if (preg_match('/^'.$this->modulePrefix.'/', $module) === 0) { continue; }
@@ -31,7 +33,6 @@ abstract class Module extends Collector {
 			}
 			$this->trigger(self::EVENT_AFTER_LOAD);
 			Yii::endProfile($this->modulePrefix .'::load');
-			$this->_loaded = true;
 		}
 	}
 	

@@ -9,6 +9,7 @@ use IteratorAggregate;
 use infinite\base\exceptions\Exception;
 
 use yii\base\Arrayable;
+use yii\base\Event;
 
 class Component extends \infinite\base\Component  implements IteratorAggregate, ArrayAccess, Arrayable 
 {
@@ -52,6 +53,7 @@ class Component extends \infinite\base\Component  implements IteratorAggregate, 
 		$this->load();
 		Yii::beginProfile(__CLASS__.'::'.__FUNCTION__);
 		foreach ($this->_collectors as $collector) {
+			if (!is_object($collector)) { continue; }
 			Yii::beginProfile(__CLASS__.'::'.__FUNCTION__ .'::'.$collector->systemId);
 			if (!$collector->isReady()) {
 				Yii::endProfile(__CLASS__.'::'.__FUNCTION__ .'::'.$collector->systemId);
@@ -91,10 +93,10 @@ class Component extends \infinite\base\Component  implements IteratorAggregate, 
 
 	protected function internalRegisterCollector($id, $collector) {
 		Yii::beginProfile(__CLASS__.'::'.__FUNCTION__.'::'.$id);
-		if (is_array($collector)) {
+		if (is_array($collector) && empty($collector['lazyLoad'])) {
 			$collector = Yii::createObject($collector);
+			$collector->systemId = $id;
 		}
-		$collector->systemId = $id;
 		$this->_collectors[$id] = $collector;
 		Yii::endProfile(__CLASS__.'::'.__FUNCTION__.'::'.$id);
 		return $collector;
@@ -104,6 +106,22 @@ class Component extends \infinite\base\Component  implements IteratorAggregate, 
 		return $this->_collectors;
 	}
 
+	public function getSleepingCount()
+	{
+		return count($this->sleeping());
+	}
+
+
+	public function sleeping()
+	{
+		$s = [];
+		foreach ($this->_collectors as $c) {
+			if (is_array($c)) {
+				$s[] = $c;
+			}
+		}
+		return $s;
+	}
 	/**
 	 * Returns an iterator for traversing the attributes in the model.
 	 * This method is required by the interface IteratorAggregate.
@@ -136,6 +154,11 @@ class Component extends \infinite\base\Component  implements IteratorAggregate, 
 	public function offsetGet($offset)
 	{
 		if ($this->offsetExists($offset)) {
+			if (is_array($this->_collectors[$offset])) {
+				$this->_collectors[$offset] = Yii::createObject($this->_collectors[$offset]);
+				$this->_collectors[$offset]->systemId = $offset;
+				$this->_collectors[$offset]->beforeRequest(new Event);
+			}
 			return $this->_collectors[$offset];
 		}
 		return null;

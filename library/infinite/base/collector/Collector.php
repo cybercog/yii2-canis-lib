@@ -10,6 +10,7 @@ abstract class Collector extends \infinite\base\Component
 	
 	const DEFAULT_BUCKET = '__default';
 	const EVENT_AFTER_COLLECTOR_INIT = 'afterCollectorInit';
+	const EVENT_BEFORE_BUCKET_ACCESS = 'beforeBucketAccess';
 
 	/**
 	 *
