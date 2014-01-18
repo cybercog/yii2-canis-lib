@@ -68,6 +68,7 @@ class Component extends \infinite\base\Component  implements IteratorAggregate, 
 
 	public function initialize() {
 		foreach ($this->_collectors as $collector) {
+			if (!is_object($collector)) { continue; }
 			if (!$collector->initialize()) {
 				return false;
 			}

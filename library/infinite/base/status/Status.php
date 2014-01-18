@@ -16,7 +16,7 @@ class Status extends \infinite\base\Component
     protected $currentTask;
     protected $levels = 0;
     protected $lastLevel = 0;
-    protected $_tasks = []];
+    protected $_tasks = [];
     public $maxLevels = 3;
 
     public function __construct($maxLevels = 3)

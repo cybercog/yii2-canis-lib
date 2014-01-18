@@ -225,7 +225,8 @@ class Setup extends \infinite\base\Object
                 }
                 $_SERVER['argv'] = [];
                 $config = include($configPath);
-                self::$_app = new \infinite\console\Application($config);
+                self::$_app = Yii::$app = new \infinite\console\Application($config);
+                Yii::$app->trigger(\yii\base\Application::EVENT_BEFORE_REQUEST);
             }
             return self::$_app;
         }
@@ -269,39 +270,31 @@ class Setup extends \infinite\base\Object
 
     public function getEnvironmentTemplateFilePath()
     {
-        $path = $this->environmentFilePath . '.sample';
+        $path = $this->environmentFilePath  . '.sample';
         return $path;
     }
 
-    public function getEnvironmentsPath()
+    public function getLibraryConfigPath()
     {
-        $path = $this->configPath . DIRECTORY_SEPARATOR . 'environments';
+        $path = INFINITE_CASCADE_PATH . DIRECTORY_SEPARATOR . 'config';
+        if (!is_dir($path)) {
+            throw new Exception("Library config path does not exist: {$path}");
+        }
+        return $path;
+    }
+
+    public function getCommonConfigPath()
+    {
+        $path = $this->libraryConfigPath . DIRECTORY_SEPARATOR . 'common';
         if (!is_dir($path)) {
             throw new Exception("Base environment path does not exist: {$path}");
         }
         return $path;
     }
 
-    public function getBaseEnvironmentPath()
-    {
-        $path = $this->environmentsPath . DIRECTORY_SEPARATOR . 'common';
-        if (!is_dir($path)) {
-            throw new Exception("Base environment path does not exist: {$path}");
-        }
-        return $path;
-    }
-
-    public function getEnvironmentSetupsPath()
-    {
-        $path = $this->environmentsPath . DIRECTORY_SEPARATOR . 'setups';
-        if (!is_dir($path)) {
-            throw new Exception("Environment setups path does not exist: {$path}");
-        }
-        return $path;
-    }
     public function getEnvironmentTemplatesPath()
     {
-        $path = $this->environmentsPath . DIRECTORY_SEPARATOR . 'templates';
+        $path = $this->libraryConfigPath . DIRECTORY_SEPARATOR . 'templates';
         if (!is_dir($path)) {
             throw new Exception("Environment templates path does not exist: {$path}");
         }
