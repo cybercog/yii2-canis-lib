@@ -116,7 +116,9 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     public static function get($id, $access = true) {
-        return self::findOne(['id' => $id], $access);
+        $class = get_called_class();
+        $dummy = new $class;
+        return self::findOne([implode('.', $dummy->primaryKey()) => $id], $access);
     }
 
     public static function findOne($where, $access = true) {
