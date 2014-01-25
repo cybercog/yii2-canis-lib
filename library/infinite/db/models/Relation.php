@@ -84,5 +84,27 @@ class Relation extends \infinite\db\ActiveRecord
 		return $registryClass::getObject($this->parent_object_id);
 	}
 
+	public static function set($parentObject, $childObject, $params = [])
+	{
+		if (is_object($parentObject)) {
+			$parentObject = $parentObject->primaryKey;
+		}
+		if (is_object($childObject)) {
+			$childObject = $childObject->primaryKey;
+		}
+		$defaultParams = ['active' => 1];
+		$params = array_merge($defaultParams, $params);
+		$coreFields = ['parent_object_id' => $parentObject, 'child_object_id' => $childObject];
+		$object = self::findOne($coreFields, false);
+		if (!$object) {
+			$className = self::className();
+			$object = new $className;
+			$object->attributes = array_merge($coreFields, $params);
+			if (!$object->save()) {
+				return false;
+			}
+		}
+		return $object;
+	}
 	
 }

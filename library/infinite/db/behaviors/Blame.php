@@ -57,18 +57,18 @@ class Blame extends \infinite\db\behaviors\ActiveRecord
     {
         $fields = $this->fields;
         if ($this->owner->isNewRecord) {
-            if (isset($this->fields['createdField'])) {
+            if (isset($this->fields['createdField']) && !$this->owner->isAttributeChanged($this->fields['createdField'])) {
                 $this->owner->{$this->fields['createdField']} = new Expression('NOW()');
             }
-            if (isset($this->fields['createdByField'])) {
+            if (isset($this->fields['createdByField']) && !$this->owner->isAttributeChanged($this->fields['createdByField'])) {
                 $this->owner->{$this->fields['createdByField']} = self::_getUserId();
             }
         }
 
-        if (isset($this->fields['modifiedField'])) {
+        if (isset($this->fields['modifiedField']) && !$this->owner->isAttributeChanged($this->fields['modifiedField'])) {
             $this->owner->{$this->fields['modifiedField']} = new Expression('NOW()');
         }
-        if (isset($this->fields['modifiedByField'])) {
+        if (isset($this->fields['modifiedByField']) && !$this->owner->isAttributeChanged($this->fields['modifiedByField'])) {
             $this->owner->{$this->fields['modifiedByField']} = self::_getUserId();
         }
     }
