@@ -37,6 +37,19 @@ class Gatekeeper extends \infinite\base\Component
 	static $_cache = [];
 
 	protected $_objectCanCache = [];
+	
+	public $authorityClass = 'infinite\\security\\Authority';
+	protected $_authority;
+
+	public function setAuthority($authority)
+	{
+		$this->_authority = Yii::createObject($authority);
+	}
+
+	public function getAuthority()
+	{
+		return $this->_authority;
+	}
 
 	public function canPublic($controlledObject, $action = 'read') {
 		$requestKey = md5(serialize([__FUNCTION__, func_get_args()]));
