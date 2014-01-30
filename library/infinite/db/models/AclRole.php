@@ -19,6 +19,14 @@ namespace infinite\db\models;
  */
 class AclRole extends \infinite\db\ActiveRecord
 {
+    /**
+	 * @inheritdoc
+	 */
+	public static function isAccessControlled()
+    {
+        return false;
+    }
+    
 	/**
 	 * @inheritdoc
 	 */

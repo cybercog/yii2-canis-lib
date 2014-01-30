@@ -118,7 +118,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     public static function get($id, $access = true) {
         $class = get_called_class();
         $dummy = new $class;
-        return self::findOne([implode('.', $dummy->primaryKey()) => $id], $access);
+        return self::findOne([$dummy->tableName() .'.'. $dummy->primaryKey()[0] => $id], $access);
     }
 
     public static function findOne($where, $access = true) {
@@ -145,7 +145,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
             if ($where) {
                 $r->where($where);
             }
-            if (!$access AND $r->hasBehavior('QueryAccess')) {
+            if (!$access AND $r->hasBehavior('Access')) {
                 $r->disableAccessCheck();
             }
             $r = $r->$type();
@@ -184,6 +184,11 @@ class ActiveRecord extends \yii\db\ActiveRecord
         return $query;
     }
 
+    public static function isAccessControlled()
+    {
+        return true;
+    }
+
     public function behaviors()
     {
         return [
@@ -202,11 +207,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
     public static function queryBehaviors()
     {
-        return [
-            'QueryAccess' => [
-                'class' => 'infinite\db\behaviors\QueryAccess',
-            ]
-        ];
+        return [];
     }
 
     public function getDescriptor()

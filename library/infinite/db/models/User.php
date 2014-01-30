@@ -59,7 +59,8 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findIdentity($id)
     {
-        return static::find($id);
+        $primaryKey = static::primaryKey();
+        return static::find()->disableAccessCheck()->andWhere([$primaryKey[0] => $id])->one();
     }
 
     /**
@@ -70,7 +71,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findByUsername($username)
     {
-        return static::find(['username' => $username, 'status' => static::STATUS_ACTIVE]);
+        return static::find()->andWhere(['username' => $username, 'status' => static::STATUS_ACTIVE])->disableAccessCheck()->one();
     }
 
     /**

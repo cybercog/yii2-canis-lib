@@ -24,6 +24,14 @@ class Relation extends \infinite\db\ActiveRecord
 	public $registryClass = 'infinite\\models\\Registry';
 	static $_callCache = [];
 
+	/**
+	 * @inheritdoc
+	 */
+	public static function isAccessControlled()
+    {
+        return false;
+    }
+    
 	public function events()
     {
         return array_merge(parent::events(), [

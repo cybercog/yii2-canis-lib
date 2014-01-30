@@ -14,6 +14,15 @@ namespace infinite\db\models;
  */
 class Aca extends \infinite\db\ActiveRecord
 {
+
+	/**
+	 * @inheritdoc
+	 */
+	public static function isAccessControlled()
+    {
+        return false;
+    }
+
 	/**
 	 * @inheritdoc
 	 */

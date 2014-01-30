@@ -14,7 +14,6 @@ use yii\db\Query;
 
 class QueryAccess extends \infinite\db\behaviors\ActiveRecord
 {
-    protected $_aclEnabled = false; //@todo got to work on this behavior
     protected static $_acceptInherit = false;
 
     public function events()
@@ -23,23 +22,7 @@ class QueryAccess extends \infinite\db\behaviors\ActiveRecord
             \infinite\db\ActiveQuery::EVENT_BEFORE_QUERY => 'beforeQuery',
         ];
     }
-
-
-    public function enableAccessCheck() {
-        $this->_aclEnabled = true;
-        return $this->owner;
-    }
-
-    public function disableAccessCheck() {
-        $this->_aclEnabled = false;
-        return $this->owner;
-    }
-
-    public function getIsAclEnabled() {
-        if (!isset(Yii::$app->gk)) { return false; }
-        return $this->_aclEnabled AND $this->owner->isAco;
-    }
-
+    
     public static function allowInherit() {
         self::$_acceptInherit = true;
     }
@@ -87,7 +70,6 @@ class QueryAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     public function addCheckAccessOld($aca = 'read', $criteria = null, $inverse = false) {
-        if (!$this->isAclEnabled) { return $this->owner; }
         \d(get_class(Yii::$app->gk));
         \d(Yii::$app->gk->authority);
 
@@ -195,8 +177,6 @@ class QueryAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     public function beforeQuery($event) {
-        if (!$this->owner->isAco) { return true; }
-        if (!$this->isAclEnabled) { return true; }
         $this->addCheckAccess();
         return true;
     }
@@ -210,7 +190,6 @@ class QueryAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     public function beforeSave($event) {
-        if (!$this->isAclEnabled) { return; }
         if ($this->owner->isNewRecord) { return; }
         // return true;
         if (!$this->can('update')) {
@@ -220,7 +199,6 @@ class QueryAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     public function afterSave($event) {
-        if (!$this->isAclEnabled) { return; }
         $this->assignCreationRole();
         return true;
     }

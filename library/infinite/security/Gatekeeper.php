@@ -128,7 +128,7 @@ class Gatekeeper extends \infinite\base\Component
 		if (!is_object($model)) {
 			$model = new $model;
 		}
-		return !$model->getBehavior('QueryAccess') || $model->can($action, $accessingObject);
+		return !$model->getBehavior('Access') || $model->can($action, $accessingObject);
 	}
 
     public function generateAclCheckCriteria($query, $controlledObject, $accessingObject = null, $model = null, $allowParentInherit = false) {
@@ -195,9 +195,9 @@ class Gatekeeper extends \infinite\base\Component
 
 		$aclOrder['IF('.$alias.'.object_model IS NULL, 0, 1)'] =  SORT_DESC;
 
-		if (is_object($controlledObject)) {
+		if (is_object($controlledObject) && !empty($controlledObject->id)) {
 			$innerOnConditions[] = [$alias.'.controlled_object_id' => $controlledObject->id];
-		} elseif (isset($controlledObject)) {
+		} elseif (isset($controlledObject) && is_string($controlledObject)) {
 			$innerOnConditions[] = [$alias.'.controlled_object_id' => $controlledObject];
 		}
 
@@ -253,7 +253,7 @@ class Gatekeeper extends \infinite\base\Component
     {
     	$aclClass = $this->aclClass;
     	if ($query instanceof ActiveQuery) {
-    		var_dump($query->modelClass);
+    		return $query->modelClass === $aclClass;
     	} else { // regular old query. Have to do this by table name
     		if ($query->primaryTable === $aclClass::tableName()) {
     			return true;
