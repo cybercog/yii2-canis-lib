@@ -30,7 +30,7 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
             'controlled_object_id' => 'char(36) CHARACTER SET ascii COLLATE ascii_bin DEFAULT NULL',
             'aca_id' => 'char(36) CHARACTER SET ascii COLLATE ascii_bin DEFAULT NULL',
             'object_model' => 'string DEFAULT NULL',
-            'access' => 'tinyint(4) DEFAULT NULL',
+            'access' => 'tinyint(4) DEFAULT NULL', // -1 explicitly deny access (rare); 1 allow access; 2 inherit from parent
             'created' => 'datetime DEFAULT NULL',
             'modified' => 'datetime DEFAULT NULL'
         ]);

@@ -145,8 +145,8 @@ class ActiveRecord extends \yii\db\ActiveRecord
             if ($where) {
                 $r->where($where);
             }
-            if (!$access AND $r->hasBehavior('Access')) {
-                $r->disableAccess();
+            if (!$access AND $r->hasBehavior('QueryAccess')) {
+                $r->disableAccessCheck();
             }
             $r = $r->$type();
             if ($r) {
@@ -192,6 +192,9 @@ class ActiveRecord extends \yii\db\ActiveRecord
             ],
             'Blame' => [
                 'class' => 'infinite\db\behaviors\Blame',
+            ],
+            'ActiveAccess' => [
+                'class' => 'infinite\db\behaviors\ActiveAccess',
             ]
         ];
     }
@@ -200,8 +203,8 @@ class ActiveRecord extends \yii\db\ActiveRecord
     public static function queryBehaviors()
     {
         return [
-            'Access' => [
-                'class' => 'infinite\db\behaviors\Access',
+            'QueryAccess' => [
+                'class' => 'infinite\db\behaviors\QueryAccess',
             ]
         ];
     }

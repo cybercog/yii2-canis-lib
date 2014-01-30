@@ -15,6 +15,7 @@ use infinite\base\ComponentTrait;
 class ActiveQuery extends \yii\db\ActiveQuery
 {
     use ComponentTrait;
+    use QueryTrait;
     /**
      * @event Event an event that is triggered before a query
      */

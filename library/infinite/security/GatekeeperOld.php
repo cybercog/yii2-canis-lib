@@ -14,10 +14,9 @@ use Yii;
 use infinite\base\exceptions\Exception;
 use infinite\helpers\ArrayHelper;
 use infinite\db\ActiveRecord;
-use infinite\db\Query;
-use infinite\db\ActiveQuery;
-use infinite\db\behaviors\ActiveAccess;
 
+use yii\db\Query;
+use yii\db\ActiveQuery;
 use yii\db\Expression;
 
 class Gatekeeper extends \infinite\base\Component
@@ -109,26 +108,36 @@ class Gatekeeper extends \infinite\base\Component
 	}
 
 	public function can($action, $controlledObject, $accessingObject = null) {
-		if (!is_array($controlledObject)) {
-			$controlledObject = [$controlledObject];
-		}
-		$registryClass = $this->registryClass;
-		foreach ($controlledObject as $co) {
-			if (!is_object($co)) {
-				$co = $registryClass::getObject($co, true);
-				if ($co->can($action, $accessingObject)) {
-					return true;
-				}
-			}
-		}
 		return false;
+		$access = $this->getAccess($controlledObject, $accessingObject);
+		if (is_null($action)) {
+			$acaKey = null;
+		} else {
+			$aca = $this->getActionObjectByName($action);
+			$acaKey = $aca->primaryKey;
+		}
+		if (array_key_exists($acaKey, $access) AND $access[$acaKey] === true) {
+			$can = true;
+		} else {
+			$can = false;
+		}
+		return $can;
 	}
 
 	public function canGeneral($action, $model, $accessingObject = null) {
-		if (!is_object($model)) {
-			$model = new $model;
+		$access = $this->getGeneralAccess($model, $accessingObject);
+		if (is_null($action)) {
+			$acaKey = null;
+		} else {
+			$aca = $this->getActionObjectByName($action);
+			$acaKey = $aca->primaryKey;
 		}
-		return !$model->getBehavior('QueryAccess') || $model->can($action, $accessingObject);
+		if (array_key_exists($acaKey, $access) AND $access[$acaKey] === true) {
+			$can = true;
+		} else {
+			$can = false;
+		}
+		return $can;
 	}
 
     public function generateAclCheckCriteria($query, $controlledObject, $accessingObject = null, $model = null, $allowParentInherit = false) {
@@ -141,10 +150,6 @@ class Gatekeeper extends \infinite\base\Component
 		$aclOnConditions = ['and'];
 		$aroN = 0;
 		$aroIn = [];
-
-		if (!isset($model) && is_object($controlledObject)) {
-			$model = get_class($controlledObject);
-		}
 
 		if (isset($model) && $model) {
 			$modelClass = ActiveRecord::parseModelAlias($model);
@@ -182,6 +187,8 @@ class Gatekeeper extends \infinite\base\Component
 			$aclOnConditions[] = [$alias.'.accessing_object_id' => null];
 		}
 
+
+
 		$aclOrder['IF('.$alias.'.aca_id IS NULL, 0, 1)'] = SORT_DESC;
 		$aclOrder['IF('.$alias.'.controlled_object_id IS NULL, 0, 1)'] = SORT_DESC;
 		
@@ -193,40 +200,40 @@ class Gatekeeper extends \infinite\base\Component
 			$aclConditions = [$alias . '.access' => 1];
 		}
 
-		$aclOrder['IF('.$alias.'.object_model IS NULL, 0, 1)'] =  SORT_DESC;
-
 		if (is_object($controlledObject)) {
-			$innerOnConditions[] = [$alias.'.controlled_object_id' => $controlledObject->id];
-		} elseif (isset($controlledObject)) {
-			$innerOnConditions[] = [$alias.'.controlled_object_id' => $controlledObject];
+			$query->params[':controlled_object_id'] = $controlledObject->id;
+			$innerOnConditions[] = $alias.'.controlled_object_id=:controlled_object_id';
+			$innerOnConditions[] = ['and', [$alias.'.controlled_object_id' => null], [$alias.'.object_model' => $controlledObject->modelAlias]];
+			$aclOrder['IF('.$alias.'.object_model IS NULL, 0, 1)'] =  SORT_DESC;
+		} elseif (!is_null($model)) {
+			$aclOrder['IF('.$alias.'.object_model IS NULL, 0, 1)'] =  SORT_DESC;
+			$innerOnConditions[] = ['and', [$alias.'.controlled_object_id' => null], [$alias.'.object_model' => $model]];
+		}elseif(is_null($controlledObject)) {
+			$aclOrder['IF('.$alias.'.object_model IS NULL, 0, 1)'] =  SORT_DESC;
+			$innerOnConditions[] = ['and', [$alias.'.controlled_object_id' => null], [$alias.'.object_model' => null]];
+		} else {
+			$cos = [];
+			foreach ($controlledObject as $co) {
+				$coKey = ':controlled_object_id_'.count($cos);
+				$cos[] = $coKey;
+				$query->params[$coKey] = $co;
+			}
+			$innerOnConditions[] = [$alias.'.controlled_object_id' => $cos];
+
 		}
 
-		if (!is_null($model)) {
-			$innerOnConditions[] = ['and', [$alias.'.controlled_object_id' => null], [$alias.'.object_model' => $model]];
-		} elseif(!isset($controlledObject)) {
-			
-		}
 		$innerOnConditions[] = ['and', [$alias.'.controlled_object_id' => null], [$alias.'.object_model' => null]];
 		$aclOnConditions[] = $innerOnConditions;
 
 		$aclClass = $this->aclClass;
-
-		$addSelect = false;
-		if (!isset($query->select)) {
-			$query->select = [];
-			$addSelect = true;
-		}
-
 		if ($this->isAclQuery($query)) {
 			if (!empty($aclConditions)) {
 				$aclOnConditions[] = $aclConditions;
 			}
 			$query->andWhere($aclOnConditions);
-			$addSelect = false;
 		} else {
 			$query->join('INNER JOIN', $aclClass::tableName() .' '. $alias, $aclOnConditions);
 			$query->andWhere($aclConditions);
-			$addSelect = $addSelect && true;
 			if (isset($query->groupBy)) {
 				$query->groupBy[] = $query->primaryAlias .'.'. $query->primaryTablePk;
 			} else {
@@ -238,24 +245,24 @@ class Gatekeeper extends \infinite\base\Component
 		} else {
 			$query->orderBy = array_merge($aclOrder, $query->orderBy);
 		}
-
-		if ($addSelect && $modelTable) {
-			$query->select = ["$modelTable.*"];
-			$query->select[] = $alias .'.access';
-			$query->select[] = $alias .'.aca_id as aca_id';
-		} else {
-			$query->select[] = $alias . '.*';
+		if (!isset($query->select)) {
+			$query->select = [];
+			if (isset($modelTable)) {
+				$query->select = ["$modelTable.*"];
+			}
 		}
+		$query->select[] = $alias .'.access';
+		$query->select[] = $alias .'.aca_id as aca_id';
     	return $query;
     }
 
-    protected function isAclQuery(\yii\db\Query $query)
+    protected function isAclQuery(Query $query)
     {
     	$aclClass = $this->aclClass;
     	if ($query instanceof ActiveQuery) {
     		var_dump($query->modelClass);
     	} else { // regular old query. Have to do this by table name
-    		if ($query->primaryTable === $aclClass::tableName()) {
+    		if (in_array($aclClass::tableName(), $query->from)) {
     			return true;
     		} else {
     			return false;
@@ -264,7 +271,52 @@ class Gatekeeper extends \infinite\base\Component
     }
 
 	public function getGeneralAccess($model, $accessingObject = null) {
-		return [];
+		if (!is_null($model)) {
+			$model = ActiveRecord::modelAlias($model);
+		}
+
+		$accessKey = md5(serialize([__FUNCTION__, $model, $accessingObject]));
+		if (!array_key_exists($accessKey, $this->_objectCanCache)) {
+			$this->_objectCanCache[$accessKey] = [];
+
+	    	$aclClass = $this->aclClass;
+
+			$innerAclQuery = new Query;
+			$innerAclQuery->from($aclClass::tableName() .' t');
+			$this->generateAclCheckCriteria($innerAclQuery, null, $accessingObject, $model);
+			$innerAclCommand = $innerAclQuery->createCommand();
+			$outerAclQuery = new Query;
+			$outerAclQuery->from(['('. $innerAclCommand->sql .') `outer`']);
+			$outerAclQuery->params($innerAclQuery->params);
+			$outerAclQuery->select('outer.aca_id, outer.access');
+			$outerAclQuery->groupBy('(`outer`.aca_id)');
+			$raw = $outerAclQuery->all();
+			$nullValue = null;
+			$discoverParents = [];
+			$acaClass = $this->acaClass;
+			foreach ($raw as $r) {
+				if (is_null($r['aca_id']) AND is_null($nullValue)) {
+					$nullValue = $r['access'];
+					if (empty($this->_objectCanCache[$accessKey])) {
+						foreach ($acaClass::findAll() as $aca) {
+							$this->_objectCanCache[$accessKey][$aca->id] = in_array($r['access'], ['0', '1']);
+						}
+					}
+					continue;
+				} elseif (!is_null($nullValue) AND is_null($r['access'])) {
+					$r['access'] = $nullValue;
+				}
+				if ($r['access'] === '-1') {
+					$this->_objectCanCache[$accessKey][$r['aca_id']] = false;
+				} elseif ($r['access'] === '1') {
+					$this->_objectCanCache[$accessKey][$r['aca_id']] = true;
+				} elseif ($r['access'] === '0') {
+					$this->_objectCanCache[$accessKey][$r['aca_id']] = true;
+				}
+				
+			}
+		}
+		return $this->_objectCanCache[$accessKey];
 	}
 
 	public function getParentActionTranslations() {
@@ -281,48 +333,92 @@ class Gatekeeper extends \infinite\base\Component
 			return $action;
 		}
 	}
+	public function getAccess($controlledObject, $accessingObject = null) {
+		$controlledId = null;
+		if (is_object($controlledObject)) {
+			$controlledId = $controlledObject->id;
+		}
+		$accessKey = md5(serialize([$controlledId, $accessingObject]));
+		if (!array_key_exists($accessKey, $this->_objectCanCache)) {
+			$this->_objectCanCache[$accessKey] = [];
+			$aclClass = $this->aclClass;
 
-	public function getAccess($controlledObject, $accessingObject = null, $acaIds = null)
-	{
-		if (is_null($acaIds)) {
-			$acaIds = array_keys($this->actionsById);
-		}
-		if (empty($acaIds)) {
-			return [];
-		}
-		$query = new Query;
-		$aclClass = $this->aclClass;
-		$alias = $aclClass::tableName();
-		$query->from = [$aclClass::tableName() .' '. $alias];
-		// generateAclCheckCriteria($query, $controlledObject, $accessingObject = null, $model = null, $allowParentInherit = false) {
-		$this->generateAclCheckCriteria($query, $controlledObject, $accessingObject, null, true);
-		$query->andWhere(['or', [$alias.'.aca_id' => $acaIds], [$alias.'.aca_id' => null]]);
-		$query->groupBy($query->primaryAlias .'.aca_id');
-		$raw = $query->all();
-		$results = [];
-		$foundNull = false;
-		foreach ($raw as $key => $result) {
-			if (is_null($result['aca_id'])) {
-				$foundNull = ActiveAccess::translateAccessValue($result['access']);
-				unset($raw[$key]);
-				break;
-			} else {
-				$results[$result['aca_id']] = ActiveAccess::translateAccessValue($result['access']);
-			}
-		}
-			foreach ($acaIds as $acaId) {
-				if ($foundNull !== false) {
-					$results[$acaId] = $foundNull;
-				}
-				if (!isset($results[$acaId])) {
-					$results[$acaId] = ActiveAccess::translateAccessValue(-1);
-				}
-			}
+			$innerAclQuery = new Query;
+			$innerAclQuery->from($aclClass::tableName() .' t');
+			$this->generateAclCheckCriteria($innerAclQuery, null, $accessingObject);
+			$innerAclCommand = $innerAclQuery->createCommand();
 
-		return $results;
+			$outerAclQuery = new Query;
+			$outerAclQuery->from(['('. $innerAclCommand->sql .') `outer`']);
+			$outerAclQuery->params($innerAclQuery->params);
+			$outerAclQuery->select(['outer.aca_id', 'outer.access']);
+			$outerAclQuery->groupBy('(`outer`.aca_id)');
+			$raw = $outerAclQuery->all();
+
+			$nullValue = null;
+			$discoverParents = [];
+			foreach ($raw as $r) {
+				// @todo not sure if this needs to be done in another loop
+				if (is_null($r['aca_id']) AND is_null($nullValue)) {
+					$nullValue = $r['access'];
+					continue;
+				} elseif (!is_null($nullValue) AND is_null($r['access'])) {
+					$r['access'] = $nullValue;
+				}
+				if ($r['access'] === '0') {
+					$discoverParents[] = $r['aca_id'];
+				} elseif ($r['access'] === '-1') {
+					$this->_objectCanCache[$accessKey][$r['aca_id']] = false;
+				} elseif ($r['access'] === '1') {
+					$this->_objectCanCache[$accessKey][$r['aca_id']] = true;
+				}
+			}
+			if (!is_null($nullValue)) {
+				$acaClass = $this->acaClass;
+				foreach ($acaClass::findAll() as $aca) {
+					if (!isset($this->_objectCanCache[$accessKey][$aca->primaryKey])) {
+						if ($nullValue === '0') {
+							$discoverParents[] = $aca->primaryKey;
+						} elseif ($nullValue === '-1') {
+							$this->_objectCanCache[$accessKey][$aca->primaryKey] = false;
+						} elseif ($nullValue === '1') {
+							$this->_objectCanCache[$accessKey][$aca->primaryKey] = true;
+						}
+					}
+				}
+			}
+			if (!empty($discoverParents)) {
+				$parents = [];
+				$parentIds = [];
+				if (is_object($controlledObject) AND $controlledObject->hasBehavior('Relatable')) {
+					$parentIds = $controlledObject->parentIds;
+				}
+				$acaById = $this->getActionsById();
+				$registryClass = $this->registryClass;
+				foreach ($discoverParents as $aca) {
+					if (!isset($acaById[$aca])) { continue; }
+					if (isset($this->_objectCanCache[$accessKey][$aca])) { continue; }
+					$acaObject = $acaById[$aca];
+					$this->_objectCanCache[$accessKey][$aca] = false;
+					foreach ($parentIds as $parentId) {
+						if (!isset($parents[$parentId])) {
+							$parents[$parentId] = $registryClass::getObject($parentId, true);
+						}
+						if (isset($parents[$parentId])) {
+							$testCan = $parents[$parentId]->can($this->_translateParentAction($acaObject));
+							if ($testCan) {
+								$this->_objectCanCache[$accessKey][$aca] = true;
+								break;
+							}
+						}
+					}
+				}
+			}
+			
+			//$this->_objectCanCache[$accessKey]
+		}
+		return $this->_objectCanCache[$accessKey];
 	}
-
-
 
 	public function clearCanCache($controlledObject, $accessingObject = null) {
 		// @todo mix this in with the caching solution
@@ -335,7 +431,7 @@ class Gatekeeper extends \infinite\base\Component
 		}
 
     	if (is_null($this->_primaryAro)) {
-    		if (isset(Yii::$app->user) && !Yii::$app->user->isGuest && !empty(Yii::$app->user->id)) {
+    		if (isset(Yii::$app->user) AND !Yii::$app->user->isGuest AND !empty(Yii::$app->user->id)) {
     			$this->_primaryAro = Yii::$app->user->identity;
     		} elseif (Yii::$app instanceof \yii\console\Application) {
     			$userClass = $this->userClass;
@@ -363,7 +459,7 @@ class Gatekeeper extends \infinite\base\Component
     		$this->_aros[$arosKey] = [];
     		if ($accessingObject) {
     			$this->_aros[$arosKey][] = $accessingObject->primaryKey;
-    			$this->_aros[$arosKey] = array_merge($this->_aros[$arosKey], $this->getGroups($accessingObject, true));
+    			$this->_aros[$arosKey] = array_merge($this->_aros[$arosKey], $this->getGroups($accessingObject, false));
     		}
 
 			if ($this->getPublicGroup()) { // always allow public groups
@@ -371,7 +467,7 @@ class Gatekeeper extends \infinite\base\Component
 				$this->_aros[$arosKey][] = $this->getTopGroup()->primaryKey;
 			}
     	}
-    	return array_unique($this->_aros[$arosKey]);
+    	return $this->_aros[$arosKey];
     }
 
     public function getGroups($accessingObject = null, $flatten = false) {
@@ -382,7 +478,7 @@ class Gatekeeper extends \infinite\base\Component
 				$accessingObject = $this->primaryAro;
 			}
 	    	$groups = [];
-	    	$parents = $accessingObject->parents($this->groupClass, [], ['disableAccessCheck' => 1]);
+	    	$parents = $accessingObject->parents($this->groupClass, [], ['disableAccess' => 1]);
 			if (!empty($parents)) {
 				$children = ArrayHelper::getColumn($parents, 'primaryKey');
 				if ($flatten) {
@@ -420,6 +516,7 @@ class Gatekeeper extends \infinite\base\Component
 	protected function _getActions() {
 		$acaClass = $this->acaClass;
 		$actions = $acaClass::find()->all();
+		\d(count($actions));
 		$this->_actionsByName = ArrayHelper::index($actions, 'name');
 		$this->_actionsById = ArrayHelper::index($actions, 'id');
 		return true;

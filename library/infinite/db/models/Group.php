@@ -117,7 +117,7 @@ class Group extends \infinite\db\ActiveRecord
 		}
 		$group = self::model();
 		if ($disableAccess) {
-			$group->disableAccess();
+			$group->disableAccessCheck();
 		}
 		$group = $group->findByPk($id);
 		if (empty($group)) { return false; }
@@ -141,7 +141,7 @@ class Group extends \infinite\db\ActiveRecord
 		}
 		$group = $groupQuery = self::find()->where(['system' => $id]);
 		if ($disableAcl AND $group->hasBehavior("Access")) {
-			$group->disableAccess();
+			$group->disableAccessCheck();
 		}
 		$group = $group->one();
 		if (!$group OR $group->system !== $id) {

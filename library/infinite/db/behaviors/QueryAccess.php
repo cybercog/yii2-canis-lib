@@ -10,10 +10,10 @@
 namespace infinite\db\behaviors;
 
 use Yii;
+use yii\db\Query;
 
-class Access extends \infinite\db\behaviors\ActiveRecord
+class QueryAccess extends \infinite\db\behaviors\ActiveRecord
 {
-
     protected $_aclEnabled = false; //@todo got to work on this behavior
     protected static $_acceptInherit = false;
 
@@ -25,12 +25,12 @@ class Access extends \infinite\db\behaviors\ActiveRecord
     }
 
 
-    public function enableAccess() {
+    public function enableAccessCheck() {
         $this->_aclEnabled = true;
         return $this->owner;
     }
 
-    public function disableAccess() {
+    public function disableAccessCheck() {
         $this->_aclEnabled = false;
         return $this->owner;
     }
@@ -62,13 +62,36 @@ class Access extends \infinite\db\behaviors\ActiveRecord
         }
         return $summary;
     }
-    public function addCheckNoAccess($aca = 'read', $criteria = null) {
-        return $this->addCheckAccess($aca, $criteria, true);
+
+
+    public function addCheckNoAccess($aca = 'read') {
+        return $this->addCheckAccess($aca, true);
     }
 
-    public function addCheckAccess($aca = 'read', $criteria = null, $inverse = false) {
+    public function addCheckAccess($aca = 'read', $inverse = false) {
+        $query = $this->owner;
+        $aclClass = Yii::$app->gk->aclClass;
+        $alias = $aclClass::tableName();
+        $parentClass = $this->owner->modelClass;
+        $classAlias = $parentClass::modelAlias();
+        Yii::$app->gk->generateAclCheckCriteria($query, false, null, $classAlias, true);
+
+        if ($aca) {
+            $aca = Yii::$app->gk->getActionObjectByName($aca);
+            if (empty($aca)) {
+                throw new Exception("ACL is not set up correctly. No '{$aca}' action!");
+            } 
+            $query->andWhere(['or', [$alias.'.aca_id' => $aca->primaryKey], [$alias.'.aca_id' => null]]);
+        }
+        return $query;
+    }
+
+    public function addCheckAccessOld($aca = 'read', $criteria = null, $inverse = false) {
         if (!$this->isAclEnabled) { return $this->owner; }
-        
+        \d(get_class(Yii::$app->gk));
+        \d(Yii::$app->gk->authority);
+
+        exit;
         if (is_null($criteria)) {
             $baseCriteria = $this->owner->getDbCriteria();
             $criteria = new CDbCriteria;

@@ -232,7 +232,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     	return $query;
     }
 
-    public function queryParentRelations($model = false, $relationOptions = [])
+    public function queryParentRelations($model = false, $relationOptions = [], $objectOptions = [])
     {
     	return $this->queryRelations('parents', $model, $relationOptions, $objectOptions);
     }
