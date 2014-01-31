@@ -80,16 +80,16 @@ class Relation extends \infinite\db\ActiveRecord
 		];
 	}
 
-	public function getChildObject()
+	public function getChildObject($checkAccess = true)
 	{
 		$registryClass = $this->registryClass;
-		return $registryClass::getObject($this->child_object_id);
+		return $registryClass::getObject($this->child_object_id, $checkAccess);
 	}
 
-	public function getParentObject()
+	public function getParentObject($checkAccess = true)
 	{
 		$registryClass = $this->registryClass;
-		return $registryClass::getObject($this->parent_object_id);
+		return $registryClass::getObject($this->parent_object_id, $checkAccess);
 	}
 
 	public static function set($parentObject, $childObject, $params = [])

@@ -402,7 +402,7 @@ class Gatekeeper extends \infinite\base\Component
 					$this->_objectCanCache[$accessKey][$aca] = false;
 					foreach ($parentIds as $parentId) {
 						if (!isset($parents[$parentId])) {
-							$parents[$parentId] = $registryClass::getObject($parentId, true);
+							$parents[$parentId] = $registryClass::getObject($parentId, false);
 						}
 						if (isset($parents[$parentId])) {
 							$testCan = $parents[$parentId]->can($this->_translateParentAction($acaObject));

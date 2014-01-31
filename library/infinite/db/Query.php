@@ -11,5 +11,7 @@ namespace infinite\db;
 
 class Query extends \yii\db\Query
 {
+    const EVENT_BEFORE_QUERY = 'beforeQuery';
+    
 	use QueryTrait;
 }

@@ -19,7 +19,7 @@ class QueryAccess extends \infinite\db\behaviors\ActiveRecord
     public function events()
     {
         return [
-            \infinite\db\ActiveQuery::EVENT_BEFORE_QUERY => 'beforeQuery',
+            \infinite\db\Query::EVENT_BEFORE_QUERY => 'beforeQuery',
         ];
     }
     
@@ -47,11 +47,11 @@ class QueryAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
 
-    public function addCheckNoAccess($aca = 'read') {
-        return $this->addCheckAccess($aca, true);
-    }
+    // public function addCheckNoAccess($aca = 'read') {
+    //     return $this->addCheckAccess($aca, true);
+    // }
 
-    public function addCheckAccess($aca = 'read', $inverse = false) {
+    public function addCheckAccess($aca = 'read') {
         $query = $this->owner;
         $aclClass = Yii::$app->gk->aclClass;
         $alias = $aclClass::tableName();

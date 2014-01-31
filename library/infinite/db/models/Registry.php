@@ -72,7 +72,7 @@ class Registry extends \infinite\db\ActiveRecord
 	 * @param unknown $id
 	 * @return unknown
 	 */
-	public static function getObject($id, $disableAccess = false) {
+	public static function getObject($id, $checkAccess = true) {
 		$requestKey = md5(serialize([__FUNCTION__, func_get_args()]));
 		$classKey = self::className();
 		if (!isset(self::$_cache[$classKey])) {
@@ -80,14 +80,14 @@ class Registry extends \infinite\db\ActiveRecord
 		}
 		if (!isset(self::$_cache[$classKey][$requestKey])) {
 			self::$_cache[$classKey][$requestKey] = false;
-			$registry = self::get($id);
+			$registry = self::get($id, false);
 			if (empty($registry)) { return false; }
 			$model = self::parseModelAlias($registry->object_model);
 			$object = $model::find();
-			if ($disableAccess) {
+			if (!$checkAccess) {
 				$object->disableAccessCheck();
 			}
-			$object = $object->where(['id' => $registry->primaryKey])->one();
+			$object = $object->where([$model::tableName() . '.id' => $registry->primaryKey])->one();
 			self::$_cache[$classKey][$requestKey] = $object;
 		}
 		return self::$_cache[$classKey][$requestKey];

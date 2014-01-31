@@ -115,8 +115,9 @@ class Gatekeeper extends \infinite\base\Component
 		$registryClass = $this->registryClass;
 		foreach ($controlledObject as $co) {
 			if (!is_object($co)) {
-				$co = $registryClass::getObject($co, true);
-				if ($co->can($action, $accessingObject)) {
+				$oco = $co;
+				$co = $registryClass::getObject($co, false);
+				if ($co && $co->can($action, $accessingObject)) {
 					return true;
 				}
 			}
@@ -244,7 +245,7 @@ class Gatekeeper extends \infinite\base\Component
 			$query->select[] = $alias .'.access';
 			$query->select[] = $alias .'.aca_id as aca_id';
 		} else {
-			$query->select[] = $alias . '.*';
+			//$query->select[] = $alias . '.*';
 		}
     	return $query;
     }
@@ -339,7 +340,7 @@ class Gatekeeper extends \infinite\base\Component
     			$this->_primaryAro = Yii::$app->user->identity;
     		} elseif (Yii::$app instanceof \yii\console\Application) {
     			$userClass = $this->userClass;
-    			$systemUser = $userClass::find()->disableAccessCheck()->where(['username' => 'system'])->one();
+    			$systemUser = $userClass::systemUser();
     			if ($systemUser) {
     				$this->_primaryAro = $systemUser;
     			}
@@ -447,7 +448,7 @@ class Gatekeeper extends \infinite\base\Component
 
 	public function getTopGroup() {
 		$groupClass = $this->groupClass;
-		return $groupClass::getBySystemName('top', true);
+		return $groupClass::getBySystemName('top', false);
 	}
 
 	public function assignRole($role, $controlledObject, $accessingObject = null) {
@@ -531,7 +532,6 @@ class Gatekeeper extends \infinite\base\Component
 		if (!is_null($controlledObjectModel)) {
 			$controlledObjectModel = ActiveRecord::modelAlias($controlledObjectModel);
 		}
-
 		$fields = [];
 		if (is_array($action)) {
 			//$action = implode('.', $action);
@@ -543,6 +543,10 @@ class Gatekeeper extends \infinite\base\Component
 		}
 		if (is_null($accessingObject)) {
 			$accessingObject = $this->getPrimaryAro();
+		}
+
+		if (empty($accessingObject)) {
+			$accessingObject = $this->getTopGroup();
 		}
 
 		if (is_object($accessingObject)) {

@@ -115,28 +115,28 @@ class ActiveRecord extends \yii\db\ActiveRecord
         return true;
     }
 
-    public static function get($id, $access = true) {
+    public static function get($id, $checkAccess = true) {
         $class = get_called_class();
         $dummy = new $class;
-        return self::findOne([$dummy->tableName() .'.'. $dummy->primaryKey()[0] => $id], $access);
+        return self::findOne([$dummy->tableName() .'.'. $dummy->primaryKey()[0] => $id], $checkAccess);
     }
 
-    public static function findOne($where, $access = true) {
-        return self::_findCache('one', $where, $access);
+    public static function findOne($where, $checkAccess = true) {
+        return self::_findCache('one', $where, $checkAccess);
     }
 
 
-    public static function findAll($where = false, $access = true) {
-        return self::_findCache('all', $where, $access);
+    public static function findAll($where = false, $checkAccess = true) {
+        return self::_findCache('all', $where, $checkAccess);
     }
 
-    protected static function _findCache($type, $where = false, $access = true)
+    protected static function _findCache($type, $where = false, $checkAccess = true)
     {
         if (is_array($where)) {
             ksort($where);
         }
         $model = self::className();
-        $key = md5(serialize(['type' => $type, 'where' => $where, 'access' => $access]));
+        $key = md5(serialize(['type' => $type, 'where' => $where, 'access' => $checkAccess]));
         if (!isset(self::$_cache[$model])) {
             self::$_cache[$model] = [];
         }
@@ -145,7 +145,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
             if ($where) {
                 $r->where($where);
             }
-            if (!$access AND $r->hasBehavior('Access')) {
+            if (!$checkAccess AND $r->hasBehavior('Access')) {
                 $r->disableAccessCheck();
             }
             $r = $r->$type();

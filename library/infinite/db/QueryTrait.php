@@ -10,8 +10,61 @@
 namespace infinite\db;
 
 use Yii;
+use yii\base\ModelEvent;
+
 trait QueryTrait
 {
+	public function __clone()
+	{
+		parent::__clone();
+		$this->ensureAccessControl();
+	}
+
+    public function init()
+    {
+        parent::init();
+        $this->ensureAccessControl();
+    }
+
+    public function ensureAccessControl()
+    {
+        $modelClass = $this->modelClass;
+        if ($modelClass::isAccessControlled()) {
+            $this->enableAccessCheck();
+        }
+    }
+
+    public function createCommand($db = null)
+    {
+        $modelEvent = new ModelEvent;
+        $this->trigger(Query::EVENT_BEFORE_QUERY, $modelEvent);
+        return parent::createCommand($db);
+    }
+
+    public function getAccessBehaviorConfiguration()
+    {
+        return [
+            'class' => 'infinite\\db\\behaviors\\QueryAccess',
+        ];
+    }
+
+    public function disableAccessCheck()
+    {
+        $this->getBehavior('Access') === null || $this->detachBehavior('Access');
+        return $this;
+    }
+
+    public function enableAccessCheck()
+    {
+       $this->getBehavior('Access') !== null || $this->attachBehavior('Access', $this->accessBehaviorConfiguration);
+       return $this;
+    }
+
+    public function count($q = '*', $db = null)
+	{
+		return parent::count($q, $db);
+	}
+
 	public function getPrimaryAlias($db = null)
 	{
 		if (is_null($db)) {
