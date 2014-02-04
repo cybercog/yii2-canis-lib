@@ -28,6 +28,7 @@ trait QueryTrait
 
     public function ensureAccessControl()
     {
+    	if (!isset($this->modelClass)) { return; }
         $modelClass = $this->modelClass;
         if ($modelClass::isAccessControlled()) {
             $this->enableAccessCheck();
