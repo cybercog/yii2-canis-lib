@@ -442,13 +442,17 @@ class Gatekeeper extends \infinite\base\Component
 	}
 
 	public function getPublicGroup() {
-		$groupClass = $this->groupClass;
-		return $groupClass::getBySystemName('public', true);
+		return $this->getGroup('public');
 	}
 
 	public function getTopGroup() {
+		return $this->getGroup('top');
+	}
+
+	public function getGroup($systemName, $checkAccess = false)
+	{
 		$groupClass = $this->groupClass;
-		return $groupClass::getBySystemName('top', false);
+		return $groupClass::getBySystemName('top', $checkAccess);
 	}
 
 	public function assignRole($role, $controlledObject, $accessingObject = null) {
@@ -508,7 +512,6 @@ class Gatekeeper extends \infinite\base\Component
 		} else {
 			return $this->allow(null, $controlledObject, $accessingObject, $controlledObject->modelAlias);
 		}
-		
 	}
 
 	public function allow($action, $controlledObject = null, $accessingObject = null, $controlledObjectModel = null, $aclRole = null) {

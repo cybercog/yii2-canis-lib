@@ -15,6 +15,7 @@ use yii\db\Query;
 class QueryAccess extends \infinite\db\behaviors\ActiveRecord
 {
     protected static $_acceptInherit = false;
+    protected $_accessingObject;
 
     public function events()
     {
@@ -29,6 +30,41 @@ class QueryAccess extends \infinite\db\behaviors\ActiveRecord
 
     public static function denyInherit() {
         self::$_acceptInherit = false;
+    }
+
+    public function asUser($userName)
+    {
+        $user = null;
+        if (($testUser = Yii::$app->gk->getUser($userName)) && !empty($testUser)) {
+            $user = $testUser;
+        }
+        return $this->asInternal($user);
+    }
+
+    public function asGroup($groupSystemName)
+    {
+        $group = null;
+        if (($testGroup = Yii::$app->gk->getGroup($groupSystemName)) && !empty($testGroup)) {
+            $group = $testGroup;
+        }
+        return $this->asInternal($group);
+    }
+
+    public function asInternal($acr)
+    {
+        $this->accessingObject = $acr;
+        return $this->owner;
+    }
+
+    public function setAccessingObject($value)
+    {
+        return $this->_accessingObject = $value;
+    }
+
+
+    public function getAccessingObject()
+    {
+        return $this->_accessingObject;
     }
 
     public function aclSummary() {
@@ -57,7 +93,7 @@ class QueryAccess extends \infinite\db\behaviors\ActiveRecord
         $alias = $aclClass::tableName();
         $parentClass = $this->owner->modelClass;
         $classAlias = $parentClass::modelAlias();
-        Yii::$app->gk->generateAclCheckCriteria($query, false, null, $classAlias, true);
+        Yii::$app->gk->generateAclCheckCriteria($query, false, $this->accessingObject, $classAlias, true);
 
         if ($aca) {
             $aca = Yii::$app->gk->getActionObjectByName($aca);

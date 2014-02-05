@@ -1,6 +1,7 @@
 <?php
 namespace infinite\base\collector;
 
+use Yii;
 use infinite\base\exceptions\Exception;
 
 class Item extends \infinite\base\Object {
@@ -39,8 +40,14 @@ class Item extends \infinite\base\Object {
 		return $this->_object;
 	}
 
-	public function setObject(CollectedObjectInterface $object)
+	public function setObject($object)
 	{
+		if (is_array($object)) {
+			$object = Yii::createObject($object);
+		}
+		if (!($object instanceof CollectedObjectInterface)) {
+			throw new Exception("Bad object passed to collector!");
+		}
 		$this->_object = $object;
 		$object->collectorItem = $this;
 	}

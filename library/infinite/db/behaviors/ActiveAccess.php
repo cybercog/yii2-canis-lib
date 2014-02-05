@@ -11,6 +11,7 @@ namespace infinite\db\behaviors;
 
 use Yii;
 use yii\db\Query;
+use infinite\base\exceptions\Exception;
 
 class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
 {
@@ -21,13 +22,17 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
 	// from QueryAccess
 	protected $_access;
 	protected $_acaId;
+	protected $_accessingObject;
 
 	protected $_accessMap = [];
+
+	public $ensureCreatorAccess = ['read', 'update', 'delete'];
 
 	public function events()
     {
         return [
             \infinite\db\ActiveRecord::EVENT_AFTER_FIND => 'afterFind',
+            \infinite\db\ActiveRecord::EVENT_AFTER_INSERT => 'afterSave',
         ];
     }
 
@@ -44,6 +49,9 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
 
     public function can($aca, $accessingObject = null)
     {
+        if (is_null($accessingObject) && !is_null($this->accessingObject)) {
+            $accessingObject = $this->accessingObject;
+        }
     	if (!is_object($aca)) {
     		$aca = Yii::$app->gk->getActionObjectByName($aca);
     	}
@@ -51,7 +59,7 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     		$this->fillAccessMap($accessingObject);
     	}
     	if (!isset($this->_accessMap[$aca->primaryKey])) {
-    		throw new Exception("Access map fill failed!");
+    		throw new Exception("Access map fill failed!" . print_r($this->_accessMap, true));
     	}
     	if ($this->_accessMap[$aca->primaryKey] === self::ACCESS_PARENT) {
     		$this->_accessMap[$aca->primaryKey] = $this->parentCan($aca, $accessingObject);
@@ -61,7 +69,10 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
 
     public function parentCan($aca, $accessingObject = null)
     {
-    	return true;
+    	return true; // @todo fix
+        if (is_null($accessingObject) && !is_null($this->accessingObject)) {
+            $accessingObject = $this->accessingObject;
+        }
     	if (!is_object($aca)) {
     		$aca = Yii::$app->gk->getActionObjectByName($aca);
     	}
@@ -74,7 +85,7 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
 
 	public function afterFind($event)
 	{
-		if (isset($this->_access) && isset($this->_acaId)) {
+		if (isset($this->_access) && isset($this->_acaId) && !empty($this->owner->isAccessControlled)) {
 			if (is_array($this->_acaId)) {
 				foreach ($this->_acaId as $acaId) {
 					$this->_accessMap[$acaId] = self::translateAccessValue($this->_access);
@@ -83,6 +94,38 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
 				$this->_accessMap[$this->_acaId] = self::translateAccessValue($this->_access);
 			}
 		}
+	}
+
+	public function afterSave($event)
+	{
+		if (!empty($this->owner->isAccessControlled) && $this->ensureCreatorAccess !== false) {
+			foreach ($this->ensureCreatorAccess as $aca) {
+				if (!$this->can($aca, $this->accessingObject)) {
+					$this->allow($aca, $this->accessingObject);
+				}
+			}
+		}
+	}
+
+	public function allow($action, $accessingObject = null, $aclRole = null) {
+        if (is_null($accessingObject) && !is_null($this->accessingObject)) {
+            $accessingObject = $this->accessingObject;
+        }
+		return Yii::$app->gk->allow($action, $this->owner, $accessingObject, get_class($this->owner), $aclRole);
+	}
+
+	public function clear($action, $accessingObject = null, $controlledObjectModel = null, $aclRole = null) {
+        if (is_null($accessingObject) && !is_null($this->accessingObject)) {
+            $accessingObject = $this->accessingObject;
+        }
+		return Yii::$app->gk->clear($action, $this->owner, $accessingObject, get_class($this->owner), $aclRole);
+	}
+
+	public function deny($action, $accessingObject = null, $controlledObjectModel = null, $aclRole = null) {
+        if (is_null($accessingObject) && !is_null($this->accessingObject)) {
+            $accessingObject = $this->accessingObject;
+        }
+		return Yii::$app->gk->deny($action, $this->owner, $accessingObject, get_class($this->owner), $aclRole);
 	}
 
 	public static function translateAccessValue($value)
@@ -110,4 +153,39 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
 		}
 	}
 
+
+    public function asUser($userName)
+    {
+        $user = null;
+        if (($testUser = Yii::$app->gk->getUser($userName)) && !empty($testUser)) {
+            $user = $testUser;
+        }
+        return $this->asInternal($user);
+    }
+
+    public function asGroup($groupSystemName)
+    {
+        $group = null;
+        if (($testGroup = Yii::$app->gk->getGroup($groupSystemName)) && !empty($testGroup)) {
+            $group = $testGroup;
+        }
+        return $this->asInternal($group);
+    }
+
+    public function asInternal($acr)
+    {
+        $this->accessingObject = $acr;
+        return $this->owner;
+    }
+
+    public function setAccessingObject($value)
+    {
+        return $this->_accessingObject = $value;
+    }
+
+
+    public function getAccessingObject()
+    {
+        return $this->_accessingObject;
+    }
 }
