@@ -15,10 +15,12 @@ use ReflectionClass;
 use yii\base\ModelEvent;
 use infinite\db\ActiveQuery;
 use infinite\base\ObjectTrait;
+use infinite\base\ModelTrait;
 
 class ActiveRecord extends \yii\db\ActiveRecord
 {
     use ObjectTrait;
+    use ModelTrait;
 
     static public $isAco = true;
     static protected $_cache = [];

@@ -9,6 +9,10 @@
 
 namespace infinite\db\behaviors;
 
-class ActiveRecord extends Model
+class Model extends \yii\base\Behavior
 {
+	public function safeAttributes()
+	{
+		return [];
+	}
 }
