@@ -207,6 +207,17 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
         return $this->queryChildObjects($model, $relationOptions, $objectOptions)->one();
     }
 
+    public function getParentIds($model = false, $relationOptions = [], $objectOptions = [])
+    {
+        return $this->queryParentRelations($model, $relationOptions, $objectOptions)->select('parent_object_id')->column();
+    }
+
+
+    public function getChildIds($model = false, $relationOptions = [], $objectOptions = [])
+    {
+        return $this->queryChildRelations($model, $relationOptions, $objectOptions)->select('child_object_id')->column();
+    }
+
     public function queryParentObjects($model, $relationOptions = [], $objectOptions = [])
     {
     	return $this->queryRelativeObjects('parents', $model, $relationOptions, $objectOptions);
