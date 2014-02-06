@@ -123,6 +123,12 @@ class ActiveRecord extends \yii\db\ActiveRecord
         return self::findOne([$dummy->tableName() .'.'. $dummy->primaryKey()[0] => $id], $checkAccess);
     }
 
+    public static function findPk($pk)
+    {
+        $find = self::find();
+        return $find->andWhere([$find->primaryAlias .'.'. $find->primaryTablePk => $pk])->one();
+    }
+
     public static function findOne($where, $checkAccess = true) {
         return self::_findCache('one', $where, $checkAccess);
     }
@@ -290,7 +296,8 @@ class ActiveRecord extends \yii\db\ActiveRecord
         if (empty($this->primaryKey)) {
             return false;
         }
-        return self::find()->where([$this->primaryKey() => $this->primaryKey])->count > 0;
+        $find = self::find();
+        return $find->andWhere([$find->primaryAlias .'.'. $find->primaryTablePk => $this->primaryKey])->count() > 0;
     }
 
     /**

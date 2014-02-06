@@ -61,6 +61,8 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 
     public function cleanupRelations($event = null)
     {
+        return true;
+        // @todo implement
         $relatedModels = $event->sender->relationModels;
         foreach ($relatedModels as $model) {
             $model->delete();
