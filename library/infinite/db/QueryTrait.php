@@ -66,6 +66,11 @@ trait QueryTrait
 		return parent::count($q, $db);
 	}
 
+	public function pk($pk)
+	{
+		return $this->andWhere([$this->primaryAlias .'.'. $this->primaryTablePk => $pk]);
+	}
+
 	public function getPrimaryAlias($db = null)
 	{
 		if (is_null($db)) {
