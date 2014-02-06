@@ -114,7 +114,7 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
         }
 
         $_registryModel = $this->registryClass;
-        $_registry = $_registryModel::findPk($pk);
+        $_registry = $_registryModel::find()->pk($pk)->one();
         if (!empty($_registry)) {
             return $_registry->delete();
         }

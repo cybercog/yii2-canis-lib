@@ -60,12 +60,7 @@ trait QueryTrait
        $this->getBehavior('Access') !== null || $this->attachBehavior('Access', $this->accessBehaviorConfiguration);
        return $this;
     }
-
-    public function count($q = '*', $db = null)
-	{
-		return parent::count($q, $db);
-	}
-
+    
 	public function pk($pk)
 	{
 		return $this->andWhere([$this->primaryAlias .'.'. $this->primaryTablePk => $pk]);

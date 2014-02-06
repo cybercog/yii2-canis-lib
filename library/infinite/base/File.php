@@ -28,11 +28,11 @@ class File extends \infinite\web\UploadedFile implements FileInterface
     /**
     * @inheritdoc
     */
-    public function saveAs($file, $deleteTempFile = true)
+    public function saveAs($file, $deleteTempFile = false)
     {
         if ($deleteTempFile) {
             return rename($this->tempName, $file);
-        } elseif (is_uploaded_file($this->tempName)) {
+        } else {
             return copy($this->tempName, $file);
         }
         return false;

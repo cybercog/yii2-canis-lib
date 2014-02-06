@@ -87,7 +87,7 @@ class Registry extends \infinite\db\ActiveRecord
 			if (!$checkAccess) {
 				$object->disableAccessCheck();
 			}
-			$object = $object->where([$model::tableName() . '.id' => $registry->primaryKey])->one();
+			$object = $object->pk($registry->primaryKey)->one();
 			self::$_cache[$classKey][$requestKey] = $object;
 		}
 		return self::$_cache[$classKey][$requestKey];
