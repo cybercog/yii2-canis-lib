@@ -228,11 +228,7 @@ class Gatekeeper extends \infinite\base\Component
 			$query->join('INNER JOIN', $aclClass::tableName() .' '. $alias, $aclOnConditions);
 			$query->andWhere($aclConditions);
 			$addSelect = $addSelect && true;
-			if (isset($query->groupBy)) {
-				$query->groupBy[] = $query->primaryAlias .'.'. $query->primaryTablePk;
-			} else {
-				$query->groupBy($query->primaryAlias .'.'. $query->primaryTablePk);
-			}
+			$query->distinct = true;
 		}
 		if (!isset($query->orderBy)) {
 			$query->orderBy($aclOrder);
