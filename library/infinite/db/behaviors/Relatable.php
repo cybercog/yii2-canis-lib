@@ -454,6 +454,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 			$query->andWhere([$this->relationAlias .'.'. $foreignKey => $this->owner->primaryKey]);
 		}
 
+
 		if ($activeOnly) {
 			$isActiveCondition = [$this->relationAlias .'.'.$this->activeField => 1];
 			if (isset($activeConditions[$this->activeField])) {

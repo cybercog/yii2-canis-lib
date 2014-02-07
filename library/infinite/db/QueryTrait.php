@@ -14,6 +14,8 @@ use yii\base\ModelEvent;
 
 trait QueryTrait
 {
+	public $disableFutureAccessCheck = false;
+
 	public function __clone()
 	{
 		parent::__clone();
@@ -28,7 +30,7 @@ trait QueryTrait
 
     public function ensureAccessControl()
     {
-    	if (!isset($this->modelClass)) { return; }
+    	if (!isset($this->modelClass) || $this->disableFutureAccessCheck) { return; }
         $modelClass = $this->modelClass;
         if ($modelClass::isAccessControlled()) {
             $this->enableAccessCheck();
@@ -51,14 +53,16 @@ trait QueryTrait
 
     public function disableAccessCheck()
     {
+    	$this->disableFutureAccessCheck = true;
         $this->getBehavior('Access') === null || $this->detachBehavior('Access');
         return $this;
     }
 
     public function enableAccessCheck()
     {
-       $this->getBehavior('Access') !== null || $this->attachBehavior('Access', $this->accessBehaviorConfiguration);
-       return $this;
+    	$this->disableFutureAccessCheck = false;
+		$this->getBehavior('Access') !== null || $this->attachBehavior('Access', $this->accessBehaviorConfiguration);
+		return $this;
     }
     
 	public function pk($pk)
@@ -94,6 +98,9 @@ trait QueryTrait
 		$tableName = $this->getPrimaryTable($db);
 		if ($tableName) {
 			$schema = $db->getTableSchema($tableName);
+			if (!is_object($schema)) {
+				throw new \Exception("$tableName");
+			}
 			return $schema->primaryKey[0];
 		}
 		return false;
@@ -104,13 +111,13 @@ trait QueryTrait
 		if (is_null($db)) {
 			$db = Yii::$app->db;
 		}
-		if (isset($this->from[0])) {
+		if ($this instanceof ActiveQuery) {
+			$modelClass = $this->modelClass;
+			return $modelClass::tableName();
+		} elseif (isset($this->from[0])) {
 			$tableName = $this->from[0];
 			$tableParts = explode(' ', $this->from[0]);
 			return $tableParts[0];
-		} elseif ($this instanceof ActiveQuery) {
-			$modelClass = $this->modelClass;
-			return $modelClass::tableName();
 		}
 		return false;
 	}
