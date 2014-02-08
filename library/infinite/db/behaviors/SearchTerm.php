@@ -19,10 +19,6 @@ trait SearchTerm
 	public static $defaultSearchParams = ['limit' => 30, 'foreignLimitPercent' => 0.3];
 	public static $searchResultClass = 'infinite\\db\\behaviors\\SearchTermResult';
 
-	public function getRegistryClass()
-	{
-		return 'infinite\\db\\models\\Registry';
-	}
 
 	public static function searchTerm($queryString, $params = [])
 	{

@@ -21,6 +21,8 @@ namespace infinite\db\models;
  */
 class Relation extends \infinite\db\ActiveRecord
 {
+    public static $registryCache = false;
+    public static $relationCache = false;
 	public $registryClass = 'infinite\\models\\Registry';
 	static $_callCache = [];
 

@@ -19,6 +19,8 @@ namespace infinite\db\models;
  */
 class AclRole extends \infinite\db\ActiveRecord
 {
+    public static $registryCache = false;
+    public static $relationCache = false;
     /**
 	 * @inheritdoc
 	 */

@@ -17,9 +17,6 @@ use infinite\helpers\ArrayHelper;
 
 class Relatable extends \infinite\db\behaviors\ActiveRecord
 {
-    public $relationId;
-    public $primaryRelation;
-
 	public $relationClass = 'app\models\Relation';
 	public $registryClass = 'app\models\Registry';
 
@@ -40,11 +37,6 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 	protected $_relationsKey;
 
     static $_setGlobalEvents = false;
-
-    public function safeAttributes()
-    {
-        return ['primaryRelation', 'relationId'];
-    }
 
 	/*
 		Events stuff
@@ -247,7 +239,20 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 		}
 
 		$query = $modelClass::createQuery();
-        $query->select = [$query->primaryAlias .'.*', $this->relationAlias .'.primary as primaryRelation', $this->relationAlias .'.id as relationId'];
+        $query->select = [
+            $query->primaryAlias .'.*', 
+            $this->relationAlias .'.id as `r.id`',
+            $this->relationAlias .'.start as `r.start`',
+            $this->relationAlias .'.end as `r.end`',
+            $this->relationAlias .'.primary as `r.primary`', 
+            $this->relationAlias .'.special as `r.special`', 
+        ];
+        $query->select[] = '\''. addslashes($modelClass). '\' as `r.companion_model`';
+        if (in_array($relationshipType, ['children', 'child'])) {
+            $query->select[] = $this->relationAlias .'.child_object_id as `r.child_object_id`';
+        } else {
+            $query->select[] = $this->relationAlias .'.parent_object_id as `r.parent_object_id`';
+        }
 		$this->objectAlias = $modelClass::tableName();
 		$this->_prepareRelationQuery($query, $relationshipType, $model, $relationOptions);
 		$this->_prepareObjectQuery($query, $relationshipType, $model, $objectOptions);

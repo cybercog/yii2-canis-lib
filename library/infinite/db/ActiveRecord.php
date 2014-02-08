@@ -16,6 +16,8 @@ use yii\base\ModelEvent;
 use infinite\db\ActiveQuery;
 use infinite\base\ObjectTrait;
 use infinite\base\ModelTrait;
+use infinite\db\models\Relation;
+use infinite\db\models\Registry;
 
 class ActiveRecord extends \yii\db\ActiveRecord
 {
@@ -28,6 +30,8 @@ class ActiveRecord extends \yii\db\ActiveRecord
     public $tabularIdHuman;
     public $descriptorField;
     public $subdescriptorFields = [];
+    public static $registryCache = true;
+    public static $relationCache = true;
 
 
     const FORM_PRIMARY_MODEL = 'primary';
@@ -39,6 +43,34 @@ class ActiveRecord extends \yii\db\ActiveRecord
      */
     const EVENT_AFTER_SAVE_FAIL = 'afterSaveFail';
 
+    public static function getRegistryClass()
+    {
+        return Registry::className();
+    }
+
+    public static function getRelationClass()
+    {
+        return Relation::className();
+    }
+
+    public static function populateRecord($record, $row)
+    {
+        $relation = [];
+        foreach ($row as $key => $value) {
+            if (substr($key, 0, 2) === 'r.') {
+                $relation[substr($key, 2)] = $value;
+                unset($row[$key]);
+            }
+        }
+        if (self::$relationCache && !empty($relation)) {
+            \d($relation);exit;
+        }
+        parent::populateRecord($record, $row);
+        if (self::$registryCache) {
+            $registryClass = self::getRegistryClass();
+            $registryClass::registerObject($record);
+        }
+    }
 
     public function setTabularId($value) {
         $this->tabularIdHuman = $value;
