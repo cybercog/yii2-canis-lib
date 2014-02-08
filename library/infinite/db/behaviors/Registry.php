@@ -18,6 +18,7 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
 {
     public $registryClass = 'app\\models\\Registry';
     public static $_table;
+    public $objectOwner;
 
     public function events()
     {

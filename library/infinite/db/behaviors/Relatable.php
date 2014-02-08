@@ -17,6 +17,9 @@ use infinite\helpers\ArrayHelper;
 
 class Relatable extends \infinite\db\behaviors\ActiveRecord
 {
+    public $relationId;
+    public $primaryRelation;
+
 	public $relationClass = 'app\models\Relation';
 	public $registryClass = 'app\models\Registry';
 
@@ -37,6 +40,11 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 	protected $_relationsKey;
 
     static $_setGlobalEvents = false;
+
+    public function safeAttributes()
+    {
+        return ['primaryRelation', 'relationId'];
+    }
 
 	/*
 		Events stuff
@@ -239,6 +247,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 		}
 
 		$query = $modelClass::createQuery();
+        $query->select = [$query->primaryAlias .'.*', $this->relationAlias .'.primary as primaryRelation', $this->relationAlias .'.id as relationId'];
 		$this->objectAlias = $modelClass::tableName();
 		$this->_prepareRelationQuery($query, $relationshipType, $model, $relationOptions);
 		$this->_prepareObjectQuery($query, $relationshipType, $model, $objectOptions);
@@ -352,6 +361,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 
     protected function _aliasKeys($conditions, $alias)
     {
+        // @todo this should be refactored to accomodate all the different types of condition statements
         if (is_array($conditions)) {
             $newConditions = [];
             foreach ($conditions as $k => $v) {
