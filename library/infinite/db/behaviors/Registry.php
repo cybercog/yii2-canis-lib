@@ -54,9 +54,9 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
 
     public function uuid()
     {
-        return self::generateUuid(get_class($this->owner));
+        $ownerClass = get_class($this->owner);
+        return self::generateUuid($ownerClass::modelPrefix());
     }
-
 
     /**
      *
@@ -64,12 +64,11 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
      * @param unknown $model (optional)
      * @return unknown
      */
-    public static function generateUuid($model = NULL)
+    public static function generateUuid($modelPrefix)
     {
-        $model = strtoupper(sha1($model));
         $salt = strtoupper(sha1(Yii::$app->params['salt']));
         return sprintf('%s-%s-%04X-%04X-%04X%04X%04X',
-            substr($model, 0, 8),
+            $modelPrefix,
             substr($salt, 0, 4),
             mt_rand(16384, 20479),
             mt_rand(32768, 49151),

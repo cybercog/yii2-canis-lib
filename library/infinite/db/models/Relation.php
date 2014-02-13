@@ -94,6 +94,7 @@ class Relation extends \infinite\db\ActiveRecord
 		return $registryClass::getObject($this->parent_object_id, $checkAccess);
 	}
 
+
 	public static function set($parentObject, $childObject, $params = [])
 	{
 		if (is_object($parentObject)) {

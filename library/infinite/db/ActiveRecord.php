@@ -53,19 +53,29 @@ class ActiveRecord extends \yii\db\ActiveRecord
         return Relation::className();
     }
 
+    public static function modelPrefix()
+    {
+        return substr(strtoupper(sha1(get_called_class())), 0, 8);
+    }
+
     public static function populateRecord($record, $row)
     {
         $relation = [];
-        foreach ($row as $key => $value) {
-            if (substr($key, 0, 2) === 'r.') {
-                $relation[substr($key, 2)] = $value;
-                unset($row[$key]);
-            }
-        }
-        if (self::$relationCache && !empty($relation)) {
-            \d($relation);exit;
-        }
+        $orow = $row;
+        // foreach ($row as $key => $value) {
+        //     if (substr($key, 0, 2) === 'r.') {
+        //         $relation[substr($key, 2)] = $value;
+        //         unset($row[$key]);
+        //     }
+        // }
         parent::populateRecord($record, $row);
+        // if (self::$relationCache && $record->getBehavior('Relatable') !== null && !empty($relation) && !empty($relation['cid'])) {
+        //     $record->registerRelation($relation['cid'], $relation['ct'], [
+        //         'id' => isset($relation['id']) ? $relation['id'] : false,
+        //         'primary' => !empty($relation['primary']),
+        //         'model' => isset($relation['cm']) ? $relation['cm'] : false,
+        //     ]);
+        // }
         if (self::$registryCache) {
             $registryClass = self::getRegistryClass();
             $registryClass::registerObject($record);

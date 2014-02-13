@@ -30,11 +30,12 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 
 	public $objectAlias = 'o';
 	public $relationAlias = 'r';
-	public $registryAlias = 'x';
+    public $registryAlias = 'x';
 
 	protected static $_relationModels = [];
 	protected static $_relationModelsOld = [];
-	protected $_relationsKey;
+    protected $_relationsKey;
+    protected $_relations = [];
 
     static $_setGlobalEvents = false;
 
@@ -239,20 +240,23 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 		}
 
 		$query = $modelClass::createQuery();
-        $query->select = [
-            $query->primaryAlias .'.*', 
-            $this->relationAlias .'.id as `r.id`',
-            $this->relationAlias .'.start as `r.start`',
-            $this->relationAlias .'.end as `r.end`',
-            $this->relationAlias .'.primary as `r.primary`', 
-            $this->relationAlias .'.special as `r.special`', 
-        ];
-        $query->select[] = '\''. addslashes($modelClass). '\' as `r.companion_model`';
-        if (in_array($relationshipType, ['children', 'child'])) {
-            $query->select[] = $this->relationAlias .'.child_object_id as `r.child_object_id`';
-        } else {
-            $query->select[] = $this->relationAlias .'.parent_object_id as `r.parent_object_id`';
-        }
+        // $query->select = [
+        //     $query->primaryAlias .'.*', 
+        //     $this->relationAlias .'.id as `r.id`',
+        // //    $this->relationAlias .'.start as `r.start`',
+        // //    $this->relationAlias .'.end as `r.end`',
+        //     $this->relationAlias .'.primary as `r.primary`', 
+        // //    $this->relationAlias .'.special as `r.special`', 
+        // ];
+        // if (in_array($relationshipType, ['children', 'child'])) {
+        //     $query->select[] = '\''. addslashes(get_class($this->owner)) . '\' as `r.cm`';
+        //     $query->select[] = '\'parent\' as `r.ct`';
+        //     $query->select[] = $this->relationAlias .'.parent_object_id as `r.cid`';
+        // } else {
+        //     $query->select[] = '\''. addslashes(get_class($this->owner)) . '\' as `r.cm`';
+        //     $query->select[] = '\'child\' as `r.ct`';
+        //     $query->select[] = $this->relationAlias .'.child_object_id as `r.cid`';
+        // }
 		$this->objectAlias = $modelClass::tableName();
 		$this->_prepareRelationQuery($query, $relationshipType, $model, $relationOptions);
 		$this->_prepareObjectQuery($query, $relationshipType, $model, $objectOptions);
@@ -510,6 +514,18 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     	return $query;
     }
 
+    public function addActiveConditions($query, $alias = null)
+    {
+        if (is_null($alias)) {
+            $alias = $this->relationAlias;
+        }
+        $conditions = ['and'];
+        $conditions[] = [$alias .'.'.$this->activeField => 1];
+        $conditions[] = ['or', $alias .'.'. $this->startDateField . ' IS NULL', $alias .'.'. $this->startDateField .' > NOW()'];
+        $conditions[] = ['or', $alias .'.'. $this->endDateField . ' IS NULL', $alias .'.'. $this->endDateField .' < NOW()'];
+        $query->andWhere($conditions);
+    }
+
     protected function _applyOptions(Query $query, $options = [])
     {
     	foreach ($options as $method => $args) {
@@ -518,5 +534,90 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     		}
     	}
     	return true;
+    }
+
+    public function registerRelation($companionId, $type, $base = [])
+    {
+        $key = $type .'-'. $companionId;
+        if (!isset($this->_relations[$key])) {
+            $this->_relations[$key] = $base;
+        } else {
+            $this->_relations[$key] = array_merge($this->_relations[$key], $base);
+        }
+        return $this->_relations[$key];
+    }
+
+    public function isParentPrimary($companionId)
+    {
+        $key = 'parent-'. $companionId;
+        if (isset($this->_relations[$key]) && isset($this->_relations[$key]['primary'])) {
+            return $this->_relations[$key]['primary'];
+        } else {
+            $relationClass = $this->relationClass;
+            $relation = $this->getRelation($companionId, $this->owner->primaryKey);
+            if ($relation) {
+                return !empty($relation->primary);
+            }
+        }
+        return false;
+    }
+
+    public function isChildPrimary($companionId)
+    {
+        $key = 'child-'. $companionId;
+        if (isset($this->_relations[$key]) && isset($this->_relations[$key]['primary'])) {
+            return $this->_relations[$key]['primary'];
+        } else {
+            $relationClass = $this->relationClass;
+            $relation = $this->getRelation($this->owner->primaryKey, $companionId);
+            if ($relation) {
+                return !empty($relation->primary);
+            }
+        }
+        return false;
+    }
+
+
+    public function parentModel($companionId)
+    {
+        $key = 'parent-'. $companionId;
+        if (isset($this->_relations[$key]) && isset($this->_relations[$key]['primary'])) {
+            return $this->_relations[$key]['model'];
+        } else {
+            $relationClass = $this->relationClass;
+            $relation = $this->getRelation($companionId, $this->owner->primaryKey);
+            if ($relation && ($parent = $relation->parentObject)) {
+                return get_class($parent);
+            }
+        }
+        return false;
+    }
+
+    public function childModel($companionId)
+    {
+        $key = 'child-'. $companionId;
+        if (isset($this->_relations[$key]) && isset($this->_relations[$key]['primary'])) {
+            return $this->_relations[$key]['primary'];
+        } else {
+            $relationClass = $this->relationClass;
+            $relation = $this->getRelation($this->owner->primaryKey, $companionId);
+            if ($relation && ($child = $relation->childObject)) {
+                return get_class($child);
+            }
+        }
+        return false;
+    }
+
+
+    public function getRelation ($parentObject, $childObject)
+    {
+        // @todo only active!
+        if (is_object($parentObject)) {
+            $parentObject = $parentObject->primaryKey;
+        }
+        if (is_object($childObject)) {
+            $childObject = $childObject->primaryKey;
+        }
+        return $relationClass::findOne(['parent_object_id' => $parentObject, 'child_object_id' => $childObject]);   
     }
 }
