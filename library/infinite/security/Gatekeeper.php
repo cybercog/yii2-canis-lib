@@ -237,9 +237,11 @@ class Gatekeeper extends \infinite\base\Component
 		}
 
 		if ($addSelect && $modelTable) {
+
+			// this messes up distinct!
 			$query->select = ["$modelTable.*"];
-			$query->select[] = $alias .'.access';
-			$query->select[] = $alias .'.aca_id as aca_id';
+			// $query->select[] = $alias .'.access';
+			// $query->select[] = $alias .'.aca_id as aca_id';
 		} else {
 			//$query->select[] = $alias . '.*';
 		}
