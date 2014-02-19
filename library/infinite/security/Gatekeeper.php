@@ -17,8 +17,10 @@ use infinite\db\ActiveRecord;
 use infinite\db\Query;
 use infinite\db\ActiveQuery;
 use infinite\db\behaviors\ActiveAccess;
+use infinite\caching\Cacher;
 
 use yii\db\Expression;
+use yii\caching\GroupDependency;
 
 class Gatekeeper extends \infinite\base\Component
 {
@@ -354,20 +356,25 @@ class Gatekeeper extends \infinite\base\Component
 			$accessingObject = $this->primaryAro;
 		}
     	if (is_object($accessingObject)) {
-			$arosKey = md5(serialize([__FUNCTION__, $accessingObject->primaryKey]));
+			$arosKey = md5(json_encode([__CLASS__.'.'.__FUNCTION__, $accessingObject->primaryKey]));
 		} else {
-			$arosKey = md5(serialize([__FUNCTION__, false]));
+			$arosKey = md5(json_encode([__CLASS__.'.'.__FUNCTION__, false]));
 		}
-    	if (!isset($this->_aros[$arosKey])) {
-    		$this->_aros[$arosKey] = [];
-    		if ($accessingObject) {
-    			$this->_aros[$arosKey][] = $accessingObject->primaryKey;
-    			$this->_aros[$arosKey] = array_merge($this->_aros[$arosKey], $this->getGroups($accessingObject, true));
-    		}
 
-			if ($this->getPublicGroup()) { // always allow public groups
-				$this->_aros[$arosKey][] = $this->getPublicGroup()->primaryKey;
-				$this->_aros[$arosKey][] = $this->getTopGroup()->primaryKey;
+    	if (!isset($this->_aros[$arosKey])) {
+    		$this->_aros[$arosKey] = Cacher::get($arosKey);
+    		if (!$this->_aros[$arosKey]) {
+	    		$this->_aros[$arosKey] = [];
+	    		if ($accessingObject) {
+	    			$this->_aros[$arosKey][] = $accessingObject->primaryKey;
+	    			$this->_aros[$arosKey] = array_merge($this->_aros[$arosKey], $this->getGroups($accessingObject, true));
+	    		}
+
+				if ($this->getPublicGroup()) { // always allow public groups
+					$this->_aros[$arosKey][] = $this->getPublicGroup()->primaryKey;
+					$this->_aros[$arosKey][] = $this->getTopGroup()->primaryKey;
+				}
+				Cacher::set($arosKey, $this->_aros[$arosKey], 0, new GroupDependency(['group' => 'aros']));
 			}
     	}
     	return array_unique($this->_aros[$arosKey]);

@@ -41,7 +41,6 @@ class Row extends \infinite\base\Object {
 				}
 			}
 
-
 			foreach ($fillSizes as $size => $toFill) {
 				$toDistribute = $this->getDistributionColumns($size);
 				if (!empty($toDistribute)) {

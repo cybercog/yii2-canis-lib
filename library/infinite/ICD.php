@@ -61,7 +61,7 @@ class ICD extends \yii\helpers\VarDumper
 
     public function getFormat() {
     	if ($this->_format === 'auto') {
-    		if (!empty($_REQUEST)) {
+    		if (PHP_SAPI !== 'cli') {
     			return 'html';
     		}
     		return 'plaintext';

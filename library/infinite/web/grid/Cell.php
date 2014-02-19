@@ -158,7 +158,7 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
 	}
 
 	public function getMaxColumns($size = null) {
-		if (property_exists($this->content, 'maxColumns') && !is_null($this->content->maxColumns)) {
+		if (is_object($this->content) && property_exists($this->content, 'maxColumns') && !is_null($this->content->maxColumns)) {
 			return $this->content->maxColumns;
 		}
 		if (is_null($size)) {
@@ -185,7 +185,7 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
 	}
 
 	public function getColumns($size = null) {
-		if (property_exists($this->content, 'columns') && !is_null($this->content->columns)) {
+		if (is_object($this->content) && property_exists($this->content, 'columns') && !is_null($this->content->columns)) {
 			return $this->content->columns;
 		}
 
