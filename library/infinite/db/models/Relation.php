@@ -95,25 +95,32 @@ class Relation extends \infinite\db\ActiveRecord
 	}
 
 
-	public static function set($parentObject, $childObject, $params = [])
+	public static function set($parentObject, $childObject = null, $params = [])
 	{
+		$baseParams = ['active' => 1];
+		if (!is_object($parentObject) && is_array($parentObject) && isset($parentObject['parent_object_id']) && isset($parentObject['child_object_id'])) {
+			$newParams = $parentObject;
+			$childObject = $newParams['child_object_id'];
+			$parentObject = $newParams['parent_object_id'];
+			unset($newParams['parent_object_id'], $newParams['child_object_id']);
+			$baseParams = array_merge($baseParams, $newParams);
+		}
 		if (is_object($parentObject)) {
 			$parentObject = $parentObject->primaryKey;
 		}
 		if (is_object($childObject)) {
 			$childObject = $childObject->primaryKey;
 		}
-		$defaultParams = ['active' => 1];
-		$params = array_merge($defaultParams, $params);
+		$params = array_merge($baseParams, $params);
 		$coreFields = ['parent_object_id' => $parentObject, 'child_object_id' => $childObject];
 		$object = self::findOne($coreFields, false);
 		if (!$object) {
 			$className = self::className();
 			$object = new $className;
-			$object->attributes = array_merge($coreFields, $params);
-			if (!$object->save()) {
-				return false;
-			}
+		}
+		$object->attributes = array_merge($coreFields, $params);
+		if (!$object->save()) {
+			return false;
 		}
 		return $object;
 	}
