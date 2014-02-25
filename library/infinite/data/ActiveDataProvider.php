@@ -5,16 +5,6 @@ use Yii;
 use infinite\db\ActiveQuery;
 
 class ActiveDataProvider extends \yii\data\ActiveDataProvider {
-	// public function init()
-	// {
-	// 	parent::init();
-	// 	$query = new ActiveQuery;
-	// 	$query->modelClass = $this->query->modelClass;
-	// 	$query->select = ['*'];
-	// 	$query->from = ['('. $this->query->createCommand()->rawSql .') pull'];
-	// 	$query->disableAccessCheck();
-	// 	$this->query = $query;
-	// }
 	public function setPagination($value)
 	{
 		if (is_array($value) && !isset($config['class'])) {

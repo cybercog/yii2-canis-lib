@@ -97,15 +97,37 @@ span.empty {
     width: 15px;
 }
 
+.list-group-item .dropdown-toggle,
+.list-group-item .dropdown-toggle:active {
+    background-color: transparent;
+    box-shadow: none;
+}
+
 .list-group-item.active,
 .list-group-item.active > a,
 .list-group-item.active > h5 > a,
-.list-group-item.active a.dropdown-toggle {
+.list-group-item.active .dropdown-toggle {
     color: #fff;
 }
 
 .list-group-item.active a {
     text-shadow: none;
+}
+
+.list-group-item-heading,
+.list-group-item-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+}
+
+.expanded .list-group-item-heading,
+.expanded .list-group-item-text {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: none;
+    display: block;
 }
 
 /* Embedded Panels */
@@ -190,4 +212,17 @@ div.required label:after {
 }
 .no-right-padding {
     padding-right: 0;
+}
+
+/* expandable */
+.expandable {
+    cursor: pointer;
+}
+
+.expanded-only {
+    display: none;
+}
+
+.expandable .expanded-only {
+    display: block;
 }

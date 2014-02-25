@@ -221,9 +221,10 @@ class ActiveRecord extends \yii\db\ActiveRecord
      * written for querying `Customer` purpose.)
      * @return ActiveQuery the newly created [[ActiveQuery]] instance.
      */
-    public static function createQuery()
+    public static function createQuery($config = [])
     {
-        $query = new \infinite\db\ActiveQuery(['modelClass' => get_called_class()]);
+        $config['modelClass'] = get_called_class();
+        $query = new \infinite\db\ActiveQuery($config);
         $query->attachBehaviors(static::queryBehaviors());
         return $query;
     }

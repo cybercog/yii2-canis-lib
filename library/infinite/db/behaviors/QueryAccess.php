@@ -16,6 +16,7 @@ class QueryAccess extends \infinite\db\behaviors\ActiveRecord
 {
     protected static $_acceptInherit = false;
     protected $_accessingObject;
+    public $accessAdded = false;
 
     public function events()
     {
@@ -89,6 +90,8 @@ class QueryAccess extends \infinite\db\behaviors\ActiveRecord
 
     public function addCheckAccess($aca = 'read') {
         $query = $this->owner;
+        if ($this->owner->accessAdded) { return $query; }
+        $this->owner->accessAdded = true;
         $aclClass = Yii::$app->gk->aclClass;
         $alias = $aclClass::tableName();
         $parentClass = $this->owner->modelClass;
@@ -103,97 +106,6 @@ class QueryAccess extends \infinite\db\behaviors\ActiveRecord
             $query->andWhere(['or', [$alias.'.aca_id' => $aca->primaryKey], [$alias.'.aca_id' => null]]);
         }
         return $query;
-    }
-
-    public function addCheckAccessOld($aca = 'read', $criteria = null, $inverse = false) {
-        \d(get_class(Yii::$app->gk));
-        \d(Yii::$app->gk->authority);
-
-        exit;
-        if (is_null($criteria)) {
-            $baseCriteria = $this->owner->getDbCriteria();
-            $criteria = new CDbCriteria;
-            $criteria->mergeWith($baseCriteria);
-            $baseCriteria = new CDbCriteria;
-        }
-
-        $acaOriginal = $aca;
-        $alias = 'acl';
-        $aclModel = Gatekeeper::ACL_MODEL;
-        $aclModel = $aclModel::tempModel();
-        // get aro's 
-        $aros = Yii::$app->gk->aros;
-        // get aca for read
-        if ($aca) {
-            $aca = Yii::$app->gk->getActionObjectByName($aca);
-            if (empty($aca)) {
-                throw new RException("ACL is not set up correctly. No '{$aca}' action!");
-            }
-        }
-
-        $tableAlias = $this->owner->tableAlias;
-        $aclOrder = [];
-        $aclOnConditions = [];
-        $aroN = 0;
-        $aroIn = [];
-        $aclOrder[] = 'IF('.$alias.'.access IS NULL, 0, 1) DESC';
-
-        $aclOrder[] = 'IF('.$alias.'.accessing_object_id IS NULL, 0, 1) DESC';
-        foreach ($aros as $aro) {
-            if (is_array($aro)) {
-                $subInIf = [];
-                foreach ($aro as $sa) {
-                    $criteria->params[':aro_'.$aroN] = $sa;
-                    $aroIn[] = ':aro_'.$aroN;
-                    $subInIf[] = ':aro_'.$aroN;
-                    $aroN++;
-                }
-                $aclOrder[] = 'IF('.$alias.'.accessing_object_id IN ('.implode(', ', $subInIf).'), 1, 0) DESC';
-            } else {
-                $criteria->params[':aro_'.$aroN] = $aro;
-                $aroIn[] = ':aro_'.$aroN;
-                $aclOrder[] = 'IF('.$alias.'.accessing_object_id = :aro_'.$aroN.', 1, 0) DESC';
-                $aroN++;
-            }
-        }
-        
-        if (!empty($aroIn)) {
-            $aclOnConditions[] = ''.$alias.'.accessing_object_id IN ('.implode(', ', $aroIn).') OR '.$alias.'.accessing_object_id IS NULL';
-        } else {
-            $aclOnConditions[] = ''.$alias.'.accessing_object_id IS NULL';
-        }
-        
-        if ($inverse) {
-            $aclConditions = ''.$alias.'.access = -1';
-        } else {
-            $aclConditions = ''.$alias.'.access = 1';
-
-            if (self::$_acceptInherit) {
-                $aclConditions .= ' OR '.$alias.'.access = 0';
-            }
-        }
-        $criteria->params[':object_model'] = $this->owner->modelAlias;
-        if ($acaOriginal) {
-            $criteria->params[':aca_id'] = $aca->primaryKey;
-            $aclOnConditions[] = ''.$alias.'.aca_id=:aca_id OR '.$alias.'.aca_id IS NULL';
-        }
-
-        $aclOrder[] = 'IF('.$alias.'.aca_id IS NULL, 0, 1) DESC';
-        $aclOrder[] = 'IF('.$alias.'.controlled_object_id IS NULL, 0, 1) DESC';
-        $aclOrder[] = 'IF('.$alias.'.object_model IS NULL, 0, 1) DESC';
-        $aclOnConditions[] = ''.$alias.'.controlled_object_id='.$tableAlias.'.id OR ('.$alias.'.controlled_object_id IS NULL AND '.$alias.'.object_model=:object_model) OR ('.$alias.'.controlled_object_id IS NULL AND '.$alias.'.object_model IS NULL)';
-
-        if (isset($aclConditions)) {
-            $aclOnConditions[] = $aclConditions;
-        }
-        $criteria->distinct = true;
-        $join = ' INNER JOIN `'.$aclModel->tableName().'` AS '.$alias.' ON (('.implode(') AND (', $aclOnConditions).'))';
-
-        $criteria->mergeWith(['join' => $join, 'order' => implode(', ', $aclOrder)], true);
-        //RDebug::d($criteria)
-        $this->owner->dbCriteria = new CDbCriteria;
-        $this->owner->dbCriteria->mergeWith($criteria);
-        return $this->owner;
     }
 
     public function can($action = null) {
@@ -217,9 +129,6 @@ class QueryAccess extends \infinite\db\behaviors\ActiveRecord
         return true;
     }
 
-    public function beforeCount($event) {
-        $this->beforeFind($event);
-    }
 
     public function assignCreationRole() {
         return Yii::$app->gk->assignCreationRole($this->owner);

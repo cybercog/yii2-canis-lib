@@ -21,12 +21,12 @@ class Authority extends \infinite\base\Component
 		return $this->_handler;
 	}
 
-	public function getRequestors(Query $query)
+	public function getRequestors($accessingObject)
 	{
 		if (is_null($this->handler)) {
 			return false;
 		}
-
+		return $this->handler->getRequestors($accessingObject);
 	}
 }
 ?>

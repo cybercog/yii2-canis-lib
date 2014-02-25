@@ -15,7 +15,7 @@ use yii\base\ModelEvent;
 trait QueryTrait
 {
 	public $disableFutureAccessCheck = false;
-
+	
 	public function __clone()
 	{
 		parent::__clone();
@@ -41,7 +41,8 @@ trait QueryTrait
     {
         $modelEvent = new ModelEvent;
         $this->trigger(Query::EVENT_BEFORE_QUERY, $modelEvent);
-        return parent::createCommand($db);
+        $result = parent::createCommand($db);
+        return $result;
     }
 
     public function getAccessBehaviorConfiguration()

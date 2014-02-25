@@ -1,6 +1,7 @@
 <?php
 namespace infinite\db\models;
 
+use Yii;
 use infinite\db\ActiveRecord;
 use yii\helpers\Security;
 use yii\web\IdentityInterface;
@@ -157,5 +158,31 @@ class User extends ActiveRecord implements IdentityInterface
     public function getRegistry()
     {
         return $this->hasOne('Registry', ['id' => 'id']);
+    }
+
+    public function guessIndividual()
+    {
+        $individualTypeItem = Yii::$app->collectors['types']->getOne('Individual');
+        $individualClass = $individualTypeItem->object->primaryModel;
+        $emailTypeItem = Yii::$app->collectors['types']->getOne('EmailAddress');
+        $emailTypeClass = $emailTypeItem->object->primaryModel;
+        $emailMatch = $emailTypeClass::find()->where(['email_address' => $this->email])->disableAccessCheck()->all();
+        $individuals = [];
+        foreach ($emailMatch as $email) {
+            if (($individual = $email->parent($individualClass, [], ['disableAccessCheck' => true])) && $individual) {
+                $individuals[$individual->primaryKey] = $individual;
+            }
+        }
+        if (empty($individuals)) {
+            if (($individualMatch = $individualClass::find()->where(['first_name' => $this->first_name, 'last_name' => $this->last_name])->one()) && $individualMatch) {
+                return $individualMatch;
+            }
+        } else {
+            if (count($individuals) === 1) {
+                return array_pop($individuals);
+            }
+            return $individuals;
+        }
+        return false;
     }
 }

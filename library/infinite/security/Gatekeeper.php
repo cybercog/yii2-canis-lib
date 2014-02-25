@@ -119,9 +119,9 @@ class Gatekeeper extends \infinite\base\Component
 			if (!is_object($co)) {
 				$oco = $co;
 				$co = $registryClass::getObject($co, false);
-				if ($co && $co->can($action, $accessingObject)) {
-					return true;
-				}
+			}
+			if ($co && $co->can($action, $accessingObject)) {
+				return true;
 			}
 		}
 		return false;
@@ -311,14 +311,14 @@ class Gatekeeper extends \infinite\base\Component
 				$results[$result['aca_id']] = ActiveAccess::translateAccessValue($result['access']);
 			}
 		}
-			foreach ($acaIds as $acaId) {
-				if ($foundNull !== false) {
-					$results[$acaId] = $foundNull;
-				}
-				if (!isset($results[$acaId])) {
-					$results[$acaId] = ActiveAccess::translateAccessValue(-1);
-				}
+		foreach ($acaIds as $acaId) {
+			if ($foundNull !== false) {
+				$results[$acaId] = $foundNull;
 			}
+			if (!isset($results[$acaId])) {
+				$results[$acaId] = ActiveAccess::translateAccessValue(-1);
+			}
+		}
 
 		return $results;
 	}
@@ -369,11 +369,15 @@ class Gatekeeper extends \infinite\base\Component
 	    			$this->_aros[$arosKey][] = $accessingObject->primaryKey;
 	    			$this->_aros[$arosKey] = array_merge($this->_aros[$arosKey], $this->getGroups($accessingObject, true));
 	    		}
+	    		if ($this->authority && ($requestors = $this->authority->getRequestors($accessingObject)) && $requestors) {
+	    			$this->_aros[$arosKey] = array_merge($this->_aros[$arosKey], $requestors);
+	    		}
 
 				if ($this->getPublicGroup()) { // always allow public groups
 					$this->_aros[$arosKey][] = $this->getPublicGroup()->primaryKey;
 					$this->_aros[$arosKey][] = $this->getTopGroup()->primaryKey;
 				}
+				$this->_aros[$arosKey] = array_unique($this->_aros[$arosKey]);
 				Cacher::set($arosKey, $this->_aros[$arosKey], 0, new GroupDependency(['group' => 'aros']));
 			}
     	}

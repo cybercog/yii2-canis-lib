@@ -49,7 +49,6 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
 
     public function can($aca, $accessingObject = null)
     {
-        return true;
         if (is_null($accessingObject) && !is_null($this->accessingObject)) {
             $accessingObject = $this->accessingObject;
         }

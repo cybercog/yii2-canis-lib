@@ -2,6 +2,6 @@
 namespace infinite\security;
 
 interface AuthorityInterface {
-	public function getRequestors();
+	public function getRequestors($accessingObject, $firstLevel = true);
 }
 ?>

@@ -15,8 +15,22 @@ class InfiniteAsset extends AssetBundle
 {
     public $sourcePath = '@infinite/assets';
     public $css = ['css/infinite.bootstrap.css'];
-    public $js = ['js/infinite.utils.js', 'js/infinite.core.js', 'js/infinite.bootstrap.js', 'js/infinite.ajax.instructions.js', 'js/infinite.ajax.js', 'js/infinite.smart.js'];
-    public $depends = ['yii\bootstrap\BootstrapAsset', 'yii\bootstrap\BootstrapThemeAsset', 'yii\web\JqueryAsset', 'yii\jui\CoreAsset', 
-    					'infinite\web\assetBundles\UnderscoreAsset', 'infinite\web\assetBundles\FontAwesomeAsset', 
-    					'infinite\web\assetBundles\AjaxFormAsset'];
+    public $js = [
+    	'js/infinite.utils.js', 
+    	'js/infinite.core.js', 
+    	'js/infinite.bootstrap.js', 
+    	'js/infinite.ajax.instructions.js', 
+    	'js/infinite.ajax.js', 
+    	'js/infinite.smart.js', 
+    	'js/infinite.expandable.js'
+    ];
+    public $depends = [
+    	'yii\bootstrap\BootstrapAsset', 
+    	'yii\bootstrap\BootstrapThemeAsset', 
+    	'yii\web\JqueryAsset', 
+    	'yii\jui\CoreAsset', 
+		'infinite\web\assetBundles\UnderscoreAsset', 
+		'infinite\web\assetBundles\FontAwesomeAsset', 
+		'infinite\web\assetBundles\AjaxFormAsset'
+    ];
 }
