@@ -41,6 +41,9 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     	$allAcas = array_keys(Yii::$app->gk->actionsById);
     	$currentAcas = array_keys($this->_accessMap);
     	$needAcas = array_diff($allAcas, $currentAcas);
+        if (count($allAcas) === count($needAcas)) {
+            $needAcas = true;
+        }
     	$access = Yii::$app->gk->getAccess($this->owner, $accessingObject, $needAcas);
     	foreach ($access as $key => $value) {
     		$this->_accessMap[$key] = $value;
@@ -59,7 +62,7 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     		$this->fillAccessMap($accessingObject);
     	}
     	if (!isset($this->_accessMap[$aca->primaryKey])) {
-    		throw new Exception("Access map fill failed!" . print_r($this->_accessMap, true));
+    		throw new Exception("Access map fill failed! {$aca->primaryKey}" . print_r($this->_accessMap, true));
     	}
     	if ($this->_accessMap[$aca->primaryKey] === self::ACCESS_PARENT) {
     		$this->_accessMap[$aca->primaryKey] = $this->parentCan($aca, $accessingObject);

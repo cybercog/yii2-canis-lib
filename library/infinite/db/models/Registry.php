@@ -42,7 +42,7 @@ class Registry extends \infinite\db\ActiveRecord
 		return [
 			[['id'], 'required'],
 			[['created'], 'safe'],
-			[['id'], 'string', 'max' => 36],
+			[['id', 'owner_id'], 'string', 'max' => 36],
 			[['object_model'], 'string', 'max' => 100]
 		];
 	}
@@ -54,6 +54,7 @@ class Registry extends \infinite\db\ActiveRecord
 	{
 		return [
 			'id' => 'ID',
+			'owner_id' => 'Owner',
 			'object_model' => 'Object Model',
 			'created' => 'Created',
 		];

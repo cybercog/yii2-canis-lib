@@ -12,6 +12,7 @@ namespace infinite\db\behaviors;
 use Yii;
 
 use yii\db\Query;
+use infinite\helpers\ArrayHelper;
 
 trait SearchTerm
 {
@@ -28,7 +29,11 @@ trait SearchTerm
 
 		$localResults = $foreignResults = [];
 		$searchTerms = self::prepareSearchTerms($queryString);
-		$searchFields = array_unique(static::searchFields());
+		if (isset($params['searchFields'])) {
+			$searchFields = $params['searchFields'];
+		} else {
+			$searchFields = array_unique(static::searchFields());
+		}
 		if (empty($searchTerms) || empty($searchFields)) { return []; }
 		list($localFields, $foreignFields) = self::parseSearchFields($searchFields);
 		if (empty($localFields) && empty($foreignFields)) { return []; }
@@ -52,7 +57,9 @@ trait SearchTerm
 				$localResults[$object->primaryKey] = self::createSearchResult($object, $localFields);
 			}
 		}
-		return self::mergeSearchResults($localResults, $foreignResults);
+		$results = self::mergeSearchResults($localResults, $foreignResults);
+		ArrayHelper::multisort($results, ['score', 'object.descriptor', 'object.id'], [SORT_DESC, SORT_ASC, SORT_ASC], [SORT_NUMERIC, SORT_REGULAR, SORT_REGULAR]);
+		return $results;
 	}
 
 	public static function implementParams($query, $params)
@@ -115,7 +122,7 @@ trait SearchTerm
 			}
 		}
 		$relavance = implode('+', $orders);
-		$query->select = ["*", "({$relavance}) as searchScore"];
+		$query->select = [$query->primaryAlias . ".*", "({$relavance}) as searchScore"];
 		return $query;
 	}
 
@@ -198,190 +205,6 @@ trait SearchTerm
 		$parts = explode(' ', $query);
 		$parts = array_diff($parts, $badSearchWords);
 		return $parts;
-	}
-
-
-	/**
-	 *
-	 *
-	 * @param unknown $term
-	 * @return unknown
-	 */
-	public function searchTerm2($term, $params = []) {
-		throw new \Exception("Not implemented yet");
-		
-		$package = ['results' => [], 'total' => 0];
-		$fields = [];
-		$oterm = $term;
-		foreach ($this->searchTermFields as $k => $v) {
-			if (is_numeric($k)) {
-				$fields[$v] = 't.'.$v;
-			} else {
-				$fields[$k] = $v;
-			}
-		}
-		$_Owner = get_class($this->owner);
-		$searchTerms = $this->_prepareSearchTerms($term);
-		//modified from Yii eSearch extension (https://raw.github.com/jorgebg/yii-esearch/master/SearchAction.php)
-		$criteria = $this->owner->dbCriteria;
-
-		if (!empty($searchTerms)) {
-			$query = new Query();
-
-			$searchConditions = [];
-			foreach ($fields as $field) {
-				foreach ($searchTerms as $term) {
-					$searchConditions[$field] = $term;
-
-					$query->addSearchCondition($field, $term, true, 'OR');
-				}
-			}
-			
-			$query->where(['or like', $searchConditions]);
-
-			if (isset($params['field'])) {
-				foreach ($params['field'] as $field => $value) {
-					$value = $this->owner->quote($value);
-					$fullField = $field;
-					if (!strstr($fullField, '.')) {
-						$fullField = $this->owner->tableAlias.'.'.$fullField;
-					}
-					if (is_array($value)) {
-						$null_key = $this->_findNull($value);
-						if ($null_key !== false) {
-							unset($value[$null_key]);
-							$query->addCondition([$fullField.' IS NULL', $fullField.' IN ('.implode(',', $value).')'], 'OR');
-						} else {
-							$query->addCondition($fullField.' IN ('.implode(',', $value).')', RActiveRecord::LOGINFINITE_APP_AND);
-						}
-					} elseif (is_null($value)) {
-						$query->addCondition([$fullField.' IS NULL'], RActiveRecord::LOGINFINITE_APP_AND);
-					} else {
-						$query->addCondition($fullField.' = '. $value.'', RActiveRecord::LOGINFINITE_APP_AND);
-					}
-				}
-			}
-
-			if (isset($params['notField'])) {
-				foreach ($params['notField'] as $field => $value) {
-					$value = $this->owner->quote($value);
-					$fullField = $field;
-					if (!strstr($fullField, '.')) {
-						$fullField = $this->owner->tableAlias.'.'.$fullField;
-					}
-					if (is_array($value)) {
-						$null_key = $this->_findNull($value);
-						if ($null_key !== false) {
-							unset($value[$null_key]);
-							$query->addCondition([$fullField.' IS NOT NULL', $fullField.' NOT IN ('.implode(',', $value).')'], 'AND');
-						} else {
-							$query->addCondition($fullField.' NOT IN ('.implode(',', $value).')', RActiveRecord::LOGINFINITE_APP_AND);
-						}
-					} elseif (is_null($value)) {
-						$query->addCondition([$fullField.' IS NOT NULL'], RActiveRecord::LOGINFINITE_APP_AND);
-					} else {
-						$query->addCondition($fullField.' != '. $value.'', RActiveRecord::LOGINFINITE_APP_AND);
-					}
-				}
-			}
-
-			if (!empty($params['ignore'])) {
-				if (empty($params['ignore']['objects'])) {
-					$params['ignore']['objects'] = [];
-				}
-				if (!is_array($params['ignore']['objects'])) {
-					$params['ignore']['objects'] = [$params['ignore']['objects']];
-				}
-
-				if (isset($params['ignore']['parents'])) { // ignore the parents of the following objects
-					if (!is_array($params['ignore']['parents'])) {
-						$params['ignore']['parents'] = [$params['ignore']['parents']];
-					}
-					foreach ($params['ignore']['parents'] as $childId) {
-						$child = Registry::getObject($childId);
-						if ($child) {
-							$params['ignore']['objects'] = array_unique(array_merge($params['ignore']['objects'], $child->getParentIds(get_class($this->owner))));
-						}
-					}
-				}
-
-				if (isset($params['ignore']['children'])) { // ignore the children of the following objects
-					if (!is_array($params['ignore']['children'])) {
-						$params['ignore']['children'] = [$params['ignore']['children']];
-					}
-					foreach ($params['ignore']['children'] as $parentId) {
-						$parent = Registry::getObject($parentId);
-						if ($parent) {
-							$params['ignore']['objects'] = array_unique(array_merge($params['ignore']['objects'], $parent->getChildIds(get_class($this->owner))));
-						}
-					}
-				}
-				if (!empty($params['ignore']['objects'])) {
-					$params['ignore']['objects'] = $this->owner->quote($params['ignore']['objects']);
-					$query->addCondition($this->owner->tableAlias.'.id'.' NOT IN ('.implode(',', $params['ignore']['objects']).')', 'AND');
-				}
-			}
-
-			$criteria->mergeWith($query);
-
-			
-			$orders = [];
-			$weight = count($fields) * count($searchTerms);
-			foreach ($fields as $field) {
-				foreach ($searchTerms as $n => $term) {
-					$searchTermTag = ":term".$n;
-					$criteria->params[$searchTermTag] = $term;
-					$orders[] = $weight . '*(length(' . $field . ')-length(replace(LOWER(' . $field . '),' . $searchTermTag . ',\'\')))/length(' . $searchTermTag . ')';
-					$weight--;
-				}
-			}
-			$relavance = implode('+', $orders);
-			$criteria->select = ["t.*", "({$relavance}) as searchScore"];
-			$criteria->order = $relavance . ' desc';
-
-			$schema = $this->owner->dbConnection->schema;
-			$builder = $schema->commandBuilder;
-			if ($this->owner->asa('RAclBehavior')) {
-				if (empty($params['mine'])) {
-				} else {
-					$this->owner->addCheckAccess('update', $criteria);
-				}
-
-				if (isset($params['mine'])) {
-					if ($params['mine'] === true) {
-						$this->owner->addCheckAccess('read', $criteria);
-					} elseif ($params['mine'] === false) {
-						$this->owner->addCheckNoAccess('read', $criteria);
-					} else {
-						$this->owner->addCheckAccess('read', $criteria);
-					}
-				}
-			}
-			$countCriteria = clone $criteria;
-			$countCommand = $builder->createCountCommand($schema->getTable($this->owner->tableName()), $countCriteria);
-			$package['total'] = (int)$countCommand->queryScalar();
-
-			$package['limit'] = false;
-			$package['offset'] = 0;
-
-			if (isset($params['limit'])) {
-				$criteria->limit = $package['limit'] = (int)$params['limit'];
-				$criteria->offset = $package['offset'] = (int)(isset($params['offset']) ? $params['offset'] : 0);
-			}
-
-			$command = $builder->createFindCommand($schema->getTable($this->owner->tableName()), $criteria);
-			
-			$dataReader = $command->query();
-
-			foreach ($dataReader as $row) {
-				$newRecord = $this->owner->populateRecord($row);
-				$newRecord->searchScore = $row['searchScore'];
-				$package['results'][] = $newRecord;
-			}
-
-			return $package;
-		}
-		return [];
 	}
 
 

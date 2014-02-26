@@ -18,23 +18,96 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
 {
     public $registryClass = 'app\\models\\Registry';
     public static $_table;
-    public $objectOwner;
+    protected $_objectOwner;
+    protected $_model;
+    protected $_ownerDirty = false;
 
     public function events()
     {
         return [
             \infinite\db\ActiveRecord::EVENT_BEFORE_INSERT => 'beforeInsert',
+            \infinite\db\ActiveRecord::EVENT_AFTER_INSERT => 'afterSave',
+            \infinite\db\ActiveRecord::EVENT_AFTER_UPDATE => 'afterSave',
             \infinite\db\ActiveRecord::EVENT_AFTER_DELETE => 'afterDelete',
             \infinite\db\ActiveRecord::EVENT_AFTER_SAVE_FAIL => 'afterSaveFail'
         ];
+    }
+    
+    public function safeAttributes()
+    {
+        return ['objectOwner'];
+    }
+
+    public function hasOwner()
+    {
+        if (!empty($this->_objectOwner)) {
+            return true;
+        }
+
+        $registryModel = $this->registryModel;
+        if ($registryModel && !empty($registryModel->owner_id)) {
+            return true;
+        }
+        return false;
+    }
+
+    public function setObjectOwner($owner)
+    {
+        if (is_object($owner)) {
+            $ownerId = $owner->primaryKey;
+        } else {
+            $ownerId = $owner;
+        }
+        $this->_ownerDirty = true;
+        if (!empty($this->_objectOwner) && $this->objectOwnerId === $ownerId) {
+            $this->_ownerDirty = false;
+        } elseif (is_null($this->_objectOwner)) {
+            $registryModel = $this->registryModel;
+            if ($registryModel && $registryModel->owner_id === $ownerId) {
+                $this->_ownerDirty = false;
+            }
+        }
+        $this->_objectOwner = $owner;
+    }
+
+    public function getObjectOwnerId()
+    {
+        if (!is_null($this->_objectOwner) && is_object($this->_objectOwner)) {
+            return $this->_objectOwner->primaryKey;
+        }
+        return $this->_objectOwner;
+    }
+
+    public function getObjectOwner()
+    {
+        if (!is_null($this->_objectOwner) && !is_object($this->_objectOwner)) {
+            $registryClass = $this->registryClass;
+            $this->_objectOwner = $registryClass::getObject($this->_objectOwner, false);
+        }
+        return $this->_objectOwner;
+    }
+
+    public function getRegistryModel()
+    {
+        if (!is_null($this->_model)) {
+            return $this->_model;
+        }
+        if (empty($this->owner->primaryKey)) {
+            return false;
+        }
+        $registryClass = $this->registryClass;
+        $registry = $registryClass::find()->pk($this->owner->primaryKey)->one();
+        if (!empty($registry)) {
+            return $registry;
+        }
+        return false;
     }
 
     public function getTable()
     {
         if (is_null(self::$_table)) {
             $_registryModel = $this->registryClass;
-            $r = new $_registryModel;
-            self::$_table = $r->tableName();
+            self::$_table = $_registryModel::tableName();
         }
         return self::$_table;
     }
@@ -44,6 +117,10 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
         if ($this->owner->isNewRecord && $this->owner->primaryKey == NULL) {
             $_registryModel = $this->registryClass;
             $fields = ['id' => $this->uuid(), 'object_model' => $this->owner->modelAlias, 'created' =>  new Expression('NOW()')];
+            if (!empty($this->_objectOwner)) {
+                $fields['owner_id'] = $this->objectOwnerId;
+                $this->_ownerDirty = false;
+            }
             if (!Yii::$app->db->createCommand()->insert($this->table, $fields)->execute()) {
                 throw new Exception("Unable to create registry item!");
             }
@@ -83,6 +160,19 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
      *
      * @param unknown $event
      */
+    public function afterSave($event)
+    {
+        if ($this->_ownerDirty && ($model = $this->owner->registryModel) && $model) {
+            $model->owner_id = $this->objectOwnerId;
+            $model->save();
+        }
+    }
+
+    /**
+     *
+     *
+     * @param unknown $event
+     */
     public function afterSaveFail($event)
     {
         if ($this->owner->isNewRecord and !$this->owner->checkExistence()) {
@@ -108,15 +198,8 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
      */
     protected function _deleteRegistry()
     {
-        $pk = $this->owner->primaryKey;
-        if (empty($pk)) {
-            return true;
-        }
-
-        $_registryModel = $this->registryClass;
-        $_registry = $_registryModel::find()->pk($pk)->one();
-        if (!empty($_registry)) {
-            return $_registry->delete();
+        if (!empty($this->object->registryModel)) {
+           $this->object->registryModel->delete();
         }
         return true;
     }

@@ -25,6 +25,8 @@ class Blame extends \infinite\db\behaviors\ActiveRecord
     public $modifiedField = 'modified';
     public $modifiedByField = 'modified_user_id';
 
+    public $databaseTimeFormat = 'Y-m-d H:i:s';
+
     public static $_userID;
     protected $_fields;
 
@@ -56,9 +58,11 @@ class Blame extends \infinite\db\behaviors\ActiveRecord
     public function beforeSave($event)
     {
         $fields = $this->fields;
+        $nowDate = date($this->databaseTimeFormat);
+        
         if ($this->owner->isNewRecord) {
             if (isset($this->fields['createdField']) && !$this->owner->isAttributeChanged($this->fields['createdField'])) {
-                $this->owner->{$this->fields['createdField']} = new Expression('NOW()');
+                $this->owner->{$this->fields['createdField']} = $nowDate;
             }
             if (isset($this->fields['createdByField']) && !$this->owner->isAttributeChanged($this->fields['createdByField'])) {
                 $this->owner->{$this->fields['createdByField']} = self::_getUserId();
@@ -66,7 +70,7 @@ class Blame extends \infinite\db\behaviors\ActiveRecord
         }
 
         if (isset($this->fields['modifiedField']) && !$this->owner->isAttributeChanged($this->fields['modifiedField'])) {
-            $this->owner->{$this->fields['modifiedField']} = new Expression('NOW()');
+            $this->owner->{$this->fields['modifiedField']} = $nowDate;
         }
         if (isset($this->fields['modifiedByField']) && !$this->owner->isAttributeChanged($this->fields['modifiedByField'])) {
             $this->owner->{$this->fields['modifiedByField']} = self::_getUserId();
@@ -79,7 +83,8 @@ class Blame extends \infinite\db\behaviors\ActiveRecord
         if (is_null($event)) { $event = new ModelEvent; }
         if (!$this->isArchivable()) { $event->isValid = false; return false; }
 
-        $this->owner->{$this->fields['deletedField']} = new Expression('NOW()');
+        $nowDate = date($this->databaseTimeFormat);
+        $this->owner->{$this->fields['deletedField']} = $nowDate;
         if (isset($this->fields['deletedByField'])) {
             $this->owner->{$this->fields['deletedByField']} = self::_getUserId();
         }

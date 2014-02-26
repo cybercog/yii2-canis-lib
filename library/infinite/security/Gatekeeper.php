@@ -21,6 +21,8 @@ use infinite\caching\Cacher;
 
 use yii\db\Expression;
 use yii\caching\GroupDependency;
+use yii\caching\DbDependency;
+use yii\caching\ChainedDependency;
 
 class Gatekeeper extends \infinite\base\Component
 {
@@ -60,6 +62,23 @@ class Gatekeeper extends \infinite\base\Component
 	{
 		return $this->_authority;
 	}
+
+	public function getAclCacheDependency()
+	{
+		$aclClass = $this->aclClass;
+		$query = new Query;
+		$query->from([$aclClass::tableName() .' acl']);
+		$query->orderBy(['modified' => SORT_DESC]);
+		$query->select(['modified']);
+		$query->limit(1);
+		return new ChainedDependency([
+			'dependencies' => [
+				new GroupDependency(['group' => 'aros']),
+				new DbDependency(['sql' => $query->createCommand()->rawSql])
+			]
+		]);
+	}
+
 
 	public function canPublic($controlledObject, $action = 'read') {
 		$requestKey = md5(serialize([__FUNCTION__, func_get_args()]));
@@ -285,19 +304,29 @@ class Gatekeeper extends \infinite\base\Component
 
 	public function getAccess($controlledObject, $accessingObject = null, $acaIds = null)
 	{
+
 		if (is_null($acaIds)) {
-			$acaIds = array_keys($this->actionsById);
+			$acaIds = true;
 		}
 		if (empty($acaIds)) {
 			return [];
 		}
+
+		$aclKey = [__CLASS__.'.'.__FUNCTION__, func_get_args(), $this->primaryAro->primaryKey];
+    	$access = Cacher::get($aclKey);
+    	if ($access) {
+    		return $access;
+    	}
+
 		$query = new Query;
 		$aclClass = $this->aclClass;
 		$alias = $aclClass::tableName();
 		$query->from = [$aclClass::tableName() .' '. $alias];
 		// generateAclCheckCriteria($query, $controlledObject, $accessingObject = null, $model = null, $allowParentInherit = false) {
 		$this->generateAclCheckCriteria($query, $controlledObject, $accessingObject, null, true);
-		$query->andWhere(['or', [$alias.'.aca_id' => $acaIds], [$alias.'.aca_id' => null]]);
+		if ($acaIds !== true) {
+			$query->andWhere(['or', [$alias.'.aca_id' => $acaIds], [$alias.'.aca_id' => null]]);
+		}
 		$query->groupBy($query->primaryAlias .'.aca_id');
 		$raw = $query->all();
 		$results = [];
@@ -311,6 +340,9 @@ class Gatekeeper extends \infinite\base\Component
 				$results[$result['aca_id']] = ActiveAccess::translateAccessValue($result['access']);
 			}
 		}
+		if ($acaIds === true) {
+			$acaIds = array_keys($this->actionsById);
+		}
 		foreach ($acaIds as $acaId) {
 			if ($foundNull !== false) {
 				$results[$acaId] = $foundNull;
@@ -319,7 +351,7 @@ class Gatekeeper extends \infinite\base\Component
 				$results[$acaId] = ActiveAccess::translateAccessValue(-1);
 			}
 		}
-
+		Cacher::set($aclKey, $results, 0, $this->aclCacheDependency);
 		return $results;
 	}
 
@@ -345,7 +377,7 @@ class Gatekeeper extends \infinite\base\Component
     				$this->_primaryAro = $systemUser;
     			}
     		} else {
-    			$this->_primaryAro = false;
+    			$this->_primaryAro = $this->getPublicGroup();
     		}
     	}
     	return $this->_primaryAro;
@@ -605,11 +637,11 @@ class Gatekeeper extends \infinite\base\Component
 				return true;
 			}
 		} else {
-			if ($acl->isNewRecord OR $acl->access != $access OR $acl->acl_role_id !== $aclRole) {
+			if ($acl->isNewRecord || $acl->access != $access || $acl->acl_role_id !== $aclRole) {
 				$acl->access = $access;
 				$acl->acl_role_id = $aclRole;
 				$acl->save();
-				//\infinite\base\Debug::d($acl->attributes);exit;
+				//\d(array_keys($acl->getBehaviors()));exit;
 				return $acl->save();
 			}
 		}
