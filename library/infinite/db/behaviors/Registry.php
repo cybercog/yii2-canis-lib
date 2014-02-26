@@ -198,8 +198,8 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
      */
     protected function _deleteRegistry()
     {
-        if (!empty($this->object->registryModel)) {
-           $this->object->registryModel->delete();
+        if (!empty($this->owner->registryModel)) {
+           $this->owner->registryModel->delete();
         }
         return true;
     }
