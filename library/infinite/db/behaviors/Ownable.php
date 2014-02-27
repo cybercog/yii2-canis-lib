@@ -19,25 +19,68 @@ class Ownable extends \infinite\db\behaviors\ActiveRecord
     public $registryClass = 'app\\models\\Registry';
     public static $_table;
     public $objectOwner;
+    public $ownableEnabled = true;
 
     public function events()
     {
         return [
             \infinite\db\ActiveRecord::EVENT_BEFORE_INSERT => 'beforeSave',
             \infinite\db\ActiveRecord::EVENT_BEFORE_UPDATE => 'beforeSave',
+
+            \infinite\db\ActiveRecord::EVENT_AFTER_INSERT => 'afterSave',
+            \infinite\db\ActiveRecord::EVENT_AFTER_UPDATE => 'afterSave',
         ];
+    }
+    
+    public function safeAttributes()
+    {
+        return ['ownableEnabled'];
     }
 
     public function isEnabled()
     {
-        if (empty($this->owner->getBehavior('Registry'))) {
+        if (empty($this->owner->getBehavior('Registry')) || !$this->ownableEnabled) {
             return false;
         }
         return true;
     }
 
+    public function determineOwner()
+    {
+        if (isset(Yii::$app->user) && !Yii::$app->user->isGuest && isset(Yii::$app->user->id)) {
+            return Yii::$app->user->id;
+        }
+        return false;
+    }
+
+    public function ownerAccess()
+    {
+        return ['read', 'update', 'delete'];
+    }
+
     public function beforeSave($event)
     {
-        
+        if (!$this->isEnabled()) { return; }
+        if ($this->owner->hasOwner()) { return; }
+        if (($owner = $this->determineOwner()) && $owner) {
+            $this->owner->objectOwner = $owner;
+        }
+
+    }
+
+    public function afterSave($event)
+    {
+        if (!$this->isEnabled()) { return; }
+        if (empty($this->owner->getBehavior('ActiveAccess'))) { return; }
+        if (!empty($this->owner->getBehavior('Relatable'))) {
+            $this->owner->handleRelationSave($event);
+        }
+        if (!$this->owner->hasOwner()) { return; }
+        $owner = $this->owner->getObjectOwner(true);
+        foreach ($this->ownerAccess() as $aca) {
+            if (!$this->owner->can($aca, $owner)) {
+                $this->owner->allow($aca, $owner);
+            }
+        }
     }
 }

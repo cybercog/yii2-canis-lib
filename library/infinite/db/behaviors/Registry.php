@@ -72,14 +72,20 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
 
     public function getObjectOwnerId()
     {
-        if (!is_null($this->_objectOwner) && is_object($this->_objectOwner)) {
-            return $this->_objectOwner->primaryKey;
+        if (is_object($this->objectOwner)) {
+            return $this->objectOwner->primaryKey;
         }
-        return $this->_objectOwner;
+        return $this->objectOwner;
     }
 
-    public function getObjectOwner()
+    public function getObjectOwner($pull = false)
     {
+        if (is_null($this->_objectOwner) && $pull && !$this->owner->isNewRecord) {
+            $registry = $this->registryModel;
+            if ($registry) {
+                $this->_objectOwner = $registry->owner_id;
+            }
+        }
         if (!is_null($this->_objectOwner) && !is_object($this->_objectOwner)) {
             $registryClass = $this->registryClass;
             $this->_objectOwner = $registryClass::getObject($this->_objectOwner, false);
@@ -96,7 +102,7 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
             return false;
         }
         $registryClass = $this->registryClass;
-        $registry = $registryClass::find()->pk($this->owner->primaryKey)->one();
+        $registry = $registryClass::find()->disableAccessCheck()->pk($this->owner->primaryKey)->one();
         if (!empty($registry)) {
             return $registry;
         }

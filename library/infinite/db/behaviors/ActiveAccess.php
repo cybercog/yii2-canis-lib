@@ -26,13 +26,10 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
 
 	protected $_accessMap = [];
 
-	public $ensureCreatorAccess = ['read', 'update', 'delete'];
-
 	public function events()
     {
         return [
-            \infinite\db\ActiveRecord::EVENT_AFTER_FIND => 'afterFind',
-            \infinite\db\ActiveRecord::EVENT_AFTER_INSERT => 'afterSave',
+            \infinite\db\ActiveRecord::EVENT_AFTER_FIND => 'afterFind'
         ];
     }
 
@@ -50,7 +47,7 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     	}
     }
 
-    public function can($aca, $accessingObject = null)
+    public function can($aca, $accessingObject = null, $trustParent = false)
     {
         if (is_null($accessingObject) && !is_null($this->accessingObject)) {
             $accessingObject = $this->accessingObject;
@@ -65,14 +62,18 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     		throw new Exception("Access map fill failed! {$aca->primaryKey}" . print_r($this->_accessMap, true));
     	}
     	if ($this->_accessMap[$aca->primaryKey] === self::ACCESS_PARENT) {
-    		$this->_accessMap[$aca->primaryKey] = $this->parentCan($aca, $accessingObject);
+            if ($trustParent) {
+                $this->_accessMap[$aca->primaryKey] = self::ACCESS_GRANTED;
+            } else {
+    	       $this->_accessMap[$aca->primaryKey] = $this->parentCan($aca, $accessingObject);
+            }
     	}
     	return $this->_accessMap[$aca->primaryKey] === self::ACCESS_GRANTED;
     }
 
     public function parentCan($aca, $accessingObject = null)
     {
-    	return true; // @todo fix
+    	//return self::ACCESS_GRANTED; // @todo fix
         if (is_null($accessingObject) && !is_null($this->accessingObject)) {
             $accessingObject = $this->accessingObject;
         }
@@ -80,6 +81,7 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     		$aca = Yii::$app->gk->getActionObjectByName($aca);
     	}
     	$parentIds = $this->owner->queryParentRelations(false)->select(['parent_object_id'])->column();
+        
     	if (Yii::$app->gk->can($aca, $parentIds, $accessingObject)) {
 			return self::ACCESS_GRANTED;
 		}
@@ -98,7 +100,8 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
 			}
 		}
 	}
-
+    
+/*
 	public function afterSave($event)
 	{
 		if (!empty($this->owner->isAccessControlled) && $this->ensureCreatorAccess !== false) {
@@ -109,7 +112,7 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
 			}
 		}
 	}
-
+*/
 	public function allow($action, $accessingObject = null, $aclRole = null) {
         if (is_null($accessingObject) && !is_null($this->accessingObject)) {
             $accessingObject = $this->accessingObject;

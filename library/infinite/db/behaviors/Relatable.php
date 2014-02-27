@@ -9,6 +9,7 @@
 
 namespace infinite\db\behaviors;
 
+use Yii;
 use yii\db\Query;
 use yii\base\Event;
 
@@ -50,6 +51,12 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
         ];
     }
 
+
+    public function safeAttributes()
+    {
+        return ['relationModels'];
+    }
+
     public function init()
     {
         parent::init();
@@ -70,45 +77,65 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
         }   
     }
 
+    public function handleRelationSave($event)
+    {
+        $relationModelKey = $this->relationsKey;
+        if (!empty($this->owner->primaryKey) && !empty(self::$_relationModels[$relationModelKey])) {
+            if (!isset(self::$_relationModelsOld[$relationModelKey])) {
+                self::$_relationModelsOld[$relationModelKey] = [];
+            }
+            foreach (self::$_relationModels[$relationModelKey] as $key => $model) {
+                unset(self::$_relationModelsOld[$relationModelKey][$key]);
+                if (!is_object($model)) { continue; }
+                if (empty($model->{$this->parentObjectField}) && empty($model->{$this->childObjectField})) {
+                    continue;
+                }
+                if (empty($model->{$this->parentObjectField})) {
+                    $model->{$this->parentObjectField} = $this->owner->primaryKey;
+                } elseif (empty($model->{$this->childObjectField})) {
+                    $model->{$this->childObjectField} = $this->owner->primaryKey;
+                }
+                if ($model->isNewRecord) {
+                    $relationClass = $this->relationClass;
+                    $modelCheck = $relationClass::find()->where(['parent_object_id' => $model->parent_object_id, 'child_object_id' => $model->child_object_id])->one();
+
+                    $dirty = $model->getDirtyAttributes(array_keys($this->defaultRelation));
+                    if ($modelCheck) {
+                        $newAttributes = $model->attributes;
+                        unset($newAttributes['id']);
+                        foreach ($newAttributes as $key => $value) {
+                            if (!isset($dirty[$key])) {
+                                unset($newAttributes[$key]);
+                            }
+                        }
+                        $modelCheck->attributes = $newAttributes;
+                        $model = $modelCheck;
+                    } else {
+                        foreach ($this->defaultRelation as $dkey => $dvalue) {
+                            if (!isset($dirty[$dkey])) {
+                                $model->{$dkey} = $dvalue;
+                            }
+                        }
+                    }
+                }
+                if (!$model->save()) {
+                    $event->handled = false;
+                }
+            }
+            foreach (self::$_relationModelsOld[$relationModelKey] as $relationId) {
+                $relationClass = $this->relationClass;
+                $relation = $relationClass::getOne($relationId);
+                if ($relation && !$relation->delete()) {
+                    $event->handled = false;
+                }
+            }
+            self::$_relationModels[$relationModelKey] = self::$_relationModelsOld[$relationModelKey] = null;
+        }
+    }
+
     public function afterSave($event)
     {
-    	$relationModelKey = $this->relationsKey;
-    	if (!empty($this->owner->primaryKey) && !empty(self::$_relationModels[$relationModelKey])) {
-    		if (!isset(self::$_relationModelsOld[$relationModelKey])) {
-    			self::$_relationModelsOld[$relationModelKey] = [];
-    		}
-    		foreach (self::$_relationModels[$relationModelKey] as $key => $model) {
-    			unset(self::$_relationModelsOld[$relationModelKey][$key]);
-    			if (!is_object($model)) { continue; }
-    			if (empty($model->{$this->parentObjectField}) && empty($model->{$this->childObjectField})) {
-    				continue;
-    			}
-    			if (empty($model->{$this->parentObjectField})) {
-    				$model->{$this->parentObjectField} = $this->owner->primaryKey;
-    			} elseif (empty($model->{$this->childObjectField})) {
-    				$model->{$this->childObjectField} = $this->owner->primaryKey;
-    			}
-    			if ($model->isNewRecord) {
-    				$dirty = $model->getDirtyAttributes(array_keys($this->defaultRelation));
-    				foreach ($this->defaultRelation as $dkey => $dvalue) {
-    					if (!isset($dirty[$dkey])) {
-    						$model->{$dkey} = $dvalue;
-    					}
-    				}
-    			}
-    			if (!$model->save()) {
-    				$event->handled = false;
-    			}
-    		}
-    		foreach (self::$_relationModelsOld[$relationModelKey] as $relationId) {
-    			$relationClass = $this->relationClass;
-    			$relation = $relationClass::getOne($relationId);
-    			if ($relation && !$relation->delete()) {
-    				$event->handled = false;
-    			}
-    		}
-    		self::$_relationModels[$relationModelKey] = self::$_relationModelsOld[$relationModelKey] = null;
-    	}
+    	$this->handleRelationSave($event);
     }
 
     public function getDefaultRelation()
@@ -144,7 +171,18 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     	return self::$_relationModels[$relationModelKey];
     }
 
-    public function registerRelationModel($model) {
+    public function setRelationModels($models)
+    {
+        foreach ($models as $key => $model) {
+            $this->registerRelationModel($model, $key);
+        }
+    }
+
+    public function registerRelationModel($model, $key = null) {
+        if (is_array($model)) {
+            $model['class'] = $this->relationClass;
+            $model = Yii::createObject($model);
+        }
     	$relationModelKey = $this->relationsKey;
     	$id = $model->tabularId;
     	if (!isset($_relationModels[$relationModelKey])) { $_relationModels[$relationModelKey] = []; }
@@ -154,7 +192,11 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 		if (isset($idParts[3]) && substr($idParts[3], 0, 1) !== '_' && isset($this->relationModels[$idParts[3]])) {
 			$id = $idParts[3];
 		}
+        if (!is_null($key)) {
+            $id .= '-'. $key;
+        }
 		self::$_relationModels[$relationModelKey][$id] = $model;
+        return $model;
     }
 
 	public function getRelationModel($id) {
