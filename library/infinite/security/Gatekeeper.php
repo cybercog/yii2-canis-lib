@@ -225,9 +225,11 @@ class Gatekeeper extends \infinite\base\Component
 
 		if (!is_null($model)) {
 			$innerOnConditions[] = ['and', [$alias.'.controlled_object_id' => null], [$alias.'.object_model' => $model]];
-		} elseif(!isset($controlledObject)) {
+		} elseif(empty($controlledObject)) {
 			
 		}
+		$innerOnConditions[] = $alias.'.controlled_object_id =' .$query->primaryAlias .'.'. $query->primaryTablePk;
+		//\d($innerOnConditions);
 		$innerOnConditions[] = ['and', [$alias.'.controlled_object_id' => null], [$alias.'.object_model' => null]];
 		$aclOnConditions[] = $innerOnConditions;
 
