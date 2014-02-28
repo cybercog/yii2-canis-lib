@@ -16,6 +16,7 @@ class Aca extends \infinite\db\ActiveRecord
 { 
     public static $registryCache = false;
     public static $relationCache = false;
+    public static $groupCache = true;
 
 	/**
 	 * @inheritdoc

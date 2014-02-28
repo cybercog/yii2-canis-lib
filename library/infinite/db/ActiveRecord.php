@@ -18,30 +18,57 @@ use infinite\base\ObjectTrait;
 use infinite\base\ModelTrait;
 use infinite\db\models\Relation;
 use infinite\db\models\Registry;
+use yii\caching\GroupDependency;
 
 class ActiveRecord extends \yii\db\ActiveRecord
 {
     use ObjectTrait;
     use ModelTrait;
 
-    static public $isAco = true;
-    static protected $_cache = [];
-    protected $_tabularId;
     public $tabularIdHuman;
     public $descriptorField;
     public $subdescriptorFields = [];
+    protected $_wasDirty = false;
+    protected $_tabularId;
+
     public static $registryCache = true;
     public static $relationCache = true;
+    public static $isAco = true;
+    public static $groupCache = false;
+
+    protected static $_cache = [];
 
 
     const FORM_PRIMARY_MODEL = 'primary';
-
     const TABULAR_PREFIX = '0-';
 
     /**
      * @event Event an event that is triggered after a failed save.
      */
     const EVENT_AFTER_SAVE_FAIL = 'afterSaveFail';
+
+    public function beforeSave($insert)
+    {
+        if (!empty($this->getDirtyAttributes())) {
+            $this->_wasDirty = true;
+        }
+        return parent::beforeSave($insert);
+    }
+
+    public function afterSave($insert)
+    {
+        $result = parent::afterSave($insert);
+        if (static::$groupCache && $this->wasDirty) {
+            GroupDependency::invalidate(Yii::$app->cache, self::cacheGroupKey());
+        }
+        $this->_wasDirty = false;
+        return $result;
+    }
+
+    public function getWasDirty()
+    {
+        return $this->_wasDirty;
+    }
 
     public static function getRegistryClass()
     {
@@ -58,24 +85,21 @@ class ActiveRecord extends \yii\db\ActiveRecord
         return substr(strtoupper(sha1(get_called_class())), 0, 8);
     }
 
+    public static function cacheGroupKey()
+    {
+        return 'model:' . get_called_class();
+    }
+
+    public static function cacheDependency()
+    {
+        return new GroupDependency(['group' => self::cacheGroupKey()]);
+    }
+
     public static function populateRecord($record, $row)
     {
         $relation = [];
         $orow = $row;
-        // foreach ($row as $key => $value) {
-        //     if (substr($key, 0, 2) === 'r.') {
-        //         $relation[substr($key, 2)] = $value;
-        //         unset($row[$key]);
-        //     }
-        // }
         parent::populateRecord($record, $row);
-        // if (self::$relationCache && $record->getBehavior('Relatable') !== null && !empty($relation) && !empty($relation['cid'])) {
-        //     $record->registerRelation($relation['cid'], $relation['ct'], [
-        //         'id' => isset($relation['id']) ? $relation['id'] : false,
-        //         'primary' => !empty($relation['primary']),
-        //         'model' => isset($relation['cm']) ? $relation['cm'] : false,
-        //     ]);
-        // }
         if (self::$registryCache) {
             $registryClass = self::getRegistryClass();
             $registryClass::registerObject($record);
@@ -84,7 +108,6 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
     public function setTabularId($value) {
         $this->tabularIdHuman = $value;
-        //\d($value, ['showSteps' => 10]);
         $this->_tabularId = self::generateTabularId($value);
     }
 
@@ -171,6 +194,10 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
 
     public static function findAll($where = false, $checkAccess = true) {
+        return self::_findCache('all', $where, $checkAccess);
+    }
+
+    public static function findAllCache($where = false, $checkAccess = true) {
         return self::_findCache('all', $where, $checkAccess);
     }
 

@@ -71,9 +71,14 @@ class Gatekeeper extends \infinite\base\Component
 		$query->orderBy(['modified' => SORT_DESC]);
 		$query->select(['modified']);
 		$query->limit(1);
+
+		$acaClass = $this->acaClass;
+
+
 		return new ChainedDependency([
 			'dependencies' => [
 				new GroupDependency(['group' => 'aros']),
+				$acaClass::cacheDependency(),
 				new DbDependency(['sql' => $query->createCommand()->rawSql])
 			]
 		]);
@@ -565,8 +570,16 @@ class Gatekeeper extends \infinite\base\Component
 		return $this->setAccess($action, false, $controlledObject, $accessingObject, $controlledObjectModel, $aclRole);
 	}
 
-	public function deny($action, $controlledObject = null, $accessingObject = null, $controlledObjectModel = null, $aclRole = null) {
+	public function requireOwnerAdmin($action, $controlledObject = null, $accessingObject = null, $controlledObjectModel = null, $aclRole = null) {
 		return $this->setAccess($action, -1, $controlledObject, $accessingObject, $controlledObjectModel, $aclRole);
+	}
+
+	public function requireAdmin($action, $controlledObject = null, $accessingObject = null, $controlledObjectModel = null, $aclRole = null) {
+		return $this->setAccess($action, -2, $controlledObject, $accessingObject, $controlledObjectModel, $aclRole);
+	}
+
+	public function requireSuperAdmin($action, $controlledObject = null, $accessingObject = null, $controlledObjectModel = null, $aclRole = null) {
+		return $this->setAccess($action, -3, $controlledObject, $accessingObject, $controlledObjectModel, $aclRole);
 	}
 
 	public function parentAccess($action, $controlledObject = null, $accessingObject = null, $controlledObjectModel = null, $aclRole = null) {
