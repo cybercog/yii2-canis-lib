@@ -57,7 +57,7 @@ class Relation extends \infinite\db\ActiveRecord
 	public function rules()
 	{
 		return [
-			[['start', 'end', 'created', 'modified', 'taxonomy_id'], 'safe'],
+			[['start', 'end', 'created', 'modified'], 'safe'],
 			[['active', 'primary'], 'boolean'],
 			[['parent_object_id', 'child_object_id'], 'string', 'max' => 36],
 			[['special'], 'string', 'max' => 100]
