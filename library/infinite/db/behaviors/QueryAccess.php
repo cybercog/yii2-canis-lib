@@ -96,8 +96,6 @@ class QueryAccess extends \infinite\db\behaviors\ActiveRecord
         $alias = $aclClass::tableName();
         $parentClass = $this->owner->modelClass;
         $classAlias = $parentClass::modelAlias();
-        Yii::$app->gk->generateAclCheckCriteria($query, false, $this->accessingObject, $classAlias, true);
-
         if ($aca) {
             $aca = Yii::$app->gk->getActionObjectByName($aca);
             if (empty($aca)) {
@@ -105,6 +103,8 @@ class QueryAccess extends \infinite\db\behaviors\ActiveRecord
             } 
             $query->andWhere(['or', [$alias.'.aca_id' => $aca->primaryKey], [$alias.'.aca_id' => null]]);
         }
+        Yii::$app->gk->generateAclCheckCriteria($query, false, $this->accessingObject, $classAlias, true);
+
         return $query;
     }
 

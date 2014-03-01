@@ -11,10 +11,12 @@ namespace infinite\db;
 
 use Yii;
 use yii\base\ModelEvent;
+use yii\db\Query as BaseQuery;
 
 trait QueryTrait
 {
 	public $disableFutureAccessCheck = false;
+	protected $_db;
 	
 	public function __clone()
 	{
@@ -39,10 +41,33 @@ trait QueryTrait
 
     public function createCommand($db = null)
     {
+    	$this->_db = $db;
         $modelEvent = new ModelEvent;
         $this->trigger(Query::EVENT_BEFORE_QUERY, $modelEvent);
-        $result = parent::createCommand($db);
-        return $result;
+        return self::basicCreateCommand($db);
+    }
+
+    public function subquerySelf($db = null, $alias = 'inside')
+    {
+    	if (is_null($db) && !is_null($this->_db)) {
+    		$db = $this->_db;
+    	}
+    	$rawSql = '('. $this->basicCreateCommand($db)->rawSql .')';
+    	$this->resetQuery();
+    	$this->from([$alias => $rawSql]);
+    }
+
+    protected function resetQuery()
+    {
+
+    	foreach (get_class_vars(BaseQuery::className()) as $var => $default) {
+    		$this->{$var} = $default;
+    	}
+    }
+
+    private function basicCreateCommand($db = null)
+    {
+        return parent::createCommand($db);
     }
 
     public function getAccessBehaviorConfiguration()

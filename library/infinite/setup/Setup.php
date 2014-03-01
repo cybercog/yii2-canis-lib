@@ -276,7 +276,7 @@ class Setup extends \infinite\base\Object
 
     public function getLibraryConfigPath()
     {
-        $path = INFINITE_CASCADE_PATH . DIRECTORY_SEPARATOR . 'config';
+        $path = INFINITE_APP_PATH . DIRECTORY_SEPARATOR . 'config';
         if (!is_dir($path)) {
             throw new Exception("Library config path does not exist: {$path}");
         }
