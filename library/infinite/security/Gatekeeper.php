@@ -240,22 +240,22 @@ class Gatekeeper extends \infinite\base\Component
 
 		$aclClass = $this->aclClass;
 
-		$addSelect = false;
-		if (!isset($query->select)) {
-			$query->select = [];
-			$addSelect = true;
-		}
+		// $addSelect = false;
+		// if (!isset($query->select)) {
+		// 	$query->select = [];
+		// 	$addSelect = true;
+		// }
 
 		if ($this->isAclQuery($query)) {
 			if (!empty($aclConditions)) {
 				$aclOnConditions[] = $aclConditions;
 			}
 			$query->andWhere($aclOnConditions);
-			$addSelect = false;
+		//	$addSelect = false;
 		} else {
 			$query->join('INNER JOIN', $aclClass::tableName() .' '. $alias .' USE INDEX(`aclComboAcaAccess`)', $aclOnConditions);
 			$query->andWhere($aclConditions);
-			$addSelect = $addSelect && true;
+		//	$addSelect = $addSelect && true;
 			// $query->distinct = true;
 			$query->groupBy($query->primaryAlias .'.'. $query->primaryTablePk);
 		}
@@ -265,15 +265,15 @@ class Gatekeeper extends \infinite\base\Component
 			$query->orderBy = array_merge($aclOrder, $query->orderBy);
 		}
 
-		if ($addSelect && $modelTable) {
+		// if ($addSelect && $modelTable) {
 
-			// this messes up distinct!
-			$query->select = ["$modelTable.*"];
-			// $query->select[] = $alias .'.access';
-			// $query->select[] = $alias .'.aca_id as aca_id';
-		} else {
-			//$query->select[] = $alias . '.*';
-		}
+		// 	// this messes up distinct!
+		// 	$query->select = ["$modelTable.*"];
+		// 	// $query->select[] = $alias .'.access';
+		// 	// $query->select[] = $alias .'.aca_id as aca_id';
+		// } else {
+		// 	//$query->select[] = $alias . '.*';
+		// }
     	return $query;
     }
 
