@@ -216,7 +216,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
             if ($where) {
                 $r->where($where);
             }
-            if (!$checkAccess AND $r->hasBehavior('Access')) {
+            if (!$checkAccess && $r->hasBehavior('Access')) {
                 $r->disableAccessCheck();
             }
             $r = $r->$type();
