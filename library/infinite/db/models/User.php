@@ -64,6 +64,10 @@ class User extends ActiveRecord implements IdentityInterface
         return static::find()->disableAccessCheck()->andWhere([$primaryKey[0] => $id])->one();
     }
 
+    public static function findIdentityByAccessToken($token) {
+        
+    }
+
     /**
      * Finds user by username
      *

@@ -421,6 +421,7 @@ class Gatekeeper extends \infinite\base\Component
 				Cacher::set($arosKey, $this->_aros[$arosKey], 0, new GroupDependency(['group' => 'aros']));
 			}
     	}
+    	//\d(array_unique($this->_aros[$arosKey]));exit;
     	return array_unique($this->_aros[$arosKey]);
     }
 

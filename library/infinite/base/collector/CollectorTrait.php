@@ -125,7 +125,8 @@ trait CollectorTrait
 		return $item;
 	}
 
-	public function register($owner, $itemComponent, $systemId = null) {
+	public function register($owner, $itemComponent, $systemId = null)
+	{
 		$itemComponent = $this->prepareComponent($itemComponent);
 		$collectorItemClass = $this->collectorItemClass;
 		$itemComponentObject = null;
