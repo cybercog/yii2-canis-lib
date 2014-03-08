@@ -6,7 +6,7 @@ use ArrayIterator;
 use IteratorAggregate;
 use yii\base\Arrayable;
 
-class Bucket extends \infinite\base\Object implements IteratorAggregate, ArrayAccess, Arrayable {
+class Bucket extends \infinite\base\Object implements IteratorAggregate, ArrayAccess {
 	protected $_bucket = [];
 	protected $_collector;
 

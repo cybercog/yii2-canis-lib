@@ -11,7 +11,7 @@ use infinite\base\exceptions\Exception;
 use yii\base\Arrayable;
 use yii\base\Event;
 
-class Component extends \infinite\base\Component  implements IteratorAggregate, ArrayAccess, Arrayable 
+class Component extends \infinite\base\Component implements IteratorAggregate, ArrayAccess 
 {
 	const EVENT_AFTER_LOAD = 'afterLoad';
 	const EVENT_AFTER_INIT = 'afterInit';
@@ -103,7 +103,8 @@ class Component extends \infinite\base\Component  implements IteratorAggregate, 
 		return $collector;
 	}
 
-	public function toArray() {
+	public function toArray()
+	{
 		return $this->_collectors;
 	}
 
