@@ -17,15 +17,18 @@ class Controller extends \yii\web\Controller
 
 	protected static $_response = [];
 
-
-	/**
-	 * @inheritdoc
-	 */
-	public function runAction($route, $params = [])
+	public function init()
 	{
-		Yii::$app->response->controller = $this;
-		return parent::runAction($route, $params);
+		parent::init();
+		$this->on(self::EVENT_BEFORE_ACTION, [$this, 'beforeActionResponse']);
 	}
+
+	public function beforeActionResponse($actionEvent)
+	{
+		Yii::$app->response->action = $actionEvent->action;
+		Yii::$app->response->controller = $this;
+	}
+
 
 	// public function getResponse() {
 	// 	$responseKey = self::className();

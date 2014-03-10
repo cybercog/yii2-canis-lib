@@ -43,6 +43,7 @@ class Item extends \infinite\base\Object {
 	public function setObject($object)
 	{
 		if (is_array($object)) {
+			$object['collectorItem'] = $this;
 			$object = Yii::createObject($object);
 		}
 		if (!($object instanceof CollectedObjectInterface)) {

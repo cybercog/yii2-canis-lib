@@ -12,6 +12,7 @@ class Response extends \yii\web\Response
 	use ObjectTrait;
 
 	public $controller;
+	public $action;
 	public $view = false;
 
 	public $task = 'fill';
@@ -234,6 +235,12 @@ class Response extends \yii\web\Response
 		$this->setStatusCode($statusCode);
 
 		return $this;
+	}
+
+	public function getRoute()
+	{
+		if (is_null($this->action)) { return; }
+		return $this->action->getUniqueId();
 	}
 }
 ?>
