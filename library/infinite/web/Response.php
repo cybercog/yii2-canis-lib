@@ -3,6 +3,7 @@ namespace infinite\web;
 
 use Yii;
 
+use yii\helpers\Url;
 use infinite\base\exceptions\Exception;
 use infinite\base\ObjectTrait;
 use infinite\helpers\Html;
@@ -72,7 +73,7 @@ class Response extends \yii\web\Response
 		// high priority tasks
 		if ($this->redirect) {
 			$keepProcessing = false; 
-			$i['redirect'] = Html::url($this->redirect);
+			$i['redirect'] = Url::to($this->redirect);
 			$i['task'] = 'redirect';
 		} elseif ($this->refresh) {
 			$keepProcessing = false;
@@ -226,7 +227,7 @@ class Response extends \yii\web\Response
 			// ensure the route is absolute
 			$url[0] = '/' . ltrim($url[0], '/');
 		}
-		$url = Html::url($url);
+		$url = Url::to($url);
 		if (strpos($url, '/') === 0 && strpos($url, '//') !== 0) {
 			$url = Yii::$app->getRequest()->getHostInfo() . $url;
 		}

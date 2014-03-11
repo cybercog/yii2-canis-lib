@@ -67,6 +67,8 @@ $(document).on('click.infinite-api', '[data-handler="background"]', function (e)
 		options = jQuery.extend(true, options, $this.data('handlerOptions'));
 	}
 
+	options.context = $this;
+
 	var backgroundProcess = jQuery.ajax(options).always(function() {
 		setTimeout(function() { $this.removeClass('disabled')}, 500);
 	});

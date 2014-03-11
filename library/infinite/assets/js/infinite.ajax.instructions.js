@@ -1,5 +1,4 @@
 function InfiniteInstructionHandler (instructions, ajaxEvent, ajaxOptions) {
-
 	if (typeof(instructions) !== 'object') {
 		instructions = {};
 	}
@@ -9,6 +8,11 @@ function InfiniteInstructionHandler (instructions, ajaxEvent, ajaxOptions) {
 		ajaxOptions = {};
 	}
 	this.ajaxOptions = ajaxOptions;
+
+	if (ajaxOptions.context === undefined || typeof(ajaxOptions.context) !== 'object') {
+		ajaxOptions.context = {};
+	}
+	this.context = ajaxOptions.context;
 
 	if (typeof(ajaxEvent) !== 'object') {
 		ajaxEvent = {};
@@ -64,9 +68,17 @@ InfiniteInstructionHandler.prototype.handleStatus = function() {
 };
 
 InfiniteInstructionHandler.prototype.handleTrigger = function() {
+	var self = this;
 	if (this.instructions.trigger !== undefined) {
 		jQuery.each(this.instructions.trigger, function(index, event) {
-			$(event[1]).trigger(event[0]);
+			if (event[1] !== undefined) {
+				var $target = $(event[1]);
+			} else if (self.context) {
+				var $target = self.context;
+			} else {
+				return true;
+			}
+			$target.trigger(event[0]);
 		});
 	}
 	return true;
