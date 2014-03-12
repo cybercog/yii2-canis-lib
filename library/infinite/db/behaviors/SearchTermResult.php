@@ -13,7 +13,7 @@ use yii\db\Query;
 use yii\base\Arrayable;
 use infinite\base\Object;
 
-class SearchTermResult extends Object implements Arrayable
+class SearchTermResult extends Object
 {
 	protected $_object;
 	protected $_id;

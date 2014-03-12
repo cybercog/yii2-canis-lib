@@ -79,7 +79,7 @@ class Gatekeeper extends \infinite\base\Component
 			'dependencies' => [
 				new GroupDependency(['group' => 'aros']),
 				$acaClass::cacheDependency(),
-				new DbDependency(['sql' => $query->createCommand()->rawSql])
+				new DbDependency(['reusable' => true, 'sql' => $query->createCommand()->rawSql])
 			]
 		]);
 	}
@@ -151,6 +151,49 @@ class Gatekeeper extends \infinite\base\Component
 		return false;
 	}
 
+	public function fillActions($acls, $baseAccess = [], $acaIds = null)
+	{
+		$nullValue = $this->findNullAction($acls);
+		$noAccessValue = ActiveAccess::translateAccessValue(-1);
+		$actions = $this->actionsById;
+		if (isset($acaIds) && is_array($acaIds)) {
+			foreach ($acaIds as $acaId) {
+				unset($actions[$acaId]);
+			}
+		}
+
+		$access = [];
+		foreach ($acls as $acl) {
+			$acaValue = ArrayHelper::getValue($acl, 'aca_id');
+			$accessValue = ActiveAccess::translateAccessValue(ArrayHelper::getValue($acl, 'access'));
+			if (is_null($acaValue)) { continue; }
+			if (!array_key_exists($acaValue, $baseAccess) 
+				|| $baseAccess[$acaValue] === $noAccessValue) {
+				$access[$acaValue] = $accessValue;
+			}
+		}
+
+		foreach ($actions as $action) {
+			$acaValue = ArrayHelper::getValue($action, 'id');
+			if (!array_key_exists($acaValue, $access)) {
+				$access[$acaValue] = $nullValue;
+			}
+		}
+		return $access;
+	}
+
+	public function findNullAction($acls)
+	{
+		foreach ($acls as $acl) {
+			$acaValue = ArrayHelper::getValue($acl, 'aca_id');
+			if (is_null($acaValue)) {
+				$access = ArrayHelper::getValue($acl, 'access');
+				return ActiveAccess::translateAccessValue($access);
+			}	
+		}
+		return ActiveAccess::translateAccessValue(-1);
+	}
+
 	public function canGeneral($action, $model, $accessingObject = null) {
 		if (!is_object($model)) {
 			$model = new $model;
@@ -158,11 +201,17 @@ class Gatekeeper extends \infinite\base\Component
 		return !$model->getBehavior('Access') || $model->can($action, $accessingObject);
 	}
 
-    public function generateAclCheckCriteria($query, $controlledObject, $accessingObject = null, $model = null, $allowParentInherit = false) {
+    public function generateAclCheckCriteria($query, $controlledObject, $accessingObject = null, $model = null, $allowParentInherit = false, $expandAros = true) {
         $aclClass = Yii::$app->gk->aclClass;
         $alias = $aclClass::tableName();
 		// get aro's 
-		$aros = $this->getAros($accessingObject);
+		if ($expandAros) {
+			$aros = $this->getAros($accessingObject);
+		} elseif(isset($accessingObject)) {
+			$aros = is_object($accessingObject) ? [$accessingObject->primaryKey] : [$accessingObject];
+		} else {
+			$aros = [];
+		}
 
 		$aclOrder = [];
 		$aclOnConditions = ['and'];
@@ -310,7 +359,7 @@ class Gatekeeper extends \infinite\base\Component
 		}
 	}
 
-	public function getAccess($controlledObject, $accessingObject = null, $acaIds = null)
+	public function getAccess($controlledObject, $accessingObject = null, $acaIds = null, $expandAros = true)
 	{
 
 		if (is_null($acaIds)) {
@@ -331,34 +380,14 @@ class Gatekeeper extends \infinite\base\Component
 		$alias = $aclClass::tableName();
 		$query->from = [$aclClass::tableName() .' '. $alias];
 		// generateAclCheckCriteria($query, $controlledObject, $accessingObject = null, $model = null, $allowParentInherit = false) {
-		$this->generateAclCheckCriteria($query, $controlledObject, $accessingObject, null, true);
+		$this->generateAclCheckCriteria($query, $controlledObject, $accessingObject, null, true, $expandAros);
 		if ($acaIds !== true) {
 			$query->andWhere(['or', [$alias.'.aca_id' => $acaIds], [$alias.'.aca_id' => null]]);
 		}
 		$query->groupBy($query->primaryAlias .'.aca_id');
 		$raw = $query->all();
-		$results = [];
-		$foundNull = false;
-		foreach ($raw as $key => $result) {
-			if (is_null($result['aca_id'])) {
-				$foundNull = ActiveAccess::translateAccessValue($result['access']);
-				unset($raw[$key]);
-				break;
-			} else {
-				$results[$result['aca_id']] = ActiveAccess::translateAccessValue($result['access']);
-			}
-		}
-		if ($acaIds === true) {
-			$acaIds = array_keys($this->actionsById);
-		}
-		foreach ($acaIds as $acaId) {
-			if ($foundNull !== false) {
-				$results[$acaId] = $foundNull;
-			}
-			if (!isset($results[$acaId])) {
-				$results[$acaId] = ActiveAccess::translateAccessValue(-1);
-			}
-		}
+		$results = $this->fillActions($raw, [], $acaIds);
+		
 		Cacher::set($aclKey, $results, 0, $this->aclCacheDependency);
 		return $results;
 	}
