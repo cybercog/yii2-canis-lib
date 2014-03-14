@@ -16,7 +16,6 @@ use infinite\base\Exception;
 
 class Registry extends \infinite\db\behaviors\ActiveRecord
 {
-    public $registryClass = 'app\\models\\Registry';
     public static $_table;
     protected $_objectOwner;
     protected $_model;
@@ -87,7 +86,7 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
             }
         }
         if (!is_null($this->_objectOwner) && !is_object($this->_objectOwner)) {
-            $registryClass = $this->registryClass;
+            $registryClass = Yii::$app->classes['Registry'];
             $this->_objectOwner = $registryClass::getObject($this->_objectOwner, false);
         }
         return $this->_objectOwner;
@@ -101,7 +100,7 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
         if (empty($this->owner->primaryKey)) {
             return false;
         }
-        $registryClass = $this->registryClass;
+        $registryClass = Yii::$app->classes['Registry'];
         $registry = $registryClass::find()->disableAccessCheck()->pk($this->owner->primaryKey)->one();
         if (!empty($registry)) {
             return $registry;
@@ -112,7 +111,7 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
     public function getTable()
     {
         if (is_null(self::$_table)) {
-            $_registryModel = $this->registryClass;
+            $_registryModel = Yii::$app->classes['Registry'];
             self::$_table = $_registryModel::tableName();
         }
         return self::$_table;
@@ -121,7 +120,7 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
     public function beforeInsert($event)
     {
         if ($this->owner->isNewRecord && $this->owner->primaryKey == NULL) {
-            $_registryModel = $this->registryClass;
+            $_registryModel = Yii::$app->classes['Registry'];
             $fields = ['id' => $this->uuid(), 'object_model' => $this->owner->modelAlias, 'created' =>  new Expression('NOW()')];
             if (!empty($this->_objectOwner)) {
                 $fields['owner_id'] = $this->objectOwnerId;

@@ -92,7 +92,7 @@ class QueryAccess extends \infinite\db\behaviors\ActiveRecord
         $query = $this->owner;
         if ($this->owner->accessAdded) { return $query; }
         $this->owner->accessAdded = true;
-        $aclClass = Yii::$app->gk->aclClass;
+        $aclClass = Yii::$app->classes['Acl'];
         $alias = $aclClass::tableName();
         $parentClass = $this->owner->modelClass;
         $classAlias = $parentClass::modelAlias();

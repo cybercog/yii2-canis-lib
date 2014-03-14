@@ -23,7 +23,6 @@ class Relation extends \infinite\db\ActiveRecord
 {
     public static $registryCache = false;
     public static $relationCache = false;
-	public $registryClass = 'infinite\\models\\Registry';
 	static $_callCache = [];
 	/**
 	 * @inheritdoc
@@ -90,13 +89,13 @@ class Relation extends \infinite\db\ActiveRecord
 
 	public function getChildObject($checkAccess = true)
 	{
-		$registryClass = $this->registryClass;
+		$registryClass = Yii::$app->classes['Registry'];
 		return $registryClass::getObject($this->child_object_id, $checkAccess);
 	}
 
 	public function getParentObject($checkAccess = true)
 	{
-		$registryClass = $this->registryClass;
+		$registryClass = Yii::$app->classes['Registry'];
 		return $registryClass::getObject($this->parent_object_id, $checkAccess);
 	}
 

@@ -175,7 +175,6 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
             'id' => 'char(36) CHARACTER SET ascii COLLATE ascii_bin NOT NULL PRIMARY KEY',
             'name' => 'string DEFAULT NULL',
             'system_id' => 'string NOT NULL DEFAULT \'\'',
-            'system_version' => 'float unsigned DEFAULT NULL',
             'created' => 'datetime DEFAULT NULL',
             'modified' => 'datetime DEFAULT NULL'
         ]);

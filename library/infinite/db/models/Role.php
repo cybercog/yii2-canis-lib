@@ -2,6 +2,8 @@
 
 namespace infinite\db\models;
 
+use infinite\base\collector\CollectedObjectTrait;
+
 /**
  * This is the model class for table "role".
  *
@@ -14,8 +16,9 @@ namespace infinite\db\models;
  *
  * @property Registry $id
  */
-class Role extends \infinite\db\ActiveRecord
-{
+class Role extends \infinite\db\ActiveRecord implements \infinite\base\collector\CollectedObjectInterface
+{	
+	use CollectedOBjectTrait;
 	/**
 	 * @inheritdoc
 	 */
@@ -31,8 +34,8 @@ class Role extends \infinite\db\ActiveRecord
     {
         return array_merge(parent::behaviors(),
             [
-                'Registry' => 'infinite\db\behaviors\Registry',
-                'Relatable' => 'infinite\db\behaviors\Relatable',
+                'Registry' => 'infinite\\db\\behaviors\\Registry',
+                'Relatable' => 'infinite\\db\\behaviors\\Relatable',
             ]
         );
     }
@@ -43,7 +46,6 @@ class Role extends \infinite\db\ActiveRecord
 	public function rules()
 	{
 		return [
-			[['system_version'], 'number'],
 			[['created', 'modified'], 'safe'],
 			[['id'], 'string', 'max' => 36],
 			[['name', 'system_id'], 'string', 'max' => 100]

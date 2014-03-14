@@ -26,13 +26,6 @@ use yii\caching\ChainedDependency;
 
 class Gatekeeper extends \infinite\base\Component
 {
-	public $acaClass = 'app\\models\\Aca';
-	public $aclClass = 'app\\models\\Acl';
-	public $aclRoleClass = 'app\\models\\AclRole';
-	public $groupClass = 'app\\models\\Group';
-	public $registryClass = 'app\\models\\Registry';
-	public $userClass = 'app\\models\\User';
-
 	public $proxy = false;
 
 	protected $_aros;
@@ -65,14 +58,14 @@ class Gatekeeper extends \infinite\base\Component
 
 	public function getAclCacheDependency()
 	{
-		$aclClass = $this->aclClass;
+		$aclClass = Yii::$app->classes['Acl'];
 		$query = new Query;
 		$query->from([$aclClass::tableName() .' acl']);
 		$query->orderBy(['modified' => SORT_DESC]);
 		$query->select(['modified']);
 		$query->limit(1);
 
-		$acaClass = $this->acaClass;
+		$acaClass = Yii::$app->classes['Aca'];
 
 
 		return new ChainedDependency([
@@ -91,7 +84,7 @@ class Gatekeeper extends \infinite\base\Component
 			self::$_cache[$requestKey] = false;
 			$accessGroups = ['public', 'clients'];
 			$accessObject = [];
-			$groupModel = $this->groupClass;
+			$groupModel = Yii::$app->classes['Group'];
 			foreach ($accessGroups as $group) {
 				$groupObject = $groupModel::getBySystemName($group, true);
 				if ($groupObject) {
@@ -138,7 +131,7 @@ class Gatekeeper extends \infinite\base\Component
 		if (!is_array($controlledObject)) {
 			$controlledObject = [$controlledObject];
 		}
-		$registryClass = $this->registryClass;
+		$registryClass = Yii::$app->classes['Registry'];
 		foreach ($controlledObject as $co) {
 			if (!is_object($co)) {
 				$oco = $co;
@@ -202,7 +195,7 @@ class Gatekeeper extends \infinite\base\Component
 	}
 
     public function generateAclCheckCriteria($query, $controlledObject, $accessingObject = null, $model = null, $allowParentInherit = false, $expandAros = true) {
-        $aclClass = Yii::$app->gk->aclClass;
+        $aclClass = Yii::$app->classes['Acl'];
         $alias = $aclClass::tableName();
 		// get aro's 
 		if ($expandAros) {
@@ -287,7 +280,7 @@ class Gatekeeper extends \infinite\base\Component
 		$innerOnConditions[] = ['and', [$alias.'.controlled_object_id' => null], [$alias.'.object_model' => null]];
 		$aclOnConditions[] = $innerOnConditions;
 
-		$aclClass = $this->aclClass;
+		$aclClass = Yii::$app->classes['Acl'];
 
 		// $addSelect = false;
 		// if (!isset($query->select)) {
@@ -328,7 +321,7 @@ class Gatekeeper extends \infinite\base\Component
 
     protected function isAclQuery(\yii\db\Query $query)
     {
-    	$aclClass = $this->aclClass;
+    	$aclClass = Yii::$app->classes['Acl'];
     	if ($query instanceof ActiveQuery) {
     		return $query->modelClass === $aclClass;
     	} else { // regular old query. Have to do this by table name
@@ -376,7 +369,7 @@ class Gatekeeper extends \infinite\base\Component
     	}
 
 		$query = new Query;
-		$aclClass = $this->aclClass;
+		$aclClass = Yii::$app->classes['Acl'];
 		$alias = $aclClass::tableName();
 		$query->from = [$aclClass::tableName() .' '. $alias];
 		// generateAclCheckCriteria($query, $controlledObject, $accessingObject = null, $model = null, $allowParentInherit = false) {
@@ -408,7 +401,7 @@ class Gatekeeper extends \infinite\base\Component
     		if (isset(Yii::$app->user) && !Yii::$app->user->isGuest && !empty(Yii::$app->user->id)) {
     			$this->_primaryAro = Yii::$app->user->identity;
     		} elseif (Yii::$app instanceof \yii\console\Application) {
-    			$userClass = $this->userClass;
+    			$userClass = Yii::$app->classes['User'];
     			$systemUser = $userClass::systemUser();
     			if ($systemUser) {
     				$this->_primaryAro = $systemUser;
@@ -462,7 +455,7 @@ class Gatekeeper extends \infinite\base\Component
 				$accessingObject = $this->primaryAro;
 			}
 	    	$groups = [];
-	    	$parents = $accessingObject->parents($this->groupClass, [], ['disableAccessCheck' => 1]);
+	    	$parents = $accessingObject->parents(Yii::$app->classes['Group'], [], ['disableAccessCheck' => 1]);
 			if (!empty($parents)) {
 				$children = ArrayHelper::getColumn($parents, 'primaryKey');
 				if ($flatten) {
@@ -483,7 +476,7 @@ class Gatekeeper extends \infinite\base\Component
 		if (is_object($action)) { return $action; }
 		$actions = $this->getActionsByName();
 		if (!isset($actions[$action])) {
-			$acaClass = $this->acaClass;
+			$acaClass = Yii::$app->classes['Aca'];
 			$this->_actionsByName[$action] = $acaClass::find()->where(['name' => $action])->one();
 			if (empty($this->_actionsByName[$action])) {
 				$this->_actionsByName[$action] = new $acaClass;
@@ -498,7 +491,7 @@ class Gatekeeper extends \infinite\base\Component
 	}
 
 	protected function _getActions() {
-		$acaClass = $this->acaClass;
+		$acaClass = Yii::$app->classes['Aca'];
 		$actions = $acaClass::find()->all();
 		$this->_actionsByName = ArrayHelper::index($actions, 'name');
 		$this->_actionsById = ArrayHelper::index($actions, 'id');
@@ -530,7 +523,7 @@ class Gatekeeper extends \infinite\base\Component
 
 	public function getGroup($systemName, $checkAccess = false)
 	{
-		$groupClass = $this->groupClass;
+		$groupClass = Yii::$app->classes['Group'];
 		return $groupClass::getBySystemName('top', $checkAccess);
 	}
 
@@ -547,7 +540,7 @@ class Gatekeeper extends \infinite\base\Component
 		if (is_object($controlledObject)) {
 			$controlledObject = $controlledObject->primaryKey;
 		}
-		$aclRoleModel = $this->aclRoleClass;
+		$aclRoleModel = Yii::$app->classes['AclRole'];
 		$fields = ['controlled_object_id' => $controlledObject, 'accessing_object_id' => $accessingObject];
 		$aclRole = $aclRoleModel::model()->field($fields)->find();
 		if ($aclRole) {
@@ -670,7 +663,7 @@ class Gatekeeper extends \infinite\base\Component
 		$fields['accessing_object_id'] = $accessingObject;
 		$fields['controlled_object_id'] = $controlledObject;
 		$fields['object_model'] = $controlledObjectModel;
-		$aclClass = $this->aclClass;
+		$aclClass = Yii::$app->classes['Acl'];
 		$acl = $aclClass::find()->where($fields)->one();
 		if (empty($acl)) {
 			$acl = new $aclClass;

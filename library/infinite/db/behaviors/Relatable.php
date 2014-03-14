@@ -18,9 +18,6 @@ use infinite\helpers\ArrayHelper;
 
 class Relatable extends \infinite\db\behaviors\ActiveRecord
 {
-	public $relationClass = 'app\models\Relation';
-	public $registryClass = 'app\models\Registry';
-
 	public $parentObjectField = 'parent_object_id';
 	public $childObjectField = 'child_object_id';
 	public $activeField = 'active';
@@ -60,10 +57,10 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     public function init()
     {
         parent::init();
-        $registryClass = $this->registryClass;
+        $registryClass = Yii::$app->classes['Registry'];
         if (!self::$_setGlobalEvents) {
             self::$_setGlobalEvents = true;
-            Event::on($this->registryClass, $registryClass::EVENT_BEFORE_DELETE, [$this, 'cleanupRelations']);
+            Event::on(Yii::$app->classes['Registry'], $registryClass::EVENT_BEFORE_DELETE, [$this, 'cleanupRelations']);
         }
     }
 
@@ -96,7 +93,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
                     $model->{$this->childObjectField} = $this->owner->primaryKey;
                 }
                 if ($model->isNewRecord) {
-                    $relationClass = $this->relationClass;
+                    $relationClass = Yii::$app->classes['Relation'];
                     $modelCheck = $relationClass::find()->where(['parent_object_id' => $model->parent_object_id, 'child_object_id' => $model->child_object_id])->one();
 
                     $dirty = $model->getDirtyAttributes(array_keys($this->defaultRelation));
@@ -123,7 +120,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
                 }
             }
             foreach (self::$_relationModelsOld[$relationModelKey] as $relationId) {
-                $relationClass = $this->relationClass;
+                $relationClass = Yii::$app->classes['Relation'];
                 $relation = $relationClass::getOne($relationId);
                 if ($relation && !$relation->delete()) {
                     $event->handled = false;
@@ -159,7 +156,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 
     public function getRelationModels($activeOnly = false) {
     	$relationModelKey = $this->relationsKey;
-        $relationClass = $this->relationClass;
+        $relationClass = Yii::$app->classes['Relation'];
         $relationPrimaryKey = $relationClass::primaryKey()[0];
     	if (!isset(self::$_relationModels[$relationModelKey])) {
     		if ($this->owner->isNewRecord) {
@@ -184,7 +181,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 
     public function registerRelationModel($model, $key = null) {
         if (is_array($model)) {
-            $model['class'] = $this->relationClass;
+            $model['class'] = Yii::$app->classes['Relation'];
             $model = Yii::createObject($model);
         }
     	$relationModelKey = $this->relationsKey;
@@ -215,12 +212,12 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 		}
 		// for lazy loading relations
 		if (isset($this->relationModels[$id]) && !is_object($this->relationModels[$id])) {
-			$relationClass = $this->relationClass;
+			$relationClass = Yii::$app->classes['Relation'];
 			self::$_relationModels[$relationModelKey][$id] = $relationClass::getOne($this->relationModels[$id]);
 		}
 
 		if (empty(self::$_relationModels[$relationModelKey][$id])) {
-			self::$_relationModels[$relationModelKey][$id] = new $this->relationClass;
+			self::$_relationModels[$relationModelKey][$id] = new Yii::$app->classes['Relation'];
 			self::$_relationModels[$relationModelKey][$id]->tabularId = $id;
 		}
 		return $this->relationModels[$id];
@@ -327,7 +324,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 
     public function queryRelations($relationshipType, $model = false, $relationOptions = []) 
     {
-    	$relationClass = $this->relationClass;
+    	$relationClass = Yii::$app->classes['Relation'];
     	$query = $relationClass::createQuery();
         $this->relationAlias = $relationClass::tableName();
     	$this->_prepareRelationQuery($query, $relationshipType, $model, $relationOptions);
@@ -431,7 +428,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 
 	protected function _prepareObjectQuery(Query $query, $relationshipType = false, $model = false, $objectOptions = [])
     {
-    	$relationClass = $this->relationClass;
+    	$relationClass = Yii::$app->classes['Relation'];
     	$relationTableAlias = $relationClass::tableName() . ' ' . $this->relationAlias;
     	if (!empty($objectOptions['where'])) {
     		$query->andWhere($this->_aliasKeys($objectOptions['where'], $this->objectAlias));
@@ -448,8 +445,8 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     protected function _prepareRegistryModelCheck($query, $relationshipType, $model)
     {
     	if ($model) {
-    		$relationClass = $this->relationClass;
-    		$registryClass = $this->registryClass;
+    		$relationClass = Yii::$app->classes['Relation'];
+    		$registryClass = Yii::$app->classes['Registry'];
     		$registryTableAlias = $registryClass::tableName() . ' ' . $this->registryAlias;
             if ($relationshipType === 'children') {
                 $relationKey = $this->relationAlias . '.'. $this->childObjectField;
@@ -467,7 +464,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     protected function _prepareRelationQuery(Query $query, $relationshipType = false, $model = false, $relationOptions = [])
     {
     	$activeOnly = !isset($relationOptions['activeOnly']) || $relationOptions['activeOnly'];
-    	$relationClass = $this->relationClass;
+    	$relationClass = Yii::$app->classes['Relation'];
     	$relationTableAlias = $relationClass::tableName() . ' ' . $this->relationAlias;
     	$conditions = [];
     	$conditions[] = 'and';
@@ -489,7 +486,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     		$modelPrimaryKey = $modelClass::primaryKey()[0];
     	}
 
-    	$relationQuery = $query->modelClass === $this->relationClass || !$model;
+    	$relationQuery = $query->modelClass === Yii::$app->classes['Relation'] || !$model;
 
     	if ($relationQuery) {
     		$conditionsDestination = 'where';
@@ -599,7 +596,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
         if (isset($this->_relations[$key]) && isset($this->_relations[$key]['primary'])) {
             return $this->_relations[$key]['primary'];
         } else {
-            $relationClass = $this->relationClass;
+            $relationClass = Yii::$app->classes['Relation'];
             $relation = $this->getRelation($companionId, $this->owner->primaryKey);
             if ($relation) {
                 return !empty($relation->primary);
@@ -614,7 +611,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
         if (isset($this->_relations[$key]) && isset($this->_relations[$key]['primary'])) {
             return $this->_relations[$key]['primary'];
         } else {
-            $relationClass = $this->relationClass;
+            $relationClass = Yii::$app->classes['Relation'];
             $relation = $this->getRelation($this->owner->primaryKey, $companionId);
             if ($relation) {
                 return !empty($relation->primary);
@@ -630,7 +627,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
         if (isset($this->_relations[$key]) && isset($this->_relations[$key]['primary'])) {
             return $this->_relations[$key]['model'];
         } else {
-            $relationClass = $this->relationClass;
+            $relationClass = Yii::$app->classes['Relation'];
             $relation = $this->getRelation($companionId, $this->owner->primaryKey);
             if ($relation && ($parent = $relation->parentObject)) {
                 return get_class($parent);
@@ -645,7 +642,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
         if (isset($this->_relations[$key]) && isset($this->_relations[$key]['primary'])) {
             return $this->_relations[$key]['primary'];
         } else {
-            $relationClass = $this->relationClass;
+            $relationClass = Yii::$app->classes['Relation'];
             $relation = $this->getRelation($this->owner->primaryKey, $companionId);
             if ($relation && ($child = $relation->childObject)) {
                 return get_class($child);

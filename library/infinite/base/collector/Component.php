@@ -124,6 +124,7 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
 		}
 		return $s;
 	}
+	
 	/**
 	 * Returns an iterator for traversing the attributes in the model.
 	 * This method is required by the interface IteratorAggregate.
