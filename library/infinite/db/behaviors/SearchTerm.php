@@ -72,7 +72,7 @@ trait SearchTerm
 			$params['ignore'] = [];
 		}
 
-		$registryClass = $model->registryClass;
+		$registryClass = Yii::$app->classes['Registry'];
 
 		$searchModel = false;
 		if (isset($params['modules']) && count($params['modules']) === 1) {

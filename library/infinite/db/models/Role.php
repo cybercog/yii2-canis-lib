@@ -19,6 +19,8 @@ use infinite\base\collector\CollectedObjectTrait;
 class Role extends \infinite\db\ActiveRecord implements \infinite\base\collector\CollectedObjectInterface
 {	
 	use CollectedOBjectTrait;
+	public $roleableEnabled = false;
+	
 	/**
 	 * @inheritdoc
 	 */

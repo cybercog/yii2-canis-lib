@@ -16,10 +16,9 @@ use infinite\base\Exception;
 
 class Ownable extends \infinite\db\behaviors\ActiveRecord
 {
-    public $registryClass = 'app\\models\\Registry';
     public static $_table;
-    public $objectOwner;
     public $ownableEnabled = true;
+    const ROLE_OWNER = 'owner';
 
     public function events()
     {
@@ -34,12 +33,15 @@ class Ownable extends \infinite\db\behaviors\ActiveRecord
     
     public function safeAttributes()
     {
-        return ['ownableEnabled'];
+        return ['ownableEnabled', 'objectOwner'];
     }
 
     public function isEnabled()
     {
-        if (empty($this->owner->getBehavior('Registry')) || !$this->ownableEnabled) {
+        if (empty($this->owner->getBehavior('Registry')) 
+            || empty($this->owner->getBehavior('Roleable')) 
+            || !$this->owner->ownableEnabled
+            ) {
             return false;
         }
         return true;
@@ -55,29 +57,49 @@ class Ownable extends \infinite\db\behaviors\ActiveRecord
 
     public function ownerAccess()
     {
-        return ['read', 'update', 'delete'];
+        return false;
     }
 
     public function beforeSave($event)
     {
         if (!$this->isEnabled()) { return; }
-        if ($this->owner->hasOwner()) { return; }
+        if ($this->owner->hasObjectOwner()) { return; }
         if (($owner = $this->determineOwner()) && $owner) {
             $this->owner->objectOwner = $owner;
+        \d($owner);exit;
         }
+    }
 
+    public function hasObjectOwner()
+    {
+        if (!$this->isEnabled()) { return false; }
+        return !empty($this->owner->getFirstAroByRole(self::ROLE_OWNER));
+    }
+
+    public function setObjectOwner($aro)
+    {
+        if (!$this->isEnabled()) { return false; }
+        return $this->owner->setRole(self::ROLE_OWNER, $aro);
+    }
+
+    public function getObjectOwner()
+    { 
+        return $this->owner->getFirstAroByRole(self::ROLE_OWNER);
     }
 
     public function afterSave($event)
     {
         if (!$this->isEnabled()) { return; }
         if (empty($this->owner->getBehavior('ActiveAccess'))) { return; }
+        $ownerAccess = $this->owner->ownerAccess();
+        if ($ownerAccess === false) { return; }
         if (!empty($this->owner->getBehavior('Relatable'))) {
             $this->owner->handleRelationSave($event);
         }
-        if (!$this->owner->hasOwner()) { return; }
-        $owner = $this->owner->getObjectOwner(true);
-        foreach ($this->ownerAccess() as $aca) {
+        if (!$this->owner->hasRole(self::ROLE_OWNER)) { return; }
+
+        $owner = $this->owner->getFirstAroByRole(self::ROLE_OWNER);
+        foreach ($ownerAccess as $aca) {
             if (!$this->owner->can($aca, $owner)) {
                 $this->owner->allow($aca, $owner);
             }

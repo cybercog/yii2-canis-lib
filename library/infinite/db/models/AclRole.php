@@ -2,6 +2,8 @@
 
 namespace infinite\db\models;
 
+use Yii;
+
 /**
  * This is the model class for table "acl_role".
  *
@@ -77,7 +79,7 @@ class AclRole extends \infinite\db\ActiveRecord
 	 */
 	public function getAccessingObject()
 	{
-		return $this->hasOne('Registry', ['id' => 'accessing_object_id']);
+		return $this->hasOne(Yii::$app->classes['Registry'], ['id' => 'accessing_object_id']);
 	}
 
 	/**
@@ -85,7 +87,7 @@ class AclRole extends \infinite\db\ActiveRecord
 	 */
 	public function getControlledObject()
 	{
-		return $this->hasOne('Registry', ['id' => 'controlled_object_id']);
+		return $this->hasOne(Yii::$app->classes['Registry'], ['id' => 'controlled_object_id']);
 	}
 
 	/**
@@ -93,6 +95,6 @@ class AclRole extends \infinite\db\ActiveRecord
 	 */
 	public function getRole()
 	{
-		return $this->hasOne('Registry', ['id' => 'role_id']);
+		return $this->hasOne(Yii::$app->classes['Role'], ['id' => 'role_id']);
 	}
 }

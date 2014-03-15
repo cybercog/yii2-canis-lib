@@ -149,11 +149,11 @@ class Gatekeeper extends \infinite\base\Component
 		$nullValue = $this->findNullAction($acls);
 		$noAccessValue = ActiveAccess::translateAccessValue(-1);
 		$actions = $this->actionsById;
-		if (isset($acaIds) && is_array($acaIds)) {
-			foreach ($acaIds as $acaId) {
-				unset($actions[$acaId]);
-			}
-		}
+		// if (isset($acaIds) && is_array($acaIds)) {
+		// 	foreach ($acaIds as $acaId) {
+		// 		unset($actions[$acaId]);
+		// 	}
+		// }
 
 		$access = [];
 		foreach ($acls as $acl) {
@@ -505,6 +505,11 @@ class Gatekeeper extends \infinite\base\Component
 		return $this->_actionsByName;
 	}
 
+	public function clearActionsCache()
+	{
+		$this->_actionsByName = null;
+		$this->_actionsById = null;
+	}
 
 	public function getActionsById() {
 		if (is_null($this->_actionsById)) {
@@ -527,63 +532,18 @@ class Gatekeeper extends \infinite\base\Component
 		return $groupClass::getBySystemName('top', $checkAccess);
 	}
 
-	public function assignRole($role, $controlledObject, $accessingObject = null) {
-		if (is_null($accessingObject)) {
-			$accessingObject = $this->getPrimaryAro();
+	public function clearExplicitRules($controlledObject, $accessingObject = false) {
+		$params = [];
+		$params['controlled_object_id'] = is_object($controlledObject) ? $controlledObject->primaryKey : $controlledObject;
+		if ($accessingObject) {
+			$params['accessing_object_id'] = is_object($accessingObject) ? $accessingObject->primaryKey : $accessingObject;
 		}
-		if (is_object($role)) {
-			$role = $role->id;
-		}
-		if (is_object($accessingObject)) {
-			$accessingObject = $accessingObject->primaryKey;
-		}
-		if (is_object($controlledObject)) {
-			$controlledObject = $controlledObject->primaryKey;
-		}
-		$aclRoleModel = Yii::$app->classes['AclRole'];
-		$fields = ['controlled_object_id' => $controlledObject, 'accessing_object_id' => $accessingObject];
-		$aclRole = $aclRoleModel::model()->field($fields)->find();
-		if ($aclRole) {
-			if (empty($role)) {
-				return $aclRole->delete();
-			}
-			if ($aclRole->role_id !== $role) {
-				$aclRole->role_id = $role;
-				return $aclRole->save();
-			}
-		} else {
-			$aclRole = new $aclRoleModel;
-			$aclRole->attributes = $fields;
-			$aclRole->role_id = $role;
-			return $aclRole->save();
+		$aclClass = Yii::$app->classes['Acl'];
+		$current = $aclClass::find()->where($params)->all();
+		foreach ($current as $acl) {
+			$acl->delete();
 		}
 		return true;
-	}
-
-	public function assignCreationRole($controlledObject, $accessingObject = null) {
-		if (is_null($accessingObject)) {
-			$accessingObject = $this->getPrimaryAro();
-		}
-		if (isset($accessingObject->isSystemUser) AND $accessingObject->isSystemUser === true) {
-			return true;
-		}
-		if (isset($controlledObject->typeModule) AND $controlledObject->typeModule) {
-			$module = $controlledObject->typeModule;
-			$possibleRoles = ArrayHelper::index($module->possibleRoles, 'system_id');
-			$creatorRole = $module->creatorRole;
-			if ($creatorRole === false) { return true; }
-			if (!is_array($creatorRole)) {
-				$creatorRole = [$creatorRole];
-			}
-			foreach ($creatorRole as $role) {
-				if (isset($possibleRoles[$role])) {
-					return $this->assignRole($possibleRoles[$role], $controlledObject, $accessingObject);
-				}
-			}
-			return $this->assignRole(null, $controlledObject, $accessingObject);
-		} else {
-			return $this->allow(null, $controlledObject, $accessingObject, $controlledObject->modelAlias);
-		}
 	}
 
 	public function allow($action, $controlledObject = null, $accessingObject = null, $controlledObjectModel = null, $aclRole = null) {
@@ -620,7 +580,7 @@ class Gatekeeper extends \infinite\base\Component
 			//$action = implode('.', $action);
 			$results = [true];
 			foreach ($action as $a) {
-				$results[] = $this->setAccess($a, $access, $controlledObject, $accessingObject, $controlledObjectModel);
+				$results[] = $this->setAccess($a, $access, $controlledObject, $accessingObject, $controlledObjectModel, $aclRole);
 			}
 			return min($results);
 		}

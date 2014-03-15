@@ -36,10 +36,18 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
         ];
     }
 
-    public function fillAccessMap($accessingObject = null)
+    public function fillAccessMap($accessingObject = null, $ensureAca = null)
     {
     	$allAcas = array_keys(Yii::$app->gk->actionsById);
-        // \d($allAcas);exit;
+        if (!is_null($ensureAca)) {
+            $aca = is_object($ensureAca) ? $ensureAca->primaryKey : $ensureAca;
+            if (!in_array($aca, $allAcas)) {
+                \d("clear");exit;
+                Yii::$app->gk->clearActionsCache();
+                $allAcas = array_keys(Yii::$app->gk->actionsById);
+                \d($allAcas);exit;
+            }
+        }
     	$currentAcas = array_keys($this->_accessMap);
     	$needAcas = array_diff($allAcas, $currentAcas);
         if (count($allAcas) === count($needAcas)) {
@@ -49,6 +57,15 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     	foreach ($access as $key => $value) {
     		$this->_accessMap[$key] = $value;
     	}
+        if (isset($aca)) {
+            if (!isset($this->_accessMap[$aca])) {
+                \d($currentAcas);
+                \d($needAcas);
+                \d($access);
+                \d($aca);
+                exit;
+            }
+        }
     }
 
     public function can($aca, $accessingObject = null, $trustParent = false)
@@ -60,7 +77,7 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     		$aca = Yii::$app->gk->getActionObjectByName($aca);
     	}
     	if (!isset($this->_accessMap[$aca->primaryKey])) {
-    		$this->fillAccessMap($accessingObject);
+    		$this->fillAccessMap($accessingObject, $aca);
     	}
     	if (!isset($this->_accessMap[$aca->primaryKey])) {
     		throw new Exception("Access map fill failed! {$aca->primaryKey}" . print_r($this->_accessMap, true));
@@ -105,18 +122,6 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
 		}
 	}
     
-/*
-	public function afterSave($event)
-	{
-		if (!empty($this->owner->isAccessControlled) && $this->ensureCreatorAccess !== false) {
-			foreach ($this->ensureCreatorAccess as $aca) {
-				if (!$this->can($aca, $this->accessingObject)) {
-					$this->allow($aca, $this->accessingObject);
-				}
-			}
-		}
-	}
-*/
 	public function allow($action, $accessingObject = null, $aclRole = null) {
         if (is_null($accessingObject) && !is_null($this->accessingObject)) {
             $accessingObject = $this->accessingObject;

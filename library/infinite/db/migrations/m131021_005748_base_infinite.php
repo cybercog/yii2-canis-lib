@@ -136,7 +136,6 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
         
         $this->createTable('registry', [
             'id' => 'char(36) CHARACTER SET ascii COLLATE ascii_bin NOT NULL PRIMARY KEY',
-            'owner_id' => 'char(36) CHARACTER SET ascii COLLATE ascii_bin DEFAULT NULL',
             'object_model' => 'string DEFAULT NULL',
             'created' => 'datetime DEFAULT NULL'
         ]);

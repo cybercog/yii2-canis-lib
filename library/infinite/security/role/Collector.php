@@ -54,10 +54,9 @@ class Collector extends \infinite\base\collector\Collector
 			if (!$component['object']->save()) {
 				throw new Exception("Couldn't save new role {$component['systemId']} ". print_r($component['object']->getFirstErrors(), true));
 			}
-			$this->tableRegistry[$component['systemId']] = $component['object'];
+			$this->_tableRegistry[$component['systemId']] = $component['object'];
 			Yii::trace("Role has been initialized {$component['name']} ({$component['systemId']})");
 		}
-		unset($component['name'], $component['systemId']);
 		return $component;
 	}
 

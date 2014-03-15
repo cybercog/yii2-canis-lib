@@ -17,16 +17,12 @@ use infinite\base\Exception;
 class Registry extends \infinite\db\behaviors\ActiveRecord
 {
     public static $_table;
-    protected $_objectOwner;
     protected $_model;
-    protected $_ownerDirty = false;
 
     public function events()
     {
         return [
             \infinite\db\ActiveRecord::EVENT_BEFORE_INSERT => 'beforeInsert',
-            \infinite\db\ActiveRecord::EVENT_AFTER_INSERT => 'afterSave',
-            \infinite\db\ActiveRecord::EVENT_AFTER_UPDATE => 'afterSave',
             \infinite\db\ActiveRecord::EVENT_AFTER_DELETE => 'afterDelete',
             \infinite\db\ActiveRecord::EVENT_AFTER_SAVE_FAIL => 'afterSaveFail'
         ];
@@ -34,63 +30,9 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
     
     public function safeAttributes()
     {
-        return ['objectOwner'];
+        return [];
     }
 
-    public function hasOwner()
-    {
-        if (!empty($this->_objectOwner)) {
-            return true;
-        }
-
-        $registryModel = $this->registryModel;
-        if ($registryModel && !empty($registryModel->owner_id)) {
-            return true;
-        }
-        return false;
-    }
-
-    public function setObjectOwner($owner)
-    {
-        if (is_object($owner)) {
-            $ownerId = $owner->primaryKey;
-        } else {
-            $ownerId = $owner;
-        }
-        $this->_ownerDirty = true;
-        if (!empty($this->_objectOwner) && $this->objectOwnerId === $ownerId) {
-            $this->_ownerDirty = false;
-        } elseif (is_null($this->_objectOwner)) {
-            $registryModel = $this->registryModel;
-            if ($registryModel && $registryModel->owner_id === $ownerId) {
-                $this->_ownerDirty = false;
-            }
-        }
-        $this->_objectOwner = $owner;
-    }
-
-    public function getObjectOwnerId()
-    {
-        if (is_object($this->objectOwner)) {
-            return $this->objectOwner->primaryKey;
-        }
-        return $this->objectOwner;
-    }
-
-    public function getObjectOwner($pull = false)
-    {
-        if (is_null($this->_objectOwner) && $pull && !$this->owner->isNewRecord) {
-            $registry = $this->registryModel;
-            if ($registry) {
-                $this->_objectOwner = $registry->owner_id;
-            }
-        }
-        if (!is_null($this->_objectOwner) && !is_object($this->_objectOwner)) {
-            $registryClass = Yii::$app->classes['Registry'];
-            $this->_objectOwner = $registryClass::getObject($this->_objectOwner, false);
-        }
-        return $this->_objectOwner;
-    }
 
     public function getRegistryModel()
     {
@@ -122,10 +64,6 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
         if ($this->owner->isNewRecord && $this->owner->primaryKey == NULL) {
             $_registryModel = Yii::$app->classes['Registry'];
             $fields = ['id' => $this->uuid(), 'object_model' => $this->owner->modelAlias, 'created' =>  new Expression('NOW()')];
-            if (!empty($this->_objectOwner)) {
-                $fields['owner_id'] = $this->objectOwnerId;
-                $this->_ownerDirty = false;
-            }
             if (!Yii::$app->db->createCommand()->insert($this->table, $fields)->execute()) {
                 throw new Exception("Unable to create registry item!");
             }
@@ -159,19 +97,6 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
             mt_rand(0, 65535));
     }
 
-
-    /**
-     *
-     *
-     * @param unknown $event
-     */
-    public function afterSave($event)
-    {
-        if ($this->_ownerDirty && ($model = $this->owner->registryModel) && $model) {
-            $model->owner_id = $this->objectOwnerId;
-            $model->save();
-        }
-    }
 
     /**
      *
