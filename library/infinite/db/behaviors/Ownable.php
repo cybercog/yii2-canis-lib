@@ -38,9 +38,9 @@ class Ownable extends \infinite\db\behaviors\ActiveRecord
 
     public function isEnabled()
     {
-        if (empty($this->owner->getBehavior('Registry')) 
-            || empty($this->owner->getBehavior('Roleable')) 
-            || empty($this->owner->getBehavior('Roleable')->isEnabled())
+        if ($this->owner->getBehavior('Registry') === null
+            || $this->owner->getBehavior('Roleable') === null 
+            || !$this->owner->getBehavior('Roleable')->isEnabled()
             || !$this->owner->ownableEnabled
             ) {
             return false;
@@ -67,7 +67,6 @@ class Ownable extends \infinite\db\behaviors\ActiveRecord
         if ($this->owner->hasObjectOwner()) { return; }
         if (($owner = $this->determineOwner()) && $owner) {
             $this->owner->objectOwner = $owner;
-        \d($owner);exit;
         }
     }
 

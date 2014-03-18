@@ -31,10 +31,7 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
 
     public function normalizeRole($role = null)
     {
-        if (!is_null($role) && !is_object($role)) {
-            if (!is_string($role)) {
-                \d($role);exit;
-            }
+        if (!is_null($role) && is_string($role)) {
             $roleTest = Yii::$app->collectors['roles']->getOne($role);
             if ($roleTest) {
                 $role = $roleTest->object;
@@ -146,10 +143,10 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
 
     public function isEnabled()
     {
-        if (empty($this->owner->getBehavior('Registry')) 
+        if ($this->owner->getBehavior('Registry') === null
             || !isset(Yii::$app->collectors['roles'])
             || !$this->owner->roleableEnabled
-            || empty($this->owner->getBehavior('ActiveAccess'))
+            || $this->owner->getBehavior('ActiveAccess') === null
             ) {
             return false;
         }
@@ -164,7 +161,7 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
           //  unset($this->_role[$aroId]);
             $aro = $this->normalizeAro($aroId);
             $role = $this->normalizeRole($role);
-            if (empty($aroId)) { continue; }
+            if (empty($aro)) { continue; }
             if (!$this->internalSetRole($role, $aro)) {
                 return false;
             }
@@ -230,9 +227,9 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
             return true;
         } else {
             foreach ($accessLevels as $action) {
-                 if (!$this->owner->can($action, $aro)) {
-                    $this->owner->allow($action, $aro, $aclRole);
-                }
+                //if (!$this->owner->can($action, $aro)) {
+                $this->owner->allow($action, $aro, $aclRole);
+                //}
             }
         }
         return true;
@@ -261,7 +258,7 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
     public function afterSave($event)
     {
         if (!$this->isEnabled()) { return; }
-        if (!empty($this->owner->getBehavior('Relatable'))) {
+        if ($this->owner->getBehavior('Relatable') !== null) {
             $this->owner->handleRelationSave($event);
         }
         if (!$this->handleRoleSave($event)) {
