@@ -38,8 +38,6 @@ class MigrateController extends \yii\console\controllers\MigrateController
             $applied[$version] = true;
         }
 
-        //var_dump(Yii::$app->migrationNamespaces);exit;
-
         $migrations = [];
         foreach (array_merge($this->migrationPaths, Yii::$app->migrationAliases) as $migrationPathAlias) {
             $migrationPath = Yii::getAlias($migrationPathAlias);

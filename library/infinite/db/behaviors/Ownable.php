@@ -40,6 +40,7 @@ class Ownable extends \infinite\db\behaviors\ActiveRecord
     {
         if (empty($this->owner->getBehavior('Registry')) 
             || empty($this->owner->getBehavior('Roleable')) 
+            || empty($this->owner->getBehavior('Roleable')->isEnabled())
             || !$this->owner->ownableEnabled
             ) {
             return false;
@@ -84,6 +85,7 @@ class Ownable extends \infinite\db\behaviors\ActiveRecord
 
     public function getObjectOwner()
     { 
+        if (!$this->isEnabled()) { return false; }
         return $this->owner->getFirstAroByRole(self::ROLE_OWNER);
     }
 

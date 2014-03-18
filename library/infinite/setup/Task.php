@@ -15,6 +15,7 @@ abstract class Task extends \infinite\base\Object
     public $errors = [];
     public $fieldErrors = [];
     public $input = [];
+    public $skipComplete = false;
 
     public function __construct($setup)
     {
@@ -29,6 +30,11 @@ abstract class Task extends \infinite\base\Object
     public function getId()
     {
         return self::baseClassName();
+    }
+
+    public function skip()
+    {
+        return true;
     }
 
     public function loadInput($input)

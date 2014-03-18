@@ -29,7 +29,6 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
             'accessing_object_id' => 'char(36) CHARACTER SET ascii COLLATE ascii_bin NOT NULL',
             'controlled_object_id' => 'char(36) CHARACTER SET ascii COLLATE ascii_bin DEFAULT NULL',
             'aca_id' => 'char(36) CHARACTER SET ascii COLLATE ascii_bin DEFAULT NULL',
-            'object_model' => 'string DEFAULT NULL',
             'access' => 'tinyint(4) DEFAULT NULL', // -1 explicitly deny access (rare); 1 allow access; 2 inherit from parent
             'created' => 'datetime DEFAULT NULL',
             'modified' => 'datetime DEFAULT NULL'
@@ -38,11 +37,10 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
         $this->createIndex('aclAccessingObject', 'acl', 'accessing_object_id', false);
         $this->createIndex('aclControlledObject', 'acl', 'controlled_object_id', false);
         $this->createIndex('aclAcaRegistry', 'acl', 'aca_id', false);
-        $this->createIndex('aclModel', 'acl', 'object_model', false);
-        $this->createIndex('aclCombo', 'acl', 'accessing_object_id,controlled_object_id,object_model', false);
-        $this->createIndex('aclComboAccess', 'acl', 'accessing_object_id,controlled_object_id,object_model,access', false);
-        $this->createIndex('aclComboAca', 'acl', 'accessing_object_id,controlled_object_id,aca_id,object_model', false);
-        $this->createIndex('aclComboAcaAccess', 'acl', 'accessing_object_id,controlled_object_id,aca_id,object_model,access', false);
+        $this->createIndex('aclCombo', 'acl', 'accessing_object_id,controlled_object_id', false);
+        $this->createIndex('aclComboAccess', 'acl', 'accessing_object_id,controlled_object_id,access', false);
+        $this->createIndex('aclComboAca', 'acl', 'accessing_object_id,controlled_object_id,aca_id', false);
+        $this->createIndex('aclComboAcaAccess', 'acl', 'accessing_object_id,controlled_object_id,aca_id,access', false);
         $this->createIndex('aclAclRole', 'acl', 'acl_role_id', false);
         $this->addForeignKey('aclAclRole', 'acl', 'acl_role_id', 'acl_role', 'id', 'CASCADE', 'CASCADE');
         $this->addForeignKey('aclAccessingObject', 'acl', 'accessing_object_id', 'registry', 'id', 'CASCADE', 'CASCADE');

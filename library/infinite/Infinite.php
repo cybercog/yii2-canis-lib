@@ -6,7 +6,6 @@
  * @package infinite
  */
 
-
 function d($variable, $settings = []) {
     $default = ['die' => false, 'skipSteps' => 1];
     (new \ICD($variable, array_merge($default, $settings)))->output();
@@ -26,10 +25,11 @@ class Infinite extends \yii\base\Extension
     /**
      * @inheritdoc
      */
-    public static function init()
+    public static function bootstrap()
     {
-    	parent::init();
-        \Yii::setAlias('@infinite', __DIR__);
-        \Yii::$app->registerMigrationAlias('@infinite/db/migrations');
+    	parent::bootstrap();
+        Yii::setAlias('@infinite', __DIR__);
+        Yii::$app->registerMigrationAlias('@infinite/db/migrations');
     }
 }
+?>

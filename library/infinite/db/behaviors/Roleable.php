@@ -31,7 +31,10 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
 
     public function normalizeRole($role = null)
     {
-        if (!is_null($role)) {
+        if (!is_null($role) && !is_object($role)) {
+            if (!is_string($role)) {
+                \d($role);exit;
+            }
             $roleTest = Yii::$app->collectors['roles']->getOne($role);
             if ($roleTest) {
                 $role = $roleTest->object;
@@ -71,7 +74,7 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
         }
     }
 
-    public function setRole($role, $aro = null)
+    public function setRole($role, $aro = null, $handle = false)
     {
         $aro = $this->normalizeAro($aro);
         if (empty($aro)) { return false; }
@@ -86,6 +89,9 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
             $this->_roleChanged[$aro] = true;
         }
         $this->_role[$aro] = $role;
+        if ($handle) {
+            return $this->handleRoleSave();
+        }
         return true;
     }
 
@@ -141,6 +147,7 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
     public function isEnabled()
     {
         if (empty($this->owner->getBehavior('Registry')) 
+            || !isset(Yii::$app->collectors['roles'])
             || !$this->owner->roleableEnabled
             || empty($this->owner->getBehavior('ActiveAccess'))
             ) {
@@ -149,7 +156,7 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
         return true;
     }
 
-    public function handleRoleSave($event)
+    public function handleRoleSave($event = null)
     {
         if (!$this->isEnabled()) { return true; }
         $current = null;
@@ -217,7 +224,7 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
         $role = $role->object->system_id;
         $aro = $registryClass::getObject($aclRole->accessing_object_id, false);
         if (!$aro) { return false; }
-        $accessLevels = $this->determineAccessLevel($role, $aro);
+        $accessLevels = $this->owner->determineAccessLevel($role, $aro);
         if ($accessLevels === false) {
             Yii::$app->gk->clearExplicitRules($this->owner->primaryKey, $aro);
             return true;

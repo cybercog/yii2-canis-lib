@@ -57,7 +57,7 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     	foreach ($access as $key => $value) {
     		$this->_accessMap[$key] = $value;
     	}
-        if (isset($aca)) {
+/*        if (isset($aca)) {
             if (!isset($this->_accessMap[$aca])) {
                 \d($currentAcas);
                 \d($needAcas);
@@ -65,7 +65,7 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
                 \d($aca);
                 exit;
             }
-        }
+        }*/
     }
 
     public function can($aca, $accessingObject = null, $trustParent = false)
@@ -80,7 +80,7 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     		$this->fillAccessMap($accessingObject, $aca);
     	}
     	if (!isset($this->_accessMap[$aca->primaryKey])) {
-    		throw new Exception("Access map fill failed! {$aca->primaryKey}" . print_r($this->_accessMap, true));
+    		return false;
     	}
     	if ($this->_accessMap[$aca->primaryKey] === self::ACCESS_PARENT) {
             if ($trustParent) {
@@ -122,39 +122,46 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
 		}
 	}
     
-	public function allow($action, $accessingObject = null, $aclRole = null) {
+    public function allow($action, $accessingObject = null, $aclRole = null) {
         if (is_null($accessingObject) && !is_null($this->accessingObject)) {
             $accessingObject = $this->accessingObject;
         }
-		return Yii::$app->gk->allow($action, $this->owner, $accessingObject, get_class($this->owner), $aclRole);
+        return Yii::$app->gk->allow($action, $this->owner, $accessingObject, $aclRole);
+    }
+
+    public function parentAccess($action, $accessingObject = null, $aclRole = null) {
+        if (is_null($accessingObject) && !is_null($this->accessingObject)) {
+            $accessingObject = $this->accessingObject;
+        }
+        return Yii::$app->gk->parentAccess($action, $this->owner, $accessingObject, $aclRole);
+    }
+
+	public function clear($action, $accessingObject = null, $aclRole = null) {
+        if (is_null($accessingObject) && !is_null($this->accessingObject)) {
+            $accessingObject = $this->accessingObject;
+        }
+		return Yii::$app->gk->clear($action, $this->owner, $accessingObject, $aclRole);
 	}
 
-	public function clear($action, $accessingObject = null, $controlledObjectModel = null, $aclRole = null) {
+    public function requireOwnerAdmin($action, $accessingObject = null, $aclRole = null) {
         if (is_null($accessingObject) && !is_null($this->accessingObject)) {
             $accessingObject = $this->accessingObject;
         }
-		return Yii::$app->gk->clear($action, $this->owner, $accessingObject, get_class($this->owner), $aclRole);
-	}
-
-    public function requireOwnerAdmin($action, $accessingObject = null, $controlledObjectModel = null, $aclRole = null) {
-        if (is_null($accessingObject) && !is_null($this->accessingObject)) {
-            $accessingObject = $this->accessingObject;
-        }
-        return Yii::$app->gk->requireOwnerAdmin($action, $this->owner, $accessingObject, get_class($this->owner), $aclRole);
+        return Yii::$app->gk->requireOwnerAdmin($action, $this->owner, $accessingObject, $aclRole);
     }
     
-    public function requireAdmin($action, $accessingObject = null, $controlledObjectModel = null, $aclRole = null) {
+    public function requireAdmin($action, $accessingObject = null, $aclRole = null) {
         if (is_null($accessingObject) && !is_null($this->accessingObject)) {
             $accessingObject = $this->accessingObject;
         }
-        return Yii::$app->gk->requireAdmin($action, $this->owner, $accessingObject, get_class($this->owner), $aclRole);
+        return Yii::$app->gk->requireAdmin($action, $this->owner, $accessingObject, $aclRole);
     }
     
-    public function requireSuperAdmin($action, $accessingObject = null, $controlledObjectModel = null, $aclRole = null) {
+    public function requireSuperAdmin($action, $accessingObject = null, $aclRole = null) {
         if (is_null($accessingObject) && !is_null($this->accessingObject)) {
             $accessingObject = $this->accessingObject;
         }
-        return Yii::$app->gk->requireSuperAdmin($action, $this->owner, $accessingObject, get_class($this->owner), $aclRole);
+        return Yii::$app->gk->requireSuperAdmin($action, $this->owner, $accessingObject, $aclRole);
     }
 
 	public static function translateAccessValue($value)

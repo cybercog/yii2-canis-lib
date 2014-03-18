@@ -104,9 +104,7 @@ class Gatekeeper extends \infinite\base\Component
 	public function is($group, $accessingObject = null) {
 		$requestKey = md5(serialize([__FUNCTION__, func_get_args()]));
 		if (!array_key_exists($requestKey, self::$_cache)) {
-			if (is_null($accessingObject)) {
-				$accessingObject = $this->primaryAro;
-			}
+			$accessingObject = $this->getAccessingObject($accessingObject);
 
 			if (is_array($group)) {
 				foreach ($group as $g) {
@@ -194,7 +192,22 @@ class Gatekeeper extends \infinite\base\Component
 		return !$model->getBehavior('Access') || $model->can($action, $accessingObject);
 	}
 
-    public function generateAclCheckCriteria($query, $controlledObject, $accessingObject = null, $model = null, $allowParentInherit = false, $expandAros = true) {
+	public function getControlledObject($object)
+	{
+		if (isset($object)) {
+			if (!is_object($object)) {
+				$registryClass = Yii::$app->classes['Registry'];
+				$object = $registryClass::getObject($object, false);
+				if (empty($object)) {
+					return false;
+				}
+			}
+			return $object;
+		}
+		return false;
+	}
+
+    public function generateAclCheckCriteria($query, $controlledObject, $accessingObject = null, $allowParentInherit = false, $expandAros = true) {
         $aclClass = Yii::$app->classes['Acl'];
         $alias = $aclClass::tableName();
 		// get aro's 
@@ -211,19 +224,6 @@ class Gatekeeper extends \infinite\base\Component
 		$aroN = 0;
 		$aroIn = [];
 
-		if (!isset($model) && is_object($controlledObject)) {
-			$model = get_class($controlledObject);
-		}
-
-		if (isset($model) && $model) {
-			$modelClass = ActiveRecord::parseModelAlias($model);
-			$modelTable = $modelClass::tableName();
-		}
-
-		if (!is_null($model)) {
-			$model = ActiveRecord::modelAlias($model);
-		}
-
 		$aclOrder[$alias.'.access'] = SORT_ASC;
 
 		$aclOrder['IF('.$alias.'.accessing_object_id IS NULL, 0, 1)'] = SORT_DESC;
@@ -231,16 +231,12 @@ class Gatekeeper extends \infinite\base\Component
 			if (is_array($aro)) {
 				$subInIf = [];
 				foreach ($aro as $sa) {
-					// $query->params[':aro_'.$aroN] = $sa;
 					$aroIn[] = $sa;
 					$subInIf[] = $sa;
 					$aroN++;
 				}
-				// $aclOrder['IF('.$alias.'.accessing_object_id IN ('.implode(', ', $subInIf).'), 1, 0)'] = SORT_DESC;
 			} else {
-				//$query->params[':aro_'.$aroN] = $aro;
 				$aroIn[] = $aro;
-				// $aclOrder['IF('.$alias.'.accessing_object_id = :aro_'.$aroN.', 1, 0)'] = SORT_DESC;
 				$aroN++;
 			}
 		}
@@ -262,43 +258,27 @@ class Gatekeeper extends \infinite\base\Component
 			$aclConditions = [$alias . '.access' => 1];
 		}
 
-		$aclOrder['IF('.$alias.'.object_model IS NULL, 0, 1)'] =  SORT_DESC;
+		$controlledObject = $this->getControlledObject($controlledObject);
 
-		if (is_object($controlledObject) && !empty($controlledObject->id)) {
-			$innerOnConditions[] = [$alias.'.controlled_object_id' => $controlledObject->id];
-		} elseif (isset($controlledObject) && is_string($controlledObject)) {
+		if (!empty($controlledObject)) {
 			$innerOnConditions[] = [$alias.'.controlled_object_id' => $controlledObject];
 		}
 
-		if (!is_null($model)) {
-			$innerOnConditions[] = ['and', [$alias.'.controlled_object_id' => null], [$alias.'.object_model' => $model]];
-		} elseif(empty($controlledObject)) {
-			
-		}
 		$innerOnConditions[] = $alias.'.controlled_object_id =' .$query->primaryAlias .'.'. $query->primaryTablePk;
-		//\d($innerOnConditions);
-		$innerOnConditions[] = ['and', [$alias.'.controlled_object_id' => null], [$alias.'.object_model' => null]];
+		$innerOnConditions[] = [$alias.'.controlled_object_id' => null];
+
 		$aclOnConditions[] = $innerOnConditions;
 
 		$aclClass = Yii::$app->classes['Acl'];
-
-		// $addSelect = false;
-		// if (!isset($query->select)) {
-		// 	$query->select = [];
-		// 	$addSelect = true;
-		// }
 
 		if ($this->isAclQuery($query)) {
 			if (!empty($aclConditions)) {
 				$aclOnConditions[] = $aclConditions;
 			}
 			$query->andWhere($aclOnConditions);
-		//	$addSelect = false;
 		} else {
 			$query->join('INNER JOIN', $aclClass::tableName() .' '. $alias .' USE INDEX(`aclComboAcaAccess`)', $aclOnConditions);
 			$query->andWhere($aclConditions);
-		//	$addSelect = $addSelect && true;
-			// $query->distinct = true;
 			$query->groupBy($query->primaryAlias .'.'. $query->primaryTablePk);
 		}
 		if (!isset($query->orderBy)) {
@@ -306,16 +286,6 @@ class Gatekeeper extends \infinite\base\Component
 		} else {
 			$query->orderBy = array_merge($aclOrder, $query->orderBy);
 		}
-
-		// if ($addSelect && $modelTable) {
-
-		// 	// this messes up distinct!
-		// 	$query->select = ["$modelTable.*"];
-		// 	// $query->select[] = $alias .'.access';
-		// 	// $query->select[] = $alias .'.aca_id as aca_id';
-		// } else {
-		// 	//$query->select[] = $alias . '.*';
-		// }
     	return $query;
     }
 
@@ -354,7 +324,7 @@ class Gatekeeper extends \infinite\base\Component
 
 	public function getAccess($controlledObject, $accessingObject = null, $acaIds = null, $expandAros = true)
 	{
-
+		if (!$this->primaryAro) { return []; }
 		if (is_null($acaIds)) {
 			$acaIds = true;
 		}
@@ -414,9 +384,7 @@ class Gatekeeper extends \infinite\base\Component
     }
 
     public function getAros($accessingObject = null) {
-		if (is_null($accessingObject)) {
-			$accessingObject = $this->primaryAro;
-		}
+		$accessingObject = $this->getAccessingObject($accessingObject);
     	if (is_object($accessingObject)) {
 			$arosKey = md5(json_encode([__CLASS__.'.'.__FUNCTION__, $accessingObject->primaryKey]));
 		} else {
@@ -428,7 +396,7 @@ class Gatekeeper extends \infinite\base\Component
     		if (!$this->_aros[$arosKey]) {
 	    		$this->_aros[$arosKey] = [];
 	    		if ($accessingObject) {
-	    			$this->_aros[$arosKey][] = $accessingObject->primaryKey;
+	    			$this->_aros[$arosKey][] = is_object($accessingObject) ? $accessingObject->primaryKey : $accessingObject;
 	    			$this->_aros[$arosKey] = array_merge($this->_aros[$arosKey], $this->getGroups($accessingObject, true));
 	    		}
 	    		if ($this->authority && ($requestors = $this->authority->getRequestors($accessingObject)) && $requestors) {
@@ -447,13 +415,23 @@ class Gatekeeper extends \infinite\base\Component
     	return array_unique($this->_aros[$arosKey]);
     }
 
+    public function getAccessingObject($accessingObject)
+    {
+		if (is_null($accessingObject)) {
+			$accessingObject = $this->primaryAro;
+		}
+		if (!is_object($accessingObject)) {
+			$registryClass = Yii::$app->classes['Registry'];
+			$accessingObject = $registryClass::getObject($accessingObject, false);
+		}
+		return $accessingObject;
+    }
+
     public function getGroups($accessingObject = null, $flatten = false) {
 		$requestKey = md5(serialize([__FUNCTION__, func_get_args()]));
 
 		if (!isset(self::$_cache[$requestKey])) {
-			if (is_null($accessingObject)) {
-				$accessingObject = $this->primaryAro;
-			}
+			$accessingObject = $this->getAccessingObject($accessingObject);
 	    	$groups = [];
 	    	$parents = $accessingObject->parents(Yii::$app->classes['Group'], [], ['disableAccessCheck' => 1]);
 			if (!empty($parents)) {
@@ -546,47 +524,41 @@ class Gatekeeper extends \infinite\base\Component
 		return true;
 	}
 
-	public function allow($action, $controlledObject = null, $accessingObject = null, $controlledObjectModel = null, $aclRole = null) {
-		return $this->setAccess($action, 1, $controlledObject, $accessingObject, $controlledObjectModel, $aclRole);
+	public function allow($action, $controlledObject = null, $accessingObject = null, $aclRole = null) {
+		return $this->setAccess($action, 1, $controlledObject, $accessingObject, $aclRole);
 	}
 
-	public function clear($action, $controlledObject = null, $accessingObject = null, $controlledObjectModel = null, $aclRole = null) {
-		return $this->setAccess($action, false, $controlledObject, $accessingObject, $controlledObjectModel, $aclRole);
+	public function clear($action, $controlledObject = null, $accessingObject = null, $aclRole = null) {
+		return $this->setAccess($action, false, $controlledObject, $accessingObject, $aclRole);
 	}
 
-	public function requireOwnerAdmin($action, $controlledObject = null, $accessingObject = null, $controlledObjectModel = null, $aclRole = null) {
-		return $this->setAccess($action, -1, $controlledObject, $accessingObject, $controlledObjectModel, $aclRole);
+	public function requireOwnerAdmin($action, $controlledObject = null, $accessingObject = null, $aclRole = null) {
+		return $this->setAccess($action, -1, $controlledObject, $accessingObject, $aclRole);
 	}
 
-	public function requireAdmin($action, $controlledObject = null, $accessingObject = null, $controlledObjectModel = null, $aclRole = null) {
-		return $this->setAccess($action, -2, $controlledObject, $accessingObject, $controlledObjectModel, $aclRole);
+	public function requireAdmin($action, $controlledObject = null, $accessingObject = null, $aclRole = null) {
+		return $this->setAccess($action, -2, $controlledObject, $accessingObject, $aclRole);
 	}
 
-	public function requireSuperAdmin($action, $controlledObject = null, $accessingObject = null, $controlledObjectModel = null, $aclRole = null) {
-		return $this->setAccess($action, -3, $controlledObject, $accessingObject, $controlledObjectModel, $aclRole);
+	public function requireSuperAdmin($action, $controlledObject = null, $accessingObject = null, $aclRole = null) {
+		return $this->setAccess($action, -3, $controlledObject, $accessingObject, $aclRole);
 	}
 
-	public function parentAccess($action, $controlledObject = null, $accessingObject = null, $controlledObjectModel = null, $aclRole = null) {
-		return $this->setAccess($action, 0, $controlledObject, $accessingObject, $controlledObjectModel, $aclRole);
+	public function parentAccess($action, $controlledObject = null, $accessingObject = null, $aclRole = null) {
+		return $this->setAccess($action, 0, $controlledObject, $accessingObject, $aclRole);
 	}
 
 
-	public function setAccess($action, $access, $controlledObject = null, $accessingObject = null, $controlledObjectModel = null, $aclRole = null) {
-		if (!is_null($controlledObjectModel)) {
-			$controlledObjectModel = ActiveRecord::modelAlias($controlledObjectModel);
-		}
+	public function setAccess($action, $access, $controlledObject = null, $accessingObject = null, $aclRole = null) {
 		$fields = [];
 		if (is_array($action)) {
-			//$action = implode('.', $action);
 			$results = [true];
 			foreach ($action as $a) {
-				$results[] = $this->setAccess($a, $access, $controlledObject, $accessingObject, $controlledObjectModel, $aclRole);
+				$results[] = $this->setAccess($a, $access, $controlledObject, $accessingObject, $aclRole);
 			}
 			return min($results);
 		}
-		if (is_null($accessingObject)) {
-			$accessingObject = $this->getPrimaryAro();
-		}
+		$accessingObject = $this->getAccessingObject($accessingObject);
 
 		if (empty($accessingObject)) {
 			$accessingObject = $this->getTopGroup();
@@ -622,7 +594,6 @@ class Gatekeeper extends \infinite\base\Component
 		}
 		$fields['accessing_object_id'] = $accessingObject;
 		$fields['controlled_object_id'] = $controlledObject;
-		$fields['object_model'] = $controlledObjectModel;
 		$aclClass = Yii::$app->classes['Acl'];
 		$acl = $aclClass::find()->where($fields)->one();
 		if (empty($acl)) {
@@ -640,7 +611,6 @@ class Gatekeeper extends \infinite\base\Component
 				$acl->access = $access;
 				$acl->acl_role_id = $aclRole;
 				$acl->save();
-				//\d(array_keys($acl->getBehaviors()));exit;
 				return $acl->save();
 			}
 		}

@@ -70,23 +70,38 @@ class Setup extends \infinite\base\Object
         if ($this->isEnvironmented) {
             $message = 'updated successfully';
         }
+        $skip = [];
+        if (isset($_GET['skip'])) {
+            $skip = explode(',', $_GET['skip']);
+        }
+        $newSkip = false;
         foreach ($tasks as $task) {
             if (!$this->beforeRun()) {
                 $this->render('message');
                 return false;
             }
-
+            if (defined('INFINITE_SETUP_DB_READY') && INFINITE_SETUP_DB_READY) {
+                $this->app(); //initialize the app
+            }
+            if (in_array($task->id, $skip) && $task->skipComplete) {
+                $task->skip();
+                continue;
+            }
             // try {
                 $tasksLeft--;
                 if ($task->test()) {
+                    if ($task->skipComplete) {
+                        $skip[] = $task->id;
+                        $newSkip = true;
+                    }
                     continue;
                 }
-                if (!empty($task->verification) AND !$this->getConfirmed($task->id)) {
+                if (!empty($task->verification) && !$this->getConfirmed($task->id)) {
                     // show confirm link
                     $this->params['question'] = $task->verification;
                     $this->params['task'] = $task;
                     $this->render('confirm');
-                } elseif(!empty($task->fields) AND (empty($_POST[$task->id]) OR !$this->getConfirmed($task->id) OR !$task->loadInput($_POST[$task->id]))) {
+                } elseif(!empty($task->fields) && (empty($_POST[$task->id]) || !$this->getConfirmed($task->id) || !$task->loadInput($_POST[$task->id]))) {
                     // show form
                     $this->params['fields'] = $task->fields;
                     $this->params['task'] = $task;
@@ -101,8 +116,12 @@ class Setup extends \infinite\base\Object
                     } else {
                         $this->afterRun();
                         $tasksDone++;
-                        if (!empty($task->verification) OR !empty($task->fields)) {
-                            $this->refresh("Successfully completed the task <em>{$task->title}</em>");
+                        if ($task->skipComplete) {
+                            $skip[] = $task->id;
+                            $newSkip = true;
+                        }
+                        if (!empty($task->verification) || !empty($task->fields) || $newSkip) {
+                            $this->refresh("Successfully completed the task <em>{$task->title}</em>", $skip);
                             break;
                         }
                     }
@@ -123,10 +142,13 @@ class Setup extends \infinite\base\Object
         return true;
     }
 
-    public function refresh($message = null)
+    public function refresh($message = null, $skip = false)
     {
         //echo '<pre>';var_dump($_SERVER);exit;
         $url = $_SERVER['SCRIPT_NAME'] . '?message='.$message;
+        if (isset($skip)) {
+            $url .= '&skip='.implode(',', $skip);
+        }
         header('Location: '.$url);
         exit(0);
     }
@@ -174,6 +196,15 @@ class Setup extends \infinite\base\Object
     {
         if (!$this->isEnvironmented) { return false; }
         if ($this->version > $this->instanceVersion) { return false; }
+        return true;
+    }
+
+    public function markDbReady()
+    {
+        if (!defined('INFINITE_SETUP_DB_READY')) { 
+            self::$_app = null;
+            define('INFINITE_SETUP_DB_READY', true);
+        }
         return true;
     }
 
@@ -324,3 +355,4 @@ class Setup extends \infinite\base\Object
         exit(0);
     }
 }
+?>

@@ -21,7 +21,10 @@ trait ApplicationTrait {
 	public function getIsDbAvailable()
 	{
 		if (!isset($this->db)) { return false; }
-		if (defined('INFINITE_SETUP') && INFINITE_SETUP) { return false; }
+		$infiniteSetup = defined('INFINITE_SETUP') && INFINITE_SETUP;
+		$infiniteSetupDbReady = defined('INFINITE_SETUP_DB_READY') && INFINITE_SETUP_DB_READY;
+		$infiniteSetupDb = $infiniteSetup && !$infiniteSetupDbReady;
+		if ($infiniteSetupDb) { return false; }
 		return true;
 	}
 

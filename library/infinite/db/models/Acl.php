@@ -10,7 +10,6 @@ namespace infinite\db\models;
  * @property string $accessing_object_id
  * @property string $controlled_object_id
  * @property string $aca_id
- * @property string $object_model
  * @property boolean $access
  * @property string $created
  * @property string $modified
@@ -49,8 +48,7 @@ class Acl extends \infinite\db\ActiveRecord
 			[['accessing_object_id'], 'required'],
 			[['access'], 'integer'],
 			[['created', 'modified'], 'safe'],
-			[['accessing_object_id', 'controlled_object_id', 'aca_id'], 'string', 'max' => 36],
-			[['object_model'], 'string', 'max' => 100]
+			[['accessing_object_id', 'controlled_object_id', 'aca_id'], 'string', 'max' => 36]
 		];
 	}
 
@@ -65,7 +63,6 @@ class Acl extends \infinite\db\ActiveRecord
 			'accessing_object_id' => 'Accessing Object ID',
 			'controlled_object_id' => 'Controlled Object ID',
 			'aca_id' => 'Aca ID',
-			'object_model' => 'Object Model',
 			'access' => 'Access',
 			'created' => 'Created',
 			'modified' => 'Modified',
