@@ -192,9 +192,9 @@ class Gatekeeper extends \infinite\base\Component
 		return !$model->getBehavior('Access') || $model->can($action, $accessingObject);
 	}
 
-	public function getControlledObject($object)
+	public function getControlledObject($object, $modelClass = null)
 	{
-		if (isset($object)) {
+		if (!empty($object)) {
 			if (!is_object($object)) {
 				$registryClass = Yii::$app->classes['Registry'];
 				$object = $registryClass::getObject($object, false);
@@ -207,9 +207,22 @@ class Gatekeeper extends \infinite\base\Component
 		return false;
 	}
 
-    public function generateAclCheckCriteria($query, $controlledObject, $accessingObject = null, $allowParentInherit = false, $expandAros = true) {
+    public function generateAclCheckCriteria($query, $controlledObject, $accessingObject = null, $allowParentInherit = false, $modelClass = null, $expandAros = true) {
         $aclClass = Yii::$app->classes['Acl'];
         $alias = $aclClass::tableName();
+        $modelAlias = null;
+        if (is_null($modelClass)) {
+        	$modelClass = get_class($controlledObject);
+        } elseif(is_string($modelClass)) {
+        	$modelClass = ActiveRecord::parseModelAlias($modelClass);
+        } else {
+        	$modelClass = null;
+        }
+
+        if (!is_null($modelClass)) {
+        	$modelAlias = ActiveRecord::modelAlias($modelClass);
+        }
+
 		// get aro's 
 		if ($expandAros) {
 			$aros = $this->getAros($accessingObject);
@@ -258,7 +271,7 @@ class Gatekeeper extends \infinite\base\Component
 			$aclConditions = [$alias . '.access' => 1];
 		}
 
-		$controlledObject = $this->getControlledObject($controlledObject);
+		$controlledObject = $this->getControlledObject($controlledObject, $modelClass);
 
 		if (!empty($controlledObject)) {
 			$innerOnConditions[] = [$alias.'.controlled_object_id' => $controlledObject];
@@ -342,8 +355,7 @@ class Gatekeeper extends \infinite\base\Component
 		$aclClass = Yii::$app->classes['Acl'];
 		$alias = $aclClass::tableName();
 		$query->from = [$aclClass::tableName() .' '. $alias];
-		// generateAclCheckCriteria($query, $controlledObject, $accessingObject = null, $model = null, $allowParentInherit = false) {
-		$this->generateAclCheckCriteria($query, $controlledObject, $accessingObject, null, true, $expandAros);
+		$this->generateAclCheckCriteria($query, $controlledObject, $accessingObject, true, get_class($controlledObject), $expandAros);
 		if ($acaIds !== true) {
 			$query->andWhere(['or', [$alias.'.aca_id' => $acaIds], [$alias.'.aca_id' => null]]);
 		}

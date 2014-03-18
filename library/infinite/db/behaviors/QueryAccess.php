@@ -103,7 +103,7 @@ class QueryAccess extends \infinite\db\behaviors\ActiveRecord
             } 
             $query->andWhere(['or', [$alias.'.aca_id' => $aca->primaryKey], [$alias.'.aca_id' => null]]);
         }
-        Yii::$app->gk->generateAclCheckCriteria($query, false, $this->accessingObject, $classAlias, true);
+        Yii::$app->gk->generateAclCheckCriteria($query, false, $this->accessingObject, true, $classAlias);
 
         return $query;
     }
