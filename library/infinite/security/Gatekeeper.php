@@ -38,6 +38,7 @@ class Gatekeeper extends \infinite\base\Component
 	protected $_objectCanCache = [];
 	
 	public $authorityClass = 'infinite\\security\\Authority';
+	public $accessClass = 'infinite\\security\\Access';
 	protected $_authority;
 
 	public function setAuthority($authority)
@@ -580,7 +581,7 @@ class Gatekeeper extends \infinite\base\Component
 			$accessingObject = $accessingObject->primaryKey;
 		}
 
-		if (!is_null($aclRole) AND is_object($aclRole)) {
+		if (!is_null($aclRole) && is_object($aclRole)) {
 			$aclRole = $aclRole->primaryKey;
 		}
 
@@ -628,4 +629,40 @@ class Gatekeeper extends \infinite\base\Component
 		}
 		return true;
 	}
+
+
+	public function getObjectAccess($object)
+	{
+		$accessClass = $this->accessClass;
+		return $accessClass::get($object);
+	}
+
+	public function getObjectAros($object)
+	{
+		$aclClass = Yii::$app->classes['Acl'];
+		$where = [];
+		$where = ['controlled_object_id' => $this->getControlledObject($object)];
+		$aros = $aclClass::find()->where($where)->groupBy(['[[accessing_object_id]]'])->select(['[[accessing_object_id]]'])->asArray()->all();
+		$aros = ArrayHelper::getColumn($aros, 'accessing_object_id');
+		return $aros;
+	}
+
+	public function getObjectRoles($object)
+	{
+		$aclRoleClass = Yii::$app->classes['AclRole'];
+		$where = [];
+		$where = ['controlled_object_id' => $this->getControlledObject($object)];
+		$aros = $aclRoleClass::find()->where($where)->groupBy(['[[accessing_object_id]]'])->select(['[[accessing_object_id]]', '[[role_id]]'])->asArray()->all();
+		$aros = ArrayHelper::map($aros, 'accessing_object_id', 'role_id');
+		return $aros;
+	}
+
+	protected function getTopAccess($baseAccess = [])
+	{
+		$aclClass = Yii::$app->classes['Acl'];
+		$base = $aclClass::find()->where(['[[accessing_object_id]]' => null, '[[controlled_object_id]]' => null])->asArray()->all();
+		return $this->fillActions($base, $baseAccess);
+	}
+
+
 }

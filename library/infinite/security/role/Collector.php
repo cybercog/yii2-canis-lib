@@ -30,6 +30,20 @@ class Collector extends \infinite\base\collector\Collector
 		return 'infinite\\security\\role\\Item';
 	}
 
+	public function getById($id)
+	{
+		foreach ($this->tableRegistry as $role) {
+			if ($role->primaryKey === $id) {
+				$object = $this->getOne($role->system_id);
+				if ($object->object) {
+					return $object->object;
+				}
+				break;
+			}
+		}
+		return false;
+	}
+
 	public function getTableRegistry() {
 		if (is_null($this->_tableRegistry)) {
 			$roleClass = Yii::$app->classes['Role'];

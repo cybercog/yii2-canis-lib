@@ -27,10 +27,12 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
     public $tabularIdHuman;
     public $descriptorField;
+
     public $subdescriptorFields = [];
     protected $_wasDirty = false;
     protected $_tabularId;
 
+    public static $queryClass;
     public static $registryCache = true;
     public static $relationCache = true;
     public static $isAco = true;
@@ -49,7 +51,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
     public function beforeSave($insert)
     {
-        if (!empty($this->getDirtyAttributes())) {
+        if (!empty($this->dirtyAttributes)) {
             $this->_wasDirty = true;
         }
         return parent::beforeSave($insert);
@@ -68,16 +70,6 @@ class ActiveRecord extends \yii\db\ActiveRecord
     public function getWasDirty()
     {
         return $this->_wasDirty;
-    }
-
-    public static function getRegistryClass()
-    {
-        return Registry::className();
-    }
-
-    public static function getRelationClass()
-    {
-        return Relation::className();
     }
 
     public static function modelPrefix()
@@ -101,7 +93,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
         $orow = $row;
         parent::populateRecord($record, $row);
         if (self::$registryCache) {
-            $registryClass = self::getRegistryClass();
+            $registryClass = Yii::$app->classes['Registry'];
             $registryClass::registerObject($record);
         }
     }
@@ -250,8 +242,15 @@ class ActiveRecord extends \yii\db\ActiveRecord
      */
     public static function createQuery($config = [])
     {
+        if (!isset($config['class'])) {
+            if (is_null(static::$queryClass)) {
+                $config['class'] = 'infinite\\db\\ActiveQuery';
+            } else {
+                $config['class'] = static::$queryClass;
+            }
+        }
         $config['modelClass'] = get_called_class();
-        $query = new \infinite\db\ActiveQuery($config);
+        $query = Yii::createObject($config);
         $query->attachBehaviors(static::queryBehaviors());
         return $query;
     }

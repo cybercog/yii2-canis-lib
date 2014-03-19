@@ -10,7 +10,7 @@ class Authority extends \infinite\base\Component
 
 	public function setHandler($handler)
 	{
-		if (empty($handler->getBehavior('Authority'))) {
+		if ($handler->getBehavior('Authority') === null) {
 			throw new Exception("Handler passed to the authority engine is not valid.");
 		}
 		$this->_handler = $handler;

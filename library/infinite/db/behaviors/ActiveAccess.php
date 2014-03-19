@@ -23,7 +23,8 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
 	const ACCESS_GRANTED = 0x20;        // 1
 
 	// from QueryAccess
-	protected $_access;
+    protected $_objectAccess;
+    protected $_access;
 	protected $_acaId;
 	protected $_accessingObject;
 
@@ -121,6 +122,13 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
 			}
 		}
 	}
+
+    public function getObjectAccess() {
+        if (!isset($this->_objectAccess)) {
+            $this->_objectAccess = Yii::$app->gk->getObjectAccess($this->owner);
+        }
+        return $this->_objectAccess;
+    }
     
     public function allow($action, $accessingObject = null, $aclRole = null) {
         if (is_null($accessingObject) && !is_null($this->accessingObject)) {
