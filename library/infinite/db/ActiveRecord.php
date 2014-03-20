@@ -92,7 +92,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
         $relation = [];
         $orow = $row;
         parent::populateRecord($record, $row);
-        if (self::$registryCache) {
+        if (static::$registryCache) {
             $registryClass = Yii::$app->classes['Registry'];
             $registryClass::registerObject($record);
         }

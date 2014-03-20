@@ -84,11 +84,25 @@ span.empty {
     margin: -5px;
 }
 
+/* buttons */
+.btn.disabled .caret {
+    display: none;
+}
+
 /* list-group */
 .list-group-item .btn {
+}
+
+.list-group-item .btn.dropdown-toggle {
     padding: 0;
     margin-top: -3px;
 }
+
+.list-group-item .list-group-item-text.help-text {
+    font-size: .85em;
+    line-height: .9em;
+}
+
 .list-group-item .dropdown-menu {
     top: 25px;
 }

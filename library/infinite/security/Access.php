@@ -7,24 +7,32 @@ use yii\db\Query;
 use infinite\db\behaviors\ActiveAccess;
 use infinite\caching\Cacher;
 
-class Access extends \infinite\base\Component
+class Access extends \infinite\base\Object
 {
-	protected $_object;
-	protected $_requestors;
-	protected $_specialMap;
-	protected $_roles;
-	protected $_visibility;
+	protected $_aclModel;
+	protected $_accessLevel;
+	protected $_action;
 	protected $_tempCache = [];
 
+    const ACCESS_NONE = 0x10;           // null
+    const ACCESS_DIRECT_ADMIN = 0x11;    // -1
+    const ACCESS_ADMIN = 0x12;          // -2
+    const ACCESS_SUPER_ADMIN = 0x13;    // -3
+    const ACCESS_PARENT = 0x30;         // 0
+	const ACCESS_GRANTED = 0x20;        // 1
 
 	public function __sleep()
 	{
-		if (is_object($this->_object)) {
-			$this->_object = $this->_object->primaryKey;
+		if (is_object($this->_aclModel)) {
+			$this->_aclModel = $this->_aclModel->primaryKey;
+		}
+
+		if (is_object($this->_action)) {
+			$this->_action = $this->_action->primaryKey;
 		}
 
 		$keys = array_keys((array)$this);
-		$bad = ["\0*\_tempCache"];
+		$bad = ["\0*\0_tempCache"];
 		foreach($keys as $k => $key) {
 			if (in_array($key, $bad)) {
 				unset($keys[$k]);
@@ -33,120 +41,169 @@ class Access extends \infinite\base\Component
 		return $keys;
 	}
 
-	public static function get($object)
+	public function can($object, $accessingObject = null, $trustParent = false)
 	{
-		$objectId = is_object($object) ? $object->primaryKey : $object;
-		$accessKey = [__CLASS__.'.'.__FUNCTION__, $objectId];
-    	$accessObject = Cacher::get($accessKey);	
-    	if ($accessObject) {
-    		return $accessObject;
-    	}
-    	$accessClass = get_called_class();
-    	$accessObject = Yii::createObject(['class' => $accessClass, 'object' => $object]);
-		Cacher::set($accessKey, $accessObject, 0, Yii::$app->gk->aclCacheDependency);
-		return $accessObject;
+		$cacheKey = [__FUNCTION__];
+		$cacheKey[] = is_object($object) ? $object->primaryKey : $object;
+		$cacheKey[] = is_object($accessingObject) ? $accessingObject->primaryKey : $accessingObject;
+		$cacheKey[] = $trustParent;
+		$cacheKey = md5(json_encode($cacheKey));
+		if (isset($this->_tempCache[$cacheKey])) {
+			return $this->_tempCache[$cacheKey];
+		}
+		$accessingObject = Yii::$app->gk->getAccessingObject($accessingObject);
+		switch($this->accessLevel) {
+			case self::ACCESS_GRANTED:
+				return $this->_tempCache[$cacheKey] = true;
+			break;
+			case self::ACCESS_NONE:
+				return $this->_tempCache[$cacheKey] = false;
+			break;
+			case self::ACCESS_PARENT:
+	            if ($trustParent) {
+	            	return $this->_tempCache[$cacheKey] = true;
+	            } else {
+	    	    	return $this->_tempCache[$cacheKey] = $object->parentCan($this->action, $accessingObject) === self::ACCESS_GRANTED;
+	            }
+			break;
+			case self::ACCESS_DIRECT_ADMIN:
+				$this->_tempCache[$cacheKey] = false;
+				if (Yii::$app->gk->accessorHasGroup($accessingObject, 'administrators')) {
+					$this->_tempCache[$cacheKey] = true;
+				} elseif (isset($this->aclModel) 
+					&& isset($accessingObject)
+					&& $this->aclModel->accessing_object_id === $accessingObject->primaryKey) {
+					$this->_tempCache[$cacheKey] = true;
+				}
+
+				return $this->_tempCache[$cacheKey];
+			break;
+			case self::ACCESS_ADMIN:
+				$this->_tempCache[$cacheKey] = false;
+				if (Yii::$app->gk->accessorHasGroup($accessingObject, 'administrators')) {
+					$this->_tempCache[$cacheKey] = true;
+				}
+				return $this->_tempCache[$cacheKey];
+			break;
+			case self::ACCESS_SUPER_ADMIN:
+				$this->_tempCache[$cacheKey] = false;
+				if (Yii::$app->gk->accessorHasGroup($accessingObject, 'super_administrators')) {
+					$this->_tempCache[$cacheKey] = true;
+				}
+				return $this->_tempCache[$cacheKey];
+			break;
+
+		}
+		return false;
 	}
 
-	public function load()
+	public function getHumanAccessLevel($accessLevel = null)
 	{
-		$this->roles;
-		$this->requestors;
+		if (is_null($accessLevel)) {
+			$accessLevel = $this->accessLevel;
+		}
+		switch($accessLevel) {
+			case self::ACCESS_GRANTED:
+				return 'Access Granted';
+			break;
+			case self::ACCESS_NONE:
+				return 'No Access';
+			break;
+			case self::ACCESS_PARENT:
+	       		return 'Inherit Parent Access';
+			break;
+			case self::ACCESS_DIRECT_ADMIN:
+	       		return 'Administrators and Direct Accessors';
+			break;
+			case self::ACCESS_ADMIN:
+	       		return 'Administrator Access';
+			break;
+			case self::ACCESS_SUPER_ADMIN:
+	       		return 'Super Administrator Access';
+			break;
+		}
+		return 'Unknown';
 	}
 
-
-	public function getRequestors()
+	public function setAccessLevel($accessLevel)
 	{
-		if (is_null($this->_requestors)) {
-			$this->_requestors = [];
-			$this->_specialMap = [];
-			$publicGroup = Yii::$app->gk->publicGroup;
-			$this->_specialMap['public'] = $publicGroup->primaryKey;
-			$aros = Yii::$app->gk->getObjectAros($this->object);
-			if (!in_array($publicGroup->primaryKey, $aros)) {
-				$aros[] = $publicGroup->primaryKey;
+		$this->_accessLevel = self::translateTableAccessValue($accessLevel);
+	}
+
+	public function getAccessLevel()
+	{
+		if (is_null($this->_accessLevel)) {
+			if (isset($this->aclModel)) {
+				$this->accessLevel = $this->aclModel->access;
 			}
-			foreach ($aros as $aro) {
-				$this->_requestors[$aro] = Yii::$app->gk->getAccess($this->object, $aro, null, false);
-			}
 		}
-		return $this->_requestors;
+		return $this->_accessLevel;
 	}
 
-	public function getRoles()
+	public function setAclModel($object)
 	{
-		if (is_null($this->_roles)) {
-			$this->_roles = Yii::$app->gk->getObjectRoles($this->object);
+		$this->_aclModel = $object;
+		if (is_object($object)) {
+			$this->accessLevel = $object->access;
+			$this->action = $object->aca_id;
 		}
-		return $this->_roles;
 	}
 
-	public function getRoleObjects()
+	public function getAclModel()
 	{
-		if (!isset($this->_tempCache['roled'])) {
-			$this->_tempCache['roled'] = [];
-			$registryClass = Yii::$app->classes['Registry'];
-			foreach ($this->roles as $requestorId => $roleId) {
-				$object = $registryClass::getObject($requestorId, true);
-				$role = Yii::$app->collectors['roles']->getById($roleId);
-				$this->_tempCache['roled'][$requestorId] = [
-					'object' => $object,
-					'role' => $role
-				];
-			}
+		if (!is_object($this->_aclModel) && !empty($this->_aclModel)) {
+			$aclClass = Yii::$app->classes['Acl'];
+			$this->_aclModel = $aclClass::get($this->_aclModel, false);
 		}
-		return $this->_tempCache['roled'];
+		return $this->_aclModel;
 	}
 
-	public function setObject($object)
+	public function setAction($object)
 	{
-		$this->_object = $object;
-		$this->load();
+		$this->_action = $object;
 	}
 
-	public function getObject()
+	public function getAction()
 	{
-		if (!is_object($this->_object)) {
-			$registryClass = Yii::$app->classes['Registry'];
-			$this->_object = $registryClass::getObject($this->_object, false);
+		if (!is_object($this->_action)) {
+			$actionClass = Yii::$app->classes['Aca'];
+			$this->_action = $actionClass::get($this->_action, false);
 		}
-		return $this->_object;
+		return $this->_action;
 	}
 
-	public function determineVisibility()
+	public static function translateTableAccessValue($value)
 	{
-		$groupClass = Yii::$app->classes['Group'];
-		$groupPrefix = $groupClass::modelPrefix();
-		$publicGroup = Yii::$app->gk->publicGroup;
-		$actions = Yii::$app->gk->actionsByName;
-		$readAction = $actions['read'];
-		$publicAro = isset($this->requestors[$publicGroup->primaryKey]) ? $this->requestors[$publicGroup->primaryKey] : false;
-		if ($publicAro && $publicAro[$readAction->primaryKey] === ActiveAccess::ACCESS_GRANTED) {
-			return 'public';
+		if ($value == 0 || $value == self::ACCESS_PARENT) {
+			return self::ACCESS_PARENT;
+        } elseif ($value == 1 || $value == self::ACCESS_GRANTED) {
+            return self::ACCESS_GRANTED;
+        } elseif ($value == -1 || $value == self::ACCESS_DIRECT_ADMIN) {
+            return self::ACCESS_DIRECT_ADMIN;
+        } elseif ($value == -2 || $value == self::ACCESS_ADMIN) {
+            return self::ACCESS_ADMIN;
+        } elseif ($value == -3 || $value == self::ACCESS_SUPER_ADMIN) {
+            return self::ACCESS_SUPER_ADMIN;
+		} else {
+			return self::ACCESS_NONE;
 		}
-
-		foreach ($this->requestors as $aro => $access) {
-			if (preg_match('/^'. $groupPrefix .'\-/', $aro) === 0) {
-				return 'shared';
-			}
-		}
-
-		return 'private';
 	}
 
-	public function getSpecialMap()
-	{
-		if (is_null($this->_specialMap)) {
-			$this->requestors;
-		}
-		return $this->_specialMap;
-	}
-
-	public function getVisibility()
-	{
-		if (is_null($this->_visibility)) {
-			$this->_visibility = $this->determineVisibility();
-		}
-		return $this->_visibility;
-	}
+    public static function translateAccessValue($value)
+    {
+        if ($value == self::ACCESS_PARENT || $value == 0) {
+            return 0;
+        } elseif ($value == self::ACCESS_GRANTED || $value == 1) {
+            return 1;
+        } elseif ($value == self::ACCESS_DIRECT_ADMIN || $value == -1) {
+            return -1;
+        } elseif ($value == self::ACCESS_ADMIN || $value == -2) {
+            return -2;
+        } elseif ($value == self::ACCESS_SUPER_ADMIN || $value == -3) {
+            return -3;
+        } else {
+            return $value;
+        }
+    }
 }
 ?>

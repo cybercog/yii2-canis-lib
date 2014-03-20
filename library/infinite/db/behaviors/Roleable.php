@@ -226,10 +226,14 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
             Yii::$app->gk->clearExplicitRules($this->owner->primaryKey, $aro);
             return true;
         } else {
-            foreach ($accessLevels as $action) {
-                //if (!$this->owner->can($action, $aro)) {
-                $this->owner->allow($action, $aro, $aclRole);
-                //}
+            foreach ($accessLevels as $key => $action) {
+                if (is_numeric($key)) {
+                    $this->owner->allow($action, $aro, $aclRole);
+                } else {
+                    $accessLevel = $action;
+                    $action = $key;
+                    $this->owner->setAccessLevel($action, $accessLevel, $aro, $aclRole);
+                }
             }
         }
         return true;

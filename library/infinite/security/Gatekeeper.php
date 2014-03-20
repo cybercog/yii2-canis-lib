@@ -38,6 +38,7 @@ class Gatekeeper extends \infinite\base\Component
 	protected $_objectCanCache = [];
 	
 	public $authorityClass = 'infinite\\security\\Authority';
+	public $objectAccessClass = 'infinite\\security\\ObjectAccess';
 	public $accessClass = 'infinite\\security\\Access';
 	protected $_authority;
 
@@ -145,33 +146,57 @@ class Gatekeeper extends \infinite\base\Component
 
 	public function fillActions($acls, $baseAccess = [], $acaIds = null)
 	{
-		$nullValue = $this->findNullAction($acls);
-		$noAccessValue = ActiveAccess::translateAccessValue(-1);
+		$baseNullAccess = $this->findNullAction($acls);
 		$actions = $this->actionsById;
-		// if (isset($acaIds) && is_array($acaIds)) {
-		// 	foreach ($acaIds as $acaId) {
-		// 		unset($actions[$acaId]);
-		// 	}
-		// }
 
 		$access = [];
 		foreach ($acls as $acl) {
 			$acaValue = ArrayHelper::getValue($acl, 'aca_id');
-			$accessValue = ActiveAccess::translateAccessValue(ArrayHelper::getValue($acl, 'access'));
 			if (is_null($acaValue)) { continue; }
+			$accessObject = $this->createAccess($acl);
 			if (!array_key_exists($acaValue, $baseAccess) 
 				|| $baseAccess[$acaValue] === $noAccessValue) {
-				$access[$acaValue] = $accessValue;
+				$access[$acaValue] = $accessObject;
 			}
 		}
 
 		foreach ($actions as $action) {
 			$acaValue = ArrayHelper::getValue($action, 'id');
 			if (!array_key_exists($acaValue, $access)) {
-				$access[$acaValue] = $nullValue;
+				$nullAccess = clone $baseNullAccess;
+				$nullAccess->action = $action;
+				$access[$acaValue] = $nullAccess;
 			}
 		}
 		return $access;
+	}
+
+	protected function createAccess($acl, $config = [])
+	{
+		if (is_object($acl)) {
+			$config['aclModel'] = $acl;
+		} elseif(is_array($acl)) {
+			if (isset($acl['id'])) {
+				// we have a faux-aclModel
+				$config['aclModel'] = $acl['id'];
+				if (!isset($config['accessLevel'])) {
+					$config['accessLevel'] = $acl['access'];
+				}
+				if (!isset($config['action'])) {
+					$config['action'] = $acl['aca_id'];
+				}
+			} else {
+				$config = array_merge($config, $acl);
+			}
+		} else { 
+			return false;
+		}
+
+		if (!isset($config['class'])) {
+			$config['class'] = $this->accessClass;
+		}
+
+		return Yii::createObject($config);
 	}
 
 	public function findNullAction($acls)
@@ -179,11 +204,10 @@ class Gatekeeper extends \infinite\base\Component
 		foreach ($acls as $acl) {
 			$acaValue = ArrayHelper::getValue($acl, 'aca_id');
 			if (is_null($acaValue)) {
-				$access = ArrayHelper::getValue($acl, 'access');
-				return ActiveAccess::translateAccessValue($access);
+				return $this->createAccess($acl);
 			}	
 		}
-		return ActiveAccess::translateAccessValue(-1);
+		return $this->createAccess(['accessLevel' => Access::ACCESS_NONE]);
 	}
 
 	public function canGeneral($action, $model, $accessingObject = null) {
@@ -208,7 +232,7 @@ class Gatekeeper extends \infinite\base\Component
 		return false;
 	}
 
-    public function generateAclCheckCriteria($query, $controlledObject, $accessingObject = null, $allowParentInherit = false, $modelClass = null, $expandAros = true) {
+    public function generateAclCheckCriteria($query, $controlledObject, $accessingObject = null, $allowParentInherit = false, $modelClass = null, $expandAros = true, $limitAccess = true) {
         $aclClass = Yii::$app->classes['Acl'];
         $alias = $aclClass::tableName();
         $modelAlias = null;
@@ -266,10 +290,12 @@ class Gatekeeper extends \infinite\base\Component
 		
 		$innerOnConditions = ['or'];
 
-		if ($allowParentInherit) {
-			$aclConditions = [$alias . '.access' => [0, 1]];
-		} else {
-			$aclConditions = [$alias . '.access' => 1];
+		if ($limitAccess) {
+			if ($allowParentInherit) {
+				$aclConditions = [$alias . '.access' => [0, 1]];
+			} else {
+				$aclConditions = [$alias . '.access' => 1];
+			}
 		}
 
 		$controlledObject = $this->getControlledObject($controlledObject, $modelClass);
@@ -356,7 +382,7 @@ class Gatekeeper extends \infinite\base\Component
 		$aclClass = Yii::$app->classes['Acl'];
 		$alias = $aclClass::tableName();
 		$query->from = [$aclClass::tableName() .' '. $alias];
-		$this->generateAclCheckCriteria($query, $controlledObject, $accessingObject, true, get_class($controlledObject), $expandAros);
+		$this->generateAclCheckCriteria($query, $controlledObject, $accessingObject, true, get_class($controlledObject), $expandAros, false);
 		if ($acaIds !== true) {
 			$query->andWhere(['or', [$alias.'.aca_id' => $acaIds], [$alias.'.aca_id' => null]]);
 		}
@@ -424,9 +450,35 @@ class Gatekeeper extends \infinite\base\Component
 				Cacher::set($arosKey, $this->_aros[$arosKey], 0, new GroupDependency(['group' => 'aros']));
 			}
     	}
-    	//\d(array_unique($this->_aros[$arosKey]));exit;
     	return array_unique($this->_aros[$arosKey]);
     }
+
+	public function accessorHasGroup($accessingObject, $groupSystemId)
+	{
+		$userClass = Yii::$app->classes['User'];
+		$accessingObject = $this->getAccessingObject($accessingObject);
+		if (get_class($accessingObject) !== $userClass) {
+			return false;
+		}
+		$groups = $this->getAccessorGroups($accessingObject);
+		foreach ($groups as $group) {
+			if ($group->system === $groupSystemId) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public function getAccessorGroups($accessingObject)
+	{
+		$accessingObject = $this->getAccessingObject($accessingObject);
+		$groupClass = Yii::$app->classes['Group'];
+		$cacheKey = Cacher::key([__FUNCTION__, is_object($accessingObject) ? $accessingObject->primaryKey : $accessingObject], true);
+		if (!isset(self::$_cache[$cacheKey])) {
+			self::$_cache[$cacheKey] = $accessingObject->parents($groupClass, [], ['disableAccessCheck' => true]);
+		}
+		return self::$_cache[$cacheKey];
+	}
 
     public function getAccessingObject($accessingObject)
     {
@@ -520,7 +572,7 @@ class Gatekeeper extends \infinite\base\Component
 	public function getGroup($systemName, $checkAccess = false)
 	{
 		$groupClass = Yii::$app->classes['Group'];
-		return $groupClass::getBySystemName('top', $checkAccess);
+		return $groupClass::getBySystemName($systemName, $checkAccess);
 	}
 
 	public function clearExplicitRules($controlledObject, $accessingObject = false) {
@@ -545,7 +597,7 @@ class Gatekeeper extends \infinite\base\Component
 		return $this->setAccess($action, false, $controlledObject, $accessingObject, $aclRole);
 	}
 
-	public function requireOwnerAdmin($action, $controlledObject = null, $accessingObject = null, $aclRole = null) {
+	public function requireDirectAdmin($action, $controlledObject = null, $accessingObject = null, $aclRole = null) {
 		return $this->setAccess($action, -1, $controlledObject, $accessingObject, $aclRole);
 	}
 
@@ -633,8 +685,8 @@ class Gatekeeper extends \infinite\base\Component
 
 	public function getObjectAccess($object)
 	{
-		$accessClass = $this->accessClass;
-		return $accessClass::get($object);
+		$objectAccessClass = $this->objectAccessClass;
+		return $objectAccessClass::get($object);
 	}
 
 	public function getObjectAros($object)

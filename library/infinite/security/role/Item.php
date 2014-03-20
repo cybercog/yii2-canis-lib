@@ -18,4 +18,5 @@ class Item extends \infinite\base\collector\Item
 	public $exclusive = false;
 	public $conflictRole = false;
 	public $name;
+	public $level = 100;
 }

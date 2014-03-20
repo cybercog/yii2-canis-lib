@@ -23,6 +23,7 @@ use yii\web\IdentityInterface;
  */
 class User extends ActiveRecord implements IdentityInterface
 {
+    protected $_groups;
     /**
      * @var string the raw password. Used to collect password input and isn't saved in database
      */
@@ -162,6 +163,15 @@ class User extends ActiveRecord implements IdentityInterface
     public function getRegistry()
     {
         return $this->hasOne('Registry', ['id' => 'id']);
+    }
+
+    public function getGroups()
+    {
+        if (!isset($this->_groups)) {
+            $groupClass = Yii::$app->classes['Group'];
+            $this->_groups = $this->parents($groupClass);
+        }
+        return $this->_groups;
     }
 
     public function guessIndividual()

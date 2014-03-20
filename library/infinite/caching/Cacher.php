@@ -4,7 +4,7 @@ namespace infinite\caching;
 use Yii;
 
 class Cacher extends \infinite\base\Component {
-	public static function key($key)
+	public static function key($key, $hash = false)
 	{
 		if (is_array($key) && !empty($key['context'])) {
 			$context = $key['context'];
@@ -31,6 +31,9 @@ class Cacher extends \infinite\base\Component {
 					break;
 				}
 			}
+		}
+		if ($hash) {
+			$key = md5(json_encode($key));
 		}
 		return $key;
 		//return md5(json_encode($key));
