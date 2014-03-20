@@ -9,4 +9,10 @@ class AuthorityBehavior extends \yii\base\Behavior {
 	{
 		return false;
 	}
+
+
+	public function getTopRequestors($accessingObject)
+	{
+		return false;
+	}
 }

@@ -52,6 +52,7 @@ class Access extends \infinite\base\Object
 			return $this->_tempCache[$cacheKey];
 		}
 		$accessingObject = Yii::$app->gk->getAccessingObject($accessingObject);
+		$topRequestors = Yii::$app->gk->getTopRequestors($accessingObject->primaryKey);
 		switch($this->accessLevel) {
 			case self::ACCESS_GRANTED:
 				return $this->_tempCache[$cacheKey] = true;
@@ -71,8 +72,7 @@ class Access extends \infinite\base\Object
 				if (Yii::$app->gk->accessorHasGroup($accessingObject, 'administrators')) {
 					$this->_tempCache[$cacheKey] = true;
 				} elseif (isset($this->aclModel) 
-					&& isset($accessingObject)
-					&& $this->aclModel->accessing_object_id === $accessingObject->primaryKey) {
+					&& in_array($this->aclModel->accessing_object_id, $topRequestors)) {
 					$this->_tempCache[$cacheKey] = true;
 				}
 

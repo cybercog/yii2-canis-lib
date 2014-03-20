@@ -28,7 +28,7 @@ class Gatekeeper extends \infinite\base\Component
 {
 	public $proxy = false;
 
-	protected $_aros;
+	protected $_requestors;
 	protected $_actionsById;
 	protected $_actionsByName;
 	protected $_primaryAro;
@@ -250,7 +250,7 @@ class Gatekeeper extends \infinite\base\Component
 
 		// get aro's 
 		if ($expandAros) {
-			$aros = $this->getAros($accessingObject);
+			$aros = $this->getRequestors($accessingObject);
 		} elseif(isset($accessingObject)) {
 			$aros = is_object($accessingObject) ? [$accessingObject->primaryKey] : [$accessingObject];
 		} else {
@@ -364,7 +364,7 @@ class Gatekeeper extends \infinite\base\Component
 
 	public function getAccess($controlledObject, $accessingObject = null, $acaIds = null, $expandAros = true)
 	{
-		if (!$this->primaryAro) { return []; }
+		if (!$this->primaryRequestor) { return []; }
 		if (is_null($acaIds)) {
 			$acaIds = true;
 		}
@@ -372,7 +372,7 @@ class Gatekeeper extends \infinite\base\Component
 			return [];
 		}
 
-		$aclKey = [__CLASS__.'.'.__FUNCTION__, func_get_args(), $this->primaryAro->primaryKey];
+		$aclKey = [__CLASS__.'.'.__FUNCTION__, func_get_args(), $this->primaryRequestor->primaryKey];
     	$access = Cacher::get($aclKey);
     	if ($access) {
     		return $access;
@@ -401,7 +401,7 @@ class Gatekeeper extends \infinite\base\Component
 		$this->_objectCanCache = [];
 	}
 
-	public function getPrimaryAro() {
+	public function getPrimaryRequestor() {
 		if ($this->proxy) {
 			return $this->proxy;
 		}
@@ -422,7 +422,9 @@ class Gatekeeper extends \infinite\base\Component
     	return $this->_primaryAro;
     }
 
-    public function getAros($accessingObject = null) {
+    public function getTopRequestors($accessingObject = null)
+    {
+
 		$accessingObject = $this->getAccessingObject($accessingObject);
     	if (is_object($accessingObject)) {
 			$arosKey = md5(json_encode([__CLASS__.'.'.__FUNCTION__, $accessingObject->primaryKey]));
@@ -430,27 +432,44 @@ class Gatekeeper extends \infinite\base\Component
 			$arosKey = md5(json_encode([__CLASS__.'.'.__FUNCTION__, false]));
 		}
 
-    	if (!isset($this->_aros[$arosKey])) {
-    		$this->_aros[$arosKey] = Cacher::get($arosKey);
-    		if (!$this->_aros[$arosKey]) {
-	    		$this->_aros[$arosKey] = [];
+    	if (!isset($this->_requestors[$arosKey])) {
+    		$this->_requestors[$arosKey] = [];
+    		if ($this->authority && ($requestors = $this->authority->getTopRequestors($accessingObject)) && $requestors) {
+    			$this->_requestors[$arosKey] = array_merge($this->_requestors[$arosKey], $requestors);
+    		}
+    	}
+    	return array_unique($this->_requestors[$arosKey]);
+    }
+
+    public function getRequestors($accessingObject = null) {
+		$accessingObject = $this->getAccessingObject($accessingObject);
+    	if (is_object($accessingObject)) {
+			$arosKey = md5(json_encode([__CLASS__.'.'.__FUNCTION__, $accessingObject->primaryKey]));
+		} else {
+			$arosKey = md5(json_encode([__CLASS__.'.'.__FUNCTION__, false]));
+		}
+
+    	if (!isset($this->_requestors[$arosKey])) {
+    		$this->_requestors[$arosKey] = Cacher::get($arosKey);
+    		if (!$this->_requestors[$arosKey]) {
+	    		$this->_requestors[$arosKey] = [];
 	    		if ($accessingObject) {
-	    			$this->_aros[$arosKey][] = is_object($accessingObject) ? $accessingObject->primaryKey : $accessingObject;
-	    			$this->_aros[$arosKey] = array_merge($this->_aros[$arosKey], $this->getGroups($accessingObject, true));
+	    			$this->_requestors[$arosKey][] = is_object($accessingObject) ? $accessingObject->primaryKey : $accessingObject;
+	    			$this->_requestors[$arosKey] = array_merge($this->_requestors[$arosKey], $this->getGroups($accessingObject, true));
 	    		}
 	    		if ($this->authority && ($requestors = $this->authority->getRequestors($accessingObject)) && $requestors) {
-	    			$this->_aros[$arosKey] = array_merge($this->_aros[$arosKey], $requestors);
+	    			$this->_requestors[$arosKey] = array_merge($this->_requestors[$arosKey], $requestors);
 	    		}
 
 				if ($this->getPublicGroup()) { // always allow public groups
-					$this->_aros[$arosKey][] = $this->getPublicGroup()->primaryKey;
-					$this->_aros[$arosKey][] = $this->getTopGroup()->primaryKey;
+					$this->_requestors[$arosKey][] = $this->getPublicGroup()->primaryKey;
+					$this->_requestors[$arosKey][] = $this->getTopGroup()->primaryKey;
 				}
-				$this->_aros[$arosKey] = array_unique($this->_aros[$arosKey]);
-				Cacher::set($arosKey, $this->_aros[$arosKey], 0, new GroupDependency(['group' => 'aros']));
+				$this->_requestors[$arosKey] = array_unique($this->_requestors[$arosKey]);
+				Cacher::set($arosKey, $this->_requestors[$arosKey], 0, new GroupDependency(['group' => 'aros']));
 			}
     	}
-    	return array_unique($this->_aros[$arosKey]);
+    	return array_unique($this->_requestors[$arosKey]);
     }
 
 	public function accessorHasGroup($accessingObject, $groupSystemId)
@@ -483,7 +502,7 @@ class Gatekeeper extends \infinite\base\Component
     public function getAccessingObject($accessingObject)
     {
 		if (is_null($accessingObject)) {
-			$accessingObject = $this->primaryAro;
+			$accessingObject = $this->primaryRequestor;
 		}
 		if (!is_object($accessingObject)) {
 			$registryClass = Yii::$app->classes['Registry'];

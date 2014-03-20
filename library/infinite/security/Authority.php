@@ -28,5 +28,13 @@ class Authority extends \infinite\base\Component
 		}
 		return $this->handler->getRequestors($accessingObject);
 	}
+
+	public function getTopRequestors($accessingObject)
+	{
+		if (is_null($this->handler)) {
+			return false;
+		}
+		return $this->handler->getTopRequestors($accessingObject);
+	}
 }
 ?>
