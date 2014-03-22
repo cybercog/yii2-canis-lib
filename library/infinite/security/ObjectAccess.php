@@ -123,6 +123,11 @@ class ObjectAccess extends \infinite\base\Component
 		return $this->_object;
 	}
 
+	public function getRoleHelpText($roleItem)
+	{
+		return null;
+	}
+
 	public function determineVisibility()
 	{
 		$groupClass = Yii::$app->classes['Group'];
@@ -144,6 +149,25 @@ class ObjectAccess extends \infinite\base\Component
 		return 'private';
 	}
 
+	public function getPossibleRoles($accessingObject = null)
+	{
+		$accessorRoleLevel = $this->getAccessorRoleLevel($accessingObject);
+		$roles = [];
+		$nullRole = [];
+		$nullRole['id'] = 'none';
+		$nullRole['item'] = null;
+		$nullRole['label'] = 'No Access';
+		$nullRole['available'] = true;
+		$nullRole['level'] = 0;
+		$roles['none'] = $nullRole;
+		foreach (Yii::$app->collectors['roles']->getAll() as $roleItem) {
+			$roles[$roleItem->id] = $roleItem->package;
+			$roles[$roleItem->id]['available'] = $roleItem->level <= $accessorRoleLevel;
+			$roles[$roleItem->id]['helpText'] = $this->getRoleHelpText($roleItem);
+
+		}
+		return $roles;
+	}
 
 	public function getVisibility()
 	{

@@ -115,10 +115,10 @@ InfiniteInstructionHandler.prototype.handleDialog = function() {
 	var $body = $("<div />", {'class': 'modal-body'}).html(this.content).appendTo($dialogContent);
 	var $form = $body.find('form');
 	
+	$modal.on('show.bs.modal', function() {
+		$preparer.fire($body);
+	});
 	if ($form.length > 0) {
-		$modal.on('show.bs.modal', function() {
-			$preparer.fire($body);
-		});
 		$modal.on('shown.bs.modal', function() {
 			$body.find('*').trigger('visible');
 			var $focus = $body.find('.has-error :focusable').first();
