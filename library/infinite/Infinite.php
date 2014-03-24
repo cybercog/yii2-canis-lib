@@ -20,14 +20,13 @@ function b($backtrace) {
     echo '</pre>';
 }
 
-class Infinite extends \yii\base\Extension
+class Infinite implements \yii\base\BootstrapInterface
 {
     /**
      * @inheritdoc
      */
-    public static function bootstrap()
+    public function bootstrap(\yii\base\Application $app)
     {
-    	parent::bootstrap();
         Yii::setAlias('@infinite', __DIR__);
         Yii::$app->registerMigrationAlias('@infinite/db/migrations');
     }
