@@ -97,7 +97,7 @@ trait SearchTerm
 		}
 
 		if (!empty($params['ignore'])) {
-			$query->andWhere(['not in', self::primaryKey(), $params['ignore']]);
+			$query->andWhere(['not in', $query->primaryAlias .'.'. self::primaryKey()[0], $params['ignore']]);
 		}
 	}
 

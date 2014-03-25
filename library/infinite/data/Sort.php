@@ -2,24 +2,10 @@
 namespace infinite\data;
 
 class Sort extends \yii\data\Sort {
-	protected $_state;
+	public $sortOrders = [];
 
-	/**
-	 *
-	 *
-	 * @return unknown
-	 */
-	public function getState() {
-		return $this->_state;
-	}
-
-
-	/**
-	 *
-	 *
-	 * @param unknown $state
-	 */
-	public function setState($state) {
-		$this->_state = $state;
-	}
+	public function getAttributeOrders($recalculate = false)
+    {
+    	return $this->sortOrders;
+    }
 }

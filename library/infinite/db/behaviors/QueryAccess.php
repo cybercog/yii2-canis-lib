@@ -10,9 +10,9 @@
 namespace infinite\db\behaviors;
 
 use Yii;
-use yii\db\Query;
+use yii\db\Query as BaseQuery;
 
-class QueryAccess extends \infinite\db\behaviors\ActiveRecord
+class QueryAccess extends Query
 {
     protected static $_acceptInherit = false;
     protected $_accessingObject;
