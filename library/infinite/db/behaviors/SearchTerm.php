@@ -18,7 +18,6 @@ trait SearchTerm
 {
 	public $searchScore;
 	public static $defaultSearchParams = ['limit' => 30, 'foreignLimitPercent' => 0.3];
-	public static $searchResultClass = 'infinite\\db\\behaviors\\SearchTermResult';
 
 
 	public static function searchTerm($queryString, $params = [])
@@ -134,7 +133,7 @@ trait SearchTerm
 		if (is_null($terms)) {
 			$terms = self::prepareObjectTerms($object, $fields);
 		}
-		return Yii::createObject(['class' => self::$searchResultClass, 'object' => $object, 'score' => $score, 'terms' => $terms]);
+		return Yii::createObject(['class' => Yii::$app->classes['SearchTermResult'], 'object' => $object, 'score' => $score, 'terms' => $terms]);
 	}
 
 	public static function prepareObjectTerms($object, $fields)

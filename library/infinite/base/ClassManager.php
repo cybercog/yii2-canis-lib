@@ -31,6 +31,7 @@ class ClassManager extends Component implements IteratorAggregate, ArrayAccess
 			'Registry' => 'app\\models\\Registry',
 			'Relation' => 'app\\models\\Relation',
 			'User' => 'app\\models\\User',
+			'SearchTermResult' => 'infinite\\db\\behaviors\\SearchTermResult',
 		];
 	}
 

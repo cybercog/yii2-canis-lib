@@ -9,7 +9,6 @@
 
 namespace infinite\db\behaviors;
 
-use yii\db\Query;
 use yii\base\Arrayable;
 use infinite\base\Object;
 
@@ -52,6 +51,7 @@ class SearchTermResult extends Object
 				}
 			}
 		}
+
 		$this->_object = $value;
 	}
 
@@ -134,7 +134,7 @@ class SearchTermResult extends Object
 		if (is_null($this->_subdescriptor)) {
 			$this->_subdescriptor = [];
 		}
-		return implode("<br />", $this->_subdescriptor);
+		return $this->_subdescriptor;
 	}
 
 	public function setScore($value)

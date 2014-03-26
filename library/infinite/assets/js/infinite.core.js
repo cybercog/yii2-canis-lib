@@ -1,5 +1,7 @@
 var $preparer = $.Callbacks("memory");
-$preparer.fire(document);
+$(function() {
+	$preparer.fire(document);
+});
 
 
 $(window).resize(function () {
@@ -9,7 +11,6 @@ $(window).resize(function () {
 });
 
 $preparer.add(function(context) {
-	console.log(context);
 	$("form").submit(function(event) {
 		var e = jQuery.Event( "beforeSubmit" );
 		$(this).trigger(e);
