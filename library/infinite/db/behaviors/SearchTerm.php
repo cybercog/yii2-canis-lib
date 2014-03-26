@@ -13,11 +13,12 @@ use Yii;
 
 use yii\db\Query;
 use infinite\helpers\ArrayHelper;
+use cascade\components\helpers\StringHelper;
 
 trait SearchTerm
 {
 	public $searchScore;
-	public static $defaultSearchParams = ['limit' => 30, 'foreignLimitPercent' => 0.3];
+	public static $defaultSearchParams = ['limit' => 30, 'foreignLimitPercent' => 0.3, 'skipForeign' => false];
 
 
 	public static function searchTerm($queryString, $params = [])
@@ -31,17 +32,23 @@ trait SearchTerm
 		if (isset($params['searchFields'])) {
 			$searchFields = $params['searchFields'];
 		} else {
-			$searchFields = array_unique(static::searchFields());
+			$searchFields = static::searchFields();
 		}
 		if (empty($searchTerms) || empty($searchFields)) { return []; }
-		list($localFields, $foreignFields) = self::parseSearchFields($searchFields);
+		$fields = self::parseSearchFields($searchFields);
+		$localFields = $fields['local'];
+		$foreignFields = $fields['foreign'];
 		if (empty($localFields) && empty($foreignFields)) { return []; }
-		foreach ($foreignFields as $field) {
-			if (count($foreignResults) > $foreignLimit) {
-				$foreignResults = array_slice($foreignResults, 0, $foreignLimit);
-				break;
+		if (!$params['skipForeign']) {
+			foreach ($foreignFields as $fieldList) {
+				foreach ($fieldList as $field) {
+					if (count($foreignResults) > $foreignLimit) {
+						$foreignResults = array_slice($foreignResults, 0, $foreignLimit);
+						break;
+					}
+					$foreignResults = self::mergeSearchResults($foreignResults, self::searchForeign($searchTerms, $field, $params));
+				}
 			}
-			$foreignResults = self::mergeSearchResults($foreignResults, self::searchForeign($searchTerms, $field, $params));
 		}
 
 		$limit = $limit - count($foreignResults);
@@ -52,8 +59,11 @@ trait SearchTerm
 			self::implementParams($localQuery, $params);
 			$command = $localQuery->createCommand();
 			$raw = $localQuery->all();
+			//echo '<pre>'. $command->rawSql .'</pre>';
 			foreach ($raw as $object) {
-				$localResults[$object->primaryKey] = self::createSearchResult($object, $localFields);
+				$localResult = self::createSearchResult($object, $localFields);
+				if (!$localResult) { continue; }
+				$localResults[$object->primaryKey] = $localResult;
 			}
 		}
 		$results = self::mergeSearchResults($localResults, $foreignResults);
@@ -103,25 +113,29 @@ trait SearchTerm
 	public static function buildQuery($query, $fields, $searchTerms)
 	{
 		$buildOr = ['or'];
-		foreach ($fields as $field) {
-			foreach ($searchTerms as $term) {
-				//$term = '%'.strtr($term, ['%'=>'\%', '_'=>'\_', '\\'=>'\\\\']).'%';
-				$buildOr[] = ['like', $field, $term];
+		foreach ($fields as $fieldList) {
+			foreach ($fieldList as $field) {
+				foreach ($searchTerms as $term) {
+					//$term = '%'.strtr($term, ['%'=>'\%', '_'=>'\_', '\\'=>'\\\\']).'%';
+					$buildOr[] = ['like', $field, $term];
+				}
 			}
 		}
 		$query->andWhere($buildOr);
 		$orders = [];
-		$weight = count($fields) * count($searchTerms);
-		foreach ($fields as $field) {
-			foreach ($searchTerms as $n => $term) {
-				$searchTermTag = ":term".$n;
-				$query->params[$searchTermTag] = strtolower($term);
-				$orders[] = $weight . '*(length(' . $field . ')-length(replace(LOWER(' . $field . '),' . $searchTermTag . ',\'\')))/length(' . $searchTermTag . ')';
-				$weight--;
+		$weight = (count($fields) * count($searchTerms));
+		foreach ($fields as $fieldList) {
+			foreach ($fieldList as $field) {
+				foreach ($searchTerms as $n => $term) {
+					$searchTermTag = ":term".$n;
+					$query->params[$searchTermTag] = strtolower($term);
+					$orders[] = 'IF(ISNULL([['. $field .']]), 0, '. ($weight * 1) . '*(length([[' . $field . ']])-length(replace(LOWER([[' . $field . ']]),' . $searchTermTag . ',\'\')))/length(' . $searchTermTag . '))';
+				}
 			}
+			$weight = $weight - 1;
 		}
 		$relavance = implode('+', $orders);
-		$query->select = [$query->primaryAlias . ".*", "({$relavance}) as searchScore"];
+		$query->select = [$query->primaryAlias . ".*", "({$relavance}) as [[searchScore]]"];
 		return $query;
 	}
 
@@ -130,6 +144,7 @@ trait SearchTerm
 		if (is_null($score) && !is_null($object->searchScore)) {
 			$score = $object->searchScore;
 		}
+		if (empty($score)) { \d($object); exit; return false; }
 		if (is_null($terms)) {
 			$terms = self::prepareObjectTerms($object, $fields);
 		}
@@ -139,9 +154,14 @@ trait SearchTerm
 	public static function prepareObjectTerms($object, $fields)
 	{
 		$terms = [];
-		foreach ($fields as $field) {
-			if (!empty($object->{$field})) {
-				$terms[] = $object->{$field};
+		foreach ($fields as $fieldList) {
+			if (!is_array($fieldList)) {
+				$fieldList = [$fieldList];
+			}
+			foreach ($fieldList as $field) {
+				if (!empty($object->{$field})) {
+					$terms[] = $object->{$field};
+				}
 			}
 		}
 		return $terms;
@@ -151,22 +171,24 @@ trait SearchTerm
 	{
 		$modelClass = get_called_class();
 		$model = new $modelClass;
-		if (is_null($model->descriptorField)) {
-			return [];
-		} elseif(is_array($model->descriptorField)) {
-			return $model->descriptorField;
-		} else {
-			return [$model->descriptorField];
+		$fields = [];
+		if (!is_null($model->descriptorField)) {
+			if (is_array($model->descriptorField)) {
+				$fields[] = $model->descriptorField;
+			} else {
+				$fields[] = [$model->descriptorField];
+			}
 		}
+		return $fields;
 	}
 
 	public static function parseSearchFields($fields)
 	{
 		// local, foreign
-		return [$fields, []];
+		return ['local' => $fields, 'foreign' => []];
 	}
 
-	public static function searchForeign($terms, $field)
+	public static function searchForeign($terms, $field, $params = [])
 	{
 		// should return array of [objectId => score]
 		return [];
@@ -201,7 +223,8 @@ trait SearchTerm
 		$badSearchWords = ["a", "about", "above", "above", "across", "after", "afterwards", "again", "against", "all", "almost", "alone", "along", "already", "also", "although", "always", "am", "among", "amongst", "amoungst", "amount", "an", "and", "another", "any", "anyhow", "anyone", "anything", "anyway", "anywhere", "are", "around", "as", "at", "back", "be", "became", "because", "become", "becomes", "becoming", "been", "before", "beforehand", "behind", "being", "below", "beside", "besides", "between", "beyond", "bill", "both", "bottom", "but", "by", "call", "can", "cannot", "cant", "co", "con", "could", "couldnt", "cry", "de", "describe", "detail", "do", "done", "down", "due", "during", "each", "eg", "eight", "either", "eleven", "else", "elsewhere", "empty", "enough", "etc", "even", "ever", "every", "everyone", "everything", "everywhere", "except", "few", "fifteen", "fify", "fill", "find", "fire", "first", "five", "for", "former", "formerly", "forty", "found", "four", "from", "front", "full", "further", "get", "give", "go", "had", "has", "hasnt", "have", "he", "hence", "her", "here", "hereafter", "hereby", "herein", "hereupon", "hers", "herself", "him", "himself", "his", "how", "however", "hundred", "ie", "if", "in", "inc", "indeed", "interest", "into", "is", "it", "its", "itself", "keep", "last", "latter", "latterly", "least", "less", "ltd", "made", "many", "may", "me", "meanwhile", "might", "mill", "mine", "more", "moreover", "most", "mostly", "move", "much", "must", "my", "myself", "name", "namely", "neither", "never", "nevertheless", "next", "nine", "no", "nobody", "none", "noone", "nor", "not", "nothing", "now", "nowhere", "of", "off", "often", "on", "once", "one", "only", "onto", "or", "other", "others", "otherwise", "our", "ours", "ourselves", "out", "over", "own", "part", "per", "perhaps", "please", "put", "rather", "re", "same", "see", "seem", "seemed", "seeming", "seems", "serious", "several", "she", "should", "show", "side", "since", "sincere", "six", "sixty", "so", "some", "somehow", "someone", "something", "sometime", "sometimes", "somewhere", "still", "such", "system", "take", "ten", "than", "that", "the", "their", "them", "themselves", "then", "thence", "there", "thereafter", "thereby", "therefore", "therein", "thereupon", "these", "they", "thickv", "thin", "third", "this", "those", "though", "three", "through", "throughout", "thru", "thus", "to", "together", "too", "top", "toward", "towards", "twelve", "twenty", "two", "un", "under", "until", "up", "upon", "us", "very", "via", "was", "we", "well", "were", "what", "whatever", "when", "whence", "whenever", "where", "whereafter", "whereas", "whereby", "wherein", "whereupon", "wherever", "whether", "which", "while", "whither", "who", "whoever", "whole", "whom", "whose", "why", "will", "with", "within", "without", "would", "yet", "you", "your", "yours", "yourself", "yourselves", "the"];
 		$oquery = $query;
 		$query = preg_replace('/[^0-9a-z\-\'\% ]/i', '', strtolower($query));
-		$parts = explode(' ', $query);
+		$parts = explode(' ', trim($query));
+		$parts = StringHelper::neighborWordCombos($parts);
 		$parts = array_diff($parts, $badSearchWords);
 		return $parts;
 	}

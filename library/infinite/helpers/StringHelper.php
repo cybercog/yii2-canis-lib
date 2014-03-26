@@ -15,6 +15,33 @@ class StringHelper extends \yii\helpers\StringHelper
 		return [];
 	}
 
+	static public function neighborWordCombos($parts)
+	{
+		if (is_string($parts)) {
+			$parts = explode(' ', $parts);
+		}
+		$newParts = [];
+		$increaseBase = false;
+		$lower = 0;
+		$higher = count($parts);
+		$i = 2;
+		if ($i > $higher) {
+			return $parts;
+		}
+		while ($lower < count($parts)-1) {
+			if ($i === count($parts)) {
+				$increaseBase = true;
+			}
+			$newParts[] = implode(' ', array_slice($parts, $lower, $i - $lower));
+			if ($increaseBase) {
+				$lower++;
+			} else {
+				$i++;
+			}
+		}
+		return array_unique(array_merge($newParts, $parts));
+	}
+
 	static public function parseText($text, $variables = [])
 	{
 		if (is_object($text)) { return $text; }
