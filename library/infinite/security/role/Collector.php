@@ -35,8 +35,8 @@ class Collector extends \infinite\base\collector\Collector
 		foreach ($this->tableRegistry as $role) {
 			if ($role->primaryKey === $id) {
 				$object = $this->getOne($role->system_id);
-				if ($object->object) {
-					return $object->object;
+				if (isset($object->object)) {
+					return $object;
 				}
 				break;
 			}

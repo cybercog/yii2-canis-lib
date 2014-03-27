@@ -6,6 +6,7 @@ use infinite\base\exceptions\Exception;
 use yii\db\Query;
 use infinite\security\Access;
 use infinite\caching\Cacher;
+use infinite\helpers\ArrayHelper;
 
 class ObjectAccess extends \infinite\base\Component
 {
@@ -62,15 +63,73 @@ class ObjectAccess extends \infinite\base\Component
 		return true;
 	}
 
+	protected function fillValidationSettings($validationSettings)
+	{
+		return $validationSettings;
+	}
+
+	public function getUniversalMaxRoleLevel()
+	{
+		return $this->getAccessorRoleLevel();
+	}
+
+	protected function validateRole($role, $validationSettings)
+	{
+		$package = ['errors' => []];
+		if ($role === 'none') {
+			return $package;
+		}
+		if (!is_object($role)) {
+			$role = Yii::$app->collectors['roles']->getById($role);
+			if (!$role) {
+				$package['errors'][] = 'Invalid role (role does not exist)';
+				return $package;
+			}
+		}
+		if (isset($validationSettings['maxRoleLevel']) && $validationSettings['maxRoleLevel'] !== true) {
+			if ($role->level >= $validationSettings['maxRoleLevel']) {
+				$package['errors'][] = 'Invalid role (role level is too high)';
+			}
+		}
+		if (isset($validationSettings['possibleRoles']) && $validationSettings['possibleRoles'] !== true) {
+			if (!in_array($role->object->primaryKey, $validationSettings['possibleRoles'])) {
+				$package['errors'][] = 'Invalid role (role not valid for this object)';
+			}
+		}
+		return $package;
+	}
+
 	protected function validateClean($data)
 	{
 		$package = ['errors' => []];
-		// check for duplicates of exclusive roles
-		$exclusive = [];
-		
 
-		// check for setting invalid access levels
+		$specialRequestors = ArrayHelper::index($this->specialRequestors, 'object.primaryKey');
 
+		$defaultValidationSettings = [
+			'maxRoleLevel' => $this->getUniversalMaxRoleLevel(),
+		];
+
+		foreach ($data as $requestor => $role) {
+			$validationSettings = $defaultValidationSettings;
+			if (isset($specialRequestors[$requestor])) {
+				$validationSettings = array_merge($validationSettings, $specialRequestors[$requestor]);
+			}
+			if (!isset($validationSettings['object'])) {
+				$registryClass = Yii::$app->classes['Registry'];
+				$validationSettings['object'] = $registryClass::getObject($requestor, false);
+			}
+			if (empty($validationSettings['object'])) {
+				$package['errors'][$requestor] = 'Not a valid object';
+				continue;
+			}
+			$validationSettings = $this->fillValidationSettings($validationSettings);
+			$results = $this->validateRole($role, $validationSettings);
+			if (!empty($results['errors'])) {
+				$package['errors'][$requestor] = implode('; ', $results['errors']);
+			}
+		}
+		\d($package);
+		exit;
 		$package['data'] = $data;
 		return $package;
 	}
@@ -81,7 +140,9 @@ class ObjectAccess extends \infinite\base\Component
 			$this->_requestors = [];
 			$aros = Yii::$app->gk->getObjectAros($this->object);
 
-			foreach ($this->specialRequestors as $special => $requestor) {
+			foreach ($this->specialRequestors as $special => $requestorSettings) {
+				if (empty($requestorSettings['object'])) { continue; }
+				$requestor = $requestorSettings['object'];
 				if (!in_array($requestor->primaryKey, $aros)) {
 					$aros[] = $requestor->primaryKey;
 				}
@@ -113,7 +174,10 @@ class ObjectAccess extends \infinite\base\Component
 			$registryClass = Yii::$app->classes['Registry'];
 			foreach ($this->roles as $requestorId => $roleId) {
 				$object = $registryClass::getObject($requestorId, true);
-				$role = Yii::$app->collectors['roles']->getById($roleId);
+				$role = null;
+				if (!empty($roleId)) {
+					$role = Yii::$app->collectors['roles']->getById($roleId);
+				}
 				$this->_tempCache['roled'][$requestorId] = [
 					'object' => $object,
 					'role' => $role
@@ -126,7 +190,10 @@ class ObjectAccess extends \infinite\base\Component
 	public function getSpecialRequestors()
 	{
 		return [
-			'public' => Yii::$app->gk->publicGroup
+			'public' => [
+				'object' => Yii::$app->gk->publicGroup,
+				'maxRoleLevel' => Yii::$app->params['maxRoleLevels']['public']
+			]
 		];
 	}
 
@@ -186,7 +253,7 @@ class ObjectAccess extends \infinite\base\Component
 		$roles['none'] = $nullRole;
 		foreach (Yii::$app->collectors['roles']->getAll() as $roleItem) {
 			$roles[$roleItem->id] = $roleItem->package;
-			$roles[$roleItem->id]['available'] = $roleItem->level <= $accessorRoleLevel;
+			$roles[$roleItem->id]['available'] = $accessorRoleLevel === true || $roleItem->level <= $accessorRoleLevel;
 			$roles[$roleItem->id]['helpText'] = $this->getRoleHelpText($roleItem);
 
 		}
@@ -204,9 +271,23 @@ class ObjectAccess extends \infinite\base\Component
 	public function getAccessorRoleLevel($accessingObject = null)
 	{
 		$accessingObject = Yii::$app->gk->getAccessingObject($accessingObject);
-
-		// @todo base this on the actual user
-		return 1000;
+		if (Yii::$app->gk->accessorHasGroup($accessingObject, ['administrators', 'super_administrators'])) {
+			return true;
+		}
+		$currentRoles = $this->getRoleObjects();
+		ArrayHelper::multisort($currentRoles, 'role.level', SORT_DESC);
+		$accessingRequestors = Yii::$app->gk->getRequestors($accessingObject);
+		foreach ($currentRoles as $roleObject) {
+			if (empty($roleObject['role'])) { continue; }
+			$objectType = $roleObject['object']->objectType;
+			if ($objectType->getBehavior('Authority') !== null) {
+				$test = true;
+				if (in_array($roleObject['object']->primaryKey, $accessingRequestors)) {
+					return $roleObject['role']->level;
+				}
+			}
+		}
+		return 0;
 	}
 }
 ?>

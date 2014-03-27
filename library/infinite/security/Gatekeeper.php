@@ -474,6 +474,9 @@ class Gatekeeper extends \infinite\base\Component
 
 	public function accessorHasGroup($accessingObject, $groupSystemId)
 	{
+		if (!is_array($groupSystemId)) {
+			$groupSystemId = [$groupSystemId];
+		}
 		$userClass = Yii::$app->classes['User'];
 		$accessingObject = $this->getAccessingObject($accessingObject);
 		if (get_class($accessingObject) !== $userClass) {
@@ -481,7 +484,7 @@ class Gatekeeper extends \infinite\base\Component
 		}
 		$groups = $this->getAccessorGroups($accessingObject);
 		foreach ($groups as $group) {
-			if ($group->system === $groupSystemId) {
+			if (in_array($group->system, $groupSystemId)) {
 				return true;
 			}
 		}
