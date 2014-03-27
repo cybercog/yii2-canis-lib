@@ -52,6 +52,28 @@ class ObjectAccess extends \infinite\base\Component
 		$this->requestors;
 	}
 
+	public function save($data)
+	{
+		$validation = $this->validateClean($data);
+		if (!empty($validation['errors']) || $validation === false) {
+			return $validation;
+		}
+
+		return true;
+	}
+
+	protected function validateClean($data)
+	{
+		$package = ['errors' => []];
+		// check for duplicates of exclusive roles
+		$exclusive = [];
+		
+
+		// check for setting invalid access levels
+
+		$package['data'] = $data;
+		return $package;
+	}
 
 	public function getRequestors()
 	{
