@@ -110,7 +110,7 @@ class SearchTermResult extends Object
 		}
 		if (isset($this->object)) {
 			$fieldValue = $this->object->getFieldValue($field);
-			if (!empty($fieldValue)) {
+			if (!empty($fieldValue) && !in_array($fieldValue, $this->_subdescriptor)) {
 				$this->_subdescriptor[] = $fieldValue;
 				return true;
 			}
@@ -123,7 +123,7 @@ class SearchTermResult extends Object
 		if (is_null($this->_subdescriptor)) {
 			$this->_subdescriptor = [];
 		}
-		if (!empty($value)) {
+		if (!empty($value) && !in_array($value, $this->_subdescriptor)) {
 			$this->_subdescriptor[] = $value;
 		}
 		return false;

@@ -123,7 +123,7 @@ InfiniteInstructionHandler.prototype.handleDialog = function() {
 			$body.find('*').trigger('visible');
 			var $focus = $body.find('.has-error :focusable').first();
 			if ($focus.length === 0) {
-				$focus = $body.find(':focusable').first();
+				$focus = $body.find(':focusable:not(.disabled)').first();
 			}
 			if ($focus.length > 0) {
 				$focus.focus();

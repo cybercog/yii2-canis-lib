@@ -16,20 +16,17 @@ use infinite\base\exceptions\Exception;
 class Item extends \infinite\base\collector\Item 
 {
 	public $exclusive = false;
-	public $conflictRole = false;
 	public $name;
 	public $level = 100;
-	public $required = true;
 
 	public function getPackage()
 	{
 		return [
 			'id' => $this->id,
+			'system_id' => $this->object->system_id,
 			'label' => $this->name,
 			'exclusive' => $this->exclusive,
-			'conflictRole' => $this->conflictRole,
 			'level' => $this->level,
-			'required' => $this->required,
 		];
 	}
 

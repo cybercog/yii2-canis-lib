@@ -155,6 +155,8 @@ class ObjectAccess extends \infinite\base\Component
 		$roles = [];
 		$nullRole = [];
 		$nullRole['id'] = 'none';
+		$nullRole['system_id'] = 'none';
+		$nullRole['exclusive'] = false;
 		$nullRole['item'] = null;
 		$nullRole['label'] = 'No Access';
 		$nullRole['available'] = true;

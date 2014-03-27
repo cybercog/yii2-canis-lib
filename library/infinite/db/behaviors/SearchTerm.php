@@ -136,6 +136,10 @@ trait SearchTerm
 		}
 		$relavance = implode('+', $orders);
 		$query->select = [$query->primaryAlias . ".*", "({$relavance}) as [[searchScore]]"];
+		if (empty($query->orderBy)) {
+			$query->orderBy = [];
+		}
+		$query->orderBy[$relavance] = SORT_DESC;
 		return $query;
 	}
 
