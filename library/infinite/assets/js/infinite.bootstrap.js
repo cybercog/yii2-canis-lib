@@ -21,7 +21,11 @@ jQuery.fn.slideLeftShow = function(speed, callback) {
 
 // ajax form
 $(document).on('submit.infinite-api', 'form.ajax', function(e) {
-	$(this).ajaxSubmit();
+	var options = {};
+	if ($(this).data('data')) {
+		options.data = $(this).data('data');
+	}
+	$(this).ajaxSubmit(options);
 	e.stopPropagation();
 	return false;
 });
