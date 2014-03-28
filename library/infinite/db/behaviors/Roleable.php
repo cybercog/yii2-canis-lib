@@ -10,6 +10,7 @@ use yii\caching\GroupDependency;
 
 class Roleable extends \infinite\db\behaviors\ActiveRecord
 {
+    public $accessRoleCheck;
     public $roleableEnabled = true;
     protected $_role = [];
     protected $_roleCurrent = [];
@@ -26,7 +27,7 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
     
     public function safeAttributes()
     {
-        return ['role', 'roles'];
+        return ['role', 'roles', 'accessRoleCheck'];
     }
 
 
@@ -93,6 +94,14 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
         $cacheKey = json_encode([__FUNCTION__, 'owner' => $this->owner->primaryKey]);
         if (!isset(self::$_cache[$cacheKey])) {
             self::$_cache[$cacheKey] = Yii::$app->gk->getObjectRoles($this->owner);
+        }
+        return self::$_cache[$cacheKey];
+    }
+
+    public function getObjectInheritedRoles() {
+        $cacheKey = json_encode([__FUNCTION__, 'owner' => $this->owner->primaryKey]);
+        if (!isset(self::$_cache[$cacheKey])) {
+            self::$_cache[$cacheKey] = Yii::$app->gk->getObjectInheritedRoles($this->owner);
         }
         return self::$_cache[$cacheKey];
     }
@@ -180,7 +189,7 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
         $roleId = empty($roleItem) ? null : $roleItem->object->primaryKey;
         $aclRoleClass = Yii::$app->classes['AclRole'];
 
-        $gkRoles = $this->getObjectRoles();
+        $gkRoles = $this->getObjectInheritedRoles();
         $inherited = false;
         $inheritedAroRole = false;
         $clearRole = empty($roleItem);

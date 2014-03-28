@@ -167,9 +167,11 @@ class ObjectAccess extends \infinite\base\Component
 					$aros[] = $requestor->primaryKey;
 				}
 			}
+			Yii::$app->gk->debug = true;
 			foreach ($aros as $aro) {
 				$this->_requestors[$aro] = Yii::$app->gk->getAccess($this->object, $aro, null, false);
 			}
+			Yii::$app->gk->debug = false;
 		}
 		return $this->_requestors;
 	}
@@ -179,6 +181,9 @@ class ObjectAccess extends \infinite\base\Component
 		if (is_null($this->_roles)) {
 			$this->_roles = Yii::$app->gk->getObjectRoles($this->object);
 			foreach ($this->specialRequestors as $special => $requestor) {
+				if (!is_object($requestor['object'])) {
+					\d($this->specialRequestors);exit;
+				}
 				if (!array_key_exists($requestor['object']->primaryKey, $this->_roles)) {
 					$this->_roles[$requestor['object']->primaryKey] = $this->getRoleObject($requestor['object']);
 				}

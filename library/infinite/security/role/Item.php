@@ -39,4 +39,20 @@ class Item extends \infinite\base\collector\Item
 	{
 		return $this->object->system_id;
 	}
+
+	public function getLevelSection()
+	{
+		if ($this->level > INFINITE_ROLE_LEVEL_MANAGER) {
+			return 'owner';
+		} elseif ($this->level > INFINITE_ROLE_LEVEL_EDITOR) {
+			return 'manager';
+		} elseif ($this->level > INFINTE_ROLE_LEVEL_COMMENTER) {
+			return 'editor';
+		} elseif ($this->level > INFINITE_ROLE_LEVEL_VIEWER) {
+			return 'commenter';
+		} elseif ($this->level > 0) {
+			return 'viewer';
+		}
+		return 'none';
+	}
 }

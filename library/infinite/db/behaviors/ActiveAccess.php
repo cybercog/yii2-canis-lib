@@ -16,7 +16,7 @@ use infinite\security\Access;
 
 class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
 {
-
+    protected static $_debug = false;
 	// from QueryAccess
     protected $_objectAccess;
     protected $_access;
@@ -51,6 +51,12 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     	foreach ($access as $key => $value) {
     		$this->_accessMap[$key] = $value;
     	}
+    }
+
+    public function setAccessDebug($debug)
+    {
+        self::$_debug = $debug;
+        Yii::$app->gk->debug = $debug;
     }
 
     public function can($aca, $accessingObject = null, $trustParent = false)

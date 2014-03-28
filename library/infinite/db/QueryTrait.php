@@ -16,6 +16,7 @@ use yii\db\Query as BaseQuery;
 trait QueryTrait
 {
 	public $disableFutureAccessCheck = false;
+	public $ensureSelect;
 	protected $_db;
 	
 	public function __clone()
@@ -28,6 +29,24 @@ trait QueryTrait
     {
         parent::init();
         $this->ensureAccessControl();
+    }
+
+    public function prepareBuild($builder)
+    {
+    	parent::prepareBuild($builder);
+    	if (!empty($this->ensureSelect)) {
+    		if (!is_array($this->ensureSelect)) {
+    			$this->ensureSelect = [$this->ensureSelect];
+    		}
+    		if (!isset($this->select)) {
+    			$this->select = [];
+    		}
+    		foreach ($this->ensureSelect as $select) {
+    			if (!in_array($select, $this->select)) {
+    				$this->select[] = $select;
+    			}
+    		}
+    	}
     }
 
     public function ensureAccessControl()

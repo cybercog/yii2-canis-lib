@@ -27,6 +27,7 @@ use yii\caching\ChainedDependency;
 class Gatekeeper extends \infinite\base\Component
 {
 	public $proxy = false;
+	public $debug = false;
 
 	protected $_requestors;
 	protected $_actionsById;
@@ -148,15 +149,29 @@ class Gatekeeper extends \infinite\base\Component
 	public function fillActions($acls, $baseAccess = [], $acaIds = null)
 	{
 		$baseNullAccess = $this->findNullAction($acls);
+		$baseNoAccess = $this->createAccess(['accessLevel' => Access::ACCESS_NONE]);
 		$actions = $this->actionsById;
-
+		$accessClass = $this->accessClass;
 		$access = [];
+		if ($baseNullAccess) {
+			foreach ($actions as $action) {
+				$acaValue = ArrayHelper::getValue($action, 'id');
+				$nullAccess = clone $baseNullAccess;
+				$nullAccess->action = $action;
+				$access[$acaValue] = $nullAccess;
+			}
+		}
+
 		foreach ($acls as $acl) {
 			$acaValue = ArrayHelper::getValue($acl, 'aca_id');
 			if (is_null($acaValue)) { continue; }
-			$accessObject = $this->createAccess($acl);
-			if (!array_key_exists($acaValue, $baseAccess) 
-				|| $baseAccess[$acaValue] === $noAccessValue) {
+			if (!isset($access[$acaValue])) {
+				if (!array_key_exists($acaValue, $baseAccess) 
+					|| $baseAccess[$acaValue] !== $accessClass::ACCESS_GRANTED) {
+					$accessObject = $this->createAccess($acl);
+				} else {
+					$accessObject = $this->createAccess(['access' => $baseAccess[$acaValue]]);
+				}
 				$access[$acaValue] = $accessObject;
 			}
 		}
@@ -164,9 +179,9 @@ class Gatekeeper extends \infinite\base\Component
 		foreach ($actions as $action) {
 			$acaValue = ArrayHelper::getValue($action, 'id');
 			if (!array_key_exists($acaValue, $access)) {
-				$nullAccess = clone $baseNullAccess;
-				$nullAccess->action = $action;
-				$access[$acaValue] = $nullAccess;
+				$noAccess = clone $baseNoAccess;
+				$noAccess->action = $action;
+				$access[$acaValue] = $noAccess;
 			}
 		}
 		return $access;
@@ -208,7 +223,8 @@ class Gatekeeper extends \infinite\base\Component
 				return $this->createAccess($acl);
 			}	
 		}
-		return $this->createAccess(['accessLevel' => Access::ACCESS_NONE]);
+		return false;
+		// return $this->createAccess(['accessLevel' => Access::ACCESS_NONE]);
 	}
 
 	public function canGeneral($action, $model, $accessingObject = null) {
@@ -231,6 +247,83 @@ class Gatekeeper extends \infinite\base\Component
 			return $object;
 		}
 		return false;
+	}
+
+	public function generateAclRoleCheckCriteria($query, $controlledObject, $accessingObject = null, $modelClass = null, $expandAros = true)
+	{
+		if (Yii::$app->gk->accessorHasGroup($accessingObject, ['administrators', 'super_administrators'])) {
+			return $query;
+		}
+		$aclRoleClass = Yii::$app->classes['AclRole'];
+        $aclRoleTable = $aclRoleClass::tableName();
+        $modelAlias = null;
+        if (is_null($modelClass)) {
+        	$modelClass = get_class($controlledObject);
+        } elseif(is_string($modelClass)) {
+        	$modelClass = ActiveRecord::parseModelAlias($modelClass);
+        } else {
+        	$modelClass = null;
+        }
+
+        if (!is_null($modelClass)) {
+        	$modelAlias = ActiveRecord::modelAlias($modelClass);
+        }
+		$controlledObject = $this->getControlledObject($controlledObject, $modelClass);
+		$orderControlledObject = [];
+		if (is_array($controlledObject)) {
+			$modelPrefix = $modelClass::modelPrefix();
+			foreach ($controlledObject as $objectId) {
+				if (preg_match('/^'. preg_quote($modelPrefix .'-') .'/', $objectId) !== 1) {
+					$orderControlledObject[] = $objectId;
+				}
+			}
+		}
+		$subquery = new Query;
+		$innerAlias = 'inner_acl_role';
+		$innerOnConditions = ['or'];
+		$innerOnConditions[] = ['[['. $innerAlias .']].[[controlled_object_id]]' => $controlledObject];
+		$innerOnConditions[] = '[['. $innerAlias.']].[[controlled_object_id]] = [[' .$query->primaryAlias .']].[['. $query->primaryTablePk .']]';
+		$subquery->from([$aclRoleTable => $aclRoleTable]);
+		if ($expandAros) {
+			$aros = $this->getRequestors($accessingObject);
+		} elseif(isset($accessingObject)) {
+			$aros = is_object($accessingObject) ? [$accessingObject->primaryKey] : [$accessingObject];
+		} else {
+			$aros = [];
+		}
+		$aroIn = [];
+		foreach ($aros as $aro) {
+			if (is_array($aro)) {
+				foreach ($aro as $sa) {
+					$aroIn[] = $sa;
+				}
+			} else {
+				$aroIn[] = $aro;
+			}
+		}
+
+		$where = ['and'];
+		if (!empty($aroIn)) {
+			$where[] = ['{{'. $aclRoleTable .'}}.[[accessing_object_id]]' => $aroIn];
+		} else {
+			$where[] = ['{{'. $aclRoleTable .'}}.[[accessing_object_id]]' => null]; //never!
+		}
+
+		// $subquery->where($innerOnConditions)->select(['[[role_id]]']);
+		if (!empty($orderControlledObject)) {
+			$subquery->orderBy(['IF([[controlled_object_id]] IN ("'. implode('", "', $orderControlledObject) .'"), 1, 0)' => SORT_ASC]);
+		}
+		// $subquery->limit = '1';
+		$subquery->where($where);
+		$query->leftJoin([$innerAlias => $subquery], $innerOnConditions);
+		$query->groupBy('{{'. $query->primaryAlias .'}}.[['. $query->primaryTablePk .']]');
+		$query->having(['and', '[[accessRoleCheck]] IS NOT NULL']);
+		if (!isset($query->ensureSelect)) {
+			$query->ensureSelect = [];
+		}
+		$query->ensureSelect[] = '{{inner_acl_role}}.[[role_id]] as accessRoleCheck';
+
+		return $query;
 	}
 
     public function generateAclCheckCriteria($query, $controlledObject, $accessingObject = null, $allowParentInherit = false, $modelClass = null, $expandAros = true, $limitAccess = true) {
@@ -365,7 +458,7 @@ class Gatekeeper extends \infinite\base\Component
 
 	public function getAccess($controlledObject, $accessingObject = null, $acaIds = null, $expandAros = true)
 	{
-		if (!$this->primaryRequestor) { return []; }
+		if (is_null($accessingObject) && !$this->primaryRequestor) { return []; }
 		if (is_null($acaIds)) {
 			$acaIds = true;
 		}
@@ -373,21 +466,26 @@ class Gatekeeper extends \infinite\base\Component
 			return [];
 		}
 
-		$aclKey = [__CLASS__.'.'.__FUNCTION__, func_get_args(), $this->primaryRequestor->primaryKey];
+		$aclKey = [__CLASS__.'.'.__FUNCTION__, func_get_args(), !empty($this->primaryRequestor) ? $this->primaryRequestor->primaryKey : null];
     	$access = Cacher::get($aclKey);
     	if ($access) {
     		return $access;
     	}
 
-		$query = new Query;
+		$subquery = new Query;
 		$aclClass = Yii::$app->classes['Acl'];
 		$alias = $aclClass::tableName();
-		$query->from = [$aclClass::tableName() .' '. $alias];
-		$this->generateAclCheckCriteria($query, $controlledObject, $accessingObject, true, get_class($controlledObject), $expandAros, false);
+		$subquery->from = [$aclClass::tableName() .' '. $alias];
+		$this->generateAclCheckCriteria($subquery, $controlledObject, $accessingObject, true, get_class($controlledObject), $expandAros, false);
 		if ($acaIds !== true) {
-			$query->andWhere(['or', [$alias.'.aca_id' => $acaIds], [$alias.'.aca_id' => null]]);
+			$subquery->andWhere(['or', [$alias.'.[[aca_id]]' => $acaIds], [$alias.'.[[aca_id]]' => null]]);
 		}
-		$query->groupBy($query->primaryAlias .'.aca_id');
+
+		$query = new Query;
+		$query->from(['internal' => $subquery]);
+		$query->groupBy('[[internal]].[[aca_id]]');
+
+
 		$raw = $query->all();
 		$results = $this->fillActions($raw, [], $acaIds);
 		
@@ -722,13 +820,28 @@ class Gatekeeper extends \infinite\base\Component
 		return $aros;
 	}
 
-	public function getObjectRoles($object)
+	public function getObjectInheritedRoles($object, $params = [])
+	{
+		if (!isset($params['ignoreControlled'])) {
+			$params['ignoreControlled'] = [];
+		}
+		$params['ignoreControlled'][] = $object->primaryKey;
+		return $this->getObjectRoles($object, $params);
+	}
+
+	public function getObjectRoles($object, $params = [])
 	{
 		$aclRoleClass = Yii::$app->classes['AclRole'];
 		$where = [];
 		$controlledObject = $this->getControlledObject($object);
-		$topControlledObject = is_array($controlledObject) ? $controlledObject[0] : $controlledObject;
+		if (!is_array($controlledObject)) {
+			$controlledObject = [$controlledObject];
+		}
+		$topControlledObject = $controlledObject[0];
 
+		if (isset($params['ignoreControlled'])) {
+			$controlledObject = array_diff($controlledObject, $params['ignoreControlled']);
+		}
 		$where = ['controlled_object_id' => $controlledObject];
 		$arosRaw = $aclRoleClass::find()->where($where)->select(['[[id]]','[[controlled_object_id]]','[[accessing_object_id]]', '[[role_id]]'])->asArray();
 		$arosRaw = $arosRaw->all();

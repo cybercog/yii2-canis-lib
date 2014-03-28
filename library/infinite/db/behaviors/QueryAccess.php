@@ -92,18 +92,23 @@ class QueryAccess extends Query
         $query = $this->owner;
         if ($this->owner->accessAdded) { return $query; }
         $this->owner->accessAdded = true;
-        $aclClass = Yii::$app->classes['Acl'];
-        $alias = $aclClass::tableName();
         $parentClass = $this->owner->modelClass;
         $classAlias = $parentClass::modelAlias();
-        if ($aca) {
+        $readRole = true;
+        if ($aca && !($aca === 'read' && $readRole)) {
+            $aclClass = Yii::$app->classes['Acl'];
+            $alias = $aclClass::tableName();
             $aca = Yii::$app->gk->getActionObjectByName($aca);
             if (empty($aca)) {
                 throw new Exception("ACL is not set up correctly. No '{$aca}' action!");
             } 
             $query->andWhere(['or', [$alias.'.aca_id' => $aca->primaryKey], [$alias.'.aca_id' => null]]);
         }
-        Yii::$app->gk->generateAclCheckCriteria($query, false, $this->accessingObject, true, $classAlias);
+        if ($aca === 'read' && $readRole) {
+            Yii::$app->gk->generateAclRoleCheckCriteria($query, false, $this->accessingObject, $classAlias);
+        } else {
+            Yii::$app->gk->generateAclCheckCriteria($query, false, $this->accessingObject, true, $classAlias);
+        }
 
         return $query;
     }
