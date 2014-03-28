@@ -54,7 +54,7 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
             'id' => 'bigint unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY',
             'accessing_object_id' => 'char(36) CHARACTER SET ascii COLLATE ascii_bin NOT NULL',
             'controlled_object_id' => 'char(36) CHARACTER SET ascii COLLATE ascii_bin NOT NULL',
-            'role_id' => 'char(36) CHARACTER SET ascii COLLATE ascii_bin NOT NULL',
+            'role_id' => 'char(36) CHARACTER SET ascii COLLATE ascii_bin DEFAULT NULL',
             'created' => 'datetime DEFAULT NULL',
             'modified' => 'datetime DEFAULT NULL'
         ]);

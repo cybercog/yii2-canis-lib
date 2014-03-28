@@ -73,6 +73,7 @@ class Gatekeeper extends \infinite\base\Component
 		return new ChainedDependency([
 			'dependencies' => [
 				new GroupDependency(['group' => 'aros']),
+				new GroupDependency(['group' => 'acl_role']),
 				$acaClass::cacheDependency(),
 				new DbDependency(['reusable' => true, 'sql' => $query->createCommand()->rawSql])
 			]
@@ -725,9 +726,20 @@ class Gatekeeper extends \infinite\base\Component
 	{
 		$aclRoleClass = Yii::$app->classes['AclRole'];
 		$where = [];
-		$where = ['controlled_object_id' => $this->getControlledObject($object)];
-		$aros = $aclRoleClass::find()->where($where)->groupBy(['[[accessing_object_id]]'])->select(['[[accessing_object_id]]', '[[role_id]]'])->asArray()->all();
-		$aros = ArrayHelper::map($aros, 'accessing_object_id', 'role_id');
+		$controlledObject = $this->getControlledObject($object);
+		$topControlledObject = is_array($controlledObject) ? $controlledObject[0] : $controlledObject;
+
+		$where = ['controlled_object_id' => $controlledObject];
+		$arosRaw = $aclRoleClass::find()->where($where)->groupBy(['[[accessing_object_id]]'])->select(['[[id]]','[[controlled_object_id]]','[[accessing_object_id]]', '[[role_id]]'])->asArray()->all();
+		$aros = [];
+		foreach ($arosRaw as $aro) {
+			$aros[$aro['accessing_object_id']] = [
+				'acl_role_id' => $aro['id'],
+				'role_id' => $aro['role_id'],
+				'inherited' => $topControlledObject !== $aro['controlled_object_id']
+			];
+		}
+		ArrayHelper::map($aros, 'accessing_object_id', 'role_id');
 		return $aros;
 	}
 

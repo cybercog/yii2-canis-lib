@@ -73,7 +73,7 @@ class Ownable extends \infinite\db\behaviors\ActiveRecord
     public function hasObjectOwner()
     {
         if (!$this->isEnabled()) { return false; }
-        return !empty($this->owner->getFirstAroByRole(self::ROLE_OWNER));
+        return !empty($this->owner->getFirstAroByRole(['system_id' => self::ROLE_OWNER]));
     }
 
     public function setObjectOwner($aro)
@@ -85,7 +85,7 @@ class Ownable extends \infinite\db\behaviors\ActiveRecord
     public function getObjectOwner()
     { 
         if (!$this->isEnabled()) { return false; }
-        return $this->owner->getFirstAroByRole(self::ROLE_OWNER);
+        return $this->owner->getFirstAroByRole(['system_id' => self::ROLE_OWNER]);
     }
 
     public function afterSave($event)
@@ -99,7 +99,7 @@ class Ownable extends \infinite\db\behaviors\ActiveRecord
         }
         if (!$this->owner->hasRole(self::ROLE_OWNER)) { return; }
 
-        $owner = $this->owner->getFirstAroByRole(self::ROLE_OWNER);
+        $owner = $this->owner->getFirstAroByRole(['system_id' => self::ROLE_OWNER]);
         foreach ($ownerAccess as $aca) {
             if (!$this->owner->can($aca, $owner)) {
                 $this->owner->allow($aca, $owner);

@@ -6,6 +6,7 @@ use Yii;
 use yii\db\Expression;
 use infinite\base\Exception;
 use infinite\helpers\ArrayHelper;
+use yii\caching\GroupDependency;
 
 class Roleable extends \infinite\db\behaviors\ActiveRecord
 {
@@ -32,18 +33,24 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
     public function normalizeRole($role = null)
     {
         if (!is_null($role) && is_string($role)) {
-            $roleTest = Yii::$app->collectors['roles']->getOne($role);
+            $roleTest = Yii::$app->collectors['roles']->getById($role);
+            $role = null;
             if ($roleTest) {
-                $role = $roleTest->object;
-            } else {
-                $role = false;
+                $role = $roleTest;
             }
         }
-        if (is_object($role)) {
-            $role = $role->system_id;
+        if (!is_object($role) && is_array($role)) {
+            $roleLookup = $role;
+            $role = null;
+            if (isset($roleLookup['system_id'])) {
+                 $roleTest = Yii::$app->collectors['roles']->getOne($roleLookup['system_id']);
+                if ($roleTest) {
+                    $role = $roleTest;
+                }
+            }
         }
         if (empty($role)) {
-            return false;
+            return null;
         }
         return $role;
     }
@@ -75,21 +82,19 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
     {
         $aro = $this->normalizeAro($aro);
         if (empty($aro)) { return false; }
-        if (!isset($this->_roleChanged[$aro])) {
-            $this->_roleChanged[$aro] = false;
-        }
-        if (isset($this->_role[$aro])) {
-            $checkRoleA = is_object($role) ? $role->primaryKey : $role;
-            $checkRoleB = is_object($this->_role[$aro]) ? $this->_role[$aro]->primaryKey : $this->_role[$aro];
-            $this->_roleChanged[$aro] = $checkRoleB !== $checkRoleA;
-        } else {
-            $this->_roleChanged[$aro] = true;
-        }
         $this->_role[$aro] = $role;
         if ($handle) {
             return $this->handleRoleSave();
         }
         return true;
+    }
+
+    public function getObjectRoles() {
+        $cacheKey = json_encode([__FUNCTION__, 'owner' => $this->owner->primaryKey]);
+        if (!isset(self::$_cache[$cacheKey])) {
+            self::$_cache[$cacheKey] = Yii::$app->gk->getObjectRoles($this->owner);
+        }
+        return self::$_cache[$cacheKey];
     }
 
     public function getRole($aro = null, $includeNew = true)
@@ -117,13 +122,13 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
     public function getAroByRole($role)
     {
         $role = $this->normalizeRole($role);
-        $cacheKey = json_encode(['role' => $role, 'object' => $this->owner->primaryKey]);
+        $cacheKey = json_encode([__FUNCTION__, 'role' => $role->object->primaryKey, 'object' => $this->owner->primaryKey]);
         if (!isset(self::$_cache[$cacheKey])) {
             self::$_cache[$cacheKey] = false;
             $aclRoleClass = Yii::$app->classes['AclRole'];
             $params = [];
             $params['controlled_object_id'] = $this->owner->primaryKey;
-            $params['role_id'] = $role;
+            $params['role_id'] = $role->object->primaryKey;
             self::$_cache[$cacheKey] = $aclRoleClass::find()->where($params)->all();
             if (empty(self::$_cache[$cacheKey])) {
                 self::$_cache[$cacheKey] = false;
@@ -171,37 +176,46 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
 
     protected function internalSetRole($role, $aro) {
         $aro = $this->normalizeAro($aro);
-        $role = $this->normalizeRole($role);
+        $roleItem = $this->normalizeRole($role);
+        $roleId = empty($roleItem) ? null : $roleItem->object->primaryKey;
         $aclRoleClass = Yii::$app->classes['AclRole'];
-        if (empty($role)) {
-            $this->clearAroRole($aro);
-            return true;
-        }
-        $roleItem = Yii::$app->collectors['roles']->getOne($role);
-        if ($roleItem->exclusive) {
-            $params = [];
-            $params['role_id'] = $roleItem->object->primaryKey;
-            $params['controlled_object_id'] = $this->owner->primaryKey;
-            $currentAros = $aclRoleClass::find()->where($params)->all();
-            foreach ($currentAros as $aclRole) {
-                if (!$this->internalSetRole($roleItem->conflictRole, $aclRole->accessing_object_id)) {
-                    return false;
-                }
+
+        $gkRoles = $this->getObjectRoles();
+        $inherited = false;
+        $inheritedAroRole = false;
+        $clearRole = empty($roleItem);
+        if (isset($gkRoles[$aro])) {
+            $inherited = $gkRoles[$aro]['inherited'];
+            if ($inherited) {
+                $inheritedAroRoleId = $gkRoles[$aro]['acl_role_id'];
+                $inheritedAroRole = $aclRoleClass::get($inheritedAroRoleId);
+                $clearRole = $inheritedAroRole->role_id === $roleId;
             }
         }
+        if ($clearRole) {
+            $this->clearAroRole($aro);
+            GroupDependency::invalidate(Yii::$app->cache, 'acl_role');
+            return true;
+        }
         $aclRole = $this->getRole($aro, false);
+        $existing = true;
         if (!$aclRole) {
             $aclRole = new $aclRoleClass;
+            $existing = false;
         }
+        $changed = $aclRole->role_id !== $roleId;
         $params = [];
         $params['controlled_object_id'] = $this->owner->primaryKey;
         $params['accessing_object_id'] = $aro;
-        $params['role_id'] = $roleItem->object->primaryKey;
+        $params['role_id'] = $roleId;
         $aclRole->attributes = $params;
         if (!$aclRole->save()) {
             return false;
         }
-        return $this->ensureRoleAccess($aclRole);
+        if ($changed) {
+            GroupDependency::invalidate(Yii::$app->cache, 'acl_role');
+        }
+        return $this->ensureRoleAccess($aclRole, $existing);
     }
 
     public function determineAccessLevel($role, $aro = null)
@@ -209,9 +223,18 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
         return false;
     }
 
-    public function ensureRoleAccess($aclRole)
+    public function ensureRoleAccess($aclRole, $existing = false)
     {
         $registryClass = Yii::$app->classes['Registry'];
+        $aclClass = Yii::$app->classes['Acl'];
+        $aro = $registryClass::getObject($aclRole->accessing_object_id, false);
+        if (!$aro) { return false; }
+
+        if (empty($aclRole->role_id)) {
+            $this->owner->requireDirectAdmin(null, $aro, $aclRole);
+            return true;
+        }
+        
         $roleModel = $aclRole->role;
         if (empty($roleModel)) { return false; }
         $role = Yii::$app->collectors['roles']->getOne($roleModel->system_id);
@@ -219,13 +242,19 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
             return false;
         }
         $role = $role->object->system_id;
-        $aro = $registryClass::getObject($aclRole->accessing_object_id, false);
-        if (!$aro) { return false; }
+
         $accessLevels = $this->owner->determineAccessLevel($role, $aro);
+
+        $current = [];
+        if ($existing) {
+            $currentRaw = $aclClass::find()->where(['acl_role_id' => $aclRole->primaryKey])->all();
+            $current = ArrayHelper::index($currentRaw, 'aca_id');
+        }
         if ($accessLevels === false) {
             Yii::$app->gk->clearExplicitRules($this->owner->primaryKey, $aro);
             return true;
         } else {
+            $actionsByName = Yii::$app->gk->getActionsByName();
             foreach ($accessLevels as $key => $action) {
                 if (is_numeric($key)) {
                     $this->owner->allow($action, $aro, $aclRole);
@@ -234,6 +263,13 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
                     $action = $key;
                     $this->owner->setAccessLevel($action, $accessLevel, $aro, $aclRole);
                 }
+                $actionObject = isset($actionsByName[$action]) ? $actionsByName[$action] : false;
+                if ($actionObject && isset($current[$actionObject->primaryKey])) {
+                   unset($current[$actionObject->primaryKey]);
+                }
+            }
+            foreach ($current as $currentAcl) {
+                $currentAcl->delete();
             }
         }
         return true;

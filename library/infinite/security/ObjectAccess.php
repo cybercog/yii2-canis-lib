@@ -55,9 +55,21 @@ class ObjectAccess extends \infinite\base\Component
 
 	public function save($data)
 	{
-		$validation = $this->validateClean($data);
+		$validation = $this->validate($data);
 		if (!empty($validation['errors']) || $validation === false) {
+			if ($validation === false) {
+				$validation = ['errors' => 'Unable to save sharing settings.'];
+			}
 			return $validation;
+		}
+		foreach ($data as $requestorId => $roleId) {
+			if ($roleId === 'none') {
+				$roleId = null;
+			}
+			$this->object->setRole($roleId, $requestorId);
+		}
+		if (!$this->object->save()) {
+			return ['errors' => 'Unable to save sharing settings.'];
 		}
 
 		return true;
@@ -81,13 +93,13 @@ class ObjectAccess extends \infinite\base\Component
 		}
 		if (!is_object($role)) {
 			$role = Yii::$app->collectors['roles']->getById($role);
-			if (!$role) {
-				$package['errors'][] = 'Invalid role (role does not exist)';
-				return $package;
-			}
+		}
+		if (empty($role)) {
+			$package['errors'][] = 'Invalid role (role does not exist)';
+			return $package;
 		}
 		if (isset($validationSettings['maxRoleLevel']) && $validationSettings['maxRoleLevel'] !== true) {
-			if ($role->level >= $validationSettings['maxRoleLevel']) {
+			if ($role->level > $validationSettings['maxRoleLevel']) {
 				$package['errors'][] = 'Invalid role (role level is too high)';
 			}
 		}
@@ -99,7 +111,7 @@ class ObjectAccess extends \infinite\base\Component
 		return $package;
 	}
 
-	protected function validateClean($data)
+	protected function validate($data)
 	{
 		$package = ['errors' => []];
 
@@ -108,7 +120,7 @@ class ObjectAccess extends \infinite\base\Component
 		$defaultValidationSettings = [
 			'maxRoleLevel' => $this->getUniversalMaxRoleLevel(),
 		];
-
+		$exclusive = [];
 		foreach ($data as $requestor => $role) {
 			$validationSettings = $defaultValidationSettings;
 			if (isset($specialRequestors[$requestor])) {
@@ -122,14 +134,22 @@ class ObjectAccess extends \infinite\base\Component
 				$package['errors'][$requestor] = 'Not a valid object';
 				continue;
 			}
+			if (!empty($role) && $role !== 'none') {
+				$role = Yii::$app->collectors['roles']->getById($role);
+				if ($role && $role->exclusive) {
+					if (isset($exclusive[$role->object->primaryKey])) {
+						$package['errors'][$requestor] = 'There can not be more than one '. $role->object->name;
+						continue;
+					}
+					$exclusive[$role->object->primaryKey] = true;
+				}
+			}
 			$validationSettings = $this->fillValidationSettings($validationSettings);
 			$results = $this->validateRole($role, $validationSettings);
 			if (!empty($results['errors'])) {
 				$package['errors'][$requestor] = implode('; ', $results['errors']);
 			}
 		}
-		\d($package);
-		exit;
 		$package['data'] = $data;
 		return $package;
 	}
@@ -159,8 +179,8 @@ class ObjectAccess extends \infinite\base\Component
 		if (is_null($this->_roles)) {
 			$this->_roles = Yii::$app->gk->getObjectRoles($this->object);
 			foreach ($this->specialRequestors as $special => $requestor) {
-				if (!array_key_exists($requestor->primaryKey, $this->_roles)) {
-					$this->_roles[$requestor->primaryKey] = null;
+				if (!array_key_exists($requestor['object']->primaryKey, $this->_roles)) {
+					$this->_roles[$requestor['object']->primaryKey] = $this->getRoleObject($requestor['object']);
 				}
 			}
 		}
@@ -171,20 +191,31 @@ class ObjectAccess extends \infinite\base\Component
 	{
 		if (!isset($this->_tempCache['roled'])) {
 			$this->_tempCache['roled'] = [];
-			$registryClass = Yii::$app->classes['Registry'];
-			foreach ($this->roles as $requestorId => $roleId) {
-				$object = $registryClass::getObject($requestorId, true);
-				$role = null;
-				if (!empty($roleId)) {
-					$role = Yii::$app->collectors['roles']->getById($roleId);
-				}
-				$this->_tempCache['roled'][$requestorId] = [
-					'object' => $object,
-					'role' => $role
-				];
+			foreach ($this->roles as $requestorId => $roleSet) {
+				$this->_tempCache['roled'][$requestorId] = $this->getRoleObject($requestorId, $roleSet);
 			}
 		}
 		return $this->_tempCache['roled'];
+	}
+
+	public function getRoleObject($requestorId, $roleSet = [])
+	{
+		$defaultRoleSet = ['role_id' => null, 'inherited' => false, 'acl_role_id' => null];
+		$roleSet = array_merge($defaultRoleSet, $roleSet);
+		$registryClass = Yii::$app->classes['Registry'];
+		if (is_object($requestorId)) {
+			$object = $requestorId;
+		} else {
+			$object = $registryClass::getObject($requestorId, true);
+		}
+		$role = null;
+		if (!empty($roleSet['role_id']) && $roleSet['role_id'] !== 'none') {
+			$role = Yii::$app->collectors['roles']->getById($roleSet['role_id']);
+		}
+		$roleSet['object'] = $object;
+		$roleSet['role'] = $role;
+		unset($roleSet['role_id']);
+		return $roleSet;
 	}
 
 	public function getSpecialRequestors()
