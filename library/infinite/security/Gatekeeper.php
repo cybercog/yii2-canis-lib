@@ -730,9 +730,11 @@ class Gatekeeper extends \infinite\base\Component
 		$topControlledObject = is_array($controlledObject) ? $controlledObject[0] : $controlledObject;
 
 		$where = ['controlled_object_id' => $controlledObject];
-		$arosRaw = $aclRoleClass::find()->where($where)->groupBy(['[[accessing_object_id]]'])->select(['[[id]]','[[controlled_object_id]]','[[accessing_object_id]]', '[[role_id]]'])->asArray()->all();
+		$arosRaw = $aclRoleClass::find()->where($where)->select(['[[id]]','[[controlled_object_id]]','[[accessing_object_id]]', '[[role_id]]'])->asArray();
+		$arosRaw = $arosRaw->all();
 		$aros = [];
 		foreach ($arosRaw as $aro) {
+			if (isset($aros[$aro['accessing_object_id']])) { continue; }
 			$aros[$aro['accessing_object_id']] = [
 				'acl_role_id' => $aro['id'],
 				'role_id' => $aro['role_id'],
