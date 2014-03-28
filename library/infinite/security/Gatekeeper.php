@@ -833,7 +833,7 @@ class Gatekeeper extends \infinite\base\Component
 	{
 		$aclRoleClass = Yii::$app->classes['AclRole'];
 		$where = [];
-		$controlledObject = $this->getControlledObject($object);
+		$controlledObject = $this->getControlledObject($object, get_class($object), ['debug' => true]);
 		if (!is_array($controlledObject)) {
 			$controlledObject = [$controlledObject];
 		}

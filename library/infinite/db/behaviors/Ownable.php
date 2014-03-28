@@ -79,7 +79,7 @@ class Ownable extends \infinite\db\behaviors\ActiveRecord
     public function setObjectOwner($aro)
     {
         if (!$this->isEnabled()) { return false; }
-        return $this->owner->setRole(self::ROLE_OWNER, $aro);
+        return $this->owner->setRole(['system_id' => self::ROLE_OWNER], $aro);
     }
 
     public function getObjectOwner()

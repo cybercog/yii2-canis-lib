@@ -12,10 +12,12 @@ namespace infinite\security\role;
 use Yii;
 
 use infinite\base\exceptions\Exception;
+use infinite\helpers\ArrayHelper;
 
 class Item extends \infinite\base\collector\Item 
 {
 	public $exclusive = false;
+	public $inheritedEditable = true;
 	public $name;
 	public $level = 100;
 
@@ -26,18 +28,25 @@ class Item extends \infinite\base\collector\Item
 			'system_id' => $this->object->system_id,
 			'label' => $this->name,
 			'exclusive' => $this->exclusive,
+			// 'inheritedEditable' => $this->inheritedEditable,
 			'level' => $this->level,
 		];
 	}
 
 	public function getId()
 	{
-		return $this->object->primaryKey;
+		if (!isset($this->object)) {
+			return false;
+		}
+		return ArrayHelper::getValue($this->object, 'primaryKey');
 	}
 
 	public function getSystemId()
 	{
-		return $this->object->system_id;
+		if (parent::getSystemId()) {
+			return parent::getSystemId();
+		}
+		return ArrayHelper::getValue($this->object, 'system_id');
 	}
 
 	public function getLevelSection()

@@ -55,7 +55,17 @@ class ObjectAccess extends \infinite\base\Component
 
 	public function save($data)
 	{
-		$validation = $this->validate($data);
+		$currentRoles = $this->getRoleObjects();
+		foreach ($data as $requestorId => $roleId) {
+			if (isset($currentRoles[$requestorId])) {
+				if ($currentRoles[$requestorId]['inherited'] 
+					&& isset($currentRoles[$requestorId]['role'])
+					&& !$currentRoles[$requestorId]['role']->inheritedEditable) {
+					unset($data[$requestorId]);
+				}
+			}
+		}
+		$validation = $this->validate($data, $currentRoles);
 		if (!empty($validation['errors']) || $validation === false) {
 			if ($validation === false) {
 				$validation = ['errors' => 'Unable to save sharing settings.'];
@@ -206,6 +216,12 @@ class ObjectAccess extends \infinite\base\Component
 	public function getRoleObject($requestorId, $roleSet = [])
 	{
 		$defaultRoleSet = ['role_id' => null, 'inherited' => false, 'acl_role_id' => null];
+		if ($roleSet === 'none') {
+			$roleSet = [];
+		}
+		if (is_string($roleSet)) {
+			$roleSet = ['role_id' => $roleSet];
+		}
 		$roleSet = array_merge($defaultRoleSet, $roleSet);
 		$registryClass = Yii::$app->classes['Registry'];
 		if (is_object($requestorId)) {

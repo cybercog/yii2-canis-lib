@@ -57,7 +57,9 @@ class Collector extends \infinite\base\collector\Collector
 	}
 
 	public function prepareComponent($component) {
-		if (!Yii::$app->isDbAvailable) { return $component; }
+		if (!Yii::$app->isDbAvailable) {
+			return $component;
+		}
 		if (!isset($component['systemId'])) { return false; }
 		$roleClass = Yii::$app->classes['Role'];
 		$component['object'] = isset($this->tableRegistry[$component['systemId']]) ? $this->tableRegistry[$component['systemId']] : false;
