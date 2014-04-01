@@ -146,7 +146,7 @@ class Gatekeeper extends \infinite\base\Component
 		return false;
 	}
 
-	public function fillActions($acls, $baseAccess = [], $acaIds = null)
+	public function fillActions($acls, $baseAccess = [], $controlledObject = null, $acaIds = null)
 	{
 		$baseNullAccess = $this->findNullAction($acls);
 		$baseNoAccess = $this->createAccess(['accessLevel' => Access::ACCESS_NONE]);
@@ -179,12 +179,50 @@ class Gatekeeper extends \infinite\base\Component
 		foreach ($actions as $action) {
 			$acaValue = ArrayHelper::getValue($action, 'id');
 			if (!array_key_exists($acaValue, $access)) {
-				$noAccess = clone $baseNoAccess;
-				$noAccess->action = $action;
-				$access[$acaValue] = $noAccess;
+				$actionLink = $this->getActionLink($action, $access, $controlledObject);
+				if ($actionLink) {
+					$access[$acaValue] = $actionLink;
+				} else {
+					$noAccess = clone $baseNoAccess;
+					$noAccess->action = $action;
+					$access[$acaValue] = $noAccess;
+				}
 			}
 		}
 		return $access;
+	}
+
+	protected function getActionMap($controlledObject = null)
+	{
+		return [];
+	}
+
+	protected function getActionLink($action, $accessMap = [], $controlledObject = null)
+	{
+		$actionId = ArrayHelper::getValue($action, 'id');
+		$actionName = ArrayHelper::getValue($action, 'name');
+		$baseActionName = static::getBaseActionName($actionName);
+		$actionMap = $this->getActionMap($controlledObject);
+		$actionsByName = $this->getActionsByName();
+		$mappedAction = null;
+		if (isset($actionMap[$actionName]) 
+			&& isset($actionsByName[$actionMap[$actionName]])) {
+			$mappedAction = $actionsByName[$actionMap[$actionName]];
+		} elseif (isset($actionMap[$baseActionName]) 
+			&& isset($actionsByName[$actionMap[$baseActionName]])) {
+			$mappedAction = $actionsByName[$actionMap[$baseActionName]];
+		}
+
+		if (isset($mappedAction) && isset($accessMap[$mappedAction->primaryKey])) {
+			return $accessMap[$mappedAction->primaryKey];
+		}
+		return false;
+	}
+
+	protected static function getBaseActionName($actionName)
+	{
+		$parts = explode(':', $actionName);
+		return $parts[0];
 	}
 
 	protected function createAccess($acl, $config = [])
@@ -487,7 +525,7 @@ class Gatekeeper extends \infinite\base\Component
 
 
 		$raw = $query->all();
-		$results = $this->fillActions($raw, [], $acaIds);
+		$results = $this->fillActions($raw, [], $controlledObject, $acaIds);
 		
 		Cacher::set($aclKey, $results, 0, $this->aclCacheDependency);
 		return $results;
