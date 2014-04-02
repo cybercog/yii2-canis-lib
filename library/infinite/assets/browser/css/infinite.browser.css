@@ -1,0 +1,34 @@
+
+.infinite-browse {
+  height: 200px;
+  border: 1px solid #CCCCCC;
+  border-top-width: 0;
+  overflow: hidden;
+}
+.infinite-browse .section {
+  overflow-y: scroll;
+  height: 200px;
+  width: 300px;
+  float: left;
+  display: block;
+  border-right: 1px solid #CCCCCC;
+  position: relative;
+}
+
+.infinite-browse .list-group-item .glyphicon {
+  float: right;
+}
+
+.infinite-browse .section .canvas {
+  margin: 5px 20px;
+}
+
+.infinite-browse .type-chooser {
+}
+
+.infinite-browse .parent-chooser {
+}
+
+.infinite-browse .object-chooser {
+  border-right: none;
+}

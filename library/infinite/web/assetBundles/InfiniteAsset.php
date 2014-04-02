@@ -13,7 +13,7 @@ namespace infinite\web\assetBundles;
  */
 class InfiniteAsset extends AssetBundle
 {
-    public $sourcePath = '@infinite/assets';
+    public $sourcePath = '@infinite/assets/core';
     public $css = ['css/infinite.bootstrap.css'];
     public $js = [
     	'js/infinite.utils.js', 
