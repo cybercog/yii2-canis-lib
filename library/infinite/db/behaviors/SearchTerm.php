@@ -114,7 +114,14 @@ trait SearchTerm
 	{
 		$buildOr = ['or'];
 		foreach ($fields as $fieldList) {
-			foreach ($fieldList as $field) {
+			foreach ($fieldList as &$field) {
+				if (!in_array(substr($field, 0, 1), ['[', '{'])) {
+					$field = '[['. $field .']]';	
+				}
+
+				if (!in_array(substr($field, 0, 1), ['{'])) {
+					$field = '{{'. $query->primaryAlias . '}}.' . $field;	
+				}
 				foreach ($searchTerms as $term) {
 					//$term = '%'.strtr($term, ['%'=>'\%', '_'=>'\_', '\\'=>'\\\\']).'%';
 					$buildOr[] = ['like', $field, $term];
@@ -129,7 +136,7 @@ trait SearchTerm
 				foreach ($searchTerms as $n => $term) {
 					$searchTermTag = ":term".$n;
 					$query->params[$searchTermTag] = strtolower($term);
-					$orders[] = 'IF(ISNULL([['. $field .']]), 0, '. ($weight * 1) . '*(length([[' . $field . ']])-length(replace(LOWER([[' . $field . ']]),' . $searchTermTag . ',\'\')))/length(' . $searchTermTag . '))';
+					$orders[] = 'IF(ISNULL('. $field .'), 0, '. ($weight * 1) . '*(length(' . $field . ')-length(replace(LOWER(' . $field . '),' . $searchTermTag . ',\'\')))/length(' . $searchTermTag . '))';
 				}
 			}
 			$weight = $weight - 1;

@@ -104,7 +104,10 @@ class QueryAccess extends Query
             } 
             $query->andWhere(['or', [$alias.'.aca_id' => $aca->primaryKey], [$alias.'.aca_id' => null]]);
         }
-        if ($aca === 'read' && $readRole) {
+        if ($aca === 'read' 
+            && $readRole
+            && (!($query instanceof \yii\db\ActiveQuery) || $query->getBehavior('Roleable') !== null)
+        ) {
             Yii::$app->gk->generateAclRoleCheckCriteria($query, false, $this->accessingObject, $classAlias);
         } else {
             Yii::$app->gk->generateAclCheckCriteria($query, false, $this->accessingObject, true, $classAlias);
