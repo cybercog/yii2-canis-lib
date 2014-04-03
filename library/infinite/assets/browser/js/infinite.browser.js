@@ -5,7 +5,7 @@ function InfiniteBrowser (parent, options) {
 	};
 	this.options = jQuery.extend(true, {}, defaultOptions, options);
    if (this.options.root && !(this.options.root instanceof InfiniteBrowserBundle)) {
-      this.options.root = new InfiniteBrowserBundle(this.options.root);
+      this.options.root = new InfiniteBrowserBundle(this, this.options.root);
    }
    $.debug(['holla', this.options]);
    this.parent = parent;
@@ -36,7 +36,7 @@ InfiniteBrowser.prototype.init = function() {
 
 InfiniteBrowser.prototype.drawBundle = function(bundle) {
    if (bundle instanceof InfiniteBrowserBundle) {
-      bundle.draw(this);
+      bundle.draw();
    } else {
       $.debug(["woops", bundle]);
    }
@@ -90,16 +90,74 @@ InfiniteBrowser.prototype.hide = function() {
    this.elements.canvas.slideUp(function() { self.visible = false; });
 };
 
-function InfiniteBrowserBundle (options) {
+function InfiniteBrowserBundle (browser, options) {
    var defaultOptions = {
+      'id': null,
+      'type': 'item',
+      'typeOptions': {},
+      'total': null,
+      'bundle': false
    };
+   this.browser = browser;
+   this.element = null;
+   this.fetched = false;
+   this.items = {};
    this.options = jQuery.extend(true, {}, defaultOptions, options);
-   $.debug(['bundle', this.options]);
+   if (this.options.bundle) {
+      this.loadBundle(this.options.bundle);
+      this.fetched = true;
+      this.options.bundle = null;
+   }
+   $.debug(['bundle', this.options.bundle]);
 }
 
-InfiniteBrowserBundle.prototype.draw = function(browser) {
-   var section = $("<div />").html("holla");
+InfiniteBrowserBundle.prototype.loadBundle = function(bundle) {
+   var self = this;
+   jQuery.each(bundle.items, function(index, value) {
+      self.items[index] = value;
+      if (self.list !== null) {
+         // append it to list
+         self.appendItem(value);
+      }
+   });
+};
+
+InfiniteBrowserBundle.prototype.draw = function() {
+   var self = this;
+   var section = this.element = $("<div />", {'class': 'section-container'});
+   if (this.fetched) {
+      this.drawInitialList();
+   } else {
+      this.fetch(function() {
+         self.drawInitialList();
+      });
+      section.html("Thinking...");
+   }
    browser.internalDrawBundle(this, section);
+};
+
+InfiniteBrowserBundle.prototype.drawInitialList = function(callback) {
+   var self = this;
+   if (Object.size(this.items) === 0) {
+      var list = this.list = $("<div />", {'class': 'alert alert-danger'}).html('None found.').appendTo(this.element);
+      return false;
+   }
+   this.element.html('');
+   var list = this.list = $("<div />", {'class': 'list-group'}).appendTo(this.element);
+   jQuery.each(this.items, function(index, value) {
+      self.appendItem(value);
+   });
+};
+InfiniteBrowserBundle.prototype.appendItem = function(item) {
+   var self = this;
+   if (this.list === null) { return false; }
+   $("<a />", {'href': '#', 'class': 'object-type list-group-item'}).html('<i class="glyphicon glyphicon-chevron-right"></i>' + item.label).appendTo(self.list).click(function() {
+      self.list.find('.object-type.active').removeClass('active');
+      $(this).addClass('active');
+   });
+};
+InfiniteBrowserBundle.prototype.fetch = function(callback) {
+
 };
 
 

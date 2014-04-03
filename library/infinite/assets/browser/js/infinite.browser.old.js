@@ -36,9 +36,6 @@ InfiniteBrowser.prototype.renderType = function() {
       jQuery.each(this.options.types, function(index, label) {
          $("<a />", {'href': '#', 'class': 'object-type list-group-item'}).html('<i class="glyphicon glyphicon-chevron-right"></i>' + label).appendTo(list).click(function() {
             list.find('.object-type.active').removeClass('active');
-            self.focus = 'parent';
-            self.state.type = index;
-            self.updateFocus();
             $(this).addClass('active');
          });
       });
