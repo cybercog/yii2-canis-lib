@@ -16,7 +16,15 @@
 }
 
 .infinite-browse .list-group-item .glyphicon {
-  float: right;
+  margin-top: 2px;
+}
+
+.infinite-browse .list-group-item .glyphicon.pull-left {
+  margin-right: 5px;
+}
+
+.infinite-browse .list-group-item .glyphicon.pull-right {
+  margin-left: 5px;
 }
 
 .infinite-browse .section .canvas {

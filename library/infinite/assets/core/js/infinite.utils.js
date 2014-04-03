@@ -164,6 +164,7 @@ $.fn.serializeHash = function() {
 jQuery.debug = function(message){
     if (!$("body").hasClass('development')) { return; }
     if(console !== undefined){
+        // console.trace();
         console.debug(message);
     }
 };

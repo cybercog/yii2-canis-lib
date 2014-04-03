@@ -240,17 +240,14 @@ class ActiveRecord extends \yii\db\ActiveRecord
      * written for querying `Customer` purpose.)
      * @return ActiveQuery the newly created [[ActiveQuery]] instance.
      */
-    public static function createQuery($config = [])
+    public static function createQuery()
     {
-        if (!isset($config['class'])) {
-            if (is_null(static::$queryClass)) {
-                $config['class'] = 'infinite\\db\\ActiveQuery';
-            } else {
-                $config['class'] = static::$queryClass;
-            }
+        if (is_null(static::$queryClass)) {
+            $queryClass = 'infinite\\db\\ActiveQuery';
+        } else {
+            $queryClass = static::$queryClass;
         }
-        $config['modelClass'] = get_called_class();
-        $query = Yii::createObject($config);
+        $query = new $queryClass(get_called_class());
         $query->attachBehaviors(static::queryBehaviors());
         return $query;
     }
