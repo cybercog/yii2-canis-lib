@@ -10,7 +10,6 @@ class Item extends \infinite\base\Object
 	public $type;
 	public $id;
 	public $label;
-	public $hasChildren = true;
 	protected $_sortKey;
 
 	public function package()
@@ -18,8 +17,7 @@ class Item extends \infinite\base\Object
 		return [
 			'type' => $this->type,
 			'id' => $this->id,
-			'label' => $this->label,
-			'hasChildren' => $this->hasChildren
+			'label' => $this->label
 		];
 	}
 

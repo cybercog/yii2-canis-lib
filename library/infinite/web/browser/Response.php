@@ -26,16 +26,18 @@ abstract class Response extends \infinite\base\Object
 
 	public static function handleRequests($requests, $baseInstructions, $handle = true)
 	{
+		$response = static::getInstance();
 		foreach ($requests as $requestId => $instructions) {
-			if (isset($this->_bundles[$requestId])) {
+			if (isset($response->bundles[$requestId])) {
 				continue;
 			}
 			$instructions = array_merge(['id' => $requestId], $baseInstructions, $instructions);
-			$instructionBundle = $this->addBundle(['instructions' => $instructions]);
+			$instructionBundle = $response->addBundle(['instructions' => $instructions]);
 			if ($handle) {
 				$instructionBundle->handle();
 			}
 		}
+		return $response;
 	}
 
 	public static function handleInstructions($instructions, $handle = true)
@@ -52,12 +54,14 @@ abstract class Response extends \infinite\base\Object
 	public function package()
 	{
 		$package = [];
-		$package['bundles'] = [];
-		foreach ($this->_bundles as $bundleId => $bundle) {
-			if (is_object($bundle)) {
-				$bundle = $bundle->package();
+		$package['responses'] = [];
+		if (!empty($this->_bundles)) {
+			foreach ($this->_bundles as $bundleId => $bundle) {
+				if (is_object($bundle)) {
+					$bundle = $bundle->package();
+				}
+				$package['responses'][$bundleId] = $bundle;
 			}
-			$package['bundles'][$bundleId] = $bundle;
 		}
 		return $package;
 	}
@@ -76,6 +80,11 @@ abstract class Response extends \infinite\base\Object
 		$bundle = Yii::createObject($bundle);
 		$this->_bundles[$bundle->id] = $bundle;
 		return $bundle;
+	}
+
+	public function getBundles()
+	{
+		return $this->_bundles;
 	}
 }
 ?>

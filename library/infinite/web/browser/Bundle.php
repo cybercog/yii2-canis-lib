@@ -11,6 +11,7 @@ class Bundle extends \infinite\base\Object
 {
 	public $itemClass = 'infinite\\web\\browser\\Item';
 	public $sortDirection = SORT_ASC;
+	public $limit = 30;
 	protected $_id; // never set, based on instructions
 	protected $_instructions;
 	protected $_type; // pivot: category list; item: items list
@@ -45,6 +46,13 @@ class Bundle extends \infinite\base\Object
 			throw new Exception('Instructions for browser responses can only be set once.');
 		}
 		$this->_instructions = array_merge($this->_baseInstructions, $instructions);
+		if (isset($this->_instructions['id'])) {
+			$this->_id = $this->_instructions['id'];
+		}
+		if (isset($this->_instructions['offset'])) {
+			$this->_offset = $this->_instructions['offset'];
+		}
+		unset($this->_instructions['id'], $this->_instructions['offset']);
 	}
 
 	public function addItem($item)
@@ -120,16 +128,21 @@ class Bundle extends \infinite\base\Object
 
 	public function predictTotal()
 	{
+		if ($this->handler) {
+			return $this->handler->total;
+		}
 		return false;
 	}
 
 	public function getTotal()
 	{
 		if (is_null($this->_total)) {
-			if (isset($this->_items)) {
+			if (($total = $this->predictTotal())) {
+				$this->_total = $total;
+			} elseif (isset($this->_items)) {
 				return count($this->_items);
 			} else {
-				return $this->predictTotal();
+				$this->_total = false;
 			}
 		}
 		return $this->_total;

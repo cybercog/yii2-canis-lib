@@ -1,7 +1,8 @@
 function InfiniteBrowser (parent, options) {
 	var defaultOptions = {
 		'url': '/browse',
-      'root': false
+      'root': false,
+      'data': {}
 	};
 	this.options = jQuery.extend(true, {}, defaultOptions, options);
    if (this.options.root && !(this.options.root instanceof InfiniteBrowserBundle)) {
@@ -14,6 +15,7 @@ function InfiniteBrowser (parent, options) {
    this.elements.sections = [];
    this.stack = [];
    this.visible = false;
+   this.request = false;
    this.init();
 }
 
@@ -33,6 +35,16 @@ InfiniteBrowser.prototype.init = function() {
    $(window).on('resizeDone', function() {
       self.updateDimensions();
    });
+};
+
+InfiniteBrowser.prototype.addRequestBundle = function (bundle, callback, request) {
+   if (request === undefined) {
+      if (!this.request || this.request.executed) {
+         this.request = new InfiniteBrowserRequest(this);
+      }
+      request = this.request;
+   }
+   request.add(bundle, callback);
 };
 
 InfiniteBrowser.prototype.drawBundle = function(bundle) {
@@ -96,18 +108,22 @@ InfiniteBrowser.prototype.appendStackItem = function(bundle, item) {
    var selectedBundlePosition = bundle.getPosition();
    this.goToPositionIndex(selectedBundlePosition);
    this.stack.push(item);
-   this.handleStack(this.stack.slice(0));
+   this.handleStack(this.stack.slice(0), true);
 };
 
-InfiniteBrowser.prototype.handleStack = function(stack) {
+InfiniteBrowser.prototype.handleStack = function(stack, draw) {
    if (stack.length === 0) {
       this.reset();
+      return false;
    } else {
       var stackObject = new InfiniteBrowserStack(stack);
       if (this.bundles[stackObject.getId()] === undefined) {
          this.bundles[stackObject.getId()] = stackObject.getBundle(this);
       }
-      this.drawBundle(this.bundles[stackObject.getId()]);
+      if (draw === true) {
+         this.drawBundle(this.bundles[stackObject.getId()]);
+      }
+      return this.bundles[stackObject.getId()];
    }
 };
 
@@ -152,6 +168,10 @@ function InfiniteBrowserBundle (browser, options) {
    $.debug(['bundle', this]);
 }
 
+InfiniteBrowserBundle.prototype.getId = function() {
+   return this.options.id;
+};
+
 InfiniteBrowserBundle.prototype.loadBundle = function(bundle) {
    var self = this;
    jQuery.each(bundle.items, function(index, value) {
@@ -175,6 +195,28 @@ InfiniteBrowserBundle.prototype.draw = function() {
       section.html("Thinking...");
    }
    this.browser.internalDrawBundle(this, section);
+};
+
+InfiniteBrowserBundle.prototype.loadBundleResponse = function(bundleResponse) {
+   var self = this;
+   // update instructions
+   if (bundleResponse.instructions !== undefined && bundleResponse.instructions) {
+      this.options.instructions = bundleResponse.instructions;
+   }
+
+   // update total
+   if (bundleResponse.total !== undefined && bundleResponse.total) {
+      this.options.total = bundleResponse.total;
+   }
+
+   if (bundleResponse.bundle !== undefined && bundleResponse.bundle) {
+      jQuery.each(bundleResponse.bundle.items, function(id, item) {
+         if (self.items[id] === undefined) {
+            self.items[id] = item;
+            self.appendItem(item);
+         }
+      });
+   }
 };
 
 InfiniteBrowserBundle.prototype.drawInitialList = function(callback) {
@@ -223,7 +265,7 @@ InfiniteBrowserBundle.prototype.getPosition = function() {
 };
 
 InfiniteBrowserBundle.prototype.fetch = function(callback) {
-   $.debug("FETCH!");
+   this.browser.addRequestBundle(this, callback);
 };
 
 function InfiniteBrowserStack(stack) {
@@ -236,8 +278,7 @@ InfiniteBrowserStack.prototype.getStack = function() {
 
 InfiniteBrowserStack.prototype.getId = function() {
    if (this._id === undefined) {
-      var idParts = [];
-      $.debug(['hey there', this.getStack()]);
+      var idParts = ['stack'];
       jQuery.each(this.getStack(), function(index, value) {
          var subPart = [];
          subPart.push(value.type);
@@ -259,9 +300,78 @@ InfiniteBrowserStack.prototype.getBundle = function(browser) {
 
 InfiniteBrowserStack.prototype.getInstructions = function() {
    var instructions = {};
+   instructions.id = this.getId();
    instructions.task = 'stack';
    instructions.stack = this.getStack();
    return instructions;
+};
+
+
+function InfiniteBrowserRequest(browser, options) {
+   var defaultOptions = {
+      'autoexecute': true,
+      'ajax': {
+         'dataType': 'json'
+      }
+   };
+   if (options === undefined) {
+      options = {};
+   }
+   this.options = jQuery.extend(true, {}, defaultOptions, options);
+   this.browser = browser;
+   this.bundles = {};
+   this.executed = false;
+   this.jxhr = false;
+}
+
+InfiniteBrowserRequest.prototype.add = function(bundle, callback) {
+   if (this.executed) {
+      return false;
+   }
+   var id = bundle.getId();
+   if (callback === undefined) {
+      callback = false;
+   }
+   this.bundles[id] = {'bundle': bundle, 'callback': callback};
+   if (this.options.autoexecute) {
+      this.execute();
+   }
+   return true;
+};
+
+InfiniteBrowserRequest.prototype.execute = function() {
+   if (this.executed) { return false; }
+   if (Object.size(this.bundles) === 0) { return true; }
+   var self = this;
+   this.executed = true;
+   var self = this;
+   var ajaxConfig = this.options.ajax;
+   ajaxConfig.success = function(data) { self.callback(data); };
+   ajaxConfig.url = this.browser.options.url;
+   ajaxConfig.data = this.browser.options.data;
+   ajaxConfig.data.requests = {};
+   jQuery.each(this.bundles, function (index, bundleSet) {
+      var bundle = bundleSet.bundle;
+      if (!bundle.options.instructions) { return true; }
+      ajaxConfig.data.requests[bundle.getId()] = bundle.options.instructions;
+   });
+   this.jxhr = jQuery.ajax(ajaxConfig);
+};
+
+
+InfiniteBrowserRequest.prototype.callback = function(data) {
+   var self = this;
+   if (data.responses === undefined) { return false; }
+   jQuery.each(data.responses, function(id, bundleResponse) {
+      if (self.bundles[id] === undefined) { return true; }
+      var bundleSet = self.bundles[id];
+      var bundle = bundleSet.bundle;
+      bundle.loadBundleResponse(bundleResponse);
+      if (bundleSet.callback) {
+         bundleSet.callback(bundle);
+      }
+   });
+   $.debug(data);
 };
 
 
