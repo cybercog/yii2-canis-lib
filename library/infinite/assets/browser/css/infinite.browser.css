@@ -1,14 +1,33 @@
 
 .infinite-browse {
-  height: 200px;
+  height: 250px;
+  width: 100%;
+  position: relative;
   border: 1px solid #CCCCCC;
   border-top-width: 0;
+  display: block;
   overflow: hidden;
 }
+
+.infinite-browse-load-element {
+  display: block;
+  text-align: center;
+  margin: 10px;
+}
+
+.infinite-browse-canvas {
+  display: block;
+  width: 10000px;
+}
+
+.infinite-browse .infinite-browse-filter {
+  width: 100%;
+  margin: -5px;
+}
+
 .infinite-browse .section {
   overflow-y: scroll;
-  height: 200px;
-  width: 300px;
+  height: 250px;
   float: left;
   display: block;
   border-right: 1px solid #CCCCCC;

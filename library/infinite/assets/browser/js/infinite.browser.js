@@ -2,13 +2,15 @@ function InfiniteBrowser (parent, options) {
 	var defaultOptions = {
 		'url': '/browse',
       'root': false,
-      'data': {}
+      'data': {},
+      'section': {
+         'width': 300
+      }
 	};
 	this.options = jQuery.extend(true, {}, defaultOptions, options);
    if (this.options.root && !(this.options.root instanceof InfiniteBrowserBundle)) {
       this.options.root = new InfiniteBrowserBundle(this, this.options.root);
    }
-   $.debug(['holla', this.options]);
    this.parent = parent;
    this.bundles = {};
    this.elements = {};
@@ -26,14 +28,15 @@ InfiniteBrowser.prototype.error = function(message) {
 
 InfiniteBrowser.prototype.init = function() {
    var self = this;
-   this.elements.canvas = $("<div />").hide().addClass('infinite-browse').appendTo(this.parent);
+   this.elements.container = $("<div />").hide().addClass('infinite-browse').appendTo(this.parent);
+   this.elements.canvas = $("<div />").addClass('infinite-browse-canvas').appendTo(this.elements.container);
    if (!this.options.root) {
       this.error("No root has been defined!");
    }
    this.drawBundle();
-   this.updateDimensions();
+   this.updateViewport();
    $(window).on('resizeDone', function() {
-      self.updateDimensions();
+      self.updateViewport();
    });
 };
 
@@ -50,16 +53,20 @@ InfiniteBrowser.prototype.addRequestBundle = function (bundle, callback, request
 InfiniteBrowser.prototype.drawBundle = function(bundle) {
    if (bundle instanceof InfiniteBrowserBundle) {
       bundle.draw();
-   } else {
-      $.debug(["woops", bundle]);
    }
 };
 
 InfiniteBrowser.prototype.internalDrawBundle = function(bundle, element) {
    if (bundle instanceof InfiniteBrowserBundle) {
-      var sectionElement = $("<div />", {'class': 'section'}).append(element);
-      this.elements.sections.push({'bundle': bundle, 'element': sectionElement});
-      this.elements.canvas.append(sectionElement);
+
+      if (this.elements.sections.length > 0) {
+         var lastSection = this.elements.sections[this.elements.sections.length-1];
+         lastSection.element.removeClass('active-section');
+      }
+      element.addClass('active-section');
+      this.elements.sections.push({'bundle': bundle, 'element': element});
+      this.elements.canvas.append(element);
+      this.updateViewport();
    }
 };
 
@@ -69,12 +76,25 @@ InfiniteBrowser.prototype.draw = function() {
    }
 };
 
-
-InfiniteBrowser.prototype.updatePositioning = function() {
+InfiniteBrowser.prototype.internalUpdateMarginShift = function(left) {
+   this.elements.canvas.animate({'marginLeft': left});
 };
 
-InfiniteBrowser.prototype.updateDimensions = function() {
-   this.updatePositioning();
+InfiniteBrowser.prototype.updateViewport = function() {
+   var sectionWidth = this.getSectionWidth();
+   this.elements.container.find('.section').width(sectionWidth);
+   if (this.elements.sections.length === 0) {
+      this.internalUpdateMarginShift(0);
+   } else {
+      var viewportWidth = Math.max(this.elements.container.innerWidth(), sectionWidth);
+      var allSectionWidth = this.elements.sections.length * sectionWidth;
+      if (allSectionWidth > viewportWidth) {
+         var newShift = viewportWidth - allSectionWidth;
+         this.internalUpdateMarginShift(newShift);
+      } else {
+         this.internalUpdateMarginShift(0);
+      }
+   }
 };
 
 InfiniteBrowser.prototype.reset = function(draw) {
@@ -92,21 +112,20 @@ InfiniteBrowser.prototype.reset = function(draw) {
 InfiniteBrowser.prototype.show = function() {
    var self = this;
    this.reset();
-   this.elements.canvas.slideDown(function() { 
+   this.elements.container.slideDown(function() { 
       self.visible = true; 
-      self.updateDimensions();
+      self.updateViewport();
    });
 };
 
 InfiniteBrowser.prototype.hide = function() {
    var self = this;
-   this.elements.canvas.slideUp(function() { self.visible = false; });
+   this.elements.container.slideUp(function() { self.visible = false; });
 };
 
 InfiniteBrowser.prototype.appendStackItem = function(bundle, item) {
-   // $.debug([item, ]);
    var selectedBundlePosition = bundle.getPosition();
-   this.goToPositionIndex(selectedBundlePosition);
+   this.goToPositionIndex(selectedBundlePosition, false);
    this.stack.push(item);
    this.handleStack(this.stack.slice(0), true);
 };
@@ -127,16 +146,44 @@ InfiniteBrowser.prototype.handleStack = function(stack, draw) {
    }
 };
 
-InfiniteBrowser.prototype.goToPositionIndex = function(index) {
+InfiniteBrowser.prototype.getSectionWidth = function() {
+   var containerWidth = parseInt(this.elements.container.innerWidth(), 10);
+   var width = parseInt(this.options.section.width, 10);
+   
+   if ((width * 2) > containerWidth) {
+      width = containerWidth;
+   }
+   return width;
+};
+
+InfiniteBrowser.prototype.goToPositionIndex = function(index, shiftViewport) {
+   if (shiftViewport === undefined) {
+      shiftViewport = true;
+   }
    var topPosition = this.elements.sections.length - 1;
+   var self = this;
    if (index < 0) { // take off from the end [[index]] items
-      $.debug(['go back', index]);
+      var lastSection = null;
+      while (index < 0) {
+         lastSection = this.elements.sections.pop();
+         if (lastSection !== undefined) {
+            lastSection.bundle.undraw();
+         }
+         this.stack.pop();
+         index++;
+      }
+      if (this.elements.sections.length > 0) {
+         lastSection = this.elements.sections[this.elements.sections.length-1];
+         lastSection.element.find('.browser-item.active').removeClass('active');
+         lastSection.element.addClass('active-section');
+      }
+      if (shiftViewport) {
+         this.updateViewport();
+      }
    } else { // go back until topPosition matches index
       var goBack = index - topPosition;
       if (goBack < 0) {
-         this.goToPositionIndex(goBack);
-      } else {
-         $.debug("we're there!");
+         this.goToPositionIndex(goBack, shiftViewport);
       }
    }
    if (this.elements.sections.length === 1) {
@@ -159,46 +206,107 @@ function InfiniteBrowserBundle (browser, options) {
    this.element = null;
    this.fetched = false;
    this.items = {};
+   this.elementItems = [];
    this.options = jQuery.extend(true, {}, defaultOptions, options);
+   this.fetchTimer = null;
+   this.offset = 0;
+   this.list = null;
+   this.listInitialized = false;
+   this.rendered = false;
+
    if (this.options.bundle) {
-      this.loadBundle(this.options.bundle);
-      this.fetched = true;
+      this.loadBundleResponse(this.options);
       this.options.bundle = null;
    }
-   $.debug(['bundle', this]);
 }
+
+
+InfiniteBrowserBundle.prototype.getInstructions = function() {
+   var instructions = this.options.instructions;
+   instructions.id = this.getId();
+   instructions.offset = this.offset;
+   return instructions;
+};
 
 InfiniteBrowserBundle.prototype.getId = function() {
    return this.options.id;
 };
-
-InfiniteBrowserBundle.prototype.loadBundle = function(bundle) {
-   var self = this;
-   jQuery.each(bundle.items, function(index, value) {
-      self.items[index] = value;
-      if (self.list !== null) {
-         // append it to list
-         self.appendItem(value);
-      }
-   });
+InfiniteBrowserBundle.prototype.undraw = function() {
+   this.element.remove();
+   this.element = null;
+   this.listInitialized = false;
+   this.rendered = false;
 };
 
 InfiniteBrowserBundle.prototype.draw = function() {
    var self = this;
-   var section = this.element = $("<div />", {'class': 'section-container'});
+   this.rendered = true;
+   var section = this.element = $("<div />", {'class': 'section'}).width(this.browser.getSectionWidth());
+
+   var container = this.container = $("<div />", {'class': 'section-container'}).appendTo(section);
+   var list = this.list = $("<div />", {'class': 'list-group'}).appendTo(this.container);
+   var loadElement = this.loadElement = $("<div />", {'class': 'glyphicon glyphicon-chevron-down infinite-browse-load-element'}).hide().appendTo(this.element);
+
    if (this.fetched) {
-      this.drawInitialList();
+      this.drawItems();
    } else {
       this.fetch(function() {
-         self.drawInitialList();
       });
-      section.html("Thinking...");
+      $("<div />", {'class': 'list-group-item'}).append($("<div />", {'class': 'alert alert-warning'}).html('Loading...')).appendTo(self.list);
    }
    this.browser.internalDrawBundle(this, section);
+};
+InfiniteBrowserBundle.prototype.drawItems = function() {
+   var self = this;
+   if (Object.size(this.items) === 0) {
+      self.emptyListNotice();
+      return false;
+   }
+   jQuery.each(this.items, function(index, item) {
+      self.appendItem(item);
+   });
+   this.checkLoader();
+};
+
+InfiniteBrowserBundle.prototype.checkLoader = function() {
+   var self = this;
+   if (!this.rendered) { return true; }
+   if (this.isLoaded()) {
+      this.loadElement.hide();
+      clearTimeout(this.fetchTimer);
+   } else {
+      this.loadElement.show();
+      var sectionElement = this.element;
+      $(sectionElement).scroll(function(e) {
+         clearTimeout(self.fetchTimer);
+         var element = $(this);
+         self.fetchTimer = setTimeout(function() {
+            var height = parseInt(element.height(), 10);
+            var scrollHeight = parseInt(element[0].scrollHeight, 10);
+            var scrollBottom = parseInt(element.scrollTop(), 10) + height;
+            var scrollRemaining = scrollHeight - scrollBottom;
+            if (scrollRemaining < (height * 3)) {
+               $(sectionElement).unbind('scroll');
+               clearTimeout(self.fetchTimer);
+               self.fetchMore();
+            }
+         }, 100);
+      });
+   }
+};
+
+InfiniteBrowserBundle.prototype.isLoaded = function() {
+   if (this.options.total !== null && (this.options.total === false || Object.size(this.items) >= this.options.total)) {
+      return true;
+   }
+   return false;
 };
 
 InfiniteBrowserBundle.prototype.loadBundleResponse = function(bundleResponse) {
    var self = this;
+
+   this.fetched = true;
+
    // update instructions
    if (bundleResponse.instructions !== undefined && bundleResponse.instructions) {
       this.options.instructions = bundleResponse.instructions;
@@ -206,48 +314,68 @@ InfiniteBrowserBundle.prototype.loadBundleResponse = function(bundleResponse) {
 
    // update total
    if (bundleResponse.total !== undefined && bundleResponse.total) {
-      this.options.total = bundleResponse.total;
+      this.options.total = parseInt(bundleResponse.total, 10);
+   } else {
+      this.options.total = 0;
    }
 
    if (bundleResponse.bundle !== undefined && bundleResponse.bundle) {
+      this.offset = this.offset + parseInt(bundleResponse.bundle.size, 10);
       jQuery.each(bundleResponse.bundle.items, function(id, item) {
          if (self.items[id] === undefined) {
             self.items[id] = item;
-            self.appendItem(item);
+            if (self.rendered) {
+               self.appendItem(item);
+            }
          }
       });
    }
-};
-
-InfiniteBrowserBundle.prototype.drawInitialList = function(callback) {
-   var self = this;
    if (Object.size(this.items) === 0) {
-      var list = this.list = $("<div />", {'class': 'alert alert-danger'}).html('None found.').appendTo(this.element);
-      return false;
+      self.emptyListNotice();
    }
-   this.element.html('');
-   var list = this.list = $("<div />", {'class': 'list-group'}).appendTo(this.element);
-
+   this.checkLoader();
+};
+InfiniteBrowserBundle.prototype.emptyListNotice = function() {
+   this.initializeList(false);
+   $("<div />", {'class': 'list-group-item'}).append($("<div />", {'class': 'alert alert-danger'}).html('None found!')).appendTo(this.list);
+};
+InfiniteBrowserBundle.prototype.initializeList = function(search) {
+   var self = this;
+   if (this.listInitialized) { return true; }
+   if (search === undefined) {
+      search = true;
+   }
+   this.listInitialized = true;
+   this.list.html('');
    if (this.browser.elements.sections.length > 0) {
-      $("<a />", {'href': '#', 'class': 'browser-back list-group-item'}).html('<i class="glyphicon glyphicon-chevron-left pull-left"></i> Back').appendTo(self.list).click(function() {
-         self.list.find('.object-type.active').removeClass('active');
-         $(this).addClass('active');
-         self.browser.goToPositionIndex();
+      $("<a />", {'href': '#', 'class': 'infinite-browse-back list-group-item'}).html('<i class="glyphicon glyphicon-chevron-left pull-left"></i> Back').appendTo(self.list).click(function() {
+         self.browser.goToPositionIndex(self.getPosition()-1);
       });
    }
+   if (search) {
+      var searchInput = $("<input />", {'type': 'text', 'class': 'infinite-browse-filter form-control', 'placeholder': 'Filter...'});
+      var searchInputContainer = $("<div />", {'class': 'list-group-item'}).appendTo(self.list).append(searchInput);
+   }
 
-   jQuery.each(this.items, function(index, value) {
-      self.appendItem(value);
-   });
+   if (self.rendered) {
+      setTimeout(function() {
+         if (self.element) {
+            self.element.scrollTop(0);
+         }
+      }, 500);
+   }
 };
+
 InfiniteBrowserBundle.prototype.appendItem = function(item) {
    var self = this;
+   this.initializeList();
    if (this.list === null) { return false; }
-   $("<a />", {'href': '#', 'class': 'browser-item list-group-item'}).html('<i class="glyphicon glyphicon-chevron-right pull-right"></i>' + item.label).appendTo(self.list).click(function() {
+   var element = $("<a />", {'href': '#', 'class': 'browser-item list-group-item'}).html('<i class="glyphicon glyphicon-chevron-right pull-right"></i>' + item.label).appendTo(self.list).click(function() {
+      self.browser.appendStackItem(self, item);
       self.list.find('.browser-item.active').removeClass('active');
       $(this).addClass('active');
-      self.browser.appendStackItem(self, item);
    });
+   this.elementItems.push(element);
 };
 
 InfiniteBrowserBundle.prototype.getPosition = function() {
@@ -265,7 +393,16 @@ InfiniteBrowserBundle.prototype.getPosition = function() {
 };
 
 InfiniteBrowserBundle.prototype.fetch = function(callback) {
+   if (this.isLoaded()) { return true; }
    this.browser.addRequestBundle(this, callback);
+};
+
+
+InfiniteBrowserBundle.prototype.fetchMore = function() {
+   clearTimeout(this.fetchTimer);
+   this.fetch(function() {
+
+   });
 };
 
 function InfiniteBrowserStack(stack) {
@@ -353,7 +490,7 @@ InfiniteBrowserRequest.prototype.execute = function() {
    jQuery.each(this.bundles, function (index, bundleSet) {
       var bundle = bundleSet.bundle;
       if (!bundle.options.instructions) { return true; }
-      ajaxConfig.data.requests[bundle.getId()] = bundle.options.instructions;
+      ajaxConfig.data.requests[bundle.getId()] = bundle.getInstructions();
    });
    this.jxhr = jQuery.ajax(ajaxConfig);
 };
@@ -371,7 +508,6 @@ InfiniteBrowserRequest.prototype.callback = function(data) {
          bundleSet.callback(bundle);
       }
    });
-   $.debug(data);
 };
 
 
