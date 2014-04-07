@@ -213,6 +213,10 @@ function InfiniteBrowserBundle (browser, options) {
    this.list = null;
    this.listInitialized = false;
    this.rendered = false;
+   this.state = 'list';
+   this.filterQuery = false;
+   this.searchCache = {};
+   this.filterTimer = null;
 
    if (this.options.bundle) {
       this.loadBundleResponse(this.options);
@@ -225,6 +229,7 @@ InfiniteBrowserBundle.prototype.getInstructions = function() {
    var instructions = this.options.instructions;
    instructions.id = this.getId();
    instructions.offset = this.offset;
+   instructions.filterQuery = this.filterQuery;
    return instructions;
 };
 
@@ -241,6 +246,7 @@ InfiniteBrowserBundle.prototype.undraw = function() {
 InfiniteBrowserBundle.prototype.draw = function() {
    var self = this;
    this.rendered = true;
+   this.state = 'list';
    var section = this.element = $("<div />", {'class': 'section'}).width(this.browser.getSectionWidth());
 
    var container = this.container = $("<div />", {'class': 'section-container'}).appendTo(section);
@@ -256,13 +262,17 @@ InfiniteBrowserBundle.prototype.draw = function() {
    }
    this.browser.internalDrawBundle(this, section);
 };
-InfiniteBrowserBundle.prototype.drawItems = function() {
+
+InfiniteBrowserBundle.prototype.drawItems = function(items) {
    var self = this;
-   if (Object.size(this.items) === 0) {
+   if (items === undefined) {
+      items = this.items;
+   }
+   if (Object.size(items) === 0) {
       self.emptyListNotice();
       return false;
    }
-   jQuery.each(this.items, function(index, item) {
+   jQuery.each(items, function(index, item) {
       self.appendItem(item);
    });
    this.checkLoader();
@@ -271,12 +281,13 @@ InfiniteBrowserBundle.prototype.drawItems = function() {
 InfiniteBrowserBundle.prototype.checkLoader = function() {
    var self = this;
    if (!this.rendered) { return true; }
-   if (this.isLoaded()) {
+   var sectionElement = this.element;
+   if (this.isLoaded() || this.state !== 'list') {
       this.loadElement.hide();
+      $(sectionElement).unbind('scroll');
       clearTimeout(this.fetchTimer);
    } else {
       this.loadElement.show();
-      var sectionElement = this.element;
       $(sectionElement).scroll(function(e) {
          clearTimeout(self.fetchTimer);
          var element = $(this);
@@ -302,43 +313,85 @@ InfiniteBrowserBundle.prototype.isLoaded = function() {
    return false;
 };
 
-InfiniteBrowserBundle.prototype.loadBundleResponse = function(bundleResponse) {
+InfiniteBrowserBundle.prototype.loadBundleResponse = function(bundleResponse, request) {
    var self = this;
 
    this.fetched = true;
+   if (bundleResponse.filterQuery === false) {
+      // update instructions
+      if (bundleResponse.instructions !== undefined && bundleResponse.instructions) {
+         this.options.instructions = bundleResponse.instructions;
+      }
 
-   // update instructions
-   if (bundleResponse.instructions !== undefined && bundleResponse.instructions) {
-      this.options.instructions = bundleResponse.instructions;
-   }
-
-   // update total
-   if (bundleResponse.total !== undefined && bundleResponse.total) {
-      this.options.total = parseInt(bundleResponse.total, 10);
+      // update total
+      if (bundleResponse.total !== undefined && bundleResponse.total) {
+         this.options.total = parseInt(bundleResponse.total, 10);
+      } else {
+         this.options.total = 0;
+      }
+      var itemDestination = self.items;
+      var render = self.rendered;
    } else {
-      this.options.total = 0;
+      var itemDestination = self.searchCache[bundleResponse.filterQuery] = {};
+      var render = bundleResponse.filterQuery === this.filterQuery;
    }
 
    if (bundleResponse.bundle !== undefined && bundleResponse.bundle) {
       this.offset = this.offset + parseInt(bundleResponse.bundle.size, 10);
       jQuery.each(bundleResponse.bundle.items, function(id, item) {
-         if (self.items[id] === undefined) {
-            self.items[id] = item;
-            if (self.rendered) {
+         if (itemDestination[id] === undefined) {
+            itemDestination[id] = item;
+            if (render) {
                self.appendItem(item);
             }
          }
       });
    }
-   if (Object.size(this.items) === 0) {
+   if (Object.size(itemDestination) === 0) {
       self.emptyListNotice();
    }
    this.checkLoader();
 };
+
 InfiniteBrowserBundle.prototype.emptyListNotice = function() {
    this.initializeList(false);
-   $("<div />", {'class': 'list-group-item'}).append($("<div />", {'class': 'alert alert-danger'}).html('None found!')).appendTo(this.list);
+   $("<div />", {'class': 'list-group-item browser-none-message'}).append($("<div />", {'class': 'alert alert-danger'}).html('None found!')).appendTo(this.list);
 };
+
+InfiniteBrowserBundle.prototype.updateState = function (state, filterQuery) {
+   if (filterQuery === undefined) {
+      filterQuery = false;
+   } else {
+      filterQuery = filterQuery.trim();
+   }
+   var currentState = this.state;
+   this.state = state;
+   this.filterQuery = filterQuery;
+   if (state === 'list' && currentState !== 'list') {
+      this.list.find('.browser-item, .browser-none-message').remove();
+      this.drawItems(this.items);
+   } else if (state === 'search') {
+      this.list.find('.browser-item, .browser-none-message').remove();
+      this.handleSearch(filterQuery);
+   }
+};
+
+InfiniteBrowserBundle.prototype.handleSearch = function() {
+   var self = this;
+   if (!this.filterQuery) { return false; }
+   if (this.searchCache[this.filterQuery] !== undefined) {
+      this.drawItems(this.searchCache[this.filterQuery]);
+   } else {
+      clearTimeout(self.filterTimer);
+      self.filterTimer = setTimeout(function() {         
+         self.fetch(function(bundle) {
+
+         });
+      }, 250);
+   }
+};
+
+
 InfiniteBrowserBundle.prototype.initializeList = function(search) {
    var self = this;
    if (this.listInitialized) { return true; }
@@ -354,6 +407,13 @@ InfiniteBrowserBundle.prototype.initializeList = function(search) {
    }
    if (search) {
       var searchInput = $("<input />", {'type': 'text', 'class': 'infinite-browse-filter form-control', 'placeholder': 'Filter...'});
+      searchInput.on('change keydown keyup', function(e) {
+         if (searchInput.val() === '') {
+            self.updateState('list');
+         } else {
+            self.updateState('search', searchInput.val());
+         }
+      });
       var searchInputContainer = $("<div />", {'class': 'list-group-item'}).appendTo(self.list).append(searchInput);
    }
 
@@ -393,7 +453,7 @@ InfiniteBrowserBundle.prototype.getPosition = function() {
 };
 
 InfiniteBrowserBundle.prototype.fetch = function(callback) {
-   if (this.isLoaded()) { return true; }
+   if (this.state === 'list' && this.isLoaded()) { return true; }
    this.browser.addRequestBundle(this, callback);
 };
 

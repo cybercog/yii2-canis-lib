@@ -20,6 +20,20 @@ trait SearchTerm
 	public $searchScore;
 	public static $defaultSearchParams = ['limit' => 30, 'foreignLimitPercent' => 0.3, 'skipForeign' => false];
 
+	public static function simpleSearchTermQuery($query, $queryString, $params = [])
+	{
+		$searchTerms = self::prepareSearchTerms($queryString);
+		if (isset($params['searchFields'])) {
+			$searchFields = $params['searchFields'];
+		} else {
+			$searchFields = static::searchFields();
+		}
+		if (empty($searchTerms) || empty($searchFields)) { return []; }
+		$fields = self::parseSearchFields($searchFields);
+		$localFields = $fields['local'];
+		self::buildSearchQuery($query, $localFields, $searchTerms);
+		self::implementParams($query, $params);
+	}
 
 	public static function searchTerm($queryString, $params = [])
 	{
@@ -55,11 +69,10 @@ trait SearchTerm
 		if (!empty($localFields)) {
 			$localQuery = static::createQuery();
 			$localQuery->limit = $limit;
-			self::buildQuery($localQuery, $localFields, $searchTerms);
+			self::buildSearchQuery($localQuery, $localFields, $searchTerms);
 			self::implementParams($localQuery, $params);
 			$command = $localQuery->createCommand();
 			$raw = $localQuery->all();
-			//echo '<pre>'. $command->rawSql .'</pre>';
 			foreach ($raw as $object) {
 				$localResult = self::createSearchResult($object, $localFields);
 				if (!$localResult) { continue; }
@@ -110,7 +123,7 @@ trait SearchTerm
 		}
 	}
 
-	public static function buildQuery($query, $fields, $searchTerms)
+	public static function buildSearchQuery($query, $fields, $searchTerms)
 	{
 		$buildOr = ['or'];
 		foreach ($fields as $fieldList) {

@@ -10,18 +10,16 @@ use yii\base\InvalidConfigException;
 class Bundle extends \infinite\base\Object
 {
 	public $itemClass = 'infinite\\web\\browser\\Item';
-	public $sortDirection = SORT_ASC;
 	public $limit = 30;
+	public $filterQuery = false;
 	protected $_id; // never set, based on instructions
 	protected $_instructions;
 	protected $_type; // pivot: category list; item: items list
 	protected $_typeOptions = [];
 	protected $_items;
-	protected $_sorted = false;
 	protected $_handled = false;
 	protected $_total;
 	protected $_offset = 0;
-
 	protected $_baseInstructions = ['task' => null];
 
 	public function getId()
@@ -52,7 +50,12 @@ class Bundle extends \infinite\base\Object
 		if (isset($this->_instructions['offset'])) {
 			$this->_offset = $this->_instructions['offset'];
 		}
-		unset($this->_instructions['id'], $this->_instructions['offset']);
+
+		if (isset($this->_instructions['filterQuery'])) {
+			$this->filterQuery = $this->_instructions['filterQuery'];
+		}
+
+		unset($this->_instructions['id'], $this->_instructions['offset'], $this->_instructions['filterQuery']);
 	}
 
 	public function addItem($item)
@@ -68,7 +71,6 @@ class Bundle extends \infinite\base\Object
 		}
 		$item = Yii::createObject($item);
 		$this->_items[$item->id] = $item;
-		$this->_sorted = false;
 		return $item;
 	}
 
@@ -77,26 +79,18 @@ class Bundle extends \infinite\base\Object
 		$package = [];
 		$package['id'] = $this->id;
 		$package['instructions'] = $this->instructions;
+		$package['filterQuery'] = $this->filterQuery;
 		$package['type'] = $this->type;
 		$package['typeOptions'] = $this->typeOptions;
 		$package['total'] = $this->total;
 		$package['bundle'] = false;
 		if (isset($this->_items)) {
 			$package['bundle'] = ['offset' => $this->offset, 'size' => count($this->_items), 'items' => []];
-			$this->ensureSorting();
 			foreach ($this->_items as $item) {
 				$package['bundle']['items'][$item->id] = $item->package();
 			}
 		}
 		return $package;
-	}
-
-	public function ensureSorting()
-	{
-		if (!$this->_sorted) {
-			ArrayHelper::multisort($this->_items, 'sortKey', $this->sortDirection);
-		}
-		$this->_sorted = true;
 	}
 
 	public function setTypeOptions($options)

@@ -14,5 +14,13 @@ abstract class Handler extends \infinite\base\Object
 		}
 		return $this->bundle->instructions;
 	}
+
+	public function getFilterQuery()
+	{
+		if (!isset($this->bundle)) {
+			return false;
+		}
+		return $this->bundle->filterQuery;
+	}
 }
 ?>
