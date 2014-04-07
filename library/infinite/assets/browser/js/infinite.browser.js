@@ -5,7 +5,8 @@ function InfiniteBrowser (parent, options) {
       'data': {},
       'section': {
          'width': 300
-      }
+      },
+      'callback': function(item) { }
 	};
 	this.options = jQuery.extend(true, {}, defaultOptions, options);
    if (this.options.root && !(this.options.root instanceof InfiniteBrowserBundle)) {
@@ -20,6 +21,12 @@ function InfiniteBrowser (parent, options) {
    this.request = false;
    this.init();
 }
+
+InfiniteBrowser.prototype.select = function(item) {
+   this.options.callback(item);
+   this.hide();
+   this.reset();
+};
 
 InfiniteBrowser.prototype.error = function(message) {
    this.reset(false);
@@ -335,10 +342,17 @@ InfiniteBrowserBundle.prototype.loadBundleResponse = function(bundleResponse, re
       var itemDestination = self.searchCache[bundleResponse.filterQuery] = {};
       var render = bundleResponse.filterQuery === this.filterQuery;
    }
-
+   var defaultItem = {
+      'id': null,
+      'descriptor': null,
+      'subdescriptor': null,
+      'hasChildren': false,
+      'isSelectable': false
+   };
    if (bundleResponse.bundle !== undefined && bundleResponse.bundle) {
       this.offset = this.offset + parseInt(bundleResponse.bundle.size, 10);
       jQuery.each(bundleResponse.bundle.items, function(id, item) {
+         item = jQuery.extend(true, {}, defaultItem, item);
          if (itemDestination[id] === undefined) {
             itemDestination[id] = item;
             if (render) {
@@ -400,10 +414,16 @@ InfiniteBrowserBundle.prototype.initializeList = function(search) {
    }
    this.listInitialized = true;
    this.list.html('');
-   if (this.browser.elements.sections.length > 0) {
-      $("<a />", {'href': '#', 'class': 'infinite-browse-back list-group-item'}).html('<i class="glyphicon glyphicon-chevron-left pull-left"></i> Back').appendTo(self.list).click(function() {
+   if (self.browser.stack[self.getPosition()-1] !== undefined) {
+      var previousStackItem = self.browser.stack[self.getPosition()-1];
+      $("<a />", {'href': '#', 'class': 'infinite-browse-back list-group-item'}).html('<i class="glyphicon glyphicon-chevron-left pull-left"></i> Back to <em>'+previousStackItem.descriptor+'</em>').appendTo(self.list).click(function() {
          self.browser.goToPositionIndex(self.getPosition()-1);
       });
+      if (previousStackItem.isSelectable) {
+         $("<a />", {'href': '#', 'class': 'infinite-browse-select list-group-item'}).html('<i class="glyphicon glyphicon-check pull-right"></i> Select <em>'+previousStackItem.descriptor+'</em>').appendTo(self.list).click(function() {
+            self.browser.select(previousStackItem);
+         });
+      }
    }
    if (search) {
       var searchInput = $("<input />", {'type': 'text', 'class': 'infinite-browse-filter form-control', 'placeholder': 'Filter...'});
@@ -430,11 +450,31 @@ InfiniteBrowserBundle.prototype.appendItem = function(item) {
    var self = this;
    this.initializeList();
    if (this.list === null) { return false; }
-   var element = $("<a />", {'href': '#', 'class': 'browser-item list-group-item'}).html('<i class="glyphicon glyphicon-chevron-right pull-right"></i>' + item.label).appendTo(self.list).click(function() {
-      self.browser.appendStackItem(self, item);
-      self.list.find('.browser-item.active').removeClass('active');
-      $(this).addClass('active');
-   });
+   var element = $("<a />", {'href': '#', 'class': 'browser-item list-group-item'}).html(item.descriptor).appendTo(self.list);
+   var clickable = false;
+   if (item.hasChildren) {
+      $("<i />", {'class': 'glyphicon glyphicon-chevron-right pull-right'}).prependTo(element);
+      element.click(function() {
+         self.browser.appendStackItem(self, item);
+         self.list.find('.browser-item.active').removeClass('active');
+         $(this).addClass('active');
+      });
+      clickable = true;
+   }
+   if (item.isSelectable) {
+      var selectIcon = $("<a />", {'href': '#', 'class': 'glyphicon glyphicon-check pull-right'}).prependTo(element);
+      var selectFunction = function() {
+         self.browser.select(item);
+      };
+      selectIcon.click(selectFunction);
+      if (!clickable) {
+         element.click(selectFunction);
+         clickable = true;
+      }
+   }
+   if (!clickable) {
+      element.addClass('disabled');
+   }
    this.elementItems.push(element);
 };
 

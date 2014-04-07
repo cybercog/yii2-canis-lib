@@ -9,14 +9,20 @@ class Item extends \infinite\base\Object
 {
 	public $type;
 	public $id;
-	public $label;
+	public $descriptor;
+	public $subdescriptor;
+	public $isSelectable = false;
+	public $hasChildren = false;
 
 	public function package()
 	{
 		return [
 			'type' => $this->type,
 			'id' => $this->id,
-			'label' => $this->label
+			'descriptor' => $this->descriptor,
+			'subdescriptor' => $this->subdescriptor,
+			'hasChildren' => $this->hasChildren,
+			'isSelectable' => $this->isSelectable
 		];
 	}
 }
