@@ -4,7 +4,8 @@ function InfiniteBrowser (parent, options) {
       'root': false,
       'data': {},
       'section': {
-         'width': 300
+         'width': 300,
+         'animationSpeed': 200
       },
       'callback': function(item) { }
 	};
@@ -65,7 +66,6 @@ InfiniteBrowser.prototype.drawBundle = function(bundle) {
 
 InfiniteBrowser.prototype.internalDrawBundle = function(bundle, element) {
    if (bundle instanceof InfiniteBrowserBundle) {
-
       if (this.elements.sections.length > 0) {
          var lastSection = this.elements.sections[this.elements.sections.length-1];
          lastSection.element.removeClass('active-section');
@@ -84,7 +84,7 @@ InfiniteBrowser.prototype.draw = function() {
 };
 
 InfiniteBrowser.prototype.internalUpdateMarginShift = function(left) {
-   this.elements.canvas.animate({'marginLeft': left});
+   this.elements.canvas.animate({'marginLeft': left}, this.options.section.animationSpeed);
 };
 
 InfiniteBrowser.prototype.updateViewport = function() {
@@ -109,6 +109,9 @@ InfiniteBrowser.prototype.reset = function(draw) {
       draw = true;
    }
    this.stack = [];
+   jQuery.each(this.elements.sections, function(index, value) {
+      value.bundle.undraw();
+   });
    this.elements.sections = [];
    this.elements.canvas.find('.section').remove();
    if (draw) {
@@ -127,7 +130,7 @@ InfiniteBrowser.prototype.show = function() {
 
 InfiniteBrowser.prototype.hide = function() {
    var self = this;
-   this.elements.container.slideUp(function() { self.visible = false; });
+   this.elements.container.slideUp(function() { self.visible = false; self.reset(); });
 };
 
 InfiniteBrowser.prototype.appendStackItem = function(bundle, item) {
@@ -260,6 +263,7 @@ InfiniteBrowserBundle.prototype.draw = function() {
    var list = this.list = $("<div />", {'class': 'list-group'}).appendTo(this.container);
    var loadElement = this.loadElement = $("<div />", {'class': 'glyphicon glyphicon-chevron-down infinite-browse-load-element'}).hide().appendTo(this.element);
 
+   this.browser.internalDrawBundle(this, section);
    if (this.fetched) {
       this.drawItems();
    } else {
@@ -267,7 +271,6 @@ InfiniteBrowserBundle.prototype.draw = function() {
       });
       $("<div />", {'class': 'list-group-item'}).append($("<div />", {'class': 'alert alert-warning'}).html('Loading...')).appendTo(self.list);
    }
-   this.browser.internalDrawBundle(this, section);
 };
 
 InfiniteBrowserBundle.prototype.drawItems = function(items) {
