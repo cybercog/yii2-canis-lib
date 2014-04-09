@@ -30,7 +30,7 @@ class Infinite implements \yii\base\BootstrapInterface
     /**
      * @inheritdoc
      */
-    public function bootstrap(\yii\base\Application $app)
+    public function bootstrap($app)
     {
         Yii::setAlias('@infinite', __DIR__);
         Yii::$app->registerMigrationAlias('@infinite/db/migrations');

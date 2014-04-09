@@ -9,9 +9,10 @@ use IteratorAggregate;
 use infinite\base\exceptions\Exception;
 
 use yii\base\Arrayable;
+use yii\base\BootstrapInterface;
 use yii\base\Event;
 
-class Component extends \infinite\base\Component implements IteratorAggregate, ArrayAccess 
+class Component extends \infinite\base\Component implements IteratorAggregate, ArrayAccess, BootstrapInterface
 {
 	const EVENT_AFTER_LOAD = 'afterLoad';
 	const EVENT_AFTER_INIT = 'afterInit';
@@ -20,9 +21,8 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
 	protected $_init_collectors = [];
 	protected $_loaded = false;
 
-	public function init() {
+	public function bootstrap($app) {
 		Yii::$app->on(\yii\base\Application::EVENT_BEFORE_REQUEST, [$this, 'beforeRequest']);
-		parent::init();
 	}
 
 	public function beforeRequest($event) {
