@@ -333,6 +333,7 @@ class Gatekeeper extends \infinite\base\Component
 		} else {
 			$aros = [];
 		}
+		
 		$aroIn = [];
 		foreach ($aros as $aro) {
 			if (is_array($aro)) {
