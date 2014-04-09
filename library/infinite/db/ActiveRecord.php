@@ -240,7 +240,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
      * written for querying `Customer` purpose.)
      * @return ActiveQuery the newly created [[ActiveQuery]] instance.
      */
-    public static function createQuery()
+    public static function find()
     {
         if (is_null(static::$queryClass)) {
             $queryClass = 'infinite\\db\\ActiveQuery';

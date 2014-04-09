@@ -67,7 +67,7 @@ trait SearchTerm
 
 		$limit = $limit - count($foreignResults);
 		if (!empty($localFields)) {
-			$localQuery = static::createQuery();
+			$localQuery = static::find();
 			$localQuery->limit = $limit;
 			self::buildSearchQuery($localQuery, $localFields, $searchTerms);
 			self::implementParams($localQuery, $params);

@@ -282,7 +282,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 			$model = new $modelClass;
 		}
 
-		$query = $modelClass::createQuery();
+		$query = $modelClass::find();
         // $query->select = [
         //     $query->primaryAlias .'.*', 
         //     $this->relationAlias .'.id as `r.id`',
@@ -325,7 +325,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     public function queryRelations($relationshipType, $model = false, $relationOptions = []) 
     {
     	$relationClass = Yii::$app->classes['Relation'];
-    	$query = $relationClass::createQuery();
+    	$query = $relationClass::find();
         $this->relationAlias = $relationClass::tableName();
     	$this->_prepareRelationQuery($query, $relationshipType, $model, $relationOptions);
     	$this->_prepareRegistryModelCheck($query, $relationshipType, $model);

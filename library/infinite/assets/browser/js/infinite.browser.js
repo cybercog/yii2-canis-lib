@@ -10,6 +10,7 @@ function InfiniteBrowser (parent, options) {
       'callback': function(item) { }
 	};
 	this.options = jQuery.extend(true, {}, defaultOptions, options);
+   $.debug(['browser', this.options])
    if (this.options.root && !(this.options.root instanceof InfiniteBrowserBundle)) {
       this.options.root = new InfiniteBrowserBundle(this, this.options.root);
    }
