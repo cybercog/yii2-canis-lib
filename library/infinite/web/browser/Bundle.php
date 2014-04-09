@@ -11,9 +11,9 @@ class Bundle extends \infinite\base\Object
 {
 	public $itemClass = 'infinite\\web\\browser\\Item';
 	public $limit = 30;
-	public $filterQuery = false;
 	protected $_id; // never set, based on instructions
 	protected $_instructions;
+	protected $_filterQuery = false;
 	protected $_type; // pivot: category list; item: items list
 	protected $_typeOptions = [];
 	protected $_items;
@@ -91,6 +91,19 @@ class Bundle extends \infinite\base\Object
 			}
 		}
 		return $package;
+	}
+
+	public function setFilterQuery($value)
+	{
+		if ($value === 'false') {
+			$value = false;
+		}
+		$this->_filterQuery = $value;
+	}
+
+	public function getFilterQuery()
+	{
+		return $this->_filterQuery;
 	}
 
 	public function setTypeOptions($options)
