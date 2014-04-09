@@ -59,8 +59,10 @@ class Item extends \infinite\base\collector\Item
 			return 'editor';
 		} elseif ($this->level > INFINITE_ROLE_LEVEL_VIEWER) {
 			return 'commenter';
-		} elseif ($this->level > 0) {
+		} elseif ($this->level > INFINITE_ROLE_LEVEL_BROWSER) {
 			return 'viewer';
+		} elseif ($this->level > 0) {
+			return 'browser';
 		}
 		return 'none';
 	}

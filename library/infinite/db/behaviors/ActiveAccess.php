@@ -51,6 +51,7 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     	foreach ($access as $key => $value) {
     		$this->_accessMap[$key] = $value;
     	}
+        // \d($this->_accessMap);exit;
     }
 
     public function setAccessDebug($debug)

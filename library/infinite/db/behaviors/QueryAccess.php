@@ -17,6 +17,7 @@ class QueryAccess extends Query
     protected static $_acceptInherit = false;
     protected $_accessingObject;
     public $accessAdded = false;
+    protected $_bannedRoles;
 
     public function events()
     {
@@ -31,6 +32,58 @@ class QueryAccess extends Query
 
     public static function denyInherit() {
         self::$_acceptInherit = false;
+    }
+
+    public function banRole($role)
+    {
+        if (!$this->queryAccessModel || $this->queryAccessModel->getBehavior('Roleable') === null) { return $this->owner; }
+        if (!isset($this->_bannedRoles)) {
+            $this->initializeBannedRoles();
+        }
+        $role = $this->queryAccessModel->normalizeRole($role);
+        if ($role && !empty($role->object)) {
+            $this->_bannedRoles[$role->object->primaryKey] = $role;
+        }
+        return $this->owner;
+    }
+
+    public function allowRole($role)
+    {
+       if (!$this->queryAccessModel || $this->queryAccessModel->getBehavior('Roleable') === null) { return $this->owner; }
+        if (!isset($this->_bannedRoles)) {
+            $this->initializeBannedRoles();
+        }
+        $role = $this->queryAccessModel->normalizeRole($role);
+        if ($role && !empty($role->object)) {
+            unset($this->_bannedRoles[$role->object->primaryKey]);
+        }
+        return $this->owner;
+    }
+
+    public function getAutoBannedRoles()
+    {
+        return [['system_id' => 'browser']];
+    }
+
+    public function initializeBannedRoles()
+    {
+        $this->_bannedRoles = [];
+        if (!$this->queryAccessModel || $this->queryAccessModel->getBehavior('Roleable') === null) { return true; }
+        foreach ($this->autoBannedRoles as $role) {
+            $role = $this->queryAccessModel->normalizeRole($role);
+            if ($role && !empty($role->object)) {
+                $this->_bannedRoles[$role->object->primaryKey] = $role;
+            }
+        }
+    }
+
+    public function getBannedRoles()
+    {
+        if (!$this->queryAccessModel || $this->queryAccessModel->getBehavior('Roleable') === null) { return []; }
+        if (!isset($this->_bannedRoles)) {
+            $this->initializeBannedRoles();
+        }
+        return $this->_bannedRoles;
     }
 
     public function asUser($userName)
@@ -83,6 +136,13 @@ class QueryAccess extends Query
         return $summary;
     }
 
+    public function getQueryAccessModel()
+    {
+        if ($this->owner instanceof \infinite\db\ActiveQuery) {
+            return $this->owner->model;
+        }
+        return false;
+    }
 
     // public function addCheckNoAccess($aca = 'read') {
     //     return $this->addCheckAccess($aca, true);
@@ -104,12 +164,14 @@ class QueryAccess extends Query
             } 
             $query->andWhere(['or', [$alias.'.aca_id' => $aca->primaryKey], [$alias.'.aca_id' => null]]);
         }
-        if ($aca === 'read' 
-            && $readRole
-            && (!($query instanceof \yii\db\ActiveQuery) || $query->getBehavior('Roleable') !== null)
-        ) {
-            Yii::$app->gk->generateAclRoleCheckCriteria($query, false, $this->accessingObject, $classAlias);
+        $roleable = false;
+        if ($aca === 'read' && $readRole && $this->queryAccessModel) {
+            $roleable = $this->queryAccessModel->getBehavior('Roleable') !== true;
+        }
+        if ($roleable) {
+            Yii::$app->gk->generateAclRoleCheckCriteria($query, false, $this->accessingObject, $classAlias, array_keys($this->bannedRoles));
         } else {
+            \d($query->getBehavior('Roleable'));
             Yii::$app->gk->generateAclCheckCriteria($query, false, $this->accessingObject, true, $classAlias);
         }
 

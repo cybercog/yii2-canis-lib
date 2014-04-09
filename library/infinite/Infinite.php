@@ -5,11 +5,12 @@
  * @author Jacob Morrison <jacob@infinitecascade.com>
  * @package infinite
  */
-defined('INFINITE_ROLE_LEVEL_OWNER') || define('INFINITE_ROLE_LEVEL_OWNER', 500); // owner levels: 401-500
-defined('INFINITE_ROLE_LEVEL_MANAGER') || define('INFINITE_ROLE_LEVEL_MANAGER', 400); // manager levels: 301-400
-defined('INFINITE_ROLE_LEVEL_EDITOR') || define('INFINITE_ROLE_LEVEL_EDITOR', 300); // editor levels: 201-300
-defined('INFINITE_ROLE_LEVEL_COMMENTER') || define('INFINITE_ROLE_LEVEL_COMMENTER', 200); // commenter levels: 101-200; doesn't exist in system
-defined('INFINITE_ROLE_LEVEL_VIEWER') || define('INFINITE_ROLE_LEVEL_VIEWER', 100); // viewer levels: 1-100
+defined('INFINITE_ROLE_LEVEL_OWNER') || define('INFINITE_ROLE_LEVEL_OWNER', 600); // owner levels: 501-600
+defined('INFINITE_ROLE_LEVEL_MANAGER') || define('INFINITE_ROLE_LEVEL_MANAGER', 500); // manager levels: 401-500
+defined('INFINITE_ROLE_LEVEL_EDITOR') || define('INFINITE_ROLE_LEVEL_EDITOR', 400); // editor levels: 301-400
+defined('INFINITE_ROLE_LEVEL_COMMENTER') || define('INFINITE_ROLE_LEVEL_COMMENTER', 300); // commenter levels: 201-300; doesn't exist in system
+defined('INFINITE_ROLE_LEVEL_VIEWER') || define('INFINITE_ROLE_LEVEL_VIEWER', 200); // viewer levels: 101-200
+defined('INFINITE_ROLE_LEVEL_BROWSER') || define('INFINITE_ROLE_LEVEL_BROWSER', 100); // viewer levels: 1-100
 
 function d($variable, $settings = []) {
     $default = ['die' => false, 'skipSteps' => 1];

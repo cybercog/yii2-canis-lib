@@ -309,6 +309,7 @@ class ObjectAccess extends \infinite\base\Component
 			$roles[$roleItem->id]['helpText'] = $this->getRoleHelpText($roleItem);
 
 		}
+		ArrayHelper::multisort($roles, 'level', SORT_ASC);
 		return $roles;
 	}
 

@@ -287,11 +287,12 @@ class Gatekeeper extends \infinite\base\Component
 		return false;
 	}
 
-	public function generateAclRoleCheckCriteria($query, $controlledObject, $accessingObject = null, $modelClass = null, $expandAros = true)
+	public function generateAclRoleCheckCriteria($query, $controlledObject, $accessingObject = null, $modelClass = null, $bannedRoles = [], $expandAros = true)
 	{
 		if (Yii::$app->gk->accessorHasGroup($accessingObject, ['administrators', 'super_administrators'])) {
 			return $query;
 		}
+		//\d($bannedRoles);
 		$aclRoleClass = Yii::$app->classes['AclRole'];
         $aclRoleTable = $aclRoleClass::tableName();
         $modelAlias = null;
@@ -321,6 +322,9 @@ class Gatekeeper extends \infinite\base\Component
 		$innerOnConditions = ['or'];
 		$innerOnConditions[] = ['[['. $innerAlias .']].[[controlled_object_id]]' => $controlledObject];
 		$innerOnConditions[] = '[['. $innerAlias.']].[[controlled_object_id]] = [[' .$query->primaryAlias .']].[['. $query->primaryTablePk .']]';
+		if (!empty($bannedRoles)) {
+			$innerOnConditions = ['and', $innerOnConditions, ['and', ['not', ['[['. $innerAlias.']].[[role_id]]' => $bannedRoles]]]];
+		}
 		$subquery->from([$aclRoleTable => $aclRoleTable]);
 		if ($expandAros) {
 			$aros = $this->getRequestors($accessingObject);
@@ -504,7 +508,14 @@ class Gatekeeper extends \infinite\base\Component
 			return [];
 		}
 
-		$aclKey = [__CLASS__.'.'.__FUNCTION__, func_get_args(), !empty($this->primaryRequestor) ? $this->primaryRequestor->primaryKey : null];
+		$aclKey = [
+			__CLASS__.'.'.__FUNCTION__, 
+			is_object($controlledObject) ? $controlledObject->primaryKey : $controlledObject,
+			is_object($accessingObject) ? $accessingObject->primaryKey : $accessingObject,
+			is_object($acaIds) ? $acaIds->primaryKey : $acaIds,
+			$expandAros,
+			!empty($this->primaryRequestor) ? $this->primaryRequestor->primaryKey : null
+		];
     	$access = Cacher::get($aclKey);
     	if ($access) {
     		return $access;
