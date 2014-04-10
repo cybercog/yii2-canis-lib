@@ -292,7 +292,8 @@ class Gatekeeper extends \infinite\base\Component
 		return true;
 	}
 
-	public function generateAclRoleCheckCriteria($query, $controlledObject, $accessingObject = null, $modelClass = null, $bannedRoles = [], $expandAros = true)
+	// this function is not possible because it loses inheritance from object types two levels up
+	public function BADgenerateAclRoleCheckCriteria($query, $controlledObject, $accessingObject = null, $modelClass = null, $bannedRoles = [], $expandAros = true)
 	{
 		if (Yii::$app->gk->accessorHasGroup($accessingObject, ['administrators', 'super_administrators'])) {
 			return $query;

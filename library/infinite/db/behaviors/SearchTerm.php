@@ -121,6 +121,10 @@ trait SearchTerm
 		if (!empty($params['ignore'])) {
 			$query->andWhere(['not in', $query->primaryAlias .'.'. self::primaryKey()[0], $params['ignore']]);
 		}
+
+		if (!empty($params['action'])) {
+			$query->action = $params['action'];
+		}
 	}
 
 	public static function buildSearchQuery($query, $fields, $searchTerms)
