@@ -18,7 +18,7 @@ use infinite\base\ObjectTrait;
 use infinite\base\ModelTrait;
 use infinite\db\models\Relation;
 use infinite\db\models\Registry;
-use yii\caching\GroupDependency;
+use infinite\caching\Cacher;
 
 class ActiveRecord extends \yii\db\ActiveRecord
 {
@@ -61,7 +61,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     {
         $result = parent::afterSave($insert);
         if (static::$groupCache && $this->wasDirty) {
-            GroupDependency::invalidate(Yii::$app->cache, self::cacheGroupKey());
+            Cacher::invalidateGroup(self::cacheGroupKey());
         }
         $this->_wasDirty = false;
         return $result;
@@ -84,7 +84,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
     public static function cacheDependency()
     {
-        return new GroupDependency(['group' => self::cacheGroupKey()]);
+        return Cacher::groupDependency(self::cacheGroupKey());
     }
 
     public static function populateRecord($record, $row)

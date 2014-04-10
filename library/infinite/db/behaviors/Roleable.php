@@ -6,7 +6,7 @@ use Yii;
 use yii\db\Expression;
 use infinite\base\Exception;
 use infinite\helpers\ArrayHelper;
-use yii\caching\GroupDependency;
+use infinite\caching\Cacher;
 
 class Roleable extends \infinite\db\behaviors\ActiveRecord
 {
@@ -203,7 +203,7 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
         }
         if ($clearRole) {
             $this->clearAroRole($aro);
-            GroupDependency::invalidate(Yii::$app->cache, 'acl_role');
+            Cacher::invalidateGroup('acl_role');
             return true;
         }
         $aclRole = $this->getRole($aro, false);
@@ -222,7 +222,7 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
             return false;
         }
         if ($changed) {
-            GroupDependency::invalidate(Yii::$app->cache, 'acl_role');
+            Cacher::invalidateGroup('acl_role');
         }
         return $this->ensureRoleAccess($aclRole, $existing);
     }

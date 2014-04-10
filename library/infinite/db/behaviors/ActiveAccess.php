@@ -90,8 +90,9 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     	if (!is_object($aca)) {
     		$aca = Yii::$app->gk->getActionObjectByName($aca);
     	}
-    	$parentIds = $this->owner->queryParentRelations(false)->select(['parent_object_id'])->column();
-        
+    	//$parentIds = $this->owner->queryParentRelations(false)->select(['parent_object_id'])->column();
+        $parentIds = $this->owner->loadAllParentIds();
+
     	if (Yii::$app->gk->can($aca, $parentIds, $accessingObject)) {
 			return Access::ACCESS_GRANTED;
 		}

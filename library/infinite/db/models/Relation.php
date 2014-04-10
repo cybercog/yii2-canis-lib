@@ -33,6 +33,7 @@ class Relation extends \infinite\db\ActiveRecord
 		parent::init();
 		$this->on(self::EVENT_AFTER_INSERT, [$this, 'afterSaveRelation']);
 		$this->on(self::EVENT_AFTER_UPDATE, [$this, 'afterSaveRelation']);
+		$this->on(self::EVENT_AFTER_DELETE, [$this, 'afterDeleteRelation']);
 	}
 
 	/**
@@ -65,6 +66,11 @@ class Relation extends \infinite\db\ActiveRecord
 	}
 
 	public function afterSaveRelation($event)
+	{
+		return true;
+	}
+
+	public function afterDeleteRelation($event)
 	{
 		return true;
 	}

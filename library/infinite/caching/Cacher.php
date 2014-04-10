@@ -3,6 +3,11 @@ namespace infinite\caching;
 
 use Yii;
 
+use yii\caching\ChainedDependency;
+use yii\caching\GroupDependency;
+use yii\caching\DbDependency;
+
+
 class Cacher extends \infinite\base\Component {
 	public static function key($key, $hash = false)
 	{
@@ -52,7 +57,40 @@ class Cacher extends \infinite\base\Component {
 
 	public static function set($key, $value, $expire = 0, $dependency = null)
 	{
-		return Yii::$app->cache->set(self::key($key), $value, $expire, $dependency);
+		$chain = [];
+		$chain[] = new GroupDependency(['group' => 'all']);
+		if (!is_null($dependency)) {
+			$chain[] = $dependency;
+		}
+
+		return Yii::$app->cache->set(self::key($key), $value, $expire, static::chainedDependency($chain));
+	}
+
+	public static function chainedDependency($chain = [])
+	{
+		return new ChainedDependency(['dependencies' => $chain]);
+	}
+
+	public static function dbDependency($sql, $reusable = false)
+	{
+		return new DbDependency(['reusable' => $reusable, 'sql' => $sql]);
+	}
+
+	public static function groupDependency($group, $category = null)
+	{
+		if (!is_null($category)) {
+			$chain = [];
+			$chain[] = new GroupDependency(['group' => ['category', $category]]);
+			$chain[] = new GroupDependency(['group' => $group]);
+			return static::chainedDependency($chain);
+		} else {
+			return new GroupDependency(['group' => $group]);
+		}
+	}
+
+	public static function invalidateGroup($group)
+	{
+		GroupDependency::invalidate(Yii::$app->cache, $group);
 	}
 }
 ?>

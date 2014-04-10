@@ -20,9 +20,6 @@ use infinite\db\behaviors\ActiveAccess;
 use infinite\caching\Cacher;
 
 use yii\db\Expression;
-use yii\caching\GroupDependency;
-use yii\caching\DbDependency;
-use yii\caching\ChainedDependency;
 
 class Gatekeeper extends \infinite\base\Component
 {
@@ -70,14 +67,11 @@ class Gatekeeper extends \infinite\base\Component
 
 		$acaClass = Yii::$app->classes['Aca'];
 
-
-		return new ChainedDependency([
-			'dependencies' => [
-				new GroupDependency(['group' => 'aros']),
-				new GroupDependency(['group' => 'acl_role']),
-				$acaClass::cacheDependency(),
-				new DbDependency(['reusable' => true, 'sql' => $query->createCommand()->rawSql])
-			]
+		return Cacher::chainedDependency([
+			Cacher::groupDependency('aros'),
+			Cacher::groupDependency('acl_role'),
+			$acaClass::cacheDependency(),
+			Cacher::dbDependency($query->createCommand()->rawSql, true)
 		]);
 	}
 
@@ -623,7 +617,7 @@ class Gatekeeper extends \infinite\base\Component
 					$this->_requestors[$arosKey][] = $this->getTopGroup()->primaryKey;
 				}
 				$this->_requestors[$arosKey] = array_unique($this->_requestors[$arosKey]);
-				Cacher::set($arosKey, $this->_requestors[$arosKey], 0, new GroupDependency(['group' => 'aros']));
+				Cacher::set($arosKey, $this->_requestors[$arosKey], 0, Cacher::groupDependency('aros'));
 			}
     	}
     	return array_unique($this->_requestors[$arosKey]);

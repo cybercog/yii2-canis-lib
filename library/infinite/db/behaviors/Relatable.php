@@ -15,6 +15,7 @@ use yii\base\Event;
 
 use infinite\db\Tree;
 use infinite\helpers\ArrayHelper;
+use infinite\caching\Cacher;
 
 class Relatable extends \infinite\db\behaviors\ActiveRecord
 {
@@ -61,6 +62,85 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
         if (!self::$_setGlobalEvents) {
             self::$_setGlobalEvents = true;
             Event::on(Yii::$app->classes['Registry'], $registryClass::EVENT_BEFORE_DELETE, [$this, 'cleanupRelations']);
+        }
+    }
+
+
+    public function loadAllParentIds()
+    {
+        return self::getAllParentIds($this->owner);
+    }
+
+    public static function getAllParentIds($child)
+    {
+        $childObject = null;
+        if (is_object($child)) {
+            $childObject = $child;
+            $child = $child->primaryKey;
+        }
+        $key = [__CLASS__, 'parentIds', $child];
+        $parentIds = Cacher::get($key);
+        if ($parentIds) {
+            return $parentIds;
+        }
+        if (is_null($childObject)) {
+            $registryClass = Yii::$app->classes['Registry'];
+            $childObject = $registryClass::getObject($child, false);
+        }
+        if ($childObject) {
+            $parentIds = $childObject->queryParentRelations(false)->select(['parent_object_id'])->column();
+            self::setAllParentIds($childObject, $parentIds);
+            return $parentIds;
+        }
+        return [];
+    }
+
+    public static function setAllParentIds($child, $parentIds = [])
+    {
+         $childObject = null;
+        if (is_object($child)) {
+            $childObject = $child;
+            $child = $child->primaryKey;
+        }
+        $key = [__CLASS__, 'parentIds', $child];
+        $dependency = Cacher::groupDependency(['Object', 'relations', $child], 'relation');
+        Cacher::set($key, $parentIds, 0, $dependency);
+        return $dependency;
+    }
+
+    // this helps prevent a ton of relation calls later on
+    public function loadChildParentIds()
+    {
+        $dependencies = [];
+        $relationClass = Yii::$app->classes['Relation'];
+        $relationTable = $relationClass::tableName();
+        $key = [__CLASS__, 'parentIdsLoaded', $this->owner->primaryKey];
+        $dependencyChain = [];
+        $dependencyChain[] = Cacher::groupDependency(['Object', 'relations', $this->owner->primaryKey]);
+
+        if (!Cacher::get($key)) {
+            $query = new Query;
+            $subquery = new Query;
+            $query->from(['outerRelation' => $relationTable]);
+            $this->_prepareRelationQuery($query, 'parents', false, ['alias' => 'outerRelation', 'skipAssociation' => true]);
+            $this->_prepareRelationQuery($subquery, 'children', false, ['alias' => 'innerRelation']);
+            $subquery->select(['{{innerRelation}}.[[child_object_id]]']);
+            $subquery->from(['innerRelation' => $relationTable]);
+            // $subquery->andWhere(['{{innerRelation}}.[[parent_object_id]]' => $this->owner->primaryKey]);
+            $query->andWhere(['and', '{{outerRelation}}.[[child_object_id]] IN ('. $subquery->createCommand()->rawSql .')']);
+            $query->select(['{{outerRelation}}.[[child_object_id]]', '{{outerRelation}}.[[parent_object_id]]']);
+            $childParentsRaw = $query->all();
+            $childParents = [];
+            foreach ($childParentsRaw as $relation) {
+                if (!isset($childParents[$relation['child_object_id']])) {
+                    $childParents[$relation['child_object_id']] = [];
+                }
+                $childParents[$relation['child_object_id']][] = $relation['parent_object_id'];
+            }
+            foreach ($relation as $childObjectId => $parentObjectIds) {
+                $dependencyChain[] = static::setAllParentIds($childObjectId, $parentObjectIds);
+            }
+            Cacher::set($key, true, 0, Cacher::chainedDependency($dependencyChain));
         }
     }
 
@@ -465,6 +545,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     protected function _prepareRelationQuery(Query $query, $relationshipType = false, $model = false, $relationOptions = [])
     {
     	$activeOnly = !isset($relationOptions['activeOnly']) || $relationOptions['activeOnly'];
+        $skipAssociation = isset($relationOptions['skipAssociation']) && $relationOptions['skipAssociation'];
     	$relationClass = Yii::$app->classes['Relation'];
         $relationAlias = isset($relationOptions['alias']) ? $relationOptions['alias'] : $this->relationAlias;
     	$relationTableAlias = $relationClass::tableName() . ' ' . $relationAlias;
@@ -488,7 +569,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     		$modelPrimaryKey = $modelClass::primaryKey()[0];
     	}
 
-    	$relationQuery = $query->modelClass === Yii::$app->classes['Relation'] || !$model;
+    	$relationQuery = (isset($query->modelClass) && $query->modelClass === Yii::$app->classes['Relation']) || !$model;
 
     	if ($relationQuery) {
     		$conditionsDestination = 'where';
@@ -496,41 +577,43 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     		$conditionsDestination = 'on';
     	}
 
-    	if ($relationshipType === 'parents') {
-			$primaryKey = $this->parentObjectField;
-			$foreignKey = $this->childObjectField;
-    	} elseif ($relationshipType === 'children') {
-			$primaryKey = $this->childObjectField;
-			$foreignKey = $this->parentObjectField;
-    	} else {
-    		$conditions[] = [
-    			'or',
-    			['{{'. $this->relationAlias .'}}.[['. $this->parentObjectField .']]' => $this->owner->primaryKey], 
-    			['{{'. $this->relationAlias .'}}.[['. $this->childObjectField .']]' => $this->owner->primaryKey]
-    		];
-    	}
+        if (!$skipAssociation) {
+        	if ($relationshipType === 'parents') {
+    			$primaryKey = $this->parentObjectField;
+    			$foreignKey = $this->childObjectField;
+        	} elseif ($relationshipType === 'children') {
+    			$primaryKey = $this->childObjectField;
+    			$foreignKey = $this->parentObjectField;
+        	} else {
+        		$conditions[] = [
+        			'or',
+        			['{{'. $relationAlias .'}}.[['. $this->parentObjectField .']]' => $this->owner->primaryKey], 
+        			['{{'. $relationAlias .'}}.[['. $this->childObjectField .']]' => $this->owner->primaryKey]
+        		];
+        	}
 
-    	if (!$relationQuery && isset($primaryKey)) {
-			$conditions[] = '{{'. $this->relationAlias .'}}.[['. $primaryKey .']] = {{'. $this->objectAlias .'}}.[['. $modelPrimaryKey .']]';
-		}
+        	if (!$relationQuery && isset($primaryKey)) {
+    			$conditions[] = '{{'. $relationAlias .'}}.[['. $primaryKey .']] = {{'. $this->objectAlias .'}}.[['. $modelPrimaryKey .']]';
+    		}
+        }
 
     	if (isset($foreignKey)) {
-			$query->andWhere(['{{'. $this->relationAlias .'}}.[['. $foreignKey .']]' => $this->owner->primaryKey]);
+			$query->andWhere(['{{'. $relationAlias .'}}.[['. $foreignKey .']]' => $this->owner->primaryKey]);
 		}
 
 
 		if ($activeOnly) {
-			$isActiveCondition = [$this->relationAlias .'.'.$this->activeField => 1];
+			$isActiveCondition = [$relationAlias .'.'.$this->activeField => 1];
 			if (isset($activeConditions[$this->activeField])) {
 				$isActiveCondition = $activeConditions[$this->activeField];
 				unset($activeConditions[$this->activeField]);
 			}
-			$startDateCondition = ['or', $this->relationAlias .'.'. $this->startDateField . ' IS NULL', $this->relationAlias .'.'. $this->startDateField .' > NOW()'];
+			$startDateCondition = ['or', '{{'. $relationAlias .'}}.[['. $this->startDateField . ']] IS NULL', '{{'. $relationAlias .'}}.[['. $this->startDateField .']] > NOW()'];
 			if (isset($activeConditions[$this->startDateField])) {
 				$startDateCondition = $activeConditions[$this->startDateField];
 				unset($activeConditions[$this->startDateField]);
 			}
-			$endDateCondition = ['or', $this->relationAlias .'.'. $this->endDateField . ' IS NULL', $this->relationAlias .'.'. $this->endDateField .' < NOW()'];
+			$endDateCondition = ['or', '{{'. $relationAlias .'}}.[['. $this->endDateField . ']] IS NULL', '{{'. $relationAlias .'}}.[['. $this->endDateField .']] < NOW()'];
 			if (isset($activeConditions[$this->endDateField])) {
 				$endDateCondition = $activeConditions[$this->endDateField];
 				unset($activeConditions[$this->endDateField]);
@@ -539,13 +622,13 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 			foreach ($parts as $part) {
 				$var = $part .'Condition';
 				if (isset($$var) && $$var) {
-					$conditions[] = $this->_aliasKeys($$var, $this->relationAlias);
+					$conditions[] = $this->_aliasKeys($$var, $relationAlias);
 				}
 			}
 		}
 
 		if (!empty($activeConditions)) {
-            $activeConditions = $this->_aliasKeys($activeConditions, $this->relationAlias);
+            $activeConditions = $this->_aliasKeys($activeConditions, $relationAlias);
 			$conditions[] = $activeConditions;
 		}
 
@@ -665,4 +748,5 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
         }
         return $relationClass::findOne(['parent_object_id' => $parentObject, 'child_object_id' => $childObject]);   
     }
+
 }
