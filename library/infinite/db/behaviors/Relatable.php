@@ -326,7 +326,8 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     {
     	$relationClass = Yii::$app->classes['Relation'];
     	$query = $relationClass::find();
-        $this->relationAlias = $relationClass::tableName();
+        $this->relationAlias = isset($relationOptions['alias']) ? $relationOptions['alias'] : $relationClass::tableName();
+        $query->from([$this->relationAlias => $relationClass::tableName()]);
     	$this->_prepareRelationQuery($query, $relationshipType, $model, $relationOptions);
     	$this->_prepareRegistryModelCheck($query, $relationshipType, $model);
     	return $query;
@@ -465,7 +466,8 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     {
     	$activeOnly = !isset($relationOptions['activeOnly']) || $relationOptions['activeOnly'];
     	$relationClass = Yii::$app->classes['Relation'];
-    	$relationTableAlias = $relationClass::tableName() . ' ' . $this->relationAlias;
+        $relationAlias = isset($relationOptions['alias']) ? $relationOptions['alias'] : $this->relationAlias;
+    	$relationTableAlias = $relationClass::tableName() . ' ' . $relationAlias;
     	$conditions = [];
     	$conditions[] = 'and';
     	$params = isset($relationOptions['params']) ? $relationOptions['params'] : [];
@@ -503,17 +505,17 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     	} else {
     		$conditions[] = [
     			'or',
-    			[$this->relationAlias .'.'. $this->parentObjectField => $this->owner->primaryKey], 
-    			[$this->relationAlias .'.'. $this->childObjectField => $this->owner->primaryKey]
+    			['{{'. $this->relationAlias .'}}.[['. $this->parentObjectField .']]' => $this->owner->primaryKey], 
+    			['{{'. $this->relationAlias .'}}.[['. $this->childObjectField .']]' => $this->owner->primaryKey]
     		];
     	}
 
     	if (!$relationQuery && isset($primaryKey)) {
-			$conditions[] = $this->relationAlias .'.'. $primaryKey .' = '. $this->objectAlias .'.'. $modelPrimaryKey;
+			$conditions[] = '{{'. $this->relationAlias .'}}.[['. $primaryKey .']] = {{'. $this->objectAlias .'}}.[['. $modelPrimaryKey .']]';
 		}
 
     	if (isset($foreignKey)) {
-			$query->andWhere([$this->relationAlias .'.'. $foreignKey => $this->owner->primaryKey]);
+			$query->andWhere(['{{'. $this->relationAlias .'}}.[['. $foreignKey .']]' => $this->owner->primaryKey]);
 		}
 
 

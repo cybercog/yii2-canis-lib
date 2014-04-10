@@ -287,6 +287,11 @@ class Gatekeeper extends \infinite\base\Component
 		return false;
 	}
 
+	public function buildInnerRoleCheckConditions(&$innerOnConditions, $innerAlias, $query)
+	{
+		return true;
+	}
+
 	public function generateAclRoleCheckCriteria($query, $controlledObject, $accessingObject = null, $modelClass = null, $bannedRoles = [], $expandAros = true)
 	{
 		if (Yii::$app->gk->accessorHasGroup($accessingObject, ['administrators', 'super_administrators'])) {
@@ -321,7 +326,9 @@ class Gatekeeper extends \infinite\base\Component
 		$innerAlias = 'inner_acl_role';
 		$innerOnConditions = ['or'];
 		$innerOnConditions[] = ['[['. $innerAlias .']].[[controlled_object_id]]' => $controlledObject];
-		$innerOnConditions[] = '[['. $innerAlias.']].[[controlled_object_id]] = [[' .$query->primaryAlias .']].[['. $query->primaryTablePk .']]';
+		$innerOnConditions[] = '[['. $innerAlias .']].[[controlled_object_id]] = {{' .$query->primaryAlias .'}}.[['. $query->primaryTablePk .']]';
+		$this->buildInnerRoleCheckConditions($innerOnConditions, $innerAlias, $query);
+
 		if (!empty($bannedRoles)) {
 			$innerOnConditions = ['and', $innerOnConditions, ['and', ['not', ['[['. $innerAlias.']].[[role_id]]' => $bannedRoles]]]];
 		}

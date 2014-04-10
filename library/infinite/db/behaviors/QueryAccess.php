@@ -169,7 +169,7 @@ class QueryAccess extends Query
             $roleable = $this->queryAccessModel->getBehavior('Roleable') !== true;
         }
         // @todo must add parent lookup query for inheritance in roles
-        $roleable = false;
+        //$roleable = false;
         if ($roleable) {
             Yii::$app->gk->generateAclRoleCheckCriteria($query, false, $this->accessingObject, $classAlias, array_keys($this->bannedRoles));
         } else {
