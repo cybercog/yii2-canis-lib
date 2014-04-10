@@ -137,7 +137,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
                 }
                 $childParents[$relation['child_object_id']][] = $relation['parent_object_id'];
             }
-            foreach ($relation as $childObjectId => $parentObjectIds) {
+            foreach ($childParents as $childObjectId => $parentObjectIds) {
                 $dependencyChain[] = static::setAllParentIds($childObjectId, $parentObjectIds);
             }
             Cacher::set($key, true, 0, Cacher::chainedDependency($dependencyChain));
