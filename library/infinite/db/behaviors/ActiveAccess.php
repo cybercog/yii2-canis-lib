@@ -59,7 +59,7 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
         Yii::$app->gk->debug = $debug;
     }
 
-    public function can($aca, $accessingObject = null, $trustParent = false)
+    public function can($aca, $accessingObject = null, $relatedObject = false)
     {
         if (is_null($accessingObject) && !is_null($this->accessingObject)) {
             $accessingObject = $this->accessingObject;
@@ -76,20 +76,27 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
         if (!is_object($this->_accessMap[$aca->primaryKey])) {
             \d($this->_accessMap);exit;
         }
-        $result = $this->_accessMap[$aca->primaryKey]->can($this->owner, $accessingObject, $trustParent);
+        $result = $this->_accessMap[$aca->primaryKey]->can($this->owner, $accessingObject);
         return $result;
+    }
+
+
+    public function canDeleteAssociation($relatedObject)
+    {
+        return isset($relatedObject)
+                && $relatedObject->can('update');
     }
 
     public function parentCan($aca, $accessingObject = null)
     {
-    	//return Access::ACCESS_GRANTED; // @todo fix
         if (is_null($accessingObject) && !is_null($this->accessingObject)) {
             $accessingObject = $this->accessingObject;
         }
     	if (!is_object($aca)) {
     		$aca = Yii::$app->gk->getActionObjectByName($aca);
     	}
-    	//$parentIds = $this->owner->queryParentRelations(false)->select(['parent_object_id'])->column();
+        $aca = Yii::$app->gk->translateParentAction($this->owner, $aca);
+        \d($aca->name);exit;
         $parentIds = $this->owner->loadAllParentIds();
 
     	if (Yii::$app->gk->can($aca, $parentIds, $accessingObject)) {

@@ -41,12 +41,11 @@ class Access extends \infinite\base\Object
 		return $keys;
 	}
 
-	public function can($object, $accessingObject = null, $trustParent = false)
+	public function can($object, $accessingObject = null)
 	{
 		$cacheKey = [__FUNCTION__];
 		$cacheKey[] = is_object($object) ? $object->primaryKey : $object;
 		$cacheKey[] = is_object($accessingObject) ? $accessingObject->primaryKey : $accessingObject;
-		$cacheKey[] = $trustParent;
 		$cacheKey = md5(json_encode($cacheKey));
 		if (isset($this->_tempCache[$cacheKey])) {
 			return $this->_tempCache[$cacheKey];
@@ -61,11 +60,7 @@ class Access extends \infinite\base\Object
 				return $this->_tempCache[$cacheKey] = false;
 			break;
 			case self::ACCESS_PARENT:
-	            if ($trustParent) {
-	            	return $this->_tempCache[$cacheKey] = true;
-	            } else {
-	    	    	return $this->_tempCache[$cacheKey] = $object->parentCan($this->action, $accessingObject) === self::ACCESS_GRANTED;
-	            }
+	    	    return $this->_tempCache[$cacheKey] = $object->parentCan($this->action, $accessingObject) === self::ACCESS_GRANTED;
 			break;
 			case self::ACCESS_DIRECT_ADMIN:
 				$this->_tempCache[$cacheKey] = false;

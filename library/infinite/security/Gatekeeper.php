@@ -492,7 +492,8 @@ class Gatekeeper extends \infinite\base\Component
 		];
 	}
 
-	protected function _translateParentAction($action) {
+	public function translateParentAction($object,$action)
+	{
 		$translationMap = $this->getParentActionTranslations();
 		if (isset($translationMap[$action->primaryKey])) {
 			return $translationMap[$action->primaryKey];
