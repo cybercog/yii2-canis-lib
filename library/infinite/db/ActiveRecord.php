@@ -266,6 +266,9 @@ class ActiveRecord extends \yii\db\ActiveRecord
             'Blame' => [
                 'class' => 'infinite\db\behaviors\Blame',
             ],
+            'Archivable' => [
+                'class' => 'infinite\db\behaviors\ActiveArchivable',
+            ],
             'ActiveAccess' => [
                 'class' => 'infinite\db\behaviors\ActiveAccess',
             ]
@@ -275,7 +278,11 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
     public static function queryBehaviors()
     {
-        return [];
+        return [
+            'Archivable' => [
+                'class' => 'infinite\db\behaviors\QueryArchivable',
+            ],
+        ];
     }
 
     public function getDescriptor()

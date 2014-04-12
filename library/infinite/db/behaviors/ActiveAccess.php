@@ -10,7 +10,6 @@
 namespace infinite\db\behaviors;
 
 use Yii;
-use yii\db\Query;
 use infinite\base\exceptions\Exception;
 use infinite\security\Access;
 
@@ -76,12 +75,26 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
         if (!is_object($this->_accessMap[$aca->primaryKey])) {
             \d($this->_accessMap);exit;
         }
-        $result = $this->_accessMap[$aca->primaryKey]->can($this->owner, $accessingObject);
-        return $result;
+        $results = [true];
+        $additionalTest = false;
+        if ($relatedObject) {
+            $results[] = $relatedObject->can('update', $accessingObject);
+            if ($aca->name === 'delete') {
+                $additionalTest = $this->canDeleteAssociation($relatedObject);
+            }
+        }
+        $results[] = $additionalTest || $this->_accessMap[$aca->primaryKey]->can($this->owner, $accessingObject);
+        return min($results);
     }
 
 
     public function canDeleteAssociation($relatedObject)
+    {
+        return isset($relatedObject)
+                && $relatedObject->can('update');
+    }
+
+    public function canUpdateAssociation($relatedObject)
     {
         return isset($relatedObject)
                 && $relatedObject->can('update');
@@ -96,7 +109,6 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     		$aca = Yii::$app->gk->getActionObjectByName($aca);
     	}
         $aca = Yii::$app->gk->translateParentAction($this->owner, $aca);
-        \d($aca->name);exit;
         $parentIds = $this->owner->loadAllParentIds();
 
     	if (Yii::$app->gk->can($aca, $parentIds, $accessingObject)) {

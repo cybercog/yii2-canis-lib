@@ -77,25 +77,6 @@ class Blame extends \infinite\db\behaviors\ActiveRecord
         }
     }
 
-
-    public function archive(Event $event = null)
-    {
-        if (is_null($event)) { $event = new ModelEvent; }
-        if (!$this->isArchivable()) { $event->isValid = false; return false; }
-
-        $nowDate = date($this->databaseTimeFormat);
-        $this->owner->{$this->fields['deletedField']} = $nowDate;
-        if (isset($this->fields['deletedByField'])) {
-            $this->owner->{$this->fields['deletedByField']} = self::_getUserId();
-        }
-        return $this->owner->save();
-    }
-
-    public function isArchivable()
-    {
-        return isset($this->fields['deletedField']);
-    }
-
     protected static function _getUserId()
     {
         if (is_null(self::$_userID)) {

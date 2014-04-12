@@ -24,7 +24,8 @@ class Response extends \yii\web\Response
 		'submit' => 'Save',
 		'cancel' => 'Cancel',
 		'confirm_yes' => 'Yes',
-		'confirm_delete' => 'Delete',
+		'confirm_delete' => 'Submit',
+		'confirm_cancel' => 'Cancel',
 		'confirm_no' => 'No',
 		'close' => 'Close',
 	];
@@ -154,8 +155,8 @@ class Response extends \yii\web\Response
 		if (!isset($this->taskOptions['buttons'])) {
 			$this->taskOptions['buttons'] = [];
 			if ($this->taskOptions['isConfirmDeletion']) {
-				$this->taskOptions['buttons'][$this->labels['confirm_delete']] = ['role' => 'submit', 'state' => 'danger'];
-				$this->taskOptions['buttons'][$this->labels['confirm_no']] = ['role' => 'close'];
+				$this->taskOptions['buttons'][$this->labels['confirm_delete']] = ['role' => 'submit', 'state' => 'danger', 'class' => 'delete-button-label'];
+				$this->taskOptions['buttons'][$this->labels['confirm_cancel']] = ['role' => 'close'];
 			} elseif ($this->taskOptions['isConfirmation']) {
 				$this->taskOptions['buttons'][$this->labels['confirm_yes']] = ['role' => 'submit'];
 				$this->taskOptions['buttons'][$this->labels['confirm_no']] = ['role' => 'close'];

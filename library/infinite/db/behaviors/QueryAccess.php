@@ -12,7 +12,7 @@ namespace infinite\db\behaviors;
 use Yii;
 use yii\db\Query as BaseQuery;
 
-class QueryAccess extends Query
+class QueryAccess extends QueryBehavior
 {
     protected static $_acceptInherit = false;
     protected $_accessingObject;

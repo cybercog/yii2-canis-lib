@@ -106,6 +106,11 @@ class Relation extends \infinite\db\ActiveRecord
 		return $registryClass::getObject($this->parent_object_id, $checkAccess);
 	}
 
+	public function endRelationship()
+	{
+		$this->end = date("Y-m-d");
+		return $this->save();
+	}
 
 	// public static function set($parentObject, $childObject = null, $params = [])
 	// {

@@ -9,6 +9,6 @@
 
 namespace infinite\db\behaviors;
 
-class Query extends Model
+class QueryBehavior extends Model
 {
 }
