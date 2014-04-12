@@ -19,7 +19,11 @@ var waitForFinalEvent = (function () {
   };
 })();
 
-$.fn.renderSelect = function(options, blank) {
+$.fn.renderSelect = function(options, blank, values) {
+    if (values === undefined) {
+        values = [];
+    }
+
     var $this = $(this);
     $this.html('');
     if (blank !== undefined && blank) {
@@ -35,7 +39,11 @@ $.fn.renderSelect = function(options, blank) {
             $optgroup.renderSelect(value, false);
             $this.append($optgroup);
         } else {
-            $this.append($("<option />", {'value': index}).html(value));
+            var option = $("<option />", {'value': index}).html(value);
+            if (values.indexOf(value) > -1) {
+                option.attr('checked', true);
+            }
+            $this.append(option);
         }
     });
 };
