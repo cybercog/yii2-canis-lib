@@ -22,7 +22,12 @@ var waitForFinalEvent = (function () {
 $.fn.renderSelect = function(options, blank, values) {
     if (values === undefined) {
         values = [];
+    } else if (_.isObject(values)) {
+        values = _.values(values);
+    } else if (_.isString(values)) {
+        values = [values];
     }
+    $.debug(values);
 
     var $this = $(this);
     $this.html('');
@@ -40,8 +45,8 @@ $.fn.renderSelect = function(options, blank, values) {
             $this.append($optgroup);
         } else {
             var option = $("<option />", {'value': index}).html(value);
-            if (values.indexOf(value) > -1) {
-                option.attr('checked', true);
+            if (values.indexOf(index) > -1) {
+                option.attr('selected', true);
             }
             $this.append(option);
         }
