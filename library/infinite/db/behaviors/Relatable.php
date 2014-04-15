@@ -621,12 +621,12 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 				$isActiveCondition = $activeConditions[$this->activeField];
 				unset($activeConditions[$this->activeField]);
 			}
-			$startDateCondition = ['or', '{{'. $relationAlias .'}}.[['. $this->startDateField . ']] IS NULL', '{{'. $relationAlias .'}}.[['. $this->startDateField .']] > NOW()'];
+			$startDateCondition = ['or', '{{'. $relationAlias .'}}.[['. $this->startDateField . ']] IS NULL', '{{'. $relationAlias .'}}.[['. $this->startDateField .']] <= CURDATE()'];
 			if (isset($activeConditions[$this->startDateField])) {
 				$startDateCondition = $activeConditions[$this->startDateField];
 				unset($activeConditions[$this->startDateField]);
 			}
-			$endDateCondition = ['or', '{{'. $relationAlias .'}}.[['. $this->endDateField . ']] IS NULL', '{{'. $relationAlias .'}}.[['. $this->endDateField .']] < NOW()'];
+			$endDateCondition = ['or', '{{'. $relationAlias .'}}.[['. $this->endDateField . ']] IS NULL', '{{'. $relationAlias .'}}.[['. $this->endDateField .']] >= CURDATE()'];
 			if (isset($activeConditions[$this->endDateField])) {
 				$endDateCondition = $activeConditions[$this->endDateField];
 				unset($activeConditions[$this->endDateField]);
@@ -662,8 +662,8 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
         }
         $conditions = ['and'];
         $conditions[] = [$alias .'.'.$this->activeField => 1];
-        $conditions[] = ['or', $alias .'.'. $this->startDateField . ' IS NULL', $alias .'.'. $this->startDateField .' > NOW()'];
-        $conditions[] = ['or', $alias .'.'. $this->endDateField . ' IS NULL', $alias .'.'. $this->endDateField .' < NOW()'];
+        $conditions[] = ['or', $alias .'.'. $this->startDateField . ' IS NULL', $alias .'.'. $this->startDateField .' <= CURDATE()'];
+        $conditions[] = ['or', $alias .'.'. $this->endDateField . ' IS NULL', $alias .'.'. $this->endDateField .' >= CURDATE()'];
         $query->andWhere($conditions);
     }
 

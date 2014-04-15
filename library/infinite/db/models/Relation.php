@@ -108,8 +108,32 @@ class Relation extends \infinite\db\ActiveRecord
 
 	public function endRelationship()
 	{
-		$this->end = date("Y-m-d");
+		$this->end = date("Y-m-d", strtotime("-1 day"));
 		return $this->save();
+	}
+
+	public function getIsActive()
+	{
+		if (empty($this->active)) {
+			return false;
+		}
+		
+		$today = strtotime(date("Y-m-d") . " 12:00:00");
+		if (!empty($this->start)) {
+			$start = strtotime($this->start . " 12:00:00");
+			if ($start > $today) {
+				return false;
+			}
+		}
+
+		if (!empty($this->end)) {
+			$end = strtotime($this->end . " 12:00:00");
+			if ($end < $today) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	// public static function set($parentObject, $childObject = null, $params = [])

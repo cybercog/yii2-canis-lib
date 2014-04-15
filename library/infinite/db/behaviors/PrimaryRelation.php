@@ -6,11 +6,14 @@ use infinite\db\models\Relation;
 class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
 {
 	public $primaryField = 'primary';
+	public $wasPrimary = false;
 
 	public function events()
     {
         return [
             \infinite\db\ActiveRecord::EVENT_BEFORE_INSERT => 'beforeInsert',
+            \infinite\db\ActiveRecord::EVENT_BEFORE_UPDATE => 'beforeUpdate',
+            \infinite\db\ActiveRecord::EVENT_AFTER_UPDATE => 'afterUpdate',
             \infinite\db\ActiveRecord::EVENT_AFTER_DELETE => 'afterDelete'
         ];
     }
@@ -36,8 +39,50 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
 	{
 		if (!$this->handlePrimary()) { return true; }
 		$primarySiblings = $this->getSiblings(true);
-		if (empty($primarySiblings)) {
+		$this->wasPrimary = !empty($this->owner->{$this->primaryField});
+		if (!$this->owner->isActive) {
+			$this->owner->{$this->primaryField} = 0;
+		}elseif (empty($primarySiblings)) {
 			$this->owner->{$this->primaryField} = 1;
+		}
+		return true;
+	}
+
+	public function beforeUpdate($event = null)
+	{
+		if (!$this->handlePrimary()) { return true; }
+		$this->wasPrimary = !empty($this->owner->{$this->primaryField});
+		if (!$this->owner->isActive) {
+			$this->owner->{$this->primaryField} = 0;
+		}
+		return true;
+	}
+
+	public function afterUpdate($event = null)
+	{
+		if (!$this->handlePrimary()) { return true; }
+		if (!$this->owner->isActive) {
+			$this->handOffPrimary();
+		}
+		return true;
+	}
+
+
+	public function afterDelete($event = null)
+	{
+		if (!$this->handlePrimary()) { return true; }
+		$this->handOffPrimary();
+	}
+
+	public function handOffPrimary()
+	{
+		if ($this->owner->isPrimary || $this->owner->wasPrimary) {
+			// assign a new primary
+			$siblings = $this->getSiblings(false);
+			if (!empty($siblings)) {
+				$sibling = array_shift($siblings);
+				$sibling->setPrimary();
+			}
 		}
 		return true;
 	}
@@ -56,18 +101,6 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
 		return $this->owner->save();
 	}
 
-	public function afterDelete($event = null)
-	{
-		if (!$this->handlePrimary()) { return true; }
-		if ($this->isPrimary) {
-			// assign a new primary
-			$siblings = $this->getSiblings(false);
-			if (!empty($siblings)) {
-				$sibling = array_shift($siblings);
-				$sibling->setPrimary();
-			}
-		}
-	}
 
 	public function getIsPrimary()
 	{
