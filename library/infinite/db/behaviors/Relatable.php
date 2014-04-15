@@ -38,6 +38,8 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 
     static $_setGlobalEvents = false;
 
+    static $debug = [];
+
 	/*
 		Events stuff
 	*/
@@ -161,8 +163,11 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
             if (!isset(self::$_relationModelsOld[$relationModelKey])) {
                 self::$_relationModelsOld[$relationModelKey] = [];
             }
-            foreach (self::$_relationModels[$relationModelKey] as $key => $model) {
+            foreach (self::$_relationModels[$relationModelKey] as $key => $package) {
                 unset(self::$_relationModelsOld[$relationModelKey][$key]);
+                if (self::$_relationModels[$relationModelKey][$key]['handled']) { continue; }
+                self::$_relationModels[$relationModelKey][$key]['handled'] = true;
+                $model = $package['model'];
                 if (!is_object($model)) { continue; }
                 if (empty($model->{$this->parentObjectField}) && empty($model->{$this->childObjectField})) {
                     continue;
@@ -172,6 +177,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
                 } elseif (empty($model->{$this->childObjectField})) {
                     $model->{$this->childObjectField} = $this->owner->primaryKey;
                 }
+
                 if ($model->isNewRecord) {
                     $relationClass = Yii::$app->classes['Relation'];
                     $modelCheck = $relationClass::find()->where(['parent_object_id' => $model->parent_object_id, 'child_object_id' => $model->child_object_id])->one();
@@ -195,6 +201,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
                         }
                     }
                 }
+
                 if (!$model->save()) {
                     $event->handled = false;
                 }
@@ -206,7 +213,8 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
                     $event->handled = false;
                 }
             }
-            self::$_relationModels[$relationModelKey] = self::$_relationModelsOld[$relationModelKey] = null;
+            // self::$_relationModels[$relationModelKey] = null;
+            self::$_relationModelsOld[$relationModelKey] = null;
         }
     }
 
@@ -259,6 +267,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
         }
     }
 
+
     public function registerRelationModel($model, $key = null) {
         if (is_array($model)) {
             $model['class'] = Yii::$app->classes['Relation'];
@@ -273,10 +282,11 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 		if (isset($idParts[3]) && substr($idParts[3], 0, 1) !== '_' && isset($this->relationModels[$idParts[3]])) {
 			$id = $idParts[3];
 		}
-        if (!is_null($key)) {
+        $oid = $id;
+        if (!is_null($key) && $key !== $id) {
             $id .= '-'. $key;
         }
-		self::$_relationModels[$relationModelKey][$id] = $model;
+		self::$_relationModels[$relationModelKey][$id] = ['handled' => false, 'model' => $model];
         return $model;
     }
 
@@ -291,16 +301,19 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 			$id = $idParts[3];
 		}
 		// for lazy loading relations
-		if (isset($this->relationModels[$id]) && !is_object($this->relationModels[$id])) {
+		if (isset($this->relationModels[$id]) && !is_object($this->relationModels[$id]['model'])) {
 			$relationClass = Yii::$app->classes['Relation'];
-			self::$_relationModels[$relationModelKey][$id] = $relationClass::getOne($this->relationModels[$id]);
+			self::$_relationModels[$relationModelKey][$id] = ['model' => $relationClass::getOne($this->relationModels[$id]), 'handled' => false];
 		}
 
-		if (empty(self::$_relationModels[$relationModelKey][$id])) {
-			self::$_relationModels[$relationModelKey][$id] = new Yii::$app->classes['Relation'];
-			self::$_relationModels[$relationModelKey][$id]->tabularId = $id;
+		if (empty(self::$_relationModels[$relationModelKey][$id]['model'])) {
+			if (!isset(self::$_relationModels[$relationModelKey][$id])) {
+                self::$_relationModels[$relationModelKey][$id] = ['model' => null, 'handled' => false];
+            }
+            self::$_relationModels[$relationModelKey][$id]['model'] = new Yii::$app->classes['Relation'];
+			self::$_relationModels[$relationModelKey][$id]['model']->tabularId = $id;
 		}
-		return $this->relationModels[$id];
+		return $this->relationModels[$id]['model'];
 	}
 
 	public function parents($model, $relationOptions = [], $objectOptions = [])
@@ -662,17 +675,6 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     		}
     	}
     	return true;
-    }
-
-    public function registerRelation($companionId, $type, $base = [])
-    {
-        $key = $type .'-'. $companionId;
-        if (!isset($this->_relations[$key])) {
-            $this->_relations[$key] = $base;
-        } else {
-            $this->_relations[$key] = array_merge($this->_relations[$key], $base);
-        }
-        return $this->_relations[$key];
     }
 
     public function isParentPrimary($companionId)

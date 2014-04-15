@@ -14,7 +14,7 @@ class ICD extends \yii\helpers\VarDumper
 	protected $_format = 'auto';
     protected $_depth = 10;
     protected $_skipSteps = 2;
-    protected $_showSteps = 4;
+    protected $_showSteps = 6;
 
 	protected $_output = false;
 	protected $_die = false;
@@ -32,6 +32,62 @@ class ICD extends \yii\helpers\VarDumper
 	}
     public static function d($var, $settings = []) {
     	return new static($var, $settings);
+    }
+
+    public static function btnice($backtrace = null, $settings = []) {
+        if (is_null($backtrace)) {
+            $backtrace = debug_backtrace();
+        }
+        $nice = [];
+        foreach ($backtrace as $bt) {
+            if (!isset($bt['file'])) {
+                $bt['file'] = '?';
+            }
+
+            if (!isset($bt['line'])) {
+                $bt['line'] = '#';
+            }
+            $nice[] = $bt['file'] .':'. $bt['function'] .':'. $bt['line'];
+        }
+        return $nice;
+    }
+
+    public static function btdiff($a, $b, $return = true) {
+        $diff = [];
+        $n = 0;
+        $a = static::btnice($a);
+        $b = static::btnice($b);
+        if (count($a) > count($b)) {
+            $baseDesc = 'a';
+            $compDesc = 'b';
+            $base = $a;
+            $comp = $b;
+        } else {
+            $baseDesc = 'b';
+            $compDesc = 'a';
+            $base = $b;
+            $comp = $a;
+        }
+        while (count($base) > 0) {
+            $cb = array_pop($base);
+            if (count($comp) > 0) {
+                $cc = array_pop($comp);
+            } else {
+                $cc = null;
+            }
+            if ($cb !== $cc) {
+                $diff[$n] = [
+                    $baseDesc = $cb,
+                    $compDesc = $cc
+                ];
+            }
+            $n++;
+        }
+        if ($return) {
+            return $diff;
+        } else {
+            static::d($diff);
+        }
     }
 
     public function exclude($exclude) {
