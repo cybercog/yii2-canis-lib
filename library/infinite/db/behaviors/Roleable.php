@@ -131,7 +131,10 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
     public function getAroByRole($role)
     {
         $role = $this->normalizeRole($role);
-        $cacheKey = json_encode([__FUNCTION__, 'role' => $role->object->primaryKey, 'object' => $this->owner->primaryKey]);
+        if (!$role->object) { return false; }
+        $cacheKey = json_encode([__FUNCTION__, 
+            'role' => $role->object->primaryKey, 
+            'object' => $this->owner->primaryKey]);
         if (!isset(self::$_cache[$cacheKey])) {
             self::$_cache[$cacheKey] = false;
             $aclRoleClass = Yii::$app->classes['AclRole'];

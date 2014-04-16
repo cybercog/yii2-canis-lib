@@ -68,6 +68,30 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
         $this->addForeignKey('aclRoleControlledObject', 'acl_role', 'controlled_object_id', 'registry', 'id', 'CASCADE', 'CASCADE');
         $this->addForeignKey('aclRoleRole', 'acl_role', 'role_id', 'registry', 'id', 'CASCADE', 'CASCADE');
 
+        // audit
+        $this->dropExistingTable('audit');
+        $this->createTable('audit', [
+            'id' => 'bigint(20) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY',
+            'agent_id' => 'char(36) CHARACTER SET ascii COLLATE ascii_bin NOT NULL',
+            'direct_object_id' => 'char(36) CHARACTER SET ascii COLLATE ascii_bin NOT NULL',
+            'indirect_object_id' => 'char(36) CHARACTER SET ascii COLLATE ascii_bin DEFAULT NULL',
+            'event_id' => 'string(50) NOT NULL',
+            'event_hash' => 'string(100) NOT NULL',
+            'event' => 'longblob DEFAULT NULL',
+            'hooks_handled' => 'bool NOT NULL DEFAULT 0',
+            'created' => 'datetime DEFAULT NULL'
+        ]);
+
+        $this->createIndex('auditAgent', 'audit', 'agent_id', false);
+        $this->createIndex('auditHooksHandled', 'audit', 'hooks_handled', false);
+        $this->createIndex('auditDirectObject', 'audit', 'direct_object_id', false);
+        $this->createIndex('auditIndirectObject', 'audit', 'indirect_object_id', false);
+        $this->createIndex('auditCombo', 'audit', 'direct_object_id,indirect_object_id', false);
+        $this->createIndex('auditComboAll', 'audit', 'agent_id,direct_object_id,indirect_object_id', false);
+        $this->addForeignKey('auditAgent', 'audit', 'agent_id', 'registry', 'id', 'CASCADE', 'CASCADE');
+        $this->addForeignKey('auditDirectObject', 'audit', 'direct_object_id', 'registry', 'id', 'CASCADE', 'CASCADE');
+        $this->addForeignKey('auditIndirectObject', 'audit', 'indirect_object_id', 'registry', 'id', 'CASCADE', 'CASCADE');
+
 
         // group
         $this->dropExistingTable('group');
@@ -218,21 +242,22 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
 
     public function down()
     {
-      $this->db->createCommand()->checkIntegrity(false)->execute();
+        $this->db->createCommand()->checkIntegrity(false)->execute();
 
-      $this->dropExistingTable('aca');
-      $this->dropExistingTable('acl');
-      $this->dropExistingTable('acl_role');
-      $this->dropExistingTable('group');
-      $this->dropExistingTable('http_session');
-      $this->dropExistingTable('identity_provider');
-      $this->dropExistingTable('identity');
-      $this->dropExistingTable('registry');
-      $this->dropExistingTable('relation');
-      $this->dropExistingTable('role');
-      $this->dropExistingTable('user');
+        $this->dropExistingTable('aca');
+        $this->dropExistingTable('acl');
+        $this->dropExistingTable('acl_role');
+        $this->dropExistingTable('audit');
+        $this->dropExistingTable('group');
+        $this->dropExistingTable('http_session');
+        $this->dropExistingTable('identity_provider');
+        $this->dropExistingTable('identity');
+        $this->dropExistingTable('registry');
+        $this->dropExistingTable('relation');
+        $this->dropExistingTable('role');
+        $this->dropExistingTable('user');
 
-      $this->db->createCommand()->checkIntegrity(true)->execute();
+        $this->db->createCommand()->checkIntegrity(true)->execute();
       return true;
     }
 }

@@ -26,6 +26,7 @@ class ClassManager extends Component implements IteratorAggregate, ArrayAccess
 			'Aca' => 'app\\models\\Aca',
 			'Acl' => 'app\\models\\Acl',
 			'AclRole' => 'app\\models\\AclRole',
+			'Audit' => 'app\\models\\Audit',
 			'Role' => 'app\\models\\Role',
 			'Group' => 'app\\models\\Group',
 			'Registry' => 'app\\models\\Registry',
