@@ -1,8 +1,8 @@
 <?php
 /**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
+ * @link http://www.infinitecascade.com/
+ * @copyright Copyright (c) 2014 Infinite Cascade
+ * @license http://www.infinitecascade.com/license/
  */
 
 namespace infinite\web\assetBundles;

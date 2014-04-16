@@ -1,10 +1,26 @@
 <?php
+$vendorPath = dirname(dirname(__DIR__));
+include $vendorPath .DIRECTORY_SEPARATOR . 'autoload.php';
+
 if (!isset($path)) {
 	$path = __DIR__;
 }
+if (!isset($docBlockSettings)) {
+	$docBlockSettings = [];
+}
+if (!isset($docBlockSettings['package'])) {
+	$docBlockSettings['package'] = 'infinite-core';
+}
+if (!isset($docBlockSettings['author'])) {
+	$docBlockSettings['author'] = 'Jacob Morrison <email@ofjacob.com>';
+}
+if (!isset($docBlockSettings['since'])) {
+	$docBlockSettings['since'] = '1.0';
+	if (is_file($path . DIRECTORY_SEPARATOR . 'VERSION')) {
+		$docBlockSettings['since'] = file_get_contents($path . DIRECTORY_SEPARATOR . 'VERSION');
+	}
+}
 
-$fixersPath = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'yii2-infinite-core' . DIRECTORY_SEPARATOR . 'library' . DIRECTORY_SEPARATOR . 'infinite' . DIRECTORY_SEPARATOR . 'cs';
-include $fixersPath . DIRECTORY_SEPARATOR . 'ShortArrayFixer.php';
 
 $finder = Symfony\CS\Finder\DefaultFinder::create()
     ->notName('LICENSE')
@@ -18,10 +34,10 @@ $finder = Symfony\CS\Finder\DefaultFinder::create()
 
 $config = Symfony\CS\Config\Config::create();
 $config->addCustomFixer(new infinite\cs\ShortArrayFixer());
+$config->addCustomFixer(new infinite\cs\DocBlockGenerator());
 
 return $config
-    ->fixers(array('short_array', 'indentation', 'linefeed', 'trailing_spaces', 'unused_use', 'phpdoc_params', 'return', 'php_closing_tag', 'braces', 'extra_empty_lines', 'function_declaration', 'controls_spaces', 'eof_ending', 'elseif'))
-    ->finder($finder)
-;
+    ->fixers(array('short_array', 'doc_block_gen', 'indentation', 'linefeed', 'trailing_spaces', 'unused_use', 'phpdoc_params', 'return', 'php_closing_tag', 'braces', 'extra_empty_lines', 'function_declaration', 'controls_spaces', 'eof_ending', 'elseif'))
+    ->finder($finder);
 
 ?>

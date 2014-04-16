@@ -1,13 +1,12 @@
 <?php
 /**
- * library/helpers/FileStorage.php
- *  Application component for handling temporary files
- *
- * @author Jacob Morrison <jacob@infinitecascade.com>
- * @package infinite
+ * @link http://www.infinitecascade.com/
+ * @copyright Copyright (c) 2014 Infinite Cascade
+ * @license http://www.infinitecascade.com/license/
  */
 
 namespace infinite\helpers;
+
 use infinite\base\Exception;
 
 class FileStorage extends \infinite\base\Component
