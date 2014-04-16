@@ -2,6 +2,7 @@
 if (!isset($path)) {
 	$path = __DIR__;
 }
+
 $fixersPath = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'yii2-infinite-core' . DIRECTORY_SEPARATOR . 'library' . DIRECTORY_SEPARATOR . 'infinite' . DIRECTORY_SEPARATOR . 'cs';
 include $fixersPath . DIRECTORY_SEPARATOR . 'ShortArrayFixer.php';
 
