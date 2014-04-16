@@ -10,7 +10,7 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
 
         // aca
         $this->dropExistingTable('aca');
-        
+
         $this->createTable('aca', [
             'id' => 'char(36) CHARACTER SET ascii COLLATE ascii_bin NOT NULL PRIMARY KEY',
             'name' => 'string NOT NULL',
@@ -22,7 +22,7 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
 
         // acl
         $this->dropExistingTable('acl');
-        
+
         $this->createTable('acl', [
             'id' => 'bigint unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY',
             'acl_role_id' => 'bigint unsigned DEFAULT NULL',
@@ -46,10 +46,9 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
         $this->addForeignKey('aclAccessingObject', 'acl', 'accessing_object_id', 'registry', 'id', 'CASCADE', 'CASCADE');
         $this->addForeignKey('aclControlledObject', 'acl', 'controlled_object_id', 'registry', 'id', 'CASCADE', 'CASCADE');
 
-
         // acl_role
         $this->dropExistingTable('acl_role');
-        
+
         $this->createTable('acl_role', [
             'id' => 'bigint unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY',
             'accessing_object_id' => 'char(36) CHARACTER SET ascii COLLATE ascii_bin NOT NULL',
@@ -91,10 +90,9 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
         $this->addForeignKey('auditDirectObject', 'audit', 'direct_object_id', 'registry', 'id', 'CASCADE', 'CASCADE');
         $this->addForeignKey('auditIndirectObject', 'audit', 'indirect_object_id', 'registry', 'id', 'CASCADE', 'CASCADE');
 
-
         // group
         $this->dropExistingTable('group');
-        
+
         $this->createTable('group', [
             'id' => 'char(36) CHARACTER SET ascii COLLATE ascii_bin NOT NULL PRIMARY KEY',
             'name' => 'string NOT NULL',
@@ -106,10 +104,9 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
 
         $this->addForeignKey('groupRegistry', 'group', 'id', 'registry', 'id', 'CASCADE', 'CASCADE');
 
-
         // http_session
         // $this->dropExistingTable('http_session');
-        
+
         // $this->createTable('http_session', [
         //     'id' => 'string NOT NULL PRIMARY KEY',
         //     'expire' => 'integer DEFAULT NULL',
@@ -118,10 +115,9 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
 
         // $this->createIndex('httpSessionExpire', 'http_session', 'expire', false);
 
-
         // identity_provider
         $this->dropExistingTable('identity_provider');
-        
+
         $this->createTable('identity_provider', [
             'id' => 'char(36) CHARACTER SET ascii COLLATE ascii_bin NOT NULL PRIMARY KEY',
             'name' => 'string DEFAULT NULL',
@@ -132,10 +128,9 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
 
         $this->addForeignKey('idpRegistry', 'identity_provider', 'id', 'registry', 'id', 'CASCADE', 'CASCADE');
 
-
         // identity
         $this->dropExistingTable('identity');
-        
+
         $this->createTable('identity', [
             'id' => 'char(36) CHARACTER SET ascii COLLATE ascii_bin NOT NULL PRIMARY KEY',
             'user_id' => 'char(36) CHARACTER SET ascii COLLATE ascii_bin NOT NULL',
@@ -151,10 +146,9 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
         $this->addForeignKey('identityUser', 'identity', 'id', 'user', 'id', 'CASCADE', 'CASCADE');
         $this->addForeignKey('identityIdp', 'identity', 'identity_provider_id', 'identity_provider', 'id', 'CASCADE', 'CASCADE');
 
-
         // registry
         $this->dropExistingTable('registry');
-        
+
         $this->createTable('registry', [
             'id' => 'char(36) CHARACTER SET ascii COLLATE ascii_bin NOT NULL PRIMARY KEY',
             'object_model' => 'string DEFAULT NULL',
@@ -163,10 +157,9 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
 
         $this->createIndex('registryIndex', 'registry', 'id,object_model', false);
 
-
         // relation
         $this->dropExistingTable('relation');
-        
+
         $this->createTable('relation', [
             'id' => 'bigint unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY',
             'parent_object_id' => 'char(36) CHARACTER SET ascii COLLATE ascii_bin NOT NULL DEFAULT \'\'',
@@ -187,10 +180,9 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
         $this->addForeignKey('relationChildRegistry', 'relation', 'child_object_id', 'registry', 'id', 'CASCADE', 'CASCADE');
         $this->addForeignKey('relationParentRegistry', 'relation', 'parent_object_id', 'registry', 'id', 'CASCADE', 'CASCADE');
 
-
         // role
         $this->dropExistingTable('role');
-        
+
         $this->createTable('role', [
             'id' => 'char(36) CHARACTER SET ascii COLLATE ascii_bin NOT NULL PRIMARY KEY',
             'name' => 'string DEFAULT NULL',
@@ -202,10 +194,9 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
         $this->createIndex('roleName', 'role', 'system_id', false);
         $this->addForeignKey('roleRegistry', 'role', 'id', 'registry', 'id', 'CASCADE', 'CASCADE');
 
-
         // user
         $this->dropExistingTable('user');
-        
+
         $this->createTable('user', [
             'id' => 'char(36) CHARACTER SET ascii COLLATE ascii_bin NOT NULL PRIMARY KEY',
             'primary_identity_id' => 'char(36) CHARACTER SET ascii COLLATE ascii_bin DEFAULT NULL',
@@ -237,8 +228,6 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
 
     }
 
-
-
     public function down()
     {
         $this->db->createCommand()->checkIntegrity(false)->execute();
@@ -257,6 +246,7 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
         $this->dropExistingTable('user');
 
         $this->db->createCommand()->checkIntegrity(true)->execute();
+
       return true;
     }
 }

@@ -56,23 +56,24 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * Finds an identity by the given ID.
      *
-     * @param string|integer $id the ID to be looked for
+     * @param  string|integer         $id the ID to be looked for
      * @return IdentityInterface|null the identity object that matches the given ID.
      */
     public static function findIdentity($id)
     {
         $primaryKey = static::primaryKey();
+
         return static::find()->disableAccessCheck()->andWhere([$primaryKey[0] => $id])->one();
     }
 
-    public static function findIdentityByAccessToken($token) {
-        
+    public static function findIdentityByAccessToken($token)
+    {
     }
 
     /**
      * Finds user by username
      *
-     * @param string $username
+     * @param  string    $username
      * @return null|User
      */
     public static function findByUsername($username)
@@ -97,7 +98,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * @param string $authKey
+     * @param  string  $authKey
      * @return boolean if auth key is valid for current user
      */
     public function validateAuthKey($authKey)
@@ -106,8 +107,8 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * @param string $password password to validate
-     * @return bool if password provided is valid for current user
+     * @param  string $password password to validate
+     * @return bool   if password provided is valid for current user
      */
     public function validatePassword($password)
     {
@@ -123,7 +124,7 @@ class User extends ActiveRecord implements IdentityInterface
             [['first_name', 'last_name', 'email'], 'string', 'min' => 1, 'max' => 255],
 
             [['email'], 'filter', 'filter' => 'trim'],
-            
+
             // ['email', 'required'],
             [['email'], 'email'],
             [['email'], 'unique', 'message' => 'This email address has already been taken.', 'on' => 'signup'],
@@ -152,11 +153,13 @@ class User extends ActiveRecord implements IdentityInterface
             if ($this->isNewRecord) {
                 $this->auth_key = Security::generateRandomKey();
             }
+
             return true;
         }
+
         return false;
     }
-    
+
     /**
      * @return \yii\db\ActiveRelation
      */
@@ -171,6 +174,7 @@ class User extends ActiveRecord implements IdentityInterface
             $groupClass = Yii::$app->classes['Group'];
             $this->_groups = $this->parents($groupClass);
         }
+
         return $this->_groups;
     }
 
@@ -195,8 +199,10 @@ class User extends ActiveRecord implements IdentityInterface
             if (count($individuals) === 1) {
                 return array_pop($individuals);
             }
+
             return $individuals;
         }
+
         return false;
     }
 }

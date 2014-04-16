@@ -6,13 +6,9 @@
  * @package infinite
  */
 
-
 namespace infinite\db\behaviors;
 
 use Yii;
-
-use yii\db\Expression;
-use infinite\base\Exception;
 
 class Ownable extends \infinite\db\behaviors\ActiveRecord
 {
@@ -30,7 +26,7 @@ class Ownable extends \infinite\db\behaviors\ActiveRecord
             \infinite\db\ActiveRecord::EVENT_AFTER_UPDATE => 'afterSave',
         ];
     }
-    
+
     public function safeAttributes()
     {
         return ['ownableEnabled', 'objectOwner'];
@@ -39,12 +35,13 @@ class Ownable extends \infinite\db\behaviors\ActiveRecord
     public function isEnabled()
     {
         if ($this->owner->getBehavior('Registry') === null
-            || $this->owner->getBehavior('Roleable') === null 
+            || $this->owner->getBehavior('Roleable') === null
             || !$this->owner->getBehavior('Roleable')->isEnabled()
             || !$this->owner->ownableEnabled
             ) {
             return false;
         }
+
         return true;
     }
 
@@ -53,6 +50,7 @@ class Ownable extends \infinite\db\behaviors\ActiveRecord
         if (isset(Yii::$app->user) && !Yii::$app->user->isGuest && isset(Yii::$app->user->id)) {
             return Yii::$app->user->id;
         }
+
         return false;
     }
 
@@ -74,18 +72,21 @@ class Ownable extends \infinite\db\behaviors\ActiveRecord
     {
         if (!$this->isEnabled()) { return false; }
         $owner = $this->owner->getFirstAroByRole(['system_id' => self::ROLE_OWNER]);
+
         return !empty($owner);
     }
 
     public function setObjectOwner($aro)
     {
         if (!$this->isEnabled()) { return false; }
+
         return $this->owner->setRole(['system_id' => self::ROLE_OWNER], $aro);
     }
 
     public function getObjectOwner()
-    { 
+    {
         if (!$this->isEnabled()) { return false; }
+
         return $this->owner->getFirstAroByRole(['system_id' => self::ROLE_OWNER]);
     }
 

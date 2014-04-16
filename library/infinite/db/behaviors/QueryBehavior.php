@@ -6,7 +6,6 @@
  * @package infinite
  */
 
-
 namespace infinite\db\behaviors;
 
 class QueryBehavior extends Model

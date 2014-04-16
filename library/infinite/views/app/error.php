@@ -6,7 +6,6 @@
  * @package cascade
  */
 
-
 /* @var $this SiteController */
 /* @var $error array */
 

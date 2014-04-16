@@ -23,73 +23,73 @@ class Acl extends \infinite\db\ActiveRecord
     public static $registryCache = false;
     public static $relationCache = false;
     /**
-	 * @inheritdoc
-	 */
-	public static function isAccessControlled()
+     * @inheritdoc
+     */
+    public static function isAccessControlled()
     {
         return false;
     }
-    
-	/**
-	 * @inheritdoc
-	 */
-	public static function tableName()
-	{
-		return 'acl';
-	}
 
-	/**
-	 * @inheritdoc
-	 */
-	public function rules()
-	{
-		return [
-			[['acl_role_id'], 'integer'],
-			[['accessing_object_id'], 'required'],
-			[['access'], 'integer'],
-			[['created', 'modified'], 'safe'],
-			[['accessing_object_id', 'controlled_object_id', 'aca_id'], 'string', 'max' => 36]
-		];
-	}
+    /**
+     * @inheritdoc
+     */
+    public static function tableName()
+    {
+        return 'acl';
+    }
 
-	/**
-	 * @inheritdoc
-	 */
-	public function attributeLabels()
-	{
-		return [
-			'id' => 'ID',
-			'acl_role_id' => 'Acl Role ID',
-			'accessing_object_id' => 'Accessing Object ID',
-			'controlled_object_id' => 'Controlled Object ID',
-			'aca_id' => 'Aca ID',
-			'access' => 'Access',
-			'created' => 'Created',
-			'modified' => 'Modified',
-		];
-	}
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['acl_role_id'], 'integer'],
+            [['accessing_object_id'], 'required'],
+            [['access'], 'integer'],
+            [['created', 'modified'], 'safe'],
+            [['accessing_object_id', 'controlled_object_id', 'aca_id'], 'string', 'max' => 36]
+        ];
+    }
 
-	/**
-	 * @return \yii\db\ActiveRelation
-	 */
-	public function getAclRole()
-	{
-		return $this->hasOne('AclRole', ['id' => 'acl_role_id']);
-	}
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'acl_role_id' => 'Acl Role ID',
+            'accessing_object_id' => 'Accessing Object ID',
+            'controlled_object_id' => 'Controlled Object ID',
+            'aca_id' => 'Aca ID',
+            'access' => 'Access',
+            'created' => 'Created',
+            'modified' => 'Modified',
+        ];
+    }
 
-	/**
-	 * @return \yii\db\ActiveRelation
-	 */
-	public function getAccessingObject()
-	{
-		return $this->hasOne('Registry', ['id' => 'accessing_object_id']);
-	}
+    /**
+     * @return \yii\db\ActiveRelation
+     */
+    public function getAclRole()
+    {
+        return $this->hasOne('AclRole', ['id' => 'acl_role_id']);
+    }
 
-	/**
-	 * @return \yii\db\ActiveRelation
-	 */
-	public function getControlledObject()
-	{
-		return $this->hasOne('Registry', ['id' => 'controlled_object_id']);
-	}
+    /**
+     * @return \yii\db\ActiveRelation
+     */
+    public function getAccessingObject()
+    {
+        return $this->hasOne('Registry', ['id' => 'accessing_object_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveRelation
+     */
+    public function getControlledObject()
+    {
+        return $this->hasOne('Registry', ['id' => 'controlled_object_id']);
+    }
 }

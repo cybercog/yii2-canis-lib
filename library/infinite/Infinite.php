@@ -12,12 +12,14 @@ defined('INFINITE_ROLE_LEVEL_COMMENTER') || define('INFINITE_ROLE_LEVEL_COMMENTE
 defined('INFINITE_ROLE_LEVEL_VIEWER') || define('INFINITE_ROLE_LEVEL_VIEWER', 200); // viewer levels: 101-200
 defined('INFINITE_ROLE_LEVEL_BROWSER') || define('INFINITE_ROLE_LEVEL_BROWSER', 100); // viewer levels: 1-100
 
-function d($variable, $settings = []) {
+function d($variable, $settings = [])
+{
     $default = ['die' => false, 'skipSteps' => 1];
     (new \ICD($variable, array_merge($default, $settings)))->output();
 }
 
-function b($backtrace) {
+function b($backtrace)
+{
     echo '<pre>';
     foreach ($backtrace as $b) {
         if (!isset($b['file'])) { continue; }
@@ -37,4 +39,3 @@ class Infinite implements \yii\base\BootstrapInterface
         Yii::$app->registerMigrationAlias('@infinite/db/migrations');
     }
 }
-?>

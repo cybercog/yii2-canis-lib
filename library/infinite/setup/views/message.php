@@ -6,7 +6,6 @@
  * @package infinite
  */
 
-
 echo '<div class="flash-'.(!empty($error) ? 'error' : 'success') .'">';
 echo isset($message) ? $message : "Unknown error!";
 if (!empty($errors)) {

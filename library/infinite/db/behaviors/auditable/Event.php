@@ -17,17 +17,19 @@ abstract class Event extends \infinite\base\Component
     protected $_tmp = [];
     protected $_merged = [];
 
-    public function __sleep() {
-        $keys = array_keys((array)$this);
+    public function __sleep()
+    {
+        $keys = array_keys((array) $this);
         $bad = ["\0*\0_tmp"];
         $deobject = ["\0*\0_directObject" => '_directObject', "\0*\0_indirectObject" => '_indirectObject', "\0*\0_agent" => '_agent'];
-        foreach($keys as $k => $key) {
+        foreach ($keys as $k => $key) {
             if (in_array($key, $bad)) {
                 unset($keys[$k]);
             } elseif (isset($deobject[$key]) && ($key = $deobject[$key]) && $this->{$key} instanceof \yii\db\ActiveRecord) {
                 $this->{$key} = $this->{$key}->primaryKey;
             }
         }
+
         return $keys;
     }
 
@@ -45,6 +47,7 @@ abstract class Event extends \infinite\base\Component
                 $this->_agent = false;
             }
         }
+
         return $this->_agent;
     }
 
@@ -53,6 +56,7 @@ abstract class Event extends \infinite\base\Component
         if (is_object($this->_agent)) {
             return $this->_agent->primaryKey;
         }
+
         return $this->_agent;
     }
 
@@ -70,6 +74,7 @@ abstract class Event extends \infinite\base\Component
                 $this->_indirectObject = false;
             }
         }
+
         return $this->_indirectObject;
     }
 
@@ -78,6 +83,7 @@ abstract class Event extends \infinite\base\Component
         if (is_object($this->_indirectObject)) {
             return $this->_indirectObject->primaryKey;
         }
+
         return $this->_indirectObject;
     }
 
@@ -95,6 +101,7 @@ abstract class Event extends \infinite\base\Component
                 $this->_directObject = false;
             }
         }
+
         return $this->_directObject;
     }
 
@@ -103,6 +110,7 @@ abstract class Event extends \infinite\base\Component
         if (is_object($this->_directObject)) {
             return $this->_directObject->primaryKey;
         }
+
         return $this->_directObject;
     }
 
@@ -121,6 +129,7 @@ abstract class Event extends \infinite\base\Component
         if (!isset($this->_hash)) {
             $this->_hash = md5(json_encode($this->hashArray));
         }
+
         return $this->_hash;
     }
 
@@ -147,6 +156,7 @@ abstract class Event extends \infinite\base\Component
     public function merge($with)
     {
         $this->_merged[$with->id] = $with;
+
         return true;
     }
 
@@ -161,6 +171,7 @@ abstract class Event extends \infinite\base\Component
         if (empty($this->agent)) {
             return false;
         }
+
         return true;
     }
 
@@ -169,6 +180,7 @@ abstract class Event extends \infinite\base\Component
         $event = new AuditHookEvent;
         $event->auditEvent = $this;
         $this->trigger(self::EVENT_AUDIT_HOOK, $event);
+
         return $event->isValid;
     }
 
@@ -185,6 +197,7 @@ abstract class Event extends \infinite\base\Component
             $audit->hooks_handled = 1;
         }
         $audit->event = serialize($this);
+
         return $audit->save();
     }
 }

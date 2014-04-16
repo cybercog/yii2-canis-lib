@@ -16,9 +16,9 @@ class InfiniteBrowserAsset extends AssetBundle
     public $sourcePath = '@infinite/assets/browser';
     public $css = ['css/infinite.browser.css'];
     public $js = [
-    	'js/infinite.browser.js'
+        'js/infinite.browser.js'
     ];
     public $depends = [
-		'infinite\web\assetBundles\InfiniteAsset'
+        'infinite\web\assetBundles\InfiniteAsset'
     ];
 }

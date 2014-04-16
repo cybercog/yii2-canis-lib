@@ -6,13 +6,9 @@
  * @package infinite
  */
 
-
 namespace infinite\db\behaviors;
 
 use Yii;
-
-use yii\db\Expression;
-use yii\base\ModelEvent;
 
 class Blame extends \infinite\db\behaviors\ActiveRecord
 {
@@ -29,7 +25,6 @@ class Blame extends \infinite\db\behaviors\ActiveRecord
 
     public static $_userID;
     protected $_fields;
-
 
     public function events()
     {
@@ -52,6 +47,7 @@ class Blame extends \infinite\db\behaviors\ActiveRecord
                 }
             }
         }
+
         return $this->_fields;
     }
 
@@ -59,7 +55,7 @@ class Blame extends \infinite\db\behaviors\ActiveRecord
     {
         $fields = $this->fields;
         $nowDate = date($this->databaseTimeFormat);
-        
+
         if ($this->owner->isNewRecord) {
             if (isset($this->fields['createdField']) && !$this->owner->isAttributeChanged($this->fields['createdField'])) {
                 $this->owner->{$this->fields['createdField']} = $nowDate;
@@ -85,6 +81,7 @@ class Blame extends \infinite\db\behaviors\ActiveRecord
                 self::$_userID = Yii::$app->user->id;
             }
         }
+
         return self::$_userID;
     }
 }

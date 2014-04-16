@@ -14,14 +14,15 @@ use infinite\helpers\Html;
  * @author Antonio Ramirez <amigo.cobos@gmail.com>; Jacob Morrison <jacob@infinitecascade.org>
  */
 
-class SubNavBar extends \yii\bootstrap\NavBar {
-	/**
-	 * {@inheritdoc}
-	 */
-	public function init()
-	{
-		Html::addCssClass($this->options, 'sub-navbar');
-		parent::init();
-	}
+class SubNavBar extends \yii\bootstrap\NavBar
+{
+    /**
+     * {@inheritdoc}
+     */
+    public function init()
+    {
+        Html::addCssClass($this->options, 'sub-navbar');
+        parent::init();
+    }
 
 }

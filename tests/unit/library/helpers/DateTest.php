@@ -2,7 +2,6 @@
 
 namespace infiniteunit\library\helpers;
 
-use Yii;
 use Infinite;
 
 use infinite\helpers\Date;
@@ -122,7 +121,6 @@ class DateTest extends TestCase
 
         $t = strtotime("+30 seconds", $nd);
         $this->assertEquals("in 30 seconds", Date::relativeDate($t));
-
 
         $t = strtotime("+30 minutes", $nd);
         $this->assertEquals("in 30 minutes", Date::relativeDate($t));

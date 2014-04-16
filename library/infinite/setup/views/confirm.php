@@ -6,7 +6,6 @@
  * @package infinite
  */
 
-
 echo '<div class="flash-confirm">';
 if (!isset($question)) {
     $question = 'Would you like to continue?';

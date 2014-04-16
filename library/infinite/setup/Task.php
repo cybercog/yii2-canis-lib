@@ -6,7 +6,6 @@
  * @package infinite
  */
 
-
 namespace infinite\setup;
 
 abstract class Task extends \infinite\base\Object
@@ -50,13 +49,14 @@ abstract class Task extends \infinite\base\Object
 
                 if (!empty($input[$fieldset][$key])) {
                     $this->input[$fieldset][$key] = $input[$fieldset][$key];
-                } elseif(!empty($settings['required'])) {
+                } elseif (!empty($settings['required'])) {
                     $this->fieldErrors[$fieldId] = $settings['label'] .' is a required field';
                     $error = true;
                 }
 
             }
         }
+
         return !$error;
     }
 
@@ -75,7 +75,7 @@ abstract class Task extends \infinite\base\Object
     /**
      *
      *
-     * @param unknown $template
+     * @param  unknown $template
      * @return unknown
      */
     public function templatize($template, $vars = [])
@@ -121,11 +121,12 @@ abstract class Task extends \infinite\base\Object
                         $placementItem = null;
                     }
                 }
-                $replace[$key] = (string)$placementItem;
+                $replace[$key] = (string) $placementItem;
             }
         } else {
             return $text;
         }
+
         return trim(preg_replace(array_keys($replace), array_values($replace), $text));
     }
 }

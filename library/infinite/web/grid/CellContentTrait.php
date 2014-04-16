@@ -3,6 +3,6 @@ namespace infinite\web\grid;
 
 trait CellContentTrait
 {
-	public $columns;
-	public $maxColumns;
+    public $columns;
+    public $maxColumns;
 }

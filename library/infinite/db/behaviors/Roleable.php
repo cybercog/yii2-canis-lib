@@ -3,7 +3,6 @@ namespace infinite\db\behaviors;
 
 use Yii;
 
-use yii\db\Expression;
 use infinite\base\Exception;
 use infinite\helpers\ArrayHelper;
 use infinite\caching\Cacher;
@@ -24,12 +23,11 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
             \infinite\db\ActiveRecord::EVENT_AFTER_UPDATE => 'afterSave',
         ];
     }
-    
+
     public function safeAttributes()
     {
         return ['role', 'roles', 'accessRoleCheck'];
     }
-
 
     public function normalizeRole($role = null)
     {
@@ -53,6 +51,7 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
         if (empty($role)) {
             return null;
         }
+
         return $role;
     }
 
@@ -66,6 +65,7 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
         if (is_object($aro)) {
             $aro = $aro->primaryKey;
         }
+
         return $aro;
     }
 
@@ -87,22 +87,27 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
         if ($handle) {
             return $this->handleRoleSave();
         }
+
         return true;
     }
 
-    public function getObjectRoles() {
+    public function getObjectRoles()
+    {
         $cacheKey = json_encode([__FUNCTION__, 'owner' => $this->owner->primaryKey]);
         if (!isset(self::$_cache[$cacheKey])) {
             self::$_cache[$cacheKey] = Yii::$app->gk->getObjectRoles($this->owner);
         }
+
         return self::$_cache[$cacheKey];
     }
 
-    public function getObjectInheritedRoles() {
+    public function getObjectInheritedRoles()
+    {
         $cacheKey = json_encode([__FUNCTION__, 'owner' => $this->owner->primaryKey]);
         if (!isset(self::$_cache[$cacheKey])) {
             self::$_cache[$cacheKey] = Yii::$app->gk->getObjectInheritedRoles($this->owner);
         }
+
         return self::$_cache[$cacheKey];
     }
 
@@ -122,18 +127,19 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
                     $this->_roleCurrent[$aro] = $roleQuery;
                 }
             }
+
             return $this->_roleCurrent[$aro];
         }
+
         return $this->_role[$aro];
     }
-
 
     public function getAroByRole($role)
     {
         $role = $this->normalizeRole($role);
         if (!$role->object) { return false; }
-        $cacheKey = json_encode([__FUNCTION__, 
-            'role' => $role->object->primaryKey, 
+        $cacheKey = json_encode([__FUNCTION__,
+            'role' => $role->object->primaryKey,
             'object' => $this->owner->primaryKey]);
         if (!isset(self::$_cache[$cacheKey])) {
             self::$_cache[$cacheKey] = false;
@@ -146,6 +152,7 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
                 self::$_cache[$cacheKey] = false;
             }
         }
+
         return self::$_cache[$cacheKey];
     }
 
@@ -155,6 +162,7 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
         if (!empty($aros)) {
             return array_pop($aros);
         }
+
         return false;
     }
 
@@ -167,6 +175,7 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
             ) {
             return false;
         }
+
         return true;
     }
 
@@ -183,10 +192,12 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
                 return false;
             }
         }
+
         return true;
     }
 
-    protected function internalSetRole($role, $aro) {
+    protected function internalSetRole($role, $aro)
+    {
         $aro = $this->normalizeAro($aro);
         $roleItem = $this->normalizeRole($role);
         $roleId = empty($roleItem) ? null : $roleItem->object->primaryKey;
@@ -207,6 +218,7 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
         if ($clearRole) {
             $this->clearAroRole($aro);
             Cacher::invalidateGroup('acl_role');
+
             return true;
         }
         $aclRole = $this->getRole($aro, false);
@@ -227,6 +239,7 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
         if ($changed) {
             Cacher::invalidateGroup('acl_role');
         }
+
         return $this->ensureRoleAccess($aclRole, $existing);
     }
 
@@ -244,9 +257,10 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
 
         if (empty($aclRole->role_id)) {
             $this->owner->requireDirectAdmin(null, $aro, $aclRole);
+
             return true;
         }
-        
+
         $roleModel = $aclRole->role;
         if (empty($roleModel)) { return false; }
         $role = Yii::$app->collectors['roles']->getOne($roleModel->system_id);
@@ -264,6 +278,7 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
         }
         if ($accessLevels === false) {
             Yii::$app->gk->clearExplicitRules($this->owner->primaryKey, $aro);
+
             return true;
         } else {
             $actionsByName = Yii::$app->gk->getActionsByName();
@@ -284,6 +299,7 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
                 $currentAcl->delete();
             }
         }
+
         return true;
     }
 
@@ -295,6 +311,7 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
             $this->_currentRoles = $aclRoleClass::find()->where($params)->all();
             $this->_currentRoles = ArrayHelper::index($this->_currentRoles, 'accessing_object_id');
         }
+
         return $this->_currentRoles;
     }
 
@@ -304,6 +321,7 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
         if ($aclRole) {
             $aclRole->delete();
         }
+
         return true;
     }
 

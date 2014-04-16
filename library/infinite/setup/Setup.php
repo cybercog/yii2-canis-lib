@@ -6,7 +6,6 @@
  * @package infinite
  */
 
-
 namespace infinite\setup;
 use Exception;
 use Task;
@@ -36,6 +35,7 @@ class Setup extends \infinite\base\Object
             $className = __CLASS__;
             self::$_instance = new $className($config);
         }
+
         return self::$_instance;
     }
 
@@ -78,6 +78,7 @@ class Setup extends \infinite\base\Object
         foreach ($tasks as $task) {
             if (!$this->beforeRun()) {
                 $this->render('message');
+
                 return false;
             }
             if (defined('INFINITE_SETUP_DB_READY') && INFINITE_SETUP_DB_READY) {
@@ -101,7 +102,7 @@ class Setup extends \infinite\base\Object
                     $this->params['question'] = $task->verification;
                     $this->params['task'] = $task;
                     $this->render('confirm');
-                } elseif(!empty($task->fields) && (empty($_POST[$task->id]) || !$this->getConfirmed($task->id) || !$task->loadInput($_POST[$task->id]))) {
+                } elseif (!empty($task->fields) && (empty($_POST[$task->id]) || !$this->getConfirmed($task->id) || !$task->loadInput($_POST[$task->id]))) {
                     // show form
                     $this->params['fields'] = $task->fields;
                     $this->params['task'] = $task;
@@ -139,6 +140,7 @@ class Setup extends \infinite\base\Object
         $this->params['message'] = "Your application has been {$message}!";
         $this->params['forceContinue'] = true;
         $this->render('message');
+
         return true;
     }
 
@@ -152,7 +154,6 @@ class Setup extends \infinite\base\Object
         header('Location: '.$url);
         exit(0);
     }
-
 
     public function getIsSetup()
     {
@@ -175,12 +176,12 @@ class Setup extends \infinite\base\Object
             return $tasks;
         }
         $handle = opendir($tasksPath);
-        while(($file = readdir($handle))!==false) {
-            if($file === '.' || $file === '..') {
+        while (($file = readdir($handle))!==false) {
+            if ($file === '.' || $file === '..') {
                 continue;
             }
             $path = $tasksPath . DIRECTORY_SEPARATOR . $file;
-            if(preg_match('/^Task_(\d{6}\_.*?)\.php$/',$file,$matches) AND is_file($path)) {
+            if (preg_match('/^Task_(\d{6}\_.*?)\.php$/',$file,$matches) AND is_file($path)) {
                 $className = $this->applicationNamespace . '\\setup\\tasks\\Task_'.$matches[1];
                 if (!include_once($path)) { continue; }
                 $task = new $className($this);
@@ -189,6 +190,7 @@ class Setup extends \infinite\base\Object
         }
         closedir($handle);
         ksort($tasks);
+
         return $tasks;
     }
 
@@ -196,15 +198,17 @@ class Setup extends \infinite\base\Object
     {
         if (!$this->isEnvironmented) { return false; }
         if ($this->version > $this->instanceVersion) { return false; }
+
         return true;
     }
 
     public function markDbReady()
     {
-        if (!defined('INFINITE_SETUP_DB_READY')) { 
+        if (!defined('INFINITE_SETUP_DB_READY')) {
             self::$_app = null;
             define('INFINITE_SETUP_DB_READY', true);
         }
+
         return true;
     }
 
@@ -230,6 +234,7 @@ class Setup extends \infinite\base\Object
         if (isset($confirm) AND $confirm === $this->getConfirmSalt($task)) {
             return true;
         }
+
         return false;
     }
 
@@ -243,6 +248,7 @@ class Setup extends \infinite\base\Object
         if ($this->isEnvironmented) {
             return INFINITE_APP_INSTANCE_VERSION;
         }
+
         return false;
     }
 
@@ -259,8 +265,10 @@ class Setup extends \infinite\base\Object
                 self::$_app = Yii::$app = new \infinite\console\Application($config);
                 Yii::$app->trigger(\yii\base\Application::EVENT_BEFORE_REQUEST);
             }
+
             return self::$_app;
         }
+
         return false;
     }
 
@@ -272,6 +280,7 @@ class Setup extends \infinite\base\Object
         if (isset($_GET['reset'])) {
         //  return false; // don't want to let this just sit here. could be a big security risk.
         }
+
         return defined('INFINITE_APP_INSTANCE_VERSION');
     }
 
@@ -280,6 +289,7 @@ class Setup extends \infinite\base\Object
         if ($this->isEnvironmented) {
             return INFINITE_APP_ENVIRONMENT_PATH;
         }
+
         return false;
     }
 
@@ -290,18 +300,21 @@ class Setup extends \infinite\base\Object
         if (!is_dir($path)) {
             throw new Exception("Config path does not exist: {$path}");
         }
+
         return $path;
     }
 
     public function getEnvironmentFilePath()
     {
         $path = $this->configPath . DIRECTORY_SEPARATOR . 'env.php';
+
         return $path;
     }
 
     public function getEnvironmentTemplateFilePath()
     {
         $path = $this->environmentFilePath  . '.sample';
+
         return $path;
     }
 
@@ -311,6 +324,7 @@ class Setup extends \infinite\base\Object
         if (!is_dir($path)) {
             throw new Exception("Library config path does not exist: {$path}");
         }
+
         return $path;
     }
 
@@ -320,6 +334,7 @@ class Setup extends \infinite\base\Object
         if (!is_dir($path)) {
             throw new Exception("Base environment path does not exist: {$path}");
         }
+
         return $path;
     }
 
@@ -329,6 +344,7 @@ class Setup extends \infinite\base\Object
         if (!is_dir($path)) {
             throw new Exception("Environment templates path does not exist: {$path}");
         }
+
         return $path;
     }
 
@@ -355,4 +371,3 @@ class Setup extends \infinite\base\Object
         exit(0);
     }
 }
-?>

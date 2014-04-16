@@ -6,7 +6,6 @@
  * @package infinite
  */
 
-
 namespace infinite\base;
 
 use Yii;
@@ -37,7 +36,7 @@ class Debug extends \infinite\base\Object
      */
     public static function d($what, $showFrom = true, $stepsBack = 0)
     {
-        if(defined('STDIN')) {
+        if (defined('STDIN')) {
             echo CVarDumper::dumpAsString($what, 15, false);
         } else {
             echo '<div class="debug-info group">';
@@ -58,7 +57,7 @@ class Debug extends \infinite\base\Object
         foreach ($what as $key => $value) {
             if (is_object($value) AND $value instanceof ActiveRecord) {
                 $a = $value->attributes;
-            }elseif (is_object($value) AND $value instanceof ActiveRecord) {
+            } elseif (is_object($value) AND $value instanceof ActiveRecord) {
                 $a = '#OBJECT('.get_class($value).')';
             } elseif (is_array($value)) {
                 $a = $self::ar($value, false);
@@ -70,6 +69,7 @@ class Debug extends \infinite\base\Object
         if ($print) {
             self::d($results);
         }
+
         return $results;
     }
 
@@ -93,7 +93,7 @@ class Debug extends \infinite\base\Object
     public static function c($what, $showFrom = true)
     {
         self::clean($what);
-        if(defined('STDIN')) {
+        if (defined('STDIN')) {
             echo VarDumper::dumpAsString($what, 10, false);
         } else {
             echo '<div class="debug-info group">';

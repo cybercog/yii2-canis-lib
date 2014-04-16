@@ -6,7 +6,6 @@
  * @package infinite
  */
 
-
 namespace infinite\db\behaviors;
 
 use Yii;
@@ -27,12 +26,11 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
             \infinite\db\ActiveRecord::EVENT_AFTER_SAVE_FAIL => 'afterSaveFail'
         ];
     }
-    
+
     public function safeAttributes()
     {
         return [];
     }
-
 
     public function getRegistryModel()
     {
@@ -47,6 +45,7 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
         if (!empty($registry)) {
             return $registry;
         }
+
         return false;
     }
 
@@ -56,6 +55,7 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
             $_registryModel = Yii::$app->classes['Registry'];
             self::$_table = $_registryModel::tableName();
         }
+
         return self::$_table;
     }
 
@@ -75,18 +75,20 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
     public function uuid()
     {
         $ownerClass = get_class($this->owner);
+
         return self::generateUuid($ownerClass::modelPrefix());
     }
 
     /**
      *
      *
-     * @param unknown $model (optional)
+     * @param  unknown $model (optional)
      * @return unknown
      */
     public static function generateUuid($modelPrefix)
     {
         $salt = strtoupper(sha1(Yii::$app->params['salt']));
+
         return sprintf('%s-%s-%04X-%04X-%04X%04X%04X',
             $modelPrefix,
             substr($salt, 0, 4),
@@ -96,7 +98,6 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
             mt_rand(0, 65535),
             mt_rand(0, 65535));
     }
-
 
     /**
      *
@@ -113,7 +114,7 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
     /**
      *
      *
-     * @param unknown $event
+     * @param  unknown $event
      * @return unknown
      */
     public function afterDelete($event)
@@ -131,6 +132,7 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
         if (!empty($this->owner->registryModel)) {
            $this->owner->registryModel->delete();
         }
+
         return true;
     }
 }

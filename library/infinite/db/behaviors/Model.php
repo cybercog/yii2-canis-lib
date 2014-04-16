@@ -6,13 +6,12 @@
  * @package infinite
  */
 
-
 namespace infinite\db\behaviors;
 
 class Model extends \yii\base\Behavior
 {
-	public function safeAttributes()
-	{
-		return [];
-	}
+    public function safeAttributes()
+    {
+        return [];
+    }
 }

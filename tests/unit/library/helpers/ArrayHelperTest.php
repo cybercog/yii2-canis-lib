@@ -2,7 +2,6 @@
 
 namespace infiniteunit\library\helpers;
 
-use Yii;
 use Infinite;
 
 use infiniteunit\TestCase;

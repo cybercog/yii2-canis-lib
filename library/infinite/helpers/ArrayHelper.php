@@ -6,7 +6,6 @@
  * @package infinite
  */
 
-
 namespace infinite\helpers;
 
 class ArrayHelper extends \yii\helpers\ArrayHelper
@@ -22,6 +21,7 @@ class ArrayHelper extends \yii\helpers\ArrayHelper
                 return parent::getValue($topValue, implode('.', $path));
             }
         }
+
         return parent::getValue($array, $key, $default);
     }
 
@@ -34,6 +34,7 @@ class ArrayHelper extends \yii\helpers\ArrayHelper
         if (is_null($to)) {
             $to = function ($element, $defaultValue) { return $element; };
         }
+
         return parent::map($array, $from, $to, $group);
     }
 
@@ -61,7 +62,7 @@ class ArrayHelper extends \yii\helpers\ArrayHelper
                 }
                 $result[] = $rp;
             }
-        }elseif (empty($arrays[$firstKey])) {
+        } elseif (empty($arrays[$firstKey])) {
             foreach ($rest as $key => $variation) {
                 if (is_array($variation)) {
                     $rp = $variation;
@@ -106,6 +107,7 @@ class ArrayHelper extends \yii\helpers\ArrayHelper
                 }
             }
         }
+
         return $result;
     }
 

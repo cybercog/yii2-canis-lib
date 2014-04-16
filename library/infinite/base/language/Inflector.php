@@ -6,7 +6,6 @@
  * @package infinite
  */
 
-
 namespace infinite\base\language;
 
 class Inflector extends \yii\helpers\Inflector

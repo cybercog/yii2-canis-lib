@@ -3,14 +3,15 @@ namespace infinite\db\behaviors\auditable;
 
 class AttributesEvent extends Event
 {
-	public $attributes;
+    public $attributes;
 
-	public function getHashArray()
+    public function getHashArray()
     {
-    	$hash = parent::getHashArray();
-    	$attributes = $this->attributes;
-    	ksort($attributes);
-    	$hash['attributes'] = $attributes;
-    	return $hash;
+        $hash = parent::getHashArray();
+        $attributes = $this->attributes;
+        ksort($attributes);
+        $hash['attributes'] = $attributes;
+
+        return $hash;
     }
 }

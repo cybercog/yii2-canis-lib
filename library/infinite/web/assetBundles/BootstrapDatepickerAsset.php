@@ -18,11 +18,13 @@ class BootstrapDatepickerAsset extends AssetBundle
     public $js = ['js/bootstrap-datepicker.js'];
     public $depends = ['yii\web\JqueryAsset', 'yii\bootstrap\BootstrapAsset'];
 
-	public function init() {
-		$this->publishOptions['beforeCopy'] = function($from, $to) {
-			$acceptable = ['css', 'js'];
-			return in_array(basename($from), $acceptable) || in_array(basename(dirname($from)), $acceptable);
-		};
-		parent::init();
-	}
+    public function init()
+    {
+        $this->publishOptions['beforeCopy'] = function ($from, $to) {
+            $acceptable = ['css', 'js'];
+
+            return in_array(basename($from), $acceptable) || in_array(basename(dirname($from)), $acceptable);
+        };
+        parent::init();
+    }
 }

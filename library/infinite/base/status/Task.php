@@ -6,7 +6,6 @@
  * @package infinite
  */
 
-
 namespace infinite\base\status;
 
 class Task extends \infinite\base\Component
@@ -26,7 +25,6 @@ class Task extends \infinite\base\Component
     const MESSAGE_ERROR = '__error';
     const MESSAGE_NOTICE = '__notice';
 
-
     public function __construct($parent, $system, $human = null)
     {
         if (is_null($human)) { $human = $system; }
@@ -40,6 +38,7 @@ class Task extends \infinite\base\Component
     public function addMessage($message, $status = self::MESSAGE_INFO)
     {
         $this->messages[] = ['time' => microtime(true), 'status' => $status, 'message' => $message];
+
         return true;
     }
 
@@ -47,6 +46,7 @@ class Task extends \infinite\base\Component
     {
         if (is_null($message)) { $message = true; }
         $this->error = $message;
+
         return true;
     }
     public function end()

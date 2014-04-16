@@ -6,7 +6,6 @@
  * @package infinite
  */
 
-
 namespace infinite\base;
 
 class File extends \infinite\web\UploadedFile implements FileInterface
@@ -16,6 +15,7 @@ class File extends \infinite\web\UploadedFile implements FileInterface
         if (!file_exists($tempName)) {
             $error = UPLOAD_ERR_NO_FILE;
         }
+
         return new static([
                 'name' => $name,
                 'tempName' => $tempName,
@@ -35,6 +35,7 @@ class File extends \infinite\web\UploadedFile implements FileInterface
         } else {
             return copy($this->tempName, $file);
         }
+
         return false;
     }
 }

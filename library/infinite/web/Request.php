@@ -6,7 +6,6 @@
  * @package infinite
  */
 
-
 namespace infinite\web;
 
 class Request extends \yii\web\Request

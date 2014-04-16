@@ -6,7 +6,6 @@
  * @package infinite
  */
 
-
 namespace infinite\setup;
 
 class Exception extends \Exception

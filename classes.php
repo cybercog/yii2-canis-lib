@@ -12,7 +12,6 @@
  * @package infinite
  */
 
-
 defined('INFINITE_CORE_PATH') or define('INFINITE_CORE_PATH', dirname(__FILE__) . DIRECTORY_SEPARATOR . 'library');
 return [
     'infinite\Infinite' => INFINITE_CORE_PATH . '/Infinite.php',

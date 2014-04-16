@@ -17,21 +17,21 @@ use infinite\base\collector\CollectedObjectTrait;
  * @property Registry $id
  */
 class Role extends \infinite\db\ActiveRecord implements \infinite\base\collector\CollectedObjectInterface
-{	
-	use CollectedOBjectTrait;
-	public $roleableEnabled = false;
-	
-	/**
-	 * @inheritdoc
-	 */
-	public static function tableName()
-	{
-		return 'role';
-	}
+{
+    use CollectedOBjectTrait;
+    public $roleableEnabled = false;
 
-	/**
-	 * @inheritdoc
-	 */
+    /**
+     * @inheritdoc
+     */
+    public static function tableName()
+    {
+        return 'role';
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function behaviors()
     {
         return array_merge(parent::behaviors(),
@@ -41,39 +41,39 @@ class Role extends \infinite\db\ActiveRecord implements \infinite\base\collector
             ]
         );
     }
-    
-	/**
-	 * @inheritdoc
-	 */
-	public function rules()
-	{
-		return [
-			[['created', 'modified'], 'safe'],
-			[['id'], 'string', 'max' => 36],
-			[['name', 'system_id'], 'string', 'max' => 100]
-		];
-	}
 
-	/**
-	 * @inheritdoc
-	 */
-	public function attributeLabels()
-	{
-		return [
-			'id' => 'ID',
-			'name' => 'Name',
-			'system_id' => 'System ID',
-			'system_version' => 'System Version',
-			'created' => 'Created',
-			'modified' => 'Modified',
-		];
-	}
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['created', 'modified'], 'safe'],
+            [['id'], 'string', 'max' => 36],
+            [['name', 'system_id'], 'string', 'max' => 100]
+        ];
+    }
 
-	/**
-	 * @return \yii\db\ActiveRelation
-	 */
-	public function getRegistry()
-	{
-		return $this->hasOne('Registry', ['id' => 'id']);
-	}
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'name' => 'Name',
+            'system_id' => 'System ID',
+            'system_version' => 'System Version',
+            'created' => 'Created',
+            'modified' => 'Modified',
+        ];
+    }
+
+    /**
+     * @return \yii\db\ActiveRelation
+     */
+    public function getRegistry()
+    {
+        return $this->hasOne('Registry', ['id' => 'id']);
+    }
 }

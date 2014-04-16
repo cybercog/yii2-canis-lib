@@ -6,14 +6,12 @@
  * @package infinite
  */
 
-
 namespace infinite\db;
 
 use Yii;
 use ReflectionClass;
 
 use yii\base\ModelEvent;
-use infinite\db\ActiveQuery;
 use infinite\base\ObjectTrait;
 use infinite\base\ModelTrait;
 use infinite\db\models\Relation;
@@ -40,7 +38,6 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
     protected static $_cache = [];
 
-
     const FORM_PRIMARY_MODEL = 'primary';
     const TABULAR_PREFIX = '0-';
 
@@ -54,6 +51,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
         if (!empty($this->dirtyAttributes)) {
             $this->_wasDirty = true;
         }
+
         return parent::beforeSave($insert);
     }
 
@@ -64,6 +62,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
             Cacher::invalidateGroup(self::cacheGroupKey());
         }
         $this->_wasDirty = false;
+
         return $result;
     }
 
@@ -98,36 +97,43 @@ class ActiveRecord extends \yii\db\ActiveRecord
         }
     }
 
-    public function setTabularId($value) {
+    public function setTabularId($value)
+    {
         $this->tabularIdHuman = $value;
         $this->_tabularId = self::generateTabularId($value);
     }
 
-    public function getTabularPrefix() {
+    public function getTabularPrefix()
+    {
         return '['. $this->tabularId .']';
     }
-    
-    public static function generateTabularId($id) 
+
+    public static function generateTabularId($id)
     {
         if (substr($id, 0, strlen(self::TABULAR_PREFIX)) === self::TABULAR_PREFIX) { return $id; }
+
         return self::TABULAR_PREFIX.substr(md5($id), 0, 10);
     }
 
-    public static function getPrimaryTabularId() {
+    public static function getPrimaryTabularId()
+    {
         return self::generateTabularId(self::FORM_PRIMARY_MODEL);
     }
 
-    public static function getPrimaryModel($models) {
+    public static function getPrimaryModel($models)
+    {
         if (empty($models)) { return false; }
         foreach ($models as $tabKey => $model) {
             if ($tabKey === self::getPrimaryTabularId(self::baseClassName())) {
                 return $model;
             }
         }
+
         return false;
     }
 
-    public static function parseModelAlias($alias) {
+    public static function parseModelAlias($alias)
+    {
         if (strncmp($alias, ':', 1)) {
             // not an alias
             return $alias;
@@ -139,17 +145,20 @@ class ActiveRecord extends \yii\db\ActiveRecord
         } elseif (isset(Yii::$app->modelAliases[$root])) {
             return Yii::$app->modelAliases[$root] . substr($alias, $pos);
         }
+
         return $alias;
     }
-    
-    public function getModelAlias() {
+
+    public function getModelAlias()
+    {
         return self::modelAlias();
     }
 
-    public static function modelAlias($className = null) {
+    public static function modelAlias($className = null)
+    {
         if (is_null($className)) {
             $className = get_called_class();
-        } elseif(is_object($className)) {
+        } elseif (is_object($className)) {
             $className = get_class($className);
         }
          if (!strncmp($className, ':', 1)) {
@@ -162,34 +171,41 @@ class ActiveRecord extends \yii\db\ActiveRecord
         } elseif (($alias = array_search($class->getNamespaceName(), Yii::$app->modelAliases)) !== false) {
             return $alias .'\\' . $class->getShortName();
         }
+
         return $className;
     }
 
-    public static function clearCache($model = null) {
+    public static function clearCache($model = null)
+    {
         if (is_null($model)) {
             self::$_cache = [];
-        } elseif(isset(self::$_cache[$model])) {
+        } elseif (isset(self::$_cache[$model])) {
             self::$_cache[$model] = [];
         }
+
         return true;
     }
 
-    public static function get($id, $checkAccess = true) {
+    public static function get($id, $checkAccess = true)
+    {
         $class = get_called_class();
         $dummy = new $class;
+
         return self::findOne([$dummy->tableName() .'.'. $dummy->primaryKey()[0] => $id], $checkAccess);
     }
 
-    public static function findOne($where, $checkAccess = true) {
+    public static function findOne($where, $checkAccess = true)
+    {
         return self::_findCache('one', $where, $checkAccess);
     }
 
-
-    public static function findAll($where = false, $checkAccess = true) {
+    public static function findAll($where = false, $checkAccess = true)
+    {
         return self::_findCache('all', $where, $checkAccess);
     }
 
-    public static function findAllCache($where = false, $checkAccess = true) {
+    public static function findAllCache($where = false, $checkAccess = true)
+    {
         return self::_findCache('all', $where, $checkAccess);
     }
 
@@ -218,10 +234,9 @@ class ActiveRecord extends \yii\db\ActiveRecord
                 return [];
             }
         }
+
         return self::$_cache[$model][$key];
     }
-
-
 
     public static function tableExists()
     {
@@ -230,6 +245,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
         } catch (\Exception $e) {
             return false;
         }
+
         return true;
     }
 
@@ -249,6 +265,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
         }
         $query = new $queryClass(get_called_class());
         $query->attachBehaviors(static::queryBehaviors());
+
         return $query;
     }
 
@@ -275,7 +292,6 @@ class ActiveRecord extends \yii\db\ActiveRecord
         ];
     }
 
-
     public static function queryBehaviors()
     {
         return [
@@ -295,6 +311,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
                         $descriptor[] = $this->{$field};
                     }
                 }
+
                 return implode(' ', $descriptor);
             } else {
                 return $this->{$this->descriptorField};
@@ -306,6 +323,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
                 return $this->{$t};
             }
         }
+
         return false;
     }
 
@@ -318,6 +336,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
                 $sub[] = $value;
             }
         }
+
         return $sub;
     }
 
@@ -336,6 +355,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
                     return $value;
                 }
             }
+
             return null;
         }
         if ($this->isForeignField($field)) {
@@ -350,6 +370,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
         if ($this->hasAttribute($field)) {
             return $this->{$field};
         }
+
         return null;
     }
 
@@ -363,32 +384,36 @@ class ActiveRecord extends \yii\db\ActiveRecord
         if (empty($this->primaryKey)) {
             return false;
         }
+
         return self::find()->pk($this->primaryKey)->count() > 0;
     }
 
     /**
-	 *
-	 *
-	 * @param unknown $value
-	 * @return unknown
-	 */
-	public function quote($value) {
-		if (is_array($value)) {
-			foreach ($value as $k => $v) {
-				$value[$k] = $this->quote($v);
-			}
-			return $value;
-		}
-		if (is_null($value)) { return $value; }
-		return $this->db->quoteValue($value);
-	}
+     *
+     *
+     * @param  unknown $value
+     * @return unknown
+     */
+    public function quote($value)
+    {
+        if (is_array($value)) {
+            foreach ($value as $k => $v) {
+                $value[$k] = $this->quote($v);
+            }
+
+            return $value;
+        }
+        if (is_null($value)) { return $value; }
+
+        return $this->db->quoteValue($value);
+    }
 
     /**
      *
      *
      * @todo see if they added an event in the final version of Yii2
-     * @param unknown $runValidation (optional)
-     * @param unknown $attributes    (optional)
+     * @param  unknown $runValidation (optional)
+     * @param  unknown $attributes    (optional)
      * @return unknown
      */
     public function save($runValidation=true, $attributes=NULL)
@@ -398,6 +423,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
         } else {
             $event = new ModelEvent;
             $this->trigger(self::EVENT_AFTER_SAVE_FAIL, $event);
+
             return false;
         }
     }

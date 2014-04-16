@@ -6,7 +6,6 @@
  * @package infinite
  */
 
-
 namespace infinite\db;
 
 use infinite\base\ComponentTrait;
@@ -23,6 +22,7 @@ class ActiveQuery extends \yii\db\ActiveQuery
     public function getIsAco()
     {
         $class = $this->modelClass;
+
         return $class::$isAco;
     }
 
@@ -32,6 +32,7 @@ class ActiveQuery extends \yii\db\ActiveQuery
             $modelClass = $this->modelClass;
             $this->_model = new $modelClass;
         }
+
         return $this->_model;
     }
 }

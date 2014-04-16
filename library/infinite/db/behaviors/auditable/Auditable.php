@@ -6,12 +6,10 @@
  * @package infinite
  */
 
-
 namespace infinite\db\behaviors\auditable;
 
 use Yii;
 use yii\base\InvalidConfigException;
-use infinite\helpers\Date as DateHelper;
 
 class Auditable extends \infinite\db\behaviors\ActiveRecord
 {
@@ -76,8 +74,10 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
                 $this->_auditEvents = [];
             }
             $this->_auditEvents[$event->id] = $event;
+
             return $event;
         }
+
         return false;
     }
 
@@ -120,6 +120,7 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
             $event->save();
         }
         $this->_auditEvents = null;
+
         return true;
     }
 
@@ -133,6 +134,7 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
         if (is_null($this->_auditAgent) && isset(Yii::$app->user)) {
             $this->_auditAgent = Yii::$app->user->identity;
         }
+
         return $this->_auditAgent;
     }
 
@@ -146,6 +148,7 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
         if (is_null($this->_directObject)) {
             $this->_directObject = $this->owner;
         }
+
         return $this->_directObject;
     }
 
@@ -156,7 +159,6 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
 
     public function getIndirectObject()
     {
-        
         return $this->_indirectObject;
     }
 
@@ -262,6 +264,7 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
                 return false;
             }
         }
+
         return true;
     }
 
@@ -275,6 +278,7 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
             }
         }
         self::$_auditMute = $this;
+
         return true;
     }
 
@@ -283,11 +287,13 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
         if (isset(self::$_auditMute)) {
             if (self::$_auditMute === $this) {
                 self::$_auditMute = null;
+
                 return true;
             } else {
                 return false;
             }
         }
+
         return true;
     }
 }

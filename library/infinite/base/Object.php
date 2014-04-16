@@ -6,12 +6,9 @@
  * @package infinite
  */
 
-
 namespace infinite\base;
-
-use infinite\base\ObjectTrait;
 
 class Object extends \yii\base\Object
 {
-	use ObjectTrait;
+    use ObjectTrait;
 }

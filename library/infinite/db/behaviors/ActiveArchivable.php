@@ -2,28 +2,29 @@
 namespace infinite\db\behaviors;
 
 use Yii;
-use infinite\helpers\ArrayHelper;
 use yii\base\ModelEvent;
 
 class ActiveArchivable extends ActiveRecord
 {
     public $archiveUserField = 'archived_user_id';
-	public $archiveField = 'archived';
+    public $archiveField = 'archived';
     public $databaseTimeFormat = 'Y-m-d H:i:s';
     protected $_isArchivable;
     protected $_trackUserArchive;
     public static $_userID;
 
-    public function isArchivable() {
+    public function isArchivable()
+    {
         if (is_null($this->_isArchivable)) {
-        	$this->_isArchivable = true;
-        	$ownerClass = get_class($this->owner);
+            $this->_isArchivable = true;
+            $ownerClass = get_class($this->owner);
             $schema = $ownerClass::getTableSchema();
 
             if (!isset($schema->columns[$this->archiveField])) {
-            	$this->_isArchivable = false;
+                $this->_isArchivable = false;
             }
         }
+
         return $this->_isArchivable;
     }
 
@@ -31,22 +32,24 @@ class ActiveArchivable extends ActiveRecord
     {
         if (!$this->isArchivable()) { return false; }
         if (empty($this->owner->{$this->archiveField})) {
-        	return false;
+            return false;
         }
+
         return true;
     }
 
-
-    public function trackUserArchive() {
+    public function trackUserArchive()
+    {
         if (is_null($this->_trackUserArchive)) {
-        	$this->_trackUserArchive = true;
-        	$ownerClass = get_class($this->owner);
+            $this->_trackUserArchive = true;
+            $ownerClass = get_class($this->owner);
             $schema = $ownerClass::getTableSchema();
 
             if (!isset($schema->columns[$this->archiveUserField])) {
-            	$this->_trackUserArchive = false;
+                $this->_trackUserArchive = false;
             }
         }
+
         return $this->_trackUserArchive;
     }
 
@@ -60,6 +63,7 @@ class ActiveArchivable extends ActiveRecord
         if ($this->trackUserArchive()) {
             $this->owner->archiveUserField = self::_getUserId();
         }
+
         return $this->owner->save();
     }
 
@@ -72,6 +76,7 @@ class ActiveArchivable extends ActiveRecord
         if ($this->trackUserArchive()) {
             $this->owner->archiveUserField = null;
         }
+
         return $this->owner->save();
     }
 
@@ -83,7 +88,7 @@ class ActiveArchivable extends ActiveRecord
                 self::$_userID = Yii::$app->user->id;
             }
         }
+
         return self::$_userID;
     }
 }
-?>

@@ -6,7 +6,6 @@
  * @package infinite
  */
 
-
 namespace infinite\helpers;
 
 class Match extends \infinite\base\Component
@@ -32,11 +31,10 @@ class Match extends \infinite\base\Component
         $this->not = $not;
     }
 
-
     /**
      *
      *
-     * @param unknown $test
+     * @param  unknown $test
      * @return unknown
      */
     public function test($test)
@@ -62,6 +60,7 @@ class Match extends \infinite\base\Component
                 return preg_match($this->regex, $test) === 1;
             }
         }
+
         return false;
     }
 }

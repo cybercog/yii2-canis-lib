@@ -6,7 +6,6 @@
  * @package infinite
  */
 
-
 namespace infinite\db\behaviors;
 
 use infinite\helpers\Date as DateHelper;
@@ -36,10 +35,12 @@ class Date extends \infinite\db\behaviors\ActiveRecord
         foreach ($this->handle as $field => $format) {
             $this->owner->{$field} = $this->_formatForDatabase($this->owner->{$field}, $format);
         }
+
         return true;
     }
 
-    public function _toHumanErrorCheck($event) {
+    public function _toHumanErrorCheck($event)
+    {
         if ($this->owner->hasErrors()) {
             $this->_toHuman($event);
         }
@@ -50,6 +51,7 @@ class Date extends \infinite\db\behaviors\ActiveRecord
         foreach ($this->handle as $field => $format) {
             $this->owner->{$field} = $this->_formatForHuman($this->owner->{$field}, $format);
         }
+
         return true;
     }
 
@@ -77,6 +79,7 @@ class Date extends \infinite\db\behaviors\ActiveRecord
         if (empty($field)) {
             $field = null;
         }
+
         return $field;
     }
 
@@ -101,6 +104,7 @@ class Date extends \infinite\db\behaviors\ActiveRecord
         if (empty($field)) {
             $field = null;
         }
+
         return $field;
     }
 
@@ -126,6 +130,7 @@ class Date extends \infinite\db\behaviors\ActiveRecord
                 }
             }
         }
+
         return $this->_handle;
     }
 

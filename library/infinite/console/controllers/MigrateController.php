@@ -12,7 +12,6 @@ class MigrateController extends \yii\console\controllers\MigrateController
      */
     public $migrationPaths = [];
 
-
     protected $migrationsMap = [];
 
     public $templateFile = '@infinite/views/system/migration.phpt';
@@ -24,6 +23,7 @@ class MigrateController extends \yii\console\controllers\MigrateController
         }
         $file = $this->migrationsMap[$class];
         require_once($file);
+
         return new $class(['db' => $this->db]);
     }
 
@@ -34,7 +34,7 @@ class MigrateController extends \yii\console\controllers\MigrateController
     protected function getNewMigrations()
     {
         $applied = [];
-        foreach($this->getMigrationHistory(-1) as $version=>$time) {
+        foreach ($this->getMigrationHistory(-1) as $version=>$time) {
             $applied[$version] = true;
         }
 
@@ -43,12 +43,12 @@ class MigrateController extends \yii\console\controllers\MigrateController
             $migrationPath = Yii::getAlias($migrationPathAlias);
             if (!is_dir($migrationPath)) { throw new Exception("Bad migration path {$migrationPath}!"); continue; }
             $handle = opendir($migrationPath);
-            while(($file = readdir($handle))!==false) {
-                if($file === '.' || $file === '..') {
+            while (($file = readdir($handle))!==false) {
+                if ($file === '.' || $file === '..') {
                     continue;
                 }
                 $path = $migrationPath . DIRECTORY_SEPARATOR . $file;
-                if(preg_match('/^(m(\d{6}_\d{6})_.*?)\.php$/',$file,$matches) AND is_file($path)) {
+                if (preg_match('/^(m(\d{6}_\d{6})_.*?)\.php$/',$file,$matches) AND is_file($path)) {
                     $migrationClassName = str_replace('/', '\\', substr($migrationPathAlias, 1)) .'\\'.  $matches[1];
                     if (!isset($applied[$migrationClassName])) {
                         $migrations[] = $migrationClassName;
@@ -59,6 +59,7 @@ class MigrateController extends \yii\console\controllers\MigrateController
             closedir($handle);
         }
         sort($migrations);
+
         return $migrations;
     }
 }

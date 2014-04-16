@@ -6,7 +6,6 @@
  * @package infinite
  */
 
-
 echo '<form id="setup-form" name="setup-form" method="post" action="">';
 echo '<input type="hidden" name="confirm" value="'.$this->getConfirmSalt($task->id).'" />';
 echo '<input type="hidden" name="task" value="'.$task->id.'" />';

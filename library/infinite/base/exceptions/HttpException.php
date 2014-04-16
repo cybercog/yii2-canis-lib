@@ -6,7 +6,6 @@
  * @package infinite
  */
 
-
 namespace infinite\base\exceptions;
 
 class HttpException extends \yii\web\HttpException

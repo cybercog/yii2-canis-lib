@@ -23,7 +23,7 @@ class Audit extends \infinite\db\ActiveRecord
 {
     public static $registryCache = false;
     public static $relationCache = false;
-    
+
     /**
      * @inheritdoc
      */
@@ -39,7 +39,6 @@ class Audit extends \infinite\db\ActiveRecord
     {
         return false;
     }
-    
 
     /**
      * @inheritdoc
@@ -62,7 +61,6 @@ class Audit extends \infinite\db\ActiveRecord
             [['event_id'], 'string', 'max' => 50]
         ];
     }
-
 
     /**
      * @inheritdoc
@@ -88,6 +86,7 @@ class Audit extends \infinite\db\ActiveRecord
         } catch (\Exception $e) {
             $event = false;
         }
+
         return $event;
     }
 
@@ -102,8 +101,10 @@ class Audit extends \infinite\db\ActiveRecord
             if ($save) {
                 return $this->save();
             }
+
             return true;
         }
+
         return false;
     }
 

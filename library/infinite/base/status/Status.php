@@ -6,7 +6,6 @@
  * @package infinite
  */
 
-
 namespace infinite\base\status;
 
 use yii\base\Event;
@@ -27,6 +26,7 @@ class Status extends \infinite\base\Component
     public function get($system)
     {
         if (!isset($this->_tasks[$system])) { $this->startTask($system); }
+
         return $this->_tasks[$system];
     }
 
@@ -36,6 +36,7 @@ class Status extends \infinite\base\Component
         $this->currentTask = new RTask($this, $system, $human);
         $this->_tasks[$system] = $this->currentTask;
         $this->trigger('startTask');
+
         return true;
     }
 

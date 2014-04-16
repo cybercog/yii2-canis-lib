@@ -6,14 +6,13 @@
  * @package infinite
  */
 
-
 namespace infinite\db;
 use infinite\base\ComponentTrait;
 
 class Query extends \yii\db\Query
 {
     const EVENT_BEFORE_QUERY = 'beforeQuery';
-    
-	use QueryTrait;
+
+    use QueryTrait;
     use ComponentTrait;
 }

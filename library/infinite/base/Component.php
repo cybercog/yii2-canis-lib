@@ -6,15 +6,11 @@
  * @package infinite
  */
 
-
 namespace infinite\base;
-
-use infinite\base\ObjectTrait;
-use infinite\base\ComponentTrait;
 
 class Component extends \yii\base\Component
 {
-	use ObjectTrait;
-	use ComponentTrait;
+    use ObjectTrait;
+    use ComponentTrait;
 
 }

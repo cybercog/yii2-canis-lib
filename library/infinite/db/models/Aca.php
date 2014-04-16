@@ -13,30 +13,30 @@ namespace infinite\db\models;
  * @property Registry $id
  */
 class Aca extends \infinite\db\ActiveRecord
-{ 
+{
     public static $registryCache = false;
     public static $relationCache = false;
     public static $groupCache = true;
 
-	/**
-	 * @inheritdoc
-	 */
-	public static function isAccessControlled()
+    /**
+     * @inheritdoc
+     */
+    public static function isAccessControlled()
     {
         return false;
     }
 
-	/**
-	 * @inheritdoc
-	 */
-	public static function tableName()
-	{
-		return 'aca';
-	}
+    /**
+     * @inheritdoc
+     */
+    public static function tableName()
+    {
+        return 'aca';
+    }
 
-	/**
-	 * @inheritdoc
-	 */
+    /**
+     * @inheritdoc
+     */
     public function behaviors()
     {
         return array_merge(parent::behaviors(),
@@ -46,37 +46,37 @@ class Aca extends \infinite\db\ActiveRecord
             ]
         );
     }
-	/**
-	 * @inheritdoc
-	 */
-	public function rules()
-	{
-		return [
-			[['name'], 'required'],
-			[['created', 'modified'], 'safe'],
-			[['id'], 'string', 'max' => 36],
-			[['name'], 'string', 'max' => 100]
-		];
-	}
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['name'], 'required'],
+            [['created', 'modified'], 'safe'],
+            [['id'], 'string', 'max' => 36],
+            [['name'], 'string', 'max' => 100]
+        ];
+    }
 
-	/**
-	 * @inheritdoc
-	 */
-	public function attributeLabels()
-	{
-		return [
-			'id' => 'ID',
-			'name' => 'Name',
-			'created' => 'Created',
-			'modified' => 'Modified',
-		];
-	}
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'name' => 'Name',
+            'created' => 'Created',
+            'modified' => 'Modified',
+        ];
+    }
 
-	/**
-	 * @return \yii\db\ActiveRelation
-	 */
-	public function getRegistry()
-	{
-		return $this->hasOne('Registry', ['id' => 'id']);
-	}
+    /**
+     * @return \yii\db\ActiveRelation
+     */
+    public function getRegistry()
+    {
+        return $this->hasOne('Registry', ['id' => 'id']);
+    }
 }
