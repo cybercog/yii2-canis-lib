@@ -76,7 +76,6 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
             'direct_object_id' => 'char(36) CHARACTER SET ascii COLLATE ascii_bin NOT NULL',
             'indirect_object_id' => 'char(36) CHARACTER SET ascii COLLATE ascii_bin DEFAULT NULL',
             'event_id' => 'string(50) NOT NULL',
-            'event_hash' => 'string(100) NOT NULL',
             'event' => 'longblob DEFAULT NULL',
             'hooks_handled' => 'bool NOT NULL DEFAULT 0',
             'created' => 'datetime DEFAULT NULL'

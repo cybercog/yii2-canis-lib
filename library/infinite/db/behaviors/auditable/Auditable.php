@@ -50,6 +50,11 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
         ];
     }
 
+    public function safeAttributes()
+    {
+        return ['directObject', 'indirectObject', 'auditAgent'];
+    }
+
     public function getAuditDirtyAttributes()
     {
         return $this->_dirtyAttributes;
@@ -67,6 +72,9 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
             throw new InvalidConfigException("Invalid audit event thrown");
         }
         if ($event->isValid()) {
+            if (!isset($this->_auditEvents)) {
+                $this->_auditEvents = [];
+            }
             $this->_auditEvents[$event->id] = $event;
             return $event;
         }
@@ -218,13 +226,15 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
         if ($this->collectBehaviorLogs) {
             $this->owner->trigger(self::EVENT_COLLECT_AUDIT_DELETE);
         }
-        $this->registerEvent([
-            'class' => $this->insertEventClass,
-            'directObject' => $this->directObject,
-            'indirectObject' => $this->indirectObject,
-            'attributes' => $this->auditDirtyAttributes,
-            'agent' => $this->auditAgent
-        ]);
+        if ($this->enableDeleteLog) {
+            $this->registerEvent([
+                'class' => $this->deleteEventClass,
+                'directObject' => $this->directObject,
+                'indirectObject' => $this->indirectObject,
+                'attributes' => $this->auditDirtyAttributes,
+                'agent' => $this->auditAgent
+            ]);
+        }
         $this->handleAuditSave();
         $this->unmuteAudit();
     }

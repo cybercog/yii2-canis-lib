@@ -11,7 +11,6 @@ use Yii;
  * @property string $direct_object_id
  * @property string $indirect_object_id
  * @property string $event_id
- * @property string $event_hash
  * @property string $event
  * @property bool $hooks_handled
  * @property string $created
@@ -56,12 +55,11 @@ class Audit extends \infinite\db\ActiveRecord
     public function rules()
     {
         return [
-            [['agent_id', 'direct_object_id', 'event_id', 'event_hash'], 'required'],
+            [['agent_id', 'direct_object_id', 'event_id'], 'required'],
             [['event'], 'string'],
             [['hooks_handled'], 'boolean'],
             [['agent_id', 'direct_object_id', 'indirect_object_id'], 'string', 'max' => 36],
-            [['event_id'], 'string', 'max' => 50],
-            [['event_hash'], 'string', 'max' => 100]
+            [['event_id'], 'string', 'max' => 50]
         ];
     }
 
@@ -77,7 +75,6 @@ class Audit extends \infinite\db\ActiveRecord
             'direct_object_id' => 'Direct Object ID',
             'indirect_object_id' => 'Indirect Object ID',
             'event_id' => 'Event ID',
-            'event_hash' => 'Event Hash',
             'event' => 'Event',
             'hooks_handled' => 'Hooks Handled',
             'created' => 'Created',

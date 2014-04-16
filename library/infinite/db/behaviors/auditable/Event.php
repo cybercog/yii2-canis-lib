@@ -180,7 +180,6 @@ abstract class Event extends \infinite\base\Component
         $audit->direct_object_id = $this->directObjectId;
         $audit->indirect_object_id = $this->indirectObjectId;
         $audit->event_id = $this->id;
-        $audit->event_hash = $this->hash;
         $audit->hooks_handled = 0;
         if ($this->handleHooksOnCreate && $this->handleHooks()) {
             $audit->hooks_handled = 1;
