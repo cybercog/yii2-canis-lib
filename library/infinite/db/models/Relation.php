@@ -128,7 +128,9 @@ class Relation extends \infinite\db\ActiveRecord
     public function getChildObject($checkAccess = true)
     {
         $registryClass = Yii::$app->classes['Registry'];
-
+        if (empty($this->child_object_id)) {
+            return false;
+        }
         return $registryClass::getObject($this->child_object_id, $checkAccess);
     }
 
@@ -140,7 +142,9 @@ class Relation extends \infinite\db\ActiveRecord
     public function getParentObject($checkAccess = true)
     {
         $registryClass = Yii::$app->classes['Registry'];
-
+        if (empty($this->parent_object_id)) {
+            return false;
+        }
         return $registryClass::getObject($this->parent_object_id, $checkAccess);
     }
 

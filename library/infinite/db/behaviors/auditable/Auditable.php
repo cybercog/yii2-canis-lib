@@ -125,16 +125,19 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_registerEvent_description__
+     * __method_registerAuditEvent_description__
      * @param __param_event_type__ $event __param_event_description__
-     * @return __return_registerEvent_type__ __return_registerEvent_description__
+     * @return __return_registerAuditEvent_type__ __return_registerAuditEvent_description__
      * @throws InvalidConfigException __exception_InvalidConfigException_description__
      */
-    public function registerEvent($event)
+    public function registerAuditEvent($event)
     {
         if (is_array($event)) {
             if (!isset($event['class'])) {
                 $event['class'] = $this->baseEventClass;
+            }
+            if (!isset($event['agent'])) {
+                $event['agent'] = $this->auditAgent;
             }
             $event = Yii::createObject($event);
         }
@@ -149,6 +152,7 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
 
             return $event;
         }
+        \d($event);exit;
 
         return false;
     }
@@ -289,7 +293,7 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     {
         if (!$this->owner->isAuditEnabled()) { return true; }
         if ($this->owner->enableSaveLog && !empty($this->auditDirtyAttributes)) {
-            $this->registerEvent([
+            $this->registerAuditEvent([
                 'class' => $this->updateEventClass,
                 'directObject' => $this->directObject,
                 'indirectObject' => $this->indirectObject,
@@ -314,7 +318,7 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     {
         if (!$this->owner->isAuditEnabled()) { return true; }
         if ($this->owner->enableSaveLog && !empty($this->auditDirtyAttributes)) {
-            $this->registerEvent([
+            $this->registerAuditEvent([
                 'class' => $this->insertEventClass,
                 'directObject' => $this->directObject,
                 'indirectObject' => $this->indirectObject,
@@ -354,7 +358,7 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
             $this->owner->trigger(self::EVENT_COLLECT_AUDIT_DELETE);
         }
         if ($this->enableDeleteLog) {
-            $this->registerEvent([
+            $this->registerAuditEvent([
                 'class' => $this->deleteEventClass,
                 'directObject' => $this->directObject,
                 'indirectObject' => $this->indirectObject,

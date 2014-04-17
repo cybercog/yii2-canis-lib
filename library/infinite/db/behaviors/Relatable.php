@@ -22,6 +22,10 @@ use infinite\caching\Cacher;
 class Relatable extends \infinite\db\behaviors\ActiveRecord
 {
     /**
+     * @var string Audit event class for relation class
+     */
+    public $relationAuditEventClass = 'infinite\\db\\behaviors\\auditable\\RelationEvent';
+    /**
      * @var __var_parentObjectField_type__ __var_parentObjectField_description__
      */
     public $parentObjectField = 'parent_object_id';
@@ -248,6 +252,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
                 if (empty($model->{$this->parentObjectField}) && empty($model->{$this->childObjectField})) {
                     continue;
                 }
+
                 if (empty($model->{$this->parentObjectField})) {
                     $model->{$this->parentObjectField} = $this->owner->primaryKey;
                 } elseif (empty($model->{$this->childObjectField})) {
@@ -392,9 +397,43 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
         if (!is_null($key) && $key !== $id) {
             $id .= '-'. $key;
         }
-        self::$_relationModels[$relationModelKey][$id] = ['handled' => false, 'model' => $model];
 
+        if (empty($model->{$this->parentObjectField}) && empty($model->{$this->childObjectField})) {
+            throw new \Exception("boom");
+            return false;
+        }
+
+        if (empty($model->{$this->parentObjectField})) {
+            $model->{$this->parentObjectField} = $this->owner->primaryKey;
+        } elseif (empty($model->{$this->childObjectField})) {
+            $model->{$this->childObjectField} = $this->owner->primaryKey;
+        }
+
+        self::$_relationModels[$relationModelKey][$id] = ['handled' => false, 'model' => $model];
+        $this->registerRelationAuditEvent($model);
         return $model;
+    }
+
+    public function registerRelationAuditEvent($model)
+    {
+        if ($this->owner->getBehavior('Auditable') === null) { return false; }
+        $parentObject = $model->getParentObject(false);
+        $childObject = $model->getChildObject(false);
+        if (!$model->isNewRecord ||
+            empty($parentObject) || $parentObject->isNewRecord 
+            || empty($childObject) || $childObject->isNewRecord) {
+            return false;
+        }
+        $eventLog = ['class' => $this->relationAuditEventClass];
+        $eventLog['relationObject'] = $model;
+        $eventLog['directObject'] = $this->owner;
+        //$eventLog['exclusive'] = true;
+        if ($this->owner === $parentObject) {
+            $eventLog['indirectObject'] = $childObject;
+        } else {
+            $eventLog['indirectObject'] = $parentObject;
+        }
+        return $this->owner->registerAuditEvent($eventLog);
     }
 
     /**
