@@ -11,6 +11,7 @@ use Yii;
 use yii\console\Controller;
 use yii\helpers\Console;
 use yii\helpers\FileHelper;
+use yii\helpers\ArrayHelper;
 
 /**
  * PhpDocController is there to help maintaining PHPDoc annotation in class files
@@ -258,31 +259,79 @@ class PhpDocController extends Controller
             // $this->stderr("[ERR] No @author found in class doc in file: $file\n", Console::FG_RED);
         }
         $newDoc = implode("\n", $lines) . "\n";
+        $updates = [];
+        $fileContent = explode("\n", file_get_contents($file));
         if (trim($oldDoc) != trim($newDoc)) {
-
-            $fileContent = explode("\n", file_get_contents($file));
             $start = $ref->getStartLine() - 1;
-            $docStart = $start - $oldDocSize + 1;
-            array_splice($fileContent, $start, $oldDocSize, $lines);
+            $updates = [
+                'inject' => $lines,
+                'length' => $oldDocSize,
+                'start' => $start
+            ];
+        }
+        $updates = array_merge($updates, $this->updateMethodDocs($fileContent, $className, $file));
+        ArrayHelper::multisort($updates, 'start', SORT_ASC, SORT_NUMERIC);
+        $offset = 0;
+        if (!empty($updates)) {
+            foreach ($updates as $update) {
+                array_splice($fileContent, $update['start'] + $offset, $update['length'], $update['inject']);
+                $offset = $offset + (count($update['inject']) - $update['length']);
+            }
             file_put_contents($file, implode("\n", $fileContent));
-            //\d($fileContent); exit;
+        }
+        return !empty($updates);
+    }
 
-            // $newFileContent = [];
-            // $n = count($fileContent);
-            // for ($i = 0; $i < $n; $i++) {
-            //     if ($i > $start || $i < $docStart) {
-            //         $newFileContent[] = $fileContent[$i];
-            //     } else {
-            //         $newFileContent[] = trim($newDoc);
-            //         $i = $start;
-            //     }
-            // }
-            // \d(implode("\n", $newFileContent));exit;
-            // file_put_contents($file, implode("\n", $newFileContent));
+    public function updateMethodDocs($fileContent, $className, $file)
+    {
+        $ref = new \ReflectionClass($className);
+        if (strtolower($ref->getFileName()) != strtolower($file)) {
+            $this->stderr("[ERR] Unable to create ReflectionClass for class: $className loaded class ({$ref->getFileName()}) is not from file: $file\n", Console::FG_RED);
+        }
+        $updates = [];
+        foreach ($ref->getMethods() as $method) {
+            if (strtolower($method->getFileName()) != strtolower($file)) {
+                continue;
+            }
+            $inheritDocs = $this->isMethodReplacingParent($ref, $method);
+            $docs = $originalDocs = $method->getDocComment();
+            $docsSize = count(explode("\n", $docs));
+            $final = false;
+            if (empty($docs)) {
+                $docsSize = 0;
+                $docs = "/**\n**/";
+            }
+            $lines = explode("\n", $docs);
+            if ($inheritDocs && $docsSize === 0) {
+                array_splice($lines, 1, 0, [' * @inheritdoc']);
+                $final = true;
+            }
+            if (count($lines) > 1 && $docsSize == 0) {
+                $currentStartLine = $fileContent[$method->getStartLine()-1];
+                preg_match('/^([ \t\r\n\f]*)[a-zA-Z].*/', $currentStartLine, $matches);
+                $whitespace = isset($matches[1]) ? $matches[1] : '';
+                foreach ($lines as $k => $line) {
+                    $lines[$k] = $whitespace . trim($line);
+                }
+                $updates[] = [
+                    'inject' => $lines,
+                    'length' => $docsSize,
+                    'start' => $method->getStartLine() - 1
+                ];
+            }
+        }
+        return $updates;
+    }
 
+    public function isMethodReplacingParent(\ReflectionClass $class, \ReflectionMethod $method)
+    {
+        $parentClass = $class->getParentClass();
+        if (!$parentClass) {
+            return false;
+        }
+        if (method_exists($parentClass->getName(), $method->getName())) {
             return true;
         }
-
         return false;
     }
 
