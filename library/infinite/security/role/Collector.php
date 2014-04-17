@@ -34,7 +34,7 @@ class Collector extends \infinite\base\collector\Collector
     }
 
     /**
-     * __method_setInitialItems_description__
+     * Set initial items
      * @param __param_value_type__ $value __param_value_description__
      */
     public function setInitialItems($value)
@@ -51,7 +51,7 @@ class Collector extends \infinite\base\collector\Collector
     }
 
     /**
-     * __method_getById_description__
+     * Get by
      * @param __param_id_type__ $id __param_id_description__
      * @return __return_getById_type__ __return_getById_description__
      */
@@ -71,7 +71,7 @@ class Collector extends \infinite\base\collector\Collector
     }
 
     /**
-     * __method_getTableRegistry_description__
+     * Get table registry
      * @return __return_getTableRegistry_type__ __return_getTableRegistry_description__
      */
     public function getTableRegistry()

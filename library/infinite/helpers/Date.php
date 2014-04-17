@@ -55,7 +55,7 @@ class Date extends \infinite\base\Object
      * @param string $format date format
      * @param int    $time   Unix timestamp (optional)
      * @return string formatted date
-                      @see php:date
+     * @see php:date
      */
     public static function date($format, $time = null)
     {
@@ -71,7 +71,7 @@ class Date extends \infinite\base\Object
      * @param string $str  strtotime string
      * @param int    $time Unix timestamp (optional)
      * @return string formatted date
-                    @see php:strtotime
+     * @see php:strtotime
      */
     public static function strtotime($str, $time = null)
     {

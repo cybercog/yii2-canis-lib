@@ -106,7 +106,7 @@ class QueryAccess extends QueryBehavior
     }
 
     /**
-     * __method_setAccessingObject_description__
+     * Set accessing object
      * @param __param_value_type__ $value __param_value_description__
      * @return __return_setAccessingObject_type__ __return_setAccessingObject_description__
      */
@@ -116,7 +116,7 @@ class QueryAccess extends QueryBehavior
     }
 
     /**
-     * __method_getAccessingObject_description__
+     * Get accessing object
      * @return __return_getAccessingObject_type__ __return_getAccessingObject_description__
      */
     public function getAccessingObject()
@@ -146,7 +146,7 @@ class QueryAccess extends QueryBehavior
     }
 
     /**
-     * __method_getQueryAccessModel_description__
+     * Get query access model
      * @return __return_getQueryAccessModel_type__ __return_getQueryAccessModel_description__
      */
     public function getQueryAccessModel()
@@ -159,7 +159,7 @@ class QueryAccess extends QueryBehavior
     }
 
     /**
-     * __method_setAction_description__
+     * Set action
      * @param __param_action_type__ $action __param_action_description__
      * @return __return_setAction_type__ __return_setAction_description__
      */
@@ -171,7 +171,7 @@ class QueryAccess extends QueryBehavior
     }
 
     /**
-     * __method_getAction_description__
+     * Get action
      * @return __return_getAction_type__ __return_getAction_description__
      */
     public function getAction()

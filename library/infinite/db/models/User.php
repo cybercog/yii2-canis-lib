@@ -113,7 +113,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * __method_getId_description__
+     * Get id
      * @return int|string current user ID
      */
     public function getId()
@@ -122,7 +122,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * __method_getAuthKey_description__
+     * Get auth key
      * @return string current user auth key
      */
     public function getAuthKey()
@@ -205,7 +205,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * __method_getRegistry_description__
+     * Get registry
      * @return \yii\db\ActiveRelation
      */
     public function getRegistry()
@@ -214,7 +214,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * __method_getGroups_description__
+     * Get groups
      * @return __return_getGroups_type__ __return_getGroups_description__
      */
     public function getGroups()

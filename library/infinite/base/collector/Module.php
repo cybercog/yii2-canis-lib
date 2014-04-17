@@ -30,7 +30,7 @@ abstract class Module extends Collector
     protected $_loaded = false;
 
     /**
-     * __method_getModulePrefix_description__
+     * Get module prefix
      */
     abstract public function getModulePrefix();
 

@@ -42,7 +42,7 @@ class SearchTermResult extends Object
     protected $_score;
 
     /**
-     * __method_setId_description__
+     * Set id
      * @param __param_value_type__ $value __param_value_description__
      */
     public function setId($value)
@@ -51,7 +51,7 @@ class SearchTermResult extends Object
     }
 
     /**
-     * __method_getId_description__
+     * Get id
      * @return __return_getId_type__ __return_getId_description__
      */
     public function getId()
@@ -64,7 +64,7 @@ class SearchTermResult extends Object
     }
 
     /**
-     * __method_setObject_description__
+     * Set object
      * @param __param_value_type__ $value __param_value_description__
      */
     public function setObject($value)
@@ -89,7 +89,7 @@ class SearchTermResult extends Object
     }
 
     /**
-     * __method_getObject_description__
+     * Get object
      * @return __return_getObject_type__ __return_getObject_description__
      */
     public function getObject()
@@ -98,7 +98,7 @@ class SearchTermResult extends Object
     }
 
     /**
-     * __method_setDescriptor_description__
+     * Set descriptor
      * @param __param_value_type__ $value __param_value_description__
      */
     public function setDescriptor($value)
@@ -107,7 +107,7 @@ class SearchTermResult extends Object
     }
 
     /**
-     * __method_getDescriptor_description__
+     * Get descriptor
      * @return __return_getDescriptor_type__ __return_getDescriptor_description__
      */
     public function getDescriptor()
@@ -120,7 +120,7 @@ class SearchTermResult extends Object
     }
 
     /**
-     * __method_setTerms_description__
+     * Set terms
      * @param __param_value_type__ $value __param_value_description__
      */
     public function setTerms($value)
@@ -129,7 +129,7 @@ class SearchTermResult extends Object
     }
 
     /**
-     * __method_getTerms_description__
+     * Get terms
      * @return __return_getTerms_type__ __return_getTerms_description__
      */
     public function getTerms()
@@ -156,7 +156,7 @@ class SearchTermResult extends Object
     }
 
     /**
-     * __method_setSubdescriptor_description__
+     * Set subdescriptor
      * @param __param_value_type__ $value __param_value_description__
      */
     public function setSubdescriptor($value)
@@ -204,7 +204,7 @@ class SearchTermResult extends Object
     }
 
     /**
-     * __method_getSubdescriptor_description__
+     * Get subdescriptor
      * @return __return_getSubdescriptor_type__ __return_getSubdescriptor_description__
      */
     public function getSubdescriptor()
@@ -217,7 +217,7 @@ class SearchTermResult extends Object
     }
 
     /**
-     * __method_setScore_description__
+     * Set score
      * @param __param_value_type__ $value __param_value_description__
      */
     public function setScore($value)
@@ -235,7 +235,7 @@ class SearchTermResult extends Object
     }
 
     /**
-     * __method_getScore_description__
+     * Get score
      * @return __return_getScore_type__ __return_getScore_description__
      */
     public function getScore()

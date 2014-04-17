@@ -86,7 +86,7 @@ class Registry extends \infinite\db\ActiveRecord
     }
 
     /**
-     * __method_getObject_description__
+     * Get object
      * @param unknown $id
      * @param boolean $checkAccess __param_checkAccess_description__ [optional]
      * @return unknown

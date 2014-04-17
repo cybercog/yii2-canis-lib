@@ -61,7 +61,7 @@ class ObjectAccess extends \infinite\base\Component
     }
 
     /**
-     * __method_get_description__
+     * Get
      * @param __param_object_type__ $object __param_object_description__
      * @return __return_get_type__ __return_get_description__
      */
@@ -138,7 +138,7 @@ class ObjectAccess extends \infinite\base\Component
     }
 
     /**
-     * __method_getUniversalMaxRoleLevel_description__
+     * Get universal max role level
      * @return __return_getUniversalMaxRoleLevel_type__ __return_getUniversalMaxRoleLevel_description__
      */
     public function getUniversalMaxRoleLevel()
@@ -230,7 +230,7 @@ class ObjectAccess extends \infinite\base\Component
     }
 
     /**
-     * __method_getRequestors_description__
+     * Get requestors
      * @return __return_getRequestors_type__ __return_getRequestors_description__
      */
     public function getRequestors()
@@ -257,7 +257,7 @@ class ObjectAccess extends \infinite\base\Component
     }
 
     /**
-     * __method_getRoles_description__
+     * Get roles
      * @return __return_getRoles_type__ __return_getRoles_description__
      */
     public function getRoles()
@@ -278,7 +278,7 @@ class ObjectAccess extends \infinite\base\Component
     }
 
     /**
-     * __method_getRoleObjects_description__
+     * Get role objects
      * @return __return_getRoleObjects_type__ __return_getRoleObjects_description__
      */
     public function getRoleObjects()
@@ -294,7 +294,7 @@ class ObjectAccess extends \infinite\base\Component
     }
 
     /**
-     * __method_getRoleObject_description__
+     * Get role object
      * @param __param_requestorId_type__ $requestorId __param_requestorId_description__
      * @param array $roleSet __param_roleSet_description__ [optional]
      * @return __return_getRoleObject_type__ __return_getRoleObject_description__
@@ -327,7 +327,7 @@ class ObjectAccess extends \infinite\base\Component
     }
 
     /**
-     * __method_getSpecialRequestors_description__
+     * Get special requestors
      * @return __return_getSpecialRequestors_type__ __return_getSpecialRequestors_description__
      */
     public function getSpecialRequestors()
@@ -341,7 +341,7 @@ class ObjectAccess extends \infinite\base\Component
     }
 
     /**
-     * __method_setObject_description__
+     * Set object
      * @param __param_object_type__ $object __param_object_description__
      */
     public function setObject($object)
@@ -351,7 +351,7 @@ class ObjectAccess extends \infinite\base\Component
     }
 
     /**
-     * __method_getObject_description__
+     * Get object
      * @return __return_getObject_type__ __return_getObject_description__
      */
     public function getObject()
@@ -365,7 +365,7 @@ class ObjectAccess extends \infinite\base\Component
     }
 
     /**
-     * __method_getRoleHelpText_description__
+     * Get role help text
      * @param __param_roleItem_type__ $roleItem __param_roleItem_description__
      * @return __return_getRoleHelpText_type__ __return_getRoleHelpText_description__
      */
@@ -400,7 +400,7 @@ class ObjectAccess extends \infinite\base\Component
     }
 
     /**
-     * __method_getPossibleRoles_description__
+     * Get possible roles
      * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__ [optional]
      * @return __return_getPossibleRoles_type__ __return_getPossibleRoles_description__
      */
@@ -429,7 +429,7 @@ class ObjectAccess extends \infinite\base\Component
     }
 
     /**
-     * __method_getVisibility_description__
+     * Get visibility
      * @return __return_getVisibility_type__ __return_getVisibility_description__
      */
     public function getVisibility()
@@ -442,7 +442,7 @@ class ObjectAccess extends \infinite\base\Component
     }
 
     /**
-     * __method_getAccessorRoleLevel_description__
+     * Get accessor role level
      * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__ [optional]
      * @return __return_getAccessorRoleLevel_type__ __return_getAccessorRoleLevel_description__
      */

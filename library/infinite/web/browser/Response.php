@@ -30,7 +30,7 @@ abstract class Response extends \infinite\base\Object
     protected $_bundles;
 
     /**
-     * __method_getInstance_description__
+     * Get instance
      * @param boolean $static __param_static_description__ [optional]
      * @return __return_getInstance_type__ __return_getInstance_description__
      */
@@ -132,7 +132,7 @@ abstract class Response extends \infinite\base\Object
     }
 
     /**
-     * __method_getBundles_description__
+     * Get bundles
      * @return __return_getBundles_type__ __return_getBundles_description__
      */
     public function getBundles()

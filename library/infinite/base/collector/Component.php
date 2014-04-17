@@ -122,7 +122,7 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
     }
 
     /**
-     * __method_getCollectors_description__
+     * Get collectors
      * @return __return_getCollectors_type__ __return_getCollectors_description__
      */
     public function getCollectors()
@@ -131,7 +131,7 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
     }
 
     /**
-     * __method_setCollectors_description__
+     * Set collectors
      * @param __param_collectors_type__ $collectors __param_collectors_description__
      */
     public function setCollectors($collectors)
@@ -188,7 +188,7 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
     }
 
     /**
-     * __method_getSleepingCount_description__
+     * Get sleeping count
      * @return __return_getSleepingCount_type__ __return_getSleepingCount_description__
      */
     public function getSleepingCount()

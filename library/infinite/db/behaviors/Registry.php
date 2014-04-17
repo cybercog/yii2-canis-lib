@@ -49,7 +49,7 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_getRegistryModel_description__
+     * Get registry model
      * @return __return_getRegistryModel_type__ __return_getRegistryModel_description__
      */
     public function getRegistryModel()
@@ -70,7 +70,7 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_getTable_description__
+     * Get table
      * @return __return_getTable_type__ __return_getTable_description__
      */
     public function getTable()

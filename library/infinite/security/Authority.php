@@ -22,7 +22,7 @@ class Authority extends \infinite\base\Component
     protected $_handler;
 
     /**
-     * __method_setHandler_description__
+     * Set handler
      * @param __param_handler_type__ $handler __param_handler_description__
      * @throws Exception __exception_Exception_description__
      */
@@ -35,7 +35,7 @@ class Authority extends \infinite\base\Component
     }
 
     /**
-     * __method_getHandler_description__
+     * Get handler
      * @return __return_getHandler_type__ __return_getHandler_description__
      */
     public function getHandler()
@@ -44,7 +44,7 @@ class Authority extends \infinite\base\Component
     }
 
     /**
-     * __method_getRequestors_description__
+     * Get requestors
      * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__
      * @return __return_getRequestors_type__ __return_getRequestors_description__
      */
@@ -58,7 +58,7 @@ class Authority extends \infinite\base\Component
     }
 
     /**
-     * __method_getTopRequestors_description__
+     * Get top requestors
      * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__
      * @return __return_getTopRequestors_type__ __return_getTopRequestors_description__
      */

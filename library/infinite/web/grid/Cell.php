@@ -100,7 +100,7 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
 
 
     /**
-     * __method_getContent_description__
+     * Get content
      * @return __return_getContent_type__ __return_getContent_description__
      */
     public function getContent()
@@ -109,7 +109,7 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
     }
 
     /**
-     * __method_setContent_description__
+     * Set content
      * @param __param_content_type__ $content __param_content_description__
      */
     public function setContent($content)
@@ -196,7 +196,7 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
 
 
     /**
-     * __method_getClasses_description__
+     * Get classes
      * @return __return_getClasses_type__ __return_getClasses_description__
      */
     public function getClasses()
@@ -220,7 +220,7 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
     }
 
     /**
-     * __method_getSizes_description__
+     * Get sizes
      * @return __return_getSizes_type__ __return_getSizes_description__
      */
     public function getSizes()
@@ -251,7 +251,7 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
     }
 
     /**
-     * __method_getId_description__
+     * Get id
      * @return __return_getId_type__ __return_getId_description__
      */
     public function getId()
@@ -302,7 +302,7 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
     }
 
     /**
-     * __method_getMaxColumns_description__
+     * Get max columns
      * @param __param_size_type__ $size __param_size_description__ [optional]
      * @return __return_getMaxColumns_type__ __return_getMaxColumns_description__
      */
@@ -320,7 +320,7 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
     }
 
     /**
-     * __method_setMaxColumns_description__
+     * Set max columns
      * @param __param_columns_type__ $columns __param_columns_description__
      * @param __param_size_type__ $size __param_size_description__ [optional]
      */
@@ -334,7 +334,7 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
     }
 
     /**
-     * __method_setColumns_description__
+     * Set columns
      * @param __param_columns_type__ $columns __param_columns_description__
      * @param __param_size_type__ $size __param_size_description__ [optional]
      */
@@ -348,7 +348,7 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
     }
 
     /**
-     * __method_getColumns_description__
+     * Get columns
      * @param __param_size_type__ $size __param_size_description__ [optional]
      * @return __return_getColumns_type__ __return_getColumns_description__
      */
@@ -367,7 +367,7 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
     }
 
     /**
-     * __method_setPhoneColumns_description__
+     * Set phone columns
      * @param __param_columns_type__ $columns __param_columns_description__
      */
     public function setPhoneColumns($columns)
@@ -377,7 +377,7 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
     }
 
     /**
-     * __method_setTabletColumns_description__
+     * Set tablet columns
      * @param __param_columns_type__ $columns __param_columns_description__
      */
     public function setTabletColumns($columns)
@@ -387,7 +387,7 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
     }
 
     /**
-     * __method_setMediumDesktopColumns_description__
+     * Set medium desktop columns
      * @param __param_columns_type__ $columns __param_columns_description__
      */
     public function setMediumDesktopColumns($columns)
@@ -397,7 +397,7 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
     }
 
     /**
-     * __method_setLargeDesktopColumns_description__
+     * Set large desktop columns
      * @param __param_columns_type__ $columns __param_columns_description__
      */
     public function setLargeDesktopColumns($columns)
@@ -408,7 +408,7 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
 
 
     /**
-     * __method_setMaxPhoneColumns_description__
+     * Set max phone columns
      * @param __param_columns_type__ $columns __param_columns_description__
      */
     public function setMaxPhoneColumns($columns)
@@ -417,7 +417,7 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
     }
 
     /**
-     * __method_setMaxTabletColumns_description__
+     * Set max tablet columns
      * @param __param_columns_type__ $columns __param_columns_description__
      */
     public function setMaxTabletColumns($columns)
@@ -426,7 +426,7 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
     }
 
     /**
-     * __method_setMaxMediumDesktopColumns_description__
+     * Set max medium desktop columns
      * @param __param_columns_type__ $columns __param_columns_description__
      */
     public function setMaxMediumDesktopColumns($columns)
@@ -435,7 +435,7 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
     }
 
     /**
-     * __method_setMaxLargeDesktopColumns_description__
+     * Set max large desktop columns
      * @param __param_columns_type__ $columns __param_columns_description__
      */
     public function setMaxLargeDesktopColumns($columns)
@@ -446,7 +446,7 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
 
 
     /**
-     * __method_getMaxPhoneColumns_description__
+     * Get max phone columns
      * @return __return_getMaxPhoneColumns_type__ __return_getMaxPhoneColumns_description__
      */
     public function getMaxPhoneColumns()
@@ -459,7 +459,7 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
     }
 
     /**
-     * __method_getMaxTabletColumns_description__
+     * Get max tablet columns
      * @return __return_getMaxTabletColumns_type__ __return_getMaxTabletColumns_description__
      */
     public function getMaxTabletColumns()
@@ -472,7 +472,7 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
     }
 
     /**
-     * __method_getMaxMediumDesktopColumns_description__
+     * Get max medium desktop columns
      * @return __return_getMaxMediumDesktopColumns_type__ __return_getMaxMediumDesktopColumns_description__
      */
     public function getMaxMediumDesktopColumns()
@@ -485,7 +485,7 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
     }
 
     /**
-     * __method_getMaxLargeDesktopColumns_description__
+     * Get max large desktop columns
      * @return __return_getMaxLargeDesktopColumns_type__ __return_getMaxLargeDesktopColumns_description__
      */
     public function getMaxLargeDesktopColumns()
@@ -498,7 +498,7 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
     }
 
     /**
-     * __method_getPhoneColumns_description__
+     * Get phone columns
      * @return __return_getPhoneColumns_type__ __return_getPhoneColumns_description__
      */
     public function getPhoneColumns()
@@ -511,7 +511,7 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
     }
 
     /**
-     * __method_getTabletColumns_description__
+     * Get tablet columns
      * @return __return_getTabletColumns_type__ __return_getTabletColumns_description__
      */
     public function getTabletColumns()
@@ -524,7 +524,7 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
     }
 
     /**
-     * __method_getMediumDesktopColumns_description__
+     * Get medium desktop columns
      * @return __return_getMediumDesktopColumns_type__ __return_getMediumDesktopColumns_description__
      */
     public function getMediumDesktopColumns()
@@ -537,7 +537,7 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
     }
 
     /**
-     * __method_getLargeDesktopColumns_description__
+     * Get large desktop columns
      * @return __return_getLargeDesktopColumns_type__ __return_getLargeDesktopColumns_description__
      */
     public function getLargeDesktopColumns()
@@ -550,7 +550,7 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
     }
 
     /**
-     * __method_getHasPhoneColumns_description__
+     * Get has phone columns
      * @return __return_getHasPhoneColumns_type__ __return_getHasPhoneColumns_description__
      */
     public function getHasPhoneColumns()
@@ -559,7 +559,7 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
     }
 
     /**
-     * __method_getHasTabletColumns_description__
+     * Get has tablet columns
      * @return __return_getHasTabletColumns_type__ __return_getHasTabletColumns_description__
      */
     public function getHasTabletColumns()
@@ -568,7 +568,7 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
     }
 
     /**
-     * __method_getHasMediumDesktopColumns_description__
+     * Get has medium desktop columns
      * @return __return_getHasMediumDesktopColumns_type__ __return_getHasMediumDesktopColumns_description__
      */
     public function getHasMediumDesktopColumns()
@@ -577,7 +577,7 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
     }
 
     /**
-     * __method_getHasLargeDesktopColumns_description__
+     * Get has large desktop columns
      * @return __return_getHasLargeDesktopColumns_type__ __return_getHasLargeDesktopColumns_description__
      */
     public function getHasLargeDesktopColumns()
@@ -586,7 +586,7 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
     }
 
     /**
-     * __method_getFlex_description__
+     * Get flex
      * @param __param_size_type__ $size __param_size_description__ [optional]
      * @return __return_getFlex_type__ __return_getFlex_description__
      */

@@ -30,7 +30,7 @@ class QueryArchivable extends QueryBehavior
     }
 
     /**
-     * __method_getAllowArchives_description__
+     * Get allow archives
      * @return __return_getAllowArchives_type__ __return_getAllowArchives_description__
      */
     public function getAllowArchives()
@@ -39,7 +39,7 @@ class QueryArchivable extends QueryBehavior
     }
 
     /**
-     * __method_setAllowArchives_description__
+     * Set allow archives
      * @param __param_value_type__ $value __param_value_description__
      * @return __return_setAllowArchives_type__ __return_setAllowArchives_description__
      */

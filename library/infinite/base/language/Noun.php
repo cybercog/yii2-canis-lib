@@ -64,7 +64,7 @@ class Noun extends \infinite\base\language\Word
     }
 
     /**
-     * __method_getUpperSingular_description__
+     * Get upper singular
      * @return __return_getUpperSingular_type__ __return_getUpperSingular_description__
      */
     public function getUpperSingular()
@@ -73,7 +73,7 @@ class Noun extends \infinite\base\language\Word
     }
 
     /**
-     * __method_getSingular_description__
+     * Get singular
      * @param unknown $upper (optional)
      * @return unknown
      */
@@ -83,7 +83,7 @@ class Noun extends \infinite\base\language\Word
     }
 
     /**
-     * __method_getUpperPlural_description__
+     * Get upper plural
      * @return __return_getUpperPlural_type__ __return_getUpperPlural_description__
      */
     public function getUpperPlural()
@@ -92,7 +92,7 @@ class Noun extends \infinite\base\language\Word
     }
 
     /**
-     * __method_getPlural_description__
+     * Get plural
      * @param unknown $upper (optional)
      * @return unknown
      */
@@ -106,7 +106,7 @@ class Noun extends \infinite\base\language\Word
     }
 
     /**
-     * __method_getPossessive_description__
+     * Get possessive
      * @param unknown $upper (optional)
      * @return unknown
      */
@@ -124,7 +124,7 @@ class Noun extends \infinite\base\language\Word
     }
 
     /**
-     * __method_getPossessivePlural_description__
+     * Get possessive plural
      * @param unknown $upper (optional)
      * @return unknown
      */

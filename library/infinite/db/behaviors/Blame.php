@@ -69,7 +69,7 @@ class Blame extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_getFields_description__
+     * Get fields
      * @return __return_getFields_type__ __return_getFields_description__
      */
     public function getFields()

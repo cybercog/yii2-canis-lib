@@ -110,7 +110,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
-     * __method_getWasDirty_description__
+     * Get was dirty
      * @return __return_getWasDirty_type__ __return_getWasDirty_description__
      */
     public function getWasDirty()
@@ -160,7 +160,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
-     * __method_setTabularId_description__
+     * Set tabular
      * @param __param_value_type__ $value __param_value_description__
      */
     public function setTabularId($value)
@@ -170,7 +170,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
-     * __method_getTabularPrefix_description__
+     * Get tabular prefix
      * @return __return_getTabularPrefix_type__ __return_getTabularPrefix_description__
      */
     public function getTabularPrefix()
@@ -191,7 +191,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
-     * __method_getPrimaryTabularId_description__
+     * Get primary tabular
      * @return __return_getPrimaryTabularId_type__ __return_getPrimaryTabularId_description__
      */
     public static function getPrimaryTabularId()
@@ -200,7 +200,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
-     * __method_getPrimaryModel_description__
+     * Get primary model
      * @param __param_models_type__ $models __param_models_description__
      * @return __return_getPrimaryModel_type__ __return_getPrimaryModel_description__
      */
@@ -239,7 +239,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
-     * __method_getModelAlias_description__
+     * Get model alias
      * @return __return_getModelAlias_type__ __return_getModelAlias_description__
      */
     public function getModelAlias()
@@ -290,7 +290,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
-     * __method_get_description__
+     * Get
      * @param __param_id_type__ $id __param_id_description__
      * @param boolean $checkAccess __param_checkAccess_description__ [optional]
      * @return __return_get_type__ __return_get_description__
@@ -446,7 +446,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
-     * __method_getDescriptor_description__
+     * Get descriptor
      * @return __return_getDescriptor_type__ __return_getDescriptor_description__
      */
     public function getDescriptor()
@@ -476,7 +476,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
-     * __method_getSubdescriptor_description__
+     * Get subdescriptor
      * @return __return_getSubdescriptor_type__ __return_getSubdescriptor_description__
      */
     public function getSubdescriptor()
@@ -503,7 +503,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
-     * __method_getFieldValue_description__
+     * Get field value
      * @param __param_field_type__ $field __param_field_description__
      * @return __return_getFieldValue_type__ __return_getFieldValue_description__
      */
@@ -528,7 +528,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
-     * __method_getLocalFieldValue_description__
+     * Get local field value
      * @param __param_field_type__ $field __param_field_description__
      * @return __return_getLocalFieldValue_type__ __return_getLocalFieldValue_description__
      */
@@ -542,7 +542,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
-     * __method_getForeignFieldValue_description__
+     * Get foreign field value
      * @param __param_field_type__ $field __param_field_description__
      * @return __return_getForeignFieldValue_type__ __return_getForeignFieldValue_description__
      */

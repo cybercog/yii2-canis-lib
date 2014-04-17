@@ -26,6 +26,9 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
      * @var __var__objectAccess_type__ __var__objectAccess_description__
      */
     protected $_objectAccess;
+    /**
+     * @var __var__access_type__ __var__access_description__
+     */
     protected $_access;
     /**
      * @var __var__acaId_type__ __var__acaId_description__
@@ -84,7 +87,7 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_setAccessDebug_description__
+     * Set access debug
      * @param __param_debug_type__ $debug __param_debug_description__
      */
     public function setAccessDebug($debug)
@@ -194,7 +197,7 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_getObjectAccess_description__
+     * Get object access
      * @return __return_getObjectAccess_type__ __return_getObjectAccess_description__
      */
     public function getObjectAccess()
@@ -207,7 +210,7 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_setAccessLevel_description__
+     * Set access level
      * @param __param_action_type__ $action __param_action_description__
      * @param __param_access_type__ $access __param_access_description__
      * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__ [optional]
@@ -321,7 +324,7 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_setAccess_description__
+     * Set access
      * @param __param_value_type__ $value __param_value_description__
      */
     public function setAccess($value)
@@ -330,7 +333,7 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_setAca_id_description__
+     * Set aca
      * @param __param_value_type__ $value __param_value_description__
      */
     public function setAca_id($value)
@@ -385,7 +388,7 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_setAccessingObject_description__
+     * Set accessing object
      * @param __param_value_type__ $value __param_value_description__
      * @return __return_setAccessingObject_type__ __return_setAccessingObject_description__
      */
@@ -395,7 +398,7 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_getAccessingObject_description__
+     * Get accessing object
      * @return __return_getAccessingObject_type__ __return_getAccessingObject_description__
      */
     public function getAccessingObject()

@@ -88,7 +88,7 @@ class Aca extends \infinite\db\ActiveRecord
     }
 
     /**
-     * __method_getRegistry_description__
+     * Get registry
      * @return \yii\db\ActiveRelation
      */
     public function getRegistry()

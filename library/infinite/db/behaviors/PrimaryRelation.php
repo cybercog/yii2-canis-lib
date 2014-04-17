@@ -48,7 +48,7 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_getSiblings_description__
+     * Get siblings
      * @param boolean $primaryOnly __param_primaryOnly_description__ [optional]
      * @return __return_getSiblings_type__ __return_getSiblings_description__
      */
@@ -145,7 +145,7 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_setPrimary_description__
+     * Set primary
      * @return __return_setPrimary_type__ __return_setPrimary_description__
      */
     public function setPrimary()
@@ -164,7 +164,7 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_getIsPrimary_description__
+     * Get is primary
      * @return __return_getIsPrimary_type__ __return_getIsPrimary_description__
      */
     public function getIsPrimary()
@@ -175,7 +175,7 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_getPresentSetPrimaryOption_description__
+     * Get present set primary option
      * @return __return_getPresentSetPrimaryOption_type__ __return_getPresentSetPrimaryOption_description__
      */
     public function getPresentSetPrimaryOption()

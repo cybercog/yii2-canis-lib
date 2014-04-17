@@ -38,6 +38,9 @@ class Bundle extends \infinite\base\Object
      * @var __var__filterQuery_type__ __var__filterQuery_description__
      */
     protected $_filterQuery = false;
+    /**
+     * @var __var__type_type__ __var__type_description__
+     */
     protected $_type; // pivot: category list; item: items list
     /**
      * @var __var__typeOptions_type__ __var__typeOptions_description__
@@ -68,7 +71,7 @@ class Bundle extends \infinite\base\Object
     protected $_baseInstructions = ['task' => null];
 
     /**
-     * __method_getId_description__
+     * Get id
      * @return __return_getId_type__ __return_getId_description__
      */
     public function getId()
@@ -81,7 +84,7 @@ class Bundle extends \infinite\base\Object
     }
 
     /**
-     * __method_getInstructions_description__
+     * Get instructions
      * @return __return_getInstructions_type__ __return_getInstructions_description__
      * @throws InvalidConfigException __exception_InvalidConfigException_description__
      */
@@ -95,7 +98,7 @@ class Bundle extends \infinite\base\Object
     }
 
     /**
-     * __method_setInstructions_description__
+     * Set instructions
      * @param __param_instructions_type__ $instructions __param_instructions_description__
      * @throws Exception __exception_Exception_description__
      */
@@ -166,7 +169,7 @@ class Bundle extends \infinite\base\Object
     }
 
     /**
-     * __method_setFilterQuery_description__
+     * Set filter query
      * @param __param_value_type__ $value __param_value_description__
      */
     public function setFilterQuery($value)
@@ -178,7 +181,7 @@ class Bundle extends \infinite\base\Object
     }
 
     /**
-     * __method_getFilterQuery_description__
+     * Get filter query
      * @return __return_getFilterQuery_type__ __return_getFilterQuery_description__
      */
     public function getFilterQuery()
@@ -187,7 +190,7 @@ class Bundle extends \infinite\base\Object
     }
 
     /**
-     * __method_setTypeOptions_description__
+     * Set type options
      * @param __param_options_type__ $options __param_options_description__
      */
     public function setTypeOptions($options)
@@ -196,7 +199,7 @@ class Bundle extends \infinite\base\Object
     }
 
     /**
-     * __method_getTypeOptions_description__
+     * Get type options
      * @return __return_getTypeOptions_type__ __return_getTypeOptions_description__
      */
     public function getTypeOptions()
@@ -205,7 +208,7 @@ class Bundle extends \infinite\base\Object
     }
 
     /**
-     * __method_setType_description__
+     * Set type
      * @param __param_type_type__ $type __param_type_description__
      * @throws InvalidConfigException __exception_InvalidConfigException_description__
      */
@@ -219,7 +222,7 @@ class Bundle extends \infinite\base\Object
     }
 
     /**
-     * __method_getType_description__
+     * Get type
      * @return __return_getType_type__ __return_getType_description__
      */
     public function getType()
@@ -245,7 +248,7 @@ class Bundle extends \infinite\base\Object
     }
 
     /**
-     * __method_getTotal_description__
+     * Get total
      * @return __return_getTotal_type__ __return_getTotal_description__
      */
     public function getTotal()
@@ -264,7 +267,7 @@ class Bundle extends \infinite\base\Object
     }
 
     /**
-     * __method_setTotal_description__
+     * Set total
      * @param __param_total_type__ $total __param_total_description__
      */
     public function setTotal($total)
@@ -273,7 +276,7 @@ class Bundle extends \infinite\base\Object
     }
 
     /**
-     * __method_getOffset_description__
+     * Get offset
      * @return __return_getOffset_type__ __return_getOffset_description__
      */
     public function getOffset()
@@ -282,7 +285,7 @@ class Bundle extends \infinite\base\Object
     }
 
     /**
-     * __method_setOffset_description__
+     * Set offset
      * @param __param_offset_type__ $offset __param_offset_description__
      */
     public function setOffset($offset)
@@ -291,7 +294,7 @@ class Bundle extends \infinite\base\Object
     }
 
     /**
-     * __method_getHandlers_description__
+     * Get handlers
      * @return __return_getHandlers_type__ __return_getHandlers_description__
      */
     public function getHandlers()
@@ -300,7 +303,7 @@ class Bundle extends \infinite\base\Object
     }
 
     /**
-     * __method_getHandler_description__
+     * Get handler
      * @return __return_getHandler_type__ __return_getHandler_description__
      */
     public function getHandler()

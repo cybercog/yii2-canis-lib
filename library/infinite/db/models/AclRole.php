@@ -80,7 +80,7 @@ class AclRole extends \infinite\db\ActiveRecord
     }
 
     /**
-     * __method_getAcls_description__
+     * Get acls
      * @return \yii\db\ActiveRelation
      */
     public function getAcls()
@@ -89,7 +89,7 @@ class AclRole extends \infinite\db\ActiveRecord
     }
 
     /**
-     * __method_getAccessingObject_description__
+     * Get accessing object
      * @return \yii\db\ActiveRelation
      */
     public function getAccessingObject()
@@ -98,7 +98,7 @@ class AclRole extends \infinite\db\ActiveRecord
     }
 
     /**
-     * __method_getControlledObject_description__
+     * Get controlled object
      * @return \yii\db\ActiveRelation
      */
     public function getControlledObject()
@@ -107,7 +107,7 @@ class AclRole extends \infinite\db\ActiveRecord
     }
 
     /**
-     * __method_getRole_description__
+     * Get role
      * @return \yii\db\ActiveRelation
      */
     public function getRole()

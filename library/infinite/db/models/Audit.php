@@ -94,7 +94,7 @@ class Audit extends \infinite\db\ActiveRecord
     }
 
     /**
-     * __method_getEventObject_description__
+     * Get event object
      * @return __return_getEventObject_type__ __return_getEventObject_description__
      */
     public function getEventObject()
@@ -132,7 +132,7 @@ class Audit extends \infinite\db\ActiveRecord
     }
 
     /**
-     * __method_getAgent_description__
+     * Get agent
      * @return \yii\db\ActiveRelation
      */
     public function getAgent()
@@ -141,7 +141,7 @@ class Audit extends \infinite\db\ActiveRecord
     }
 
     /**
-     * __method_getDirectObject_description__
+     * Get direct object
      * @return \yii\db\ActiveRelation
      */
     public function getDirectObject()
@@ -150,7 +150,7 @@ class Audit extends \infinite\db\ActiveRecord
     }
 
     /**
-     * __method_getIndirectObject_description__
+     * Get indirect object
      * @return \yii\db\ActiveRelation
      */
     public function getIndirectObject()

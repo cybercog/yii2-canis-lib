@@ -19,16 +19,16 @@ abstract class Handler extends \infinite\base\Object
      */
     public $bundle;
     /**
-     * __method_getTotal_description__
+     * Get total
      */
     abstract public function getTotal();
     /**
-     * __method_getItems_description__
+     * Get items
      */
     abstract public function getItems();
 
     /**
-     * __method_getInstructions_description__
+     * Get instructions
      * @return __return_getInstructions_type__ __return_getInstructions_description__
      */
     public function getInstructions()
@@ -41,7 +41,7 @@ abstract class Handler extends \infinite\base\Object
     }
 
     /**
-     * __method_getFilterQuery_description__
+     * Get filter query
      * @return __return_getFilterQuery_type__ __return_getFilterQuery_description__
      */
     public function getFilterQuery()

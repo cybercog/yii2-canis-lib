@@ -35,6 +35,9 @@ class Response extends \yii\web\Response
      */
     public $view = false;
 
+    /**
+     * @var __var_task_type__ __var_task_description__
+     */
     public $task = 'fill';
     /**
      * @var __var_staticTasks_type__ __var_staticTasks_description__
@@ -106,7 +109,7 @@ class Response extends \yii\web\Response
     }
 
     /**
-     * __method_getIsInstructable_description__
+     * Get is instructable
      * @return __return_getIsInstructable_type__ __return_getIsInstructable_description__
      */
     public function getIsInstructable()
@@ -351,7 +354,7 @@ class Response extends \yii\web\Response
     }
 
     /**
-     * __method_getRoute_description__
+     * Get route
      * @return __return_getRoute_type__ __return_getRoute_description__
      */
     public function getRoute()

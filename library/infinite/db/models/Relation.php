@@ -121,7 +121,7 @@ class Relation extends \infinite\db\ActiveRecord
     }
 
     /**
-     * __method_getChildObject_description__
+     * Get child object
      * @param boolean $checkAccess __param_checkAccess_description__ [optional]
      * @return __return_getChildObject_type__ __return_getChildObject_description__
      */
@@ -133,7 +133,7 @@ class Relation extends \infinite\db\ActiveRecord
     }
 
     /**
-     * __method_getParentObject_description__
+     * Get parent object
      * @param boolean $checkAccess __param_checkAccess_description__ [optional]
      * @return __return_getParentObject_type__ __return_getParentObject_description__
      */
@@ -156,7 +156,7 @@ class Relation extends \infinite\db\ActiveRecord
     }
 
     /**
-     * __method_getIsActive_description__
+     * Get is active
      * @return __return_getIsActive_type__ __return_getIsActive_description__
      */
     public function getIsActive()

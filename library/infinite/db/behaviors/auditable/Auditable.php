@@ -106,7 +106,7 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_getAuditDirtyAttributes_description__
+     * Get audit dirty attributes
      * @return __return_getAuditDirtyAttributes_type__ __return_getAuditDirtyAttributes_description__
      */
     public function getAuditDirtyAttributes()
@@ -191,7 +191,7 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_setAuditAgent_description__
+     * Set audit agent
      * @param __param_object_type__ $object __param_object_description__
      */
     public function setAuditAgent($object)
@@ -200,7 +200,7 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_getAuditAgent_description__
+     * Get audit agent
      * @return __return_getAuditAgent_type__ __return_getAuditAgent_description__
      */
     public function getAuditAgent()
@@ -213,7 +213,7 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_setDirectObject_description__
+     * Set direct object
      * @param __param_object_type__ $object __param_object_description__
      */
     public function setDirectObject($object)
@@ -222,7 +222,7 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_getDirectObject_description__
+     * Get direct object
      * @return __return_getDirectObject_type__ __return_getDirectObject_description__
      */
     public function getDirectObject()
@@ -235,7 +235,7 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_setIndirectObject_description__
+     * Set indirect object
      * @param __param_object_type__ $object __param_object_description__
      */
     public function setIndirectObject($object)
@@ -244,7 +244,7 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_getIndirectObject_description__
+     * Get indirect object
      * @return __return_getIndirectObject_type__ __return_getIndirectObject_description__
      */
     public function getIndirectObject()
@@ -357,7 +357,7 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_setIgnoreAttributes_description__
+     * Set ignore attributes
      * @param __param_value_type__ $value __param_value_description__
      */
     public function setIgnoreAttributes($value)
@@ -370,7 +370,7 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_getIgnoreAttributes_description__
+     * Get ignore attributes
      * @return __return_getIgnoreAttributes_type__ __return_getIgnoreAttributes_description__
      */
     public function getIgnoreAttributes()

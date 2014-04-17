@@ -79,7 +79,7 @@ abstract class Event extends \infinite\base\Component
     }
 
     /**
-     * __method_setAgent_description__
+     * Set agent
      * @param __param_agent_type__ $agent __param_agent_description__
      */
     public function setAgent($agent)
@@ -88,7 +88,7 @@ abstract class Event extends \infinite\base\Component
     }
 
     /**
-     * __method_getAgent_description__
+     * Get agent
      * @return __return_getAgent_type__ __return_getAgent_description__
      */
     public function getAgent()
@@ -105,7 +105,7 @@ abstract class Event extends \infinite\base\Component
     }
 
     /**
-     * __method_getAgentId_description__
+     * Get agent
      * @return __return_getAgentId_type__ __return_getAgentId_description__
      */
     public function getAgentId()
@@ -118,7 +118,7 @@ abstract class Event extends \infinite\base\Component
     }
 
     /**
-     * __method_setIndirectObject_description__
+     * Set indirect object
      * @param __param_object_type__ $object __param_object_description__
      */
     public function setIndirectObject($object)
@@ -127,7 +127,7 @@ abstract class Event extends \infinite\base\Component
     }
 
     /**
-     * __method_getIndirectObject_description__
+     * Get indirect object
      * @return __return_getIndirectObject_type__ __return_getIndirectObject_description__
      */
     public function getIndirectObject()
@@ -144,7 +144,7 @@ abstract class Event extends \infinite\base\Component
     }
 
     /**
-     * __method_getIndirectObjectId_description__
+     * Get indirect object
      * @return __return_getIndirectObjectId_type__ __return_getIndirectObjectId_description__
      */
     public function getIndirectObjectId()
@@ -157,7 +157,7 @@ abstract class Event extends \infinite\base\Component
     }
 
     /**
-     * __method_setDirectObject_description__
+     * Set direct object
      * @param __param_object_type__ $object __param_object_description__
      */
     public function setDirectObject($object)
@@ -166,7 +166,7 @@ abstract class Event extends \infinite\base\Component
     }
 
     /**
-     * __method_getDirectObject_description__
+     * Get direct object
      * @return __return_getDirectObject_type__ __return_getDirectObject_description__
      */
     public function getDirectObject()
@@ -183,7 +183,7 @@ abstract class Event extends \infinite\base\Component
     }
 
     /**
-     * __method_getDirectObjectId_description__
+     * Get direct object
      * @return __return_getDirectObjectId_type__ __return_getDirectObjectId_description__
      */
     public function getDirectObjectId()
@@ -196,7 +196,7 @@ abstract class Event extends \infinite\base\Component
     }
 
     /**
-     * __method_setId_description__
+     * Set id
      * @param __param_id_type__ $id __param_id_description__
      * @return __return_setId_type__ __return_setId_description__
      */
@@ -206,7 +206,7 @@ abstract class Event extends \infinite\base\Component
     }
 
     /**
-     * __method_getId_description__
+     * Get id
      * @return __return_getId_type__ __return_getId_description__
      */
     public function getId()
@@ -215,7 +215,7 @@ abstract class Event extends \infinite\base\Component
     }
 
     /**
-     * __method_getHash_description__
+     * Get hash
      * @return __return_getHash_type__ __return_getHash_description__
      */
     public function getHash()
@@ -228,7 +228,7 @@ abstract class Event extends \infinite\base\Component
     }
 
     /**
-     * __method_getHashArray_description__
+     * Get hash array
      * @return __return_getHashArray_type__ __return_getHashArray_description__
      */
     public function getHashArray()
@@ -242,7 +242,7 @@ abstract class Event extends \infinite\base\Component
     }
 
     /**
-     * __method_setExclusive_description__
+     * Set exclusive
      * @param __param_exclusive_type__ $exclusive __param_exclusive_description__
      * @return __return_setExclusive_type__ __return_setExclusive_description__
      */
@@ -252,7 +252,7 @@ abstract class Event extends \infinite\base\Component
     }
 
     /**
-     * __method_getExclusive_description__
+     * Get exclusive
      * @return __return_getExclusive_type__ __return_getExclusive_description__
      */
     public function getExclusive()

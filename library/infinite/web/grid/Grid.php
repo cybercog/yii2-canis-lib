@@ -114,7 +114,7 @@ class Grid extends \infinite\base\Object
     }
 
     /**
-     * __method_setCells_description__
+     * Set cells
      * @param __param_items_type__ $items __param_items_description__
      */
     public function setCells($items)
@@ -130,7 +130,7 @@ class Grid extends \infinite\base\Object
     }
 
     /**
-     * __method_getCurrentRow_description__
+     * Get current row
      * @return __return_getCurrentRow_type__ __return_getCurrentRow_description__
      */
     public function getCurrentRow()

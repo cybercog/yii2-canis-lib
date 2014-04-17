@@ -114,7 +114,7 @@ class Ownable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_setObjectOwner_description__
+     * Set object owner
      * @param __param_aro_type__ $aro __param_aro_description__
      * @return __return_setObjectOwner_type__ __return_setObjectOwner_description__
      */
@@ -126,7 +126,7 @@ class Ownable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_getObjectOwner_description__
+     * Get object owner
      * @return __return_getObjectOwner_type__ __return_getObjectOwner_description__
      */
     public function getObjectOwner()

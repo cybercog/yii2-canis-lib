@@ -62,7 +62,7 @@ class ActiveArchivable extends ActiveRecord
     }
 
     /**
-     * __method_getArchived_description__
+     * Get archived
      * @return __return_getArchived_type__ __return_getArchived_description__
      */
     public function getArchived()

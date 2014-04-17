@@ -63,7 +63,7 @@ class Cacher extends \infinite\base\Component
     }
 
     /**
-     * __method_get_description__
+     * Get
      * @param __param_key_type__ $key __param_key_description__
      * @return __return_get_type__ __return_get_description__
      */
@@ -83,7 +83,7 @@ class Cacher extends \infinite\base\Component
     }
 
     /**
-     * __method_set_description__
+     * Set
      * @param __param_key_type__ $key __param_key_description__
      * @param __param_value_type__ $value __param_value_description__
      * @param integer $expire __param_expire_description__ [optional]

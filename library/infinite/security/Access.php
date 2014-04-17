@@ -126,7 +126,7 @@ class Access extends \infinite\base\Object
     }
 
     /**
-     * __method_getHumanAccessLevel_description__
+     * Get human access level
      * @param __param_accessLevel_type__ $accessLevel __param_accessLevel_description__ [optional]
      * @return __return_getHumanAccessLevel_type__ __return_getHumanAccessLevel_description__
      */
@@ -160,7 +160,7 @@ class Access extends \infinite\base\Object
     }
 
     /**
-     * __method_setAccessLevel_description__
+     * Set access level
      * @param __param_accessLevel_type__ $accessLevel __param_accessLevel_description__
      */
     public function setAccessLevel($accessLevel)
@@ -169,7 +169,7 @@ class Access extends \infinite\base\Object
     }
 
     /**
-     * __method_getAccessLevel_description__
+     * Get access level
      * @return __return_getAccessLevel_type__ __return_getAccessLevel_description__
      */
     public function getAccessLevel()
@@ -184,7 +184,7 @@ class Access extends \infinite\base\Object
     }
 
     /**
-     * __method_setAclModel_description__
+     * Set acl model
      * @param __param_object_type__ $object __param_object_description__
      */
     public function setAclModel($object)
@@ -197,7 +197,7 @@ class Access extends \infinite\base\Object
     }
 
     /**
-     * __method_getAclModel_description__
+     * Get acl model
      * @return __return_getAclModel_type__ __return_getAclModel_description__
      */
     public function getAclModel()
@@ -211,7 +211,7 @@ class Access extends \infinite\base\Object
     }
 
     /**
-     * __method_setAction_description__
+     * Set action
      * @param __param_object_type__ $object __param_object_description__
      */
     public function setAction($object)
@@ -220,7 +220,7 @@ class Access extends \infinite\base\Object
     }
 
     /**
-     * __method_getAction_description__
+     * Get action
      * @return __return_getAction_type__ __return_getAction_description__
      */
     public function getAction()

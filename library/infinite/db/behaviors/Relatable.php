@@ -60,6 +60,9 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
      */
     public $registryAlias = 'x';
 
+    /**
+     * @var __var__relationModels_type__ __var__relationModels_description__
+     */
     protected static $_relationModels = [];
     /**
      * @var __var__relationModelsOld_type__ __var__relationModelsOld_description__
@@ -132,7 +135,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_getAllParentIds_description__
+     * Get all parent ids
      * @param __param_child_type__ $child __param_child_description__
      * @return __return_getAllParentIds_type__ __return_getAllParentIds_description__
      */
@@ -163,7 +166,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_setAllParentIds_description__
+     * Set all parent ids
      * @param __param_child_type__ $child __param_child_description__
      * @param array $parentIds __param_parentIds_description__ [optional]
      * @return __return_setAllParentIds_type__ __return_setAllParentIds_description__
@@ -312,7 +315,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_getDefaultRelation_description__
+     * Get default relation
      * @return __return_getDefaultRelation_type__ __return_getDefaultRelation_description__
      */
     public function getDefaultRelation()
@@ -323,7 +326,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_getRelationsKey_description__
+     * Get relations key
      * @return __return_getRelationsKey_type__ __return_getRelationsKey_description__
      */
     public function getRelationsKey()
@@ -340,7 +343,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_getRelationModels_description__
+     * Get relation models
      * @param boolean $activeOnly __param_activeOnly_description__ [optional]
      * @return __return_getRelationModels_type__ __return_getRelationModels_description__
      */
@@ -361,7 +364,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_setRelationModels_description__
+     * Set relation models
      * @param __param_models_type__ $models __param_models_description__
      */
     public function setRelationModels($models)
@@ -406,7 +409,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_getRelationModel_description__
+     * Get relation model
      * @param __param_id_type__ $id __param_id_description__
      * @return __return_getRelationModel_type__ __return_getRelationModel_description__
      */
@@ -497,7 +500,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_getParentIds_description__
+     * Get parent ids
      * @param boolean $model __param_model_description__ [optional]
      * @param array $relationOptions __param_relationOptions_description__ [optional]
      * @param array $objectOptions __param_objectOptions_description__ [optional]
@@ -509,7 +512,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_getChildIds_description__
+     * Get child ids
      * @param boolean $model __param_model_description__ [optional]
      * @param array $relationOptions __param_relationOptions_description__ [optional]
      * @param array $objectOptions __param_objectOptions_description__ [optional]
@@ -1071,7 +1074,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_getRelation_description__
+     * Get relation
      * @param __param_parentObject_type__ $parentObject __param_parentObject_description__
      * @param __param_childObject_type__ $childObject __param_childObject_description__
      * @return __return_getRelation_type__ __return_getRelation_description__

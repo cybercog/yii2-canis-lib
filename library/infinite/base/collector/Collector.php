@@ -26,7 +26,7 @@ abstract class Collector extends \infinite\base\Component
     const EVENT_BEFORE_BUCKET_ACCESS = 'beforeBucketAccess';
 
     /**
-     * __method_setSystemId_description__
+     * Set system
      * @param unknown $value
      */
     public function setSystemId($value)
@@ -35,7 +35,7 @@ abstract class Collector extends \infinite\base\Component
     }
 
     /**
-     * __method_getSystemId_description__
+     * Get system
      * @return unknown
      */
     public function getSystemId()

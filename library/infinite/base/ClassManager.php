@@ -51,7 +51,7 @@ class ClassManager extends Component implements IteratorAggregate, ArrayAccess
     }
 
     /**
-     * __method_setClasses_description__
+     * Set classes
      * @param __param_classes_type__ $classes __param_classes_description__
      * @param boolean $override __param_override_description__ [optional]
      */

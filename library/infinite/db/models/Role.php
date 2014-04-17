@@ -80,7 +80,7 @@ class Role extends \infinite\db\ActiveRecord implements \infinite\base\collector
     }
 
     /**
-     * __method_getRegistry_description__
+     * Get registry
      * @return \yii\db\ActiveRelation
      */
     public function getRegistry()

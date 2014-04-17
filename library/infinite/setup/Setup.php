@@ -216,7 +216,7 @@ class Setup extends \infinite\base\Object
     }
 
     /**
-     * __method_getIsSetup_description__
+     * Get is setup
      * @return __return_getIsSetup_type__ __return_getIsSetup_description__
      */
     public function getIsSetup()
@@ -232,7 +232,7 @@ class Setup extends \infinite\base\Object
     }
 
     /**
-     * __method_getSetupTasks_description__
+     * Get setup tasks
      * @return __return_getSetupTasks_type__ __return_getSetupTasks_description__
      */
     public function getSetupTasks()
@@ -263,7 +263,7 @@ class Setup extends \infinite\base\Object
     }
 
     /**
-     * __method_getIsAvailable_description__
+     * Get is available
      * @return __return_getIsAvailable_type__ __return_getIsAvailable_description__
      */
     public function getIsAvailable()
@@ -289,7 +289,7 @@ class Setup extends \infinite\base\Object
     }
 
     /**
-     * __method_getConfirmLink_description__
+     * Get confirm link
      * @param __param_task_type__ $task __param_task_description__
      * @return __return_getConfirmLink_type__ __return_getConfirmLink_description__
      */
@@ -299,7 +299,7 @@ class Setup extends \infinite\base\Object
     }
 
     /**
-     * __method_getConfirmSalt_description__
+     * Get confirm salt
      * @param __param_task_type__ $task __param_task_description__ [optional]
      * @return __return_getConfirmSalt_type__ __return_getConfirmSalt_description__
      */
@@ -309,7 +309,7 @@ class Setup extends \infinite\base\Object
     }
 
     /**
-     * __method_getConfirmed_description__
+     * Get confirmed
      * @param __param_task_type__ $task __param_task_description__
      * @return __return_getConfirmed_type__ __return_getConfirmed_description__
      */
@@ -330,7 +330,7 @@ class Setup extends \infinite\base\Object
     }
 
     /**
-     * __method_getVersion_description__
+     * Get version
      * @return __return_getVersion_type__ __return_getVersion_description__
      */
     public function getVersion()
@@ -339,7 +339,7 @@ class Setup extends \infinite\base\Object
     }
 
     /**
-     * __method_getInstanceVersion_description__
+     * Get instance version
      * @return __return_getInstanceVersion_type__ __return_getInstanceVersion_description__
      */
     public function getInstanceVersion()
@@ -377,7 +377,7 @@ class Setup extends \infinite\base\Object
     }
 
     /**
-     * __method_getIsEnvironmented_description__
+     * Get is environmented
      * @return __return_getIsEnvironmented_type__ __return_getIsEnvironmented_description__
      */
     public function getIsEnvironmented()
@@ -393,7 +393,7 @@ class Setup extends \infinite\base\Object
     }
 
     /**
-     * __method_getEnvironmentPath_description__
+     * Get environment path
      * @return __return_getEnvironmentPath_type__ __return_getEnvironmentPath_description__
      */
     public function getEnvironmentPath()
@@ -407,7 +407,7 @@ class Setup extends \infinite\base\Object
 
 
     /**
-     * __method_getConfigPath_description__
+     * Get config path
      * @return __return_getConfigPath_type__ __return_getConfigPath_description__
      * @throws Exception __exception_Exception_description__
      */
@@ -422,7 +422,7 @@ class Setup extends \infinite\base\Object
     }
 
     /**
-     * __method_getEnvironmentFilePath_description__
+     * Get environment file path
      * @return __return_getEnvironmentFilePath_type__ __return_getEnvironmentFilePath_description__
      */
     public function getEnvironmentFilePath()
@@ -433,7 +433,7 @@ class Setup extends \infinite\base\Object
     }
 
     /**
-     * __method_getEnvironmentTemplateFilePath_description__
+     * Get environment template file path
      * @return __return_getEnvironmentTemplateFilePath_type__ __return_getEnvironmentTemplateFilePath_description__
      */
     public function getEnvironmentTemplateFilePath()
@@ -444,7 +444,7 @@ class Setup extends \infinite\base\Object
     }
 
     /**
-     * __method_getLibraryConfigPath_description__
+     * Get library config path
      * @return __return_getLibraryConfigPath_type__ __return_getLibraryConfigPath_description__
      * @throws Exception __exception_Exception_description__
      */
@@ -459,7 +459,7 @@ class Setup extends \infinite\base\Object
     }
 
     /**
-     * __method_getCommonConfigPath_description__
+     * Get common config path
      * @return __return_getCommonConfigPath_type__ __return_getCommonConfigPath_description__
      * @throws Exception __exception_Exception_description__
      */
@@ -474,7 +474,7 @@ class Setup extends \infinite\base\Object
     }
 
     /**
-     * __method_getEnvironmentTemplatesPath_description__
+     * Get environment templates path
      * @return __return_getEnvironmentTemplatesPath_type__ __return_getEnvironmentTemplatesPath_description__
      * @throws Exception __exception_Exception_description__
      */

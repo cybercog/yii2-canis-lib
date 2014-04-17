@@ -46,7 +46,7 @@ class Status extends \infinite\base\Component
     }
 
     /**
-     * __method_get_description__
+     * Get
      * @param __param_system_type__ $system __param_system_description__
      * @return __return_get_type__ __return_get_description__
      */

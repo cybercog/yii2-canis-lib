@@ -157,7 +157,7 @@ class Date extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_getHandle_description__
+     * Get handle
      * @return __return_getHandle_type__ __return_getHandle_description__
      */
     public function getHandle()

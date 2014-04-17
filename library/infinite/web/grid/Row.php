@@ -101,7 +101,7 @@ class Row extends \infinite\base\Object
     }
 
     /**
-     * __method_getColumnFlex_description__
+     * Get column flex
      * @param string $size __param_size_description__ [optional]
      * @return __return_getColumnFlex_type__ __return_getColumnFlex_description__
      */
@@ -117,7 +117,7 @@ class Row extends \infinite\base\Object
     }
 
     /**
-     * __method_getDistributionColumns_description__
+     * Get distribution columns
      * @param __param_size_type__ $size __param_size_description__ [optional]
      * @return __return_getDistributionColumns_type__ __return_getDistributionColumns_description__
      */
@@ -143,7 +143,7 @@ class Row extends \infinite\base\Object
     }
 
     /**
-     * __method_getColumnCount_description__
+     * Get column count
      * @return __return_getColumnCount_type__ __return_getColumnCount_description__
      */
     public function getColumnCount()
@@ -204,7 +204,7 @@ class Row extends \infinite\base\Object
     }
 
     /**
-     * __method_setCells_description__
+     * Set cells
      * @param __param_cells_type__ $cells __param_cells_description__
      */
     public function setCells($cells)

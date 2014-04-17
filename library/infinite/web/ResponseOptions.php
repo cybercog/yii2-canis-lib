@@ -39,6 +39,9 @@ class ResponseOptions extends \infinite\base\Object
      */
     public $redirect = false;
 
+    /**
+     * @var __var_ajaxDialog_type__ __var_ajaxDialog_description__
+     */
     public $ajaxDialog;
     /**
      * @var __var_ajaxDialogSettings_type__ __var_ajaxDialogSettings_description__

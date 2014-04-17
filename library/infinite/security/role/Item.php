@@ -34,7 +34,7 @@ class Item extends \infinite\base\collector\Item
     public $level = 100;
 
     /**
-     * __method_getPackage_description__
+     * Get package
      * @return __return_getPackage_type__ __return_getPackage_description__
      */
     public function getPackage()
@@ -50,7 +50,7 @@ class Item extends \infinite\base\collector\Item
     }
 
     /**
-     * __method_getId_description__
+     * Get id
      * @return __return_getId_type__ __return_getId_description__
      */
     public function getId()
@@ -75,7 +75,7 @@ class Item extends \infinite\base\collector\Item
     }
 
     /**
-     * __method_getLevelSection_description__
+     * Get level section
      * @return __return_getLevelSection_type__ __return_getLevelSection_description__
      */
     public function getLevelSection()

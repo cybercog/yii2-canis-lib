@@ -108,7 +108,7 @@ class Task extends \infinite\base\Component
     }
 
     /**
-     * __method_getMemoryUsage_description__
+     * Get memory usage
      * @return __return_getMemoryUsage_type__ __return_getMemoryUsage_description__
      */
     public function getMemoryUsage()
@@ -117,7 +117,7 @@ class Task extends \infinite\base\Component
     }
 
     /**
-     * __method_getDuration_description__
+     * Get duration
      * @return __return_getDuration_type__ __return_getDuration_description__
      */
     public function getDuration()

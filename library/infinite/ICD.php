@@ -204,7 +204,7 @@ class ICD extends \yii\helpers\VarDumper
     }
 
     /**
-     * __method_getFormat_description__
+     * Get format
      * @return __return_getFormat_type__ __return_getFormat_description__
      */
     public function getFormat()

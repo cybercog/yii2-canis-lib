@@ -23,7 +23,7 @@ class State extends \infinite\base\Object
     protected $_temporaryState = [];
 
     /**
-     * __method_get_description__
+     * Get
      * @param __param_key_type__ $key __param_key_description__
      * @param __param_default_type__ $default __param_default_description__ [optional]
      * @return __return_get_type__ __return_get_description__
@@ -44,7 +44,7 @@ class State extends \infinite\base\Object
     }
 
     /**
-     * __method_set_description__
+     * Set
      * @param __param_key_type__ $key __param_key_description__
      * @param __param_value_type__ $value __param_value_description__
      * @return __return_set_type__ __return_set_description__

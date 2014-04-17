@@ -23,7 +23,7 @@ class ActiveQuery extends \yii\db\ActiveQuery
      */
     protected $_model;
     /**
-     * __method_getIsAco_description__
+     * Get is aco
      * __method_getIsAco_description__
      *
      * @return __return_getIsAco_type__ __return_getIsAco_description__
@@ -36,7 +36,7 @@ class ActiveQuery extends \yii\db\ActiveQuery
     }
 
     /**
-     * __method_getModel_description__
+     * Get model
      * @return __return_getModel_type__ __return_getModel_description__
      */
     public function getModel()

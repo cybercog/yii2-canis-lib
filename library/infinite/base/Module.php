@@ -22,12 +22,12 @@ abstract class Module extends \yii\base\Module
     protected $_systemId;
 
     /**
-     * __method_getModuleType_description__
+     * Get module type
      */
     abstract public function getModuleType();
 
     /**
-     * __method_setSystemId_description__
+     * Set system
      * @param unknown $value
      */
     public function setSystemId($value)
@@ -36,7 +36,7 @@ abstract class Module extends \yii\base\Module
     }
 
     /**
-     * __method_getSystemId_description__
+     * Get system
      * @return unknown
      * @throws Exception __exception_Exception_description__
      */

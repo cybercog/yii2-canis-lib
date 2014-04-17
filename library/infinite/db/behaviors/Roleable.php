@@ -28,6 +28,9 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
      * @var __var_roleableEnabled_type__ __var_roleableEnabled_description__
      */
     public $roleableEnabled = true;
+    /**
+     * @var __var__role_type__ __var__role_description__
+     */
     protected $_role = [];
     /**
      * @var __var__roleCurrent_type__ __var__roleCurrent_description__
@@ -35,9 +38,6 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
     protected $_roleCurrent = [];
     /**
      * @var __var__roleChanged_type__ __var__roleChanged_description__
-     */
-    /**
-     * @var __var__role_type__ __var__role_description__
      */
     protected $_roleChanged = [];
     /**
@@ -115,7 +115,7 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_setRoles_description__
+     * Set roles
      * @param __param_roles_type__ $roles __param_roles_description__
      */
     public function setRoles($roles)
@@ -129,7 +129,7 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_setRole_description__
+     * Set role
      * @param __param_role_type__ $role __param_role_description__
      * @param __param_aro_type__ $aro __param_aro_description__ [optional]
      * @param boolean $handle __param_handle_description__ [optional]
@@ -148,7 +148,7 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_getObjectRoles_description__
+     * Get object roles
      * @return __return_getObjectRoles_type__ __return_getObjectRoles_description__
      */
     public function getObjectRoles()
@@ -162,7 +162,7 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_getObjectInheritedRoles_description__
+     * Get object inherited roles
      * @return __return_getObjectInheritedRoles_type__ __return_getObjectInheritedRoles_description__
      */
     public function getObjectInheritedRoles()
@@ -176,7 +176,7 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_getRole_description__
+     * Get role
      * @param __param_aro_type__ $aro __param_aro_description__ [optional]
      * @param boolean $includeNew __param_includeNew_description__ [optional]
      * @return __return_getRole_type__ __return_getRole_description__
@@ -205,7 +205,7 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_getAroByRole_description__
+     * Get aro by role
      * @param __param_role_type__ $role __param_role_description__
      * @return __return_getAroByRole_type__ __return_getAroByRole_description__
      */
@@ -232,7 +232,7 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_getFirstAroByRole_description__
+     * Get first aro by role
      * @param __param_role_type__ $role __param_role_description__
      * @return __return_getFirstAroByRole_type__ __return_getFirstAroByRole_description__
      */
@@ -411,7 +411,7 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_getCurrentRoles_description__
+     * Get current roles
      * @return __return_getCurrentRoles_type__ __return_getCurrentRoles_description__
      */
     public function getCurrentRoles()
@@ -445,6 +445,7 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
      * __method_afterSave_description__
      * @param __param_event_type__ $event __param_event_description__
      * @return __return_afterSave_type__ __return_afterSave_description__
+     * @throws \ __exception_\_description__
      * @throws \ __exception_\_description__
      */
     public function afterSave($event)

@@ -40,7 +40,7 @@ class Item extends \infinite\base\Object
     protected $_systemId;
 
     /**
-     * __method_setSystemId_description__
+     * Set system
      * @param __param_id_type__ $id __param_id_description__
      */
     public function setSystemId($id)
@@ -49,7 +49,7 @@ class Item extends \infinite\base\Object
     }
 
     /**
-     * __method_getSystemId_description__
+     * Get system
      * @return __return_getSystemId_type__ __return_getSystemId_description__
      */
     public function getSystemId()
@@ -62,7 +62,7 @@ class Item extends \infinite\base\Object
     }
 
     /**
-     * __method_setCollector_description__
+     * Set collector
      * @param __param_collector_type__ $collector __param_collector_description__
      */
     public function setCollector($collector)
@@ -80,7 +80,7 @@ class Item extends \infinite\base\Object
     }
 
     /**
-     * __method_getObject_description__
+     * Get object
      * @return __return_getObject_type__ __return_getObject_description__
      */
     public function getObject()
@@ -89,7 +89,7 @@ class Item extends \infinite\base\Object
     }
 
     /**
-     * __method_setObject_description__
+     * Set object
      * @param __param_object_type__ $object __param_object_description__
      * @throws Exception __exception_Exception_description__
      */
@@ -107,7 +107,7 @@ class Item extends \infinite\base\Object
     }
 
     /**
-     * __method_setOwner_description__
+     * Set owner
      * @param __param_owner_type__ $owner __param_owner_description__
      */
     public function setOwner($owner)
@@ -116,7 +116,7 @@ class Item extends \infinite\base\Object
     }
 
     /**
-     * __method_getOwner_description__
+     * Get owner
      * @return __return_getOwner_type__ __return_getOwner_description__
      */
     public function getOwner()
@@ -125,7 +125,7 @@ class Item extends \infinite\base\Object
     }
 
     /**
-     * __method_getCollector_description__
+     * Get collector
      * @return __return_getCollector_type__ __return_getCollector_description__
      */
     public function getCollector()

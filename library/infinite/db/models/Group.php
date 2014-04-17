@@ -87,7 +87,7 @@ class Group extends \infinite\db\ActiveRecord
     }
 
     /**
-     * __method_getRegistry_description__
+     * Get registry
      * @return \yii\db\ActiveRelation
      */
     public function getRegistry()
@@ -96,7 +96,7 @@ class Group extends \infinite\db\ActiveRecord
     }
 
     /**
-     * __method_getSystemGroup_description__
+     * Get system group
      * @param unknown $system
      * @return unknown
      */
@@ -125,7 +125,7 @@ class Group extends \infinite\db\ActiveRecord
     }
 
     /**
-     * __method_getById_description__
+     * Get by
      * @param unknown $id
      * @param boolean $checkAccess __param_checkAccess_description__ [optional]
      * @return unknown
@@ -151,7 +151,7 @@ class Group extends \infinite\db\ActiveRecord
     }
 
     /**
-     * __method_getBySystemName_description__
+     * Get by system name
      * @param unknown $id
      * @param boolean $checkAccess __param_checkAccess_description__ [optional]
      * @return unknown

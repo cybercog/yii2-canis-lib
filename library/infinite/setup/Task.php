@@ -44,7 +44,7 @@ abstract class Task extends \infinite\base\Object
     }
 
     /**
-     * __method_getSetup_description__
+     * Get setup
      * @return __return_getSetup_type__ __return_getSetup_description__
      */
     public function getSetup()
@@ -53,7 +53,7 @@ abstract class Task extends \infinite\base\Object
     }
 
     /**
-     * __method_getId_description__
+     * Get id
      * @return __return_getId_type__ __return_getId_description__
      */
     public function getId()
@@ -100,7 +100,7 @@ abstract class Task extends \infinite\base\Object
     }
 
     /**
-     * __method_getTitle_description__
+     * Get title
      */
     abstract public function getTitle();
     /**
@@ -112,7 +112,7 @@ abstract class Task extends \infinite\base\Object
      */
     abstract public function run();
     /**
-     * __method_getFields_description__
+     * Get fields
      * @return __return_getFields_type__ __return_getFields_description__
      */
     public function getFields()
@@ -120,7 +120,7 @@ abstract class Task extends \infinite\base\Object
         return false;
     }
     /**
-     * __method_getVerification_description__
+     * Get verification
      * @return __return_getVerification_type__ __return_getVerification_description__
      */
     public function getVerification()

@@ -57,7 +57,7 @@ class Verb extends \infinite\base\language\Word
     }
 
     /**
-     * __method_getActive_description__
+     * Get active
      * @param unknown $upper (optional)
      * @return unknown
      */
@@ -77,7 +77,7 @@ class Verb extends \infinite\base\language\Word
     }
 
     /**
-     * __method_getPast_description__
+     * Get past
      * @param unknown $upper (optional)
      * @return unknown
      */
