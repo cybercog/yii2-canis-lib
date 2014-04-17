@@ -41,12 +41,10 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
      * @var __var_endDateField_type__ __var_endDateField_description__
      */
     public $endDateField = 'end';
-
     /**
      * @var __var_registryModelField_type__ __var_registryModelField_description__
      */
     public $registryModelField = 'object_model';
-
     /**
      * @var __var_objectAlias_type__ __var_objectAlias_description__
      */
@@ -59,16 +57,12 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
      * @var __var_registryAlias_type__ __var_registryAlias_description__
      */
     public $registryAlias = 'x';
-
     /**
      * @var __var__relationModels_type__ __var__relationModels_description__
      */
     protected static $_relationModels = [];
     /**
      * @var __var__relationModelsOld_type__ __var__relationModelsOld_description__
-     */
-    /**
-     * @var __var__relationModels_type__ __var__relationModels_description__
      */
     protected static $_relationModelsOld = [];
     /**
@@ -79,20 +73,15 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
      * @var __var__relations_type__ __var__relations_description__
      */
     protected $_relations = [];
-
     /**
      * @var __var__setGlobalEvents_type__ __var__setGlobalEvents_description__
      */
     static $_setGlobalEvents = false;
-
     /**
      * @var __var_debug_type__ __var_debug_description__
      */
     static $debug = [];
 
-    /*
-        Events stuff
-    */
     /**
     * @inheritdoc
     **/

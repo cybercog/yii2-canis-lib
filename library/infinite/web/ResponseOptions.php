@@ -46,9 +46,6 @@ class ResponseOptions extends \infinite\base\Object
     /**
      * @var __var_ajaxDialogSettings_type__ __var_ajaxDialogSettings_description__
      */
-    /**
-     * @var __var_ajaxDialog_type__ __var_ajaxDialog_description__
-     */
     public $ajaxDialogSettings;
 
 }

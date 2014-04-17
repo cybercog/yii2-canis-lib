@@ -21,7 +21,6 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
      * @var __var__debug_type__ __var__debug_description__
      */
     protected static $_debug = false;
-    // from QueryAccess
     /**
      * @var __var__objectAccess_type__ __var__objectAccess_description__
      */
@@ -38,15 +37,8 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
      * @var __var__accessingObject_type__ __var__accessingObject_description__
      */
     protected $_accessingObject;
-
     /**
      * @var __var__accessMap_type__ __var__accessMap_description__
-     */
-    /**
-     * @var __var__access_type__ __var__access_description__
-     */
-    /**
-     * @var __var__access_type__ __var__access_description__
      */
     protected $_accessMap = [];
 

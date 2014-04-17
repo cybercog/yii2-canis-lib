@@ -45,9 +45,6 @@ class Bundle extends \infinite\base\Object
     /**
      * @var __var__typeOptions_type__ __var__typeOptions_description__
      */
-    /**
-     * @var __var__type_type__ __var__type_description__
-     */
     protected $_typeOptions = [];
     /**
      * @var __var__items_type__ __var__items_description__

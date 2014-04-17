@@ -46,9 +46,6 @@ class Response extends \yii\web\Response
     /**
      * @var __var_taskOptions_type__ __var_taskOptions_description__
      */
-    /**
-     * @var __var_task_type__ __var_task_description__
-     */
     public $taskOptions = [];
     /**
      * @var __var_baseInstructions_type__ __var_baseInstructions_description__
