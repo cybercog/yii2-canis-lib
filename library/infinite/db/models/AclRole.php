@@ -12,19 +12,18 @@ use Yii;
 /**
  * AclRole is the model class for table "acl_role".
  *
- *
  * @property string $id
  * @property string $accessing_object_id
  * @property string $controlled_object_id
  * @property string $role_id
  * @property string $created
  * @property string $modified
- * 
+ *
  * @property Acl[] $acls
  * @property Registry $accessingObject
  * @property Registry $controlledObject
  * @property Registry $role
- * 
+ *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class AclRole extends \infinite\db\ActiveRecord

@@ -209,11 +209,6 @@ class PhpDocController extends Controller
             $this->stderr("[ERR] Unable to create ReflectionClass for class: $className loaded class is not from file: $file\n", Console::FG_RED);
         }
 
-        if (!$ref->isSubclassOf('yii\base\Object') && $className != 'yii\base\Object') {
-            $this->stderr("[INFO] Skipping class $className as it is not a subclass of yii\\base\\Object.\n", Console::FG_BLUE, Console::BOLD);
-
-            return false;
-        }
 
         $oldDoc = $ref->getDocComment();
         $oldDocSize = count(explode("\n", $oldDoc));
@@ -222,12 +217,17 @@ class PhpDocController extends Controller
             $oldDoc = "/**\n**/";
         }
         // * ". $ref->getShortName() ." @doctodo write class description for ". $ref->getShortName() ."\n 
-        $newDoc = $this->cleanDocComment($this->updateDocComment($oldDoc, $propertyDoc, $coveredProperties, $ref));
+        
+        if (!$ref->isSubclassOf('yii\base\Object') && $className != 'yii\base\Object') {
+            $newDoc = $oldDoc;
+        } else {
+            $newDoc = $this->cleanDocComment($this->updateDocComment($oldDoc, $propertyDoc, $coveredProperties, $ref));
+        }
         $seenSince = false;
         $seenAuthor = false;
 
         // TODO move these checks to different action
-        $lines = explode("\n", $newDoc);
+        $lines = explode("\n", trim($newDoc));
 
         $oldTest = ' * '. $ref->getShortName();
         if (strpos($lines[1], $oldTest) !== 0) {
@@ -246,18 +246,19 @@ class PhpDocController extends Controller
         }
 
         if (!$seenSince) {
-            $this->stderr("[ERR] No @since found in class doc in file: $file\n", Console::FG_RED);
+            //$this->stderr("[ERR] No @since found in class doc in file: $file\n", Console::FG_RED);
         }
         if (!$seenAuthor) {
             $insertLines = [];
-            if (strpos($lines[count($lines)-2], " * @property") !== false) {
+            if (strpos($lines[count($lines)-2], " * @since") === false
+                && $lines[count($lines)-2] !== ' *') {
                 $insertLines[] = ' *';
             }
             $insertLines[] = " * @author {$this->author}";
             array_splice( $lines, count($lines)-1, 0, $insertLines);
             // $this->stderr("[ERR] No @author found in class doc in file: $file\n", Console::FG_RED);
         }
-        $newDoc = implode("\n", $lines);
+        $newDoc = implode("\n", $lines) . "\n";
 
         if (trim($oldDoc) != trim($newDoc)) {
 
@@ -331,7 +332,7 @@ class PhpDocController extends Controller
             } elseif ($ref->isSubclassOf('yii\db\ActiveRecord') 
                 && preg_match('/^\* This is the model class for table/', trim($line)) === 1) {
                 unset($lines[$i]);
-            } elseif ($ref->isSubclassOf('yii\db\ActiveRecord')) {
+            } else {
                 foreach ($coveredProperties as $property) {
                     if (preg_match('/^\* \@property[^\w]'. $property .'/', trim($line)) === 1) {
                         unset($lines[$i]);
@@ -407,6 +408,7 @@ class PhpDocController extends Controller
 
             $props = [];
             foreach ($acrs as &$acr) {
+                if ($acr['type'] === '\yii\db\ActiveRelation') { continue; }
                 $acr['name'] = lcfirst($acr['name']);
                 $acr['comment'] = trim(preg_replace('#(^|\n)\s+\*\s?#', '$1 * ', $acr['comment']));
                 $props[$acr['name']][$acr['kind']] = [

@@ -12,7 +12,6 @@ use Yii;
 /**
  * Audit is the model class for table "audit".
  *
- *
  * @property string $id
  * @property string $agent_id
  * @property string $direct_object_id
@@ -21,11 +20,11 @@ use Yii;
  * @property string $event
  * @property bool $hooks_handled
  * @property string $created
- * 
+ *
  * @property Registry $agent
  * @property Registry $directObject
  * @property Registry $indirectObject
- * 
+ *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class Audit extends \infinite\db\ActiveRecord

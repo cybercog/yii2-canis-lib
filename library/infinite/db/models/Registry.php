@@ -10,7 +10,6 @@ namespace infinite\db\models;
 /**
  * Registry is the model class for table "registry".
  *
- *
  * @property string $id
  * @property string $object_model
  * @property string $created
@@ -27,7 +26,7 @@ namespace infinite\db\models;
  * @property Relation[] $relations
  * @property Relation[] $relations0
  * @property Role $role
- * 
+ *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class Registry extends \infinite\db\ActiveRecord

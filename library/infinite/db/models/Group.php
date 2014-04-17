@@ -10,7 +10,6 @@ namespace infinite\db\models;
 /**
  * Group is the model class for table "group".
  *
- *
  * @property string $id
  * @property string $name
  * @property string $system
@@ -19,7 +18,7 @@ namespace infinite\db\models;
  * @property string $modified
  *
  * @property Registry $id
- * 
+ *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class Group extends \infinite\db\ActiveRecord

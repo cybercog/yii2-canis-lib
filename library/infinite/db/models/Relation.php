@@ -11,7 +11,6 @@ use Yii;
 /**
  * Relation is the model class for table "relation".
  *
- *
  * @property string $id
  * @property string $parent_object_id
  * @property string $child_object_id
@@ -25,7 +24,7 @@ use Yii;
  *
  * @property Registry $childObject
  * @property Registry $parentObject
- * 
+ *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class Relation extends \infinite\db\ActiveRecord

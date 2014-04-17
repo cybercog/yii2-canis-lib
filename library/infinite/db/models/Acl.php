@@ -10,7 +10,6 @@ namespace infinite\db\models;
 /**
  * Acl is the model class for table "acl".
  *
- *
  * @property string $id
  * @property string $acl_role_id
  * @property string $accessing_object_id
@@ -23,7 +22,7 @@ namespace infinite\db\models;
  * @property AclRole $aclRole
  * @property Registry $accessingObject
  * @property Registry $controlledObject
- * 
+ *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class Acl extends \infinite\db\ActiveRecord

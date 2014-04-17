@@ -12,7 +12,6 @@ use infinite\base\collector\CollectedObjectTrait;
 /**
  * Role is the model class for table "role".
  *
- *
  * @property string $id
  * @property string $name
  * @property string $system_id
@@ -21,7 +20,7 @@ use infinite\base\collector\CollectedObjectTrait;
  * @property string $modified
  *
  * @property Registry $id
- * 
+ *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class Role extends \infinite\db\ActiveRecord implements \infinite\base\collector\CollectedObjectInterface

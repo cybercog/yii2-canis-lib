@@ -1,11 +1,13 @@
 <?php
 /**
+/**
+ * ICD [@doctodo write class description for ICD]
+ *
  * library/ICD.php
  *
  * @author Jacob Morrison <jacob@infinitecascade.com>
  * @package infinite
  */
-
 class ICD extends \yii\helpers\VarDumper
 {
     protected $_var;

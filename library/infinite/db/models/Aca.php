@@ -10,13 +10,12 @@ namespace infinite\db\models;
 /**
  * Aca is the model class for table "aca".
  *
- *
  * @property string $id
  * @property string $name
  * @property string $created
  * @property string $modified
  * @property \yii\db\ActiveRelation $registry This property is read-only.
- * 
+ *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class Aca extends \infinite\db\ActiveRecord
