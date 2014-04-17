@@ -25,8 +25,9 @@ use Yii;
  *
  * @property Registry $childObject
  * @property Registry $parentObject
- */
+ * 
  * @author Jacob Morrison <email@ofjacob.com>
+ */
 class Relation extends \infinite\db\ActiveRecord
 {
     public static $registryCache = false;

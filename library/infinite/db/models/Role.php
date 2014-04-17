@@ -20,11 +20,10 @@ use infinite\base\collector\CollectedObjectTrait;
  * @property string $created
  * @property string $modified
  *
- * @property \yii\db\ActiveRelation $registry This property is read-only.
- *
  * @property Registry $id
- */
+ * 
  * @author Jacob Morrison <email@ofjacob.com>
+ */
 class Role extends \infinite\db\ActiveRecord implements \infinite\base\collector\CollectedObjectInterface
 {
     use CollectedOBjectTrait;

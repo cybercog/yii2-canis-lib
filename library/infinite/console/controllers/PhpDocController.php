@@ -50,9 +50,9 @@ class PhpDocController extends Controller
         foreach ($files as $file) {
             $result = $this->generateClassPropertyDocs($file);
             if ($result !== false) {
-                list($className, $phpdoc) = $result;
+                list($className, $phpdoc, $coveredProperties) = $result;
                 if ($this->updateFiles) {
-                    if ($this->updateClassPropertyDocs($file, $className, $phpdoc)) {
+                    if ($this->updateClassPropertyDocs($file, $className, $phpdoc, $coveredProperties)) {
                         $nFilesUpdated++;
                     }
                 } elseif (!empty($phpdoc)) {
@@ -202,7 +202,7 @@ class PhpDocController extends Controller
         return $description;
     }
 
-    protected function updateClassPropertyDocs($file, $className, $propertyDoc)
+    protected function updateClassPropertyDocs($file, $className, $propertyDoc, $coveredProperties)
     {
         $ref = new \ReflectionClass($className);
         if ($ref->getFileName() != $file) {
@@ -222,7 +222,7 @@ class PhpDocController extends Controller
             $oldDoc = "/**\n**/";
         }
         // * ". $ref->getShortName() ." @doctodo write class description for ". $ref->getShortName() ."\n 
-        $newDoc = $this->cleanDocComment($this->updateDocComment($oldDoc, $propertyDoc, $ref));
+        $newDoc = $this->cleanDocComment($this->updateDocComment($oldDoc, $propertyDoc, $coveredProperties, $ref));
         $seenSince = false;
         $seenAuthor = false;
 
@@ -310,7 +310,7 @@ class PhpDocController extends Controller
      * @param $properties
      * @return string
      */
-    protected function updateDocComment($doc, $properties, $ref)
+    protected function updateDocComment($doc, $properties, $coveredProperties, $ref)
     {
         $lines = explode("\n", trim($doc));
         $propertyPart = false;
@@ -328,8 +328,16 @@ class PhpDocController extends Controller
             }
             if ($propertyPart && !$ref->isSubclassOf('yii\base\Model')) {
                 unset($lines[$i]);
-            } elseif (preg_match('/^\* This is the model class for table/', trim($line)) === 1) {
+            } elseif ($ref->isSubclassOf('yii\db\ActiveRecord') 
+                && preg_match('/^\* This is the model class for table/', trim($line)) === 1) {
                 unset($lines[$i]);
+            } elseif ($ref->isSubclassOf('yii\db\ActiveRecord')) {
+                foreach ($coveredProperties as $property) {
+                    if (preg_match('/^\* \@property[^\w]'. $property .'/', trim($line)) === 1) {
+                        unset($lines[$i]);
+                        break;
+                    }
+                }
             }
         }
         $finalDoc = '';
@@ -408,7 +416,7 @@ class PhpDocController extends Controller
             }
 
             ksort($props);
-
+            $coveredProperties = [];
             if (count($props) > 0) {
                 $phpdoc .= " *\n";
                 foreach ($props as $propName => &$prop) {
@@ -453,6 +461,7 @@ class PhpDocController extends Controller
                     } else {
                         continue;
                     }
+                    $coveredProperties[] = $propName;
                     $docline .= ' ' . $this->getPropParam($prop, 'type') . " $$propName ";
                     $comment = explode("\n", $this->getPropParam($prop, 'comment') . $note);
                     foreach ($comment as &$cline) {
@@ -466,7 +475,7 @@ class PhpDocController extends Controller
             }
         }
 
-        return [$className, $phpdoc];
+        return [$className, $phpdoc, $coveredProperties];
     }
 
     protected function match($pattern, $subject)

@@ -15,12 +15,10 @@ namespace infinite\db\models;
  * @property string $name
  * @property string $created
  * @property string $modified
- *
  * @property \yii\db\ActiveRelation $registry This property is read-only.
- *
- * @property Registry $id
- */
+ * 
  * @author Jacob Morrison <email@ofjacob.com>
+ */
 class Aca extends \infinite\db\ActiveRecord
 {
     public static $registryCache = false;

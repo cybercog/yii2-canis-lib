@@ -19,18 +19,14 @@ use Yii;
  * @property string $role_id
  * @property string $created
  * @property string $modified
- *
- * @property \yii\db\ActiveRelation $accessingObject This property is read-only.
- * @property \yii\db\ActiveRelation $acls This property is read-only.
- * @property \yii\db\ActiveRelation $controlledObject This property is read-only.
- * @property \yii\db\ActiveRelation $role This property is read-only.
- *
+ * 
  * @property Acl[] $acls
  * @property Registry $accessingObject
  * @property Registry $controlledObject
  * @property Registry $role
- */
+ * 
  * @author Jacob Morrison <email@ofjacob.com>
+ */
 class AclRole extends \infinite\db\ActiveRecord
 {
     public static $registryCache = false;

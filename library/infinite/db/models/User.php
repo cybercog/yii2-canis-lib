@@ -33,8 +33,9 @@ use yii\web\IdentityInterface;
  * @property integer $status
  * @property integer $create_time
  * @property integer $update_time
- */
+ * 
  * @author Jacob Morrison <email@ofjacob.com>
+ */
 class User extends ActiveRecord implements IdentityInterface
 {
     protected $_groups;

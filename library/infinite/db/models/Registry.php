@@ -27,8 +27,9 @@ namespace infinite\db\models;
  * @property Relation[] $relations
  * @property Relation[] $relations0
  * @property Role $role
- */
+ * 
  * @author Jacob Morrison <email@ofjacob.com>
+ */
 class Registry extends \infinite\db\ActiveRecord
 {
     public static $registryCache = false;
