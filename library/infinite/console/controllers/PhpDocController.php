@@ -197,7 +197,7 @@ class PhpDocController extends Controller
         if ($ref->isSubclassOf('yii\db\ActiveRecord')) {
             $className = $ref->getName();
             $tableName = $className::tableName();
-            $description = " is the model class for table \"{$tableName}\".";
+            $description = "is the model class for table \"{$tableName}\".";
         }
         return $description;
     }
@@ -223,7 +223,6 @@ class PhpDocController extends Controller
         }
         // * ". $ref->getShortName() ." @doctodo write class description for ". $ref->getShortName() ."\n 
         $newDoc = $this->cleanDocComment($this->updateDocComment($oldDoc, $propertyDoc, $ref));
-        $newDoc = $oldDoc;
         $seenSince = false;
         $seenAuthor = false;
 
@@ -276,7 +275,7 @@ class PhpDocController extends Controller
                     $i = $start;
                 }
             }
-
+            //\d(implode("\n", $newFileContent));exit;
             file_put_contents($file, implode("\n", $newFileContent));
 
             return true;
@@ -329,8 +328,7 @@ class PhpDocController extends Controller
             }
             if ($propertyPart && !$ref->isSubclassOf('yii\base\Model')) {
                 unset($lines[$i]);
-            } elseif ($ref->isSubclassOf('yii\db\ActiveRecord') 
-                && preg_match('/^\* This is the model class for table/', trim($line)) !== false) {
+            } elseif (preg_match('/^\* This is the model class for table/', trim($line)) === 1) {
                 unset($lines[$i]);
             }
         }

@@ -13,6 +13,13 @@ use yii\helpers\Security;
 use yii\web\IdentityInterface;
 
 /**
+ * User is the model class for table "user".
+ *
+ *
+ * @property string $authKey Current user auth key. This property is read-only.
+ * @property int|string $id Current user ID. This property is read-only.
+ * @property \yii\db\ActiveRelation $registry This property is read-only.
+ *
  * Class User
  * @package common\models
  *
@@ -27,6 +34,7 @@ use yii\web\IdentityInterface;
  * @property integer $create_time
  * @property integer $update_time
  */
+ * @author Jacob Morrison <email@ofjacob.com>
 class User extends ActiveRecord implements IdentityInterface
 {
     protected $_groups;

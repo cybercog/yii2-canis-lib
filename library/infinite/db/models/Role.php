@@ -10,7 +10,8 @@ namespace infinite\db\models;
 use infinite\base\collector\CollectedObjectTrait;
 
 /**
- * This is the model class for table "role".
+ * Role is the model class for table "role".
+ *
  *
  * @property string $id
  * @property string $name
@@ -19,8 +20,11 @@ use infinite\base\collector\CollectedObjectTrait;
  * @property string $created
  * @property string $modified
  *
+ * @property \yii\db\ActiveRelation $registry This property is read-only.
+ *
  * @property Registry $id
  */
+ * @author Jacob Morrison <email@ofjacob.com>
 class Role extends \infinite\db\ActiveRecord implements \infinite\base\collector\CollectedObjectInterface
 {
     use CollectedOBjectTrait;

@@ -8,6 +8,8 @@
 namespace infinite\web\assetBundles;
 
 /**
+ * BootstrapDatepickerAsset [@doctodo write class description for BootstrapDatepickerAsset]
+ *
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */

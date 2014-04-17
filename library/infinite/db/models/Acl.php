@@ -8,7 +8,8 @@
 namespace infinite\db\models;
 
 /**
- * This is the model class for table "acl".
+ * Acl is the model class for table "acl".
+ *
  *
  * @property string $id
  * @property string $acl_role_id
@@ -19,10 +20,15 @@ namespace infinite\db\models;
  * @property string $created
  * @property string $modified
  *
+ * @property \yii\db\ActiveRelation $accessingObject This property is read-only.
+ * @property \yii\db\ActiveRelation $aclRole This property is read-only.
+ * @property \yii\db\ActiveRelation $controlledObject This property is read-only.
+ *
  * @property AclRole $aclRole
  * @property Registry $accessingObject
  * @property Registry $controlledObject
  */
+ * @author Jacob Morrison <email@ofjacob.com>
 class Acl extends \infinite\db\ActiveRecord
 {
     public static $registryCache = false;

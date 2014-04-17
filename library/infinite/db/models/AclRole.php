@@ -10,7 +10,8 @@ namespace infinite\db\models;
 use Yii;
 
 /**
- * This is the model class for table "acl_role".
+ * AclRole is the model class for table "acl_role".
+ *
  *
  * @property string $id
  * @property string $accessing_object_id
@@ -19,11 +20,17 @@ use Yii;
  * @property string $created
  * @property string $modified
  *
+ * @property \yii\db\ActiveRelation $accessingObject This property is read-only.
+ * @property \yii\db\ActiveRelation $acls This property is read-only.
+ * @property \yii\db\ActiveRelation $controlledObject This property is read-only.
+ * @property \yii\db\ActiveRelation $role This property is read-only.
+ *
  * @property Acl[] $acls
  * @property Registry $accessingObject
  * @property Registry $controlledObject
  * @property Registry $role
  */
+ * @author Jacob Morrison <email@ofjacob.com>
 class AclRole extends \infinite\db\ActiveRecord
 {
     public static $registryCache = false;

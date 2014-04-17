@@ -8,7 +8,8 @@
 namespace infinite\db\models;
 
 /**
- * This is the model class for table "registry".
+ * Registry is the model class for table "registry".
+ *
  *
  * @property string $id
  * @property string $object_model
@@ -27,6 +28,7 @@ namespace infinite\db\models;
  * @property Relation[] $relations0
  * @property Role $role
  */
+ * @author Jacob Morrison <email@ofjacob.com>
 class Registry extends \infinite\db\ActiveRecord
 {
     public static $registryCache = false;

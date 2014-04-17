@@ -8,7 +8,8 @@
 namespace infinite\db\models;
 
 /**
- * This is the model class for table "group".
+ * Group is the model class for table "group".
+ *
  *
  * @property string $id
  * @property string $name
@@ -17,8 +18,11 @@ namespace infinite\db\models;
  * @property string $created
  * @property string $modified
  *
+ * @property \yii\db\ActiveRelation $registry This property is read-only.
+ *
  * @property Registry $id
  */
+ * @author Jacob Morrison <email@ofjacob.com>
 class Group extends \infinite\db\ActiveRecord
 {
     static protected $_cache = ['id' => [], 'system' => []];

@@ -8,6 +8,8 @@
 namespace infinite\web\assetBundles;
 
 /**
+ * UnderscoreAsset [@doctodo write class description for UnderscoreAsset]
+ *
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */

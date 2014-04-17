@@ -10,7 +10,8 @@ namespace infinite\db\models;
 use Yii;
 
 /**
- * This is the model class for table "audit".
+ * Audit is the model class for table "audit".
+ *
  *
  * @property string $id
  * @property string $agent_id
@@ -21,10 +22,15 @@ use Yii;
  * @property bool $hooks_handled
  * @property string $created
  *
+ * @property \yii\db\ActiveRelation $agent This property is read-only.
+ * @property \yii\db\ActiveRelation $directObject This property is read-only.
+ * @property \yii\db\ActiveRelation $indirectObject This property is read-only.
+ *
  * @property Registry $agent
  * @property Registry $directObject
  * @property Registry $indirectObject
  */
+ * @author Jacob Morrison <email@ofjacob.com>
 class Audit extends \infinite\db\ActiveRecord
 {
     public static $registryCache = false;
