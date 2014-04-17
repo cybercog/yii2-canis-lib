@@ -113,7 +113,7 @@ class PhpDocController extends Controller
     {
         $except = [];
         if ($root === null) {
-            $root = INFINITE_APP_VENDOR_PATH . DIRECTORY_SEPARATOR . 'infiniteCascade';
+            $root = INFINITE_APP_VENDOR_PATH . DIRECTORY_SEPARATOR . 'infiniteCascade' . DIRECTORY_SEPARATOR .'cascade-lib';
 
             $except = [
                 '.git/',
@@ -275,7 +275,7 @@ class PhpDocController extends Controller
         if (!empty($updates)) {
             foreach ($updates as $update) {
                 array_splice($fileContent, $update['start'] + $offset, $update['length'], $update['inject']);
-                $offset = $offset + ($update['length'] - count($update['inject']));
+                $offset = $offset + (count($update['inject']) - $update['length']);
             }
             file_put_contents($file, implode("\n", $fileContent));
         }
@@ -309,15 +309,15 @@ class PhpDocController extends Controller
             $currentStartLine = $fileContent[$method->getStartLine()-1];
             preg_match('/^([ \t\r\n\f]*)[a-zA-Z].*/', $currentStartLine, $matches);
             $whitespace = isset($matches[1]) ? $matches[1] : '';
+            $newDocs = implode("\n", $lines);
             foreach ($lines as $k => $line) {
                 $lines[$k] = $whitespace . trim($line);
             }
-            $newDocs = implode("\n", $lines);
             if ($newDocs !== $originalDocs && $newDocs !== "/**\n**/") {
                 $updates[] = [
                     'inject' => $lines,
                     'length' => $docsSize,
-                    'start' => $method->getStartLine() - 1
+                    'start' => $method->getStartLine() - 1 - $docsSize
                 ];
             }
         }
