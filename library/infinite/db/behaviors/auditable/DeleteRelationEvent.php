@@ -8,18 +8,18 @@
 namespace infinite\db\behaviors\auditable;
 
 /**
- * UpdateEvent [@doctodo write class description for UpdateEvent]
+ * DeleteRelationEvent [@doctodo write class description for DeleteRelationEvent]
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class UpdateEvent extends RelationEvent
+class DeleteRelationEvent extends RelationEvent
 {
     /**
      * @inheritdoc
      */
-    protected $_id = 'update';
+    public $saveOnRegister = true;
     /**
      * @inheritdoc
      */
-    public $attributes;
+    protected $_id = 'delete_relation';
 }

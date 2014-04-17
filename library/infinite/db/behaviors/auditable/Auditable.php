@@ -149,7 +149,9 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
                 $this->_auditEvents = [];
             }
             $this->_auditEvents[$event->id] = $event;
-
+            if ($event->saveOnRegister) {
+                $event->save();
+            }
             return $event;
         }
         \d($event);exit;

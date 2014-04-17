@@ -26,6 +26,10 @@ abstract class Event extends \infinite\base\Component
      */
     public $handleHooksOnCreate = false;
     /**
+     * @var __var_handleHooksOnCreate_type__ __var_handleHooksOnCreate_description__
+     */
+    public $saveOnRegister = false;
+    /**
      * @var __var__exclusive_type__ __var__exclusive_description__
      */
     protected $_exclusive = false;
@@ -310,6 +314,10 @@ abstract class Event extends \infinite\base\Component
      */
     public function save()
     {
+        if (!empty($this->_tmp['handled'])) {
+            return true;
+        }
+        $this->_tmp['handled'] = true;
         $auditClass = Yii::$app->classes['Audit'];
         $audit = new $auditClass;
         $audit->agent_id = $this->agentId;

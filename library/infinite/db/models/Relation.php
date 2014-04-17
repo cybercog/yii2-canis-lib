@@ -47,6 +47,7 @@ class Relation extends \infinite\db\ActiveRecord
     public function init()
     {
         parent::init();
+        $this->on(self::EVENT_BEFORE_VALIDATE, [$this, 'beforeValidateRelation']);
         $this->on(self::EVENT_AFTER_INSERT, [$this, 'afterSaveRelation']);
         $this->on(self::EVENT_AFTER_UPDATE, [$this, 'afterSaveRelation']);
         $this->on(self::EVENT_AFTER_DELETE, [$this, 'afterDeleteRelation']);
@@ -81,6 +82,21 @@ class Relation extends \infinite\db\ActiveRecord
         ];
     }
 
+    public function beforeValidateRelation($event)
+    {
+        if (empty($this->start)) {
+            $this->start = null;
+        } else {
+            $this->start = date("Y-m-d", strtotime($this->start . " 12:00"));
+        }
+        if (empty($this->end)) {
+            $this->end = null;
+        } else {
+            $this->end = date("Y-m-d", strtotime($this->end . " 12:00"));
+        }
+        return true;
+    }
+
     /**
      * __method_afterSaveRelation_description__
      * @param __param_event_type__ $event __param_event_description__
@@ -98,6 +114,10 @@ class Relation extends \infinite\db\ActiveRecord
      */
     public function afterDeleteRelation($event)
     {
+        $parentObject = $this->parentObject;
+        if (!empty($parentObject) && $parentObject->getBehavior('Relatable') !== null) {
+            $parentObject->registerDeleteRelationAuditEvent($this);
+        }
         return true;
     }
 
@@ -155,7 +175,10 @@ class Relation extends \infinite\db\ActiveRecord
     public function endRelationship()
     {
         $this->end = date("Y-m-d", strtotime("-1 day"));
-
+        $parentObject = $this->parentObject;
+        if (!empty($parentObject) && $parentObject->getBehavior('Relatable') !== null) {
+            $parentObject->registerEndRelationAuditEvent($this);
+        }
         return $this->save();
     }
 
@@ -186,35 +209,4 @@ class Relation extends \infinite\db\ActiveRecord
 
         return true;
     }
-
-    // public static function set($parentObject, $childObject = null, $params = [])
-    // {
-    // 	$baseParams = ['active' => 1];
-    // 	if (!is_object($parentObject) && is_array($parentObject) && isset($parentObject['parent_object_id']) && isset($parentObject['child_object_id'])) {
-    // 		$newParams = $parentObject;
-    // 		$childObject = $newParams['child_object_id'];
-    // 		$parentObject = $newParams['parent_object_id'];
-    // 		unset($newParams['parent_object_id'], $newParams['child_object_id']);
-    // 		$baseParams = array_merge($baseParams, $newParams);
-    // 	}
-    // 	if (is_object($parentObject)) {
-    // 		$parentObject = $parentObject->primaryKey;
-    // 	}
-    // 	if (is_object($childObject)) {
-    // 		$childObject = $childObject->primaryKey;
-    // 	}
-    // 	$params = array_merge($baseParams, $params);
-    // 	$coreFields = ['parent_object_id' => $parentObject, 'child_object_id' => $childObject];
-    // 	$object = self::findOne($coreFields, false);
-    // 	if (!$object) {
-    // 		$className = self::className();
-    // 		$object = new $className;
-    // 	}
-    // 	$object->attributes = array_merge($coreFields, $params);
-    // 	if (!$object->save()) {
-    // 		return false;
-    // 	}
-    // 	return $object;
-    // }
-
 }

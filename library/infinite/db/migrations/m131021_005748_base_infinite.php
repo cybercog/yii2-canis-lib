@@ -173,7 +173,7 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
             'modified' => 'datetime DEFAULT NULL'
         ]);
 
-        $this->createIndex('relationParentChild', 'relation', 'parent_object_id,child_object_id', true);
+        // $this->createIndex('relationParentChild', 'relation', 'parent_object_id,child_object_id', true);
         $this->createIndex('relationParent', 'relation', 'parent_object_id', false);
         $this->createIndex('relationChild', 'relation', 'child_object_id', false);
         $this->createIndex('relationCommonCombo', 'relation', 'parent_object_id,child_object_id,start,end,active', false);

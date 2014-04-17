@@ -21,7 +21,7 @@ class RelationEvent extends AttributesEvent
     /**
      * @inheritdoc
      */
-    protected $_id = 'relate';
+    protected $_id = 'relation';
     /**
      * @var object [[Relation]] model
      */

@@ -24,7 +24,19 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     /**
      * @var string Audit event class for relation class
      */
-    public $relationAuditEventClass = 'infinite\\db\\behaviors\\auditable\\RelationEvent';
+    public $createRelationAuditEventClass = 'infinite\\db\\behaviors\\auditable\\RelationEvent';
+    /**
+     * @var string Audit event class for relation class
+     */
+    public $deleteRelationAuditEventClass = 'infinite\\db\\behaviors\\auditable\\DeleteRelationEvent';
+    /**
+     * @var string Audit event class for relation class
+     */
+    public $endRelationAuditEventClass = 'infinite\\db\\behaviors\\auditable\\EndRelationEvent';
+    /**
+     * @var string Audit event class for relation class
+     */
+    public $updateRelationAuditEventClass = 'infinite\\db\\behaviors\\auditable\\UpdateRelationEvent';
     /**
      * @var __var_parentObjectField_type__ __var_parentObjectField_description__
      */
@@ -261,7 +273,11 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 
                 if ($model->isNewRecord) {
                     $relationClass = Yii::$app->classes['Relation'];
-                    $modelCheck = $relationClass::find()->where(['parent_object_id' => $model->parent_object_id, 'child_object_id' => $model->child_object_id])->one();
+                    $modelCheck = $relationClass::find()->where(['parent_object_id' => $model->parent_object_id, 'child_object_id' => $model->child_object_id]);
+                    
+                    $this->addActiveConditions($modelCheck, false);
+                    $modelCheck = $modelCheck->one();
+
 
                     $dirty = $model->getDirtyAttributes(array_keys($this->defaultRelation));
                     if ($modelCheck) {
@@ -399,7 +415,6 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
         }
 
         if (empty($model->{$this->parentObjectField}) && empty($model->{$this->childObjectField})) {
-            throw new \Exception("boom");
             return false;
         }
 
@@ -414,7 +429,40 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
         return $model;
     }
 
-    public function registerRelationAuditEvent($model)
+    public function registerDeleteRelationAuditEvent($model, $base = [])
+    {
+        if ($this->owner->getBehavior('Auditable') === null) { return false; }
+        $parentObject = $model->getParentObject(false);
+        $childObject = $model->getChildObject(false);
+        if (!isset($base['class'])) {
+            $base['class'] = $this->deleteRelationAuditEventClass;
+        }
+        return $this->registerRelationAuditEvent($model, $base);
+    }
+
+    public function registerEndRelationAuditEvent($model, $base = [])
+    {
+        if ($this->owner->getBehavior('Auditable') === null) { return false; }
+        $parentObject = $model->getParentObject(false);
+        $childObject = $model->getChildObject(false);
+        if (!isset($base['class'])) {
+            $base['class'] = $this->endRelationAuditEventClass;
+        }
+        return $this->registerRelationAuditEvent($model, $base);
+    }
+
+    public function registerUpdateRelationAuditEvent($model, $base = [])
+    {
+        if ($this->owner->getBehavior('Auditable') === null) { return false; }
+        $parentObject = $model->getParentObject(false);
+        $childObject = $model->getChildObject(false);
+        if (!isset($base['class'])) {
+            $base['class'] = $this->updateRelationAuditEventClass;
+        }
+        return $this->registerRelationAuditEvent($model, $base);
+    }
+
+    public function registerCreateRelationAuditEvent($model, $base = [])
     {
         if ($this->owner->getBehavior('Auditable') === null) { return false; }
         $parentObject = $model->getParentObject(false);
@@ -424,18 +472,29 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
             || empty($childObject) || $childObject->isNewRecord) {
             return false;
         }
-        $eventLog = ['class' => $this->relationAuditEventClass];
+        if (!isset($base['class'])) {
+            $base['class'] = $this->createRelationAuditEventClass;
+        }
+        return $this->registerRelationAuditEvent($model, $base);
+    }
+
+    protected function registerRelationAuditEvent($model, $base = [])
+    {
+        $eventLog = $base;
+        if (!isset($eventLog['class'])) {
+            return false;
+        }
+        $parentObject = $model->getParentObject(false);
+        $childObject = $model->getChildObject(false);
         $eventLog['relationObject'] = $model;
         $eventLog['directObject'] = $this->owner;
-        //$eventLog['exclusive'] = true;
         if ($this->owner === $parentObject) {
             $eventLog['indirectObject'] = $childObject;
         } else {
             $eventLog['indirectObject'] = $parentObject;
         }
-        return $this->owner->registerAuditEvent($eventLog);
+        return $this->owner->registerAuditEvent($eventLog);   
     }
-
     /**
      * Get relation model
      * @param __param_id_type__ $id __param_id_description__
@@ -993,10 +1052,15 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
         if (is_null($alias)) {
             $alias = $this->relationAlias;
         }
+        if ($alias === false) {
+            $alias = '';
+        } else {
+            $alias = '{{'.$alias .'}}.';
+        }
         $conditions = ['and'];
-        $conditions[] = [$alias .'.'.$this->activeField => 1];
-        $conditions[] = ['or', $alias .'.'. $this->startDateField . ' IS NULL', $alias .'.'. $this->startDateField .' <= CURDATE()'];
-        $conditions[] = ['or', $alias .'.'. $this->endDateField . ' IS NULL', $alias .'.'. $this->endDateField .' >= CURDATE()'];
+        $conditions[] = [$alias .'[['. $this->activeField .']]' => 1];
+        $conditions[] = ['or', $alias .'[['. $this->startDateField . ']] IS NULL', $alias .'[['. $this->startDateField .']] <= CURDATE()'];
+        $conditions[] = ['or', $alias .'[['. $this->endDateField . ']] IS NULL', $alias .'[['. $this->endDateField .']] >= CURDATE()'];
         $query->andWhere($conditions);
     }
 
