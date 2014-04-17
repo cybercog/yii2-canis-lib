@@ -11,7 +11,6 @@ use infinite\base\ObjectTrait;
 
 class ResponseOptions extends \infinite\base\Object
 {
-    use ObjectTrait;
 
     public $justStatus = false;
     public $error;
