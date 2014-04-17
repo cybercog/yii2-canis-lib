@@ -263,7 +263,7 @@ class PhpDocController extends Controller
         $fileContent = explode("\n", file_get_contents($file));
         if (trim($oldDoc) != trim($newDoc)) {
             $start = $ref->getStartLine() - 1;
-            $updates = [
+            $updates[] = [
                 'inject' => $lines,
                 'length' => $oldDocSize,
                 'start' => $start
@@ -282,6 +282,42 @@ class PhpDocController extends Controller
         return !empty($updates);
     }
 
+    public function guessMethodDescription($method)
+    {
+        if ($method->getName() === '__construct') {
+            return 'Constructor.';
+        } elseif ($method->getName() === 'init') {
+            return 'Initializes.';
+        }
+        return ' @todo method description';
+    }
+
+    public function generateMethodDocs($method, $lines)
+    {
+        if (trim($lines[1]) == '*' || substr(trim($lines[1]), 0, 3) == '* @') {
+            array_splice( $lines, 1, 0, [" * ". $this->guessMethodDescription($method),' *']);
+        }
+        $currentParams = $this->extractParams($lines);
+        $currentThrows = $this->extractThrows($lines);
+        $currentSee = $this->extractThrows($lines);
+        $params = [];
+        $throws = [];
+        $see = $currentSee;
+    }
+
+    public function extractParams(&$lines)
+    {
+        $params = [];
+        foreach ($lines as $line) {
+            $properties = $this->match(
+                '#\* @(?<kind>param) (?<type>[\w\\|\\\\\\[\\]]+)(?: (?<comment>(?:(?!\*/|\* @).)+?)(?:(?!\*/).)+|[\s\n]*)\*/' .
+                '[\s\n]{2,}public function [g|s]et(?<name>\w+)\(((?:,? ?\$\w+ ?= ?[^,]+)*|\$\w+(?:, ?\$\w+ ?= ?[^,]+)*)\)#',
+                $class['content']);
+
+        }
+        return $params;
+    }
+
     public function updateMethodDocs($fileContent, $className, $file)
     {
         $ref = new \ReflectionClass($className);
@@ -296,7 +332,6 @@ class PhpDocController extends Controller
             $inheritDocs = $this->isMethodReplacingParent($ref, $method);
             $docs = $originalDocs = $method->getDocComment();
             $docsSize = count(explode("\n", $docs));
-            $final = false;
             if (empty($docs)) {
                 $docsSize = 0;
                 $docs = "/**\n**/";
@@ -304,7 +339,9 @@ class PhpDocController extends Controller
             $lines = explode("\n", $docs);
             if ($inheritDocs && $docsSize === 0) {
                 array_splice($lines, 1, 0, [' * @inheritdoc']);
-                $final = true;
+            }
+            if (preg_match('/\@inheritdoc/', implode($lines)) === 0) {
+                $lines = $this->generateMethodDocs($method, $lines);
             }
             $currentStartLine = $fileContent[$method->getStartLine()-1];
             preg_match('/^([ \t\r\n\f]*)[a-zA-Z].*/', $currentStartLine, $matches);
