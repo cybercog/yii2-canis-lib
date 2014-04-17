@@ -275,7 +275,7 @@ class PhpDocController extends Controller
         if (!empty($updates)) {
             foreach ($updates as $update) {
                 array_splice($fileContent, $update['start'] + $offset, $update['length'], $update['inject']);
-                $offset = $offset + (count($update['inject']) - $update['length']);
+                $offset = $offset + ($update['length'] - count($update['inject']));
             }
             file_put_contents($file, implode("\n", $fileContent));
         }
