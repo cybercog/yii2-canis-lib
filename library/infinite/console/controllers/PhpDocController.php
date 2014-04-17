@@ -191,6 +191,17 @@ class PhpDocController extends Controller
         }
     }
 
+    protected function guessClassDescription($ref)
+    {
+        $description = "[@doctodo write class description for ". $ref->getShortName() . "]";
+        if ($ref->isSubclassOf('yii\db\ActiveRecord')) {
+            $className = $ref->getName();
+            $tableName = $className::tableName();
+            $description = " is the model class for table \"{$tableName}\".";
+        }
+        return $description;
+    }
+
     protected function updateClassPropertyDocs($file, $className, $propertyDoc)
     {
         $ref = new \ReflectionClass($className);
@@ -205,11 +216,13 @@ class PhpDocController extends Controller
         }
 
         $oldDoc = $ref->getDocComment();
+        $oldDocSize = count(explode("\n", $oldDoc));
         if (empty($oldDoc)) {
-            $oldDoc = "/**\n**/\n";
+            $oldDocSize = 0;
+            $oldDoc = "/**\n**/";
         }
         // * ". $ref->getShortName() ." @doctodo write class description for ". $ref->getShortName() ."\n 
-        // $newDoc = $this->cleanDocComment($this->updateDocComment($oldDoc, $propertyDoc));
+        $newDoc = $this->cleanDocComment($this->updateDocComment($oldDoc, $propertyDoc, $ref));
         $newDoc = $oldDoc;
         $seenSince = false;
         $seenAuthor = false;
@@ -219,7 +232,7 @@ class PhpDocController extends Controller
 
         $oldTest = ' * '. $ref->getShortName();
         if (strpos($lines[1], $oldTest) !== 0) {
-            array_splice( $lines, 1, 0, [" * ". $ref->getShortName() ." [@doctodo write class description for ". $ref->getShortName() . ']',' *']);
+            array_splice( $lines, 1, 0, [" * ". $ref->getShortName() ." ". $this->guessClassDescription($ref),' *']);
         }
 
         if (trim($lines[1]) == '*' || substr(trim($lines[1]), 0, 3) == '* @') {
@@ -237,18 +250,21 @@ class PhpDocController extends Controller
             $this->stderr("[ERR] No @since found in class doc in file: $file\n", Console::FG_RED);
         }
         if (!$seenAuthor) {
-            array_splice( $lines, count($lines)-2, 0, [" * @author {$this->author}"]);
+            $insertLines = [];
+            if (strpos($lines[count($lines)-2], " * @property") !== false) {
+                $insertLines[] = ' *';
+            }
+            $insertLines[] = " * @author {$this->author}";
+            array_splice( $lines, count($lines)-1, 0, $insertLines);
             // $this->stderr("[ERR] No @author found in class doc in file: $file\n", Console::FG_RED);
         }
-
         $newDoc = implode("\n", $lines);
 
-        \d($newDoc);
         if (trim($oldDoc) != trim($newDoc)) {
 
             $fileContent = explode("\n", file_get_contents($file));
             $start = $ref->getStartLine() - 2;
-            $docStart = $start - count(explode("\n", $oldDoc)) + 1;
+            $docStart = $start - $oldDocSize + 1;
 
             $newFileContent = [];
             $n = count($fileContent);
@@ -261,7 +277,7 @@ class PhpDocController extends Controller
                 }
             }
 
-            //file_put_contents($file, implode("\n", $newFileContent));
+            file_put_contents($file, implode("\n", $newFileContent));
 
             return true;
         }
@@ -295,9 +311,9 @@ class PhpDocController extends Controller
      * @param $properties
      * @return string
      */
-    protected function updateDocComment($doc, $properties)
+    protected function updateDocComment($doc, $properties, $ref)
     {
-        $lines = explode("\n", $doc);
+        $lines = explode("\n", trim($doc));
         $propertyPart = false;
         $propertyPosition = false;
         foreach ($lines as $i => $line) {
@@ -311,7 +327,10 @@ class PhpDocController extends Controller
                 $propertyPosition = $i - 1;
                 $propertyPart = false;
             }
-            if ($propertyPart) {
+            if ($propertyPart && !$ref->isSubclassOf('yii\base\Model')) {
+                unset($lines[$i]);
+            } elseif ($ref->isSubclassOf('yii\db\ActiveRecord') 
+                && preg_match('/^\* This is the model class for table/', trim($line)) !== false) {
                 unset($lines[$i]);
             }
         }
