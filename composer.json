@@ -17,10 +17,12 @@
 		"umpirsky/country-list": "*",
 		"jom/php-subnational-division": "dev-master",
 		"bootstrap-select/bootstrap-select": "*",
-		"eternicode/bootstrap-datepicker": "*"
+		"eternicode/bootstrap-datepicker": "*",
 	},
 	"require-dev": {
-		"phpunit/phpunit": "3.7.*"
+		"phpunit/phpunit": "3.7.*",
+		"fabpot/php-cs-fixer": "@stable",
+		"phpdocumentor/reflection-docblock": "*"
 	},
 	"autoload": {
 		"classmap": ["library/infinite/Infinite.php", "library/infinite/ICD.php"],
