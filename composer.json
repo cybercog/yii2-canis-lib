@@ -22,7 +22,7 @@
 	"require-dev": {
 		"phpunit/phpunit": "3.7.*",
 		"fabpot/php-cs-fixer": "@stable",
-		"phpdocumentor/reflection-docblock": "*"
+		"phpdocumentor/reflection-docblock": "2.0.*@dev"
 	},
 	"autoload": {
 		"classmap": ["library/infinite/Infinite.php", "library/infinite/ICD.php"],
