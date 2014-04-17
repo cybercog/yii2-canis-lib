@@ -16,6 +16,9 @@ class QueryArchivable extends QueryBehavior
 {
     protected $_allowArchives;
 
+    /**
+    * @inheritdoc
+    **/
     public function events()
     {
         return [

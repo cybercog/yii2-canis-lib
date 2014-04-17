@@ -113,7 +113,7 @@ class PhpDocController extends Controller
     {
         $except = [];
         if ($root === null) {
-            $root = INFINITE_APP_VENDOR_PATH . DIRECTORY_SEPARATOR . 'infiniteCascade' . DIRECTORY_SEPARATOR .'cascade-lib';
+            $root = INFINITE_APP_VENDOR_PATH . DIRECTORY_SEPARATOR . 'infiniteCascade';// . DIRECTORY_SEPARATOR .'cascade-lib';
 
             $except = [
                 '.git/',

@@ -16,6 +16,9 @@ class Sort extends \yii\data\Sort
 {
     public $sortOrders = [];
 
+    /**
+    * @inheritdoc
+    **/
     public function getAttributeOrders($recalculate = false)
     {
         return $this->sortOrders;

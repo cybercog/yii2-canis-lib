@@ -39,6 +39,9 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     const EVENT_COLLECT_AUDIT_UPDATE = 'collectAuditInsert';
     const EVENT_COLLECT_AUDIT_DELETE = 'collectAuditDelete';
 
+    /**
+    * @inheritdoc
+    **/
     public function events()
     {
         return [
@@ -52,6 +55,9 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
         ];
     }
 
+    /**
+    * @inheritdoc
+    **/
     public function safeAttributes()
     {
         return ['directObject', 'indirectObject', 'auditAgent'];

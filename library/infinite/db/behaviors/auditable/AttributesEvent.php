@@ -16,6 +16,9 @@ class AttributesEvent extends Event
 {
     public $attributes;
 
+    /**
+    * @inheritdoc
+    **/
     public function getHashArray()
     {
         $hash = parent::getHashArray();

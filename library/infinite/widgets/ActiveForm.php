@@ -16,6 +16,9 @@ class ActiveForm extends \yii\widgets\ActiveForm
 {
     public $fieldConfig = ['class' => 'infinite\\widgets\\ActiveField'];
 
+    /**
+    * @inheritdoc
+    **/
     public static function begin($config = [], $echo = true)
     {
         ob_start();
@@ -30,6 +33,9 @@ class ActiveForm extends \yii\widgets\ActiveForm
         return $return;
     }
 
+    /**
+    * @inheritdoc
+    **/
     public static function end($echo = true)
     {
         ob_start();

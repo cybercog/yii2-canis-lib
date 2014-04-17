@@ -19,6 +19,9 @@ class Collector extends \infinite\base\collector\Collector
 {
     protected $_tableRegistry;
     protected $_initialItems = [];
+    /**
+    * @inheritdoc
+    **/
     public function getInitialItems()
     {
         return $this->_initialItems;
@@ -29,6 +32,9 @@ class Collector extends \infinite\base\collector\Collector
         $this->_initialItems = $value;
     }
 
+    /**
+    * @inheritdoc
+    **/
     public function getCollectorItemClass()
     {
         return 'infinite\\security\\role\\Item';
@@ -63,6 +69,9 @@ class Collector extends \infinite\base\collector\Collector
         return $this->_tableRegistry;
     }
 
+    /**
+    * @inheritdoc
+    **/
     public function prepareComponent($component)
     {
         if (!Yii::$app->isDbAvailable) {

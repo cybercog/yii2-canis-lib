@@ -23,6 +23,9 @@ class Date extends \infinite\db\behaviors\ActiveRecord
     public $humanTimeFormat = "g:i a";
     public $humanDateFormat = "m/d/Y";
 
+    /**
+    * @inheritdoc
+    **/
     public function events()
     {
         return [

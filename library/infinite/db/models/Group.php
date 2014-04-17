@@ -33,6 +33,9 @@ class Group extends \infinite\db\ActiveRecord
         return 'group';
     }
 
+    /**
+    * @inheritdoc
+    **/
     public function behaviors()
     {
         return array_merge(parent::behaviors(),

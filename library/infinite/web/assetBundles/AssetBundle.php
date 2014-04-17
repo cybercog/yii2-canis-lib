@@ -14,6 +14,9 @@ namespace infinite\web\assetBundles;
 **/
 class AssetBundle extends \yii\web\AssetBundle
 {
+    /**
+    * @inheritdoc
+    **/
     public function init()
     {
         parent::init();

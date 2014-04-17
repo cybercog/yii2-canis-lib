@@ -27,6 +27,9 @@ class MigrateController extends \yii\console\controllers\MigrateController
 
     public $templateFile = '@infinite/views/system/migration.phpt';
 
+    /**
+    * @inheritdoc
+    **/
     protected function createMigration($class)
     {
         if (!isset($this->migrationsMap[$class])) {

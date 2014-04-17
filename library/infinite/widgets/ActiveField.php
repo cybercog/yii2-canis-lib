@@ -20,6 +20,9 @@ class ActiveField extends \yii\widgets\ActiveField
     public $inputGroupPrefix = false;
     public $inputGroupPostfix = false;
 
+    /**
+    * @inheritdoc
+    **/
     public function render($content = null)
     {
         if ($content === null) {

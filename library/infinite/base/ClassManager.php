@@ -19,6 +19,9 @@ use IteratorAggregate;
 class ClassManager extends Component implements IteratorAggregate, ArrayAccess
 {
     protected $_classes = [];
+    /**
+    * @inheritdoc
+    **/
     public function init()
     {
         $this->setClasses($this->baseClasses(), false);

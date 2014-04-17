@@ -17,6 +17,9 @@ class Tree extends \infinite\base\Object
     public $object;
     public $children;
 
+    /**
+    * @inheritdoc
+    **/
     public function __construct($object, $children)
     {
         $this->object = $object;

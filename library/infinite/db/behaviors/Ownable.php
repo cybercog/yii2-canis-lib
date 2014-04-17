@@ -20,6 +20,9 @@ class Ownable extends \infinite\db\behaviors\ActiveRecord
     public $ownableEnabled = true;
     const ROLE_OWNER = 'owner';
 
+    /**
+    * @inheritdoc
+    **/
     public function events()
     {
         return [
@@ -31,6 +34,9 @@ class Ownable extends \infinite\db\behaviors\ActiveRecord
         ];
     }
 
+    /**
+    * @inheritdoc
+    **/
     public function safeAttributes()
     {
         return ['ownableEnabled', 'objectOwner'];

@@ -26,6 +26,9 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
 
     protected $_accessMap = [];
 
+    /**
+    * @inheritdoc
+    **/
     public function events()
     {
         return [

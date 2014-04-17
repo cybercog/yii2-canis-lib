@@ -21,6 +21,9 @@ class Bucket extends \infinite\base\Object implements IteratorAggregate, ArrayAc
     protected $_bucket = [];
     protected $_collector;
 
+    /**
+    * @inheritdoc
+    **/
     public function __construct($collector)
     {
         $this->_collector = $collector;

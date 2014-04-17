@@ -22,6 +22,9 @@ class Status extends \infinite\base\Component
     protected $_tasks = [];
     public $maxLevels = 3;
 
+    /**
+    * @inheritdoc
+    **/
     public function __construct($maxLevels = 3)
     {
         $this->maxLevels = $maxLevels;

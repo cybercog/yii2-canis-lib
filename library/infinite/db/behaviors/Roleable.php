@@ -27,6 +27,9 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
     protected $_roleChanged = [];
     protected static $_cache = [];
 
+    /**
+    * @inheritdoc
+    **/
     public function events()
     {
         return [
@@ -35,6 +38,9 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
         ];
     }
 
+    /**
+    * @inheritdoc
+    **/
     public function safeAttributes()
     {
         return ['role', 'roles', 'accessRoleCheck'];

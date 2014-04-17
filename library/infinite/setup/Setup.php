@@ -44,6 +44,9 @@ class Setup extends \infinite\base\Object
         return self::$_instance;
     }
 
+    /**
+    * @inheritdoc
+    **/
     public function __construct($config = [])
     {
         foreach ($config as $k => $v) {

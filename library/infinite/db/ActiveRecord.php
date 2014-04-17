@@ -50,6 +50,9 @@ class ActiveRecord extends \yii\db\ActiveRecord
      */
     const EVENT_AFTER_SAVE_FAIL = 'afterSaveFail';
 
+    /**
+    * @inheritdoc
+    **/
     public function beforeSave($insert)
     {
         if (!empty($this->dirtyAttributes)) {
@@ -59,6 +62,9 @@ class ActiveRecord extends \yii\db\ActiveRecord
         return parent::beforeSave($insert);
     }
 
+    /**
+    * @inheritdoc
+    **/
     public function afterSave($insert)
     {
         $result = parent::afterSave($insert);
@@ -90,6 +96,9 @@ class ActiveRecord extends \yii\db\ActiveRecord
         return Cacher::groupDependency(self::cacheGroupKey());
     }
 
+    /**
+    * @inheritdoc
+    **/
     public static function populateRecord($record, $row)
     {
         $relation = [];
@@ -198,11 +207,17 @@ class ActiveRecord extends \yii\db\ActiveRecord
         return self::findOne([$dummy->tableName() .'.'. $dummy->primaryKey()[0] => $id], $checkAccess);
     }
 
+    /**
+    * @inheritdoc
+    **/
     public static function findOne($where, $checkAccess = true)
     {
         return self::_findCache('one', $where, $checkAccess);
     }
 
+    /**
+    * @inheritdoc
+    **/
     public static function findAll($where = false, $checkAccess = true)
     {
         return self::_findCache('all', $where, $checkAccess);
@@ -278,6 +293,9 @@ class ActiveRecord extends \yii\db\ActiveRecord
         return true;
     }
 
+    /**
+    * @inheritdoc
+    **/
     public function behaviors()
     {
         return [

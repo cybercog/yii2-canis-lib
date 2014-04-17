@@ -19,6 +19,9 @@ class FontAwesomeAsset extends AssetBundle
         'css/font-awesome.min.css',
     ];
 
+    /**
+    * @inheritdoc
+    **/
     public function init()
     {
         $this->publishOptions['beforeCopy'] = function ($from, $to) {

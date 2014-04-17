@@ -29,6 +29,9 @@ class Task extends \infinite\base\Component
     const MESSAGE_ERROR = '__error';
     const MESSAGE_NOTICE = '__notice';
 
+    /**
+    * @inheritdoc
+    **/
     public function __construct($parent, $system, $human = null)
     {
         if (is_null($human)) { $human = $system; }

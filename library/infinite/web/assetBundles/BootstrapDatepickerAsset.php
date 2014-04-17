@@ -20,6 +20,9 @@ class BootstrapDatepickerAsset extends AssetBundle
     public $js = ['js/bootstrap-datepicker.js'];
     public $depends = ['yii\web\JqueryAsset', 'yii\bootstrap\BootstrapAsset'];
 
+    /**
+    * @inheritdoc
+    **/
     public function init()
     {
         $this->publishOptions['beforeCopy'] = function ($from, $to) {

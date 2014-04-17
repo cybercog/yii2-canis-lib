@@ -19,6 +19,9 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
     public $primaryField = 'primary';
     public $wasPrimary = false;
 
+    /**
+    * @inheritdoc
+    **/
     public function events()
     {
         return [

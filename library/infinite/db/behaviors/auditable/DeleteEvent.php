@@ -19,11 +19,17 @@ class DeleteEvent extends AttributesEvent
 
     protected $_id = 'delete';
 
+    /**
+    * @inheritdoc
+    **/
     public function setDirectObject($object)
     {
         $this->descriptor = $object->descriptor;
     }
 
+    /**
+    * @inheritdoc
+    **/
     public function setIndirectObject($object)
     {
         parent::setDirectObject($object);

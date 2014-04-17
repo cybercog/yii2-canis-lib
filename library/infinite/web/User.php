@@ -16,6 +16,9 @@ use Yii;
 **/
 class User extends \yii\web\User
 {
+    /**
+    * @inheritdoc
+    **/
     public function loginRequired()
     {
         $request = Yii::$app->getRequest();

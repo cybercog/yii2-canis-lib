@@ -45,6 +45,9 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     /*
         Events stuff
     */
+    /**
+    * @inheritdoc
+    **/
     public function events()
     {
         return [
@@ -53,11 +56,17 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
         ];
     }
 
+    /**
+    * @inheritdoc
+    **/
     public function safeAttributes()
     {
         return ['relationModels'];
     }
 
+    /**
+    * @inheritdoc
+    **/
     public function init()
     {
         parent::init();

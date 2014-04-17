@@ -22,6 +22,9 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
     public static $_table;
     protected $_model;
 
+    /**
+    * @inheritdoc
+    **/
     public function events()
     {
         return [
@@ -31,6 +34,9 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
         ];
     }
 
+    /**
+    * @inheritdoc
+    **/
     public function safeAttributes()
     {
         return [];

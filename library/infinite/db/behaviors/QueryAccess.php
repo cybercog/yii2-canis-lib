@@ -22,6 +22,9 @@ class QueryAccess extends QueryBehavior
     public $accessAdded = false;
     protected $_bannedRoles;
 
+    /**
+    * @inheritdoc
+    **/
     public function events()
     {
         return [

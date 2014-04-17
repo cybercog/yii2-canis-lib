@@ -16,6 +16,9 @@ class Pagination extends \yii\data\Pagination
 {
     protected $_state;
 
+    /**
+    * @inheritdoc
+    **/
     public function createUrl($page, $absolute = false)
     {
         return '#';

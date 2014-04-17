@@ -20,6 +20,9 @@ abstract class Task extends \infinite\base\Object
     public $input = [];
     public $skipComplete = false;
 
+    /**
+    * @inheritdoc
+    **/
     public function __construct($setup)
     {
         $this->_setup = $setup;

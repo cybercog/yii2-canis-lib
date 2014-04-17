@@ -21,6 +21,9 @@ class CssSpriteImage extends \infinite\base\Object
     public $name;
     public $outputs = [];
 
+    /**
+    * @inheritdoc
+    **/
     public function __construct($path, $name)
     {
         $this->path = $path;

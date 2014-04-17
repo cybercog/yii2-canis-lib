@@ -14,6 +14,9 @@ namespace infinite\base\exceptions;
 **/
 class Deprecated extends \infinite\base\exceptions\Exception
 {
+    /**
+    * @inheritdoc
+    **/
     public function getName()
     {
         return 'Deprecated';

@@ -30,6 +30,9 @@ class Blame extends \infinite\db\behaviors\ActiveRecord
     public static $_userID;
     protected $_fields;
 
+    /**
+    * @inheritdoc
+    **/
     public function events()
     {
         return [

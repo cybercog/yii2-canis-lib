@@ -14,6 +14,9 @@ namespace infinite\helpers;
 **/
 class ArrayHelper extends \yii\helpers\ArrayHelper
 {
+    /**
+    * @inheritdoc
+    **/
     public static function getValue($array, $key, $default = null)
     {
         if (strstr($key, '.') !== false) {

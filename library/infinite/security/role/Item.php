@@ -42,6 +42,9 @@ class Item extends \infinite\base\collector\Item
         return ArrayHelper::getValue($this->object, 'primaryKey');
     }
 
+    /**
+    * @inheritdoc
+    **/
     public function getSystemId()
     {
         if (parent::getSystemId()) {

@@ -20,6 +20,9 @@ class Controller extends \yii\web\Controller
 
     protected static $_response = [];
 
+    /**
+    * @inheritdoc
+    **/
     public function init()
     {
         parent::init();

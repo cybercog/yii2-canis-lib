@@ -25,6 +25,9 @@ abstract class Module extends Collector
 
     abstract public function getModulePrefix();
 
+    /**
+    * @inheritdoc
+    **/
     public function beforeRequest(Event $event)
     {
         $this->load();
