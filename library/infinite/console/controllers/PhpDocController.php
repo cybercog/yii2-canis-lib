@@ -572,7 +572,7 @@ class PhpDocController extends Controller
                 $docsSize = 0;
                 $docs = "/**\n */";
             }
-            $lines = explode("\n", $docs);
+            $lines = $originalLines = explode("\n", $docs);
             if ($inheritDocs && $docsSize === 0) {
                 array_splice($lines, 1, 0, [' * @inheritdoc']);
             }
@@ -582,7 +582,14 @@ class PhpDocController extends Controller
             $currentStartLine = $fileContent[$startLine-1];
             preg_match('/^([ \t\r\n\f]*)[a-zA-Z].*/', $currentStartLine, $matches);
             $whitespace = isset($matches[1]) ? $matches[1] : '';
-            $newDocs = implode("\n", $lines);
+            $newDocs = '';
+            foreach ($lines as $k => $line) {
+                $newDocs .= trim($line) ."\n";
+            }
+            $originalDocs = '';
+            foreach ($originalLines as $k => $line) {
+                $originalDocs .= trim($line) ."\n";
+            }
             foreach ($lines as $k => $line) {
                 $extra = '';
                 if ($k !== 0) {
@@ -626,7 +633,7 @@ class PhpDocController extends Controller
                 $docsSize = 0;
                 $docs = "/**\n */";
             }
-            $lines = explode("\n", $docs);
+            $lines = $originalLines = explode("\n", $docs);
             if ($inheritDocs && $docsSize === 0) {
                 array_splice($lines, 1, 0, [' * @inheritdoc']);
             }
@@ -636,7 +643,14 @@ class PhpDocController extends Controller
             $currentStartLine = $fileContent[$method->getStartLine()-1];
             preg_match('/^([ \t\r\n\f]*)[a-zA-Z].*/', $currentStartLine, $matches);
             $whitespace = isset($matches[1]) ? $matches[1] : '';
-            $newDocs = implode("\n", $lines);
+            $newDocs = '';
+            foreach ($lines as $k => $line) {
+                $newDocs .= trim($line) ."\n";
+            }
+            $originalDocs = '';
+            foreach ($originalLines as $k => $line) {
+                $originalDocs .= trim($line) ."\n";
+            }
             foreach ($lines as $k => $line) {
                 $extra = '';
                 if ($k !== 0) {
@@ -644,7 +658,7 @@ class PhpDocController extends Controller
                 }
                 $lines[$k] = $whitespace . $extra . trim($line);
             }
-            if ($newDocs !== $originalDocs && $newDocs !== "/**\n */") {
+            if (trim($newDocs) !== trim($originalDocs) && $newDocs !== "/**\n */") {
                 $updates[] = [
                     'inject' => $lines,
                     'length' => $docsSize,
