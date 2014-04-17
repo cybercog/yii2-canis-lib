@@ -306,13 +306,14 @@ class PhpDocController extends Controller
                 array_splice($lines, 1, 0, [' * @inheritdoc']);
                 $final = true;
             }
-            if (count($lines) > 1 && $docsSize == 0) {
-                $currentStartLine = $fileContent[$method->getStartLine()-1];
-                preg_match('/^([ \t\r\n\f]*)[a-zA-Z].*/', $currentStartLine, $matches);
-                $whitespace = isset($matches[1]) ? $matches[1] : '';
-                foreach ($lines as $k => $line) {
-                    $lines[$k] = $whitespace . trim($line);
-                }
+            $currentStartLine = $fileContent[$method->getStartLine()-1];
+            preg_match('/^([ \t\r\n\f]*)[a-zA-Z].*/', $currentStartLine, $matches);
+            $whitespace = isset($matches[1]) ? $matches[1] : '';
+            foreach ($lines as $k => $line) {
+                $lines[$k] = $whitespace . trim($line);
+            }
+            $newDocs = implode("\n", $lines);
+            if ($newDocs !== $originalDocs && $newDocs !== "/**\n**/") {
                 $updates[] = [
                     'inject' => $lines,
                     'length' => $docsSize,
@@ -493,7 +494,7 @@ class PhpDocController extends Controller
                         }
                         if (!$parentSetter) {
                             $note = ' This property is read-only.';
-//							$docline .= '-read';
+//                          $docline .= '-read';
                         }
                     } elseif (isset($prop['set'])) {
                         // check if parent class has getter defined
@@ -508,7 +509,7 @@ class PhpDocController extends Controller
                         }
                         if (!$parentGetter) {
                             $note = ' This property is write-only.';
-//							$docline .= '-write';
+//                          $docline .= '-write';
                         }
                     } else {
                         continue;
