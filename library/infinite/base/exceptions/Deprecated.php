@@ -7,7 +7,7 @@
 
 namespace infinite\base\exceptions;
 
-class DeprecatedException extends \infinite\base\exceptions\Exception
+class Deprecated extends \infinite\base\exceptions\Exception
 {
     public function getName()
     {

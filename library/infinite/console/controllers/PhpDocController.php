@@ -17,17 +17,19 @@ use yii\helpers\FileHelper;
  *
  * @author Carsten Brandt <mail@cebe.cc>
  * @author Alexander Makarov <sam@rmcreative.ru>
+ * @author Jacob Morrison <email@ofjacob.com>
  * @since 2.0
  */
 class PhpDocController extends Controller
 {
     public $defaultAction = 'property';
+    public $author = "Jacob Morrison <email@ofjacob.com>";
 
     /**
      * @var boolean whether to update class docs directly. Setting this to false will just output docs
      * for copy and paste.
      */
-    public $updateFiles = false;
+    public $updateFiles = true;
 
     /**
      * Generates `@property annotations` in class files from getters and setters
@@ -128,6 +130,7 @@ class PhpDocController extends Controller
                 '/framework/Yii.php',
                 'tests/',
                 'vendor/',
+                'cs/',
             ];
         }
         $root = FileHelper::normalizePath($root);
@@ -202,13 +205,23 @@ class PhpDocController extends Controller
         }
 
         $oldDoc = $ref->getDocComment();
-        $newDoc = $this->cleanDocComment($this->updateDocComment($oldDoc, $propertyDoc));
-
+        if (empty($oldDoc)) {
+            $oldDoc = "/**\n**/\n";
+        }
+        // * ". $ref->getShortName() ." @doctodo write class description for ". $ref->getShortName() ."\n 
+        // $newDoc = $this->cleanDocComment($this->updateDocComment($oldDoc, $propertyDoc));
+        $newDoc = $oldDoc;
         $seenSince = false;
         $seenAuthor = false;
 
         // TODO move these checks to different action
         $lines = explode("\n", $newDoc);
+
+        $oldTest = ' * '. $ref->getShortName();
+        if (strpos($lines[1], $oldTest) !== 0) {
+            array_splice( $lines, 1, 0, [" * ". $ref->getShortName() ." [@doctodo write class description for ". $ref->getShortName() . ']',' *']);
+        }
+
         if (trim($lines[1]) == '*' || substr(trim($lines[1]), 0, 3) == '* @') {
             $this->stderr("[WARN] Class $className has no short description.\n", Console::FG_YELLOW, Console::BOLD);
         }
@@ -224,9 +237,13 @@ class PhpDocController extends Controller
             $this->stderr("[ERR] No @since found in class doc in file: $file\n", Console::FG_RED);
         }
         if (!$seenAuthor) {
-            $this->stderr("[ERR] No @author found in class doc in file: $file\n", Console::FG_RED);
+            array_splice( $lines, count($lines)-2, 0, [" * @author {$this->author}"]);
+            // $this->stderr("[ERR] No @author found in class doc in file: $file\n", Console::FG_RED);
         }
 
+        $newDoc = implode("\n", $lines);
+
+        \d($newDoc);
         if (trim($oldDoc) != trim($newDoc)) {
 
             $fileContent = explode("\n", file_get_contents($file));
@@ -244,7 +261,7 @@ class PhpDocController extends Controller
                 }
             }
 
-            file_put_contents($file, implode("\n", $newFileContent));
+            //file_put_contents($file, implode("\n", $newFileContent));
 
             return true;
         }
