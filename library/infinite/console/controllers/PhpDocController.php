@@ -218,7 +218,7 @@ class PhpDocController extends Controller
         }
         // * ". $ref->getShortName() ." @doctodo write class description for ". $ref->getShortName() ."\n 
         
-        if (!$ref->isSubclassOf('yii\base\Object') && $className != 'yii\base\Object') {
+        if (true || !$ref->isSubclassOf('yii\base\Object') && $className != 'yii\base\Object') {
             $newDoc = $oldDoc;
         } else {
             $newDoc = $this->cleanDocComment($this->updateDocComment($oldDoc, $propertyDoc, $coveredProperties, $ref));

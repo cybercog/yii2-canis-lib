@@ -1,6 +1,5 @@
 <?php
 /**
-/**
  * ICD [@doctodo write class description for ICD]
  *
  * library/ICD.php
