@@ -24,25 +24,21 @@ use yii\helpers\Inflector;
  */
 class PhpDocController extends Controller
 {
-    /**
-     * @inheritdoc
-     */
     public $defaultAction = 'property';
-    /**
-     * @var __var_author_type__ __var_author_description__
-     */
     public $author = "Jacob Morrison <email@ofjacob.com>";
 
     /**
      * @var boolean whether to update class docs directly. Setting this to false will just output docs
-for copy and paste.
+     * for copy and paste.
      */
     public $updateFiles = true;
 
     /**
      * Generates `@property annotations` in class files from getters and setters
+     *
      * Property description will be taken from getter or setter or from an `@property annotation`
      * in the getters docblock if there is one defined.
+     *
      * See https://github.com/yiisoft/yii2/wiki/Core-framework-code-style#documentation for details.
      *
      * @param string $root the directory to parse files from. Defaults to YII_PATH.
@@ -75,6 +71,7 @@ for copy and paste.
 
     /**
      * Fix some issues with PHPdoc in files
+     *
      * @param string $root the directory to parse files from. Defaults to YII_PATH.
      */
     public function actionFix($root = null)
@@ -113,16 +110,11 @@ for copy and paste.
         return array_merge(parent::options($actionId), ['updateFiles']);
     }
 
-    /**
-     * __method_findFiles_description__
-     * @param __param_root_type__ $root __param_root_description__
-     * @return __return_findFiles_type__ __return_findFiles_description__
-     */
     protected function findFiles($root)
     {
         $except = [];
         if ($root === null) {
-            $root = INFINITE_APP_VENDOR_PATH . DIRECTORY_SEPARATOR . 'infiniteCascade';//. DIRECTORY_SEPARATOR .'cascade-lib';
+            $root = INFINITE_APP_VENDOR_PATH . DIRECTORY_SEPARATOR . 'infiniteCascade'. DIRECTORY_SEPARATOR .'cascade-lib';
 
             $except = [
                 '.git/',
@@ -166,11 +158,6 @@ for copy and paste.
         return FileHelper::findFiles($root, $options);
     }
 
-    /**
-     * __method_fixFileDoc_description__
-     * @param __param_lines_type__ $lines __param_lines_description__
-     * @param __param_file_type__ $file __param_file_description__
-     */
     protected function fixFileDoc(&$lines, $file)
     {
         // find namespace
@@ -206,11 +193,6 @@ for copy and paste.
         }
     }
 
-    /**
-     * __method_guessClassDescription_description__
-     * @param __param_ref_type__ $ref __param_ref_description__
-     * @return __return_guessClassDescription_type__ __return_guessClassDescription_description__
-     */
     protected function guessClassDescription($ref)
     {
         $description = '__class_'.$ref->getName().'_description__';
@@ -222,14 +204,6 @@ for copy and paste.
         return $description;
     }
 
-    /**
-     * __method_updateClassPropertyDocs_description__
-     * @param __param_file_type__ $file __param_file_description__
-     * @param __param_className_type__ $className __param_className_description__
-     * @param __param_propertyDoc_type__ $propertyDoc __param_propertyDoc_description__
-     * @param __param_coveredProperties_type__ $coveredProperties __param_coveredProperties_description__
-     * @return __return_updateClassPropertyDocs_type__ __return_updateClassPropertyDocs_description__
-     */
     protected function updateClassPropertyDocs($file, $className, $propertyDoc, $coveredProperties)
     {
         $ref = new \ReflectionClass($className);
@@ -310,11 +284,6 @@ for copy and paste.
         return !empty($updates);
     }
 
-    /**
-     * __method_guessMethodDescription_description__
-     * @param __param_method_type__ $method __param_method_description__
-     * @return __return_guessMethodDescription_type__ __return_guessMethodDescription_description__
-     */
     public function guessMethodDescription($method)
     {
         if ($method->getName() === '__construct') {
@@ -329,13 +298,6 @@ for copy and paste.
         return '__method_'.$method->getName().'_description__';
     }
 
-    /**
-     * __method_generatePropertyDocs_description__
-     * @param __param_class_type__ $class __param_class_description__
-     * @param __param_property_type__ $property __param_property_description__
-     * @param __param_lines_type__ $lines __param_lines_description__
-     * @return __return_generatePropertyDocs_type__ __return_generatePropertyDocs_description__
-     */
     public function generatePropertyDocs($class, $property, $lines)
     {
         $phpdoc = new \phpDocumentor\Reflection\DocBlock($property);
@@ -378,12 +340,6 @@ for copy and paste.
         return $lines;
     }
 
-    /**
-     * __method_generateMethodDocs_description__
-     * @param __param_method_type__ $method __param_method_description__
-     * @param __param_lines_type__ $lines __param_lines_description__
-     * @return __return_generateMethodDocs_type__ __return_generateMethodDocs_description__
-     */
     public function generateMethodDocs($method, $lines)
     {
         if (trim($lines[1]) == '*' || substr(trim($lines[1]), 0, 3) == '* @') {
@@ -508,11 +464,6 @@ for copy and paste.
         return $lines;
     }
 
-    /**
-     * __method_getMethodCode_description__
-     * @param __param_method_type__ $method __param_method_description__
-     * @return __return_getMethodCode_type__ __return_getMethodCode_description__
-     */
     public function getMethodCode($method)
     {
         $methodFile = $method->getFileName();
@@ -525,13 +476,6 @@ for copy and paste.
     }
 
 
-    /**
-     * __method_updatePropertyDocs_description__
-     * @param __param_fileContent_type__ $fileContent __param_fileContent_description__
-     * @param __param_className_type__ $className __param_className_description__
-     * @param __param_file_type__ $file __param_file_description__
-     * @return __return_updatePropertyDocs_type__ __return_updatePropertyDocs_description__
-     */
     public function updatePropertyDocs($fileContent, $className, $file)
     {
         $ref = new \ReflectionClass($className);
@@ -596,13 +540,6 @@ for copy and paste.
         return $updates;
     }
 
-    /**
-     * __method_updateMethodDocs_description__
-     * @param __param_fileContent_type__ $fileContent __param_fileContent_description__
-     * @param __param_className_type__ $className __param_className_description__
-     * @param __param_file_type__ $file __param_file_description__
-     * @return __return_updateMethodDocs_type__ __return_updateMethodDocs_description__
-     */
     public function updateMethodDocs($fileContent, $className, $file)
     {
         $ref = new \ReflectionClass($className);
@@ -650,12 +587,6 @@ for copy and paste.
         return $updates;
     }
 
-    /**
-     * __method_isPropertyReplacingParent_description__
-     * @param ReflectionClass $class __param_class_description__
-     * @param ReflectionProperty $property __param_property_description__
-     * @return __return_isPropertyReplacingParent_type__ __return_isPropertyReplacingParent_description__
-     */
     public function isPropertyReplacingParent(\ReflectionClass $class, \ReflectionProperty $property)
     {
         $parentClass = $class->getParentClass();
@@ -668,12 +599,6 @@ for copy and paste.
         return false;
     }
 
-    /**
-     * __method_isMethodReplacingParent_description__
-     * @param ReflectionClass $class __param_class_description__
-     * @param ReflectionMethod $method __param_method_description__
-     * @return __return_isMethodReplacingParent_type__ __return_isMethodReplacingParent_description__
-     */
     public function isMethodReplacingParent(\ReflectionClass $class, \ReflectionMethod $method)
     {
         $parentClass = $class->getParentClass();
@@ -688,6 +613,7 @@ for copy and paste.
 
     /**
      * remove multi empty lines and trim trailing whitespace
+     *
      * @param $doc
      * @return string
      */
@@ -709,8 +635,6 @@ for copy and paste.
      * Replace property annotations in doc comment
      * @param $doc
      * @param $properties
-     * @param __param_coveredProperties_type__ $coveredProperties __param_coveredProperties_description__
-     * @param __param_ref_type__ $ref __param_ref_description__
      * @return string
      */
     protected function updateDocComment($doc, $properties, $coveredProperties, $ref)
@@ -754,11 +678,6 @@ for copy and paste.
         return $finalDoc;
     }
 
-    /**
-     * __method_generateClassPropertyDocs_description__
-     * @param __param_fileName_type__ $fileName __param_fileName_description__
-     * @return __return_generateClassPropertyDocs_type__ __return_generateClassPropertyDocs_description__
-     */
     protected function generateClassPropertyDocs($fileName)
     {
         $phpdoc = "";
@@ -887,12 +806,6 @@ for copy and paste.
         return [$className, $phpdoc, $coveredProperties];
     }
 
-    /**
-     * __method_match_description__
-     * @param __param_pattern_type__ $pattern __param_pattern_description__
-     * @param __param_subject_type__ $subject __param_subject_description__
-     * @return __return_match_type__ __return_match_description__
-     */
     protected function match($pattern, $subject)
     {
         $sets = [];
@@ -905,11 +818,6 @@ for copy and paste.
         return $sets;
     }
 
-    /**
-     * __method_fixSentence_description__
-     * @param __param_str_type__ $str __param_str_description__
-     * @return __return_fixSentence_type__ __return_fixSentence_description__
-     */
     protected function fixSentence($str)
     {
         // TODO fix word wrap
@@ -918,12 +826,6 @@ for copy and paste.
         return strtoupper(substr($str, 0, 1)) . substr($str, 1) . ($str[strlen($str) - 1] != '.' ? '.' : '');
     }
 
-    /**
-     * __method_getPropParam_description__
-     * @param __param_prop_type__ $prop __param_prop_description__
-     * @param __param_param_type__ $param __param_param_description__
-     * @return __return_getPropParam_type__ __return_getPropParam_description__
-     */
     protected function getPropParam($prop, $param)
     {
         return isset($prop['property']) ? $prop['property'][$param] : (isset($prop['get']) ? $prop['get'][$param] : $prop['set'][$param]);
