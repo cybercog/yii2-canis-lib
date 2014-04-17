@@ -16,7 +16,13 @@ use infinite\db\models\Relation;
 **/
 class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
 {
+    /**
+     * @var __var_primaryField_type__ __var_primaryField_description__
+     */
     public $primaryField = 'primary';
+    /**
+     * @var __var_wasPrimary_type__ __var_wasPrimary_description__
+     */
     public $wasPrimary = false;
 
     /**
@@ -32,11 +38,20 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
         ];
     }
 
+    /**
+     * __method_handlePrimary_description__
+     * @return __return_handlePrimary_type__ __return_handlePrimary_description__
+     */
     public function handlePrimary()
     {
         return $this->owner instanceof Relation;
     }
 
+    /**
+     * __method_getSiblings_description__
+     * @param boolean $primaryOnly __param_primaryOnly_description__ [optional]
+     * @return __return_getSiblings_type__ __return_getSiblings_description__
+     */
     public function getSiblings($primaryOnly = false)
     {
         $parentObject = $this->owner->parentObject;
@@ -50,6 +65,11 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
         return $childObject->siblingRelationQuery($parentObject, ['where' => $relationFields], ['disableAccess' => true])->all();
     }
 
+    /**
+     * __method_beforeInsert_description__
+     * @param __param_event_type__ $event __param_event_description__ [optional]
+     * @return __return_beforeInsert_type__ __return_beforeInsert_description__
+     */
     public function beforeInsert($event = null)
     {
         if (!$this->handlePrimary()) { return true; }
@@ -64,6 +84,11 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
         return true;
     }
 
+    /**
+     * __method_beforeUpdate_description__
+     * @param __param_event_type__ $event __param_event_description__ [optional]
+     * @return __return_beforeUpdate_type__ __return_beforeUpdate_description__
+     */
     public function beforeUpdate($event = null)
     {
         if (!$this->handlePrimary()) { return true; }
@@ -75,6 +100,11 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
         return true;
     }
 
+    /**
+     * __method_afterUpdate_description__
+     * @param __param_event_type__ $event __param_event_description__ [optional]
+     * @return __return_afterUpdate_type__ __return_afterUpdate_description__
+     */
     public function afterUpdate($event = null)
     {
         if (!$this->handlePrimary()) { return true; }
@@ -85,12 +115,21 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
         return true;
     }
 
+    /**
+     * __method_afterDelete_description__
+     * @param __param_event_type__ $event __param_event_description__ [optional]
+     * @return __return_afterDelete_type__ __return_afterDelete_description__
+     */
     public function afterDelete($event = null)
     {
         if (!$this->handlePrimary()) { return true; }
         $this->handOffPrimary();
     }
 
+    /**
+     * __method_handOffPrimary_description__
+     * @return __return_handOffPrimary_type__ __return_handOffPrimary_description__
+     */
     public function handOffPrimary()
     {
         if ($this->owner->isPrimary || $this->owner->wasPrimary) {
@@ -105,6 +144,10 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
         return true;
     }
 
+    /**
+     * __method_setPrimary_description__
+     * @return __return_setPrimary_type__ __return_setPrimary_description__
+     */
     public function setPrimary()
     {
         if (!$this->handlePrimary()) { return false; }
@@ -120,6 +163,10 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
         return $this->owner->save();
     }
 
+    /**
+     * __method_getIsPrimary_description__
+     * @return __return_getIsPrimary_type__ __return_getIsPrimary_description__
+     */
     public function getIsPrimary()
     {
         if (!$this->handlePrimary()) { return false; }
@@ -127,6 +174,10 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
         return !empty($this->owner->{$this->primaryField});
     }
 
+    /**
+     * __method_getPresentSetPrimaryOption_description__
+     * @return __return_getPresentSetPrimaryOption_type__ __return_getPresentSetPrimaryOption_description__
+     */
     public function getPresentSetPrimaryOption()
     {
         if (!$this->handlePrimary()) { return false; }

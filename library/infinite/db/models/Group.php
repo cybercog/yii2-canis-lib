@@ -23,7 +23,13 @@ namespace infinite\db\models;
  */
 class Group extends \infinite\db\ActiveRecord
 {
+    /**
+     * @inheritdoc
+     */
     static protected $_cache = ['id' => [], 'system' => []];
+    /**
+     * @var __var__doCache_type__ __var__doCache_description__
+     */
     static protected $_doCache = true;
     /**
      * @inheritdoc
@@ -81,6 +87,7 @@ class Group extends \infinite\db\ActiveRecord
     }
 
     /**
+     * __method_getRegistry_description__
      * @return \yii\db\ActiveRelation
      */
     public function getRegistry()
@@ -89,9 +96,8 @@ class Group extends \infinite\db\ActiveRecord
     }
 
     /**
-     *
-     *
-     * @param  unknown $system
+     * __method_getSystemGroup_description__
+     * @param unknown $system
      * @return unknown
      */
     static public function getSystemGroup($system)
@@ -103,7 +109,7 @@ class Group extends \infinite\db\ActiveRecord
     }
 
     /**
-     *
+     * __method_enableCache_description__
      */
     static function enableCache()
     {
@@ -111,7 +117,7 @@ class Group extends \infinite\db\ActiveRecord
     }
 
     /**
-     *
+     * __method_disableCache_description__
      */
     static function disableCache()
     {
@@ -119,9 +125,9 @@ class Group extends \infinite\db\ActiveRecord
     }
 
     /**
-     *
-     *
-     * @param  unknown $id
+     * __method_getById_description__
+     * @param unknown $id
+     * @param boolean $checkAccess __param_checkAccess_description__ [optional]
      * @return unknown
      */
     public static function getById($id, $checkAccess = true)
@@ -145,9 +151,9 @@ class Group extends \infinite\db\ActiveRecord
     }
 
     /**
-     *
-     *
-     * @param  unknown $id
+     * __method_getBySystemName_description__
+     * @param unknown $id
+     * @param boolean $checkAccess __param_checkAccess_description__ [optional]
      * @return unknown
      */
     static function getBySystemName($id, $checkAccess = true)

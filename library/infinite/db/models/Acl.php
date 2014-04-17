@@ -27,7 +27,13 @@ namespace infinite\db\models;
  */
 class Acl extends \infinite\db\ActiveRecord
 {
+    /**
+     * @inheritdoc
+     */
     public static $registryCache = false;
+    /**
+     * @inheritdoc
+     */
     public static $relationCache = false;
     /**
      * @inheritdoc
@@ -77,6 +83,7 @@ class Acl extends \infinite\db\ActiveRecord
     }
 
     /**
+     * __method_getAclRole_description__
      * @return \yii\db\ActiveRelation
      */
     public function getAclRole()
@@ -85,6 +92,7 @@ class Acl extends \infinite\db\ActiveRecord
     }
 
     /**
+     * __method_getAccessingObject_description__
      * @return \yii\db\ActiveRelation
      */
     public function getAccessingObject()
@@ -93,6 +101,7 @@ class Acl extends \infinite\db\ActiveRecord
     }
 
     /**
+     * __method_getControlledObject_description__
      * @return \yii\db\ActiveRelation
      */
     public function getControlledObject()

@@ -16,6 +16,9 @@ abstract class Collector extends \infinite\base\Component
 {
     use CollectorTrait;
 
+    /**
+     * @var __var__systemId_type__ __var__systemId_description__
+     */
     protected $_systemId;
 
     const DEFAULT_BUCKET = '__default';
@@ -23,8 +26,7 @@ abstract class Collector extends \infinite\base\Component
     const EVENT_BEFORE_BUCKET_ACCESS = 'beforeBucketAccess';
 
     /**
-     *
-     *
+     * __method_setSystemId_description__
      * @param unknown $value
      */
     public function setSystemId($value)
@@ -33,8 +35,7 @@ abstract class Collector extends \infinite\base\Component
     }
 
     /**
-     *
-     *
+     * __method_getSystemId_description__
      * @return unknown
      */
     public function getSystemId()

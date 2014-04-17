@@ -17,7 +17,13 @@ use infinite\helpers\ArrayHelper;
 **/
 class Collector extends \infinite\base\collector\Collector
 {
+    /**
+     * @var __var__tableRegistry_type__ __var__tableRegistry_description__
+     */
     protected $_tableRegistry;
+    /**
+     * @var __var__initialItems_type__ __var__initialItems_description__
+     */
     protected $_initialItems = [];
     /**
     * @inheritdoc
@@ -27,6 +33,10 @@ class Collector extends \infinite\base\collector\Collector
         return $this->_initialItems;
     }
 
+    /**
+     * __method_setInitialItems_description__
+     * @param __param_value_type__ $value __param_value_description__
+     */
     public function setInitialItems($value)
     {
         $this->_initialItems = $value;
@@ -40,6 +50,11 @@ class Collector extends \infinite\base\collector\Collector
         return 'infinite\\security\\role\\Item';
     }
 
+    /**
+     * __method_getById_description__
+     * @param __param_id_type__ $id __param_id_description__
+     * @return __return_getById_type__ __return_getById_description__
+     */
     public function getById($id)
     {
         foreach ($this->tableRegistry as $role) {
@@ -55,6 +70,10 @@ class Collector extends \infinite\base\collector\Collector
         return false;
     }
 
+    /**
+     * __method_getTableRegistry_description__
+     * @return __return_getTableRegistry_type__ __return_getTableRegistry_description__
+     */
     public function getTableRegistry()
     {
         if (is_null($this->_tableRegistry)) {

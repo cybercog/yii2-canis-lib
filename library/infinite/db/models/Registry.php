@@ -31,7 +31,13 @@ namespace infinite\db\models;
  */
 class Registry extends \infinite\db\ActiveRecord
 {
+    /**
+     * @inheritdoc
+     */
     public static $registryCache = false;
+    /**
+     * @inheritdoc
+     */
     public static $relationCache = false;
     /**
      * @inheritdoc
@@ -80,9 +86,9 @@ class Registry extends \infinite\db\ActiveRecord
     }
 
     /**
-     *
-     *
-     * @param  unknown $id
+     * __method_getObject_description__
+     * @param unknown $id
+     * @param boolean $checkAccess __param_checkAccess_description__ [optional]
      * @return unknown
      */
     public static function getObject($id, $checkAccess = true)
@@ -108,6 +114,10 @@ class Registry extends \infinite\db\ActiveRecord
         return self::$_cache[$classKey][$requestKey];
     }
 
+    /**
+     * __method_registerObject_description__
+     * @param __param_object_type__ $object __param_object_description__
+     */
     public static function registerObject($object)
     {
         $requestKey = md5(json_encode(['object', $object->primaryKey, true]));

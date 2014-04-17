@@ -20,11 +20,29 @@ use infinite\caching\Cacher;
 **/
 class Roleable extends \infinite\db\behaviors\ActiveRecord
 {
+    /**
+     * @var __var_accessRoleCheck_type__ __var_accessRoleCheck_description__
+     */
     public $accessRoleCheck;
+    /**
+     * @var __var_roleableEnabled_type__ __var_roleableEnabled_description__
+     */
     public $roleableEnabled = true;
     protected $_role = [];
+    /**
+     * @var __var__roleCurrent_type__ __var__roleCurrent_description__
+     */
     protected $_roleCurrent = [];
+    /**
+     * @var __var__roleChanged_type__ __var__roleChanged_description__
+     */
+    /**
+     * @var __var__role_type__ __var__role_description__
+     */
     protected $_roleChanged = [];
+    /**
+     * @var __var__cache_type__ __var__cache_description__
+     */
     protected static $_cache = [];
 
     /**
@@ -46,6 +64,11 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
         return ['role', 'roles', 'accessRoleCheck'];
     }
 
+    /**
+     * __method_normalizeRole_description__
+     * @param __param_role_type__ $role __param_role_description__ [optional]
+     * @return __return_normalizeRole_type__ __return_normalizeRole_description__
+     */
     public function normalizeRole($role = null)
     {
         if (!is_null($role) && is_string($role)) {
@@ -72,6 +95,11 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
         return $role;
     }
 
+    /**
+     * __method_normalizeAro_description__
+     * @param __param_aro_type__ $aro __param_aro_description__ [optional]
+     * @return __return_normalizeAro_type__ __return_normalizeAro_description__
+     */
     public function normalizeAro($aro = null)
     {
         if (is_null($aro)) {
@@ -86,6 +114,10 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
         return $aro;
     }
 
+    /**
+     * __method_setRoles_description__
+     * @param __param_roles_type__ $roles __param_roles_description__
+     */
     public function setRoles($roles)
     {
         foreach ($roles as $aro => $role) {
@@ -96,6 +128,13 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
         }
     }
 
+    /**
+     * __method_setRole_description__
+     * @param __param_role_type__ $role __param_role_description__
+     * @param __param_aro_type__ $aro __param_aro_description__ [optional]
+     * @param boolean $handle __param_handle_description__ [optional]
+     * @return __return_setRole_type__ __return_setRole_description__
+     */
     public function setRole($role, $aro = null, $handle = false)
     {
         $aro = $this->normalizeAro($aro);
@@ -108,6 +147,10 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
         return true;
     }
 
+    /**
+     * __method_getObjectRoles_description__
+     * @return __return_getObjectRoles_type__ __return_getObjectRoles_description__
+     */
     public function getObjectRoles()
     {
         $cacheKey = json_encode([__FUNCTION__, 'owner' => $this->owner->primaryKey]);
@@ -118,6 +161,10 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
         return self::$_cache[$cacheKey];
     }
 
+    /**
+     * __method_getObjectInheritedRoles_description__
+     * @return __return_getObjectInheritedRoles_type__ __return_getObjectInheritedRoles_description__
+     */
     public function getObjectInheritedRoles()
     {
         $cacheKey = json_encode([__FUNCTION__, 'owner' => $this->owner->primaryKey]);
@@ -128,6 +175,12 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
         return self::$_cache[$cacheKey];
     }
 
+    /**
+     * __method_getRole_description__
+     * @param __param_aro_type__ $aro __param_aro_description__ [optional]
+     * @param boolean $includeNew __param_includeNew_description__ [optional]
+     * @return __return_getRole_type__ __return_getRole_description__
+     */
     public function getRole($aro = null, $includeNew = true)
     {
         $aro = $this->normalizeAro($aro);
@@ -151,6 +204,11 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
         return $this->_role[$aro];
     }
 
+    /**
+     * __method_getAroByRole_description__
+     * @param __param_role_type__ $role __param_role_description__
+     * @return __return_getAroByRole_type__ __return_getAroByRole_description__
+     */
     public function getAroByRole($role)
     {
         $role = $this->normalizeRole($role);
@@ -173,6 +231,11 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
         return self::$_cache[$cacheKey];
     }
 
+    /**
+     * __method_getFirstAroByRole_description__
+     * @param __param_role_type__ $role __param_role_description__
+     * @return __return_getFirstAroByRole_type__ __return_getFirstAroByRole_description__
+     */
     public function getFirstAroByRole($role)
     {
         $aros = $this->getAroByRole($role);
@@ -183,6 +246,10 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
         return false;
     }
 
+    /**
+     * __method_isEnabled_description__
+     * @return __return_isEnabled_type__ __return_isEnabled_description__
+     */
     public function isEnabled()
     {
         if ($this->owner->getBehavior('Registry') === null
@@ -196,6 +263,11 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
         return true;
     }
 
+    /**
+     * __method_handleRoleSave_description__
+     * @param __param_event_type__ $event __param_event_description__ [optional]
+     * @return __return_handleRoleSave_type__ __return_handleRoleSave_description__
+     */
     public function handleRoleSave($event = null)
     {
         if (!$this->isEnabled()) { return true; }
@@ -213,6 +285,12 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
         return true;
     }
 
+    /**
+     * __method_internalSetRole_description__
+     * @param __param_role_type__ $role __param_role_description__
+     * @param __param_aro_type__ $aro __param_aro_description__
+     * @return __return_internalSetRole_type__ __return_internalSetRole_description__
+     */
     protected function internalSetRole($role, $aro)
     {
         $aro = $this->normalizeAro($aro);
@@ -260,11 +338,23 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
         return $this->ensureRoleAccess($aclRole, $existing);
     }
 
+    /**
+     * __method_determineAccessLevel_description__
+     * @param __param_role_type__ $role __param_role_description__
+     * @param __param_aro_type__ $aro __param_aro_description__ [optional]
+     * @return __return_determineAccessLevel_type__ __return_determineAccessLevel_description__
+     */
     public function determineAccessLevel($role, $aro = null)
     {
         return false;
     }
 
+    /**
+     * __method_ensureRoleAccess_description__
+     * @param __param_aclRole_type__ $aclRole __param_aclRole_description__
+     * @param boolean $existing __param_existing_description__ [optional]
+     * @return __return_ensureRoleAccess_type__ __return_ensureRoleAccess_description__
+     */
     public function ensureRoleAccess($aclRole, $existing = false)
     {
         $registryClass = Yii::$app->classes['Registry'];
@@ -320,6 +410,10 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
         return true;
     }
 
+    /**
+     * __method_getCurrentRoles_description__
+     * @return __return_getCurrentRoles_type__ __return_getCurrentRoles_description__
+     */
     public function getCurrentRoles()
     {
         if (!isset($this->_currentRoles)) {
@@ -332,6 +426,11 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
         return $this->_currentRoles;
     }
 
+    /**
+     * __method_clearAroRole_description__
+     * @param __param_aro_type__ $aro __param_aro_description__
+     * @return __return_clearAroRole_type__ __return_clearAroRole_description__
+     */
     public function clearAroRole($aro)
     {
         $aclRole = $this->getRole($aro, false);
@@ -342,6 +441,12 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
         return true;
     }
 
+    /**
+     * __method_afterSave_description__
+     * @param __param_event_type__ $event __param_event_description__
+     * @return __return_afterSave_type__ __return_afterSave_description__
+     * @throws \ __exception_\_description__
+     */
     public function afterSave($event)
     {
         if (!$this->isEnabled()) { return; }

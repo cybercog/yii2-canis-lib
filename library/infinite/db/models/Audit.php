@@ -29,7 +29,13 @@ use Yii;
  */
 class Audit extends \infinite\db\ActiveRecord
 {
+    /**
+     * @inheritdoc
+     */
     public static $registryCache = false;
+    /**
+     * @inheritdoc
+     */
     public static $relationCache = false;
 
     /**
@@ -87,6 +93,10 @@ class Audit extends \infinite\db\ActiveRecord
         ];
     }
 
+    /**
+     * __method_getEventObject_description__
+     * @return __return_getEventObject_type__ __return_getEventObject_description__
+     */
     public function getEventObject()
     {
         try {
@@ -98,6 +108,11 @@ class Audit extends \infinite\db\ActiveRecord
         return $event;
     }
 
+    /**
+     * __method_handleHooks_description__
+     * @param boolean $save __param_save_description__ [optional]
+     * @return __return_handleHooks_type__ __return_handleHooks_description__
+     */
     public function handleHooks($save = true)
     {
         if (!empty($this->hooks_handled)) {
@@ -117,6 +132,7 @@ class Audit extends \infinite\db\ActiveRecord
     }
 
     /**
+     * __method_getAgent_description__
      * @return \yii\db\ActiveRelation
      */
     public function getAgent()
@@ -125,6 +141,7 @@ class Audit extends \infinite\db\ActiveRecord
     }
 
     /**
+     * __method_getDirectObject_description__
      * @return \yii\db\ActiveRelation
      */
     public function getDirectObject()
@@ -133,6 +150,7 @@ class Audit extends \infinite\db\ActiveRecord
     }
 
     /**
+     * __method_getIndirectObject_description__
      * @return \yii\db\ActiveRelation
      */
     public function getIndirectObject()

@@ -16,6 +16,12 @@ use yii\base\Event as YiiEvent;
 **/
 class AuditHookEvent extends YiiEvent
 {
+    /**
+     * @var __var_auditEvent_type__ __var_auditEvent_description__
+     */
     public $auditEvent;
+    /**
+     * @var __var_isValid_type__ __var_isValid_description__
+     */
     public $isValid = true;
 }

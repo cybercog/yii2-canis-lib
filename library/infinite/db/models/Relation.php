@@ -29,8 +29,17 @@ use Yii;
  */
 class Relation extends \infinite\db\ActiveRecord
 {
+    /**
+     * @inheritdoc
+     */
     public static $registryCache = false;
+    /**
+     * @inheritdoc
+     */
     public static $relationCache = false;
+    /**
+     * @var __var__callCache_type__ __var__callCache_description__
+     */
     static $_callCache = [];
     /**
      * @inheritdoc
@@ -72,11 +81,21 @@ class Relation extends \infinite\db\ActiveRecord
         ];
     }
 
+    /**
+     * __method_afterSaveRelation_description__
+     * @param __param_event_type__ $event __param_event_description__
+     * @return __return_afterSaveRelation_type__ __return_afterSaveRelation_description__
+     */
     public function afterSaveRelation($event)
     {
         return true;
     }
 
+    /**
+     * __method_afterDeleteRelation_description__
+     * @param __param_event_type__ $event __param_event_description__
+     * @return __return_afterDeleteRelation_type__ __return_afterDeleteRelation_description__
+     */
     public function afterDeleteRelation($event)
     {
         return true;
@@ -101,6 +120,11 @@ class Relation extends \infinite\db\ActiveRecord
         ];
     }
 
+    /**
+     * __method_getChildObject_description__
+     * @param boolean $checkAccess __param_checkAccess_description__ [optional]
+     * @return __return_getChildObject_type__ __return_getChildObject_description__
+     */
     public function getChildObject($checkAccess = true)
     {
         $registryClass = Yii::$app->classes['Registry'];
@@ -108,6 +132,11 @@ class Relation extends \infinite\db\ActiveRecord
         return $registryClass::getObject($this->child_object_id, $checkAccess);
     }
 
+    /**
+     * __method_getParentObject_description__
+     * @param boolean $checkAccess __param_checkAccess_description__ [optional]
+     * @return __return_getParentObject_type__ __return_getParentObject_description__
+     */
     public function getParentObject($checkAccess = true)
     {
         $registryClass = Yii::$app->classes['Registry'];
@@ -115,6 +144,10 @@ class Relation extends \infinite\db\ActiveRecord
         return $registryClass::getObject($this->parent_object_id, $checkAccess);
     }
 
+    /**
+     * __method_endRelationship_description__
+     * @return __return_endRelationship_type__ __return_endRelationship_description__
+     */
     public function endRelationship()
     {
         $this->end = date("Y-m-d", strtotime("-1 day"));
@@ -122,6 +155,10 @@ class Relation extends \infinite\db\ActiveRecord
         return $this->save();
     }
 
+    /**
+     * __method_getIsActive_description__
+     * @return __return_getIsActive_type__ __return_getIsActive_description__
+     */
     public function getIsActive()
     {
         if (empty($this->active)) {

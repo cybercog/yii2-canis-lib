@@ -19,12 +19,18 @@ class MigrateController extends \yii\console\controllers\MigrateController
 {
     /**
      * @var array the directories storing the migration classes. This can contain either
-     * a path alias or a directory.
+a path alias or a directory.
      */
     public $migrationPaths = [];
 
+    /**
+     * @var __var_migrationsMap_type__ __var_migrationsMap_description__
+     */
     protected $migrationsMap = [];
 
+    /**
+     * @inheritdoc
+     */
     public $templateFile = '@infinite/views/system/migration.phpt';
 
     /**
@@ -44,6 +50,7 @@ class MigrateController extends \yii\console\controllers\MigrateController
     /**
      * Returns the migrations that are not applied.
      * @return array list of new migrations
+     * @throws Exception __exception_Exception_description__
      */
     protected function getNewMigrations()
     {

@@ -14,14 +14,25 @@ namespace infinite\base\language;
 **/
 class Noun extends \infinite\base\language\Word
 {
+    /**
+     * @var __var__singular_type__ __var__singular_description__
+     */
     protected $_singular;
+    /**
+     * @var __var__plural_type__ __var__plural_description__
+     */
     protected $_plural;
+    /**
+     * @var __var__possessive_type__ __var__possessive_description__
+     */
     protected $_possessive;
+    /**
+     * @var __var__possessive_plural_type__ __var__possessive_plural_description__
+     */
     protected $_possessive_plural;
 
     /**
-     *
-     *
+     * Constructor.
      * @param unknown $singular
      * @param unknown $variants (optional)
      */
@@ -44,8 +55,7 @@ class Noun extends \infinite\base\language\Word
     }
 
     /**
-     *
-     *
+     * Converts object to string.
      * @return unknown
      */
     public function __toString()
@@ -53,15 +63,18 @@ class Noun extends \infinite\base\language\Word
         return $this->_singular;
     }
 
+    /**
+     * __method_getUpperSingular_description__
+     * @return __return_getUpperSingular_type__ __return_getUpperSingular_description__
+     */
     public function getUpperSingular()
     {
         return $this->getSingular(true);
     }
 
     /**
-     *
-     *
-     * @param  unknown $upper (optional)
+     * __method_getSingular_description__
+     * @param unknown $upper (optional)
      * @return unknown
      */
     public function getSingular($upper = false)
@@ -69,15 +82,18 @@ class Noun extends \infinite\base\language\Word
         return $this->prepare($this->_singular, $upper);
     }
 
+    /**
+     * __method_getUpperPlural_description__
+     * @return __return_getUpperPlural_type__ __return_getUpperPlural_description__
+     */
     public function getUpperPlural()
     {
         return $this->getPlural(true);
     }
 
     /**
-     *
-     *
-     * @param  unknown $upper (optional)
+     * __method_getPlural_description__
+     * @param unknown $upper (optional)
      * @return unknown
      */
     public function getPlural($upper = false)
@@ -90,9 +106,8 @@ class Noun extends \infinite\base\language\Word
     }
 
     /**
-     *
-     *
-     * @param  unknown $upper (optional)
+     * __method_getPossessive_description__
+     * @param unknown $upper (optional)
      * @return unknown
      */
     public function getPossessive($upper = false)
@@ -109,9 +124,8 @@ class Noun extends \infinite\base\language\Word
     }
 
     /**
-     *
-     *
-     * @param  unknown $upper (optional)
+     * __method_getPossessivePlural_description__
+     * @param unknown $upper (optional)
      * @return unknown
      */
     public function getPossessivePlural($upper = false)

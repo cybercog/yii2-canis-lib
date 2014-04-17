@@ -46,6 +46,9 @@ use yii\web\IdentityInterface;
  */
 class User extends ActiveRecord implements IdentityInterface
 {
+    /**
+     * @var __var__groups_type__ __var__groups_description__
+     */
     protected $_groups;
     /**
      * @var string the raw password. Used to collect password input and isn't saved in database
@@ -81,8 +84,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Finds an identity by the given ID.
-     *
-     * @param  string|integer         $id the ID to be looked for
+     * @param string|integer         $id the ID to be looked for
      * @return IdentityInterface|null the identity object that matches the given ID.
      */
     public static function findIdentity($id)
@@ -92,14 +94,17 @@ class User extends ActiveRecord implements IdentityInterface
         return static::find()->disableAccessCheck()->andWhere([$primaryKey[0] => $id])->one();
     }
 
+    /**
+     * __method_findIdentityByAccessToken_description__
+     * @param __param_token_type__ $token __param_token_description__
+     */
     public static function findIdentityByAccessToken($token)
     {
     }
 
     /**
      * Finds user by username
-     *
-     * @param  string    $username
+     * @param string    $username
      * @return null|User
      */
     public static function findByUsername($username)
@@ -108,6 +113,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
+     * __method_getId_description__
      * @return int|string current user ID
      */
     public function getId()
@@ -116,6 +122,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
+     * __method_getAuthKey_description__
      * @return string current user auth key
      */
     public function getAuthKey()
@@ -124,7 +131,8 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * @param  string  $authKey
+     * __method_validateAuthKey_description__
+     * @param string  $authKey
      * @return boolean if auth key is valid for current user
      */
     public function validateAuthKey($authKey)
@@ -133,7 +141,8 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * @param  string $password password to validate
+     * __method_validatePassword_description__
+     * @param string $password password to validate
      * @return bool   if password provided is valid for current user
      */
     public function validatePassword($password)
@@ -196,6 +205,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
+     * __method_getRegistry_description__
      * @return \yii\db\ActiveRelation
      */
     public function getRegistry()
@@ -203,6 +213,10 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->hasOne('Registry', ['id' => 'id']);
     }
 
+    /**
+     * __method_getGroups_description__
+     * @return __return_getGroups_type__ __return_getGroups_description__
+     */
     public function getGroups()
     {
         if (!isset($this->_groups)) {
@@ -213,6 +227,10 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->_groups;
     }
 
+    /**
+     * __method_guessIndividual_description__
+     * @return __return_guessIndividual_type__ __return_guessIndividual_description__
+     */
     public function guessIndividual()
     {
         $individualTypeItem = Yii::$app->collectors['types']->getOne('Individual');

@@ -33,9 +33,15 @@ class ArrayHelper extends \yii\helpers\ArrayHelper
     }
 
     /**
-    * 	Extends ArrayHelper's map capability by letting it map to its parent object
-    * 	@see \yii\helpers\ArrayHelper:map
-    */
+     * 	Extends ArrayHelper's map capability by letting it map to its parent object
+     * 	@see \yii\helpers\ArrayHelper:map
+     *
+     * @param __param_array_type__ $array __param_array_description__
+     * @param __param_from_type__ $from __param_from_description__
+     * @param __param_to_type__ $to __param_to_description__ [optional]
+     * @param __param_group_type__ $group __param_group_description__ [optional]
+     * @return __return_map_type__ __return_map_description__
+     */
     public static function map($array, $from, $to = null, $group = null)
     {
         if (is_null($to)) {
@@ -45,6 +51,12 @@ class ArrayHelper extends \yii\helpers\ArrayHelper
         return parent::map($array, $from, $to, $group);
     }
 
+    /**
+     * __method_cartesian_description__
+     * @param __param_arrays_type__ $arrays __param_arrays_description__
+     * @param boolean $first __param_first_description__ [optional]
+     * @return __return_cartesian_type__ __return_cartesian_description__
+     */
     public static function cartesian($arrays, $first = true)
     {
         if (empty($arrays)) { return []; }
@@ -118,6 +130,13 @@ class ArrayHelper extends \yii\helpers\ArrayHelper
         return $result;
     }
 
+    /**
+     * __method_permutations_description__
+     * @param __param_array_type__ $array __param_array_description__
+     * @param integer $min __param_min_description__ [optional]
+     * @param boolean $max __param_max_description__ [optional]
+     * @return __return_permutations_type__ __return_permutations_description__
+     */
     public static function permutations($array, $min = 1, $max = false)
     {
         $results = [[ ]];

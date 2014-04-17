@@ -16,8 +16,17 @@ use infinite\helpers\Html;
 **/
 class ActiveField extends \yii\widgets\ActiveField
 {
+    /**
+     * @var __var_inputGroupHtmlOptions_type__ __var_inputGroupHtmlOptions_description__
+     */
     public $inputGroupHtmlOptions = ['class' => 'input-group'];
+    /**
+     * @var __var_inputGroupPrefix_type__ __var_inputGroupPrefix_description__
+     */
     public $inputGroupPrefix = false;
+    /**
+     * @var __var_inputGroupPostfix_type__ __var_inputGroupPostfix_description__
+     */
     public $inputGroupPostfix = false;
 
     /**

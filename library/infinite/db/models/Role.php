@@ -26,6 +26,9 @@ use infinite\base\collector\CollectedObjectTrait;
 class Role extends \infinite\db\ActiveRecord implements \infinite\base\collector\CollectedObjectInterface
 {
     use CollectedOBjectTrait;
+    /**
+     * @var __var_roleableEnabled_type__ __var_roleableEnabled_description__
+     */
     public $roleableEnabled = false;
 
     /**
@@ -77,6 +80,7 @@ class Role extends \infinite\db\ActiveRecord implements \infinite\base\collector
     }
 
     /**
+     * __method_getRegistry_description__
      * @return \yii\db\ActiveRelation
      */
     public function getRegistry()

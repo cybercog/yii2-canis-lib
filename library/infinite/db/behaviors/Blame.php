@@ -16,18 +16,45 @@ use Yii;
 **/
 class Blame extends \infinite\db\behaviors\ActiveRecord
 {
+    /**
+     * @var __var_deletedField_type__ __var_deletedField_description__
+     */
     public $deletedField = 'deleted';
+    /**
+     * @var __var_deletedByField_type__ __var_deletedByField_description__
+     */
     public $deletedByField = 'deleted_user_id';
 
+    /**
+     * @var __var_createdField_type__ __var_createdField_description__
+     */
     public $createdField = 'created';
+    /**
+     * @var __var_createdByField_type__ __var_createdByField_description__
+     */
     public $createdByField = 'created_user_id';
 
+    /**
+     * @var __var_modifiedField_type__ __var_modifiedField_description__
+     */
     public $modifiedField = 'modified';
+    /**
+     * @var __var_modifiedByField_type__ __var_modifiedByField_description__
+     */
     public $modifiedByField = 'modified_user_id';
 
+    /**
+     * @var __var_databaseTimeFormat_type__ __var_databaseTimeFormat_description__
+     */
     public $databaseTimeFormat = 'Y-m-d H:i:s';
 
+    /**
+     * @var __var__userID_type__ __var__userID_description__
+     */
     public static $_userID;
+    /**
+     * @var __var__fields_type__ __var__fields_description__
+     */
     protected $_fields;
 
     /**
@@ -41,6 +68,10 @@ class Blame extends \infinite\db\behaviors\ActiveRecord
         ];
     }
 
+    /**
+     * __method_getFields_description__
+     * @return __return_getFields_type__ __return_getFields_description__
+     */
     public function getFields()
     {
         if (is_null($this->_fields)) {
@@ -58,6 +89,10 @@ class Blame extends \infinite\db\behaviors\ActiveRecord
         return $this->_fields;
     }
 
+    /**
+     * __method_beforeSave_description__
+     * @param __param_event_type__ $event __param_event_description__
+     */
     public function beforeSave($event)
     {
         $fields = $this->fields;
@@ -80,6 +115,10 @@ class Blame extends \infinite\db\behaviors\ActiveRecord
         }
     }
 
+    /**
+     * __method__getUserId_description__
+     * @return __return__getUserId_type__ __return__getUserId_description__
+     */
     protected static function _getUserId()
     {
         if (is_null(self::$_userID)) {

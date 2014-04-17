@@ -20,9 +20,18 @@ abstract class Module extends Collector
 {
     const EVENT_AFTER_LOAD = 'afterLoad';
 
+    /**
+     * @var __var_autoload_type__ __var_autoload_description__
+     */
     public $autoload = true;
+    /**
+     * @var __var__loaded_type__ __var__loaded_description__
+     */
     protected $_loaded = false;
 
+    /**
+     * __method_getModulePrefix_description__
+     */
     abstract public function getModulePrefix();
 
     /**
@@ -35,6 +44,10 @@ abstract class Module extends Collector
         return parent::beforeRequest($event);
     }
 
+    /**
+     * __method_load_description__
+     * @param boolean $force __param_force_description__ [optional]
+     */
     public function load($force = false)
     {
         if (!$this->_loaded && ($force || $this->autoload)) {
@@ -51,6 +64,11 @@ abstract class Module extends Collector
         }
     }
 
+    /**
+     * __method_onAfterLoad_description__
+     * @param __param_action_type__ $action __param_action_description__
+     * @return __return_onAfterLoad_type__ __return_onAfterLoad_description__
+     */
     public function onAfterLoad($action)
     {
         return $this->on(self::EVENT_AFTER_LOAD, $action);

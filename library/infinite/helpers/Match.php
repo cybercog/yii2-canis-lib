@@ -14,13 +14,21 @@ namespace infinite\helpers;
 **/
 class Match extends \infinite\base\Component
 {
+    /**
+     * @var __var_regex_type__ __var_regex_description__
+     */
     public $regex;
+    /**
+     * @var __var_value_type__ __var_value_description__
+     */
     public $value;
+    /**
+     * @var __var_not_type__ __var_not_description__
+     */
     public $not = false;
 
     /**
-     *
-     *
+     * Constructor.
      * @param unknown $value
      * @param unknown $not   (optional)
      * @param unknown $type  (optional)
@@ -36,9 +44,8 @@ class Match extends \infinite\base\Component
     }
 
     /**
-     *
-     *
-     * @param  unknown $test
+     * __method_test_description__
+     * @param unknown $test
      * @return unknown
      */
     public function test($test)

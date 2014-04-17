@@ -14,13 +14,21 @@ namespace infinite\base\language;
 **/
 class Verb extends \infinite\base\language\Word
 {
+    /**
+     * @var __var__base_type__ __var__base_description__
+     */
     protected $_base;
+    /**
+     * @var __var__active_type__ __var__active_description__
+     */
     protected $_active;
+    /**
+     * @var __var__past_type__ __var__past_description__
+     */
     protected $_past;
 
     /**
-     *
-     *
+     * Constructor.
      * @param unknown $base
      * @param unknown $variants (optional)
      */
@@ -40,8 +48,7 @@ class Verb extends \infinite\base\language\Word
     }
 
     /**
-     *
-     *
+     * Converts object to string.
      * @return unknown
      */
     public function __toString()
@@ -50,9 +57,8 @@ class Verb extends \infinite\base\language\Word
     }
 
     /**
-     *
-     *
-     * @param  unknown $upper (optional)
+     * __method_getActive_description__
+     * @param unknown $upper (optional)
      * @return unknown
      */
     public function getActive($upper = false)
@@ -71,9 +77,8 @@ class Verb extends \infinite\base\language\Word
     }
 
     /**
-     *
-     *
-     * @param  unknown $upper (optional)
+     * __method_getPast_description__
+     * @param unknown $upper (optional)
      * @return unknown
      */
     public function getPast($upper = false)

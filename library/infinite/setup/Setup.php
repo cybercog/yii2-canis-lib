@@ -21,17 +21,52 @@ defined('STDOUT') OR define('STDOUT', fopen('php://stdout', 'w'));
 **/
 class Setup extends \infinite\base\Object
 {
+    /**
+     * @var __var__instance_type__ __var__instance_description__
+     */
     public static $_instance;
+    /**
+     * @var __var__migrator_type__ __var__migrator_description__
+     */
     public static $_migrator;
+    /**
+     * @var __var__app_type__ __var__app_description__
+     */
     public static $_app;
+    /**
+     * @var __var_basePath_type__ __var_basePath_description__
+     */
     public $basePath;
+    /**
+     * @var __var_applicationPath_type__ __var_applicationPath_description__
+     */
     public $applicationPath;
+    /**
+     * @var __var_name_type__ __var_name_description__
+     */
     public $name = 'Application';
+    /**
+     * @var __var_pageTitle_type__ __var_pageTitle_description__
+     */
     public $pageTitle = 'Setup';
+    /**
+     * @var __var_applicationNamespace_type__ __var_applicationNamespace_description__
+     */
     public $applicationNamespace = 'app';
+    /**
+     * @var __var_params_type__ __var_params_description__
+     */
     public $params = [];
+    /**
+     * @var __var_neededInformation_type__ __var_neededInformation_description__
+     */
     public $neededInformation = [];
 
+    /**
+     * __method_createSetupApplication_description__
+     * @param array $config __param_config_description__ [optional]
+     * @return __return_createSetupApplication_type__ __return_createSetupApplication_description__
+     */
     public static function createSetupApplication($config = [])
     {
         defined('YII_DEBUG') OR define('YII_DEBUG', true);
@@ -57,16 +92,28 @@ class Setup extends \infinite\base\Object
         }
     }
 
+    /**
+     * __method_beforeRun_description__
+     * @return __return_beforeRun_type__ __return_beforeRun_description__
+     */
     public function beforeRun()
     {
         return true;
     }
 
+    /**
+     * __method_afterRun_description__
+     * @return __return_afterRun_type__ __return_afterRun_description__
+     */
     public function afterRun()
     {
            return true;
     }
 
+    /**
+     * __method_run_description__
+     * @return __return_run_type__ __return_run_description__
+     */
     public function run()
     {
         $self = $this;
@@ -152,6 +199,11 @@ class Setup extends \infinite\base\Object
         return true;
     }
 
+    /**
+     * __method_refresh_description__
+     * @param __param_message_type__ $message __param_message_description__ [optional]
+     * @param boolean $skip __param_skip_description__ [optional]
+     */
     public function refresh($message = null, $skip = false)
     {
         //echo '<pre>';var_dump($_SERVER);exit;
@@ -163,6 +215,10 @@ class Setup extends \infinite\base\Object
         exit(0);
     }
 
+    /**
+     * __method_getIsSetup_description__
+     * @return __return_getIsSetup_type__ __return_getIsSetup_description__
+     */
     public function getIsSetup()
     {
         // if (!$this->isEnvironmented) { return false; }
@@ -175,6 +231,10 @@ class Setup extends \infinite\base\Object
         return true;
     }
 
+    /**
+     * __method_getSetupTasks_description__
+     * @return __return_getSetupTasks_type__ __return_getSetupTasks_description__
+     */
     public function getSetupTasks()
     {
         $self = $this;
@@ -202,6 +262,10 @@ class Setup extends \infinite\base\Object
         return $tasks;
     }
 
+    /**
+     * __method_getIsAvailable_description__
+     * @return __return_getIsAvailable_type__ __return_getIsAvailable_description__
+     */
     public function getIsAvailable()
     {
         if (!$this->isEnvironmented) { return false; }
@@ -210,6 +274,10 @@ class Setup extends \infinite\base\Object
         return true;
     }
 
+    /**
+     * __method_markDbReady_description__
+     * @return __return_markDbReady_type__ __return_markDbReady_description__
+     */
     public function markDbReady()
     {
         if (!defined('INFINITE_SETUP_DB_READY')) {
@@ -220,16 +288,31 @@ class Setup extends \infinite\base\Object
         return true;
     }
 
+    /**
+     * __method_getConfirmLink_description__
+     * @param __param_task_type__ $task __param_task_description__
+     * @return __return_getConfirmLink_type__ __return_getConfirmLink_description__
+     */
     public function getConfirmLink($task)
     {
         return $_SERVER['REQUEST_URI'] . '?task='.$task.'&confirm='. $this->getConfirmSalt($task);
     }
 
+    /**
+     * __method_getConfirmSalt_description__
+     * @param __param_task_type__ $task __param_task_description__ [optional]
+     * @return __return_getConfirmSalt_type__ __return_getConfirmSalt_description__
+     */
     public function getConfirmSalt($task = null)
     {
         return md5(date("Y-m-d") . __FILE__ .':'. $task);
     }
 
+    /**
+     * __method_getConfirmed_description__
+     * @param __param_task_type__ $task __param_task_description__
+     * @return __return_getConfirmed_type__ __return_getConfirmed_description__
+     */
     public function getConfirmed($task)
     {
         $confirm = null;
@@ -246,11 +329,19 @@ class Setup extends \infinite\base\Object
         return false;
     }
 
+    /**
+     * __method_getVersion_description__
+     * @return __return_getVersion_type__ __return_getVersion_description__
+     */
     public function getVersion()
     {
         return trim(file_get_contents($this->basePath . DIRECTORY_SEPARATOR .'VERSION'));
     }
 
+    /**
+     * __method_getInstanceVersion_description__
+     * @return __return_getInstanceVersion_type__ __return_getInstanceVersion_description__
+     */
     public function getInstanceVersion()
     {
         if ($this->isEnvironmented) {
@@ -260,6 +351,11 @@ class Setup extends \infinite\base\Object
         return false;
     }
 
+    /**
+     * __method_app_description__
+     * @return __return_app_type__ __return_app_description__
+     * @throws Exception __exception_Exception_description__
+     */
     public function app()
     {
         if ($this->isEnvironmented) {
@@ -280,6 +376,10 @@ class Setup extends \infinite\base\Object
         return false;
     }
 
+    /**
+     * __method_getIsEnvironmented_description__
+     * @return __return_getIsEnvironmented_type__ __return_getIsEnvironmented_description__
+     */
     public function getIsEnvironmented()
     {
         if (file_exists($this->environmentFilePath)) {
@@ -292,6 +392,10 @@ class Setup extends \infinite\base\Object
         return defined('INFINITE_APP_INSTANCE_VERSION');
     }
 
+    /**
+     * __method_getEnvironmentPath_description__
+     * @return __return_getEnvironmentPath_type__ __return_getEnvironmentPath_description__
+     */
     public function getEnvironmentPath()
     {
         if ($this->isEnvironmented) {
@@ -302,6 +406,11 @@ class Setup extends \infinite\base\Object
     }
 
 
+    /**
+     * __method_getConfigPath_description__
+     * @return __return_getConfigPath_type__ __return_getConfigPath_description__
+     * @throws Exception __exception_Exception_description__
+     */
     public function getConfigPath()
     {
         $path = $this->basePath . DIRECTORY_SEPARATOR . 'config';
@@ -312,6 +421,10 @@ class Setup extends \infinite\base\Object
         return $path;
     }
 
+    /**
+     * __method_getEnvironmentFilePath_description__
+     * @return __return_getEnvironmentFilePath_type__ __return_getEnvironmentFilePath_description__
+     */
     public function getEnvironmentFilePath()
     {
         $path = $this->configPath . DIRECTORY_SEPARATOR . 'env.php';
@@ -319,6 +432,10 @@ class Setup extends \infinite\base\Object
         return $path;
     }
 
+    /**
+     * __method_getEnvironmentTemplateFilePath_description__
+     * @return __return_getEnvironmentTemplateFilePath_type__ __return_getEnvironmentTemplateFilePath_description__
+     */
     public function getEnvironmentTemplateFilePath()
     {
         $path = $this->environmentFilePath  . '.sample';
@@ -326,6 +443,11 @@ class Setup extends \infinite\base\Object
         return $path;
     }
 
+    /**
+     * __method_getLibraryConfigPath_description__
+     * @return __return_getLibraryConfigPath_type__ __return_getLibraryConfigPath_description__
+     * @throws Exception __exception_Exception_description__
+     */
     public function getLibraryConfigPath()
     {
         $path = INFINITE_APP_PATH . DIRECTORY_SEPARATOR . 'config';
@@ -336,6 +458,11 @@ class Setup extends \infinite\base\Object
         return $path;
     }
 
+    /**
+     * __method_getCommonConfigPath_description__
+     * @return __return_getCommonConfigPath_type__ __return_getCommonConfigPath_description__
+     * @throws Exception __exception_Exception_description__
+     */
     public function getCommonConfigPath()
     {
         $path = $this->libraryConfigPath . DIRECTORY_SEPARATOR . 'common';
@@ -346,6 +473,11 @@ class Setup extends \infinite\base\Object
         return $path;
     }
 
+    /**
+     * __method_getEnvironmentTemplatesPath_description__
+     * @return __return_getEnvironmentTemplatesPath_type__ __return_getEnvironmentTemplatesPath_description__
+     * @throws Exception __exception_Exception_description__
+     */
     public function getEnvironmentTemplatesPath()
     {
         $path = $this->libraryConfigPath . DIRECTORY_SEPARATOR . 'templates';
@@ -356,6 +488,11 @@ class Setup extends \infinite\base\Object
         return $path;
     }
 
+    /**
+     * __method_render_description__
+     * @param __param_view_type__ $view __param_view_description__
+     * @throws Exception __exception_Exception_description__
+     */
     public function render($view)
     {
         $basePath = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'views';

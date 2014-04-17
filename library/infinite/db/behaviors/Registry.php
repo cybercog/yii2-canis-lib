@@ -19,7 +19,13 @@ use infinite\base\Exception;
 **/
 class Registry extends \infinite\db\behaviors\ActiveRecord
 {
+    /**
+     * @var __var__table_type__ __var__table_description__
+     */
     public static $_table;
+    /**
+     * @var __var__model_type__ __var__model_description__
+     */
     protected $_model;
 
     /**
@@ -42,6 +48,10 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
         return [];
     }
 
+    /**
+     * __method_getRegistryModel_description__
+     * @return __return_getRegistryModel_type__ __return_getRegistryModel_description__
+     */
     public function getRegistryModel()
     {
         if (!is_null($this->_model)) {
@@ -59,6 +69,10 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
         return false;
     }
 
+    /**
+     * __method_getTable_description__
+     * @return __return_getTable_type__ __return_getTable_description__
+     */
     public function getTable()
     {
         if (is_null(self::$_table)) {
@@ -69,6 +83,11 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
         return self::$_table;
     }
 
+    /**
+     * __method_beforeInsert_description__
+     * @param __param_event_type__ $event __param_event_description__
+     * @throws Exception __exception_Exception_description__
+     */
     public function beforeInsert($event)
     {
         if ($this->owner->isNewRecord && $this->owner->primaryKey == NULL) {
@@ -82,6 +101,10 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
         }
     }
 
+    /**
+     * __method_uuid_description__
+     * @return __return_uuid_type__ __return_uuid_description__
+     */
     public function uuid()
     {
         $ownerClass = get_class($this->owner);
@@ -90,9 +113,8 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     *
-     *
-     * @param  unknown $model (optional)
+     * __method_generateUuid_description__
+     * @param __param_modelPrefix_type__ $modelPrefix __param_modelPrefix_description__
      * @return unknown
      */
     public static function generateUuid($modelPrefix)
@@ -110,8 +132,7 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     *
-     *
+     * __method_afterSaveFail_description__
      * @param unknown $event
      */
     public function afterSaveFail($event)
@@ -122,9 +143,8 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     *
-     *
-     * @param  unknown $event
+     * __method_afterDelete_description__
+     * @param unknown $event
      * @return unknown
      */
     public function afterDelete($event)
@@ -133,8 +153,7 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     *
-     *
+     * __method__deleteRegistry_description__
      * @return unknown
      */
     protected function _deleteRegistry()

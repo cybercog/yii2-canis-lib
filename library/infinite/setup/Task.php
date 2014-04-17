@@ -14,10 +14,25 @@ namespace infinite\setup;
 **/
 abstract class Task extends \infinite\base\Object
 {
+    /**
+     * @var __var__setup_type__ __var__setup_description__
+     */
     protected $_setup;
+    /**
+     * @var __var_errors_type__ __var_errors_description__
+     */
     public $errors = [];
+    /**
+     * @var __var_fieldErrors_type__ __var_fieldErrors_description__
+     */
     public $fieldErrors = [];
+    /**
+     * @var __var_input_type__ __var_input_description__
+     */
     public $input = [];
+    /**
+     * @var __var_skipComplete_type__ __var_skipComplete_description__
+     */
     public $skipComplete = false;
 
     /**
@@ -28,21 +43,38 @@ abstract class Task extends \infinite\base\Object
         $this->_setup = $setup;
     }
 
+    /**
+     * __method_getSetup_description__
+     * @return __return_getSetup_type__ __return_getSetup_description__
+     */
     public function getSetup()
     {
         return $this->_setup;
     }
 
+    /**
+     * __method_getId_description__
+     * @return __return_getId_type__ __return_getId_description__
+     */
     public function getId()
     {
         return self::baseClassName();
     }
 
+    /**
+     * __method_skip_description__
+     * @return __return_skip_type__ __return_skip_description__
+     */
     public function skip()
     {
         return true;
     }
 
+    /**
+     * __method_loadInput_description__
+     * @param __param_input_type__ $input __param_input_description__
+     * @return __return_loadInput_type__ __return_loadInput_description__
+     */
     public function loadInput($input)
     {
         $error = false;
@@ -67,22 +99,39 @@ abstract class Task extends \infinite\base\Object
         return !$error;
     }
 
+    /**
+     * __method_getTitle_description__
+     */
     abstract public function getTitle();
+    /**
+     * __method_test_description__
+     */
     abstract public function test();
+    /**
+     * __method_run_description__
+     */
     abstract public function run();
+    /**
+     * __method_getFields_description__
+     * @return __return_getFields_type__ __return_getFields_description__
+     */
     public function getFields()
     {
         return false;
     }
+    /**
+     * __method_getVerification_description__
+     * @return __return_getVerification_type__ __return_getVerification_description__
+     */
     public function getVerification()
     {
         return false;
     }
 
     /**
-     *
-     *
-     * @param  unknown $template
+     * __method_templatize_description__
+     * @param unknown $template
+     * @param array $vars __param_vars_description__ [optional]
      * @return unknown
      */
     public function templatize($template, $vars = [])
@@ -107,6 +156,12 @@ abstract class Task extends \infinite\base\Object
         return $template;
     }
 
+    /**
+     * __method_parseText_description__
+     * @param __param_text_type__ $text __param_text_description__
+     * @param array $variables __param_variables_description__ [optional]
+     * @return __return_parseText_type__ __return_parseText_description__
+     */
     public static function parseText($text, $variables = [])
     {
         if (is_object($text)) { return $text; }

@@ -18,12 +18,31 @@ use infinite\helpers\ArrayHelper;
 **/
 class ObjectAccess extends \infinite\base\Component
 {
+    /**
+     * @var __var__object_type__ __var__object_description__
+     */
     protected $_object;
+    /**
+     * @var __var__requestors_type__ __var__requestors_description__
+     */
     protected $_requestors;
+    /**
+     * @var __var__roles_type__ __var__roles_description__
+     */
     protected $_roles;
+    /**
+     * @var __var__visibility_type__ __var__visibility_description__
+     */
     protected $_visibility;
+    /**
+     * @var __var__tempCache_type__ __var__tempCache_description__
+     */
     protected $_tempCache = [];
 
+    /**
+     * Prepares object for serialization.
+     * @return __return___sleep_type__ __return___sleep_description__
+     */
     public function __sleep()
     {
         if (is_object($this->_object)) {
@@ -41,6 +60,11 @@ class ObjectAccess extends \infinite\base\Component
         return $keys;
     }
 
+    /**
+     * __method_get_description__
+     * @param __param_object_type__ $object __param_object_description__
+     * @return __return_get_type__ __return_get_description__
+     */
     public static function get($object)
     {
         $objectId = is_object($object) ? $object->primaryKey : $object;
@@ -56,12 +80,20 @@ class ObjectAccess extends \infinite\base\Component
         return $accessObject;
     }
 
+    /**
+     * __method_load_description__
+     */
     public function load()
     {
         $this->roles;
         $this->requestors;
     }
 
+    /**
+     * __method_save_description__
+     * @param __param_data_type__ $data __param_data_description__
+     * @return __return_save_type__ __return_save_description__
+     */
     public function save($data)
     {
         $currentRoles = $this->getRoleObjects();
@@ -95,16 +127,31 @@ class ObjectAccess extends \infinite\base\Component
         return true;
     }
 
+    /**
+     * __method_fillValidationSettings_description__
+     * @param __param_validationSettings_type__ $validationSettings __param_validationSettings_description__
+     * @return __return_fillValidationSettings_type__ __return_fillValidationSettings_description__
+     */
     protected function fillValidationSettings($validationSettings)
     {
         return $validationSettings;
     }
 
+    /**
+     * __method_getUniversalMaxRoleLevel_description__
+     * @return __return_getUniversalMaxRoleLevel_type__ __return_getUniversalMaxRoleLevel_description__
+     */
     public function getUniversalMaxRoleLevel()
     {
         return $this->getAccessorRoleLevel();
     }
 
+    /**
+     * __method_validateRole_description__
+     * @param __param_role_type__ $role __param_role_description__
+     * @param __param_validationSettings_type__ $validationSettings __param_validationSettings_description__
+     * @return __return_validateRole_type__ __return_validateRole_description__
+     */
     protected function validateRole($role, $validationSettings)
     {
         $package = ['errors' => []];
@@ -133,6 +180,11 @@ class ObjectAccess extends \infinite\base\Component
         return $package;
     }
 
+    /**
+     * __method_validate_description__
+     * @param __param_data_type__ $data __param_data_description__
+     * @return __return_validate_type__ __return_validate_description__
+     */
     protected function validate($data)
     {
         $package = ['errors' => []];
@@ -177,6 +229,10 @@ class ObjectAccess extends \infinite\base\Component
         return $package;
     }
 
+    /**
+     * __method_getRequestors_description__
+     * @return __return_getRequestors_type__ __return_getRequestors_description__
+     */
     public function getRequestors()
     {
         if (is_null($this->_requestors)) {
@@ -200,6 +256,10 @@ class ObjectAccess extends \infinite\base\Component
         return $this->_requestors;
     }
 
+    /**
+     * __method_getRoles_description__
+     * @return __return_getRoles_type__ __return_getRoles_description__
+     */
     public function getRoles()
     {
         if (is_null($this->_roles)) {
@@ -217,6 +277,10 @@ class ObjectAccess extends \infinite\base\Component
         return $this->_roles;
     }
 
+    /**
+     * __method_getRoleObjects_description__
+     * @return __return_getRoleObjects_type__ __return_getRoleObjects_description__
+     */
     public function getRoleObjects()
     {
         if (!isset($this->_tempCache['roled'])) {
@@ -229,6 +293,12 @@ class ObjectAccess extends \infinite\base\Component
         return $this->_tempCache['roled'];
     }
 
+    /**
+     * __method_getRoleObject_description__
+     * @param __param_requestorId_type__ $requestorId __param_requestorId_description__
+     * @param array $roleSet __param_roleSet_description__ [optional]
+     * @return __return_getRoleObject_type__ __return_getRoleObject_description__
+     */
     public function getRoleObject($requestorId, $roleSet = [])
     {
         $defaultRoleSet = ['role_id' => null, 'inherited' => false, 'acl_role_id' => null];
@@ -256,6 +326,10 @@ class ObjectAccess extends \infinite\base\Component
         return $roleSet;
     }
 
+    /**
+     * __method_getSpecialRequestors_description__
+     * @return __return_getSpecialRequestors_type__ __return_getSpecialRequestors_description__
+     */
     public function getSpecialRequestors()
     {
         return [
@@ -266,12 +340,20 @@ class ObjectAccess extends \infinite\base\Component
         ];
     }
 
+    /**
+     * __method_setObject_description__
+     * @param __param_object_type__ $object __param_object_description__
+     */
     public function setObject($object)
     {
         $this->_object = $object;
         $this->load();
     }
 
+    /**
+     * __method_getObject_description__
+     * @return __return_getObject_type__ __return_getObject_description__
+     */
     public function getObject()
     {
         if (!is_object($this->_object)) {
@@ -282,11 +364,20 @@ class ObjectAccess extends \infinite\base\Component
         return $this->_object;
     }
 
+    /**
+     * __method_getRoleHelpText_description__
+     * @param __param_roleItem_type__ $roleItem __param_roleItem_description__
+     * @return __return_getRoleHelpText_type__ __return_getRoleHelpText_description__
+     */
     public function getRoleHelpText($roleItem)
     {
         return null;
     }
 
+    /**
+     * __method_determineVisibility_description__
+     * @return __return_determineVisibility_type__ __return_determineVisibility_description__
+     */
     public function determineVisibility()
     {
         $groupClass = Yii::$app->classes['Group'];
@@ -308,6 +399,11 @@ class ObjectAccess extends \infinite\base\Component
         return 'private';
     }
 
+    /**
+     * __method_getPossibleRoles_description__
+     * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__ [optional]
+     * @return __return_getPossibleRoles_type__ __return_getPossibleRoles_description__
+     */
     public function getPossibleRoles($accessingObject = null)
     {
         $accessorRoleLevel = $this->getAccessorRoleLevel($accessingObject);
@@ -332,6 +428,10 @@ class ObjectAccess extends \infinite\base\Component
         return $roles;
     }
 
+    /**
+     * __method_getVisibility_description__
+     * @return __return_getVisibility_type__ __return_getVisibility_description__
+     */
     public function getVisibility()
     {
         if (is_null($this->_visibility)) {
@@ -341,6 +441,11 @@ class ObjectAccess extends \infinite\base\Component
         return $this->_visibility;
     }
 
+    /**
+     * __method_getAccessorRoleLevel_description__
+     * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__ [optional]
+     * @return __return_getAccessorRoleLevel_type__ __return_getAccessorRoleLevel_description__
+     */
     public function getAccessorRoleLevel($accessingObject = null)
     {
         $accessingObject = Yii::$app->gk->getAccessingObject($accessingObject);

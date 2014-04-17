@@ -14,11 +14,20 @@ namespace infinite\helpers;
 **/
 class StringHelper extends \yii\helpers\StringHelper
 {
+    /**
+     * __method_parseInstructions_description__
+     * @return __return_parseInstructions_type__ __return_parseInstructions_description__
+     */
     static public function parseInstructions()
     {
         return [];
     }
 
+    /**
+     * __method_neighborWordCombos_description__
+     * @param __param_parts_type__ $parts __param_parts_description__
+     * @return __return_neighborWordCombos_type__ __return_neighborWordCombos_description__
+     */
     static public function neighborWordCombos($parts)
     {
         if (is_string($parts)) {
@@ -47,6 +56,12 @@ class StringHelper extends \yii\helpers\StringHelper
         return array_unique(array_merge($newParts, $parts));
     }
 
+    /**
+     * __method_parseText_description__
+     * @param __param_text_type__ $text __param_text_description__
+     * @param array $variables __param_variables_description__ [optional]
+     * @return __return_parseText_type__ __return_parseText_description__
+     */
     static public function parseText($text, $variables = [])
     {
         if (is_object($text)) { return $text; }

@@ -16,8 +16,14 @@ use Yii;
 **/
 class Controller extends \yii\web\Controller
 {
+    /**
+     * @var __var_params_type__ __var_params_description__
+     */
     public $params = [];
 
+    /**
+     * @var __var__response_type__ __var__response_description__
+     */
     protected static $_response = [];
 
     /**
@@ -29,6 +35,10 @@ class Controller extends \yii\web\Controller
         $this->on(self::EVENT_BEFORE_ACTION, [$this, 'beforeActionResponse']);
     }
 
+    /**
+     * __method_beforeActionResponse_description__
+     * @param __param_actionEvent_type__ $actionEvent __param_actionEvent_description__
+     */
     public function beforeActionResponse($actionEvent)
     {
         Yii::$app->response->action = $actionEvent->action;

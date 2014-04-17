@@ -17,13 +17,35 @@ use yii\base\ModelEvent;
 **/
 class ActiveArchivable extends ActiveRecord
 {
+    /**
+     * @var __var_archiveUserField_type__ __var_archiveUserField_description__
+     */
     public $archiveUserField = 'archived_user_id';
+    /**
+     * @var __var_archiveField_type__ __var_archiveField_description__
+     */
     public $archiveField = 'archived';
+    /**
+     * @var __var_databaseTimeFormat_type__ __var_databaseTimeFormat_description__
+     */
     public $databaseTimeFormat = 'Y-m-d H:i:s';
+    /**
+     * @var __var__isArchivable_type__ __var__isArchivable_description__
+     */
     protected $_isArchivable;
+    /**
+     * @var __var__trackUserArchive_type__ __var__trackUserArchive_description__
+     */
     protected $_trackUserArchive;
+    /**
+     * @var __var__userID_type__ __var__userID_description__
+     */
     public static $_userID;
 
+    /**
+     * __method_isArchivable_description__
+     * @return __return_isArchivable_type__ __return_isArchivable_description__
+     */
     public function isArchivable()
     {
         if (is_null($this->_isArchivable)) {
@@ -39,6 +61,10 @@ class ActiveArchivable extends ActiveRecord
         return $this->_isArchivable;
     }
 
+    /**
+     * __method_getArchived_description__
+     * @return __return_getArchived_type__ __return_getArchived_description__
+     */
     public function getArchived()
     {
         if (!$this->isArchivable()) { return false; }
@@ -49,6 +75,10 @@ class ActiveArchivable extends ActiveRecord
         return true;
     }
 
+    /**
+     * __method_trackUserArchive_description__
+     * @return __return_trackUserArchive_type__ __return_trackUserArchive_description__
+     */
     public function trackUserArchive()
     {
         if (is_null($this->_trackUserArchive)) {
@@ -64,7 +94,12 @@ class ActiveArchivable extends ActiveRecord
         return $this->_trackUserArchive;
     }
 
-    public function archive(Event $event = null)
+    /**
+     * __method_archive_description__
+     * @param yii\base\ModelEvent $event __param_event_description__ [optional]
+     * @return __return_archive_type__ __return_archive_description__
+     */
+    public function archive(ModelEvent $event = null)
     {
         if (is_null($event)) { $event = new ModelEvent; }
         if (!$this->isArchivable()) { $event->isValid = false; return false; }
@@ -78,7 +113,12 @@ class ActiveArchivable extends ActiveRecord
         return $this->owner->save();
     }
 
-    public function unarchive(Event $event = null)
+    /**
+     * __method_unarchive_description__
+     * @param yii\base\ModelEvent $event __param_event_description__ [optional]
+     * @return __return_unarchive_type__ __return_unarchive_description__
+     */
+    public function unarchive(ModelEvent $event = null)
     {
         if (is_null($event)) { $event = new ModelEvent; }
         if (!$this->isArchivable()) { $event->isValid = false; return false; }
@@ -91,6 +131,10 @@ class ActiveArchivable extends ActiveRecord
         return $this->owner->save();
     }
 
+    /**
+     * __method__getUserId_description__
+     * @return __return__getUserId_type__ __return__getUserId_description__
+     */
     protected static function _getUserId()
     {
         if (is_null(self::$_userID)) {

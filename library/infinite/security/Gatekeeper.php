@@ -23,23 +23,63 @@ use infinite\caching\Cacher;
 **/
 class Gatekeeper extends \infinite\base\Component
 {
+    /**
+     * @var __var_proxy_type__ __var_proxy_description__
+     */
     public $proxy = false;
+    /**
+     * @var __var_debug_type__ __var_debug_description__
+     */
     public $debug = false;
 
+    /**
+     * @var __var__requestors_type__ __var__requestors_description__
+     */
     protected $_requestors;
+    /**
+     * @var __var__actionsById_type__ __var__actionsById_description__
+     */
     protected $_actionsById;
+    /**
+     * @var __var__actionsByName_type__ __var__actionsByName_description__
+     */
     protected $_actionsByName;
+    /**
+     * @var __var__primaryAro_type__ __var__primaryAro_description__
+     */
     protected $_primaryAro;
 
+    /**
+     * @var __var__cache_type__ __var__cache_description__
+     */
     static $_cache = [];
 
+    /**
+     * @var __var__objectCanCache_type__ __var__objectCanCache_description__
+     */
     protected $_objectCanCache = [];
 
+    /**
+     * @var __var_authorityClass_type__ __var_authorityClass_description__
+     */
     public $authorityClass = 'infinite\\security\\Authority';
+    /**
+     * @var __var_objectAccessClass_type__ __var_objectAccessClass_description__
+     */
     public $objectAccessClass = 'infinite\\security\\ObjectAccess';
+    /**
+     * @var __var_accessClass_type__ __var_accessClass_description__
+     */
     public $accessClass = 'infinite\\security\\Access';
+    /**
+     * @var __var__authority_type__ __var__authority_description__
+     */
     protected $_authority;
 
+    /**
+     * __method_setAuthority_description__
+     * @param __param_authority_type__ $authority __param_authority_description__
+     */
     public function setAuthority($authority)
     {
         if (!is_object($authority)) {
@@ -51,11 +91,19 @@ class Gatekeeper extends \infinite\base\Component
         $this->_authority = $authority;
     }
 
+    /**
+     * __method_getAuthority_description__
+     * @return __return_getAuthority_type__ __return_getAuthority_description__
+     */
     public function getAuthority()
     {
         return $this->_authority;
     }
 
+    /**
+     * __method_getAclCacheDependency_description__
+     * @return __return_getAclCacheDependency_type__ __return_getAclCacheDependency_description__
+     */
     public function getAclCacheDependency()
     {
         $aclClass = Yii::$app->classes['Acl'];
@@ -75,6 +123,12 @@ class Gatekeeper extends \infinite\base\Component
         ]);
     }
 
+    /**
+     * __method_canPublic_description__
+     * @param __param_controlledObject_type__ $controlledObject __param_controlledObject_description__
+     * @param string $action __param_action_description__ [optional]
+     * @return __return_canPublic_type__ __return_canPublic_description__
+     */
     public function canPublic($controlledObject, $action = 'read')
     {
         $requestKey = md5(serialize([__FUNCTION__, func_get_args()]));
@@ -100,6 +154,12 @@ class Gatekeeper extends \infinite\base\Component
         return self::$_cache[$requestKey];
     }
 
+    /**
+     * __method_is_description__
+     * @param __param_group_type__ $group __param_group_description__
+     * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__ [optional]
+     * @return __return_is_type__ __return_is_description__
+     */
     public function is($group, $accessingObject = null)
     {
         $requestKey = md5(serialize([__FUNCTION__, func_get_args()]));
@@ -127,6 +187,13 @@ class Gatekeeper extends \infinite\base\Component
         return self::$_cache[$requestKey];
     }
 
+    /**
+     * __method_can_description__
+     * @param __param_action_type__ $action __param_action_description__
+     * @param __param_controlledObject_type__ $controlledObject __param_controlledObject_description__
+     * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__ [optional]
+     * @return __return_can_type__ __return_can_description__
+     */
     public function can($action, $controlledObject, $accessingObject = null)
     {
         if (!is_array($controlledObject)) {
@@ -146,6 +213,14 @@ class Gatekeeper extends \infinite\base\Component
         return false;
     }
 
+    /**
+     * __method_fillActions_description__
+     * @param __param_acls_type__ $acls __param_acls_description__
+     * @param array $baseAccess __param_baseAccess_description__ [optional]
+     * @param __param_controlledObject_type__ $controlledObject __param_controlledObject_description__ [optional]
+     * @param __param_acaIds_type__ $acaIds __param_acaIds_description__ [optional]
+     * @return __return_fillActions_type__ __return_fillActions_description__
+     */
     public function fillActions($acls, $baseAccess = [], $controlledObject = null, $acaIds = null)
     {
         $baseNullAccess = $this->findNullAction($acls);
@@ -193,11 +268,23 @@ class Gatekeeper extends \infinite\base\Component
         return $access;
     }
 
+    /**
+     * __method_getActionMap_description__
+     * @param __param_controlledObject_type__ $controlledObject __param_controlledObject_description__ [optional]
+     * @return __return_getActionMap_type__ __return_getActionMap_description__
+     */
     protected function getActionMap($controlledObject = null)
     {
         return [];
     }
 
+    /**
+     * __method_getActionLink_description__
+     * @param __param_action_type__ $action __param_action_description__
+     * @param array $accessMap __param_accessMap_description__ [optional]
+     * @param __param_controlledObject_type__ $controlledObject __param_controlledObject_description__ [optional]
+     * @return __return_getActionLink_type__ __return_getActionLink_description__
+     */
     protected function getActionLink($action, $accessMap = [], $controlledObject = null)
     {
         $actionId = ArrayHelper::getValue($action, 'id');
@@ -221,6 +308,11 @@ class Gatekeeper extends \infinite\base\Component
         return false;
     }
 
+    /**
+     * __method_getBaseActionName_description__
+     * @param __param_actionName_type__ $actionName __param_actionName_description__
+     * @return __return_getBaseActionName_type__ __return_getBaseActionName_description__
+     */
     protected static function getBaseActionName($actionName)
     {
         $parts = explode(':', $actionName);
@@ -228,6 +320,12 @@ class Gatekeeper extends \infinite\base\Component
         return $parts[0];
     }
 
+    /**
+     * __method_createAccess_description__
+     * @param __param_acl_type__ $acl __param_acl_description__
+     * @param array $config __param_config_description__ [optional]
+     * @return __return_createAccess_type__ __return_createAccess_description__
+     */
     protected function createAccess($acl, $config = [])
     {
         if (is_object($acl)) {
@@ -256,6 +354,11 @@ class Gatekeeper extends \infinite\base\Component
         return Yii::createObject($config);
     }
 
+    /**
+     * __method_findNullAction_description__
+     * @param __param_acls_type__ $acls __param_acls_description__
+     * @return __return_findNullAction_type__ __return_findNullAction_description__
+     */
     public function findNullAction($acls)
     {
         foreach ($acls as $acl) {
@@ -269,6 +372,13 @@ class Gatekeeper extends \infinite\base\Component
         // return $this->createAccess(['accessLevel' => Access::ACCESS_NONE]);
     }
 
+    /**
+     * __method_canGeneral_description__
+     * @param __param_action_type__ $action __param_action_description__
+     * @param __param_model_type__ $model __param_model_description__
+     * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__ [optional]
+     * @return __return_canGeneral_type__ __return_canGeneral_description__
+     */
     public function canGeneral($action, $model, $accessingObject = null)
     {
         if (!is_object($model)) {
@@ -278,6 +388,12 @@ class Gatekeeper extends \infinite\base\Component
         return !$model->getBehavior('Access') || $model->can($action, $accessingObject);
     }
 
+    /**
+     * __method_getControlledObject_description__
+     * @param __param_object_type__ $object __param_object_description__
+     * @param __param_modelClass_type__ $modelClass __param_modelClass_description__ [optional]
+     * @return __return_getControlledObject_type__ __return_getControlledObject_description__
+     */
     public function getControlledObject($object, $modelClass = null)
     {
         if (!empty($object)) {
@@ -295,12 +411,29 @@ class Gatekeeper extends \infinite\base\Component
         return false;
     }
 
+    /**
+     * __method_buildInnerRoleCheckConditions_description__
+     * @param __param_innerOnConditions_type__ $innerOnConditions __param_innerOnConditions_description__
+     * @param __param_innerAlias_type__ $innerAlias __param_innerAlias_description__
+     * @param __param_query_type__ $query __param_query_description__
+     * @return __return_buildInnerRoleCheckConditions_type__ __return_buildInnerRoleCheckConditions_description__
+     */
     public function buildInnerRoleCheckConditions(&$innerOnConditions, $innerAlias, $query)
     {
         return true;
     }
 
     // this function is not possible because it loses inheritance from object types two levels up
+    /**
+     * __method_BADgenerateAclRoleCheckCriteria_description__
+     * @param __param_query_type__ $query __param_query_description__
+     * @param __param_controlledObject_type__ $controlledObject __param_controlledObject_description__
+     * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__ [optional]
+     * @param __param_modelClass_type__ $modelClass __param_modelClass_description__ [optional]
+     * @param array $bannedRoles __param_bannedRoles_description__ [optional]
+     * @param boolean $expandAros __param_expandAros_description__ [optional]
+     * @return __return_BADgenerateAclRoleCheckCriteria_type__ __return_BADgenerateAclRoleCheckCriteria_description__
+     */
     public function BADgenerateAclRoleCheckCriteria($query, $controlledObject, $accessingObject = null, $modelClass = null, $bannedRoles = [], $expandAros = true)
     {
         if (Yii::$app->gk->accessorHasGroup($accessingObject, ['administrators', 'super_administrators'])) {
@@ -385,6 +518,17 @@ class Gatekeeper extends \infinite\base\Component
         return $query;
     }
 
+    /**
+     * __method_generateAclCheckCriteria_description__
+     * @param __param_query_type__ $query __param_query_description__
+     * @param __param_controlledObject_type__ $controlledObject __param_controlledObject_description__
+     * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__ [optional]
+     * @param boolean $allowParentInherit __param_allowParentInherit_description__ [optional]
+     * @param __param_modelClass_type__ $modelClass __param_modelClass_description__ [optional]
+     * @param boolean $expandAros __param_expandAros_description__ [optional]
+     * @param boolean $limitAccess __param_limitAccess_description__ [optional]
+     * @return __return_generateAclCheckCriteria_type__ __return_generateAclCheckCriteria_description__
+     */
     public function generateAclCheckCriteria($query, $controlledObject, $accessingObject = null, $allowParentInherit = false, $modelClass = null, $expandAros = true, $limitAccess = true)
     {
         $aclClass = Yii::$app->classes['Acl'];
@@ -484,6 +628,11 @@ class Gatekeeper extends \infinite\base\Component
         return $query;
     }
 
+    /**
+     * __method_isAclQuery_description__
+     * @param yii\db\Query $query __param_query_description__
+     * @return __return_isAclQuery_type__ __return_isAclQuery_description__
+     */
     protected function isAclQuery(\yii\db\Query $query)
     {
         $aclClass = Yii::$app->classes['Acl'];
@@ -498,11 +647,21 @@ class Gatekeeper extends \infinite\base\Component
         }
     }
 
+    /**
+     * __method_getGeneralAccess_description__
+     * @param __param_model_type__ $model __param_model_description__
+     * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__ [optional]
+     * @return __return_getGeneralAccess_type__ __return_getGeneralAccess_description__
+     */
     public function getGeneralAccess($model, $accessingObject = null)
     {
         return [];
     }
 
+    /**
+     * __method_getParentActionTranslations_description__
+     * @return __return_getParentActionTranslations_type__ __return_getParentActionTranslations_description__
+     */
     public function getParentActionTranslations()
     {
         return [
@@ -510,6 +669,12 @@ class Gatekeeper extends \infinite\base\Component
         ];
     }
 
+    /**
+     * __method_translateParentAction_description__
+     * @param __param_object_type__ $object __param_object_description__
+     * @param __param_action_type__ $action __param_action_description__
+     * @return __return_translateParentAction_type__ __return_translateParentAction_description__
+     */
     public function translateParentAction($object,$action)
     {
         $translationMap = $this->getParentActionTranslations();
@@ -520,6 +685,14 @@ class Gatekeeper extends \infinite\base\Component
         }
     }
 
+    /**
+     * __method_getAccess_description__
+     * @param __param_controlledObject_type__ $controlledObject __param_controlledObject_description__
+     * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__ [optional]
+     * @param __param_acaIds_type__ $acaIds __param_acaIds_description__ [optional]
+     * @param boolean $expandAros __param_expandAros_description__ [optional]
+     * @return __return_getAccess_type__ __return_getAccess_description__
+     */
     public function getAccess($controlledObject, $accessingObject = null, $acaIds = null, $expandAros = true)
     {
         if (is_null($accessingObject) && !$this->primaryRequestor) { return []; }
@@ -567,12 +740,21 @@ class Gatekeeper extends \infinite\base\Component
 
 
 
+    /**
+     * __method_clearCanCache_description__
+     * @param __param_controlledObject_type__ $controlledObject __param_controlledObject_description__
+     * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__ [optional]
+     */
     public function clearCanCache($controlledObject, $accessingObject = null)
     {
         // @todo mix this in with the caching solution
         $this->_objectCanCache = [];
     }
 
+    /**
+     * __method_getPrimaryRequestor_description__
+     * @return __return_getPrimaryRequestor_type__ __return_getPrimaryRequestor_description__
+     */
     public function getPrimaryRequestor()
     {
         if ($this->proxy) {
@@ -596,6 +778,11 @@ class Gatekeeper extends \infinite\base\Component
         return $this->_primaryAro;
     }
 
+    /**
+     * __method_getTopRequestors_description__
+     * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__ [optional]
+     * @return __return_getTopRequestors_type__ __return_getTopRequestors_description__
+     */
     public function getTopRequestors($accessingObject = null)
     {
 
@@ -616,6 +803,11 @@ class Gatekeeper extends \infinite\base\Component
         return array_unique($this->_requestors[$arosKey]);
     }
 
+    /**
+     * __method_getRequestors_description__
+     * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__ [optional]
+     * @return __return_getRequestors_type__ __return_getRequestors_description__
+     */
     public function getRequestors($accessingObject = null)
     {
         $accessingObject = $this->getAccessingObject($accessingObject);
@@ -649,6 +841,12 @@ class Gatekeeper extends \infinite\base\Component
         return array_unique($this->_requestors[$arosKey]);
     }
 
+    /**
+     * __method_accessorHasGroup_description__
+     * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__
+     * @param __param_groupSystemId_type__ $groupSystemId __param_groupSystemId_description__
+     * @return __return_accessorHasGroup_type__ __return_accessorHasGroup_description__
+     */
     public function accessorHasGroup($accessingObject, $groupSystemId)
     {
         if (!is_array($groupSystemId)) {
@@ -669,6 +867,11 @@ class Gatekeeper extends \infinite\base\Component
         return false;
     }
 
+    /**
+     * __method_getAccessorGroups_description__
+     * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__
+     * @return __return_getAccessorGroups_type__ __return_getAccessorGroups_description__
+     */
     public function getAccessorGroups($accessingObject)
     {
         $accessingObject = $this->getAccessingObject($accessingObject);
@@ -681,6 +884,11 @@ class Gatekeeper extends \infinite\base\Component
         return self::$_cache[$cacheKey];
     }
 
+    /**
+     * __method_getAccessingObject_description__
+     * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__
+     * @return __return_getAccessingObject_type__ __return_getAccessingObject_description__
+     */
     public function getAccessingObject($accessingObject)
     {
         if (is_null($accessingObject)) {
@@ -694,6 +902,12 @@ class Gatekeeper extends \infinite\base\Component
         return $accessingObject;
     }
 
+    /**
+     * __method_getGroups_description__
+     * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__ [optional]
+     * @param boolean $flatten __param_flatten_description__ [optional]
+     * @return __return_getGroups_type__ __return_getGroups_description__
+     */
     public function getGroups($accessingObject = null, $flatten = false)
     {
         $requestKey = md5(serialize([__FUNCTION__, func_get_args()]));
@@ -719,6 +933,12 @@ class Gatekeeper extends \infinite\base\Component
         return self::$_cache[$requestKey];
     }
 
+    /**
+     * __method_getActionObjectByName_description__
+     * @param __param_action_type__ $action __param_action_description__
+     * @return __return_getActionObjectByName_type__ __return_getActionObjectByName_description__
+     * @throws Exception __exception_Exception_description__
+     */
     public function getActionObjectByName($action)
     {
         if (is_object($action)) { return $action; }
@@ -739,6 +959,10 @@ class Gatekeeper extends \infinite\base\Component
         return $this->_actionsByName[$action];
     }
 
+    /**
+     * __method__getActions_description__
+     * @return __return__getActions_type__ __return__getActions_description__
+     */
     protected function _getActions()
     {
         $acaClass = Yii::$app->classes['Aca'];
@@ -749,6 +973,10 @@ class Gatekeeper extends \infinite\base\Component
         return true;
     }
 
+    /**
+     * __method_getActionsByName_description__
+     * @return __return_getActionsByName_type__ __return_getActionsByName_description__
+     */
     public function getActionsByName()
     {
         if (is_null($this->_actionsByName)) {
@@ -758,12 +986,19 @@ class Gatekeeper extends \infinite\base\Component
         return $this->_actionsByName;
     }
 
+    /**
+     * __method_clearActionsCache_description__
+     */
     public function clearActionsCache()
     {
         $this->_actionsByName = null;
         $this->_actionsById = null;
     }
 
+    /**
+     * __method_getActionsById_description__
+     * @return __return_getActionsById_type__ __return_getActionsById_description__
+     */
     public function getActionsById()
     {
         if (is_null($this->_actionsById)) {
@@ -773,16 +1008,30 @@ class Gatekeeper extends \infinite\base\Component
         return $this->_actionsById;
     }
 
+    /**
+     * __method_getPublicGroup_description__
+     * @return __return_getPublicGroup_type__ __return_getPublicGroup_description__
+     */
     public function getPublicGroup()
     {
         return $this->getGroup('public');
     }
 
+    /**
+     * __method_getTopGroup_description__
+     * @return __return_getTopGroup_type__ __return_getTopGroup_description__
+     */
     public function getTopGroup()
     {
         return $this->getGroup('top');
     }
 
+    /**
+     * __method_getGroup_description__
+     * @param __param_systemName_type__ $systemName __param_systemName_description__
+     * @param boolean $checkAccess __param_checkAccess_description__ [optional]
+     * @return __return_getGroup_type__ __return_getGroup_description__
+     */
     public function getGroup($systemName, $checkAccess = false)
     {
         $groupClass = Yii::$app->classes['Group'];
@@ -790,6 +1039,12 @@ class Gatekeeper extends \infinite\base\Component
         return $groupClass::getBySystemName($systemName, $checkAccess);
     }
 
+    /**
+     * __method_clearExplicitRules_description__
+     * @param __param_controlledObject_type__ $controlledObject __param_controlledObject_description__
+     * @param boolean $accessingObject __param_accessingObject_description__ [optional]
+     * @return __return_clearExplicitRules_type__ __return_clearExplicitRules_description__
+     */
     public function clearExplicitRules($controlledObject, $accessingObject = false)
     {
         $params = [];
@@ -806,37 +1061,95 @@ class Gatekeeper extends \infinite\base\Component
         return true;
     }
 
+    /**
+     * __method_allow_description__
+     * @param __param_action_type__ $action __param_action_description__
+     * @param __param_controlledObject_type__ $controlledObject __param_controlledObject_description__ [optional]
+     * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__ [optional]
+     * @param __param_aclRole_type__ $aclRole __param_aclRole_description__ [optional]
+     * @return __return_allow_type__ __return_allow_description__
+     */
     public function allow($action, $controlledObject = null, $accessingObject = null, $aclRole = null)
     {
         return $this->setAccess($action, 1, $controlledObject, $accessingObject, $aclRole);
     }
 
+    /**
+     * __method_clear_description__
+     * @param __param_action_type__ $action __param_action_description__
+     * @param __param_controlledObject_type__ $controlledObject __param_controlledObject_description__ [optional]
+     * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__ [optional]
+     * @param __param_aclRole_type__ $aclRole __param_aclRole_description__ [optional]
+     * @return __return_clear_type__ __return_clear_description__
+     */
     public function clear($action, $controlledObject = null, $accessingObject = null, $aclRole = null)
     {
         return $this->setAccess($action, false, $controlledObject, $accessingObject, $aclRole);
     }
 
+    /**
+     * __method_requireDirectAdmin_description__
+     * @param __param_action_type__ $action __param_action_description__
+     * @param __param_controlledObject_type__ $controlledObject __param_controlledObject_description__ [optional]
+     * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__ [optional]
+     * @param __param_aclRole_type__ $aclRole __param_aclRole_description__ [optional]
+     * @return __return_requireDirectAdmin_type__ __return_requireDirectAdmin_description__
+     */
     public function requireDirectAdmin($action, $controlledObject = null, $accessingObject = null, $aclRole = null)
     {
         return $this->setAccess($action, -1, $controlledObject, $accessingObject, $aclRole);
     }
 
+    /**
+     * __method_requireAdmin_description__
+     * @param __param_action_type__ $action __param_action_description__
+     * @param __param_controlledObject_type__ $controlledObject __param_controlledObject_description__ [optional]
+     * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__ [optional]
+     * @param __param_aclRole_type__ $aclRole __param_aclRole_description__ [optional]
+     * @return __return_requireAdmin_type__ __return_requireAdmin_description__
+     */
     public function requireAdmin($action, $controlledObject = null, $accessingObject = null, $aclRole = null)
     {
         return $this->setAccess($action, -2, $controlledObject, $accessingObject, $aclRole);
     }
 
+    /**
+     * __method_requireSuperAdmin_description__
+     * @param __param_action_type__ $action __param_action_description__
+     * @param __param_controlledObject_type__ $controlledObject __param_controlledObject_description__ [optional]
+     * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__ [optional]
+     * @param __param_aclRole_type__ $aclRole __param_aclRole_description__ [optional]
+     * @return __return_requireSuperAdmin_type__ __return_requireSuperAdmin_description__
+     */
     public function requireSuperAdmin($action, $controlledObject = null, $accessingObject = null, $aclRole = null)
     {
         return $this->setAccess($action, -3, $controlledObject, $accessingObject, $aclRole);
     }
 
+    /**
+     * __method_parentAccess_description__
+     * @param __param_action_type__ $action __param_action_description__
+     * @param __param_controlledObject_type__ $controlledObject __param_controlledObject_description__ [optional]
+     * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__ [optional]
+     * @param __param_aclRole_type__ $aclRole __param_aclRole_description__ [optional]
+     * @return __return_parentAccess_type__ __return_parentAccess_description__
+     */
     public function parentAccess($action, $controlledObject = null, $accessingObject = null, $aclRole = null)
     {
         return $this->setAccess($action, 0, $controlledObject, $accessingObject, $aclRole);
     }
 
 
+    /**
+     * __method_setAccess_description__
+     * @param __param_action_type__ $action __param_action_description__
+     * @param __param_access_type__ $access __param_access_description__
+     * @param __param_controlledObject_type__ $controlledObject __param_controlledObject_description__ [optional]
+     * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__ [optional]
+     * @param __param_aclRole_type__ $aclRole __param_aclRole_description__ [optional]
+     * @return __return_setAccess_type__ __return_setAccess_description__
+     * @throws Exception __exception_Exception_description__
+     */
     public function setAccess($action, $access, $controlledObject = null, $accessingObject = null, $aclRole = null)
     {
         $fields = [];
@@ -910,6 +1223,11 @@ class Gatekeeper extends \infinite\base\Component
     }
 
 
+    /**
+     * __method_getObjectAccess_description__
+     * @param __param_object_type__ $object __param_object_description__
+     * @return __return_getObjectAccess_type__ __return_getObjectAccess_description__
+     */
     public function getObjectAccess($object)
     {
         $objectAccessClass = $this->objectAccessClass;
@@ -917,6 +1235,11 @@ class Gatekeeper extends \infinite\base\Component
         return $objectAccessClass::get($object);
     }
 
+    /**
+     * __method_getObjectAros_description__
+     * @param __param_object_type__ $object __param_object_description__
+     * @return __return_getObjectAros_type__ __return_getObjectAros_description__
+     */
     public function getObjectAros($object)
     {
         $aclClass = Yii::$app->classes['Acl'];
@@ -928,6 +1251,12 @@ class Gatekeeper extends \infinite\base\Component
         return $aros;
     }
 
+    /**
+     * __method_getObjectInheritedRoles_description__
+     * @param __param_object_type__ $object __param_object_description__
+     * @param array $params __param_params_description__ [optional]
+     * @return __return_getObjectInheritedRoles_type__ __return_getObjectInheritedRoles_description__
+     */
     public function getObjectInheritedRoles($object, $params = [])
     {
         if (!isset($params['ignoreControlled'])) {
@@ -938,6 +1267,12 @@ class Gatekeeper extends \infinite\base\Component
         return $this->getObjectRoles($object, $params);
     }
 
+    /**
+     * __method_getObjectRoles_description__
+     * @param __param_object_type__ $object __param_object_description__
+     * @param array $params __param_params_description__ [optional]
+     * @return __return_getObjectRoles_type__ __return_getObjectRoles_description__
+     */
     public function getObjectRoles($object, $params = [])
     {
         $aclRoleClass = Yii::$app->classes['AclRole'];
@@ -968,6 +1303,11 @@ class Gatekeeper extends \infinite\base\Component
         return $aros;
     }
 
+    /**
+     * __method_getTopAccess_description__
+     * @param array $baseAccess __param_baseAccess_description__ [optional]
+     * @return __return_getTopAccess_type__ __return_getTopAccess_description__
+     */
     protected function getTopAccess($baseAccess = [])
     {
         $aclClass = Yii::$app->classes['Acl'];

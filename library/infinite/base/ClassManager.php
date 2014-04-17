@@ -18,6 +18,9 @@ use IteratorAggregate;
 **/
 class ClassManager extends Component implements IteratorAggregate, ArrayAccess
 {
+    /**
+     * @var __var__classes_type__ __var__classes_description__
+     */
     protected $_classes = [];
     /**
     * @inheritdoc
@@ -27,6 +30,10 @@ class ClassManager extends Component implements IteratorAggregate, ArrayAccess
         $this->setClasses($this->baseClasses(), false);
     }
 
+    /**
+     * __method_baseClasses_description__
+     * @return __return_baseClasses_type__ __return_baseClasses_description__
+     */
     public function baseClasses()
     {
         return [
@@ -43,6 +50,11 @@ class ClassManager extends Component implements IteratorAggregate, ArrayAccess
         ];
     }
 
+    /**
+     * __method_setClasses_description__
+     * @param __param_classes_type__ $classes __param_classes_description__
+     * @param boolean $override __param_override_description__ [optional]
+     */
     public function setClasses($classes, $override = true)
     {
         foreach ($classes as $key => $class) {
@@ -55,6 +67,7 @@ class ClassManager extends Component implements IteratorAggregate, ArrayAccess
     /**
      * Returns an iterator for traversing the attributes in the model.
      * This method is required by the interface IteratorAggregate.
+     *
      * @return ArrayIterator an iterator for traversing the items in the list.
      */
     public function getIterator()
@@ -66,7 +79,8 @@ class ClassManager extends Component implements IteratorAggregate, ArrayAccess
      * Returns whether there is an element at the specified offset.
      * This method is required by the SPL interface `ArrayAccess`.
      * It is implicitly called when you use something like `isset($model[$offset])`.
-     * @param  mixed   $offset the offset to check on
+     *
+     * @param mixed   $offset the offset to check on
      * @return boolean
      */
     public function offsetExists($offset)
@@ -78,8 +92,11 @@ class ClassManager extends Component implements IteratorAggregate, ArrayAccess
      * Returns the element at the specified offset.
      * This method is required by the SPL interface `ArrayAccess`.
      * It is implicitly called when you use something like `$value = $model[$offset];`.
-     * @param  mixed $offset the offset to retrieve element.
+     *
+     * @param mixed $offset the offset to retrieve element.
      * @return mixed the element at the offset, null if no element is found at the offset
+     * @throws \ __exception_\_description__
+     * @throws \ __exception_\_description__
      */
     public function offsetGet($offset)
     {
@@ -97,6 +114,7 @@ class ClassManager extends Component implements IteratorAggregate, ArrayAccess
      * Sets the element at the specified offset.
      * This method is required by the SPL interface `ArrayAccess`.
      * It is implicitly called when you use something like `$model[$offset] = $item;`.
+     *
      * @param integer $offset the offset to set element
      * @param mixed   $item   the element value
      */
@@ -109,6 +127,7 @@ class ClassManager extends Component implements IteratorAggregate, ArrayAccess
      * Sets the element value at the specified offset to null.
      * This method is required by the SPL interface `ArrayAccess`.
      * It is implicitly called when you use something like `unset($model[$offset])`.
+     *
      * @param mixed $offset the offset to unset element
      */
     public function offsetUnset($offset)

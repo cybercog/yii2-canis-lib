@@ -15,9 +15,21 @@ namespace infinite\web\assetBundles;
  */
 class BootstrapDatepickerAsset extends AssetBundle
 {
+    /**
+     * @inheritdoc
+     */
     public $sourcePath = '@vendor/eternicode/bootstrap-datepicker';
+    /**
+     * @inheritdoc
+     */
     public $css = ['css/datepicker.css'];
+    /**
+     * @inheritdoc
+     */
     public $js = ['js/bootstrap-datepicker.js'];
+    /**
+     * @inheritdoc
+     */
     public $depends = ['yii\web\JqueryAsset', 'yii\bootstrap\BootstrapAsset'];
 
     /**

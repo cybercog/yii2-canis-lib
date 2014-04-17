@@ -14,6 +14,12 @@ namespace infinite\db\behaviors\auditable;
 **/
 class InsertEvent extends AttributesEvent
 {
+    /**
+     * @inheritdoc
+     */
     protected $_id = 'insert';
+    /**
+     * @inheritdoc
+     */
     public $attributes;
 }

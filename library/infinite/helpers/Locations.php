@@ -18,6 +18,10 @@ use jom\SubnationalDivisions;
 **/
 class Locations extends \infinite\base\Component
 {
+    /**
+     * __method_countryList_description__
+     * @return __return_countryList_type__ __return_countryList_description__
+     */
     public static function countryList()
     {
         $englishPath = Yii::getAlias("@vendor/umpirsky/country-list/country/cldr/en/country.php");
@@ -31,6 +35,12 @@ class Locations extends \infinite\base\Component
         return false;
     }
 
+    /**
+     * __method_allSubnationalDivisions_description__
+     * @param boolean $shortName __param_shortName_description__ [optional]
+     * @param boolean $flat __param_flat_description__ [optional]
+     * @return __return_allSubnationalDivisions_type__ __return_allSubnationalDivisions_description__
+     */
     public static function allSubnationalDivisions($shortName = false, $flat = false)
     {
         $subdivisions = SubnationalDivisions::getAll($flat);

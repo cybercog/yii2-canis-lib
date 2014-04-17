@@ -28,7 +28,13 @@ use Yii;
  */
 class AclRole extends \infinite\db\ActiveRecord
 {
+    /**
+     * @inheritdoc
+     */
     public static $registryCache = false;
+    /**
+     * @inheritdoc
+     */
     public static $relationCache = false;
     /**
      * @inheritdoc
@@ -74,6 +80,7 @@ class AclRole extends \infinite\db\ActiveRecord
     }
 
     /**
+     * __method_getAcls_description__
      * @return \yii\db\ActiveRelation
      */
     public function getAcls()
@@ -82,6 +89,7 @@ class AclRole extends \infinite\db\ActiveRecord
     }
 
     /**
+     * __method_getAccessingObject_description__
      * @return \yii\db\ActiveRelation
      */
     public function getAccessingObject()
@@ -90,6 +98,7 @@ class AclRole extends \infinite\db\ActiveRecord
     }
 
     /**
+     * __method_getControlledObject_description__
      * @return \yii\db\ActiveRelation
      */
     public function getControlledObject()
@@ -98,6 +107,7 @@ class AclRole extends \infinite\db\ActiveRecord
     }
 
     /**
+     * __method_getRole_description__
      * @return \yii\db\ActiveRelation
      */
     public function getRole()

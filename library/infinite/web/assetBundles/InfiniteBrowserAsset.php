@@ -15,11 +15,23 @@ namespace infinite\web\assetBundles;
  */
 class InfiniteBrowserAsset extends AssetBundle
 {
+    /**
+     * @inheritdoc
+     */
     public $sourcePath = '@infinite/assets/browser';
+    /**
+     * @inheritdoc
+     */
     public $css = ['css/infinite.browser.css'];
+    /**
+     * @inheritdoc
+     */
     public $js = [
         'js/infinite.browser.js'
     ];
+    /**
+     * @inheritdoc
+     */
     public $depends = [
         'infinite\web\assetBundles\InfiniteAsset'
     ];

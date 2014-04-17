@@ -18,12 +18,20 @@ use yii\helpers\Console;
 **/
 class Controller extends \yii\console\Controller
 {
+    /**
+     * __method_hr_description__
+     */
     public function hr()
     {
         list($width, $height) = Console::getScreenSize();
         $this->out(str_repeat("=", $width));
     }
 
+    /**
+     * __method_out_description__
+     * @param __param_string_type__ $string __param_string_description__
+     * @return __return_out_type__ __return_out_description__
+     */
     public function out($string)
     {
         $string = $string . PHP_EOL;

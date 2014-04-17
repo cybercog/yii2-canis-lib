@@ -15,8 +15,20 @@ namespace infinite\web\assetBundles;
  */
 class UnderscoreAsset extends AssetBundle
 {
+    /**
+     * @inheritdoc
+     */
     public $sourcePath = '@vendor/components/underscore';
+    /**
+     * @inheritdoc
+     */
     public $css = [];
+    /**
+     * @inheritdoc
+     */
     public $js = ['underscore-min.js'];
+    /**
+     * @inheritdoc
+     */
     public $depends = [];
 }

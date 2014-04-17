@@ -18,11 +18,16 @@ class ActiveQuery extends \yii\db\ActiveQuery
 {
     use ComponentTrait;
     use QueryTrait;
+    /**
+     * @var __var__model_type__ __var__model_description__
+     */
     protected $_model;
     /**
-     * @event Event an event that is triggered before a query
+     * __method_getIsAco_description__
+     * __method_getIsAco_description__
+     *
+     * @return __return_getIsAco_type__ __return_getIsAco_description__
      */
-
     public function getIsAco()
     {
         $class = $this->modelClass;
@@ -30,6 +35,10 @@ class ActiveQuery extends \yii\db\ActiveQuery
         return $class::$isAco;
     }
 
+    /**
+     * __method_getModel_description__
+     * @return __return_getModel_type__ __return_getModel_description__
+     */
     public function getModel()
     {
         if (is_null($this->_model)) {

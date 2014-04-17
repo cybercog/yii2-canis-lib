@@ -16,12 +16,22 @@ use infinite\base\Exception;
 **/
 class FileStorage extends \infinite\base\Component
 {
+    /**
+     * @var __var__supportedImageTypes_type__ __var__supportedImageTypes_description__
+     */
     protected $_supportedImageTypes;
+    /**
+     * @var __var__tempPath_type__ __var__tempPath_description__
+     */
     protected $_tempPath;
+    /**
+     * @var __var__tempFiles_type__ __var__tempFiles_description__
+     */
     protected $_tempFiles = [];
 
     /**
      * Initializes the component
+     * @return __return_init_type__ __return_init_description__
      */
     public function init()
     {
@@ -32,7 +42,6 @@ class FileStorage extends \infinite\base\Component
 
     /**
      * Delete the tracked temporary file
-     *
      * @return boolean status of temp file deletion
      */
     public function deleteTempFiles()
@@ -46,9 +55,8 @@ class FileStorage extends \infinite\base\Component
 
     /**
      * Get a temporary file
-     *
-     * @param  boolean $keep Keep the file after request has been processed (optional)
-     * @param  unknown $ext  Extension of temporary file (optional)
+     * @param boolean $keep Keep the file after request has been processed (optional)
+     * @param unknown $ext  Extension of temporary file (optional)
      * @return string  Temporary file path
      */
     public function getTempFile($keep = false, $ext = null)
@@ -75,10 +83,8 @@ class FileStorage extends \infinite\base\Component
 
     /**
      * Get a temporary path
-     *
-     * @param  boolean $keep Keep the file after request has been processed (optional)
-     * @param  unknown $ext  Extension of temporary file (optional)
      * @return string  Temporary file path
+     * @throws Exception __exception_Exception_description__
      */
     public function getTempPath()
     {

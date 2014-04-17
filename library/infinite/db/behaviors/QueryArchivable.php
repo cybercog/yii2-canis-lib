@@ -14,6 +14,9 @@ namespace infinite\db\behaviors;
 **/
 class QueryArchivable extends QueryBehavior
 {
+    /**
+     * @var __var__allowArchives_type__ __var__allowArchives_description__
+     */
     protected $_allowArchives;
 
     /**
@@ -26,11 +29,20 @@ class QueryArchivable extends QueryBehavior
         ];
     }
 
+    /**
+     * __method_getAllowArchives_description__
+     * @return __return_getAllowArchives_type__ __return_getAllowArchives_description__
+     */
     public function getAllowArchives()
     {
         return $this->_allowArchives;
     }
 
+    /**
+     * __method_setAllowArchives_description__
+     * @param __param_value_type__ $value __param_value_description__
+     * @return __return_setAllowArchives_type__ __return_setAllowArchives_description__
+     */
     public function setAllowArchives($value)
     {
         $this->_allowArchives = $value;
@@ -38,6 +50,10 @@ class QueryArchivable extends QueryBehavior
         return $this->owner;
     }
 
+    /**
+     * __method_includeArchives_description__
+     * @return __return_includeArchives_type__ __return_includeArchives_description__
+     */
     public function includeArchives()
     {
         $this->allowArchives = null;
@@ -45,6 +61,10 @@ class QueryArchivable extends QueryBehavior
         return $this->owner;
     }
 
+    /**
+     * __method_onlyArchives_description__
+     * @return __return_onlyArchives_type__ __return_onlyArchives_description__
+     */
     public function onlyArchives()
     {
         $this->allowArchives = true;
@@ -52,6 +72,10 @@ class QueryArchivable extends QueryBehavior
         return $this->owner;
     }
 
+    /**
+     * __method_excludeArchives_description__
+     * @return __return_excludeArchives_type__ __return_excludeArchives_description__
+     */
     public function excludeArchives()
     {
         $this->allowArchives = false;
@@ -59,6 +83,11 @@ class QueryArchivable extends QueryBehavior
         return $this->owner;
     }
 
+    /**
+     * __method_beforeQuery_description__
+     * @param __param_event_type__ $event __param_event_description__
+     * @return __return_beforeQuery_type__ __return_beforeQuery_description__
+     */
     public function beforeQuery($event)
     {
         if (

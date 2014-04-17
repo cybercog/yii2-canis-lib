@@ -20,6 +20,12 @@ use yii\caching\DbDependency;
 **/
 class Cacher extends \infinite\base\Component
 {
+    /**
+     * __method_key_description__
+     * @param __param_key_type__ $key __param_key_description__
+     * @param boolean $hash __param_hash_description__ [optional]
+     * @return __return_key_type__ __return_key_description__
+     */
     public static function key($key, $hash = false)
     {
         if (is_array($key) && !empty($key['context'])) {
@@ -56,16 +62,34 @@ class Cacher extends \infinite\base\Component
         //return md5(json_encode($key));
     }
 
+    /**
+     * __method_get_description__
+     * @param __param_key_type__ $key __param_key_description__
+     * @return __return_get_type__ __return_get_description__
+     */
     public static function get($key)
     {
         return Yii::$app->cache->get(self::key($key));
     }
 
+    /**
+     * __method_exists_description__
+     * @param __param_key_type__ $key __param_key_description__
+     * @return __return_exists_type__ __return_exists_description__
+     */
     public static function exists($key)
     {
         return Yii::$app->cache->exists(self::key($key));
     }
 
+    /**
+     * __method_set_description__
+     * @param __param_key_type__ $key __param_key_description__
+     * @param __param_value_type__ $value __param_value_description__
+     * @param integer $expire __param_expire_description__ [optional]
+     * @param __param_dependency_type__ $dependency __param_dependency_description__ [optional]
+     * @return __return_set_type__ __return_set_description__
+     */
     public static function set($key, $value, $expire = 0, $dependency = null)
     {
         $chain = [];
@@ -77,16 +101,33 @@ class Cacher extends \infinite\base\Component
         return Yii::$app->cache->set(self::key($key), $value, $expire, static::chainedDependency($chain));
     }
 
+    /**
+     * __method_chainedDependency_description__
+     * @param array $chain __param_chain_description__ [optional]
+     * @return __return_chainedDependency_type__ __return_chainedDependency_description__
+     */
     public static function chainedDependency($chain = [])
     {
         return new ChainedDependency(['dependencies' => $chain]);
     }
 
+    /**
+     * __method_dbDependency_description__
+     * @param __param_sql_type__ $sql __param_sql_description__
+     * @param boolean $reusable __param_reusable_description__ [optional]
+     * @return __return_dbDependency_type__ __return_dbDependency_description__
+     */
     public static function dbDependency($sql, $reusable = false)
     {
         return new DbDependency(['reusable' => $reusable, 'sql' => $sql]);
     }
 
+    /**
+     * __method_groupDependency_description__
+     * @param __param_group_type__ $group __param_group_description__
+     * @param __param_category_type__ $category __param_category_description__ [optional]
+     * @return __return_groupDependency_type__ __return_groupDependency_description__
+     */
     public static function groupDependency($group, $category = null)
     {
         if (!is_null($category)) {
@@ -100,6 +141,10 @@ class Cacher extends \infinite\base\Component
         }
     }
 
+    /**
+     * __method_invalidateGroup_description__
+     * @param __param_group_type__ $group __param_group_description__
+     */
     public static function invalidateGroup($group)
     {
         GroupDependency::invalidate(Yii::$app->cache, $group);

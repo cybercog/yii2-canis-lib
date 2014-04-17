@@ -14,6 +14,9 @@ namespace infinite\widgets;
 **/
 class ActiveForm extends \yii\widgets\ActiveForm
 {
+    /**
+     * @inheritdoc
+     */
     public $fieldConfig = ['class' => 'infinite\\widgets\\ActiveField'];
 
     /**

@@ -14,6 +14,15 @@ namespace infinite\base;
 **/
 class File extends \infinite\web\UploadedFile implements FileInterface
 {
+    /**
+     * __method_createInstance_description__
+     * @param __param_name_type__ $name __param_name_description__
+     * @param __param_tempName_type__ $tempName __param_tempName_description__
+     * @param __param_type_type__ $type __param_type_description__
+     * @param __param_size_type__ $size __param_size_description__
+     * @param integer $error __param_error_description__ [optional]
+     * @return __return_createInstance_type__ __return_createInstance_description__
+     */
     public static function createInstance($name, $tempName, $type, $size, $error = UPLOAD_ERR_OK)
     {
         if (!file_exists($tempName)) {

@@ -19,6 +19,10 @@ use infinite\db\ActiveRecord;
 **/
 class Debug extends \infinite\base\Object
 {
+    /**
+     * __method_db_description__
+     * @param __param_query_type__ $query __param_query_description__
+     */
     public static function db($query)
     {
         if (is_null($query->params)) { $query->params = []; }
@@ -33,10 +37,10 @@ class Debug extends \infinite\base\Object
     }
 
     /**
-     *
-     *
+     * __method_d_description__
      * @param unknown $what
      * @param unknown $showFrom (optional)
+     * @param integer $stepsBack __param_stepsBack_description__ [optional]
      */
     public static function d($what, $showFrom = true, $stepsBack = 0)
     {
@@ -55,6 +59,12 @@ class Debug extends \infinite\base\Object
         }
     }
 
+    /**
+     * __method_ar_description__
+     * @param __param_what_type__ $what __param_what_description__
+     * @param boolean $print __param_print_description__ [optional]
+     * @return __return_ar_type__ __return_ar_description__
+     */
     public static function ar($what, $print = true)
     {
         $results = [];
@@ -77,6 +87,10 @@ class Debug extends \infinite\base\Object
         return $results;
     }
 
+    /**
+     * __method_clean_description__
+     * @param __param_what_type__ $what __param_what_description__
+     */
     public static function clean(&$what)
     {
         foreach ($what as $key => $value) {
@@ -89,8 +103,7 @@ class Debug extends \infinite\base\Object
         }
     }
     /**
-     *
-     *
+     * __method_c_description__
      * @param unknown $what
      * @param unknown $showFrom (optional)
      */

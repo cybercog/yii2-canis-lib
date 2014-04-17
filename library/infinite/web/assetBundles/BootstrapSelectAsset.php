@@ -14,10 +14,19 @@ namespace infinite\web\assetBundles;
 **/
 class BootstrapSelectAsset extends AssetBundle
 {
+    /**
+     * @inheritdoc
+     */
     public $sourcePath = '@vendor/bootstrap-select/bootstrap-select';
+    /**
+     * @inheritdoc
+     */
     public $css = [
         'bootstrap-select.min.css',
     ];
+    /**
+     * @inheritdoc
+     */
     public $js = [
         'bootstrap-select.min.js',
     ];

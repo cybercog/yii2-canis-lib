@@ -20,8 +20,17 @@ namespace infinite\db\models;
  */
 class Aca extends \infinite\db\ActiveRecord
 {
+    /**
+     * @inheritdoc
+     */
     public static $registryCache = false;
+    /**
+     * @inheritdoc
+     */
     public static $relationCache = false;
+    /**
+     * @inheritdoc
+     */
     public static $groupCache = true;
 
     /**
@@ -79,6 +88,7 @@ class Aca extends \infinite\db\ActiveRecord
     }
 
     /**
+     * __method_getRegistry_description__
      * @return \yii\db\ActiveRelation
      */
     public function getRegistry()

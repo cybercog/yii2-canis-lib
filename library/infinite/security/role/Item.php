@@ -16,11 +16,27 @@ use infinite\helpers\ArrayHelper;
 **/
 class Item extends \infinite\base\collector\Item
 {
+    /**
+     * @var __var_exclusive_type__ __var_exclusive_description__
+     */
     public $exclusive = false;
+    /**
+     * @var __var_inheritedEditable_type__ __var_inheritedEditable_description__
+     */
     public $inheritedEditable = true;
+    /**
+     * @var __var_name_type__ __var_name_description__
+     */
     public $name;
+    /**
+     * @var __var_level_type__ __var_level_description__
+     */
     public $level = 100;
 
+    /**
+     * __method_getPackage_description__
+     * @return __return_getPackage_type__ __return_getPackage_description__
+     */
     public function getPackage()
     {
         return [
@@ -33,6 +49,10 @@ class Item extends \infinite\base\collector\Item
         ];
     }
 
+    /**
+     * __method_getId_description__
+     * @return __return_getId_type__ __return_getId_description__
+     */
     public function getId()
     {
         if (!isset($this->object)) {
@@ -54,6 +74,10 @@ class Item extends \infinite\base\collector\Item
         return ArrayHelper::getValue($this->object, 'system_id');
     }
 
+    /**
+     * __method_getLevelSection_description__
+     * @return __return_getLevelSection_type__ __return_getLevelSection_description__
+     */
     public function getLevelSection()
     {
         if ($this->level > INFINITE_ROLE_LEVEL_MANAGER) {

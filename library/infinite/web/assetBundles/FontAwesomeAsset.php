@@ -14,7 +14,13 @@ namespace infinite\web\assetBundles;
 **/
 class FontAwesomeAsset extends AssetBundle
 {
+    /**
+     * @inheritdoc
+     */
     public $sourcePath = '@vendor/fortawesome/font-awesome';
+    /**
+     * @inheritdoc
+     */
     public $css = [
         'css/font-awesome.min.css',
     ];

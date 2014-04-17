@@ -14,6 +14,10 @@ namespace infinite\web;
 **/
 class UploadedFile extends \yii\web\UploadedFile implements \infinite\base\FileInterface
 {
+    /**
+     * __method_getErrorMessage_description__
+     * @return __return_getErrorMessage_type__ __return_getErrorMessage_description__
+     */
     public function getErrorMessage()
     {
         $baseInternalError = 'An internal error occurred that prevented this file from being uploaded';

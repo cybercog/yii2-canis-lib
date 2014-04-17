@@ -15,13 +15,13 @@ namespace infinite\helpers;
 class Date extends \infinite\base\Object
 {
     /**
-    * Override the current time of the application
-    */
+     * @var __var__now_type__ __var__now_description__
+     */
     protected static $_now;
 
     /**
      * Sets the current time of the application
-     * @param  varies $now Either the int of the exact time or it could be a relative string
+     * @param varies $now Either the int of the exact time or it could be a relative string
      * @return int    Unix timestamp
      */
     public static function now($now)
@@ -33,7 +33,6 @@ class Date extends \infinite\base\Object
 
     /**
      * Get the current time
-     *
      * @return int Unix timestamp
      */
     public static function time()
@@ -51,11 +50,12 @@ class Date extends \infinite\base\Object
 
     /**
      * Format date
-     *
-     * @param  string $format date format
-     * @param  int    $time   Unix timestamp (optional)
-     * @return string formatted date
      *                       @see php:date
+     *
+     * @param string $format date format
+     * @param int    $time   Unix timestamp (optional)
+     * @return string formatted date
+                      @see php:date
      */
     public static function date($format, $time = null)
     {
@@ -66,11 +66,12 @@ class Date extends \infinite\base\Object
 
     /**
      * Strtotime with fallback on overriden application time
-     *
-     * @param  string $str  strtotime string
-     * @param  int    $time Unix timestamp (optional)
-     * @return string formatted date
      *                     @see php:strtotime
+     *
+     * @param string $str  strtotime string
+     * @param int    $time Unix timestamp (optional)
+     * @return string formatted date
+                    @see php:strtotime
      */
     public static function strtotime($str, $time = null)
     {
@@ -81,9 +82,8 @@ class Date extends \infinite\base\Object
 
     /**
      * Gets the first second of a day
-     *
-     * @param  string $day  date string
-     * @param  int    $time Unix timestamp (optional)
+     * @param string $day  date string
+     * @param int    $time Unix timestamp (optional)
      * @return string Unix timestamp
      */
     public static function startOfDay($day, $time = null)
@@ -93,9 +93,8 @@ class Date extends \infinite\base\Object
 
     /**
      * Gets the last second of a day
-     *
-     * @param  string $day  date string
-     * @param  int    $time Unix timestamp (optional)
+     * @param string $day  date string
+     * @param int    $time Unix timestamp (optional)
      * @return string Unix timestamp
      */
     public static function endOfDay($day, $time = null)
@@ -105,9 +104,8 @@ class Date extends \infinite\base\Object
 
     /**
      * Is the date in the past?
-     *
-     * @param  varies $date
-     * @param  int    $time (optional)
+     * @param varies $date
+     * @param int    $time (optional)
      * @return bool   Is the time in the past or not
      */
     public static function inPast($date, $time = null)
@@ -120,9 +118,8 @@ class Date extends \infinite\base\Object
 
     /**
      * Is the date in the future?
-     *
-     * @param  varies $date
-     * @param  int    $time (optional)
+     * @param varies $date
+     * @param int    $time (optional)
      * @return bool   Is the time in the past or not
      */
     public static function inFuture($date, $time = null)
@@ -135,9 +132,8 @@ class Date extends \infinite\base\Object
 
     /**
      * Is it now
-     *
-     * @param  varies $date
-     * @param  int    $time (optional)
+     * @param varies $date
+     * @param int    $time (optional)
      * @return bool   Is the time in the past or not
      */
     public static function isPresent($date, $time = null)
@@ -149,12 +145,11 @@ class Date extends \infinite\base\Object
     }
 
     /**
-     *	Return string of relative date
-     *
-     * @param  varies  $mdate         date to compare
-     * @param  int     $time          Unix timestamp         (optional)
-     * @param  unknown $showTime      (optional)
-     * @param  unknown $defaultFormat (optional)
+     * __method_relativeDate_description__
+     * @param varies  $mdate         date to compare
+     * @param int     $time          Unix timestamp         (optional)
+     * @param unknown $showTime      (optional)
+     * @param unknown $defaultFormat (optional)
      * @return string  Formatted relative date
      */
     public static function relativeDate($mdate, $time = null, $showTime = false, $defaultFormat = 'F j, Y \a\t g:i A')
@@ -204,10 +199,9 @@ class Date extends \infinite\base\Object
 
     /**
      * Nice time difference
-     *
-     * @param  string $d1           Date string
-     * @param  string $d2           Date string
-     * @param  int    $limitPeriods Number of periods to show (optional)
+     * @param string $d1           Date string
+     * @param string $d2           Date string
+     * @param int    $limitPeriods Number of periods to show (optional)
      * @return string Nice duration
      */
     public static function niceTimeDiff($d1, $d2, $limitPeriods = 2)
@@ -224,12 +218,9 @@ class Date extends \infinite\base\Object
 
     /**
      * Get the human string of a duration
-     *
-     * @url http://www.snipplr.com/view.php?codeview&id=49609
-     *
-     * @param  int    $seconds      Number of seconds
-     * @param  int    $limitPeriods (optional)
-     * @param  bool   $zeros        Show zeros    (optional; default false)
+     * @param int    $seconds      Number of seconds
+     * @param int    $limitPeriods (optional)
+     * @param bool   $zeros        Show zeros    (optional; default false)
      * @return string Nice human duration
      */
     public static function niceDuration($seconds, $limitPeriods = 7, $zeros = false)

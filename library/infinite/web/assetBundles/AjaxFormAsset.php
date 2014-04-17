@@ -14,7 +14,16 @@ namespace infinite\web\assetBundles;
 **/
 class AjaxFormAsset extends AssetBundle
 {
+    /**
+     * @inheritdoc
+     */
     public $sourcePath = '@vendor/malsup/form';
+    /**
+     * @inheritdoc
+     */
     public $js = ['jquery.form.js'];
+    /**
+     * @inheritdoc
+     */
     public $depends = ['yii\web\JqueryAsset'];
 }

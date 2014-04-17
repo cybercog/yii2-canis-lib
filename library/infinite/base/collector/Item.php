@@ -18,17 +18,40 @@ use infinite\base\exceptions\Exception;
 class Item extends \infinite\base\Object
 {
     //public $name;
+    /**
+     * @var __var__owner_type__ __var__owner_description__
+     */
     protected $_owner;
+    /**
+     * @var __var__collector_type__ __var__collector_description__
+     */
     protected $_collector;
+    /**
+     * @var __var__settings_type__ __var__settings_description__
+     */
     protected $_settings;
+    /**
+     * @var __var__object_type__ __var__object_description__
+     */
     protected $_object;
+    /**
+     * @var __var__systemId_type__ __var__systemId_description__
+     */
     protected $_systemId;
 
+    /**
+     * __method_setSystemId_description__
+     * @param __param_id_type__ $id __param_id_description__
+     */
     public function setSystemId($id)
     {
         $this->_systemId = $id;
     }
 
+    /**
+     * __method_getSystemId_description__
+     * @return __return_getSystemId_type__ __return_getSystemId_description__
+     */
     public function getSystemId()
     {
         if (is_null($this->_systemId) && !is_null($this->object) && isset($this->object->systemId)) {
@@ -38,21 +61,38 @@ class Item extends \infinite\base\Object
         return $this->_systemId;
     }
 
+    /**
+     * __method_setCollector_description__
+     * @param __param_collector_type__ $collector __param_collector_description__
+     */
     public function setCollector($collector)
     {
         $this->_collector = $collector;
     }
 
+    /**
+     * __method_hasObject_description__
+     * @return __return_hasObject_type__ __return_hasObject_description__
+     */
     public function hasObject()
     {
         return $this->_object !== null;
     }
 
+    /**
+     * __method_getObject_description__
+     * @return __return_getObject_type__ __return_getObject_description__
+     */
     public function getObject()
     {
         return $this->_object;
     }
 
+    /**
+     * __method_setObject_description__
+     * @param __param_object_type__ $object __param_object_description__
+     * @throws Exception __exception_Exception_description__
+     */
     public function setObject($object)
     {
         if (is_array($object)) {
@@ -66,16 +106,28 @@ class Item extends \infinite\base\Object
         $object->collectorItem = $this;
     }
 
+    /**
+     * __method_setOwner_description__
+     * @param __param_owner_type__ $owner __param_owner_description__
+     */
     public function setOwner($owner)
     {
         $this->_owner = $owner;
     }
 
+    /**
+     * __method_getOwner_description__
+     * @return __return_getOwner_type__ __return_getOwner_description__
+     */
     public function getOwner()
     {
         return $this->_owner;
     }
 
+    /**
+     * __method_getCollector_description__
+     * @return __return_getCollector_type__ __return_getCollector_description__
+     */
     public function getCollector()
     {
         return $this->_collector;

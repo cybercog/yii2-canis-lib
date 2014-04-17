@@ -15,8 +15,17 @@ namespace infinite\web\assetBundles;
  */
 class InfiniteAsset extends AssetBundle
 {
+    /**
+     * @inheritdoc
+     */
     public $sourcePath = '@infinite/assets/core';
+    /**
+     * @inheritdoc
+     */
     public $css = ['css/infinite.bootstrap.css'];
+    /**
+     * @inheritdoc
+     */
     public $js = [
         'js/infinite.utils.js',
         'js/infinite.core.js',
@@ -26,6 +35,9 @@ class InfiniteAsset extends AssetBundle
         'js/infinite.smart.js',
         'js/infinite.expandable.js'
     ];
+    /**
+     * @inheritdoc
+     */
     public $depends = [
         'yii\bootstrap\BootstrapAsset',
         'yii\bootstrap\BootstrapThemeAsset',

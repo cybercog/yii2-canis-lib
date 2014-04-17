@@ -16,18 +16,44 @@ use infinite\base\Object;
 **/
 class SearchTermResult extends Object
 {
+    /**
+     * @var __var__object_type__ __var__object_description__
+     */
     protected $_object;
+    /**
+     * @var __var__id_type__ __var__id_description__
+     */
     protected $_id;
+    /**
+     * @var __var__terms_type__ __var__terms_description__
+     */
     protected $_terms;
+    /**
+     * @var __var__descriptor_type__ __var__descriptor_description__
+     */
     protected $_descriptor;
+    /**
+     * @var __var__subdescriptor_type__ __var__subdescriptor_description__
+     */
     protected $_subdescriptor;
+    /**
+     * @var __var__score_type__ __var__score_description__
+     */
     protected $_score;
 
+    /**
+     * __method_setId_description__
+     * @param __param_value_type__ $value __param_value_description__
+     */
     public function setId($value)
     {
         $this->_id = $value;
     }
 
+    /**
+     * __method_getId_description__
+     * @return __return_getId_type__ __return_getId_description__
+     */
     public function getId()
     {
         if (is_null($this->_id) && isset($this->object)) {
@@ -37,6 +63,10 @@ class SearchTermResult extends Object
         return $this->_id;
     }
 
+    /**
+     * __method_setObject_description__
+     * @param __param_value_type__ $value __param_value_description__
+     */
     public function setObject($value)
     {
         if (!isset($this->_subdescriptor)) {
@@ -58,16 +88,28 @@ class SearchTermResult extends Object
         $this->_object = $value;
     }
 
+    /**
+     * __method_getObject_description__
+     * @return __return_getObject_type__ __return_getObject_description__
+     */
     public function getObject()
     {
         return $this->_object;
     }
 
+    /**
+     * __method_setDescriptor_description__
+     * @param __param_value_type__ $value __param_value_description__
+     */
     public function setDescriptor($value)
     {
         $this->_descriptor = $value;
     }
 
+    /**
+     * __method_getDescriptor_description__
+     * @return __return_getDescriptor_type__ __return_getDescriptor_description__
+     */
     public function getDescriptor()
     {
         if (is_null($this->_descriptor) && isset($this->object)) {
@@ -77,11 +119,19 @@ class SearchTermResult extends Object
         return $this->_descriptor;
     }
 
+    /**
+     * __method_setTerms_description__
+     * @param __param_value_type__ $value __param_value_description__
+     */
     public function setTerms($value)
     {
         $this->_terms = (array) $value;
     }
 
+    /**
+     * __method_getTerms_description__
+     * @return __return_getTerms_type__ __return_getTerms_description__
+     */
     public function getTerms()
     {
         if (is_null($this->_terms) && isset($this->object)) {
@@ -91,6 +141,10 @@ class SearchTermResult extends Object
         return $this->_terms;
     }
 
+    /**
+     * __method_mergeTerms_description__
+     * @param __param_values_type__ $values __param_values_description__
+     */
     public function mergeTerms($values)
     {
         $values = (array) $values;
@@ -101,11 +155,20 @@ class SearchTermResult extends Object
         }
     }
 
+    /**
+     * __method_setSubdescriptor_description__
+     * @param __param_value_type__ $value __param_value_description__
+     */
     public function setSubdescriptor($value)
     {
         $this->_subdescriptor = (array) $value;
     }
 
+    /**
+     * __method_addSubdescriptorField_description__
+     * @param __param_field_type__ $field __param_field_description__
+     * @return __return_addSubdescriptorField_type__ __return_addSubdescriptorField_description__
+     */
     public function addSubdescriptorField($field)
     {
         if (is_null($this->_subdescriptor)) {
@@ -123,6 +186,11 @@ class SearchTermResult extends Object
         return false;
     }
 
+    /**
+     * __method_addSubdescriptorValue_description__
+     * @param __param_value_type__ $value __param_value_description__
+     * @return __return_addSubdescriptorValue_type__ __return_addSubdescriptorValue_description__
+     */
     public function addSubdescriptorValue($value)
     {
         if (is_null($this->_subdescriptor)) {
@@ -135,6 +203,10 @@ class SearchTermResult extends Object
         return false;
     }
 
+    /**
+     * __method_getSubdescriptor_description__
+     * @return __return_getSubdescriptor_type__ __return_getSubdescriptor_description__
+     */
     public function getSubdescriptor()
     {
         if (is_null($this->_subdescriptor)) {
@@ -144,16 +216,28 @@ class SearchTermResult extends Object
         return $this->_subdescriptor;
     }
 
+    /**
+     * __method_setScore_description__
+     * @param __param_value_type__ $value __param_value_description__
+     */
     public function setScore($value)
     {
         $this->_score = (float) $value;
     }
 
+    /**
+     * __method_mergeScore_description__
+     * @param __param_value_type__ $value __param_value_description__
+     */
     public function mergeScore($value)
     {
         $this->_score = $this->score + (float) $value;
     }
 
+    /**
+     * __method_getScore_description__
+     * @return __return_getScore_type__ __return_getScore_description__
+     */
     public function getScore()
     {
         if (is_null($this->_score)) {
@@ -163,6 +247,10 @@ class SearchTermResult extends Object
         return $this->_score;
     }
 
+    /**
+     * __method_toArray_description__
+     * @return __return_toArray_type__ __return_toArray_description__
+     */
     public function toArray()
     {
         return [

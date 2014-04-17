@@ -14,6 +14,12 @@ namespace infinite\db\behaviors\auditable;
 **/
 class UpdateEvent extends AttributesEvent
 {
+    /**
+     * @inheritdoc
+     */
     protected $_id = 'update';
+    /**
+     * @inheritdoc
+     */
     public $attributes;
 }

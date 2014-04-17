@@ -14,6 +14,9 @@ namespace infinite\data;
 **/
 class Sort extends \yii\data\Sort
 {
+    /**
+     * @var __var_sortOrders_type__ __var_sortOrders_description__
+     */
     public $sortOrders = [];
 
     /**

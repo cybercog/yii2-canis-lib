@@ -14,6 +14,9 @@ namespace infinite\data;
 **/
 class Pagination extends \yii\data\Pagination
 {
+    /**
+     * @var __var__state_type__ __var__state_description__
+     */
     protected $_state;
 
     /**

@@ -16,10 +16,24 @@ use Yii;
 **/
 abstract class Response extends \infinite\base\Object
 {
+    /**
+     * @var __var_bundleClass_type__ __var_bundleClass_description__
+     */
     public $bundleClass = 'infinite\\web\\browser\\Bundle';
+    /**
+     * @var __var__instance_type__ __var__instance_description__
+     */
     protected static $_instance;
+    /**
+     * @var __var__bundles_type__ __var__bundles_description__
+     */
     protected $_bundles;
 
+    /**
+     * __method_getInstance_description__
+     * @param boolean $static __param_static_description__ [optional]
+     * @return __return_getInstance_type__ __return_getInstance_description__
+     */
     public static function getInstance($static = true)
     {
         if ($static) {
@@ -33,6 +47,13 @@ abstract class Response extends \infinite\base\Object
         }
     }
 
+    /**
+     * __method_handleRequests_description__
+     * @param __param_requests_type__ $requests __param_requests_description__
+     * @param __param_baseInstructions_type__ $baseInstructions __param_baseInstructions_description__
+     * @param boolean $handle __param_handle_description__ [optional]
+     * @return __return_handleRequests_type__ __return_handleRequests_description__
+     */
     public static function handleRequests($requests, $baseInstructions, $handle = true)
     {
         $response = static::getInstance();
@@ -50,6 +71,12 @@ abstract class Response extends \infinite\base\Object
         return $response;
     }
 
+    /**
+     * __method_handleInstructions_description__
+     * @param __param_instructions_type__ $instructions __param_instructions_description__
+     * @param boolean $handle __param_handle_description__ [optional]
+     * @return __return_handleInstructions_type__ __return_handleInstructions_description__
+     */
     public static function handleInstructions($instructions, $handle = true)
     {
         $instance = static::getInstance();
@@ -62,6 +89,10 @@ abstract class Response extends \infinite\base\Object
         return $bundle;
     }
 
+    /**
+     * __method_package_description__
+     * @return __return_package_type__ __return_package_description__
+     */
     public function package()
     {
         $package = [];
@@ -78,6 +109,11 @@ abstract class Response extends \infinite\base\Object
         return $package;
     }
 
+    /**
+     * __method_addBundle_description__
+     * @param __param_bundle_type__ $bundle __param_bundle_description__
+     * @return __return_addBundle_type__ __return_addBundle_description__
+     */
     public function addBundle($bundle)
     {
         if (!isset($this->_bundles)) {
@@ -95,6 +131,10 @@ abstract class Response extends \infinite\base\Object
         return $bundle;
     }
 
+    /**
+     * __method_getBundles_description__
+     * @return __return_getBundles_type__ __return_getBundles_description__
+     */
     public function getBundles()
     {
         return $this->_bundles;

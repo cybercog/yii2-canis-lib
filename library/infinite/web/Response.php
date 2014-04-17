@@ -22,14 +22,38 @@ class Response extends \yii\web\Response
 {
     use ObjectTrait;
 
+    /**
+     * @var __var_controller_type__ __var_controller_description__
+     */
     public $controller;
+    /**
+     * @var __var_action_type__ __var_action_description__
+     */
     public $action;
+    /**
+     * @var __var_view_type__ __var_view_description__
+     */
     public $view = false;
 
     public $task = 'fill';
+    /**
+     * @var __var_staticTasks_type__ __var_staticTasks_description__
+     */
     public $staticTasks = ['status', 'trigger'];
+    /**
+     * @var __var_taskOptions_type__ __var_taskOptions_description__
+     */
+    /**
+     * @var __var_task_type__ __var_task_description__
+     */
     public $taskOptions = [];
+    /**
+     * @var __var_baseInstructions_type__ __var_baseInstructions_description__
+     */
     public $baseInstructions = [];
+    /**
+     * @var __var_labels_type__ __var_labels_description__
+     */
     public $labels = [
         'submit' => 'Save',
         'cancel' => 'Cancel',
@@ -40,15 +64,36 @@ class Response extends \yii\web\Response
         'close' => 'Close',
     ];
 
+    /**
+     * @var __var_error_type__ __var_error_description__
+     */
     public $error;
+    /**
+     * @var __var_success_type__ __var_success_description__
+     */
     public $success;
 
+    /**
+     * @var __var_refresh_type__ __var_refresh_description__
+     */
     public $refresh = false;
+    /**
+     * @var __var_redirect_type__ __var_redirect_description__
+     */
     public $redirect = false;
 
+    /**
+     * @var __var_trigger_type__ __var_trigger_description__
+     */
     public $trigger = false;
 
+    /**
+     * @var __var_forceInstructions_type__ __var_forceInstructions_description__
+     */
     public $forceInstructions = false;
+    /**
+     * @var __var_disableInstructions_type__ __var_disableInstructions_description__
+     */
     public $disableInstructions = false;
 
     /**
@@ -60,6 +105,10 @@ class Response extends \yii\web\Response
         //$this->on(static::EVENT_BEFORE_SEND, [$this, 'beforeSend']);
     }
 
+    /**
+     * __method_getIsInstructable_description__
+     * @return __return_getIsInstructable_type__ __return_getIsInstructable_description__
+     */
     public function getIsInstructable()
     {
         $isAjax = (isset(Yii::$app->request->isAjax) && Yii::$app->request->isAjax);
@@ -76,6 +125,11 @@ class Response extends \yii\web\Response
         return (is_array($this->data) || $this->forceInstructions || $isAjax) && !$this->disableInstructions;
     }
 
+    /**
+     * __method_generateInstructions_description__
+     * @return __return_generateInstructions_type__ __return_generateInstructions_description__
+     * @throws Exception __exception_Exception_description__
+     */
     protected function generateInstructions()
     {
         if (is_array($this->data)) {
@@ -128,11 +182,21 @@ class Response extends \yii\web\Response
         return $i;
     }
 
+    /**
+     * __method_handleFill_description__
+     * @param __param_i_type__ $i __param_i_description__
+     * @return __return_handleFill_type__ __return_handleFill_description__
+     */
     protected function handleFill(&$i)
     {
         return true;
     }
 
+    /**
+     * __method_handleStatus_description__
+     * @param __param_i_type__ $i __param_i_description__
+     * @return __return_handleStatus_type__ __return_handleStatus_description__
+     */
     protected function handleStatus(&$i)
     {
         if (!empty($this->error)) {
@@ -146,6 +210,11 @@ class Response extends \yii\web\Response
         return true;
     }
 
+    /**
+     * __method_handleTrigger_description__
+     * @param __param_i_type__ $i __param_i_description__
+     * @return __return_handleTrigger_type__ __return_handleTrigger_description__
+     */
     protected function handleTrigger(&$i)
     {
         if (!empty($this->trigger)) {
@@ -155,6 +224,11 @@ class Response extends \yii\web\Response
         return true;
     }
 
+    /**
+     * __method_handleDialog_description__
+     * @param __param_i_type__ $i __param_i_description__
+     * @return __return_handleDialog_type__ __return_handleDialog_description__
+     */
     protected function handleDialog(&$i)
     {
         if (!isset($this->taskOptions['isForm'])) {
@@ -189,6 +263,9 @@ class Response extends \yii\web\Response
         return true;
     }
 
+    /**
+     * __method_handleFlashStatus_description__
+     */
     protected function handleFlashStatus()
     {
         if (isset(Yii::$app->session)) {
@@ -200,6 +277,11 @@ class Response extends \yii\web\Response
         }
     }
 
+    /**
+     * __method_renderContent_description__
+     * @param boolean $layout __param_layout_description__ [optional]
+     * @return __return_renderContent_type__ __return_renderContent_description__
+     */
     protected function renderContent($layout = true)
     {
         if (isset($this->controller) && $this->view) {
@@ -223,6 +305,10 @@ class Response extends \yii\web\Response
         parent::send();
     }
 
+    /**
+     * __method_beforeSend_description__
+     * @param __param_event_type__ $event __param_event_description__ [optional]
+     */
     public function beforeSend($event = null)
     {
         if (isset($this->controller)) {
@@ -264,6 +350,10 @@ class Response extends \yii\web\Response
         return $this;
     }
 
+    /**
+     * __method_getRoute_description__
+     * @return __return_getRoute_type__ __return_getRoute_description__
+     */
     public function getRoute()
     {
         if (is_null($this->action)) { return; }
