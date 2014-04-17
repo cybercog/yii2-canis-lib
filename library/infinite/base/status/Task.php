@@ -11,7 +11,7 @@ namespace infinite\base\status;
  * Task [@doctodo write class description for Task]
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 class Task extends \infinite\base\Component
 {
     /**
@@ -61,7 +61,7 @@ class Task extends \infinite\base\Component
 
     /**
     * @inheritdoc
-    **/
+     */
     public function __construct($parent, $system, $human = null)
     {
         if (is_null($human)) { $human = $system; }

@@ -11,7 +11,7 @@ namespace infinite\base\language;
  * Verb [@doctodo write class description for Verb]
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 class Verb extends \infinite\base\language\Word
 {
     /**

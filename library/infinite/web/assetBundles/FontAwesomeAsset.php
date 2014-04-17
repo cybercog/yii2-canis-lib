@@ -11,7 +11,7 @@ namespace infinite\web\assetBundles;
  * FontAwesomeAsset [@doctodo write class description for FontAwesomeAsset]
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 class FontAwesomeAsset extends AssetBundle
 {
     /**
@@ -27,7 +27,7 @@ class FontAwesomeAsset extends AssetBundle
 
     /**
     * @inheritdoc
-    **/
+     */
     public function init()
     {
         $this->publishOptions['beforeCopy'] = function ($from, $to) {

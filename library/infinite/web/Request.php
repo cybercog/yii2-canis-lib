@@ -11,7 +11,7 @@ namespace infinite\web;
  * Request [@doctodo write class description for Request]
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 class Request extends \yii\web\Request
 {
 }

@@ -13,7 +13,7 @@ use yii\base\Event;
  * Status [@doctodo write class description for Status]
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 class Status extends \infinite\base\Component
 {
     /**
@@ -39,7 +39,7 @@ class Status extends \infinite\base\Component
 
     /**
     * @inheritdoc
-    **/
+     */
     public function __construct($maxLevels = 3)
     {
         $this->maxLevels = $maxLevels;

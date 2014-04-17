@@ -11,7 +11,7 @@ namespace infinite\web;
  * View [@doctodo write class description for View]
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 class View extends \yii\web\View
 {
     /**

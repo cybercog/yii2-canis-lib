@@ -11,7 +11,7 @@ namespace infinite\web\browser;
  * Handler [@doctodo write class description for Handler]
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 abstract class Handler extends \infinite\base\Object
 {
     /**

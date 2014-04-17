@@ -15,7 +15,7 @@ use yii\base\InvalidConfigException;
  * Bundle [@doctodo write class description for Bundle]
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 class Bundle extends \infinite\base\Object
 {
     /**

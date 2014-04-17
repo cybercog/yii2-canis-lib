@@ -21,7 +21,7 @@ use infinite\caching\Cacher;
  * ActiveRecord is the model class for table "{{%active_record}}".
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 class ActiveRecord extends \yii\db\ActiveRecord
 {
     use ObjectTrait;
@@ -85,7 +85,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
     /**
     * @inheritdoc
-    **/
+     */
     public function beforeSave($insert)
     {
         if (!empty($this->dirtyAttributes)) {
@@ -97,7 +97,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
     /**
     * @inheritdoc
-    **/
+     */
     public function afterSave($insert)
     {
         $result = parent::afterSave($insert);
@@ -147,7 +147,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
     /**
     * @inheritdoc
-    **/
+     */
     public static function populateRecord($record, $row)
     {
         $relation = [];
@@ -305,7 +305,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
     /**
     * @inheritdoc
-    **/
+     */
     public static function findOne($where, $checkAccess = true)
     {
         return self::_findCache('one', $where, $checkAccess);
@@ -313,7 +313,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
     /**
     * @inheritdoc
-    **/
+     */
     public static function findAll($where = false, $checkAccess = true)
     {
         return self::_findCache('all', $where, $checkAccess);
@@ -413,7 +413,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
     /**
     * @inheritdoc
-    **/
+     */
     public function behaviors()
     {
         return [

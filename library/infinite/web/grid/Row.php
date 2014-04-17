@@ -13,7 +13,7 @@ use infinite\helpers\Html;
  * Row [@doctodo write class description for Row]
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 class Row extends \infinite\base\Object
 {
     const TOTAL_COLUMNS = 12;

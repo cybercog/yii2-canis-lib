@@ -13,7 +13,7 @@ use infinite\base\ObjectTrait;
  * ResponseOptions [@doctodo write class description for ResponseOptions]
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 class ResponseOptions extends \infinite\base\Object
 {
 

@@ -13,7 +13,7 @@ use infinite\helpers\Date as DateHelper;
  * Date [@doctodo write class description for Date]
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 class Date extends \infinite\db\behaviors\ActiveRecord
 {
     /**
@@ -40,7 +40,7 @@ class Date extends \infinite\db\behaviors\ActiveRecord
 
     /**
     * @inheritdoc
-    **/
+     */
     public function events()
     {
         return [

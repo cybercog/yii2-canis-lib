@@ -13,7 +13,7 @@ use Yii;
  * Controller [@doctodo write class description for Controller]
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 class Controller extends \yii\web\Controller
 {
     /**
@@ -28,7 +28,7 @@ class Controller extends \yii\web\Controller
 
     /**
     * @inheritdoc
-    **/
+     */
     public function init()
     {
         parent::init();

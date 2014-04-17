@@ -13,7 +13,7 @@ use Yii;
  * QueryAccess [@doctodo write class description for QueryAccess]
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 class QueryAccess extends QueryBehavior
 {
     /**
@@ -39,7 +39,7 @@ class QueryAccess extends QueryBehavior
 
     /**
     * @inheritdoc
-    **/
+     */
     public function events()
     {
         return [

@@ -13,12 +13,12 @@ use Yii;
  * User [@doctodo write class description for User]
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 class User extends \yii\web\User
 {
     /**
     * @inheritdoc
-    **/
+     */
     public function loginRequired()
     {
         $request = Yii::$app->getRequest();

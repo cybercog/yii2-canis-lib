@@ -11,7 +11,7 @@ namespace infinite\widgets;
  * ActiveForm [@doctodo write class description for ActiveForm]
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 class ActiveForm extends \yii\widgets\ActiveForm
 {
     /**
@@ -21,7 +21,7 @@ class ActiveForm extends \yii\widgets\ActiveForm
 
     /**
     * @inheritdoc
-    **/
+     */
     public static function begin($config = [], $echo = true)
     {
         ob_start();
@@ -38,7 +38,7 @@ class ActiveForm extends \yii\widgets\ActiveForm
 
     /**
     * @inheritdoc
-    **/
+     */
     public static function end($echo = true)
     {
         ob_start();

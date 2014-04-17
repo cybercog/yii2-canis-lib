@@ -14,7 +14,7 @@ use infinite\base\exceptions\Exception;
  * MigrateController [@doctodo write class description for MigrateController]
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 class MigrateController extends \yii\console\controllers\MigrateController
 {
     /**
@@ -35,7 +35,7 @@ a path alias or a directory.
 
     /**
     * @inheritdoc
-    **/
+     */
     protected function createMigration($class)
     {
         if (!isset($this->migrationsMap[$class])) {

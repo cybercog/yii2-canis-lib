@@ -11,7 +11,7 @@ namespace infinite\helpers;
  * StringHelper [@doctodo write class description for StringHelper]
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 class StringHelper extends \yii\helpers\StringHelper
 {
     /**

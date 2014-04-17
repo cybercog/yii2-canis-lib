@@ -13,7 +13,7 @@ use infinite\db\models\Relation;
  * PrimaryRelation [@doctodo write class description for PrimaryRelation]
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
 {
     /**
@@ -27,7 +27,7 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
 
     /**
     * @inheritdoc
-    **/
+     */
     public function events()
     {
         return [

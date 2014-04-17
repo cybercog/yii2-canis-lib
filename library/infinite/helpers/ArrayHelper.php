@@ -11,12 +11,12 @@ namespace infinite\helpers;
  * ArrayHelper [@doctodo write class description for ArrayHelper]
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 class ArrayHelper extends \yii\helpers\ArrayHelper
 {
     /**
     * @inheritdoc
-    **/
+     */
     public static function getValue($array, $key, $default = null)
     {
         if (strstr($key, '.') !== false) {

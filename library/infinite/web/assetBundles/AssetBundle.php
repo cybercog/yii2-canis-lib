@@ -11,12 +11,12 @@ namespace infinite\web\assetBundles;
  * AssetBundle [@doctodo write class description for AssetBundle]
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 class AssetBundle extends \yii\web\AssetBundle
 {
     /**
     * @inheritdoc
-    **/
+     */
     public function init()
     {
         parent::init();

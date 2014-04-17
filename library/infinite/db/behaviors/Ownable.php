@@ -13,7 +13,7 @@ use Yii;
  * Ownable [@doctodo write class description for Ownable]
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 class Ownable extends \infinite\db\behaviors\ActiveRecord
 {
     /**
@@ -28,7 +28,7 @@ class Ownable extends \infinite\db\behaviors\ActiveRecord
 
     /**
     * @inheritdoc
-    **/
+     */
     public function events()
     {
         return [
@@ -42,7 +42,7 @@ class Ownable extends \infinite\db\behaviors\ActiveRecord
 
     /**
     * @inheritdoc
-    **/
+     */
     public function safeAttributes()
     {
         return ['ownableEnabled', 'objectOwner'];

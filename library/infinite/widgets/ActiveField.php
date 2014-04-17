@@ -13,7 +13,7 @@ use infinite\helpers\Html;
  * ActiveField [@doctodo write class description for ActiveField]
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 class ActiveField extends \yii\widgets\ActiveField
 {
     /**
@@ -31,7 +31,7 @@ class ActiveField extends \yii\widgets\ActiveField
 
     /**
     * @inheritdoc
-    **/
+     */
     public function render($content = null)
     {
         if ($content === null) {

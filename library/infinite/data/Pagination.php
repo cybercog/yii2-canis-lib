@@ -11,7 +11,7 @@ namespace infinite\data;
  * Pagination [@doctodo write class description for Pagination]
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 class Pagination extends \yii\data\Pagination
 {
     /**
@@ -21,7 +21,7 @@ class Pagination extends \yii\data\Pagination
 
     /**
     * @inheritdoc
-    **/
+     */
     public function createUrl($page, $absolute = false)
     {
         return '#';

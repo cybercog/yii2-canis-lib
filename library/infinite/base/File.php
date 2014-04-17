@@ -11,7 +11,7 @@ namespace infinite\base;
  * File [@doctodo write class description for File]
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 class File extends \infinite\web\UploadedFile implements FileInterface
 {
     /**

@@ -17,7 +17,7 @@ use infinite\caching\Cacher;
  * Roleable [@doctodo write class description for Roleable]
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 class Roleable extends \infinite\db\behaviors\ActiveRecord
 {
     /**
@@ -47,7 +47,7 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
 
     /**
     * @inheritdoc
-    **/
+     */
     public function events()
     {
         return [
@@ -58,7 +58,7 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
 
     /**
     * @inheritdoc
-    **/
+     */
     public function safeAttributes()
     {
         return ['role', 'roles', 'accessRoleCheck'];

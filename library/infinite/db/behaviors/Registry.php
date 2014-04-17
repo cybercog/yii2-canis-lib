@@ -16,7 +16,7 @@ use infinite\base\Exception;
  * Registry [@doctodo write class description for Registry]
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 class Registry extends \infinite\db\behaviors\ActiveRecord
 {
     /**
@@ -30,7 +30,7 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
 
     /**
     * @inheritdoc
-    **/
+     */
     public function events()
     {
         return [
@@ -42,7 +42,7 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
 
     /**
     * @inheritdoc
-    **/
+     */
     public function safeAttributes()
     {
         return [];

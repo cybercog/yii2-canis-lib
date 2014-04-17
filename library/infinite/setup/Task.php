@@ -11,7 +11,7 @@ namespace infinite\setup;
  * Task [@doctodo write class description for Task]
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 abstract class Task extends \infinite\base\Object
 {
     /**
@@ -37,7 +37,7 @@ abstract class Task extends \infinite\base\Object
 
     /**
     * @inheritdoc
-    **/
+     */
     public function __construct($setup)
     {
         $this->_setup = $setup;

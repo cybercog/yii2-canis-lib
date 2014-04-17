@@ -14,76 +14,86 @@ use yii\base\InvalidConfigException;
  * Auditable [@doctodo write class description for Auditable]
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 class Auditable extends \infinite\db\behaviors\ActiveRecord
 {
     /**
-     * @var __var_baseEventClass_type__ __var_baseEventClass_description__
+     * @var string Audit event base class
      */
     public $baseEventClass = 'infinite\\db\\behaviors\\auditable\\BaseEvent';
     /**
-     * @var __var_insertEventClass_type__ __var_insertEventClass_description__
+     * @var string Audit insert event class 
      */
     public $insertEventClass = 'infinite\\db\\behaviors\\auditable\\InsertEvent';
     /**
-     * @var __var_updateEventClass_type__ __var_updateEventClass_description__
+     * @var string Audit uodate event class 
      */
     public $updateEventClass = 'infinite\\db\\behaviors\\auditable\\UpdateEvent';
     /**
-     * @var __var_deleteEventClass_type__ __var_deleteEventClass_description__
+     * @var string Audit delete event class 
      */
     public $deleteEventClass = 'infinite\\db\\behaviors\\auditable\\DeleteEvent';
     /**
-     * @var __var_enableSaveLog_type__ __var_enableSaveLog_description__
+     * @var bool Enable save log events
      */
     public $enableSaveLog = true;
     /**
-     * @var __var_enableDeleteLog_type__ __var_enableDeleteLog_description__
+     * @var bool Enable delete log events
      */
     public $enableDeleteLog = true;
     /**
-     * @var __var_collectBehaviorLogs_type__ __var_collectBehaviorLogs_description__
+     * @var bool Enable the colllection of audit logs
      */
     public $collectBehaviorLogs = true;
-
     /**
-     * @var __var__ignoreAttributes_type__ __var__ignoreAttributes_description__
+     * @var array Attributes to ignore
      */
     protected $_ignoreAttributes = ['modified', 'created', 'created_by_id', 'modified_by_id'];
     /**
-     * @var __var__dirtyAttributes_type__ __var__dirtyAttributes_description__
+     * @var null|array List of dirty attributes
      */
     protected $_dirtyAttributes;
     /**
-     * @var __var__directObject_type__ __var__directObject_description__
+     * @var object Object that is being directly edited
      */
     protected $_directObject;
     /**
-     * @var __var__indirectObject_type__ __var__indirectObject_description__
+     * @var object Object that is being edited via relation
      */
     protected $_indirectObject;
     /**
-     * @var __var__auditAgent_type__ __var__auditAgent_description__
+     * @var object Entity that is making the changes
      */
     protected $_auditAgent;
     /**
-     * @var __var__auditEvents_type__ __var__auditEvents_description__
+     * @var array Tracking of event logs
      */
     protected $_auditEvents = [];
-
     /**
-     * @var __var__auditMute_type__ __var__auditMute_description__
+     * @var object Mute all log events further down the chain
      */
     protected static $_auditMute;
 
+    /**
+     * @event Collect audit on object save (insert and update)
+     */
     const EVENT_COLLECT_AUDIT_SAVE = 'collectAuditSave';
+    /**
+     * @event Collect audit on object insert
+     */
     const EVENT_COLLECT_AUDIT_INSERT = 'collectAuditInsert';
+    /**
+     * @event Collect audit on object update
+     */
     const EVENT_COLLECT_AUDIT_UPDATE = 'collectAuditInsert';
+    /**
+     * @event Collect audit on object delete
+     */
     const EVENT_COLLECT_AUDIT_DELETE = 'collectAuditDelete';
 
     /**
     * @inheritdoc
-    **/
+    */
     public function events()
     {
         return [
@@ -99,7 +109,7 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
 
     /**
     * @inheritdoc
-    **/
+    */
     public function safeAttributes()
     {
         return ['directObject', 'indirectObject', 'auditAgent'];

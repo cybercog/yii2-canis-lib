@@ -11,7 +11,7 @@ namespace infinite\db\behaviors\auditable;
  * AttributesEvent [@doctodo write class description for AttributesEvent]
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 class AttributesEvent extends Event
 {
     /**
@@ -21,7 +21,7 @@ class AttributesEvent extends Event
 
     /**
     * @inheritdoc
-    **/
+     */
     public function getHashArray()
     {
         $hash = parent::getHashArray();

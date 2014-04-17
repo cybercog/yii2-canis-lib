@@ -11,7 +11,7 @@ namespace infinite\db\behaviors\auditable;
  * DeleteEvent [@doctodo write class description for DeleteEvent]
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 class DeleteEvent extends AttributesEvent
 {
     /**
@@ -30,7 +30,7 @@ class DeleteEvent extends AttributesEvent
 
     /**
     * @inheritdoc
-    **/
+     */
     public function setDirectObject($object)
     {
         $this->descriptor = $object->descriptor;
@@ -38,7 +38,7 @@ class DeleteEvent extends AttributesEvent
 
     /**
     * @inheritdoc
-    **/
+     */
     public function setIndirectObject($object)
     {
         parent::setDirectObject($object);

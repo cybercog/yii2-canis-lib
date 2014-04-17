@@ -34,7 +34,7 @@ class BootstrapDatepickerAsset extends AssetBundle
 
     /**
     * @inheritdoc
-    **/
+     */
     public function init()
     {
         $this->publishOptions['beforeCopy'] = function ($from, $to) {

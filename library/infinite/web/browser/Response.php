@@ -13,7 +13,7 @@ use Yii;
  * Response [@doctodo write class description for Response]
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 abstract class Response extends \infinite\base\Object
 {
     /**

@@ -17,7 +17,7 @@ use infinite\base\ObjectTrait;
  * Response [@doctodo write class description for Response]
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 class Response extends \yii\web\Response
 {
     use ObjectTrait;
@@ -98,7 +98,7 @@ class Response extends \yii\web\Response
 
     /**
     * @inheritdoc
-    **/
+     */
     public function init()
     {
         parent::init();
@@ -296,7 +296,7 @@ class Response extends \yii\web\Response
     }
     /**
     * @inheritdoc
-    **/
+     */
     public function send()
     {
         if (!$this->isSent && $this->statusCode !== 500) {
@@ -332,7 +332,7 @@ class Response extends \yii\web\Response
 
     /**
     * @inheritdoc
-    **/
+     */
     public function redirect($url, $statusCode = 302)
     {
         if (is_array($url) && isset($url[0])) {

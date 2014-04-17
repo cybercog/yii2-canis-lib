@@ -14,7 +14,7 @@ use yii\base\ModelEvent;
  * ActiveArchivable [@doctodo write class description for ActiveArchivable]
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 class ActiveArchivable extends ActiveRecord
 {
     /**

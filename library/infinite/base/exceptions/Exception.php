@@ -11,7 +11,7 @@ namespace infinite\base\exceptions;
  * Exception [@doctodo write class description for Exception]
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 class Exception extends \yii\base\Exception
 {
 }

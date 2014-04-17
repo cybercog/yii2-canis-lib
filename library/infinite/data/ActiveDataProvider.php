@@ -13,12 +13,12 @@ use Yii;
  * ActiveDataProvider [@doctodo write class description for ActiveDataProvider]
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 class ActiveDataProvider extends \yii\data\ActiveDataProvider
 {
     /**
     * @inheritdoc
-    **/
+     */
     public function setPagination($value)
     {
         if (is_array($value) && !isset($config['class'])) {

@@ -13,7 +13,7 @@ use Yii;
  * Blame [@doctodo write class description for Blame]
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 class Blame extends \infinite\db\behaviors\ActiveRecord
 {
     /**
@@ -59,7 +59,7 @@ class Blame extends \infinite\db\behaviors\ActiveRecord
 
     /**
     * @inheritdoc
-    **/
+     */
     public function events()
     {
         return [

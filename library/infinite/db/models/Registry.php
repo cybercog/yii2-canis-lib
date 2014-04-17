@@ -75,7 +75,7 @@ class Registry extends \infinite\db\ActiveRecord
 
     /**
     * @inheritdoc
-    **/
+     */
     public function behaviors()
     {
         return array_merge(parent::behaviors(),

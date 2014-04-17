@@ -11,7 +11,7 @@ namespace infinite\db\behaviors;
  * QueryArchivable [@doctodo write class description for QueryArchivable]
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 class QueryArchivable extends QueryBehavior
 {
     /**
@@ -21,7 +21,7 @@ class QueryArchivable extends QueryBehavior
 
     /**
     * @inheritdoc
-    **/
+     */
     public function events()
     {
         return [

@@ -13,7 +13,7 @@ use infinite\base\ApplicationTrait;
  * Application [@doctodo write class description for Application]
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 class Application extends \yii\web\Application implements \infinite\base\ApplicationInterface
 {
     use ApplicationTrait;

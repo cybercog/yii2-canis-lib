@@ -15,7 +15,7 @@ use IteratorAggregate;
  * Bucket [@doctodo write class description for Bucket]
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 class Bucket extends \infinite\base\Object implements IteratorAggregate, ArrayAccess
 {
     /**
@@ -29,7 +29,7 @@ class Bucket extends \infinite\base\Object implements IteratorAggregate, ArrayAc
 
     /**
     * @inheritdoc
-    **/
+     */
     public function __construct($collector)
     {
         $this->_collector = $collector;

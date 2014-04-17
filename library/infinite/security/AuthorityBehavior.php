@@ -11,7 +11,7 @@ namespace infinite\security;
  * AuthorityBehavior [@doctodo write class description for AuthorityBehavior]
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 class AuthorityBehavior extends \yii\base\Behavior
 {
     /**

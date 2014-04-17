@@ -11,7 +11,7 @@ namespace infinite\db\behaviors;
  * Model [@doctodo write class description for Model]
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 class Model extends \yii\base\Behavior
 {
     /**

@@ -17,7 +17,7 @@ use yii\caching\DbDependency;
  * Cacher [@doctodo write class description for Cacher]
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 class Cacher extends \infinite\base\Component
 {
     /**

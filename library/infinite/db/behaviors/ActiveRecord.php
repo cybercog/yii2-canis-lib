@@ -11,7 +11,7 @@ namespace infinite\db\behaviors;
  * ActiveRecord [@doctodo write class description for ActiveRecord]
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 class ActiveRecord extends Model
 {
 }

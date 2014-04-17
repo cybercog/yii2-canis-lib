@@ -18,7 +18,7 @@ use infinite\caching\Cacher;
  * Relatable [@doctodo write class description for Relatable]
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 class Relatable extends \infinite\db\behaviors\ActiveRecord
 {
     /**
@@ -84,7 +84,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 
     /**
     * @inheritdoc
-    **/
+     */
     public function events()
     {
         return [
@@ -95,7 +95,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 
     /**
     * @inheritdoc
-    **/
+     */
     public function safeAttributes()
     {
         return ['relationModels'];
@@ -103,7 +103,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 
     /**
     * @inheritdoc
-    **/
+     */
     public function init()
     {
         parent::init();

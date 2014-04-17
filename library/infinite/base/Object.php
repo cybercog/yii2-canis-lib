@@ -11,7 +11,7 @@ namespace infinite\base;
  * Object [@doctodo write class description for Object]
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 class Object extends \yii\base\Object
 {
     use ObjectTrait;

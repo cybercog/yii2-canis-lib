@@ -14,7 +14,7 @@ use infinite\helpers\ArrayHelper;
  * Collector [@doctodo write class description for Collector]
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 class Collector extends \infinite\base\collector\Collector
 {
     /**
@@ -27,7 +27,7 @@ class Collector extends \infinite\base\collector\Collector
     protected $_initialItems = [];
     /**
     * @inheritdoc
-    **/
+     */
     public function getInitialItems()
     {
         return $this->_initialItems;
@@ -44,7 +44,7 @@ class Collector extends \infinite\base\collector\Collector
 
     /**
     * @inheritdoc
-    **/
+     */
     public function getCollectorItemClass()
     {
         return 'infinite\\security\\role\\Item';
@@ -90,7 +90,7 @@ class Collector extends \infinite\base\collector\Collector
 
     /**
     * @inheritdoc
-    **/
+     */
     public function prepareComponent($component)
     {
         if (!Yii::$app->isDbAvailable) {

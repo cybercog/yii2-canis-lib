@@ -71,7 +71,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
     * @inheritdoc
-    **/
+     */
     public function behaviors()
     {
         return array_merge(parent::behaviors(),
@@ -152,7 +152,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
     * @inheritdoc
-    **/
+     */
     public function rules()
     {
         return [
@@ -175,7 +175,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
     * @inheritdoc
-    **/
+     */
     public function scenarios()
     {
         return [
@@ -187,7 +187,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
     * @inheritdoc
-    **/
+     */
     public function beforeSave($insert)
     {
         if (parent::beforeSave($insert)) {

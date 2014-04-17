@@ -14,7 +14,7 @@ use infinite\security\Access;
  * ActiveAccess [@doctodo write class description for ActiveAccess]
  *
  * @author Jacob Morrison <email@ofjacob.com>
-**/
+ */
 class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
 {
     /**
@@ -44,7 +44,7 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
 
     /**
     * @inheritdoc
-    **/
+     */
     public function events()
     {
         return [
