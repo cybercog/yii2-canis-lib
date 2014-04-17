@@ -7,6 +7,11 @@
 
 namespace infinite\web\assetBundles;
 
+/**
+ * AjaxFormAsset [@doctodo write class description for AjaxFormAsset]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class AjaxFormAsset extends AssetBundle
 {
     public $sourcePath = '@vendor/malsup/form';

@@ -9,6 +9,11 @@ namespace infinite\web\grid;
 
 use infinite\helpers\Html;
 
+/**
+ * Cell [@doctodo write class description for Cell]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class Cell extends \infinite\base\Object implements \infinite\web\RenderInterface
 {
     /*

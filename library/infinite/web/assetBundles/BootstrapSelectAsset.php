@@ -7,6 +7,11 @@
 
 namespace infinite\web\assetBundles;
 
+/**
+ * BootstrapSelectAsset [@doctodo write class description for BootstrapSelectAsset]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class BootstrapSelectAsset extends AssetBundle
 {
     public $sourcePath = '@vendor/bootstrap-select/bootstrap-select';

@@ -7,6 +7,11 @@
 
 namespace infinite\console\components;
 
+/**
+ * CssSpriteImage [@doctodo write class description for CssSpriteImage]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class CssSpriteImage extends \infinite\base\Object
 {
     public $path;

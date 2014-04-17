@@ -17,6 +17,11 @@ use infinite\db\models\Relation;
 use infinite\db\models\Registry;
 use infinite\caching\Cacher;
 
+/**
+ * ActiveRecord is the model class for table "{{%active_record}}".
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class ActiveRecord extends \yii\db\ActiveRecord
 {
     use ObjectTrait;

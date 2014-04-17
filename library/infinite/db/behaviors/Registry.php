@@ -12,6 +12,11 @@ use Yii;
 use yii\db\Expression;
 use infinite\base\Exception;
 
+/**
+ * Registry [@doctodo write class description for Registry]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class Registry extends \infinite\db\behaviors\ActiveRecord
 {
     public static $_table;

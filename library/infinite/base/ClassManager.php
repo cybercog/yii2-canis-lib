@@ -11,6 +11,11 @@ use ArrayAccess;
 use ArrayIterator;
 use IteratorAggregate;
 
+/**
+ * ClassManager [@doctodo write class description for ClassManager]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class ClassManager extends Component implements IteratorAggregate, ArrayAccess
 {
     protected $_classes = [];

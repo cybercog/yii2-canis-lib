@@ -7,6 +7,11 @@
 
 namespace infinite\base\collector;
 
+/**
+ * Collector [@doctodo write class description for Collector]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 abstract class Collector extends \infinite\base\Component
 {
     use CollectorTrait;

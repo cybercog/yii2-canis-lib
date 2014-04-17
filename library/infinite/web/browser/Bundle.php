@@ -11,6 +11,11 @@ use Yii;
 use infinite\base\exceptions\Exception;
 use yii\base\InvalidConfigException;
 
+/**
+ * Bundle [@doctodo write class description for Bundle]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class Bundle extends \infinite\base\Object
 {
     public $itemClass = 'infinite\\web\\browser\\Item';

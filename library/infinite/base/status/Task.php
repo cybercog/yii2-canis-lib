@@ -7,6 +7,11 @@
 
 namespace infinite\base\status;
 
+/**
+ * Task [@doctodo write class description for Task]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class Task extends \infinite\base\Component
 {
     public $parent;

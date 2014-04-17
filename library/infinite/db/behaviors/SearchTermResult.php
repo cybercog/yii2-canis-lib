@@ -9,6 +9,11 @@ namespace infinite\db\behaviors;
 
 use infinite\base\Object;
 
+/**
+ * SearchTermResult [@doctodo write class description for SearchTermResult]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class SearchTermResult extends Object
 {
     protected $_object;

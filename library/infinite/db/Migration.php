@@ -7,6 +7,11 @@
 
 namespace infinite\db;
 
+/**
+ * Migration [@doctodo write class description for Migration]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class Migration extends \yii\db\Migration
 {
     /**

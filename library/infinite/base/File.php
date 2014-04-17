@@ -7,6 +7,11 @@
 
 namespace infinite\base;
 
+/**
+ * File [@doctodo write class description for File]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class File extends \infinite\web\UploadedFile implements FileInterface
 {
     public static function createInstance($name, $tempName, $type, $size, $error = UPLOAD_ERR_OK)

@@ -9,6 +9,11 @@ namespace infinite\security;
 
 use infinite\base\exceptions\Exception;
 
+/**
+ * Authority [@doctodo write class description for Authority]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class Authority extends \infinite\base\Component
 {
     protected $_handler;

@@ -9,6 +9,11 @@ namespace infinite\db\behaviors\auditable;
 
 use Yii;
 
+/**
+ * Event [@doctodo write class description for Event]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 abstract class Event extends \infinite\base\Component
 {
     const EVENT_AUDIT_HOOK = 'auditHook';

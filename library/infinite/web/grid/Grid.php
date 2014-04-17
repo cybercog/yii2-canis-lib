@@ -9,6 +9,11 @@ namespace infinite\web\grid;
 
 use Yii;
 
+/**
+ * Grid [@doctodo write class description for Grid]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class Grid extends \infinite\base\Object
 {
     //public $fillPreviousRows = true;

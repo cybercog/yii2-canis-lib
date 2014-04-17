@@ -9,6 +9,11 @@ namespace infinite\console;
 
 use infinite\base\ApplicationTrait;
 
+/**
+ * Application [@doctodo write class description for Application]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class Application extends \yii\console\Application implements \infinite\base\ApplicationInterface
 {
     use ApplicationTrait;

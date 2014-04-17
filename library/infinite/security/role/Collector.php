@@ -10,6 +10,11 @@ namespace infinite\security\role;
 use Yii;
 use infinite\helpers\ArrayHelper;
 
+/**
+ * Collector [@doctodo write class description for Collector]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class Collector extends \infinite\base\collector\Collector
 {
     protected $_tableRegistry;

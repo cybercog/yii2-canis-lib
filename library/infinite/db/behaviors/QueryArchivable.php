@@ -7,6 +7,11 @@
 
 namespace infinite\db\behaviors;
 
+/**
+ * QueryArchivable [@doctodo write class description for QueryArchivable]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class QueryArchivable extends QueryBehavior
 {
     protected $_allowArchives;

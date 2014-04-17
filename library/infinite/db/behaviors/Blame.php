@@ -9,6 +9,11 @@ namespace infinite\db\behaviors;
 
 use Yii;
 
+/**
+ * Blame [@doctodo write class description for Blame]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class Blame extends \infinite\db\behaviors\ActiveRecord
 {
     public $deletedField = 'deleted';

@@ -9,6 +9,11 @@ namespace infinite\widgets;
 
 use infinite\helpers\Html;
 
+/**
+ * ActiveField [@doctodo write class description for ActiveField]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class ActiveField extends \yii\widgets\ActiveField
 {
     public $inputGroupHtmlOptions = ['class' => 'input-group'];

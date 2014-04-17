@@ -11,6 +11,11 @@ use Yii;
 use yii\base\InvalidParamException;
 
 use infinite\web\View;
+/**
+ * Html [@doctodo write class description for Html]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class Html extends \yii\helpers\Html
 {
     // public static function onLoadJsBlock($script, $key = null) {

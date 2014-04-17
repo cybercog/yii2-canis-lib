@@ -7,6 +7,11 @@
 
 namespace infinite\helpers;
 
+/**
+ * Purifier [@doctodo write class description for Purifier]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class Purifier extends \infinite\base\Component
 {
 }

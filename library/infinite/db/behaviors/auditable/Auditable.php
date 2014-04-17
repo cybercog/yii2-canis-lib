@@ -10,6 +10,11 @@ namespace infinite\db\behaviors\auditable;
 use Yii;
 use yii\base\InvalidConfigException;
 
+/**
+ * Auditable [@doctodo write class description for Auditable]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class Auditable extends \infinite\db\behaviors\ActiveRecord
 {
     public $baseEventClass = 'infinite\\db\\behaviors\\auditable\\BaseEvent';

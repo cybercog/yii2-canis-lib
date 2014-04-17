@@ -7,6 +7,11 @@
 
 namespace infinite\db\behaviors\auditable;
 
+/**
+ * AttributesEvent [@doctodo write class description for AttributesEvent]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class AttributesEvent extends Event
 {
     public $attributes;

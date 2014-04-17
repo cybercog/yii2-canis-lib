@@ -205,10 +205,9 @@ class PhpDocController extends Controller
     protected function updateClassPropertyDocs($file, $className, $propertyDoc, $coveredProperties)
     {
         $ref = new \ReflectionClass($className);
-        if ($ref->getFileName() != $file) {
-            $this->stderr("[ERR] Unable to create ReflectionClass for class: $className loaded class is not from file: $file\n", Console::FG_RED);
+        if (strtolower($ref->getFileName()) != strtolower($file)) {
+            $this->stderr("[ERR] Unable to create ReflectionClass for class: $className loaded class ({$ref->getFileName()}) is not from file: $file\n", Console::FG_RED);
         }
-
 
         $oldDoc = $ref->getDocComment();
         $oldDocSize = count(explode("\n", $oldDoc));
@@ -259,25 +258,27 @@ class PhpDocController extends Controller
             // $this->stderr("[ERR] No @author found in class doc in file: $file\n", Console::FG_RED);
         }
         $newDoc = implode("\n", $lines) . "\n";
-
         if (trim($oldDoc) != trim($newDoc)) {
 
             $fileContent = explode("\n", file_get_contents($file));
-            $start = $ref->getStartLine() - 2;
+            $start = $ref->getStartLine() - 1;
             $docStart = $start - $oldDocSize + 1;
+            array_splice($fileContent, $start, $oldDocSize, $lines);
+            file_put_contents($file, implode("\n", $fileContent));
+            //\d($fileContent); exit;
 
-            $newFileContent = [];
-            $n = count($fileContent);
-            for ($i = 0; $i < $n; $i++) {
-                if ($i > $start || $i < $docStart) {
-                    $newFileContent[] = $fileContent[$i];
-                } else {
-                    $newFileContent[] = trim($newDoc);
-                    $i = $start;
-                }
-            }
-            //\d(implode("\n", $newFileContent));exit;
-            file_put_contents($file, implode("\n", $newFileContent));
+            // $newFileContent = [];
+            // $n = count($fileContent);
+            // for ($i = 0; $i < $n; $i++) {
+            //     if ($i > $start || $i < $docStart) {
+            //         $newFileContent[] = $fileContent[$i];
+            //     } else {
+            //         $newFileContent[] = trim($newDoc);
+            //         $i = $start;
+            //     }
+            // }
+            // \d(implode("\n", $newFileContent));exit;
+            // file_put_contents($file, implode("\n", $newFileContent));
 
             return true;
         }

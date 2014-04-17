@@ -7,6 +7,11 @@
 
 namespace infinite\base\language;
 
+/**
+ * Inflector [@doctodo write class description for Inflector]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class Inflector extends \yii\helpers\Inflector
 {
 }

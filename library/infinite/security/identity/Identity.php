@@ -7,6 +7,11 @@
 
 namespace infinite\security\identity;
 
+/**
+ * Identity [@doctodo write class description for Identity]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class Identity extends \infinite\base\Component
 {
 }

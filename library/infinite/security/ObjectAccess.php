@@ -11,6 +11,11 @@ use Yii;
 use infinite\caching\Cacher;
 use infinite\helpers\ArrayHelper;
 
+/**
+ * ObjectAccess [@doctodo write class description for ObjectAccess]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class ObjectAccess extends \infinite\base\Component
 {
     protected $_object;

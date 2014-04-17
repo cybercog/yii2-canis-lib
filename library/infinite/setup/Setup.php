@@ -14,6 +14,11 @@ use Yii;
 
 defined('STDOUT') OR define('STDOUT', fopen('php://stdout', 'w'));
 
+/**
+ * Setup [@doctodo write class description for Setup]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class Setup extends \infinite\base\Object
 {
     public static $_instance;

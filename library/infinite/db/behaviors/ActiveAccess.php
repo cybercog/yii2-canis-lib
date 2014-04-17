@@ -10,6 +10,11 @@ namespace infinite\db\behaviors;
 use Yii;
 use infinite\security\Access;
 
+/**
+ * ActiveAccess [@doctodo write class description for ActiveAccess]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
 {
     protected static $_debug = false;

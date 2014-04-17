@@ -7,6 +7,11 @@
 
 namespace infinite\db\behaviors\auditable;
 
+/**
+ * UpdateEvent [@doctodo write class description for UpdateEvent]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class UpdateEvent extends AttributesEvent
 {
     protected $_id = 'update';

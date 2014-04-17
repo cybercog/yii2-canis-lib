@@ -9,6 +9,11 @@ namespace infinite\data;
 
 use Yii;
 
+/**
+ * ActiveDataProvider [@doctodo write class description for ActiveDataProvider]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class ActiveDataProvider extends \yii\data\ActiveDataProvider
 {
     public function setPagination($value)

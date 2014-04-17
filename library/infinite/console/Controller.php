@@ -11,6 +11,11 @@ use Yii;
 
 use yii\helpers\Console;
 
+/**
+ * Controller [@doctodo write class description for Controller]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class Controller extends \yii\console\Controller
 {
     public function hr()

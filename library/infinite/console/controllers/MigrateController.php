@@ -10,6 +10,11 @@ namespace infinite\console\controllers;
 use Yii;
 use infinite\base\exceptions\Exception;
 
+/**
+ * MigrateController [@doctodo write class description for MigrateController]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class MigrateController extends \yii\console\controllers\MigrateController
 {
     /**

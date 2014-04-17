@@ -14,6 +14,11 @@ use yii\base\Event;
 use infinite\helpers\ArrayHelper;
 use infinite\caching\Cacher;
 
+/**
+ * Relatable [@doctodo write class description for Relatable]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class Relatable extends \infinite\db\behaviors\ActiveRecord
 {
     public $parentObjectField = 'parent_object_id';

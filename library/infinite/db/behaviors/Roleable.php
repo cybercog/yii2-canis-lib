@@ -13,6 +13,11 @@ use infinite\base\Exception;
 use infinite\helpers\ArrayHelper;
 use infinite\caching\Cacher;
 
+/**
+ * Roleable [@doctodo write class description for Roleable]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class Roleable extends \infinite\db\behaviors\ActiveRecord
 {
     public $accessRoleCheck;

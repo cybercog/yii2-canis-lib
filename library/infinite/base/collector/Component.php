@@ -15,6 +15,11 @@ use IteratorAggregate;
 use yii\base\BootstrapInterface;
 use yii\base\Event;
 
+/**
+ * Component [@doctodo write class description for Component]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class Component extends \infinite\base\Component implements IteratorAggregate, ArrayAccess, BootstrapInterface
 {
     const EVENT_AFTER_LOAD = 'afterLoad';

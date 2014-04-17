@@ -28,6 +28,11 @@ function b($backtrace)
     echo '</pre>';
 }
 
+/**
+ * Infinite [@doctodo write class description for Infinite]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class Infinite implements \yii\base\BootstrapInterface
 {
     /**

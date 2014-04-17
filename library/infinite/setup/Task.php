@@ -7,6 +7,11 @@
 
 namespace infinite\setup;
 
+/**
+ * Task [@doctodo write class description for Task]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 abstract class Task extends \infinite\base\Object
 {
     protected $_setup;

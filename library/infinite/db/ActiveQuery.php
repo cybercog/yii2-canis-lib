@@ -9,6 +9,11 @@ namespace infinite\db;
 
 use infinite\base\ComponentTrait;
 
+/**
+ * ActiveQuery [@doctodo write class description for ActiveQuery]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class ActiveQuery extends \yii\db\ActiveQuery
 {
     use ComponentTrait;

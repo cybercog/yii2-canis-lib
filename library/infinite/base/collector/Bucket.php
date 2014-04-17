@@ -11,6 +11,11 @@ use ArrayAccess;
 use ArrayIterator;
 use IteratorAggregate;
 
+/**
+ * Bucket [@doctodo write class description for Bucket]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class Bucket extends \infinite\base\Object implements IteratorAggregate, ArrayAccess
 {
     protected $_bucket = [];

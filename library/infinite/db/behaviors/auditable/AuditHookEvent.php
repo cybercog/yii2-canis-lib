@@ -9,6 +9,11 @@ namespace infinite\db\behaviors\auditable;
 
 use yii\base\Event as YiiEvent;
 
+/**
+ * AuditHookEvent [@doctodo write class description for AuditHookEvent]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class AuditHookEvent extends YiiEvent
 {
     public $auditEvent;

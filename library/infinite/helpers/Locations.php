@@ -11,6 +11,11 @@ use Yii;
 
 use jom\SubnationalDivisions;
 
+/**
+ * Locations [@doctodo write class description for Locations]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class Locations extends \infinite\base\Component
 {
     public static function countryList()

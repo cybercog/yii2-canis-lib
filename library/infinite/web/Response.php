@@ -13,6 +13,11 @@ use yii\helpers\Url;
 use infinite\base\exceptions\Exception;
 use infinite\base\ObjectTrait;
 
+/**
+ * Response [@doctodo write class description for Response]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class Response extends \yii\web\Response
 {
     use ObjectTrait;

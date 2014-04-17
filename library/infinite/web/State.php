@@ -9,6 +9,11 @@ namespace infinite\web;
 
 use Yii;
 
+/**
+ * State [@doctodo write class description for State]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class State extends \infinite\base\Object
 {
     const SESSION_STATE_KEY = '_s';

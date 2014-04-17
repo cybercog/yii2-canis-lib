@@ -12,6 +12,11 @@ use Yii;
 use yii\helpers\VarDumper;
 use infinite\db\ActiveRecord;
 
+/**
+ * Debug [@doctodo write class description for Debug]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class Debug extends \infinite\base\Object
 {
     public static function db($query)

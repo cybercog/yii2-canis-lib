@@ -7,6 +7,11 @@
 
 namespace infinite\helpers;
 
+/**
+ * Match [@doctodo write class description for Match]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class Match extends \infinite\base\Component
 {
     public $regex;

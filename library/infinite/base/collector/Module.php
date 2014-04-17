@@ -11,6 +11,11 @@ use Yii;
 
 use yii\base\Event;
 
+/**
+ * Module [@doctodo write class description for Module]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 abstract class Module extends Collector
 {
     const EVENT_AFTER_LOAD = 'afterLoad';

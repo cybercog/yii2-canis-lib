@@ -16,6 +16,11 @@ use infinite\db\Query;
 use infinite\db\ActiveQuery;
 use infinite\caching\Cacher;
 
+/**
+ * Gatekeeper [@doctodo write class description for Gatekeeper]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class Gatekeeper extends \infinite\base\Component
 {
     public $proxy = false;

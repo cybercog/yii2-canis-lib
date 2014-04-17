@@ -7,6 +7,11 @@
 
 namespace infinite\web\browser;
 
+/**
+ * Item [@doctodo write class description for Item]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class Item extends \infinite\base\Object
 {
     public $type;

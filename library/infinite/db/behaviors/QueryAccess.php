@@ -9,6 +9,11 @@ namespace infinite\db\behaviors;
 
 use Yii;
 
+/**
+ * QueryAccess [@doctodo write class description for QueryAccess]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class QueryAccess extends QueryBehavior
 {
     protected static $_acceptInherit = false;

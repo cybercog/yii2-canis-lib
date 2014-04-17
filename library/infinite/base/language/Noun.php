@@ -7,6 +7,11 @@
 
 namespace infinite\base\language;
 
+/**
+ * Noun [@doctodo write class description for Noun]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class Noun extends \infinite\base\language\Word
 {
     protected $_singular;

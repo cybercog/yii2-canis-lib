@@ -9,6 +9,11 @@ namespace infinite\console\components;
 
 use infinite\base\exceptions\Exception;
 
+/**
+ * CssSprite [@doctodo write class description for CssSprite]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class CssSprite extends \infinite\base\Object
 {
     public $sourceDirectory;

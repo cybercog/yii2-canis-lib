@@ -7,6 +7,11 @@
 
 namespace infinite\db\behaviors\auditable;
 
+/**
+ * DeleteEvent [@doctodo write class description for DeleteEvent]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class DeleteEvent extends AttributesEvent
 {
     public $descriptor;

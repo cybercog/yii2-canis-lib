@@ -9,6 +9,11 @@ namespace infinite\widgets;
 
 use infinite\helpers\Html;
 
+/**
+ * LinkPager [@doctodo write class description for LinkPager]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class LinkPager extends \yii\widgets\LinkPager
 {
     public $pageStateKey = 'page';

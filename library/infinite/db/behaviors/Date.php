@@ -9,6 +9,11 @@ namespace infinite\db\behaviors;
 
 use infinite\helpers\Date as DateHelper;
 
+/**
+ * Date [@doctodo write class description for Date]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class Date extends \infinite\db\behaviors\ActiveRecord
 {
     protected $_handle = null;

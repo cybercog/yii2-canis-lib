@@ -7,6 +7,11 @@
 
 namespace infinite\base\language;
 
+/**
+ * Word [@doctodo write class description for Word]
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+**/
 class Word extends \infinite\base\Object
 {
 
