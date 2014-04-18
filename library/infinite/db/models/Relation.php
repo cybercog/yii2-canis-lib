@@ -17,7 +17,8 @@ use Yii;
  * @property string $start
  * @property string $end
  * @property boolean $active
- * @property boolean $primary
+ * @property boolean $primary_parent
+ * @property boolean $primary_child
  * @property string $special
  * @property string $created
  * @property string $modified
@@ -76,7 +77,7 @@ class Relation extends \infinite\db\ActiveRecord
     {
         return [
             [['start', 'end', 'created', 'modified'], 'safe'],
-            [['active', 'primary'], 'boolean'],
+            [['active', 'primary_parent', 'primary_child'], 'boolean'],
             [['parent_object_id', 'child_object_id'], 'string', 'max' => 36],
             [['special'], 'string', 'max' => 100]
         ];
@@ -133,7 +134,8 @@ class Relation extends \infinite\db\ActiveRecord
             'start' => 'Start',
             'end' => 'End',
             'active' => 'Active',
-            'primary' => 'Primary',
+            'primary_parent' => 'Primary Parent',
+            'primary_child' => 'Primary Child',
             'special' => 'Special',
             'created' => 'Created',
             'modified' => 'Modified',

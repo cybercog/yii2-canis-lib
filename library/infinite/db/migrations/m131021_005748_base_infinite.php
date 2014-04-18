@@ -167,7 +167,8 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
             'start' => 'date DEFAULT NULL',
             'end' => 'date DEFAULT NULL',
             'active' => 'bool NOT NULL',
-            'primary' => 'bool NOT NULL DEFAULT 0',
+            'primary_parent' => 'bool NOT NULL DEFAULT 0',
+            'primary_child' => 'bool NOT NULL DEFAULT 0',
             'special' => 'string DEFAULT NULL',
             'created' => 'datetime DEFAULT NULL',
             'modified' => 'datetime DEFAULT NULL'
