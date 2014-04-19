@@ -72,7 +72,7 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
         $this->createTable('audit', [
             'id' => 'bigint(20) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY',
             'agent_id' => 'char(36) CHARACTER SET ascii COLLATE ascii_bin NOT NULL',
-            'direct_object_id' => 'char(36) CHARACTER SET ascii COLLATE ascii_bin NOT NULL',
+            'direct_object_id' => 'char(36) CHARACTER SET ascii COLLATE ascii_bin DEFAULT NULL',
             'indirect_object_id' => 'char(36) CHARACTER SET ascii COLLATE ascii_bin DEFAULT NULL',
             'event_id' => 'string(50) NOT NULL',
             'event' => 'longblob DEFAULT NULL',

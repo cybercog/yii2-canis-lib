@@ -68,7 +68,7 @@ class Audit extends \infinite\db\ActiveRecord
     public function rules()
     {
         return [
-            [['agent_id', 'direct_object_id', 'event_id'], 'required'],
+            [['agent_id', 'event_id'], 'required'],
             [['event'], 'string'],
             [['hooks_handled'], 'boolean'],
             [['agent_id', 'direct_object_id', 'indirect_object_id'], 'string', 'max' => 36],

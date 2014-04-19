@@ -285,7 +285,7 @@ abstract class Event extends \infinite\base\Component
         if (empty($this->id)) {
             return false;
         }
-        if (empty($this->directObject)) {
+        if (empty($this->directObject) && empty($this->indirectObject)) {
             return false;
         }
         if (empty($this->agent)) {

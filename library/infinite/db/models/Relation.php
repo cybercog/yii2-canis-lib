@@ -38,6 +38,7 @@ class Relation extends \infinite\db\ActiveRecord
      * @inheritdoc
      */
     public static $relationCache = false;
+    protected $_enableAuditLogging = true;
     /**
      * @var __var__callCache_type__ __var__callCache_description__
      */
@@ -108,6 +109,19 @@ class Relation extends \infinite\db\ActiveRecord
         return true;
     }
 
+    public function suppressAudit()
+    {
+        $this->_enableAuditLogging = false;
+        return $this;
+    }
+
+    public function enableLogging()
+    {
+        $this->_enableAuditLogging = true;
+        return $this;
+    }
+
+
     /**
      * __method_afterDeleteRelation_description__
      * @param __param_event_type__ $event __param_event_description__
@@ -115,9 +129,11 @@ class Relation extends \infinite\db\ActiveRecord
      */
     public function afterDeleteRelation($event)
     {
-        $parentObject = $this->parentObject;
-        if (!empty($parentObject) && $parentObject->getBehavior('Relatable') !== null) {
-            $parentObject->registerDeleteRelationAuditEvent($this);
+        if ($this->_enableAuditLogging) {
+            $parentObject = $this->parentObject;
+            if (!empty($parentObject) && $parentObject->getBehavior('Relatable') !== null) {
+                $parentObject->registerDeleteRelationAuditEvent($this);
+            }
         }
         return true;
     }
@@ -177,9 +193,12 @@ class Relation extends \infinite\db\ActiveRecord
     public function endRelationship()
     {
         $this->end = date("Y-m-d", strtotime("-1 day"));
-        $parentObject = $this->parentObject;
-        if (!empty($parentObject) && $parentObject->getBehavior('Relatable') !== null) {
-            $parentObject->registerEndRelationAuditEvent($this);
+
+        if ($this->_enableAuditLogging) {
+            $parentObject = $this->parentObject;
+            if (!empty($parentObject) && $parentObject->getBehavior('Relatable') !== null) {
+                $parentObject->registerEndRelationAuditEvent($this);
+            }
         }
         return $this->save();
     }

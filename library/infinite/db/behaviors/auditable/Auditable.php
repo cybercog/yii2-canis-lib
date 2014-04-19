@@ -34,6 +34,10 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
      */
     public $deleteEventClass = 'infinite\\db\\behaviors\\auditable\\DeleteEvent';
     /**
+     * @var bool Enable all log events
+     */
+    public $enableLogging = true;
+    /**
      * @var bool Enable save log events
      */
     public $enableSaveLog = true;
@@ -122,6 +126,18 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     public function getAuditDirtyAttributes()
     {
         return $this->_dirtyAttributes;
+    }
+
+    public function suppressAudit()
+    {
+        $this->_enableLogging = false;
+        return $this->owner;
+    }
+
+    public function enableLogging()
+    {
+        $this->_enableLogging = true;
+        return $this->owner;
     }
 
     /**
@@ -400,6 +416,9 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
      */
     public function isAuditEnabled()
     {
+        if (!$this->enableLogging) {
+            return false;
+        }
         if (isset(self::$_auditMute)) {
             if (self::$_auditMute === $this) {
                 return true;

@@ -35,12 +35,4 @@ class DeleteEvent extends AttributesEvent
     {
         $this->descriptor = $object->descriptor;
     }
-
-    /**
-    * @inheritdoc
-     */
-    public function setIndirectObject($object)
-    {
-        parent::setDirectObject($object);
-    }
 }
