@@ -178,13 +178,13 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
      */
     public static function setAllParentIds($child, $parentIds = [])
     {
-         $childObject = null;
+        $childObject = null;
         if (is_object($child)) {
             $childObject = $child;
             $child = $child->primaryKey;
         }
         $key = [__CLASS__, 'parentIds', $child];
-        $dependency = Cacher::groupDependency(['Object', 'relations', $child], 'relation');
+        $dependency = self::relationCacheDependency($child);
         Cacher::set($key, $parentIds, 0, $dependency);
 
         return $dependency;
@@ -201,7 +201,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
         $relationTable = $relationClass::tableName();
         $key = [__CLASS__, 'parentIdsLoaded', $this->owner->primaryKey];
         $dependencyChain = [];
-        $dependencyChain[] = Cacher::groupDependency(['Object', 'relations', $this->owner->primaryKey]);
+        $dependencyChain[] = $this->getRelationCacheDependency($this->owner->primaryKey);
 
         if (!Cacher::get($key)) {
             $query = new Query;
@@ -1182,6 +1182,19 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
         }
 
         return $relationClass::findOne(['parent_object_id' => $parentObject, 'child_object_id' => $childObject]);
+    }
+
+    public function getRelationCacheDependency($object)
+    {
+        return self::relationCacheDependency($object);
+    }
+
+    public static function relationCacheDependency($object)
+    {
+        if (is_object($object)) {
+            $object = $object->primaryKey;
+        }
+        return Cacher::groupDependency(['Object', 'relations', $object], 'relation');
     }
 
 }

@@ -35,11 +35,6 @@ class ActiveRecord extends \yii\db\ActiveRecord
      * @var __var_descriptorField_type__ __var_descriptorField_description__
      */
     public $descriptorField;
-
-    /**
-     * @var __var_subdescriptorFields_type__ __var_subdescriptorFields_description__
-     */
-    public $subdescriptorFields = [];
     /**
      * @var __var__wasDirty_type__ __var__wasDirty_description__
      */
@@ -445,6 +440,11 @@ class ActiveRecord extends \yii\db\ActiveRecord
         ];
     }
 
+    public function getSubdescriptorFields()
+    {
+        return [];
+    }
+    
     /**
      * Get descriptor
      * @return __return_getDescriptor_type__ __return_getDescriptor_description__
@@ -479,11 +479,15 @@ class ActiveRecord extends \yii\db\ActiveRecord
      * Get subdescriptor
      * @return __return_getSubdescriptor_type__ __return_getSubdescriptor_description__
      */
-    public function getSubdescriptor()
+    public function getSubdescriptor($context = null)
     {
         $sub = [];
-        foreach ($this->subdescriptorFields as $field) {
-            $value = $this->getFieldValue($field);
+        foreach ($this->subdescriptorFields as $fieldName => $fieldOptions) {
+            if (is_numeric($fieldName)) {
+                $fieldName = $fieldOptions;
+                $fieldOptions = [];
+            }
+            $value = $this->getFieldValue($fieldName, $fieldOptions, $context);
             if (!empty($value)) {
                 $sub[] = $value;
             }
@@ -507,12 +511,16 @@ class ActiveRecord extends \yii\db\ActiveRecord
      * @param __param_field_type__ $field __param_field_description__
      * @return __return_getFieldValue_type__ __return_getFieldValue_description__
      */
-    public function getFieldValue($field)
+    public function getFieldValue($field, $options = [], $context = null)
     {
         if (is_array($field)) {
             // first with a value is our winner
-            foreach ($field as $subfield) {
-                $value = $this->getFieldValue($subfield);
+            foreach ($field as $subfieldName => $subfieldOptions) {
+                if (is_numeric($subfieldName)) {
+                    $subfieldName = $subfieldOptions;
+                    $subfieldOptions = [];
+                }
+                $value = $this->getFieldValue($subfieldName, array_merge($options, $subfieldOptions), $context);
                 if (!empty($value)) {
                     return $value;
                 }
@@ -521,9 +529,9 @@ class ActiveRecord extends \yii\db\ActiveRecord
             return null;
         }
         if ($this->isForeignField($field)) {
-            return $this->getForeignFieldValue($field);
+            return $this->getForeignFieldValue($field, $options, $context);
         } else {
-            return $this->getLocalFieldValue($field);
+            return $this->getLocalFieldValue($field, $options, $context);
         }
     }
 
@@ -532,9 +540,9 @@ class ActiveRecord extends \yii\db\ActiveRecord
      * @param __param_field_type__ $field __param_field_description__
      * @return __return_getLocalFieldValue_type__ __return_getLocalFieldValue_description__
      */
-    public function getLocalFieldValue($field)
+    public function getLocalFieldValue($field, $options = [], $context = null)
     {
-        if ($this->hasAttribute($field)) {
+        if (isset($this->{$field})) {
             return $this->{$field};
         }
 
@@ -546,7 +554,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
      * @param __param_field_type__ $field __param_field_description__
      * @return __return_getForeignFieldValue_type__ __return_getForeignFieldValue_description__
      */
-    public function getForeignFieldValue($field)
+    public function getForeignFieldValue($field, $options = [], $context = null)
     {
         return null;
     }

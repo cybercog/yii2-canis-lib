@@ -36,7 +36,7 @@ class ICD extends \yii\helpers\VarDumper
     /**
      * @var __var__showSteps_type__ __var__showSteps_description__
      */
-    protected $_showSteps = 6;
+    protected $_showSteps = 8;
 
     /**
      * @var __var__output_type__ __var__output_description__
