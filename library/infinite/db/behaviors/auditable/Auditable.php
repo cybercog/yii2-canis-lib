@@ -170,7 +170,6 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
             }
             return $event;
         }
-        \d($event);exit;
 
         return false;
     }
