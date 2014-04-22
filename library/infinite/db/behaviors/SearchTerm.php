@@ -259,7 +259,11 @@ trait SearchTerm
         $parts = explode(' ', trim($query));
         $parts = StringHelper::neighborWordCombos($parts);
         $parts = array_diff($parts, $badSearchWords);
-
+        foreach ($parts as $k => $p) {
+            if (strlen($p) < 3) {
+                unset($parts[$k]);
+            }
+        }
         return $parts;
     }
 

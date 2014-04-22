@@ -69,21 +69,6 @@ class SearchTermResult extends Object
      */
     public function setObject($value)
     {
-        if (!isset($this->_subdescriptor)) {
-            $this->_subdescriptor = [];
-        }
-
-        foreach ($value->subdescriptor as $subValue) {
-            if (!empty($subValue)) {
-                if (is_array($subValue) && isset($subValue['plain'])) {
-                    $this->_subdescriptor[] = $subValue['plain'];
-                } elseif (is_array($subValue) && isset($subValue['rich'])) {
-                    $this->_subdescriptor[] = strip_tags($subValue['rich']);
-                } elseif (is_string($subValue) || is_numeric($subValue)) {
-                    $this->_subdescriptor[] = strip_tags($subValue);
-                }
-            }
-        }
 
         $this->_object = $value;
     }
@@ -208,10 +193,24 @@ class SearchTermResult extends Object
      * @return __return_getSubdescriptor_type__ __return_getSubdescriptor_description__
      */
     public function getSubdescriptor()
-    {
-        if (is_null($this->_subdescriptor)) {
+    { 
+        if (!isset($this->_subdescriptor)) {
             $this->_subdescriptor = [];
+            if (isset($this->object)) {
+                foreach ($this->object->subdescriptor as $subValue) {
+                    if (!empty($subValue)) {
+                        if (is_array($subValue) && isset($subValue['plain'])) {
+                            $this->_subdescriptor[] = $subValue['plain'];
+                        } elseif (is_array($subValue) && isset($subValue['rich'])) {
+                            $this->_subdescriptor[] = strip_tags($subValue['rich']);
+                        } elseif (is_string($subValue) || is_numeric($subValue)) {
+                            $this->_subdescriptor[] = strip_tags($subValue);
+                        }
+                    }
+                }
+            }
         }
+
 
         return $this->_subdescriptor;
     }
@@ -245,6 +244,11 @@ class SearchTermResult extends Object
         }
 
         return $this->_score;
+    }
+
+    public function getScoreSort()
+    {
+        return sprintf('%010f', $this->score/100) .'-'. $this->object->primaryKey;
     }
 
     /**
