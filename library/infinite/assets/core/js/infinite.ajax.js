@@ -1,5 +1,14 @@
 $(document).data('ajax.stack', []);
 
+jQuery.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
+	if (options.type === 'POST' && $('body').data('post')) {
+		if (options.data === undefined) {
+			options.data = {};
+		}
+		options.data = $.param($.extend(originalOptions.data, $('body').data('post')));
+	}
+});
+
 $(document).ajaxComplete(function(e, xhr, ajaxOptions) {
 	/* What should be called at the end of EVERY SINGLE request, regardless of result? */
 	if (ajaxOptions.notice !== undefined) {

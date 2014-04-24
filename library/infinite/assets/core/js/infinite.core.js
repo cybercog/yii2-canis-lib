@@ -11,7 +11,7 @@ $(window).resize(function () {
 });
 
 $preparer.add(function(context) {
-	$("form").submit(function(event) {
+	$("form", context).submit(function(event) {
 		var e = jQuery.Event( "beforeSubmit" );
 		$(this).trigger(e);
 		if (e.isPropagationStopped()) {

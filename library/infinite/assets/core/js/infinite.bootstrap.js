@@ -1,3 +1,33 @@
+// match position and size
+jQuery.fn.extend({
+	matchPositionSize: function($base, minimums) {
+		return this.each(function() {
+			var basePosition = $base.position();
+			var baseHeight = $base.outerHeight();
+			var baseWidth = $base.outerWidth();
+			var baseTopMargin = parseInt($base.css('margin-top'), 10);
+			var baseLeftMargin = parseInt($base.css('margin-left'), 10);
+			var baseBottomMargin = parseInt($base.css('margin-bottom'), 10);
+			var baseRightMargin = parseInt($base.css('margin-right'), 10);
+			baseWidth = baseWidth + baseLeftMargin + baseRightMargin;
+			baseHeight = baseHeight + baseTopMargin + baseBottomMargin;
+			if (minimums !== undefined && minimums.height !== undefined && baseHeight < minimums.height) {
+				var heightDiff = minimums.height - baseHeight;
+				basePosition.top = basePosition.top - (heightDiff / 2);
+				baseHeight = minimums.height;
+			}
+			if (minimums !== undefined && minimums.width !== undefined && baseWidth < minimums.width) {
+				var widthDiff = minimums.width - baseWidth;
+				basePosition.left = basePosition.left - (widthDiff / 2);
+				baseWidth = minimums.width;
+			}
+			$(this).height(baseHeight);
+			$(this).width(baseWidth);
+			$(this).css(basePosition);
+		});
+	}
+});
+
 // simple effects
 jQuery.fn.slideLeftHide = function(speed, callback) { 
   this.animate({ 

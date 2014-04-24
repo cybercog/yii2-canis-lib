@@ -10,7 +10,7 @@ function hasHiddenElements($e) {
 }
 
 $preparer.add(function(context) {
-	$(".expandable").each(function() {
+	$(".expandable", context).each(function() {
 		if ($(this).find('.expanded-only').length === 0 && !hasHiddenElements($(this))) { 
 			$(this).removeClass('expandable');
 			return true;
