@@ -144,6 +144,14 @@ class Date extends \infinite\base\Object
         return $time === $date;
     }
 
+    public static function isToday($date, $time = null)
+    {
+        if (is_null($time)) { $time = self::time(); }
+        if (!is_int($date)) { $date = self::strtotime($date); }
+
+        return date("Y-m-d", $time) === date("Y-m-d", $date);
+    }
+
     /**
      * __method_relativeDate_description__
      * @param varies  $mdate         date to compare

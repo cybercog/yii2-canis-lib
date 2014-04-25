@@ -6,6 +6,14 @@ function hasHiddenElements($e) {
 			return false;
 		}
 	});
+	if (!checker) {
+		$e.find('.expandable-child').each(function() {
+			if( $(this)[0].scrollWidth > $(this).width() ){
+				checker = true;
+				return false;
+			}
+		});
+	}
 	return checker;
 }
 

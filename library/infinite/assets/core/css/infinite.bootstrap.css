@@ -148,6 +148,19 @@ span.empty {
     display: block;
 }
 
+.list-group-sub-label,
+.list-group-sub-value {
+    font-size: 90%;
+}
+
+.list-group-sub-label {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.list-group-label-block .list-group-sub-label {
+    display: block;
+}
 /* Embedded Panels */
 .embedded-panel .panel-heading {
     background-color: transparent;
@@ -241,6 +254,6 @@ div.required label:after {
     display: none;
 }
 
-.expandable .expanded-only {
+.expanded .expanded-only {
     display: block;
 }

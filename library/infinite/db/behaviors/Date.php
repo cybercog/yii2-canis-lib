@@ -48,6 +48,7 @@ class Date extends \infinite\db\behaviors\ActiveRecord
             \infinite\db\ActiveRecord::EVENT_AFTER_VALIDATE=> '_toHumanErrorCheck',
             \infinite\db\ActiveRecord::EVENT_AFTER_UPDATE => '_toHuman',
             \infinite\db\ActiveRecord::EVENT_AFTER_INSERT => '_toHuman',
+            \infinite\db\ActiveRecord::EVENT_AFTER_FIND => '_toHuman',
             // \infinite\db\ActiveRecord::EVENT_AFTER_SAVE_FAIL => '_toHuman'
         ];
     }
