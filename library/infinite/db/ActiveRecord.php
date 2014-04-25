@@ -170,6 +170,9 @@ class ActiveRecord extends \yii\db\ActiveRecord
      */
     public function getTabularPrefix()
     {
+        if ($this->tabularId === false) {
+            return '';
+        }
         return '['. $this->tabularId .']';
     }
 
@@ -180,6 +183,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
      */
     public static function generateTabularId($id)
     {
+        if ($id === false) { return false; }
         if (substr($id, 0, strlen(self::TABULAR_PREFIX)) === self::TABULAR_PREFIX) { return $id; }
 
         return self::TABULAR_PREFIX.substr(md5($id), 0, 10);
@@ -191,6 +195,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
      */
     public static function getPrimaryTabularId()
     {
+        return false;
         return self::generateTabularId(self::FORM_PRIMARY_MODEL);
     }
 
@@ -202,6 +207,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     public static function getPrimaryModel($models)
     {
         if (empty($models)) { return false; }
+        \d($models);exit;
         foreach ($models as $tabKey => $model) {
             if ($tabKey === self::getPrimaryTabularId(self::baseClassName())) {
                 return $model;

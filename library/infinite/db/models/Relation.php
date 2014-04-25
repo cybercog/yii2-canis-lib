@@ -39,6 +39,7 @@ class Relation extends \infinite\db\ActiveRecord
      */
     public static $relationCache = false;
     protected $_enableAuditLogging = true;
+    protected $_parentModel;
     /**
      * @var __var__callCache_type__ __var__callCache_description__
      */
@@ -53,6 +54,24 @@ class Relation extends \infinite\db\ActiveRecord
         $this->on(self::EVENT_AFTER_INSERT, [$this, 'afterSaveRelation']);
         $this->on(self::EVENT_AFTER_UPDATE, [$this, 'afterSaveRelation']);
         $this->on(self::EVENT_AFTER_DELETE, [$this, 'afterDeleteRelation']);
+    }
+
+    public function formName()
+    {
+        $parentFormName = parent::formName();
+        if (isset($this->_parentModel)) {
+            $parentModelClass = get_class($this->_parentModel);
+            return $this->_parentModel->formName() . $this->_parentModel->tabularPrefix . '[relations]';
+        }
+        return $parentFormName;
+    }
+
+    public function setParentModel($parentModel, $clearTabularPrefix = false)
+    {
+        $this->_parentModel = $parentModel;
+        if ($clearTabularPrefix) {
+            $this->_tabularId = false;
+        }
     }
 
     /**
