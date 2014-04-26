@@ -481,6 +481,24 @@ class ActiveRecord extends \yii\db\ActiveRecord
         return false;
     }
 
+
+    public function getPrimarySubdescriptor($context = null)
+    {
+        $subdescriptor = [];
+        foreach ($this->getSubdescriptor($context) as $subValue) {
+            if (!empty($subValue)) {
+                if (is_array($subValue) && isset($subValue['plain'])) {
+                    $subdescriptor[] = $subValue['plain'];
+                } elseif (is_array($subValue) && isset($subValue['rich'])) {
+                    $subdescriptor[] = strip_tags($subValue['rich']);
+                } elseif (is_string($subValue) || is_numeric($subValue)) {
+                    $subdescriptor[] = strip_tags($subValue);
+                }
+            }
+        }
+        return isset($subdescriptor[0]) ? $subdescriptor[0] : null;
+    }
+
     /**
      * Get subdescriptor
      * @return __return_getSubdescriptor_type__ __return_getSubdescriptor_description__

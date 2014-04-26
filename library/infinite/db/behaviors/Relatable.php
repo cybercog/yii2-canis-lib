@@ -277,11 +277,11 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
                     
                     $this->addActiveConditions($modelCheck, false);
                     $modelCheck = $modelCheck->one();
-
-
                     $dirty = $model->getDirtyAttributes(array_keys($this->defaultRelation));
                     if ($modelCheck) {
                         $newAttributes = $model->attributes;
+                        $newAttributes['taxonomy_id'] = $model->taxonomy_id;
+                        $dirty[] = 'taxonomy_id';
                         unset($newAttributes['id']);
                         foreach ($newAttributes as $key => $value) {
                             if (!isset($dirty[$key])) {
@@ -298,7 +298,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
                         }
                     }
                 }
-
+                $model->loadDefaultValues(true);
                 if (!$model->save()) {
                     $event->handled = false;
                 }
@@ -396,6 +396,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
      */
     public function registerRelationModel($model, $key = null)
     {
+
         if (is_array($model)) {
             $model['class'] = Yii::$app->classes['Relation'];
             $model = Yii::createObject($model);
@@ -418,9 +419,9 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
             return false;
         }
 
-        if (empty($model->{$this->parentObjectField})) {
+        if (empty($model->{$this->parentObjectField}) && $this->owner->primaryKey !== $model->{$this->childObjectField}) {
             $model->{$this->parentObjectField} = $this->owner->primaryKey;
-        } elseif (empty($model->{$this->childObjectField})) {
+        } elseif (empty($model->{$this->childObjectField}) && $this->owner->primaryKey !== $model->{$this->parentObjectField}) {
             $model->{$this->childObjectField} = $this->owner->primaryKey;
         }
 
@@ -552,7 +553,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
         if (!isset($relationOptions['order'])) {
             $relationOptions['order'] = [];
         }
-        array_unshift($relationOptions['order'], ['primary', SORT_DESC]);
+        array_unshift($relationOptions['order'], ['primary_parent', SORT_DESC]);
 
         return $this->queryParentObjects($model, $relationOptions, $objectOptions)->one();
     }
@@ -581,7 +582,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
         if (!isset($relationOptions['order'])) {
             $relationOptions['order'] = [];
         }
-        array_unshift($relationOptions['order'], ['primary', SORT_DESC]);
+        array_unshift($relationOptions['order'], ['primary_child', SORT_DESC]);
 
         return $this->queryChildObjects($model, $relationOptions, $objectOptions)->one();
     }
@@ -946,6 +947,13 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     protected function _prepareRelationQuery(Query $query, $relationshipType = false, $model = false, $relationOptions = [])
     {
         $activeOnly = !isset($relationOptions['activeOnly']) || $relationOptions['activeOnly'];
+        $taxonomy = false;
+        if (!empty($relationOptions['taxonomy'])) {
+            $taxonomy = $relationOptions['taxonomy'];
+            if (empty($taxonomy)) {
+                $taxonomy = [0];
+            }
+        }
         $skipAssociation = isset($relationOptions['skipAssociation']) && $relationOptions['skipAssociation'];
         $relationClass = Yii::$app->classes['Relation'];
         $relationAlias = isset($relationOptions['alias']) ? $relationOptions['alias'] : $this->relationAlias;
@@ -1025,6 +1033,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
                 }
             }
         }
+        $debug = false;
 
         if (!empty($activeConditions)) {
             $activeConditions = $this->_aliasKeys($activeConditions, $relationAlias);
@@ -1036,6 +1045,10 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
         } else {
             $query->addParams($params);
             $query->andWhere($conditions);
+        }
+        if ($taxonomy) {
+            $debug = true;
+            $query->filterByTaxonomy($taxonomy, ['queryAlias' => $relationAlias]);
         }
         $this->_applyOptions($query, $relationOptions);
 
