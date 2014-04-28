@@ -84,7 +84,7 @@ class Item extends \infinite\base\collector\Item
             return 'owner';
         } elseif ($this->level > INFINITE_ROLE_LEVEL_EDITOR) {
             return 'manager';
-        } elseif ($this->level > INFINTE_ROLE_LEVEL_COMMENTER) {
+        } elseif ($this->level > INFINITE_ROLE_LEVEL_COMMENTER) {
             return 'editor';
         } elseif ($this->level > INFINITE_ROLE_LEVEL_VIEWER) {
             return 'commenter';

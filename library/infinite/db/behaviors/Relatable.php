@@ -1048,7 +1048,17 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
         }
         if ($taxonomy) {
             $debug = true;
-            $query->filterByTaxonomy($taxonomy, ['queryAlias' => $relationAlias]);
+            if ($relationQuery) {
+                $query->filterByTaxonomy($taxonomy, ['queryAlias' => $relationAlias]);
+            } elseif ($query->getBehavior('Taxonomy') !== null) {
+                $original = ['viaModelClass' => $query->viaModelClass, 'relationKey' => $query->relationKey, 'taxonomyKey' => $query->taxonomyKey];
+                $relationClass = Yii::$app->classes['Relation'];
+                $relation = new $relationClass;
+                $relationQuery = $relation::find();
+                Yii::configure($query, ['viaModelClass' => $relationQuery->viaModelClass, 'relationKey' => $relationQuery->relationKey, 'taxonomyKey' => $relationQuery->taxonomyKey]);
+                $query->filterByTaxonomy($taxonomy, ['queryAlias' => $relationAlias]);
+                Yii::configure($query, $original);
+            }
         }
         $this->_applyOptions($query, $relationOptions);
 
@@ -1062,8 +1072,14 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
      */
     public function addActiveConditions($query, $alias = null)
     {
+        self::doAddActiveConditions($query, $alias);
+    }
+
+    public static function doAddActiveConditions($query, $alias = null)
+    {
+        $instance = new static;
         if (is_null($alias)) {
-            $alias = $this->relationAlias;
+            $alias = $instance->relationAlias;
         }
         if ($alias === false) {
             $alias = '';
@@ -1071,9 +1087,9 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
             $alias = '{{'.$alias .'}}.';
         }
         $conditions = ['and'];
-        $conditions[] = [$alias .'[['. $this->activeField .']]' => 1];
-        $conditions[] = ['or', $alias .'[['. $this->startDateField . ']] IS NULL', $alias .'[['. $this->startDateField .']] <= CURDATE()'];
-        $conditions[] = ['or', $alias .'[['. $this->endDateField . ']] IS NULL', $alias .'[['. $this->endDateField .']] >= CURDATE()'];
+        $conditions[] = [$alias .'[['. $instance->activeField .']]' => 1];
+        $conditions[] = ['or', $alias .'[['. $instance->startDateField . ']] IS NULL', $alias .'[['. $instance->startDateField .']] <= CURDATE()'];
+        $conditions[] = ['or', $alias .'[['. $instance->endDateField . ']] IS NULL', $alias .'[['. $instance->endDateField .']] >= CURDATE()'];
         $query->andWhere($conditions);
     }
 
