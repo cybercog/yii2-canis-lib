@@ -535,7 +535,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
      * @param __param_field_type__ $field __param_field_description__
      * @return __return_getFieldValue_type__ __return_getFieldValue_description__
      */
-    public function getFieldValue($field, $options = [], $context = null)
+    public function getFieldValue($field, $options = [], $context = null, $formatted = true)
     {
         if (is_array($field)) {
             // first with a value is our winner
@@ -553,9 +553,9 @@ class ActiveRecord extends \yii\db\ActiveRecord
             return null;
         }
         if ($this->isForeignField($field)) {
-            return $this->getForeignFieldValue($field, $options, $context);
+            return $this->getForeignFieldValue($field, $options, $context, $formatted);
         } else {
-            return $this->getLocalFieldValue($field, $options, $context);
+            return $this->getLocalFieldValue($field, $options, $context, $formatted);
         }
     }
 
@@ -564,7 +564,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
      * @param __param_field_type__ $field __param_field_description__
      * @return __return_getLocalFieldValue_type__ __return_getLocalFieldValue_description__
      */
-    public function getLocalFieldValue($field, $options = [], $context = null)
+    public function getLocalFieldValue($field, $options = [], $context = null, $formatted = true)
     {
         if (isset($this->{$field})) {
             return $this->{$field};
@@ -578,7 +578,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
      * @param __param_field_type__ $field __param_field_description__
      * @return __return_getForeignFieldValue_type__ __return_getForeignFieldValue_description__
      */
-    public function getForeignFieldValue($field, $options = [], $context = null)
+    public function getForeignFieldValue($field, $options = [], $context = null, $formatted = true)
     {
         return null;
     }
