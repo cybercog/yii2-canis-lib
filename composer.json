@@ -18,7 +18,8 @@
 		"jom/php-subnational-division": "dev-master",
 		"bootstrap-select/bootstrap-select": "*",
 		"eternicode/bootstrap-datepicker": "*",
-		"phpdocumentor/reflection-docblock": "2.0.*@dev"
+		"phpdocumentor/reflection-docblock": "2.0.*@dev",
+		"simplesamlphp/saml2": "0.1.*"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "3.7.*",
