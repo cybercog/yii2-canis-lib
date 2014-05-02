@@ -23,7 +23,8 @@ class Controller extends \yii\console\Controller
      */
     public function hr()
     {
-        list($width, $height) = Console::getScreenSize();
+        //list($width, $height) = Console::getScreenSize();
+        $width = 100;
         $this->out(str_repeat("=", $width));
     }
 
