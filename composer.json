@@ -19,7 +19,7 @@
 		"bootstrap-select/bootstrap-select": "*",
 		"eternicode/bootstrap-datepicker": "*",
 		"phpdocumentor/reflection-docblock": "2.0.*@dev",
-		"simplesamlphp/simplesamlphp": "0.1.*"
+		"simplesamlphp/simplesamlphp": "*"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "3.7.*",
