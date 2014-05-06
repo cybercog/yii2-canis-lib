@@ -120,12 +120,14 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
 
         $this->createTable('identity_provider', [
             'id' => 'char(36) CHARACTER SET ascii COLLATE ascii_bin NOT NULL PRIMARY KEY',
-            'name' => 'string DEFAULT NULL',
-            'meta' => 'blob DEFAULT NULL',
+            'name' => 'string(200) NOT NULL DEFAULT \'\'',
+            'system_id' => 'string(100) NOT NULL DEFAULT \'\'',
+            'handler' => 'string(100) NOT NULL DEFAULT \'\'',
             'created' => 'datetime DEFAULT NULL',
             'modified' => 'datetime DEFAULT NULL'
         ]);
 
+        $this->createIndex('idpSystemId', 'identity_provider', 'system_id', true);
         $this->addForeignKey('idpRegistry', 'identity_provider', 'id', 'registry', 'id', 'CASCADE', 'CASCADE');
 
         // identity

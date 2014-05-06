@@ -7,11 +7,6 @@
 
 namespace infinite\security\identity\providers;
 
-/**
- * Provider [@doctodo write class description for Provider]
- *
- * @author Jacob Morrison <email@ofjacob.com>
- */
-class Provider extends \infinite\base\Component
+trait HandlerTrait
 {
 }

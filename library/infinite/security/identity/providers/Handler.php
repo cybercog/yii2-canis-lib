@@ -8,10 +8,11 @@
 namespace infinite\security\identity\providers;
 
 /**
- * Ldap [@doctodo write class description for Ldap]
+ * Provider [@doctodo write class description for Provider]
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class Ldap extends \infinite\security\identity\providers\Handler
+class Handler extends \infinite\base\Component implements HandlerInterface
 {
+	use HandlerTrait;
 }
