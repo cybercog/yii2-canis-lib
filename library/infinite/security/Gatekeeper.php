@@ -1199,22 +1199,20 @@ class Gatekeeper extends \infinite\base\Component
         $fields['controlled_object_id'] = $controlledObject;
         $aclClass = Yii::$app->classes['Acl'];
         $acl = $aclClass::find()->where($fields)->one();
-        if (empty($acl)) {
-            $acl = new $aclClass;
-            $acl->attributes = $fields;
-        }
         if ($access === false) {
-            if (!$acl->isNewRecord) {
+            if (!empty($acl) && !$acl->isNewRecord) {
                 return $acl->delete();
             } else {
                 return true;
             }
         } else {
+            if (empty($acl)) {
+                $acl = new $aclClass;
+                $acl->attributes = $fields;
+            }
             if ($acl->isNewRecord || $acl->access != $access || $acl->acl_role_id !== $aclRole) {
                 $acl->access = $access;
                 $acl->acl_role_id = $aclRole;
-                $acl->save();
-
                 return $acl->save();
             }
         }
