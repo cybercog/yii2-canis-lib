@@ -55,7 +55,7 @@ class Blame extends \infinite\db\behaviors\ActiveRecord
     /**
      * @var __var__fields_type__ __var__fields_description__
      */
-    protected $_fields;
+    protected static $_fields = [];
 
     /**
     * @inheritdoc
@@ -74,19 +74,20 @@ class Blame extends \infinite\db\behaviors\ActiveRecord
      */
     public function getFields()
     {
-        if (is_null($this->_fields)) {
-            $this->_fields = [];
+        $ownerClass = get_class($this->owner);
+        $ownerTable = $ownerClass::tableName();
+        if (!isset(self::$_fields[$ownerTable])) {
+            self::$_fields[$ownerTable] = [];
             $_f = ['deletedField', 'deletedByField', 'createdField', 'createdByField', 'modifiedField', 'modifiedByField'];
-            $ownerClass = get_class($this->owner);
             $schema = $ownerClass::getTableSchema();
             foreach ($_f as $field) {
                 if (isset($schema->columns[$this->{$field}])) {
-                    $this->_fields[$field] = $this->{$field};
+                    self::$_fields[$ownerTable][$field] = $this->{$field};
                 }
             }
         }
 
-        return $this->_fields;
+        return self::$_fields[$ownerTable];
     }
 
     /**

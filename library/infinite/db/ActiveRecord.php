@@ -290,6 +290,15 @@ class ActiveRecord extends \yii\db\ActiveRecord
         return true;
     }
 
+    public function getCacheSize()
+    {
+        $n = 0;
+        foreach (self::$_cache as $model => $cache) {
+            $n += count($cache);
+        }
+        return $n;
+    }
+
     /**
      * Get
      * @param __param_id_type__ $id __param_id_description__

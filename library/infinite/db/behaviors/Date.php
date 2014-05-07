@@ -19,7 +19,7 @@ class Date extends \infinite\db\behaviors\ActiveRecord
     /**
      * @var __var__handle_type__ __var__handle_description__
      */
-    protected $_handle = null;
+    protected static $_handle = [];
     /**
      * @var __var_dbTimeFormat_type__ __var_dbTimeFormat_description__
      */
@@ -163,8 +163,10 @@ class Date extends \infinite\db\behaviors\ActiveRecord
      */
     public function getHandle()
     {
-        if (is_null($this->_handle)) {
-            $this->_handle = [];
+        $ownerClass = get_class($this->owner);
+        $ownerTable = $ownerClass::tableName();
+        if (!isset(self::$_handle[$ownerTable])) {
+            self::$_handle[$ownerTable] = [];
 
             $ownerClass = get_class($this->owner);
             $schema = $ownerClass::getTableSchema();
@@ -172,19 +174,19 @@ class Date extends \infinite\db\behaviors\ActiveRecord
             foreach ($schema->columns as $column) {
                 switch ($column->dbType) {
                     case 'date':
-                        $this->_handle[$column->name] = 'date';
+                        self::$_handle[$ownerTable][$column->name] = 'date';
                     break;
                     case 'time';
-                        $this->_handle[$column->name] = 'time';
+                        self::$_handle[$ownerTable][$column->name] = 'time';
                     break;
                     case 'datetime':
-                        $this->_handle[$column->name] = 'datetime';
+                        self::$_handle[$ownerTable][$column->name] = 'datetime';
                     break;
                 }
             }
         }
 
-        return $this->_handle;
+        return self::$_handle[$ownerTable];
     }
 
 }
