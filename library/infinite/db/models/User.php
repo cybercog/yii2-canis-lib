@@ -98,7 +98,7 @@ class User extends ActiveRecord implements IdentityInterface
      * __method_findIdentityByAccessToken_description__
      * @param __param_token_type__ $token __param_token_description__
      */
-    public static function findIdentityByAccessToken($token)
+    public static function findIdentityByAccessToken($token, $type = NULL)
     {
     }
 
