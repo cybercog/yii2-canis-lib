@@ -109,6 +109,17 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
         ];
     }
 
+    public function getInheritedParentModels($childObject)
+    {
+        return [];
+    }
+
+
+    public function getInheritedChildModels($parentObject)
+    {
+        return [];
+    }
+
     /**
     * @inheritdoc
      */
@@ -251,6 +262,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     public function handleRelationSave($event)
     {
         $relationModelKey = $this->relationsKey;
+        $registryClass = Yii::$app->classes['Registry'];
         if (!empty($this->owner->primaryKey) && !empty(self::$_relationModels[$relationModelKey])) {
             if (!isset(self::$_relationModelsOld[$relationModelKey])) {
                 self::$_relationModelsOld[$relationModelKey] = [];
@@ -264,6 +276,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
                 if (empty($model->{$this->parentObjectField}) && empty($model->{$this->childObjectField})) {
                     continue;
                 }
+                $parentObject = $childObject = null;
 
                 if (empty($model->{$this->parentObjectField})) {
                     $model->{$this->parentObjectField} = $this->owner->primaryKey;
@@ -271,10 +284,34 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
                     $model->{$this->childObjectField} = $this->owner->primaryKey;
                 }
 
+                if ($this->owner->primaryKey === $model->{$this->parentObjectField}) {
+                    $parentObject = $this->owner;
+                } else {
+                    $childObject = $this->owner;
+                }
+                if (!isset($parentObject)) {
+                    $parentObject = $registryClass::getObject($model->{$this->parentObjectField}, false);
+                }
+                if (!isset($childObject)) {
+                    $childObject = $registryClass::getObject($model->{$this->childObjectField}, false);
+                }
+                $inheritModels = $parentObject->getInheritedParentModels($childObject);
+                if (!empty($inheritModels)) {
+                    foreach ($inheritModels as $inheritModel) {
+                        foreach ($parentObject->parents($inheritModel) as $grandparent) {
+                            $modelClone = clone $model;
+                            $modelClone->id = null;
+                            $modelClone->{$this->parentObjectField} = $grandparent->primaryKey;
+                            $modelClone->isNewRecord = true;
+                            $grandparent->registerRelationModel($modelClone);
+                            $grandparent->save();
+                        }
+                    }
+                }
+
                 if ($model->isNewRecord) {
                     $relationClass = Yii::$app->classes['Relation'];
                     $modelCheck = $relationClass::find()->where(['parent_object_id' => $model->parent_object_id, 'child_object_id' => $model->child_object_id]);
-                    
                     $this->addActiveConditions($modelCheck, false);
                     $modelCheck = $modelCheck->one();
                     $dirty = $model->getDirtyAttributes(array_keys($this->defaultRelation));
@@ -653,23 +690,6 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
         }
 
         $query = $modelClass::find();
-        // $query->select = [
-        //     $query->primaryAlias .'.*',
-        //     $this->relationAlias .'.id as `r.id`',
-        // //    $this->relationAlias .'.start as `r.start`',
-        // //    $this->relationAlias .'.end as `r.end`',
-        //     $this->relationAlias .'.primary as `r.primary`',
-        // //    $this->relationAlias .'.special as `r.special`',
-        // ];
-        // if (in_array($relationshipType, ['children', 'child'])) {
-        //     $query->select[] = '\''. addslashes(get_class($this->owner)) . '\' as `r.cm`';
-        //     $query->select[] = '\'parent\' as `r.ct`';
-        //     $query->select[] = $this->relationAlias .'.parent_object_id as `r.cid`';
-        // } else {
-        //     $query->select[] = '\''. addslashes(get_class($this->owner)) . '\' as `r.cm`';
-        //     $query->select[] = '\'child\' as `r.ct`';
-        //     $query->select[] = $this->relationAlias .'.child_object_id as `r.cid`';
-        // }
         $this->objectAlias = $modelClass::tableName();
         $this->_prepareRelationQuery($query, $relationshipType, $model, $relationOptions);
         $this->_prepareObjectQuery($query, $relationshipType, $model, $objectOptions);
@@ -976,6 +996,10 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
             }
             $modelPrimaryKey = $modelClass::primaryKey()[0];
         }
+        $modelPrefix = false;
+        if ($modelClass) {
+            $modelPrefix = $modelClass::modelPrefix();
+        }
 
         $relationQuery = (isset($query->modelClass) && $query->modelClass === Yii::$app->classes['Relation']) || !$model;
 
@@ -1001,6 +1025,12 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
             }
 
             if (!$relationQuery && isset($primaryKey)) {
+                if ($modelPrefix) {
+                    $modelPrefix .= '-';
+                    $modelPrefixLength = strlen($modelPrefix);
+                    $conditions[] = ['LEFT({{'. $relationAlias .'}}.[['. $primaryKey .']], '. $modelPrefixLength.')' => $modelPrefix];
+                    //$conditions[] = '{{'. $relationAlias .'}}.[['. $primaryKey .']] LIKE "'. $modelPrefix.'%"';
+                }
                 $conditions[] = '{{'. $relationAlias .'}}.[['. $primaryKey .']] = {{'. $this->objectAlias .'}}.[['. $modelPrimaryKey .']]';
             }
         }
