@@ -183,6 +183,23 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
         $this->addForeignKey('relationChildRegistry', 'relation', 'child_object_id', 'registry', 'id', 'CASCADE', 'CASCADE');
         $this->addForeignKey('relationParentRegistry', 'relation', 'parent_object_id', 'registry', 'id', 'CASCADE', 'CASCADE');
 
+        // relation dependencies
+        $this->dropExistingTable('relation_dependency');
+
+        $this->createTable('relation_dependency', [
+            'id' => 'bigint unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY',
+            'parent_relation_id' => 'bigint unsigned NOT NULL',
+            'child_relation_id' => 'bigint unsigned NOT NULL',
+        ]);
+
+        // $this->createIndex('relationParentChild', 'relation', 'parent_object_id,child_object_id', true);
+        $this->createIndex('relationDependency', 'relation_dependency', 'parent_relation_id,child_relation_id', true);
+        $this->createIndex('relationDependencyParent', 'relation_dependency', 'parent_relation_id', false);
+        $this->createIndex('relationDependencyChild', 'relation_dependency', 'child_relation_id', false);
+        $this->addForeignKey('relationDependencyParent', 'relation_dependency', 'parent_relation_id', 'relation', 'id', 'CASCADE', 'CASCADE');
+        $this->addForeignKey('relationDependencyChild', 'relation_dependency', 'child_relation_id', 'relation', 'id', 'CASCADE', 'CASCADE');
+
+
         // role
         $this->dropExistingTable('role');
 

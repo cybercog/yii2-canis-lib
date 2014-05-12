@@ -45,6 +45,7 @@ class ClassManager extends Component implements IteratorAggregate, ArrayAccess
             'Group' => 'app\\models\\Group',
             'Registry' => 'app\\models\\Registry',
             'Relation' => 'app\\models\\Relation',
+            'RelationDependency' => 'app\\models\\RelationDependency',
             'User' => 'app\\models\\User',
             'Identity' => 'app\\models\\Identity',
             'IdentityProvider' => 'app\\models\\IdentityProvider',

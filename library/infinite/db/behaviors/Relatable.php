@@ -263,6 +263,8 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     {
         $relationModelKey = $this->relationsKey;
         $registryClass = Yii::$app->classes['Registry'];
+        $relationClass = Yii::$app->classes['Relation'];
+
         if (!empty($this->owner->primaryKey) && !empty(self::$_relationModels[$relationModelKey])) {
             if (!isset(self::$_relationModelsOld[$relationModelKey])) {
                 self::$_relationModelsOld[$relationModelKey] = [];
@@ -295,22 +297,9 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
                 if (!isset($childObject)) {
                     $childObject = $registryClass::getObject($model->{$this->childObjectField}, false);
                 }
-                $inheritModels = $parentObject->getInheritedParentModels($childObject);
-                if (!empty($inheritModels)) {
-                    foreach ($inheritModels as $inheritModel) {
-                        foreach ($parentObject->parents($inheritModel) as $grandparent) {
-                            $modelClone = clone $model;
-                            $modelClone->id = null;
-                            $modelClone->{$this->parentObjectField} = $grandparent->primaryKey;
-                            $modelClone->isNewRecord = true;
-                            $grandparent->registerRelationModel($modelClone);
-                            $grandparent->save();
-                        }
-                    }
-                }
+
 
                 if ($model->isNewRecord) {
-                    $relationClass = Yii::$app->classes['Relation'];
                     $modelCheck = $relationClass::find()->where(['parent_object_id' => $model->parent_object_id, 'child_object_id' => $model->child_object_id]);
                     $this->addActiveConditions($modelCheck, false);
                     $modelCheck = $modelCheck->one();
@@ -326,6 +315,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
                             }
                         }
                         $modelCheck->attributes = $newAttributes;
+                        $modelCheck->addDependencies($model->newDependencies);
                         $model = $modelCheck;
                     } else {
                         foreach ($this->defaultRelation as $dkey => $dvalue) {
@@ -336,8 +326,26 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
                     }
                 }
                 $model->loadDefaultValues(true);
+
                 if (!$model->save()) {
                     $event->handled = false;
+                }
+
+                $inheritModels = $parentObject->getInheritedParentModels($childObject);
+                if (!empty($inheritModels)) {
+                    foreach ($inheritModels as $inheritModel) {
+                        foreach ($parentObject->parents($inheritModel) as $grandparent) {
+                            $modelClone = new $relationClass;
+                            $modelClone->attributes = $model->attributes;
+                            $modelClone->id = null;
+                            $modelClone->clearMemoryId();
+                            $modelClone->{$this->parentObjectField} = $grandparent->primaryKey;
+                            $modelClone->isNewRecord = true;
+                            $modelClone->addDependency($model->primaryKey);
+                            $grandparent->registerRelationModel($modelClone);
+                            $grandparent->save();
+                        }
+                    }
                 }
             }
             foreach (self::$_relationModelsOld[$relationModelKey] as $relationId) {

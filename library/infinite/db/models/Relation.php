@@ -40,6 +40,10 @@ class Relation extends \infinite\db\ActiveRecord
     public static $relationCache = false;
     protected $_enableAuditLogging = true;
     protected $_parentModel;
+    protected $_dependencies;
+    protected $_newDependencies = [];
+    protected $_dirtyAttributes = [];
+
     /**
      * @var __var__callCache_type__ __var__callCache_description__
      */
@@ -53,6 +57,9 @@ class Relation extends \infinite\db\ActiveRecord
         $this->on(self::EVENT_BEFORE_VALIDATE, [$this, 'beforeValidateRelation']);
         $this->on(self::EVENT_AFTER_INSERT, [$this, 'afterSaveRelation']);
         $this->on(self::EVENT_AFTER_UPDATE, [$this, 'afterSaveRelation']);
+        $this->on(self::EVENT_AFTER_UPDATE, [$this, 'afterUpdateRelation']);
+        $this->on(self::EVENT_BEFORE_UPDATE, [$this, 'beforeUpdateRelation']);
+        $this->on(self::EVENT_BEFORE_DELETE, [$this, 'beforeDeleteRelation']);
         $this->on(self::EVENT_AFTER_DELETE, [$this, 'afterDeleteRelation']);
     }
 
@@ -125,8 +132,42 @@ class Relation extends \infinite\db\ActiveRecord
      */
     public function afterSaveRelation($event)
     {
+        $relationDependencyClass = Yii::$app->classes['RelationDependency'];
+        foreach ($this->newDependencies as $dependency) {
+            if (!isset($this->dependencies[$dependency])) {
+                $relationDependency = new $relationDependencyClass;
+                $relationDependency->attributes = ['parent_relation_id' => $this->primaryKey, 'child_relation_id' => $dependency];
+                if (!$relationDependency->save()) {
+                    $event->handled = false;
+                } else {
+                    $this->_dependencies[$dependency] = $relationDependency;
+                }
+            }
+        }
         return true;
     }
+
+    public function beforeUpdateRelation($event)
+    {
+        $this->_dirtyAttributes = $this->getDirtyAttributes();
+        return true;
+    }
+
+    public function afterUpdateRelation($event)
+    {
+        $dirty = $this->_dirtyAttributes;
+        $this->_dirtyAttributes = [];
+        unset($dirty['parent_object_id'], $dirty['child_object_id'], $dirty['id'], $dirty['created'], $dirty['modified']);
+        if (empty($dirty)) { return true; }
+        foreach ($this->dependencies as $dependency) {
+            $dependency->childRelation->attributes = $dirty;
+            if (!$dependency->childRelation->save()) {
+                $event->handled = false;
+            }
+        }
+        return true;
+    }
+
 
     public function suppressAudit()
     {
@@ -140,6 +181,14 @@ class Relation extends \infinite\db\ActiveRecord
         return $this;
     }
 
+
+    public function beforeDeleteRelation($event)
+    {
+        foreach ($this->dependencies as $dependency) {
+            $dependency->childRelation->delete();
+        }
+        return true;
+    }
 
     /**
      * __method_afterDeleteRelation_description__
@@ -248,5 +297,41 @@ class Relation extends \infinite\db\ActiveRecord
         }
 
         return true;
+    }
+
+    public function addDependency($dependency)
+    {
+        $this->_newDependencies[] = $dependency;
+    }
+
+    public function clearDependencies()
+    {
+        $this->_newDependencies = [];
+    }
+
+    public function addDependencies($dependencies)
+    {
+        foreach ($dependencies as $dependency) {
+            $this->_newDependencies[] = $dependency;
+        }
+        $this->_newDependencies = array_unique($this->_newDependencies);
+    }
+
+    public function getNewDependencies()
+    {
+        return $this->_newDependencies;
+    }
+
+    public function getDependencies()
+    {
+        if (!isset($this->_dependencies)) {
+            $this->_dependencies = [];
+            $relationDependencyClass = Yii::$app->classes['RelationDependency'];
+            $all = $relationDependencyClass::findAll(['parent_relation_id' => $this->primaryKey]);
+            foreach ($all as $dependency) {
+                $this->_dependencies[$dependency->child_relation_id] = $dependency;
+            }
+        }
+        return $this->_dependencies;
     }
 }

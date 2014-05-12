@@ -21,6 +21,12 @@ trait ObjectTrait
             $this->_backtrace = array_slice(debug_backtrace(), 1);
         }
     }
+
+    public function clearMemoryId()
+    {
+        $this->_memoryId = null;
+    }
+
     public function getMemoryId()
     {
         if (is_null($this->_memoryId)) {
