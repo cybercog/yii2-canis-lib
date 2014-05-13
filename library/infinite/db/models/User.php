@@ -101,15 +101,6 @@ class User extends ActiveRecord implements IdentityInterface
     {
     }
 
-    /**
-     * Finds user by username
-     * @param string    $username
-     * @return null|User
-     */
-    public static function findByUsername($username)
-    {
-        return static::find()->andWhere(['email' => $username, 'status' => static::STATUS_ACTIVE])->disableAccessCheck()->one();
-    }
 
     public static function findByEmail($email)
     {
