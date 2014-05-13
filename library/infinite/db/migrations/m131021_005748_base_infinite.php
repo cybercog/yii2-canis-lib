@@ -224,7 +224,7 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
             'first_name' => 'string DEFAULT NULL',
             'last_name' => 'string DEFAULT NULL',
             'email' => 'string DEFAULT NULL',
-            'username' => 'string NOT NULL',
+            //'username' => 'string NOT NULL',
             'password_hash' => 'string DEFAULT NULL',
             'password_reset_token' => 'string DEFAULT NULL',
             'auth_key' => 'string(32) NOT NULL',
@@ -240,6 +240,7 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
 
         $this->createIndex('userIdentityPrivider', 'user', 'primary_identity_id', false);
         $this->createIndex('userIndividual', 'user', 'object_individual_id', false);
+        $this->createIndex('userEmail', 'user', 'email', true);
         $this->addForeignKey('userIndividual', 'user', 'object_individual_id', 'object_individual', 'id', 'SET NULL', 'CASCADE');
         $this->addForeignKey('userIdentity', 'user', 'primary_identity_id', 'identity', 'id', 'SET NULL', 'CASCADE');
         $this->addForeignKey('userRegistry', 'user', 'id', 'registry', 'id', 'CASCADE', 'CASCADE');

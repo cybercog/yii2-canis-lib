@@ -23,7 +23,6 @@ use yii\web\IdentityInterface;
  * @package common\models
  *
  * @property integer $id
- * @property string $username
  * @property string $password_hash
  * @property string $password_reset_token
  * @property string $email
@@ -109,7 +108,12 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findByUsername($username)
     {
-        return static::find()->andWhere(['username' => $username, 'status' => static::STATUS_ACTIVE])->disableAccessCheck()->one();
+        return static::find()->andWhere(['email' => $username, 'status' => static::STATUS_ACTIVE])->disableAccessCheck()->one();
+    }
+
+    public static function findByEmail($email)
+    {
+        return static::find()->andWhere(['email' => $email, 'status' => static::STATUS_ACTIVE])->disableAccessCheck()->one();
     }
 
     /**
@@ -156,12 +160,11 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['username'], 'filter', 'filter' => 'trim'],
-            [['username'], 'required'],
-            [['username'], 'string', 'min' => 2, 'max' => 255],
-            [['first_name', 'last_name', 'email'], 'string', 'min' => 1, 'max' => 255],
-
             [['email'], 'filter', 'filter' => 'trim'],
+            [['email'], 'filter', 'filter' => 'strtolower'],
+            [['email'], 'required'],
+
+            [['first_name', 'last_name', 'email'], 'string', 'min' => 1, 'max' => 255],
 
             // ['email', 'required'],
             [['email'], 'email'],
@@ -179,7 +182,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function scenarios()
     {
         return [
-            'creation' => ['username', 'email', 'first_name', 'last_name', 'password'],
+            'creation' => ['email', 'first_name', 'last_name', 'password'],
             'resetPassword' => ['password'],
             'requestPasswordResetToken' => ['email'],
         ];
