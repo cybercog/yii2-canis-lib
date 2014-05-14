@@ -5,7 +5,7 @@
  * @license http://www.infinitecascade.com/license/
  */
 
-namespace infinite\helpers;
+namespace infinite\base;
 
 use infinite\base\Exception;
 
