@@ -83,7 +83,7 @@ class IdentityProvider extends \infinite\db\ActiveRecord implements \infinite\ba
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getId0()
+    public function getRegistry()
     {
         return $this->hasOne(Registry::className(), ['id' => 'id']);
     }

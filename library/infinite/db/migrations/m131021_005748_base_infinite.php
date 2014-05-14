@@ -145,7 +145,8 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
 
         $this->createIndex('identityIdp', 'identity', 'identity_provider_id', false);
         $this->addForeignKey('identityRegistry', 'identity', 'id', 'registry', 'id', 'CASCADE', 'CASCADE');
-        $this->addForeignKey('identityUser', 'identity', 'id', 'user', 'id', 'CASCADE', 'CASCADE');
+        // has to be registry because we save the identity before the user
+        $this->addForeignKey('identityUser', 'identity', 'id', 'registry', 'id', 'CASCADE', 'CASCADE');
         $this->addForeignKey('identityIdp', 'identity', 'identity_provider_id', 'identity_provider', 'id', 'CASCADE', 'CASCADE');
 
         // registry

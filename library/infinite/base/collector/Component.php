@@ -44,7 +44,7 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
      */
     public function bootstrap($app)
     {
-        Yii::$app->on(\yii\base\Application::EVENT_BEFORE_REQUEST, [$this, 'beforeRequest']);
+        Yii::$app->on(\yii\base\Application::EVENT_BEFORE_REQUEST, [$this, 'beforeRequest'], null, false);
     }
 
     /**

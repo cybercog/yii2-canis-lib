@@ -21,6 +21,26 @@ use Yii;
  */
 class Identity extends \infinite\db\ActiveRecord
 {
+
+    public function init()
+    {
+        parent::init();
+        $this->on(self::EVENT_BEFORE_VALIDATE, [$this, 'metaToSerial']);
+        $this->on(self::EVENT_AFTER_SAVE_FAIL, [$this, 'metaToSerial']);
+        $this->on(self::EVENT_AFTER_FIND, [$this, 'metaToArray']);
+    }
+
+
+    public function metaToSerial()
+    {
+        $this->meta = serialize($this->meta);
+    }
+
+    public function metaToArray()
+    {
+        $this->meta = unserialize($this->meta);
+    }
+
     /**
      * @inheritdoc
      */
@@ -79,7 +99,11 @@ class Identity extends \infinite\db\ActiveRecord
      */
     public function getIdentityProvider()
     {
-        return $this->hasOne(IdentityProvider::className(), ['id' => 'identity_provider_id']);
+        $idp = Yii::$app->collectors['identityProviders']->getById($this->identity_provider_id);
+        if (!empty($idp) && $idp->object) {
+            return $idp;
+        }
+        return false;
     }
 
     /**
@@ -87,7 +111,7 @@ class Identity extends \infinite\db\ActiveRecord
      */
     public function getId0()
     {
-        return $this->hasOne(User::className(), ['id' => 'id']);
+        return $this->hasOne(Yii::$app->classes['User'], ['id' => 'id']);
     }
 
     /**
@@ -95,6 +119,6 @@ class Identity extends \infinite\db\ActiveRecord
      */
     public function getUsers()
     {
-        return $this->hasMany(User::className(), ['primary_identity_id' => 'id']);
+        return $this->hasMany(Yii::$app->classes['User'], ['primary_identity_id' => 'id']);
     }
 }

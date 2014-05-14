@@ -9,6 +9,7 @@ namespace infinite\db\models;
 
 use Yii;
 use infinite\db\ActiveRecord;
+use infinite\helpers\ArrayHelper;
 use yii\helpers\Security;
 use yii\web\IdentityInterface;
 
@@ -53,6 +54,12 @@ class User extends ActiveRecord implements IdentityInterface
      * @var string the raw password. Used to collect password input and isn't saved in database
      */
     public $password;
+
+    protected $_identities;
+    protected $_identitiesByProvider;
+    protected $_activeIdentity;
+    protected $_touchedIdentities = [];
+    protected $_primaryIdentity;
 
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
@@ -142,6 +149,23 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function validatePassword($password)
     {
+        if ($this->activeIdentity) {
+            $identityProvider = $this->activeIdentity->identityProvider;
+            $handler = false;
+            if ($identityProvider) {
+                $handler = $identityProvider->getHandler($this->activeIdentity->token, $this->activeIdentity->meta);
+            }
+            if ($handler) {
+                $result = $handler->validatePassword($this, $password);
+                foreach ($handler->errors as $attribute => $errors) {
+                    foreach ($errors as $error) {
+                        $this->addError($attribute, $error);
+                    }
+                }
+                return $result;
+            }
+            return false;
+        }
         return Security::validatePassword($password, $this->password_hash);
     }
 
@@ -179,6 +203,87 @@ class User extends ActiveRecord implements IdentityInterface
         ];
     }
 
+    public function getPrimaryIdentity()
+    {
+        if (!isset($this->_primaryIdentity) && isset($this->primary_identity_id)) {
+            $identityClass = Yii::$app->classes['Identity'];
+            $this->_primaryIdentity = $identityClass::getOne($this->primary_identity_id);
+        }
+        if (empty($this->_primaryIdentity)) {
+            return null;
+        }
+        return $this->_primaryIdentity;
+    }
+
+    public function setPrimaryIdentity($identity)
+    {
+        $identity = $this->setIdentity($identity);
+        $this->_primaryIdentity = $identity;
+        return $identity;
+    }
+
+    public function setIdentity($identity)
+    {
+        if (!is_object($identity)) {
+            $identityAttributes = $identity;
+            $identity = null;
+            if (!isset($identityAttributes['identity_provider_id'])) { return false; }
+            if (isset($this->identitiesByProvider[$identityAttributes['identity_provider_id']])) {
+                $identity = $this->identitiesByProvider[$identityAttributes['identity_provider_id']];
+                Yii::configure($identity, $identityAttributes);
+            } else {
+                if (!isset($identityAttributes['class'])) {
+                    $identityAttributes['class'] = Yii::$app->classes['Identity'];
+                }
+                $identity = Yii::createObject($identityAttributes);
+            }
+        } elseif (isset($this->identitiesByProvider[$identity->identity_provider_id])) {
+            $newIdentity = $identity;
+            $identity = $this->identitiesByProvider[$identity->identity_provider_id];
+            $identity->token = $newIdentity->token;
+            $identity->meta = $newIdentity->meta;
+        }
+        $this->_touchedIdentities[] = $identity;
+        return $identity;
+    }
+
+    public function getIdentities()
+    {
+        if (!isset($this->_identities)) {
+            $this->_identities = [];
+            if (!empty($this->primaryKey)) {
+                $identityClass = Yii::$app->classes['Identity'];
+                $rawIdentities = $identityClass::find()->where(['user_id' => $this->primaryKey])->all();
+                $this->_identities = ArrayHelper::index($rawIdentities, 'primaryKey');
+            }
+        }
+        return $this->_identities;
+    }
+
+    public function getIdentitiesByProvider()
+    {
+        if (!isset($this->_identitiesByProvider)) {
+            $this->_identitiesByProvider = ArrayHelper::index($this->identities, 'identity_provider_id');
+        }
+        return $this->_identitiesByProvider;
+    }
+
+    public function getActiveIdentity()
+    {
+        if (!isset($this->_activeIdentity)) {
+            $this->_activeIdentity = false;
+            if (isset($this->primary_identity_id) && isset($this->identities[$this->primary_identity_id])) {
+                $this->_activeIdentity = $this->identities[$this->primary_identity_id];
+            }
+        }
+        return $this->_activeIdentity;
+    }
+
+    public function setActiveIdentity($identity)
+    {
+        $this->_activeIdentity = $identity;
+    }
+
     /**
     * @inheritdoc
      */
@@ -191,7 +296,21 @@ class User extends ActiveRecord implements IdentityInterface
             if ($this->isNewRecord) {
                 $this->auth_key = Security::generateRandomKey();
             }
+            //\d($this->_touchedIdentities);exit;
+            foreach ($this->_touchedIdentities as $identity) {
+                if ($identity->user_id !== $this->primaryKey) {
+                    $identity->user_id = $this->primaryKey;
+                }
+                if (!$identity->save()) {
+                    return false;
+                }
+            }
 
+            if (isset($this->primaryIdentity) && $this->primaryIdentity->primaryKey !== $this->primary_identity_id) {
+                $this->primary_identity_id = $this->primaryIdentity->primaryKey;
+            } elseif (!isset($this->primaryIdentity) && isset($this->primary_identity_id)) {
+                $this->primary_identity_id = null;
+            }
             return true;
         }
 

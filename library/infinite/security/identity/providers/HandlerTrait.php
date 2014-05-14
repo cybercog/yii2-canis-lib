@@ -9,4 +9,21 @@ namespace infinite\security\identity\providers;
 
 trait HandlerTrait
 {
+	public $errors = [];
+	public $token;
+	public $meta = [];
+	public $config = [];
+
+	public function validatePassword($user, $password)
+	{
+		return false;
+	}
+
+	public function addError($attribute, $error)
+	{
+		if (!isset($this->errors[$attribute])) {
+			$this->errors[$attribute] = [];
+		}
+		$this->errors[$attribute][] = $error;
+	}
 }

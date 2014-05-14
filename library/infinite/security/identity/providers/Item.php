@@ -7,6 +7,7 @@
 
 namespace infinite\security\identity\providers;
 
+use Yii;
 use infinite\helpers\ArrayHelper;
 
 /**
@@ -21,6 +22,7 @@ class Item extends \infinite\base\collector\Item
      */
     public $name;
     public $handler;
+    protected $_handlers = [];
     public $config = [];
 
     /**
@@ -59,5 +61,21 @@ class Item extends \infinite\base\collector\Item
         }
 
         return ArrayHelper::getValue($this->object, 'system_id');
+    }
+
+    public function getHandler($token, $meta = [])
+    {
+        $key = md5(serialize([$token, $meta]));
+        if (!isset($this->_handlers[$key])) {
+            $this->_handlers[$key] = false;
+            if (isset(Yii::$app->collectors['identityProviders']->handlers[$this->handler])) {
+                $handler = Yii::$app->collectors['identityProviders']->handlers[$this->handler];
+                $handler['config'] = $this->config;
+                $handler['token'] = $token;
+                $handler['meta'] = $meta;
+                $this->_handlers[$key] = Yii::createObject($handler);
+            }
+        }
+        return $this->_handlers[$key];
     }
 }
