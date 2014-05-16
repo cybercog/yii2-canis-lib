@@ -70,6 +70,7 @@ trait SearchTerm
             self::buildSearchQuery($localQuery, $localFields, $searchTerms);
             self::implementParams($localQuery, $params);
             $command = $localQuery->createCommand();
+            //echo "\n\n\n\n" . $localQuery->createCommand()->rawSql . "\n\n\n\n";
             $raw = $localQuery->all();
             foreach ($raw as $object) {
                 $localResult = self::createSearchResult($object, $localFields);
@@ -77,7 +78,12 @@ trait SearchTerm
                 $localResults[$object->primaryKey] = $localResult;
             }
         }
-        $results = self::mergeSearchResults($localResults, $foreignResults);
+        if (count($foreignResults) > $limit) {
+            ArrayHelper::multisort($foreignResults, ['score', 'object.descriptor', 'object.id'], [SORT_DESC, SORT_ASC, SORT_ASC], [SORT_NUMERIC, SORT_REGULAR, SORT_REGULAR]);
+            $results = self::mergeSearchResults($localResults, array_slice($foreignResults, 0, $limit));
+        } else {
+            $results = self::mergeSearchResults($localResults, $foreignResults);
+        }
         ArrayHelper::multisort($results, ['score', 'object.descriptor', 'object.id'], [SORT_DESC, SORT_ASC, SORT_ASC], [SORT_NUMERIC, SORT_REGULAR, SORT_REGULAR]);
 
         return $results;
