@@ -63,8 +63,8 @@ class Blame extends \infinite\db\behaviors\ActiveRecord
     public function events()
     {
         return [
-            \infinite\db\ActiveRecord::EVENT_BEFORE_INSERT => 'beforeSave',
-            \infinite\db\ActiveRecord::EVENT_BEFORE_UPDATE => 'beforeSave',
+            \infinite\db\ActiveRecord::EVENT_BEFORE_INSERT => 'beforeInsert',
+            \infinite\db\ActiveRecord::EVENT_BEFORE_UPDATE => 'beforeUpdate',
         ];
     }
 
@@ -90,22 +90,60 @@ class Blame extends \infinite\db\behaviors\ActiveRecord
         return self::$_fields[$ownerTable];
     }
 
+    public function isActuallyDirty()
+    {
+        $values = $this->owner->getDirtyAttributes();
+        if (isset($this->fields['modifiedField'])) {
+            unset($values[$this->fields['modifiedField']]);
+        }
+        if (isset($this->fields['modifiedByField'])) {
+            unset($values[$this->fields['modifiedByField']]);
+        }
+        if (isset($this->fields['createdField'])) {
+            unset($values[$this->fields['createdField']]);
+        }
+        if (isset($this->fields['createdByField'])) {
+            unset($values[$this->fields['createdByField']]);
+        }
+        return !empty($values);
+    }
     /**
      * __method_beforeSave_description__
      * @param __param_event_type__ $event __param_event_description__
      */
-    public function beforeSave($event)
+    public function beforeInsert($event)
     {
         $fields = $this->fields;
         $nowDate = date($this->databaseTimeFormat);
+        if (!$this->isActuallyDirty()) {
+            return;
+        }
 
-        if ($this->owner->isNewRecord) {
-            if (isset($this->fields['createdField']) && !$this->owner->isAttributeChanged($this->fields['createdField'])) {
-                $this->owner->{$this->fields['createdField']} = $nowDate;
-            }
-            if (isset($this->fields['createdByField']) && !$this->owner->isAttributeChanged($this->fields['createdByField'])) {
-                $this->owner->{$this->fields['createdByField']} = self::_getUserId();
-            }
+        if (isset($this->fields['createdField']) && !$this->owner->isAttributeChanged($this->fields['createdField'])) {
+            $this->owner->{$this->fields['createdField']} = $nowDate;
+        }
+        if (isset($this->fields['createdByField']) && !$this->owner->isAttributeChanged($this->fields['createdByField'])) {
+            $this->owner->{$this->fields['createdByField']} = self::_getUserId();
+        }
+
+        if (isset($this->fields['modifiedField']) && !$this->owner->isAttributeChanged($this->fields['modifiedField'])) {
+            $this->owner->{$this->fields['modifiedField']} = $nowDate;
+        }
+        if (isset($this->fields['modifiedByField']) && !$this->owner->isAttributeChanged($this->fields['modifiedByField'])) {
+            $this->owner->{$this->fields['modifiedByField']} = self::_getUserId();
+        }
+    }
+
+    /**
+     * __method_beforeSave_description__
+     * @param __param_event_type__ $event __param_event_description__
+     */
+    public function beforeUpdate($event)
+    {
+        $fields = $this->fields;
+        $nowDate = date($this->databaseTimeFormat);
+        if (!$this->isActuallyDirty()) {
+            return;
         }
 
         if (isset($this->fields['modifiedField']) && !$this->owner->isAttributeChanged($this->fields['modifiedField'])) {

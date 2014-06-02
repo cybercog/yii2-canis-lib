@@ -48,7 +48,7 @@ class Date extends \infinite\db\behaviors\ActiveRecord
             \infinite\db\ActiveRecord::EVENT_AFTER_VALIDATE=> '_toHumanErrorCheck',
             \infinite\db\ActiveRecord::EVENT_AFTER_UPDATE => '_toHuman',
             \infinite\db\ActiveRecord::EVENT_AFTER_INSERT => '_toHuman',
-            \infinite\db\ActiveRecord::EVENT_AFTER_FIND => '_toHuman',
+            // \infinite\db\ActiveRecord::EVENT_AFTER_FIND => '_toHuman',
             // \infinite\db\ActiveRecord::EVENT_AFTER_SAVE_FAIL => '_toHuman'
         ];
     }
@@ -61,7 +61,9 @@ class Date extends \infinite\db\behaviors\ActiveRecord
     public function _toDatabase($event)
     {
         foreach ($this->handle as $field => $format) {
-            $this->owner->{$field} = $this->_formatForDatabase($this->owner->{$field}, $format);
+            if ($this->owner->isAttributeChanged($field)) {
+                $this->owner->{$field} = $this->_formatForDatabase($this->owner->{$field}, $format);
+            }
         }
 
         return true;
@@ -102,7 +104,7 @@ class Date extends \infinite\db\behaviors\ActiveRecord
     {
         if (empty($field)) { $field = null; return $field; }
         if (empty($field) || in_array($field, ['0000-00-00', '00:00:00', '0000-00-00 00:00:00'])) {
-            $field = null;
+            return null;
         }
         switch ($format) {
             case 'date';
@@ -120,7 +122,7 @@ class Date extends \infinite\db\behaviors\ActiveRecord
             break;
         }
         if (empty($field)) {
-            $field = null;
+            return null;
         }
 
         return $field;
