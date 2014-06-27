@@ -93,9 +93,9 @@ class ActiveRecord extends \yii\db\ActiveRecord
     /**
     * @inheritdoc
      */
-    public function afterSave($insert)
+    public function afterSave($insert, $changedAttributes)
     {
-        $result = parent::afterSave($insert);
+        $result = parent::afterSave($insert, $changedAttributes);
         if (static::$groupCache && $this->wasDirty) {
             Cacher::invalidateGroup(self::cacheGroupKey());
         }

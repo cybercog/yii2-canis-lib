@@ -44,7 +44,8 @@ class Console extends \yii\helpers\Console
         if ($done > $total || $done == 0) {
             $info .= ' ETA: n/a';
         } elseif ($done < $total) {
-            $rate = (time() - self::$_progressStartSpecial) / $done;
+            $spent = max((time() - self::$_progressStartSpecial), 1);
+            $rate = $done / $spent;
             $info .= sprintf(' ETA: %d sec.', $rate * ($total - $done));
             $info .= sprintf(' Rate: %f/s', $rate);
         }
