@@ -98,4 +98,43 @@ class StringHelper extends \yii\helpers\StringHelper
 
         return trim(preg_replace(array_keys($replace), array_values($replace), $text));
     }
+
+    
+    public static function compareStrings($str1, $str2, $weights = [])
+    {
+        if ($str1 === $str2) {
+            return 100;
+        }
+        $score = 0;
+        $total = 0;
+
+        // set options
+        $defaultWeights = [
+            'similar_text' => 70,
+            'levenshtein' => 30
+        ];
+        $weights = array_merge($defaultWeights, $weights);
+
+        if (strlen($str2) > strlen($str1)) {
+            list($str1, $str2) = [$str2, $str1];
+        }
+        $maxLength = strlen($str1);
+
+        if (empty($maxLength)) {
+            return 100;
+        }
+
+        // calculate
+        similar_text($str1, $str2, $perc);
+        $score += (($perc / 100) * $weights['similar_text']);
+        $total += $weights['similar_text'];
+
+        if (strlen($str1) < 255 && strlen($str2) < 255) {
+            $levScore = ($maxLength - levenshtein($str1, $str2)) / $maxLength;
+            $score += ($levScore * $weights['levenshtein']);
+            $total += $weights['levenshtein'];
+        }
+
+        return ($score / $total) * 100;
+    }
 }

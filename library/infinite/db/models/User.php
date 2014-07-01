@@ -10,7 +10,6 @@ namespace infinite\db\models;
 use Yii;
 use infinite\db\ActiveRecord;
 use infinite\helpers\ArrayHelper;
-use yii\helpers\Security;
 use yii\web\IdentityInterface;
 
 /**
@@ -166,7 +165,7 @@ class User extends ActiveRecord implements IdentityInterface
             }
             return false;
         }
-        return Security::validatePassword($password, $this->password_hash);
+        return Yii::$app->security->validatePassword($password, $this->password_hash);
     }
 
     /**
@@ -291,10 +290,10 @@ class User extends ActiveRecord implements IdentityInterface
     {
         if (parent::beforeSave($insert)) {
             if (($this->isNewRecord || $this->getScenario() === 'resetPassword') && !empty($this->password)) {
-                $this->password_hash = Security::generatePasswordHash($this->password);
+                $this->password_hash = Yii::$app->security->generatePasswordHash($this->password);
             }
             if ($this->isNewRecord) {
-                $this->auth_key = Security::generateRandomKey();
+                $this->auth_key = Yii::$app->security->generateRandomKey();
             }
             //\d($this->_touchedIdentities);exit;
             foreach ($this->_touchedIdentities as $identity) {
