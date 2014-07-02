@@ -369,6 +369,9 @@ class ActiveRecord extends \yii\db\ActiveRecord
             if ($r) {
                 self::$_cache[$model][$key] = $r;
             } else {
+                if ($type === 'one') {
+                    return false;
+                }
                 return [];
             }
         }
