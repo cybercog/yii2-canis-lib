@@ -47,7 +47,7 @@ class Relation extends \infinite\db\ActiveRecord
     /**
      * @var __var__callCache_type__ __var__callCache_description__
      */
-    static $_callCache = [];
+    static $_modelRegistry = [];
     /**
      * @inheritdoc
      */
@@ -61,6 +61,40 @@ class Relation extends \infinite\db\ActiveRecord
         $this->on(self::EVENT_BEFORE_UPDATE, [$this, 'beforeUpdateRelation']);
         $this->on(self::EVENT_BEFORE_DELETE, [$this, 'beforeDeleteRelation']);
         $this->on(self::EVENT_AFTER_DELETE, [$this, 'afterDeleteRelation']);
+    }
+
+    public static function get($id, $checkAccess = false)
+    {
+        if (!isset(self::$_modelRegistry[$id])) {
+            self::$_modelRegistry[$id] = parent::get($id, false);
+        }
+        return self::$_modelRegistry[$id];
+    }
+
+    public static function registerModel($model)
+    {
+        if (!is_object($model)) {
+            $modelAttributes = $model;
+            $model = new static;
+            self::populateRecord($model, $modelAttributes);
+        }
+        if (!empty($model->primaryKey)) {
+            self::$_modelRegistry[$model->primaryKey] = $model;
+            return $model;
+        }
+        return false;
+    }
+
+    public static function getRegisterModel($model)
+    {
+        if (is_object($model)) {
+            return $model;
+        }
+        $actualModel = self::get($model['id']);
+        if (!$actualModel) {
+            return self::registerModel($model);
+        }
+        return $actualModel;
     }
 
     public function formName()

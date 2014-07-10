@@ -132,15 +132,35 @@ span.empty {
     text-shadow: none;
 }
 
-.list-group-item-heading,
+
+.list-group-item-heading {
+    font-size: 15px;
+    margin-bottom: 2px;
+}
 .list-group-item-text {
+    font-size: 14px;
+}
+
+.list-group-item-pre {
+    color: rgba(0,0,0,.6);
+    font-size: 13px;
+}
+
+.list-group-item.active .list-group-item-pre {
+    color: rgba(255,255,255,.8);
+}
+
+.list-group-item-heading,
+.list-group-item-text,
+.list-group-item-pre {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     display: block;
 }
 .expanded .list-group-item-heading,
-.expanded .list-group-item-text {
+.expanded .list-group-item-text,
+.expanded .list-group-item-pre {
     white-space: normal;
     overflow: visible;
     text-overflow: none;

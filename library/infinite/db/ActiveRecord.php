@@ -65,6 +65,8 @@ class ActiveRecord extends \yii\db\ActiveRecord
      */
     public static $groupCache = false;
 
+    protected $_specialFields = [];
+
     /**
      * @var __var__cache_type__ __var__cache_description__
      */
@@ -77,6 +79,53 @@ class ActiveRecord extends \yii\db\ActiveRecord
      * @event Event an event that is triggered after a failed save.
      */
     const EVENT_AFTER_SAVE_FAIL = 'afterSaveFail';
+
+
+    public function __get($name)
+    {
+        if (isset($this->_specialFields[$name])) {
+            return $this->_specialFields[$name];
+        } else {
+            return parent::__get($name);
+        }
+    }
+
+    public function __set($name, $value)
+    {
+        if (substr($name, 0, 2) === '__') {
+            // special field
+            $fieldParts = explode('*', substr($name, 2));
+            if (count($fieldParts) === 2) {
+                if (!isset($this->_specialFields[$fieldParts[0]])) {
+                    $this->_specialFields[$fieldParts[0]] = [];
+                }
+                $this->_specialFields[$fieldParts[0]][$fieldParts[1]] = $value; 
+            }
+        } elseif (isset($this->_specialFields[$name])) {
+            $this->_specialFields[$name] = $value;
+        } else {
+            parent::__set($name, $value);
+        }
+    }
+
+    public function __isset($name)
+    {
+        if (isset($this->_specialFields[$name])) {
+            return true;
+        } else {
+            return parent::__isset($name);
+        }
+    }
+
+    public function __unset($name)
+    {
+        if (isset($this->_specialFields[$name])) {
+            unset($this->_specialFields[$name]);
+        } else {
+            parent::__unset($name);
+        }
+    }
+
 
     /**
     * @inheritdoc

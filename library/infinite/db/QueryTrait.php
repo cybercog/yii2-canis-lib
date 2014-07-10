@@ -39,9 +39,15 @@ trait QueryTrait
             if (!isset($this->select)) {
                 $this->select = [];
             }
-            foreach ($this->ensureSelect as $select) {
-                if (!in_array($select, $this->select)) {
-                    $this->select[] = $select;
+            foreach ($this->ensureSelect as $key => $select) {
+                if (is_string($key)) {
+                    if (!isset($this->select[$key])) {
+                        $this->select[$key] = $select;
+                    }
+                } else {
+                    if (!in_array($select, $this->select)) {
+                        $this->select[] = $select;
+                    }
                 }
             }
         }
