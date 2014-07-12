@@ -18,6 +18,8 @@ class Row extends \infinite\base\Object
 {
     const TOTAL_COLUMNS = 12;
 
+    protected $_trueWidth;
+
     /**
      * @var __var_htmlOptions_type__ __var_htmlOptions_description__
      */
@@ -139,7 +141,7 @@ class Row extends \infinite\base\Object
      */
     public function isFilled()
     {
-        return $this->columnCount === self::TOTAL_COLUMNS;
+        return $this->columnCount === $this->trueWidth;
     }
 
     /**
@@ -164,7 +166,7 @@ class Row extends \infinite\base\Object
      */
     public function hasRoom($additional)
     {
-        if ($this->columnCount + $additional > self::TOTAL_COLUMNS) {
+        if ($this->columnCount + $additional > $this->trueWidth) {
             return false;
         }
 
@@ -182,7 +184,7 @@ class Row extends \infinite\base\Object
         if (!$check || $this->hasRoom($item->columns)) {
             $this->_cells[$item->id] = $item;
 
-            return true;
+            return $item;
         }
 
         return false;
@@ -212,5 +214,18 @@ class Row extends \infinite\base\Object
         foreach ($cells as $cell) {
             $this->addCell($cell, false);
         }
+    }
+
+    public function getTrueWidth()
+    {
+    	if (is_null($this->_trueWidth)) {
+    		return self::TOTAL_COLUMNS;
+    	}
+    	return $this->_trueWidth;
+    }
+
+    public function setTrueWidth($width)
+    {
+    	$this->_trueWidth = $width;
     }
 }

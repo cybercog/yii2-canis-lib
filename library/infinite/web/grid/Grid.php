@@ -8,6 +8,7 @@
 namespace infinite\web\grid;
 
 use Yii;
+use infinite\helpers\Html;
 
 /**
  * Grid [@doctodo write class description for Grid]
@@ -22,6 +23,10 @@ class Grid extends \infinite\base\Object
      */
     public $rowClass = 'infinite\web\grid\Row';
 
+    public $baseRow = [];
+    public $htmlOptions = ['class' => 'infinite-grid'];
+
+    protected $_id;
     /**
      * @var __var__prepended_type__ __var__prepended_description__
      */
@@ -54,6 +59,8 @@ class Grid extends \infinite\base\Object
     public function generate()
     {
         $items = [];
+        $this->htmlOptions['id'] = $this->id;
+        $items[] = Html::beginTag('div', $this->htmlOptions);
         foreach ($this->_prepended as $item) {
             $items[] = $item->generate();
         }
@@ -63,7 +70,7 @@ class Grid extends \infinite\base\Object
         foreach ($this->_appended as $item) {
             $items[] = $item->generate();
         }
-
+        $items[] = Html::endTag('div');
         return implode('', $items);
     }
 
@@ -93,7 +100,8 @@ class Grid extends \infinite\base\Object
     public function addRow($item)
     {
         if (is_array($item)) {
-            $item = Yii::createObject(['class' => $this->rowClass, 'cells' => $item]);;
+        	$item = array_merge($this->baseRow, ['class' => $this->rowClass, 'cells' => $item]);
+            $item = Yii::createObject($item);
         }
         $this->_rows[] = $item;
         $this->_currentRow = null;
@@ -139,10 +147,23 @@ class Grid extends \infinite\base\Object
             $this->_currentRow = null;
         }
         if (is_null($this->_currentRow)) {
-            $this->_currentRow = Yii::createObject(['class' => $this->rowClass]);
+            $this->_currentRow = Yii::createObject(array_merge(['class' => $this->rowClass], $this->baseRow));
             $this->_rows[] = $this->_currentRow;
         }
 
         return $this->_currentRow;
+    }
+
+    /**
+     * Get id
+     * @return __return_getId_type__ __return_getId_description__
+     */
+    public function getId()
+    {
+        if (is_null($this->_id)) {
+            $this->_id = md5(microtime() . mt_rand());
+        }
+
+        return $this->_id;
     }
 }

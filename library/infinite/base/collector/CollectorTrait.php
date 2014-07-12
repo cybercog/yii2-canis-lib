@@ -170,6 +170,11 @@ trait CollectorTrait
         if (isset($itemComponentObject)) {
             $item->object = $itemComponentObject->getCollectedObject($item);
         }
+        if (empty($item->systemId)) {
+        	\d($item);
+        	throw new \Exception("");
+
+        }
         if (isset($this->bucket[$item->systemId])) {
             $item = $this->mergeExistingItems($this->bucket[$item->systemId], $item);
         } else {
