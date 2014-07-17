@@ -10,7 +10,7 @@ namespace infinite\caching;
 use Yii;
 
 use yii\caching\ChainedDependency;
-use yii\caching\GroupDependency;
+use yii\caching\TagDependency;
 use yii\caching\DbDependency;
 
 /**
@@ -93,7 +93,7 @@ class Cacher extends \infinite\base\Component
     public static function set($key, $value, $expire = 0, $dependency = null)
     {
         $chain = [];
-        $chain[] = new GroupDependency(['group' => 'all']);
+        $chain[] = new TagDependency(['tags' => 'all']);
         if (!is_null($dependency)) {
             $chain[] = $dependency;
         }
@@ -132,12 +132,12 @@ class Cacher extends \infinite\base\Component
     {
         if (!is_null($category)) {
             $chain = [];
-            $chain[] = new GroupDependency(['group' => ['category', $category]]);
-            $chain[] = new GroupDependency(['group' => $group]);
+            $chain[] = new TagDependency(['tags' => ['category', $category]]);
+            $chain[] = new TagDependency(['tags' => $group]);
 
             return static::chainedDependency($chain);
         } else {
-            return new GroupDependency(['group' => $group]);
+            return new TagDependency(['tags' => $group]);
         }
     }
 
@@ -147,6 +147,6 @@ class Cacher extends \infinite\base\Component
      */
     public static function invalidateGroup($group)
     {
-        GroupDependency::invalidate(Yii::$app->cache, $group);
+        TagDependency::invalidate(Yii::$app->cache, $group);
     }
 }

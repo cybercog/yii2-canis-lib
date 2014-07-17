@@ -8,6 +8,7 @@
 namespace infinite\db\behaviors\auditable;
 
 use Yii;
+use yii\helpers\Url;
 
 /**
  * Event [@doctodo write class description for Event]
@@ -331,5 +332,37 @@ abstract class Event extends \infinite\base\Component
         $audit->event = serialize($this);
 
         return $audit->save();
+    }
+
+    public function getStory()
+    {
+        return '{{agent}} did something to {{directObject}}';
+    }
+
+    public function getPackage()
+    {
+        $package = ['story' => $this->story, 'variables' => []];
+        if ($this->indirectObject) {
+            $package['variables']['indirectObject'] = [
+                'descriptor' => $this->indirectObject->descriptor,
+                'url' => Url::to($this->indirectObject->getUrl('view'))
+            ];
+        }
+        if ($this->directObject) {
+            $package['variables']['directObject'] = [
+                'descriptor' => $this->directObject->descriptor,
+                'url' => Url::to($this->directObject->getUrl('view'))
+            ];
+        }
+        if ($this->agent) {
+            $package['variables']['agent'] = [
+                'descriptor' => $this->agent->descriptor,
+                'url' => false
+            ];
+            if (method_exists($this->agent, 'getUrl')) {
+                $package['variables']['agent']['url'] = Url::to($this->agent->getUrl('view'));
+            }
+        }
+        return $package;
     }
 }
