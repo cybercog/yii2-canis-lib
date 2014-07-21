@@ -106,9 +106,9 @@ class Cacher extends \infinite\base\Component
      * @param array $chain __param_chain_description__ [optional]
      * @return __return_chainedDependency_type__ __return_chainedDependency_description__
      */
-    public static function chainedDependency($chain = [])
+    public static function chainedDependency($chain = [], $reusable = true)
     {
-        return new ChainedDependency(['dependencies' => $chain]);
+        return new ChainedDependency(['dependencies' => $chain, 'reusable' => $reusable]);
     }
 
     /**
@@ -117,7 +117,7 @@ class Cacher extends \infinite\base\Component
      * @param boolean $reusable __param_reusable_description__ [optional]
      * @return __return_dbDependency_type__ __return_dbDependency_description__
      */
-    public static function dbDependency($sql, $reusable = false)
+    public static function dbDependency($sql, $reusable = true)
     {
         return new DbDependency(['reusable' => $reusable, 'sql' => $sql]);
     }
@@ -128,16 +128,16 @@ class Cacher extends \infinite\base\Component
      * @param __param_category_type__ $category __param_category_description__ [optional]
      * @return __return_groupDependency_type__ __return_groupDependency_description__
      */
-    public static function groupDependency($group, $category = null)
+    public static function groupDependency($group, $category = null, $reusable = true)
     {
         if (!is_null($category)) {
             $chain = [];
-            $chain[] = new TagDependency(['tags' => ['category', $category]]);
-            $chain[] = new TagDependency(['tags' => $group]);
+            $chain[] = new TagDependency(['tags' => ['category', $category], 'reusable' => $reusable]);
+            $chain[] = new TagDependency(['tags' => $group, 'reusable' => $reusable]);
 
             return static::chainedDependency($chain);
         } else {
-            return new TagDependency(['tags' => $group]);
+            return new TagDependency(['tags' => $group, 'reusable' => $reusable]);
         }
     }
 
