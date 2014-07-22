@@ -30,6 +30,7 @@ abstract class Event extends \infinite\base\Component
      * @var __var_handleHooksOnCreate_type__ __var_handleHooksOnCreate_description__
      */
     public $saveOnRegister = false;
+    public $model;
     /**
      * @var __var__exclusive_type__ __var__exclusive_description__
      */
@@ -62,6 +63,7 @@ abstract class Event extends \infinite\base\Component
      * @var __var__merged_type__ __var__merged_description__
      */
     protected $_merged = [];
+    protected $_timestamp;
 
     /**
      * Prepares object for serialization.
@@ -219,6 +221,16 @@ abstract class Event extends \infinite\base\Component
         return $this->_id;
     }
 
+    public function getTimestamp()
+    {
+        if (isset($this->_timetamp)) {
+            return $this->_timestamp;
+        }
+        if (isset($this->model)) {
+            return $this->_timestamp = strtotime($this->model->created);
+        }
+        return $this->_timestamp = time();
+    }
     /**
      * Get hash
      * @return __return_getHash_type__ __return_getHash_description__
@@ -341,28 +353,23 @@ abstract class Event extends \infinite\base\Component
 
     public function getPackage()
     {
-        $package = ['story' => $this->story, 'variables' => []];
+        $package = [ 'story' => $this->story, 'objects' => [], 'primaryObject' => null, 'timestamp' => $this->timestamp];
+        $replace = [];
         if ($this->indirectObject) {
-            $package['variables']['indirectObject'] = [
-                'descriptor' => $this->indirectObject->descriptor,
-                'url' => Url::to($this->indirectObject->getUrl('view'))
-            ];
+            $package['primaryObject'] = $this->indirectObject->primaryKey;
+            $package['objects']['indirectObject'] = $this->indirectObject;
+            $replace['{{indirectObject}}'] = '{{' . $this->indirectObject->primaryKey . '}}';
         }
         if ($this->directObject) {
-            $package['variables']['directObject'] = [
-                'descriptor' => $this->directObject->descriptor,
-                'url' => Url::to($this->directObject->getUrl('view'))
-            ];
+            $package['primaryObject'] = $this->directObject->primaryKey;
+            $package['objects']['directObject'] = $this->directObject;
+            $replace['{{directObject}}'] = '{{' . $this->directObject->primaryKey . '}}';
         }
         if ($this->agent) {
-            $package['variables']['agent'] = [
-                'descriptor' => $this->agent->descriptor,
-                'url' => false
-            ];
-            if (method_exists($this->agent, 'getUrl')) {
-                $package['variables']['agent']['url'] = Url::to($this->agent->getUrl('view'));
-            }
+            $package['objects']['agent'] = $this->agent;
+            $replace['{{agent}}'] = '{{' . $this->agent->primaryKey . '}}';
         }
+        $package['story'] = strtr($package['story'], $replace);
         return $package;
     }
 }

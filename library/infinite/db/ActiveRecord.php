@@ -16,6 +16,7 @@ use infinite\base\ModelTrait;
 use infinite\db\models\Relation;
 use infinite\db\models\Registry;
 use infinite\caching\Cacher;
+use yii\helpers\Url;
 
 /**
  * ActiveRecord is the model class for table "{{%active_record}}".
@@ -693,5 +694,17 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
             return false;
         }
+    }
+
+    public function getPackage($urlAction = 'view')
+    {
+        $p = [];
+        $p['id'] = $this->primaryKey;
+        $p['descriptor'] = $this->descriptor;
+        $p['url'] = false;
+        if (method_exists($this, 'getUrl')) {
+            $p['url'] = Url::to($this->getUrl($urlAction));
+        }
+        return $p;
     }
 }

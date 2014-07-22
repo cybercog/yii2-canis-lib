@@ -140,4 +140,14 @@ class Noun extends \infinite\base\language\Word
 
         return $this->prepare($this->_possessive_plural, $upper);
     }
+
+    public function getPackage($upper = true)
+    {
+        return [
+            'singular' => $this->getSingular($upper),
+            'plural' => $this->getPlural($upper),
+            'possessivePlural' => $this->getPossessivePlural($upper),
+            'possessive' => $this->getPossessive($upper)
+        ];
+    }
 }

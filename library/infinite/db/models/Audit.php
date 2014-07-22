@@ -104,7 +104,7 @@ class Audit extends \infinite\db\ActiveRecord
         } catch (\Exception $e) {
             $event = false;
         }
-
+        $event->model = $this;
         return $event;
     }
 
