@@ -358,12 +358,20 @@ abstract class Event extends \infinite\base\Component
         if ($this->indirectObject) {
             $package['primaryObject'] = $this->indirectObject->primaryKey;
             $package['objects']['indirectObject'] = $this->indirectObject;
-            $replace['{{indirectObject}}'] = '{{' . $this->indirectObject->primaryKey . '}}';
+            $keys = [$this->indirectObject->primaryKey];
+            if ($this->directObject) {
+                $keys[] = $this->directObject->primaryKey;
+            }
+            $replace['{{indirectObject}}'] = '{{' . implode(':', $keys) . '}}';
         }
         if ($this->directObject) {
             $package['primaryObject'] = $this->directObject->primaryKey;
             $package['objects']['directObject'] = $this->directObject;
-            $replace['{{directObject}}'] = '{{' . $this->directObject->primaryKey . '}}';
+            $keys = [$this->directObject->primaryKey];
+            if ($this->indirectObject) {
+                $keys[] = $this->indirectObject->primaryKey;
+            }
+            $replace['{{directObject}}'] = '{{' . implode(':', $keys) . '}}';
         }
         if ($this->agent) {
             $package['objects']['agent'] = $this->agent;

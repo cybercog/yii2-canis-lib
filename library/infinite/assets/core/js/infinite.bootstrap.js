@@ -1,4 +1,8 @@
 // match position and size
+jQuery.fn.outerHTML = function() {
+  return jQuery('<div />').append(this.eq(0).clone()).html();
+};
+
 jQuery.fn.extend({
 	matchPositionSize: function($base, minimums) {
 		return this.each(function() {
