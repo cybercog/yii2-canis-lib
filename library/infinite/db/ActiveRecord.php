@@ -204,6 +204,13 @@ class ActiveRecord extends \yii\db\ActiveRecord
         }
     }
 
+
+    public function getHumanType()
+    {
+        $reflector = new ReflectionClass(get_called_class());
+        return $reflector->getShortName(); 
+    }
+
     /**
      * Set tabular
      * @param __param_value_type__ $value __param_value_description__

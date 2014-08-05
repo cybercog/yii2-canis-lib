@@ -348,7 +348,25 @@ abstract class Event extends \infinite\base\Component
 
     public function getStory()
     {
-        return '{{agent}} did something to {{directObject}}';
+        return '{{agent}} '. $this->verb->past .' {{directObjectType}} {{directObject}}' . $this->indirectStory;
+    }
+
+    public function getIndirectStory()
+    {
+        if (empty($this->indirectObject) || !$this->indirectConnector) {
+            return '';
+        }
+        return ' '. $this->indirectConnector .' {{indirectObject}}';
+    }
+
+    public function getIndirectConnector()
+    {
+        return 'to';
+    }
+
+    public function getVerb()
+    {
+        return new \infinite\base\language\Verb('affect');
     }
 
     public function getPackage()
@@ -363,6 +381,7 @@ abstract class Event extends \infinite\base\Component
                 $keys[] = $this->directObject->primaryKey;
             }
             $replace['{{indirectObject}}'] = '{{' . implode(':', $keys) . '}}';
+            $replace['{{indirectObjectType}}'] = $this->indirectObject->getHumanType();
         }
         if ($this->directObject) {
             $package['primaryObject'] = $this->directObject->primaryKey;
@@ -372,6 +391,7 @@ abstract class Event extends \infinite\base\Component
                 $keys[] = $this->indirectObject->primaryKey;
             }
             $replace['{{directObject}}'] = '{{' . implode(':', $keys) . '}}';
+            $replace['{{directObjectType}}'] = $this->directObject->getHumanType();
         }
         if ($this->agent) {
             $package['objects']['agent'] = $this->agent;

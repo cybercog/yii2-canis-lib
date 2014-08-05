@@ -22,4 +22,12 @@ class InsertEvent extends AttributesEvent
      * @inheritdoc
      */
     public $attributes;
+
+    public function getVerb()
+    {
+    	if (isset($this->indirectObject)) {
+    		return new \infinite\base\language\Verb('add');
+    	}
+    	return new \infinite\base\language\Verb('create');
+    }
 }

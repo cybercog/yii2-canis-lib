@@ -34,7 +34,7 @@ class Verb extends \infinite\base\language\Word
      */
     public function __construct($base, $variants = [])
     {
-        $this->_base = strtolower($singular);
+        $this->_base = strtolower($base);
         foreach ($variants as $k => $v) {
             switch ($k) {
             case 'active':
@@ -87,7 +87,9 @@ class Verb extends \infinite\base\language\Word
             if (substr($this->_base, -1) === 'y') {
                 $this->_past = substr($this->_base, 0, -1) .'ied';
             } elseif ($this->isCVC($this->_base) and !in_array(substr($this->_base, -1), ['w', 'x', 'z'])) {
-                $this->_active = $this->_base . substr($this->_base, -1) . 'ed';
+                $this->_past = $this->_base . substr($this->_base, -1) . 'ed';
+            } elseif (in_array(substr($this->_base, -1), ['e'])) {
+                $this->_past = $this->_base . 'd';
             } else {
                 $this->_past = $this->_base .'ed';
             }
