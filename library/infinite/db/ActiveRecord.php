@@ -551,6 +551,16 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
 
+    public function hasIcon()
+    {
+        return false;
+    }
+    
+    public function getIcon()
+    {
+        return null;
+    }
+
     public function getPrimarySubdescriptor($context = null)
     {
         $subdescriptor = [];

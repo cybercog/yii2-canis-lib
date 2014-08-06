@@ -3,6 +3,17 @@ jQuery.fn.outerHTML = function() {
   return jQuery('<div />').append(this.eq(0).clone()).html();
 };
 
+jQuery.fn.isElementInViewport = function() {
+	if (!this.is(':visible')) { return false; }
+    var rect = this[0].getBoundingClientRect();
+    return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && /*or $(window).height() */
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth) /*or $(window).width() */
+    );
+}
+
 jQuery.fn.extend({
 	matchPositionSize: function($base, minimums) {
 		return this.each(function() {

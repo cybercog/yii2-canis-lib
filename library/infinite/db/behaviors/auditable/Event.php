@@ -371,32 +371,44 @@ abstract class Event extends \infinite\base\Component
 
     public function getPackage()
     {
-        $package = [ 'story' => $this->story, 'objects' => [], 'primaryObject' => null, 'timestamp' => $this->timestamp];
+        $package = ['key' => null, 'story' => $this->story, 'details' => null, 'objects' => [], 'primaryObject' => null, 'agent' => null, 'timestamp' => $this->timestamp];
+        $objectKeys = [get_class($this)];
         $replace = [];
         if ($this->indirectObject) {
             $package['primaryObject'] = $this->indirectObject->primaryKey;
             $package['objects']['indirectObject'] = $this->indirectObject;
             $keys = [$this->indirectObject->primaryKey];
+            $objectKeys[] = $this->indirectObject->primaryKey;
             if ($this->directObject) {
                 $keys[] = $this->directObject->primaryKey;
             }
             $replace['{{indirectObject}}'] = '{{' . implode(':', $keys) . '}}';
             $replace['{{indirectObjectType}}'] = $this->indirectObject->getHumanType();
+        } else {
+            $objectKeys[] = null;
         }
         if ($this->directObject) {
             $package['primaryObject'] = $this->directObject->primaryKey;
             $package['objects']['directObject'] = $this->directObject;
             $keys = [$this->directObject->primaryKey];
+            $objectKeys[] = $this->directObject->primaryKey;
             if ($this->indirectObject) {
                 $keys[] = $this->indirectObject->primaryKey;
             }
             $replace['{{directObject}}'] = '{{' . implode(':', $keys) . '}}';
             $replace['{{directObjectType}}'] = $this->directObject->getHumanType();
+        } else {
+            $objectKeys[] = null;
         }
         if ($this->agent) {
+            $package['agent'] = $this->agent->primaryKey;
             $package['objects']['agent'] = $this->agent;
+            $objectKeys[] = $this->agent->primaryKey;
             $replace['{{agent}}'] = '{{' . $this->agent->primaryKey . '}}';
+        } else {
+            $objectKeys[] = null;
         }
+        $package['key'] = md5(serialize($objectKeys));
         $package['story'] = strtr($package['story'], $replace);
         return $package;
     }
