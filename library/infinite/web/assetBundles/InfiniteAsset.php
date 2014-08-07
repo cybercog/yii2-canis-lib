@@ -33,6 +33,7 @@ class InfiniteAsset extends AssetBundle
         'js/infinite.ajax.instructions.js',
         'js/infinite.ajax.js',
         'js/infinite.smart.js',
+        'js/infinite.smartLine.js',
         'js/infinite.expandable.js'
     ];
     /**

@@ -277,10 +277,26 @@ div.required label:after {
     cursor: pointer;
 }
 
-.expanded-only {
+.expanded-only,
+.expanded-only-inline {
     display: none;
 }
 
 .expanded .expanded-only {
     display: block;
+}
+.expanded .expanded-only-inline {
+    display: inline;
+}
+.expanded .not-expanded-only {
+    display: none;
+}
+
+.smart-line {
+    white-space:nowrap;
+    overflow: hidden;
+}
+.expanded .smart-line {
+    overflow: visible;
+    white-space: normal;
 }

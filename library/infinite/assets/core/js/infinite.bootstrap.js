@@ -2,7 +2,10 @@
 jQuery.fn.outerHTML = function() {
   return jQuery('<div />').append(this.eq(0).clone()).html();
 };
-
+jQuery.fn.overflown = function(){
+	var e=this[0];
+	return e.scrollHeight>e.clientHeight||e.scrollWidth>e.clientWidth;
+}
 jQuery.fn.isElementInViewport = function() {
 	if (!this.is(':visible')) { return false; }
     var rect = this[0].getBoundingClientRect();
