@@ -36,6 +36,8 @@ class ActiveRecord extends \yii\db\ActiveRecord
      * @var __var_descriptorField_type__ __var_descriptorField_description__
      */
     public $descriptorField;
+    public $shortDescriptorField = false;
+    public $shortDescriptorLength = 100;
     /**
      * @var __var__wasDirty_type__ __var__wasDirty_description__
      */
@@ -527,18 +529,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     public function getDescriptor()
     {
         if (isset($this->descriptorField)) {
-            if (is_array($this->descriptorField)) {
-                $descriptor = [];
-                foreach ($this->descriptorField as $field) {
-                    if (!empty($this->{$field})) {
-                        $descriptor[] = $this->{$field};
-                    }
-                }
-
-                return implode(' ', $descriptor);
-            } else {
-                return $this->{$this->descriptorField};
-            }
+            return $this->parseDescriptorField($this->descriptorField);
         }
         $try = ['name', 'title', 'created'];
         foreach ($try as $t) {
@@ -550,6 +541,36 @@ class ActiveRecord extends \yii\db\ActiveRecord
         return false;
     }
 
+    protected function parseDescriptorField($config)
+    {
+        if (is_array($config)) {
+            $descriptor = [];
+            foreach ($config as $field) {
+                if (!empty($this->{$field})) {
+                    $descriptor[] = $this->{$field};
+                }
+            }
+
+            return implode(' ', $descriptor);
+        } else {
+            return $this->{$config};
+        }
+    }
+
+    public function getShortDescriptor()
+    {
+        if ($this->shortDescriptorField === false) {
+            $value = $this->descriptor;
+        } else {
+            $value = $this->parseDescriptorField($this->shortDescriptorField);
+        }
+        if ($this->shortDescriptorLength) {
+            if (strlen($value) > $this->shortDescriptorLength) {
+                $value = substr($value, 0, $this->shortDescriptorLength) . '…';
+            }
+        }
+        return $value;
+    }
 
     public function hasIcon()
     {

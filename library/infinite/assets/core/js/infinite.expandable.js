@@ -24,7 +24,7 @@ jQuery.fn.checkExpandable = function() {
 	}
 
 	$(this).click(function(e) {
-		if ($(e.target).is('a') || $(e.target).is('button')) {
+		if ($(e.target).is('a') || $(e.target).is('input') || $(e.target).is('button')) {
 			return;
 		}
 		if ($(this).is(':animated')) {

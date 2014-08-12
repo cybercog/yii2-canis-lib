@@ -14,6 +14,7 @@ namespace infinite\db;
  */
 class Migration extends \yii\db\Migration
 {
+    use \infinite\base\ObjectTrait;
     /**
      * Builds and executes a SQL statement for dropping a DB table.
      * @param string $table the table to be dropped. The name will be properly quoted by the method.

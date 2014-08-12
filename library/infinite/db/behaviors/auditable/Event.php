@@ -18,6 +18,7 @@ use yii\helpers\Url;
 abstract class Event extends \infinite\base\Component
 {
     const EVENT_AUDIT_HOOK = 'auditHook';
+    const EVENT_BEFORE_MODEL_SAVE= 'beforeModelSave';
     /**
      * @var __var_mergeWith_type__ __var_mergeWith_description__
      */
@@ -338,6 +339,7 @@ abstract class Event extends \infinite\base\Component
         $audit->indirect_object_id = $this->indirectObjectId;
         $audit->event_id = $this->id;
         $audit->hooks_handled = 0;
+        $this->trigger(self::EVENT_BEFORE_MODEL_SAVE, new EventEvent(['model' => $audit]));
         if ($this->handleHooksOnCreate && $this->handleHooks()) {
             $audit->hooks_handled = 1;
         }

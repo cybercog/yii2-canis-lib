@@ -18,8 +18,7 @@ use infinite\base\exceptions\Exception;
 class MigrateController extends \yii\console\controllers\MigrateController
 {
     /**
-     * @var array the directories storing the migration classes. This can contain either
-a path alias or a directory.
+     * @var array the directories storing the migration classes. This can contain either a path alias or a directory.
      */
     public $migrationPaths = [];
 
@@ -72,15 +71,15 @@ a path alias or a directory.
                 if (preg_match('/^(m(\d{6}_\d{6})_.*?)\.php$/',$file,$matches) AND is_file($path)) {
                     $migrationClassName = str_replace('/', '\\', substr($migrationPathAlias, 1)) .'\\'.  $matches[1];
                     if (!isset($applied[$migrationClassName])) {
-                        $migrations[] = $migrationClassName;
+                        $key = $migrationClassName::baseClassName() .'-'. md5($migrationClassName);
+                        $migrations[$key] = $migrationClassName;
                         $this->migrationsMap[$migrationClassName] = $path;
                     }
                 }
             }
             closedir($handle);
         }
-        sort($migrations);
-
+        ksort($migrations);
         return $migrations;
     }
 }

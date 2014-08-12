@@ -140,6 +140,16 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
         return $this->owner;
     }
 
+    public function behaviors()
+    {
+        return [];
+    }
+
+    public function prepareEventObject($event)
+    {
+        return $event;
+    }
+
     /**
      * __method_registerAuditEvent_description__
      * @param __param_event_type__ $event __param_event_description__
@@ -157,6 +167,8 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
             }
             $event = Yii::createObject($event);
         }
+        $event->attachBehaviors($this->behaviors());
+        $this->prepareEventObject($event);
         if (!($event instanceof Event)) {
             throw new InvalidConfigException("Invalid audit event thrown");
         }
