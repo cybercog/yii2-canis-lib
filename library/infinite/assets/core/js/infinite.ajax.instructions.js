@@ -38,6 +38,14 @@ function InfiniteInstructionHandler (instructions, ajaxEvent, ajaxOptions) {
 	if (instructions.data !== undefined) {
 		this.data = instructions.data;
 	}
+
+	if (instructions.pauseTimer !== undefined) {
+		if (instructions.pauseTimer) {
+			timer.pause();
+		} else {
+			timer.resume();
+		}
+	}
 }
 
 InfiniteInstructionHandler.prototype.staticPostTasks = ['status', 'trigger'];

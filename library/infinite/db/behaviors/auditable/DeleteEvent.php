@@ -28,11 +28,26 @@ class DeleteEvent extends AttributesEvent
      */
     protected $_id = 'delete';
 
+    public function getVerb()
+    {
+        return new \infinite\base\language\Verb('delete');
+    }
+
     /**
     * @inheritdoc
      */
     public function setDirectObject($object)
     {
         $this->descriptor = $object->descriptor;
+    }
+
+    public function getIndirectConnector()
+    {
+        return 'from';
+    }
+
+    public function getStory()
+    {
+        return '{{agent}} '. $this->verb->past .' [['. $this->descriptor .']]' . $this->indirectStory;
     }
 }

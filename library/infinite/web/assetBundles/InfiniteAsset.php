@@ -34,7 +34,8 @@ class InfiniteAsset extends AssetBundle
         'js/infinite.ajax.js',
         'js/infinite.smart.js',
         'js/infinite.smartLine.js',
-        'js/infinite.expandable.js'
+        'js/infinite.expandable.js',
+        'js/infinite.timing.js'
     ];
     /**
      * @inheritdoc

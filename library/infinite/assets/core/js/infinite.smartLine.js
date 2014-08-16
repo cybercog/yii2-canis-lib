@@ -19,9 +19,17 @@ SmartLine.prototype.getLargestLimitable = function() {
 	var largest = false;
 	var largestSize = 0;
 	jQuery.each(this.getLimitables(), function(index, limitable) {
-		if ($(limitable).html().length > largestSize) {
-			largest = limitable;
-			largestSize = $(limitable).html().length;
+		var currentLimitable = $(limitable).find('.limitable-current');
+		if (currentLimitable.length > 0) {
+			if ($(currentLimitable).html().length > largestSize) {
+				largest = limitable;
+				largestSize = $(limitable).html().length;
+			}
+		} else {
+			if ($(limitable).html().length > largestSize) {
+				largest = limitable;
+				largestSize = $(limitable).html().length;
+			}
 		}
 	});
 	return largest;
@@ -48,7 +56,7 @@ SmartLine.prototype.updateLine = function() {
 
 		$(largest).data('limitable-current-cut', cut);
 		$(largest).html('');
-		$("<span />", {'class': ''}).html(original.substr(0, cut)).appendTo($(largest));
+		$("<span />", {'class': 'limitable-current'}).html(original.substr(0, cut)).appendTo($(largest));
 		$("<span />", {'class': 'not-expanded-only'}).html("&hellip;").appendTo($(largest));
 		$("<span />", {'class': 'expanded-only-inline'}).html(original.substr(cut)).appendTo($(largest));
 

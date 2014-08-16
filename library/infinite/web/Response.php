@@ -135,8 +135,8 @@ class Response extends \yii\web\Response
         if (is_array($this->data)) {
             return $this->data;
         }
-
         $i = $this->baseInstructions;
+
         $keepProcessing = true;
 
         // high priority tasks
@@ -152,10 +152,18 @@ class Response extends \yii\web\Response
         if (!$keepProcessing) {
             // @todo set status flashes
             $this->handleFlashStatus();
-
             return $i;
         }
-
+        if (!in_array($this->getStatusCode(), [302])) {
+            $delayedInstructions = json_decode(Yii::$app->session->getFlash('delayed-instructions', json_encode([])), true);
+            //var_dump($delayedInstructions);exit;
+            if (is_array($delayedInstructions)) {
+                $i = array_merge($i, $delayedInstructions);
+            } else {
+                var_dump($delayedInstructions);
+            }
+        }
+            
         if (!empty($this->trigger)) {
             $i['trigger'] = $this->trigger;
         }
@@ -178,7 +186,6 @@ class Response extends \yii\web\Response
                 throw new Exception("Invalid response task {$task}!");
             }
         }
-
         return $i;
     }
 

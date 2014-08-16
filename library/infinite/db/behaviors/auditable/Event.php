@@ -32,6 +32,7 @@ abstract class Event extends \infinite\base\Component
      */
     public $saveOnRegister = false;
     public $model;
+    public $context = false;
     /**
      * @var __var__exclusive_type__ __var__exclusive_description__
      */
@@ -224,14 +225,26 @@ abstract class Event extends \infinite\base\Component
 
     public function getTimestamp()
     {
-        if (isset($this->_timetamp)) {
+        if (isset($this->_timestamp)) {
             return $this->_timestamp;
         }
-        if (isset($this->model)) {
-            return $this->_timestamp = strtotime($this->model->created);
+        if (isset($this->model) && isset($this->model->created)) {
+            return strtotime($this->model->created);
         }
-        return $this->_timestamp = time();
+        return time();
     }
+
+    public function setTimestamp($timestamp)
+    {
+        if (empty($timestamp)) {
+            $timestamp = time();
+        }
+        if (!is_numeric($timestamp)) {
+            $timestamp = strtotime($timestamp);
+        }
+        $this->_timestamp = $timestamp;
+    }
+
     /**
      * Get hash
      * @return __return_getHash_type__ __return_getHash_description__
@@ -339,13 +352,16 @@ abstract class Event extends \infinite\base\Component
         $audit->indirect_object_id = $this->indirectObjectId;
         $audit->event_id = $this->id;
         $audit->hooks_handled = 0;
+        $audit->created = date("Y-m-d G:i:s", $this->timestamp);
         $this->trigger(self::EVENT_BEFORE_MODEL_SAVE, new EventEvent(['model' => $audit]));
         if ($this->handleHooksOnCreate && $this->handleHooks()) {
             $audit->hooks_handled = 1;
         }
         $audit->event = serialize($this);
-
-        return $audit->save();
+        if (!$audit->save()) {
+            return false;
+        }
+        return $audit;
     }
 
     public function getStory()
@@ -356,6 +372,10 @@ abstract class Event extends \infinite\base\Component
     public function getIndirectStory()
     {
         if (empty($this->indirectObject) || !$this->indirectConnector) {
+            return '';
+        }
+
+        if ($this->context && $this->context === $this->indirectObject->primaryKey) {
             return '';
         }
         return ' '. $this->indirectConnector .' {{indirectObject}}';

@@ -69,6 +69,7 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
      * @var object Entity that is making the changes
      */
     protected $_auditAgent;
+    protected $_auditTimestamp;
     /**
      * @var array Tracking of event logs
      */
@@ -116,7 +117,7 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     */
     public function safeAttributes()
     {
-        return ['directObject', 'indirectObject', 'auditAgent'];
+        return ['directObject', 'indirectObject', 'auditAgent', 'auditTimestamp'];
     }
 
     /**
@@ -178,7 +179,9 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
             }
             $this->_auditEvents[$event->id] = $event;
             if ($event->saveOnRegister) {
-                $event->save();
+                if (!$event->save()) {
+                    return false;
+                }
             }
             return $event;
         }
@@ -243,13 +246,32 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * Set audit agent
+     * @param __param_object_type__ $object __param_object_description__
+     */
+    public function setAuditTimestamp($audit)
+    {
+        $this->_auditTimestamp = $audit;
+    }
+
+    public function getAuditTimestamp()
+    {
+        return $this->_auditTimestamp;
+    }
+
+    /**
      * Get audit agent
      * @return __return_getAuditAgent_type__ __return_getAuditAgent_description__
      */
     public function getAuditAgent()
     {
-        if (is_null($this->_auditAgent) && isset(Yii::$app->user)) {
-            $this->_auditAgent = Yii::$app->user->identity;
+        if (is_null($this->_auditAgent)) {
+            if (isset(Yii::$app->user)) {
+                $this->_auditAgent = Yii::$app->user->identity;
+            } else {
+                $userClass = Yii::$app->classes['User'];
+                $this->_auditAgent = $userClass::systemUser();
+            }
         }
 
         return $this->_auditAgent;
@@ -327,6 +349,7 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
                 'directObject' => $this->directObject,
                 'indirectObject' => $this->indirectObject,
                 'attributes' => $this->auditDirtyAttributes,
+                'timestamp' => $this->auditTimestamp,
                 'agent' => $this->auditAgent
             ]);
         }
@@ -352,6 +375,7 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
                 'directObject' => $this->directObject,
                 'indirectObject' => $this->indirectObject,
                 'attributes' => $this->auditDirtyAttributes,
+                'timestamp' => $this->auditTimestamp,
                 'agent' => $this->auditAgent
             ]);
         }
@@ -392,6 +416,7 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
                 'directObject' => $this->directObject,
                 'indirectObject' => $this->indirectObject,
                 'attributes' => $this->auditDirtyAttributes,
+                'timestamp' => $this->auditTimestamp,
                 'agent' => $this->auditAgent
             ]);
         }
@@ -434,6 +459,8 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
             if (self::$_auditMute === $this) {
                 return true;
             } else {
+                \d($this);
+                echo "MUTED";exit;
                 return false;
             }
         }

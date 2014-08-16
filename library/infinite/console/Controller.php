@@ -18,6 +18,14 @@ use yii\helpers\Console;
  */
 class Controller extends \yii\console\Controller
 {
+    public $started = false;
+    public function runAction($id, $params = [])
+    {
+        $this->on(self::EVENT_BEFORE_ACTION, function($event) {
+            $event->sender->started = true;
+        });
+        return parent::runAction($id, $params);
+    }
     /**
      * __method_hr_description__
      */
