@@ -83,4 +83,9 @@ class RelationEvent extends AttributesEvent
         }
         return $this->_relationObject;
     }
+    
+    public function getIndirectConnector()
+    {
+        return 'and';
+    }
 }

@@ -74,7 +74,7 @@ abstract class Event extends \infinite\base\Component
     public function __sleep()
     {
         $keys = array_keys((array) $this);
-        $bad = ["\0*\0_tmp"];
+        $bad = ["\0*\0_tmp", "\0*\0_id", "handleHooksOnCreate", "saveOnRegister", "\0yii\\base\\Component\0_events", "\0yii\\base\\Component\0_behaviors", "\0*\0_memoryId", "\0*\0_backtrace", "watch"];
         $deobject = ["\0*\0_directObject" => '_directObject', "\0*\0_indirectObject" => '_indirectObject', "\0*\0_agent" => '_agent'];
         foreach ($keys as $k => $key) {
             if (in_array($key, $bad)) {
@@ -83,7 +83,6 @@ abstract class Event extends \infinite\base\Component
                 $this->{$key} = $this->{$key}->primaryKey;
             }
         }
-
         return $keys;
     }
 

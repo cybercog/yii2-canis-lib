@@ -24,7 +24,7 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     /**
      * @var string Audit insert event class 
      */
-    public $insertEventClass = 'infinite\\db\\behaviors\\auditable\\InsertEvent';
+    public $createEventClass = 'infinite\\db\\behaviors\\auditable\\CreateEvent';
     /**
      * @var string Audit uodate event class 
      */
@@ -371,7 +371,7 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
         if (!$this->owner->isAuditEnabled()) { return true; }
         if ($this->owner->enableSaveLog && !empty($this->auditDirtyAttributes)) {
             $this->registerAuditEvent([
-                'class' => $this->insertEventClass,
+                'class' => $this->createEventClass,
                 'directObject' => $this->directObject,
                 'indirectObject' => $this->indirectObject,
                 'attributes' => $this->auditDirtyAttributes,
@@ -459,8 +459,6 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
             if (self::$_auditMute === $this) {
                 return true;
             } else {
-                \d($this);
-                echo "MUTED";exit;
                 return false;
             }
         }

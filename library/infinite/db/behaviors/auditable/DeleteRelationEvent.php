@@ -22,4 +22,19 @@ class DeleteRelationEvent extends RelationEvent
      * @inheritdoc
      */
     protected $_id = 'delete_relation';
+
+    public function getVerb()
+    {
+    	return new \infinite\base\language\Verb('disassociate');
+    }
+
+    public function getStory()
+    {
+        return '{{agent}} '. $this->verb->past .' {{directObjectType}} {{directObject}}' . $this->indirectStory;
+    }
+
+    public function getIndirectConnector()
+    {
+        return 'and';
+    }
 }

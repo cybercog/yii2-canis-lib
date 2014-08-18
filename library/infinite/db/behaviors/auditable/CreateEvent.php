@@ -12,12 +12,12 @@ namespace infinite\db\behaviors\auditable;
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class InsertEvent extends AttributesEvent
+class CreateEvent extends AttributesEvent
 {
     /**
      * @inheritdoc
      */
-    protected $_id = 'insert';
+    protected $_id = 'create';
     /**
      * @inheritdoc
      */

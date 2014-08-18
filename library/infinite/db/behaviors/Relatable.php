@@ -24,7 +24,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     /**
      * @var string Audit event class for relation class
      */
-    public $createRelationAuditEventClass = 'infinite\\db\\behaviors\\auditable\\RelationEvent';
+    public $createRelationAuditEventClass = 'infinite\\db\\behaviors\\auditable\\CreateRelationEvent';
     /**
      * @var string Audit event class for relation class
      */
