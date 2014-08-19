@@ -129,7 +129,13 @@ class ActiveRecord extends \yii\db\ActiveRecord
         }
     }
 
-
+    public function canSetProperty($name, $checkVars = true, $checkBehaviors = true)
+    {
+        if (substr($name, 0, 2) === '__') {
+            return true;
+        }
+        return parent::canSetProperty($name, $checkVars, $checkBehaviors);
+    }
     /**
     * @inheritdoc
      */
@@ -140,6 +146,11 @@ class ActiveRecord extends \yii\db\ActiveRecord
         }
 
         return parent::beforeSave($insert);
+    }
+
+    public function getSpecialFields()
+    {
+        return $this->_specialFields;
     }
 
     /**
