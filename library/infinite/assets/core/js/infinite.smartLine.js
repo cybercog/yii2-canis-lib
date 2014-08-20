@@ -1,3 +1,4 @@
+var SmartLineQueue = $({});
 function SmartLine($element, options) {
 	this.$element = $element;
 	this.options = options;
@@ -36,8 +37,15 @@ SmartLine.prototype.getLargestLimitable = function() {
 };
 
 SmartLine.prototype.updateLine = function() {
+	console.log("update line");
 	var limitables = this.getLimitables();
-	var loopsLeft = this.$element.html().length; 
+	var loopsLeft = this.$element.html().length;
+	jQuery.each(this.getLimitables(), function(index, value) {
+		if ($(this).data('limitable-original')) {
+			$(this).data('limitable-current-cut', $(this).data('limitable-original').length);
+			$(this).html($(this).data('limitable-original'));
+		}
+	});
 	while (loopsLeft > 0 && limitables.length > 0 && this.$element.overflown()) {
 		loopsLeft--;
 		var largest = this.getLargestLimitable();
@@ -86,5 +94,15 @@ $preparer.add(function(context) {
 });
 
 $(window).on("resizeDone", function() {
-	$(".smart-line, [data-smart-line]").trigger('updateLine');
+	timer.setTimeout("smart-line-update", function() {
+		SmartLineQueue.stop(true, false);
+		console.log(['resize', $(".smart-line, [data-smart-line]").length]);
+		$(".smart-line, [data-smart-line]").each(function() {
+			var self = this;
+			SmartLineQueue.queue(function(next) {
+				$(self).trigger('updateLine');
+				next();
+			}).delay(100);
+		});
+	}, 2000, true);
 });

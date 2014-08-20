@@ -28,6 +28,7 @@ class UpdateEvent extends RelationEvent
     {
     	return new \infinite\base\language\Verb('update');
     }
+    
     public function getIndirectConnector()
     {
         return 'in';

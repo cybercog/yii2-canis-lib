@@ -22,4 +22,14 @@ class EndRelationEvent extends RelationEvent
      * @inheritdoc
      */
     protected $_id = 'end_relation';
+
+    public function getVerb()
+    {
+    	return new \infinite\base\language\Verb('end');
+    }
+
+    public function getStory()
+    {
+        return '{{agent}} '. $this->verb->past .' link with {{directObject}}' . $this->indirectStory;
+    }
 }

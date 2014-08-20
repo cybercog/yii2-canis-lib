@@ -12,7 +12,7 @@ namespace infinite\db\behaviors\auditable;
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class UpdateRelationEvent extends AttributesEvent
+class UpdateRelationEvent extends RelationEvent
 {
     /**
      * @inheritdoc
@@ -22,4 +22,14 @@ class UpdateRelationEvent extends AttributesEvent
      * @inheritdoc
      */
     protected $_id = 'update_relation';
+
+    public function getVerb()
+    {
+    	return new \infinite\base\language\Verb('update');
+    }
+
+    public function getStory()
+    {
+        return '{{agent}} '. $this->verb->past .' link with {{directObject}}' . $this->indirectStory;
+    }
 }

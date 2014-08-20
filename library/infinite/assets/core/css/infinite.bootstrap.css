@@ -296,7 +296,29 @@ div.required label:after {
     white-space:nowrap;
     overflow: hidden;
 }
+
+.smart-double-line {
+    white-space: normal;
+    max-height: 3em;
+    overflow: hidden;
+}
+
 .expanded .smart-line {
     overflow: visible;
     white-space: normal;
+    max-height: none;
+}
+
+
+@media (max-width: 400px) {
+    .smart-double-line {
+        white-space: normal;
+        max-height: 6em;
+        overflow: hidden;
+    }
+}
+
+@media (min-width: 992px) {
+}
+@media (max-width: 1200px) {
 }

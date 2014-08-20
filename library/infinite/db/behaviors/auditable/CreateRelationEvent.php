@@ -21,6 +21,6 @@ class CreateRelationEvent extends RelationEvent
 
     public function getVerb()
     {
-    	return new \infinite\base\language\Verb('associate');
+    	return new \infinite\base\language\Verb('link');
     }
 }

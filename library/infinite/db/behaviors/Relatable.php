@@ -73,6 +73,9 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
      * @var __var_registryAlias_type__ __var_registryAlias_description__
      */
     public $registryAlias = 'x';
+
+    public $skipUpdateEvent = false;
+
     /**
      * @var __var__relationModels_type__ __var__relationModels_description__
      */
@@ -494,12 +497,14 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
         if (!isset($base['class'])) {
             $base['class'] = $this->endRelationAuditEventClass;
         }
+        $this->owner->skipUpdateEvent = true;
         return $this->registerRelationAuditEvent($model, $base);
     }
 
     public function registerUpdateRelationAuditEvent($model, $base = [])
     {
         if ($this->owner->getBehavior('Auditable') === null) { return false; }
+        if ($this->owner->skipUpdateEvent) { return false; }
         $parentObject = $model->getParentObject(false);
         $childObject = $model->getChildObject(false);
         if (!isset($base['class'])) {
@@ -513,8 +518,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
         if ($this->owner->getBehavior('Auditable') === null) { return false; }
         $parentObject = $model->getParentObject(false);
         $childObject = $model->getChildObject(false);
-        if (!$model->isNewRecord ||
-            empty($parentObject) || $parentObject->isNewRecord 
+        if (empty($parentObject) || $parentObject->isNewRecord 
             || empty($childObject) || $childObject->isNewRecord) {
             return false;
         }

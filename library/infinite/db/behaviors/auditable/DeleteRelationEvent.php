@@ -25,13 +25,9 @@ class DeleteRelationEvent extends RelationEvent
 
     public function getVerb()
     {
-    	return new \infinite\base\language\Verb('disassociate');
+    	return new \infinite\base\language\Verb('unlink');
     }
 
-    public function getStory()
-    {
-        return '{{agent}} '. $this->verb->past .' {{directObjectType}} {{directObject}}' . $this->indirectStory;
-    }
 
     public function getIndirectConnector()
     {

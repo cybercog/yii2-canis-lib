@@ -56,6 +56,7 @@ class Relation extends \infinite\db\ActiveRecord
         parent::init();
         $this->on(self::EVENT_BEFORE_VALIDATE, [$this, 'beforeValidateRelation']);
         $this->on(self::EVENT_AFTER_INSERT, [$this, 'afterSaveRelation']);
+        $this->on(self::EVENT_AFTER_INSERT, [$this, 'afterInsertRelation']);
         $this->on(self::EVENT_AFTER_UPDATE, [$this, 'afterSaveRelation']);
         $this->on(self::EVENT_AFTER_UPDATE, [$this, 'afterUpdateRelation']);
         $this->on(self::EVENT_BEFORE_UPDATE, [$this, 'beforeUpdateRelation']);
@@ -159,6 +160,17 @@ class Relation extends \infinite\db\ActiveRecord
         return true;
     }
 
+
+    public function afterInsertRelation($event)
+    {
+        if ($this->_enableAuditLogging) {
+            $parentObject = $this->parentObject;
+            if (!empty($parentObject) && $parentObject->getBehavior('Relatable') !== null) {
+                $parentObject->registerCreateRelationAuditEvent($this);
+            }
+        }
+    }
+
     /**
      * __method_afterSaveRelation_description__
      * @param __param_event_type__ $event __param_event_description__
@@ -197,6 +209,13 @@ class Relation extends \infinite\db\ActiveRecord
             $dependency->childRelation->attributes = $dirty;
             if (!$dependency->childRelation->save()) {
                 $event->handled = false;
+            }
+        }
+        
+        if ($this->_enableAuditLogging) {
+            $parentObject = $this->parentObject;
+            if (!empty($parentObject) && $parentObject->getBehavior('Relatable') !== null) {
+                $parentObject->registerUpdateRelationAuditEvent($this);
             }
         }
         return true;

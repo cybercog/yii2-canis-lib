@@ -14,33 +14,46 @@ TimerEngine.prototype.resume = function() {
 	return true;
 };
 
-TimerEngine.prototype.setInterval = function(id, func, interval) {
+TimerEngine.prototype.setInterval = function(id, func, interval, ignorePause) {
 	this.clear(id);
-
+	if (ignorePause === undefined) {
+		ignorePause = false;
+	}
 	return this.registry[id] = {
 		type: 'interval',
 		timer: setInterval(this.wrap(id, func), interval),
-		paused: false
+		paused: false,
+		ignorePause: ignorePause
 	};
 };
 
-TimerEngine.prototype.setTimeout = function(id, func, delay) {
+TimerEngine.prototype.setTimeout = function(id, func, delay, ignorePause) {
 	this.clear(id);
+	if (ignorePause === undefined) {
+		ignorePause = false;
+	}
 	return this.registry[id] = {
 		type: 'timeout',
 		timer: setTimeout(this.wrap(id, func), delay),
-		paused: false
+		paused: false,
+		ignorePause: ignorePause
 	};
 };
 
 TimerEngine.prototype.wrap = function(id, func) {
 	var self = this;
 	return function() {
-		if (self.globalPause) {
-			return true;
+		var ignorePause = false;
+		if (self.registry[id] !== undefined && self.registry[id].ignorePause === true) {
+			ignorePause = true;
 		}
-		if (self.registry[id] !== undefined && self.registry[id].paused === true) {
-			return true;
+		if (!ignorePause) {
+			if (self.globalPause) {
+				return true;
+			}
+			if (self.registry[id] !== undefined && self.registry[id].paused === true) {
+				return true;
+			}
 		}
 		return func();
 	};

@@ -26,6 +26,8 @@ class RelationEvent extends AttributesEvent
      * @var object [[Relation]] model
      */
     protected $_relationObject;
+    
+    public $saveOnRegister = true;
 
     /**
      * Prepares object for serialization.

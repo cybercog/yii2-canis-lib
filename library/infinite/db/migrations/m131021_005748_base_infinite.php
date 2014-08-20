@@ -221,7 +221,6 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
         $this->createTable('user', [
             'id' => 'char(36) CHARACTER SET ascii COLLATE ascii_bin NOT NULL PRIMARY KEY',
             'primary_identity_id' => 'char(36) CHARACTER SET ascii COLLATE ascii_bin DEFAULT NULL',
-            'object_individual_id' => 'char(36) CHARACTER SET ascii COLLATE ascii_bin DEFAULT NULL',
             'first_name' => 'string DEFAULT NULL',
             'last_name' => 'string DEFAULT NULL',
             'email' => 'string DEFAULT NULL',
@@ -240,9 +239,7 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
         ]);
 
         $this->createIndex('userIdentityPrivider', 'user', 'primary_identity_id', false);
-        $this->createIndex('userIndividual', 'user', 'object_individual_id', false);
         $this->createIndex('userEmail', 'user', 'email', true);
-        $this->addForeignKey('userIndividual', 'user', 'object_individual_id', 'object_individual', 'id', 'SET NULL', 'CASCADE');
         $this->addForeignKey('userIdentity', 'user', 'primary_identity_id', 'identity', 'id', 'SET NULL', 'CASCADE');
         $this->addForeignKey('userRegistry', 'user', 'id', 'registry', 'id', 'CASCADE', 'CASCADE');
 

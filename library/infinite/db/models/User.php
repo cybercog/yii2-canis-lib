@@ -187,6 +187,8 @@ class User extends ActiveRecord implements IdentityInterface
 
             [['password'], 'required'],
             [['password'], 'string', 'min' => 6],
+
+            
         ];
     }
 
@@ -339,35 +341,4 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->_groups;
     }
 
-    /**
-     * __method_guessIndividual_description__
-     * @return __return_guessIndividual_type__ __return_guessIndividual_description__
-     */
-    public function guessIndividual()
-    {
-        $individualTypeItem = Yii::$app->collectors['types']->getOne('Individual');
-        $individualClass = $individualTypeItem->object->primaryModel;
-        $emailTypeItem = Yii::$app->collectors['types']->getOne('EmailAddress');
-        $emailTypeClass = $emailTypeItem->object->primaryModel;
-        $emailMatch = $emailTypeClass::find()->where(['email_address' => $this->email])->disableAccessCheck()->all();
-        $individuals = [];
-        foreach ($emailMatch as $email) {
-            if (($individual = $email->parent($individualClass, [], ['disableAccessCheck' => true])) && $individual) {
-                $individuals[$individual->primaryKey] = $individual;
-            }
-        }
-        if (empty($individuals)) {
-            if (($individualMatch = $individualClass::find()->where(['first_name' => $this->first_name, 'last_name' => $this->last_name])->one()) && $individualMatch) {
-                return $individualMatch;
-            }
-        } else {
-            if (count($individuals) === 1) {
-                return array_pop($individuals);
-            }
-
-            return $individuals;
-        }
-
-        return false;
-    }
 }
