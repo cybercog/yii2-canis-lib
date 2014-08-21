@@ -7,7 +7,7 @@
 
 namespace infinite\base;
 use Yii;
-use yii\helpers\FileHelper;
+use infinite\helpers\FileHelper;
 
 /**
  * File [@doctodo write class description for File]
@@ -24,7 +24,11 @@ class RawFile extends File
             $type = FileHelper::getMimeType($tmp, null, false);
         }
         if (is_null($name)) {
-            $name = md5(time());
+            $extension = FileHelper::extensionFromMime($type);
+            $name = md5($rawContent);
+            if ($extension) {
+                $name .= $extension;
+            }
         }
         $size = filesize($tmp);
         return static::createInstance($name, $tmp, $type, $size, $error);

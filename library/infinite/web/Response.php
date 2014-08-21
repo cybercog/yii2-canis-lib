@@ -318,6 +318,9 @@ class Response extends \yii\web\Response
      */
     public function beforeSend($event = null)
     {
+        if (isset($this->stream)) {
+            return;
+        }
         if (isset($this->controller)) {
             if ($this->isInstructable) {
                 $this->format = static::FORMAT_JSON;
