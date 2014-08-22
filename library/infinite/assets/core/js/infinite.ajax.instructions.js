@@ -141,14 +141,6 @@ InfiniteInstructionHandler.prototype.handleDialog = function() {
 				$focus.focus();
 			}
 		});
-		$('input:not(.noEnterSubmit),select:not(.noEnterSubmit)', $form).keypress(function(e){
-			if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
-				$form.submit();
-				return false;
-			} else {
-				return true;
-			}
-		});
 	}
 
 	if (this.options.buttons !== undefined) {

@@ -518,8 +518,8 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
         if ($this->owner->getBehavior('Auditable') === null) { return false; }
         $parentObject = $model->getParentObject(false);
         $childObject = $model->getChildObject(false);
-        if (empty($parentObject) || $parentObject->isNewRecord 
-            || empty($childObject) || $childObject->isNewRecord) {
+        if (empty($parentObject) || $parentObject->isNewRecord || $parentObject->getRecentEvent('create') 
+            || empty($childObject) || $childObject->isNewRecord || $childObject->getRecentEvent('create')) {
             return false;
         }
         if (!isset($base['class'])) {

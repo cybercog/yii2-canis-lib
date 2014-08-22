@@ -9,6 +9,7 @@ namespace infinite\db\behaviors\auditable;
 
 use Yii;
 use yii\base\InvalidConfigException;
+use infinite\caching\Cacher;
 
 /**
  * Auditable [@doctodo write class description for Auditable]
@@ -17,6 +18,10 @@ use yii\base\InvalidConfigException;
  */
 class Auditable extends \infinite\db\behaviors\ActiveRecord
 {
+    /**
+     * @var int What is defined as recent? Used when ignoring relation saves 
+     */
+    const RECENT_IN_SECONDS = 300;
     /**
      * @var string Audit event base class
      */
@@ -141,6 +146,17 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
         return $this->owner;
     }
 
+    public function setEnableLogging($value)
+    {
+        $this->_enableLogging = $value;
+        return $this->owner;
+    }
+
+    public function getEnableLogging()
+    {
+        return $this->_enableLogging;
+    }
+
     public function behaviors()
     {
         return [];
@@ -229,11 +245,34 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
 
         // now save
         foreach ($events as $event) {
-            $event->save();
+            $auditModel = $event->save();
+            if ($auditModel) {
+                $this->registerRecentEventSave($auditModel, $event);
+            }
         }
         $this->_auditEvents = null;
 
         return true;
+    }
+
+    public function registerRecentEventSave($auditModel, Event $event)
+    {
+        if (empty($auditModel) || !is_object($auditModel)) { return; }
+        $cacheKeys = [
+            ['eventSave', $event->id, $event->directObjectId],
+            ['eventSave', 'any', $event->directObjectId]
+        ];
+        foreach ($cacheKeys as $key) {
+            Cacher::set($key, $auditModel->primaryKey, static::RECENT_IN_SECONDS);
+        }
+    }
+
+    public function getRecentEvent($eventId = 'any')
+    {
+        if (empty($this->owner->primaryKey)) {
+            return false;
+        }
+        return Cacher::get(['eventSave', $eventId, $this->owner->primaryKey]);
     }
 
     /**

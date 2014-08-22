@@ -224,22 +224,26 @@ abstract class Event extends \infinite\base\Component
 
     public function getTimestamp()
     {
+    	$microtime = microtime(true);
+        $mtimeParts = explode(".", $microtime);
         if (isset($this->_timestamp)) {
             return $this->_timestamp;
         }
         if (isset($this->model) && isset($this->model->created)) {
-            return strtotime($this->model->created);
+            return $this->_timestamp = strtotime($this->model->created) .".". $mtimeParts[1];
         }
-        return time();
+        return $microtime;
     }
 
     public function setTimestamp($timestamp)
     {
+    	$microtime = microtime(true);
+        $mtimeParts = explode(".", $microtime);
         if (empty($timestamp)) {
-            $timestamp = time();
+            $timestamp = microtime(true);
         }
         if (!is_numeric($timestamp)) {
-            $timestamp = strtotime($timestamp);
+            $timestamp = strtotime($timestamp) .".". $mtimeParts[1];
         }
         $this->_timestamp = $timestamp;
     }
