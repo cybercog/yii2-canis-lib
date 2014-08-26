@@ -52,7 +52,7 @@ class QueryAccess extends QueryBehavior
      */
     public static function allowInherit()
     {
-        self::$_acceptInherit = true;
+        static::$_acceptInherit = true;
     }
 
     /**
@@ -60,7 +60,7 @@ class QueryAccess extends QueryBehavior
      */
     public static function denyInherit()
     {
-        self::$_acceptInherit = false;
+        static::$_acceptInherit = false;
     }
 
     /**
@@ -209,7 +209,7 @@ class QueryAccess extends QueryBehavior
             $query->andWhere(['or', [$alias.'.aca_id' => $aca->primaryKey], [$alias.'.aca_id' => null]]);
         }
 
-        Yii::$app->gk->generateAclCheckCriteria($query, false, $this->accessingObject, true, $classAlias);
+        Yii::$app->gk->generateAclCheckCriteria($query, false, $this->accessingObject, static::$_acceptInherit, $classAlias);
 
         return $query;
     }

@@ -538,10 +538,13 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
         $childObject = $model->getChildObject(false);
         $eventLog['relationObject'] = $model;
         $eventLog['directObject'] = $this->owner;
-        if ($this->owner === $parentObject) {
+        if ($this->owner->primaryKey === $parentObject->primaryKey) {
             $eventLog['indirectObject'] = $childObject;
         } else {
             $eventLog['indirectObject'] = $parentObject;
+        }
+        if ($eventLog['indirectObject']->primaryKey === $eventLog['directObject']->primaryKey) {
+        	\d($eventLog);exit;
         }
         return $this->owner->registerAuditEvent($eventLog);   
     }

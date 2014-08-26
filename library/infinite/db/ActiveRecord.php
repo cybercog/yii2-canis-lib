@@ -167,6 +167,19 @@ class ActiveRecord extends \yii\db\ActiveRecord
         return $result;
     }
 
+    public function badFields()
+    {
+    	return [];
+    }
+
+    protected function resolveFields(array $fields, array $expand)
+    {
+    	$fields = parent::resolveFields($fields, $expand);
+    	foreach ($this->badFields() as $badField) {
+    		unset($fields[$badField]);
+    	}
+    	return $fields;
+    }
     /**
      * Get was dirty
      * @return __return_getWasDirty_type__ __return_getWasDirty_description__
