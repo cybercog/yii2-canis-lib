@@ -1,6 +1,6 @@
 function InfiniteBrowser (parent, options) {
 	var defaultOptions = {
-		'url': '/browse',
+		'url': '/browse-hierarchy',
       'root': false,
       'data': {},
       'section': {

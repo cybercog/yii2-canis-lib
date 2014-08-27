@@ -19,11 +19,12 @@ class User extends \yii\web\User
     /**
     * @inheritdoc
      */
-    public function loginRequired()
+    public function loginRequired($checkAjax = true)
     {
+    	$checkAjax = false;
         $request = Yii::$app->getRequest();
         $this->setReturnUrl($request->getUrl());
 
-        return parent::loginRequired();
+        return parent::loginRequired($checkAjax);
     }
 }
