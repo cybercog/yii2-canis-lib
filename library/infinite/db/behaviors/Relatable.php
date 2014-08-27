@@ -427,7 +427,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
      */
     public function setRelationModels($models)
     {
-        $setBase = md5(microtime(true));
+        $setBase = md5(microtime() . mt_rand());
         foreach ($models as $key => $model) {
             if (is_numeric($key)) {
                 $key = $key .'-'. $setBase;
