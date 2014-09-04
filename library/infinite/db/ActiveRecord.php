@@ -178,6 +178,9 @@ class ActiveRecord extends \yii\db\ActiveRecord
     	foreach ($this->badFields() as $badField) {
     		unset($fields[$badField]);
     	}
+        $fields['descriptor'] = 'descriptor';
+        $fields['subdescriptor'] = 'subdescriptor';
+        $fields['icon'] = 'icon';
     	return $fields;
     }
     /**

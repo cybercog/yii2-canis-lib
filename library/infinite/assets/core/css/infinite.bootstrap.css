@@ -133,10 +133,11 @@ span.empty {
 }
 
 
-.list-group-item-heading {
+h5.list-group-item-heading {
     font-size: 15px;
     margin-bottom: 2px;
 }
+
 .list-group-item-text {
     font-size: 14px;
 }
