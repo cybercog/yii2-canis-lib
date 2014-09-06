@@ -243,6 +243,28 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
         $this->addForeignKey('userIdentity', 'user', 'primary_identity_id', 'identity', 'id', 'SET NULL', 'CASCADE');
         $this->addForeignKey('userRegistry', 'user', 'id', 'registry', 'id', 'CASCADE', 'CASCADE');
 
+
+        $this->dropExistingTable('deferred_action');
+
+        $this->createTable('deferred_action', [
+            'id' => 'bigint() unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY',
+            'user_id' => 'char(36) CHARACTER SET ascii COLLATE ascii_bin DEFAULT NULL',
+            'type' => 'string(100) NOT NULL',
+            'action' => 'longblob NOT NULL',
+            'status' => 'enum(\'queued\',\'running\',\'error\',\'success\') NOT NULL DEFAULT \'queued\'',
+            'created' => 'datetime DEFAULT NULL',
+            'modified' => 'datetime DEFAULT NULL',
+            'expired' => 'datetime DEFAULT NULL'
+        ]);
+
+        $this->createIndex('deferredActionUser', 'deferred_action', 'user_id', false);
+        $this->createIndex('deferredActionStatus', 'deferred_action', 'status', false);
+        $this->createIndex('deferredActionType', 'deferred_action', 'type', false);
+        $this->createIndex('deferredActionCreated', 'deferred_action', 'created', false);
+        $this->createIndex('deferredActionExpired', 'deferred_action', 'expired', false);
+        $this->addForeignKey('deferredActionUser', 'deferred_action', 'user_id', 'user', 'id', 'CASCADE', 'CASCADE');
+        
+
         $this->db->createCommand()->checkIntegrity(true)->execute();
 
     }
@@ -263,6 +285,7 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
         $this->dropExistingTable('relation');
         $this->dropExistingTable('role');
         $this->dropExistingTable('user');
+        $this->dropExistingTable('deferred_action');
 
         $this->db->createCommand()->checkIntegrity(true)->execute();
 
