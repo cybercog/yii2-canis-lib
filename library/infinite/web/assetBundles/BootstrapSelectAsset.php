@@ -17,17 +17,17 @@ class BootstrapSelectAsset extends AssetBundle
     /**
      * @inheritdoc
      */
-    public $sourcePath = '@vendor/bootstrap-select/bootstrap-select';
+    public $sourcePath = '@vendor/bootstrap-select/bootstrap-select/dist';
     /**
      * @inheritdoc
      */
     public $css = [
-        'bootstrap-select.min.css',
+        'css/bootstrap-select.min.css',
     ];
     /**
      * @inheritdoc
      */
     public $js = [
-        'bootstrap-select.min.js',
+        'js/bootstrap-select.min.js',
     ];
 }

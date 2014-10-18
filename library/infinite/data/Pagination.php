@@ -22,7 +22,7 @@ class Pagination extends \yii\data\Pagination
     /**
     * @inheritdoc
      */
-    public function createUrl($page, $absolute = false)
+    public function createUrl($page, $pageSize = null, $absolute = false)
     {
         return '#';
     }

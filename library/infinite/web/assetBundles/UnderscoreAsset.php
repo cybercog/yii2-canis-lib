@@ -18,7 +18,7 @@ class UnderscoreAsset extends AssetBundle
     /**
      * @inheritdoc
      */
-    public $sourcePath = '@vendor/components/underscore';
+    public $sourcePath = '@bower/underscore';
     /**
      * @inheritdoc
      */

@@ -247,7 +247,7 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
         $this->dropExistingTable('deferred_action');
 
         $this->createTable('deferred_action', [
-            'id' => 'bigint() unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY',
+            'id' => 'bigint(20) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY',
             'user_id' => 'char(36) CHARACTER SET ascii COLLATE ascii_bin DEFAULT NULL',
             'type' => 'string(100) NOT NULL',
             'action' => 'longblob NOT NULL',
@@ -263,7 +263,7 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
         $this->createIndex('deferredActionCreated', 'deferred_action', 'created', false);
         $this->createIndex('deferredActionExpired', 'deferred_action', 'expired', false);
         $this->addForeignKey('deferredActionUser', 'deferred_action', 'user_id', 'user', 'id', 'CASCADE', 'CASCADE');
-        
+
 
         $this->db->createCommand()->checkIntegrity(true)->execute();
 

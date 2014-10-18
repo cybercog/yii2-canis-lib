@@ -44,8 +44,7 @@ class InfiniteAsset extends AssetBundle
         'yii\bootstrap\BootstrapAsset',
         'yii\bootstrap\BootstrapThemeAsset',
         'yii\web\JqueryAsset',
-        'yii\jui\CoreAsset',
-        'yii\jui\EffectAsset',
+        'yii\jui\JuiAsset',
         'infinite\web\assetBundles\UnderscoreAsset',
         'infinite\web\assetBundles\FontAwesomeAsset',
         'infinite\web\assetBundles\AjaxFormAsset'

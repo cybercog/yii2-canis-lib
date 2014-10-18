@@ -17,7 +17,7 @@ class TimeAgoAsset extends AssetBundle
     /**
      * @inheritdoc
      */
-    public $sourcePath = '@vendor/pragmaticly/smart-time-ago/lib';
+    public $sourcePath = '@bower/smart-time-ago/lib';
     /**
      * @inheritdoc
      */
