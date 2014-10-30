@@ -239,6 +239,9 @@ abstract class Event extends \infinite\base\Component
     {
     	$microtime = microtime(true);
         $mtimeParts = explode(".", $microtime);
+        if (!isset($mtimeParts[1])) {
+            $mtimeParts[1] = 0;
+        }
         if (empty($timestamp)) {
             $timestamp = microtime(true);
         }
