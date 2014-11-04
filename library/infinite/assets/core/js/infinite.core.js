@@ -22,6 +22,26 @@ $preparer.add(function(context) {
 		}
 	});
 
+	$("[data-height]", context).each(function() {
+		var $this = $(this);
+		var defaultSettings = {'min': false, 'max': false};
+		var settings = jQuery.extend({}, defaultSettings, $this.data('height'));
+		console.log(settings);
+		jQuery.each(['max', 'min'], function(index, item) {
+			var cssProperty = item + "-height";
+
+			if (settings[item] === 'item') {
+				settings[item] = $this.outerHeight();
+			} else if (settings[item] === 'body') {
+				settings[item] = $('body').height();
+			}
+			if (settings[item]) {
+				$this.addClass('height-controlled');
+				$this.css(cssProperty, settings[item]);
+			}
+		});
+
+	});
 	$("[data-parent-height-watch]", context).each(function() {
 		var $this = $(this);
 		var offset = 0;

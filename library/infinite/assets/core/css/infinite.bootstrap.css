@@ -310,6 +310,10 @@ div.required label:after {
     max-height: none;
 }
 
+.height-controlled {
+  overflow-y: auto;
+  overflow-x: visible;
+}
 
 @media (max-width: 400px) {
     .smart-double-line {
