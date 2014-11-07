@@ -25,6 +25,36 @@ class Item extends \infinite\base\collector\Item
     protected $_handlers = [];
     public $config = [];
 
+    protected $_creator = false;
+
+    public function getCreatorPriority()
+    {
+        if ($this->creator) {
+            return $this->creator->priority;
+        }
+        return false;
+    }
+
+    public function getCreator()
+    {
+        if (isset($this->_creator)) {
+            return $this->_creator;
+        }
+        return false;
+    }
+
+    public function setCreator($creator)
+    {
+        if (is_array($creator) && isset($creator['class'])) {
+            $creator = Yii::createObject($creator);
+        }
+        if (!($creator instanceof CreatorInterface)){ 
+            return;
+        }
+        $creator->identityProvider = $this;
+        $this->_creator = $creator;
+    }
+    
     /**
      * Get package
      * @return __return_getPackage_type__ __return_getPackage_description__

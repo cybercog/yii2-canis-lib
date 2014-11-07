@@ -14,8 +14,12 @@ namespace infinite\security\identity\providers;
  */
 class Ldap extends \infinite\security\identity\providers\Handler
 {
-	public function validatePassword($user, $password)
+	protected $_ldap = false;
+	public function validatePassword($username, $password)
 	{
+		if (!isset($this->meta['username'])) {
+			$this->meta['username'] = $username;
+		}
 		if (!$this->validConfig) { return false; }
 		$username = $this->meta['username'];
 		if (isset($this->config['domain']) && strpos($username, '\\') === false) {
@@ -48,6 +52,12 @@ class Ldap extends \infinite\security\identity\providers\Handler
         	$this->addError('password', 'Incorrect username or password.kj');
         	return false;
         }
+        $this->_ldap = $ldap;
         return true;
+    }
+
+    public function getLdap()
+    {
+    	return $this->_ldap;
     }
 }

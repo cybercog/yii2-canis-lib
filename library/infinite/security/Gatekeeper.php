@@ -175,7 +175,8 @@ class Gatekeeper extends \infinite\base\Component
 
                 return false;
             }
-            $groupObject = Group::getBySystemName($group, true);
+            $groupClass = Yii::$app->classes['Group'];
+            $groupObject = $groupClass::getBySystemName($group, true);
             $groups = $this->getGroups($accessingObject);
             if (!$groups OR !$groupObject) {
                 self::$_cache[$requestKey] = false;
@@ -599,6 +600,9 @@ class Gatekeeper extends \infinite\base\Component
         $controlledObject = $this->getControlledObject($controlledObject, $modelClass);
 
         if (!empty($controlledObject)) {
+            if (is_object($controlledObject)) {
+                $controlledObject = $controlledObject->primaryKey;
+            }
             $innerOnConditions[] = [$alias.'.controlled_object_id' => $controlledObject];
         }
 
@@ -728,8 +732,6 @@ class Gatekeeper extends \infinite\base\Component
         $query = new Query;
         $query->from(['internal' => $subquery]);
         $query->groupBy('[[internal]].[[aca_id]]');
-
-
         $raw = $query->all();
         $results = $this->fillActions($raw, [], $controlledObject, $acaIds);
 

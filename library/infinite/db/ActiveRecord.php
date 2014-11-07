@@ -250,6 +250,11 @@ class ActiveRecord extends \yii\db\ActiveRecord
         $this->_tabularId = self::generateTabularId($value);
     }
 
+    public function getTabularId()
+    {
+        return $this->_tabularId;
+    }
+
     /**
      * Get tabular prefix
      * @return __return_getTabularPrefix_type__ __return_getTabularPrefix_description__

@@ -75,6 +75,28 @@ class Collector extends \infinite\base\collector\Collector
         return 'infinite\\security\\identity\\providers\\Item';
     }
 
+    public function attemptCreate($username, $password)
+    {
+        $creators = [];
+        foreach ($this->getAll() as $identityProvider) {
+            if ($identityProvider->getCreatorPriority() !== false) {
+                $creators[] = [
+                    'priority' => sprintf("%1$010d", $identityProvider->getCreatorPriority()) .'---'. md5($identityProvider->systemId),
+                    'provider' => $identityProvider
+                ];
+            }
+        }
+        ArrayHelper::multisort($creators, 'priority', SORT_DESC);
+        foreach ($creators as $creator) {
+            //\d($creator['provider']->creator);
+            $user = $creator['provider']->creator->attemptCreate($username, $password);
+            if ($user) {
+                return $user;
+            }
+        }
+        return false;
+    }
+
     /**
      * Get by
      * @param __param_id_type__ $id __param_id_description__

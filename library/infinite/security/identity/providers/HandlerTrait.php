@@ -7,13 +7,15 @@
 
 namespace infinite\security\identity\providers;
 
+use Yii;
+
 trait HandlerTrait
 {
 	public $errors = [];
 	public $token;
 	public $meta = [];
 	public $config = [];
-
+	
 	public function validatePassword($user, $password)
 	{
 		return false;
