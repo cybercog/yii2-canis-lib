@@ -166,12 +166,12 @@ class Group extends \infinite\db\ActiveRecord
             $group->disableAccessCheck();
         }
         $group = $group->one();
-        if (!$group OR $group->system !== $id) {
+        if (!$group || $group->system !== $id) {
         }
         if (empty($group)) { return false; }
         // @todo security of both items?
 
-        if ($group and self::$_doCache) {
+        if ($group && self::$_doCache) {
             self::$_cache['system'][$id] = $group;
         }
 

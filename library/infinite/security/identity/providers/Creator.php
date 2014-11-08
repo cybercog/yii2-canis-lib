@@ -69,6 +69,7 @@ abstract class Creator extends \infinite\base\Component implements CreatorInterf
 			'meta' => $identityConfig
 		];
 		unset($attributes['primaryIdentity']);
+		unset($attributes['_']);
 		$user->attributes = $attributes;
 		if (!$user->save()) {
 			return false;

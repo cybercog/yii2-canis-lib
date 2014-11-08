@@ -14,6 +14,7 @@ trait HandlerTrait
 	public $errors = [];
 	public $token;
 	public $meta = [];
+	public $serverMeta = [];
 	public $config = [];
 	
 	public function validatePassword($user, $password)

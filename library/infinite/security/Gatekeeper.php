@@ -76,6 +76,9 @@ class Gatekeeper extends \infinite\base\Component
      */
     protected $_authority;
 
+    public function clearCache() {
+        static::$_cache = [];
+    }
     /**
      * Set authority
      * @param __param_authority_type__ $authority __param_authority_description__
@@ -172,16 +175,21 @@ class Gatekeeper extends \infinite\base\Component
                         return true;
                     }
                 }
-
                 return false;
             }
             $groupClass = Yii::$app->classes['Group'];
-            $groupObject = $groupClass::getBySystemName($group, true);
+            $groupObject = $groupClass::getBySystemName($group, false);
             $groups = $this->getGroups($accessingObject);
-            if (!$groups OR !$groupObject) {
+            if (!$groups || !$groupObject) {
                 self::$_cache[$requestKey] = false;
             } else {
-                self::$_cache[$requestKey] = in_array($groupObject->primaryKey, $groups);
+                $found = false;
+                foreach ($groups as $groupSet) {
+                    if (in_array($groupObject->primaryKey, $groupSet)) {
+                        $found = true; break;
+                    }
+                }
+                self::$_cache[$requestKey] = $found;
             }
         }
 

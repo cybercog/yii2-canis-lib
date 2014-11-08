@@ -23,6 +23,7 @@ class Item extends \infinite\base\collector\Item
     public $name;
     public $handler;
     protected $_handlers = [];
+    public $handlerConfig = [];
     public $config = [];
 
     protected $_creator = false;
@@ -100,9 +101,12 @@ class Item extends \infinite\base\collector\Item
             $this->_handlers[$key] = false;
             if (isset(Yii::$app->collectors['identityProviders']->handlers[$this->handler])) {
                 $handler = Yii::$app->collectors['identityProviders']->handlers[$this->handler];
-                $handler['config'] = $this->config;
+                foreach ($this->handlerConfig as $key => $value) {
+                    $handler[$key] = $value;
+                }
                 $handler['token'] = $token;
                 $handler['meta'] = $meta;
+                $handler['config'] = $this->config;
                 $this->_handlers[$key] = Yii::createObject($handler);
             }
         }

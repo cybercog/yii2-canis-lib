@@ -54,6 +54,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public $password;
 
+    protected $_identityMeta;
     protected $_identities;
     protected $_identitiesByProvider;
     protected $_activeIdentity;
@@ -113,6 +114,21 @@ class User extends ActiveRecord implements IdentityInterface
         return static::find()->andWhere(['email' => $email, 'status' => static::STATUS_ACTIVE])->disableAccessCheck()->one();
     }
 
+    public function getIdentityMeta()
+    {
+        if (is_null($this->_identityMeta)) {
+            $identityMeta = Yii::$app->session['identityMeta'];
+            if (isset($identityMeta[md5($this->primaryKey)])) {
+                $this->identityMeta = $identityMeta[md5($this->primaryKey)];
+            }
+        }
+        return $this->_identityMeta;
+    }
+
+    public function setIdentityMeta($meta)
+    {
+        $this->_identityMeta = $meta;
+    }
     /**
      * Get id
      * @return int|string current user ID
@@ -161,6 +177,11 @@ class User extends ActiveRecord implements IdentityInterface
                         $this->addError($attribute, $error);
                     }
                 }
+                if (isset(Yii::$app->session)) {
+                    $identityMeta = Yii::$app->session['identityMeta'];
+                    $identityMeta[md5($this->primaryKey)] = $this->identityMeta = $handler->serverMeta;
+                    Yii::$app->session['identityMeta'] = $identityMeta;
+                }
                 return $result;
             }
             return false;
@@ -200,6 +221,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             'creation' => ['email', 'first_name', 'last_name', 'password'],
+            'updateRelations' => [],
             'resetPassword' => ['password'],
             'requestPasswordResetToken' => ['email'],
         ];
@@ -209,7 +231,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         if (!isset($this->_primaryIdentity) && isset($this->primary_identity_id)) {
             $identityClass = Yii::$app->classes['Identity'];
-            $this->_primaryIdentity = $identityClass::getOne($this->primary_identity_id);
+            $this->_primaryIdentity = $identityClass::get($this->primary_identity_id, false);
         }
         if (empty($this->_primaryIdentity)) {
             return null;
@@ -310,7 +332,7 @@ class User extends ActiveRecord implements IdentityInterface
 
             if (isset($this->primaryIdentity) && $this->primaryIdentity->primaryKey !== $this->primary_identity_id) {
                 $this->primary_identity_id = $this->primaryIdentity->primaryKey;
-            } elseif (!isset($this->primaryIdentity) && isset($this->primary_identity_id)) {
+            } elseif (!isset($this->_primaryIdentity) && isset($this->primary_identity_id)) {
                 $this->primary_identity_id = null;
             }
             return true;
