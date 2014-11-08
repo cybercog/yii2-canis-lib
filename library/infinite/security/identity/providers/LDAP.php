@@ -108,6 +108,8 @@ class Ldap extends \infinite\security\identity\providers\Handler
 			return false;
 		}
 		$attributes['_'] = [];
+		$results['distinguishedName'] = isset($results['distinguishedName']) ? $results['distinguishedName'] : [];
+		$results['memberOf'] = isset($results['memberOf']) ? $results['memberOf'] : [];
 		$attributes['_']['ous'] = $this->extractOus($results['distinguishedName']);
 		$attributes['_']['memberOf'] = $this->extractMembership($results['memberOf']);
 		foreach ($this->map as $key => $field) {
