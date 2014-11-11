@@ -55,6 +55,13 @@ InfiniteInstructionHandler.prototype.handle = function() {
 	if (self.task && jQuery.inArray(self.task, this.staticPostTasks) === -1) {
 		self.runHandler(self.task);
 	}
+	if (self.instructions.taskSet) {
+		console.log(self.instructions.taskSet);
+		jQuery.each(self.instructions.taskSet, function(index, task) {
+			var instructor = new InfiniteInstructionHandler(task, self.ajaxEvent, self.ajaxOptions);
+			instructor.handle();
+		});
+	}
 	jQuery.each(self.staticPostTasks, function(index, task) {
 		self.runHandler(task);
 	});
@@ -88,6 +95,23 @@ InfiniteInstructionHandler.prototype.handleTrigger = function() {
 			}
 			$target.trigger(event[0]);
 		});
+	}
+	return true;
+};
+
+
+InfiniteInstructionHandler.prototype.handleRemoveElement = function() {
+	var self = this;
+	if (this.instructions.selector !== undefined) {
+		$(this.instructions.selector).remove();
+	}
+	return true;
+};
+InfiniteInstructionHandler.prototype.handleReplace = function() {
+	var self = this;
+	if (this.instructions.selector !== undefined && this.instructions.content !== undefined) {
+		var $result = $(this.instructions.selector).replaceWith(this.instructions.content);
+		$preparer.fire($result);
 	}
 	return true;
 };

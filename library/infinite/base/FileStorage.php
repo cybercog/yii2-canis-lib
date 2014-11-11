@@ -7,7 +7,7 @@
 
 namespace infinite\base;
 
-use infinite\base\Exception;
+use infinite\base\exceptions\Exception;
 
 /**
  * FileStorage [@doctodo write class description for FileStorage]

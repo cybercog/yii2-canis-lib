@@ -7,6 +7,8 @@
 
 namespace infinite\base;
 
+use infinite\base\exceptions\Exception;
+
 /**
  * Module [@doctodo write class description for Module]
  *

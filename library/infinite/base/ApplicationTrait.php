@@ -19,6 +19,11 @@ trait ApplicationTrait
     public function init()
     {
         $start = microtime(true);
+        foreach ($this->modules as $moduleKey => $moduleConfig) {
+            if (substr($moduleKey, 0, 3) === 'Set') {
+                $this->getModule($moduleKey);
+            }
+        }
         parent::init();
         $duration = round((microtime(true) - $start) * 1000, 2);
         Yii::trace("Init took ". $duration .'ms');

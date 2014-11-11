@@ -10,7 +10,7 @@ namespace infinite\db\behaviors;
 use Yii;
 
 use yii\db\Expression;
-use infinite\base\Exception;
+use infinite\base\exceptions\Exception;
 
 /**
  * Registry [@doctodo write class description for Registry]

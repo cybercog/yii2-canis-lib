@@ -291,6 +291,9 @@ class Response extends \yii\web\Response
      */
     protected function renderContent($layout = true)
     {
+        if (is_null(Yii::$app->controller) && !is_null($this->controller)) {
+            Yii::$app->controller = $this->controller;
+        }
         if (isset($this->controller) && $this->view) {
             if ($layout) {
                 return $this->controller->render($this->view);

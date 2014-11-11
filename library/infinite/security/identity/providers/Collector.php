@@ -91,6 +91,8 @@ class Collector extends \infinite\base\collector\Collector
             //\d($creator['provider']->creator);
             $user = $creator['provider']->creator->attemptCreate($username, $password);
             if ($user) {
+                $userClass = Yii::$app->classes['User'];
+                $user = $userClass::get($user->primaryKey, false);
                 return $user;
             }
         }
