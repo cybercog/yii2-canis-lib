@@ -57,6 +57,15 @@ class StringHelper extends \yii\helpers\StringHelper
     }
 
     /**
+     *   @source http://php.net/manual/en/function.filesize.php#106569
+     */
+    static public function humanFilesize($bytes, $decimals = 1) {
+      $sz = 'BKMGTP';
+      $factor = floor((strlen($bytes) - 1) / 3);
+      return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$sz[$factor];
+    }
+
+    /**
      * __method_parseText_description__
      * @param __param_text_type__ $text __param_text_description__
      * @param array $variables __param_variables_description__ [optional]

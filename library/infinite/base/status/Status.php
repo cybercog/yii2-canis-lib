@@ -66,7 +66,7 @@ class Status extends \infinite\base\Component
     public function startTask($system, $human = null)
     {
         $this->levels++;
-        $this->currentTask = new RTask($this, $system, $human);
+        $this->currentTask = new Task($this, $system, $human);
         $this->_tasks[$system] = $this->currentTask;
         $this->trigger('startTask');
 

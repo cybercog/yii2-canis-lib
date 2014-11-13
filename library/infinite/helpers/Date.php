@@ -224,6 +224,17 @@ class Date extends \infinite\base\Object
         return self::niceDuration($diff, $limitPeriods);
     }
 
+    public static function shortDuration($seconds) {
+        if ($seconds > (60*60)) { // hours
+            return round($seconds/(60*60)).'h';
+        } elseif ($seconds > 60) { // minutes
+            return round($seconds/(60)).'m';
+        } elseif ($seconds >= 1)  { // seconds
+            return round($seconds) .'s';
+        } else {
+            return round($seconds*100, 1).'ms';
+        }
+    }
     /**
      * Get the human string of a duration
      * @param int    $seconds      Number of seconds
