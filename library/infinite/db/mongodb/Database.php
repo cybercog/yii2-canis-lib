@@ -7,10 +7,23 @@
 
 namespace infinite\db\mongodb;
 
+use Yii;
 use infinite\base\ComponentTrait;
 
 class Database extends \yii\mongodb\Database
 {
     use ComponentTrait;
- 
+ 	
+ 	public function getCollectionNames()
+ 	{
+ 		return $this->mongoDb->getCollectionNames();
+ 	}
+    protected function selectCollection($name)
+    {
+        return Yii::createObject([
+            'class' => Collection::className(),
+            'mongoCollection' => $this->mongoDb->selectCollection($name)
+        ]);
+    }
+
 }

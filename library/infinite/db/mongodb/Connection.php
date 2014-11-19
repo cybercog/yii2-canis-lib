@@ -8,6 +8,7 @@
 namespace infinite\db\mongodb;
 
 use infinite\base\ComponentTrait;
+use Yii;
 
 class Connection extends \yii\mongodb\Connection
 {
