@@ -113,7 +113,7 @@ trait CollectorTrait
         return $bucket->toArray();
     }
 
-    public function getOne($item, $bucket = null)
+    public function getOne($item, $bucket = null, $create = true)
     {
         $bucket = $this->getBucket($bucket);
         if (!isset($bucket[$item])) {
