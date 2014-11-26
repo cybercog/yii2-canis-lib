@@ -7,10 +7,10 @@
 
 namespace infinite\db\mongodb;
 
-use infinite\base\ComponentTrait;
-
-class ActiveQuery extends \yii\mongodb\ActiveQuery
+trait QueryTrait
 {
-    use ComponentTrait;
-    use QueryTrait;
+	public function cursor($db = null)
+	{
+		return $this->buildCursor($db);
+	}
 }

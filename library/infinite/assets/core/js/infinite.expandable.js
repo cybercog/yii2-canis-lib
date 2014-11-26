@@ -22,7 +22,10 @@ jQuery.fn.checkExpandable = function() {
 		$(this).removeClass('expandable');
 		return true;
 	}
-
+	if ($(this).hasClass('expanded-checked')) {
+		return true;
+	}
+	$(this).addClass('expanded-checked');
 	$(this).click(function(e) {
 		if ($(e.target).is('a') || $(e.target).is('input') || $(e.target).is('button')) {
 			return;
