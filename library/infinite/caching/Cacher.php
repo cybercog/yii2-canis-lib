@@ -20,6 +20,7 @@ use yii\caching\DbDependency;
  */
 class Cacher extends \infinite\base\Component
 {
+    public static $component = 'cache';
     /**
      * __method_key_description__
      * @param __param_key_type__ $key __param_key_description__
@@ -69,7 +70,7 @@ class Cacher extends \infinite\base\Component
      */
     public static function get($key)
     {
-        return Yii::$app->cache->get(self::key($key));
+        return Yii::$app->{static::$component}->get(self::key($key));
     }
 
     /**
@@ -79,7 +80,7 @@ class Cacher extends \infinite\base\Component
      */
     public static function exists($key)
     {
-        return Yii::$app->cache->exists(self::key($key));
+        return Yii::$app->{static::$component}->exists(self::key($key));
     }
 
     /**
@@ -98,7 +99,7 @@ class Cacher extends \infinite\base\Component
             $chain[] = $dependency;
         }
 
-        return Yii::$app->cache->set(self::key($key), $value, $expire, static::chainedDependency($chain));
+        return Yii::$app->{static::$component}->set(self::key($key), $value, $expire, static::chainedDependency($chain));
     }
 
     /**
@@ -147,6 +148,6 @@ class Cacher extends \infinite\base\Component
      */
     public static function invalidateGroup($group)
     {
-        TagDependency::invalidate(Yii::$app->cache, $group);
+        TagDependency::invalidate(Yii::$app->{static::$component}, $group);
     }
 }

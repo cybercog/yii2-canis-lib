@@ -14,6 +14,7 @@ namespace infinite\helpers;
  */
 class ArrayHelper extends \yii\helpers\ArrayHelper
 {
+
     /**
     * @inheritdoc
      */
