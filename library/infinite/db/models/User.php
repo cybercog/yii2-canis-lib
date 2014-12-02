@@ -318,7 +318,7 @@ class User extends ActiveRecord implements IdentityInterface
                 $this->password_hash = Yii::$app->security->generatePasswordHash($this->password);
             }
             if ($this->isNewRecord) {
-                $this->auth_key = Yii::$app->security->generateRandomKey();
+                $this->auth_key = Yii::$app->security->generateRandomString();
             }
             //\d($this->_touchedIdentities);exit;
             foreach ($this->_touchedIdentities as $identity) {
