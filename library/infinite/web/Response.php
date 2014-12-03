@@ -39,6 +39,8 @@ class Response extends \yii\web\Response
      * @var __var_task_type__ __var_task_description__
      */
     public $task = 'fill';
+
+    public $clientTask;
     /**
      * @var __var_staticTasks_type__ __var_staticTasks_description__
      */
@@ -196,6 +198,17 @@ class Response extends \yii\web\Response
      */
     protected function handleFill(&$i)
     {
+        return true;
+    }
+
+    /**
+     * __method_handleFill_description__
+     * @param __param_i_type__ $i __param_i_description__
+     * @return __return_handleFill_type__ __return_handleFill_description__
+     */
+    protected function handleClient(&$i)
+    {
+        $this->task = $this->clientTask;
         return true;
     }
 

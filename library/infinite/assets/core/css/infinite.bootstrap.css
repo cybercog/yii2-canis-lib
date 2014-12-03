@@ -315,6 +315,10 @@ div.required label:after {
   overflow-x: visible;
 }
 
+.fa-spin-slow {
+    animation: 6s linear 0s normal none infinite running fa-spin;
+}
+
 @media (max-width: 400px) {
     .smart-double-line {
         white-space: normal;
