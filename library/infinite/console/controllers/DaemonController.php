@@ -10,6 +10,7 @@ namespace infinite\console\controllers;
 use Yii;
 use infinite\base\exceptions\Exception;
 use infinite\base\Daemon;
+ini_set('memory_limit', -1);
 
 class DaemonController extends \infinite\console\Controller
 {

@@ -10,6 +10,7 @@ namespace infinite\console\controllers;
 use Yii;
 use infinite\base\exceptions\Exception;
 use infinite\base\Cron;
+ini_set('memory_limit', -1);
 
 class CronController extends \infinite\console\Controller
 {
