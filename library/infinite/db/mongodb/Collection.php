@@ -33,8 +33,15 @@ class Collection extends \yii\mongodb\Collection
         try {
             Yii::beginProfile($token, __METHOD__);
             $mongo = $this->db->mongoClient;
-    		$query = array("renameCollection" => $this->db->database->name . '.'. $this->name, "to" => $this->db->database->name . '.'. $newName, "dropTarget" => "true");
-    		$result = $mongo->admin->command($query);
+    		$query = [
+                "renameCollection" => $this->db->database->name . '.'. $this->name, 
+                "to" => $this->db->database->name . '.'. $newName, 
+                "dropTarget" => "true"
+            ];
+            $options = [
+                "socketTimeoutMS" => -1
+            ];
+    		$result = $mongo->admin->command($query, $options);
             $this->tryResultError($result);
             Yii::endProfile($token, __METHOD__);
 
