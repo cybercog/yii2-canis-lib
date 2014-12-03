@@ -56,7 +56,6 @@ InfiniteInstructionHandler.prototype.handle = function() {
 		self.runHandler(self.task);
 	}
 	if (self.instructions.taskSet) {
-		console.log(self.instructions.taskSet);
 		jQuery.each(self.instructions.taskSet, function(index, task) {
 			var instructor = new InfiniteInstructionHandler(task, self.ajaxEvent, self.ajaxOptions);
 			instructor.handle();

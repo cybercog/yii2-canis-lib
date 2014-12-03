@@ -42,5 +42,13 @@ class Infinite implements \yii\base\BootstrapInterface
     {
         Yii::setAlias('@infinite', __DIR__);
         Yii::$app->registerMigrationAlias('@infinite/db/migrations');
+        if ($app instanceof \yii\console\Application) {
+            $app->controllerMap['cron'] = [
+                'class' => 'infinite\console\controllers\CronController'
+            ];
+            $app->controllerMap['daemon'] = [
+                'class' => 'infinite\console\controllers\DaemonController'
+            ];
+        }
     }
 }
