@@ -16,11 +16,21 @@ class DaemonController extends \infinite\console\Controller
 {
     public function actionRun()
     {
+        $cmd = [PHP_BINARY];
+        $cmd[] = $_SERVER['PHP_SELF'];
+        $cmd[] = 'daemon/tick';
+        $cmd[] = '2>&1';
         while (true) {
-            $this->tick();
+            exec(implode(' ', $cmd), $output, $exitCode);
             sleep(5);
         }
     }
+
+    public function actionTick()
+    {
+        $this->tick();
+    }
+
 
     protected function tick()
     {
