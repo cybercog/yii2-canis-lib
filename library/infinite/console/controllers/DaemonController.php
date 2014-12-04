@@ -22,6 +22,9 @@ class DaemonController extends \infinite\console\Controller
         $cmd[] = '2>&1';
         while (true) {
             exec(implode(' ', $cmd), $output, $exitCode);
+            if (!empty($exitCode)) {
+                \d($output);
+            }
             sleep(5);
         }
     }
