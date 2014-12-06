@@ -11,7 +11,7 @@ use Yii;
 
 use yii\db\Query;
 use infinite\helpers\ArrayHelper;
-use cascade\components\helpers\StringHelper;
+use infinite\helpers\StringHelper;
 
 trait SearchTerm
 {
@@ -69,6 +69,9 @@ trait SearchTerm
             $localQuery->limit = $limit;
             self::buildSearchQuery($localQuery, $localFields, $searchTerms);
             self::implementParams($localQuery, $params);
+            if (!empty($params['where'])) {
+                $localQuery->andWhere($params['where']);
+            }
             $command = $localQuery->createCommand();
             //echo "\n\n\n\n" . $localQuery->createCommand()->rawSql . "\n\n\n\n";
             $raw = $localQuery->all();

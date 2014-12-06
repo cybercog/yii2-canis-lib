@@ -10,8 +10,10 @@ use infinite\helpers\ArrayHelper;
 use infinite\db\behaviors\SearchTerm;
 
 
-trait ActiveRecordRegistryTrait {
-	
+trait ActiveRecordRegistryTrait
+{
+    use SearchTerm;
+    	
     public function behaviors()
     {
     	return array_merge(parent::behaviors(), [
