@@ -564,8 +564,6 @@ class Gatekeeper extends \infinite\base\Component
             $aros = [];
         }
 
-        \d($aros);exit;
-
         $aclOrder = [];
         $aclOnConditions = ['and'];
         $aroN = 0;
