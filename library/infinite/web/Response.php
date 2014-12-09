@@ -307,6 +307,10 @@ class Response extends \yii\web\Response
         if (is_null(Yii::$app->controller) && !is_null($this->controller)) {
             Yii::$app->controller = $this->controller;
         }
+        if (is_null(Yii::$app->controller->action) && !is_null($this->action)) {
+            Yii::$app->controller->action = $this->action;
+        }
+
         if (isset($this->controller) && $this->view) {
             if ($layout) {
                 return $this->controller->render($this->view);
@@ -359,7 +363,7 @@ class Response extends \yii\web\Response
     /**
     * @inheritdoc
      */
-    public function redirect($url, $statusCode = 302)
+    public function redirect($url, $statusCode = 302, $checkAjax = true)
     {
         if (is_array($url) && isset($url[0])) {
             // ensure the route is absolute

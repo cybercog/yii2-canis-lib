@@ -82,4 +82,38 @@ class MigrateController extends \yii\console\controllers\MigrateController
         ksort($migrations);
         return $migrations;
     }
+
+    public function actionUpPlain($limit = 0)
+    {
+        $result = parent::actionUp($limit);
+        if ($result !== static::EXIT_CODE_ERROR) {
+            echo "\n\nMigrated up successfully.";
+        }
+        return $result;
+    }
+
+    public function actionNewPlain($limit = 10)
+    {
+        if ($limit === 'all') {
+            $limit = null;
+        } else {
+            $limit = (int) $limit;
+            if ($limit < 1) {
+                throw new Exception("The limit must be greater than 0.");
+            }
+        }
+
+        $migrations = $this->getNewMigrations();
+
+        if (empty($migrations)) {
+            echo 'None';
+        } else {
+            $n = count($migrations);
+            echo "Found $n new " . ($n === 1 ? 'migration' : 'migrations') . ":\n";
+
+            foreach ($migrations as $migration) {
+                echo $migration . "\n";
+            }
+        }
+    }
 }
