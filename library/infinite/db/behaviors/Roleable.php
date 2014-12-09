@@ -297,7 +297,6 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
         $roleItem = $this->normalizeRole($role);
         $roleId = empty($roleItem) ? null : $roleItem->object->primaryKey;
         $aclRoleClass = Yii::$app->classes['AclRole'];
-
         $gkRoles = $this->getObjectInheritedRoles();
         $inherited = false;
         $inheritedAroRole = false;
@@ -313,7 +312,6 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
         if ($clearRole) {
             $this->clearAroRole($aro);
             Cacher::invalidateGroup('acl_role');
-
             return true;
         }
         $aclRole = $this->getRole($aro, false);
@@ -364,7 +362,6 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
 
         if (empty($aclRole->role_id)) {
             $this->owner->requireDirectAdmin(null, $aro, $aclRole);
-
             return true;
         }
 

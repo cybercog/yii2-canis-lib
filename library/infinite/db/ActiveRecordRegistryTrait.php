@@ -26,6 +26,9 @@ trait ActiveRecordRegistryTrait
             'ActiveAccess' => [
                 'class' => 'infinite\\db\\behaviors\\ActiveAccess',
             ],
+            'Roleable' => [
+                'class' => 'infinite\\db\\behaviors\\Roleable',
+            ],
     	]);
     }
 }

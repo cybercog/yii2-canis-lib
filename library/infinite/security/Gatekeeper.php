@@ -414,7 +414,7 @@ class Gatekeeper extends \infinite\base\Component
                 }
             }
 
-            return $object;
+            return [$object->primaryKey];
         }
 
         return false;
@@ -1286,8 +1286,8 @@ class Gatekeeper extends \infinite\base\Component
         $aclRoleClass = Yii::$app->classes['AclRole'];
         $where = [];
         $controlledObject = $this->getControlledObject($object, get_class($object), ['debug' => true]);
-        if (!is_array($controlledObject)) {
-            $controlledObject = [$controlledObject];
+        if (is_object($controlledObject)) {
+            $controlledObject = [$controlledObject->primaryKey];
         }
         $topControlledObject = $controlledObject[0];
 
