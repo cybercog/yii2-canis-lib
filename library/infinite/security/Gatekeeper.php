@@ -564,6 +564,8 @@ class Gatekeeper extends \infinite\base\Component
             $aros = [];
         }
 
+        \d($aros);exit;
+
         $aclOrder = [];
         $aclOnConditions = ['and'];
         $aroN = 0;
@@ -904,7 +906,7 @@ class Gatekeeper extends \infinite\base\Component
         if (is_null($accessingObject)) {
             $accessingObject = $this->primaryRequestor;
         }
-        if (!is_object($accessingObject)) {
+        if ($accessingObject && !is_object($accessingObject)) {
             $registryClass = Yii::$app->classes['Registry'];
             $accessingObject = $registryClass::getObject($accessingObject, false);
         }
