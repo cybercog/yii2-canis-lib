@@ -329,6 +329,7 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
         if (!$aclRole->save()) {
             return false;
         }
+        $this->_roleCurrent[$aro] = $aclRole;
         if ($changed) {
             Cacher::invalidateGroup('acl_role');
         }
