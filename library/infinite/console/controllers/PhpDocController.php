@@ -32,7 +32,18 @@ class PhpDocController extends Controller
      * @var __var_author_type__ __var_author_description__
      */
     public $author = "Jacob Morrison <email@ofjacob.com>";
-
+    /**
+     * @var __var_copyright_type__ __var_copyright_description__
+     */
+    public $copyright = "Copyright (c) 2014 Infinite Cascade";
+    /**
+     * @var __var_link_type__ __var_link_description__
+     */
+    public $link = "http://www.infinitecascade.com/";
+    /**
+     * @var __var_license_type__ __var_license_description__
+     */
+    public $license = "http://www.infinitecascade.com/license";
     /**
      * @var boolean whether to update class docs directly. Setting this to false will just output docs for copy and paste.
      */
@@ -194,9 +205,9 @@ class PhpDocController extends Controller
             $lines = array_merge([
                 "<?php",
                 "/**",
-                " * @link http://www.infinitecascade.com/",
-                " * @copyright Copyright (c) 2014 Infinite Cascade",
-                " * @license http://www.infinitecascade.com/license/",
+                " * @link " . $this->link,
+                " * @copyright ". $this->copyright,
+                " * @license ". $this->license,
                 " */",
                 "",
                 $namespaceLine,
