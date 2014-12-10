@@ -249,9 +249,12 @@ class PhpDocController extends Controller
 
         $oldDoc = $ref->getDocComment();
         $oldDocSize = count(explode("\n", $oldDoc));
+        $startLine = $ref->getStartLine()-1;
         if (empty($oldDoc)) {
             $oldDocSize = 0;
             $oldDoc = "/**\n*/";
+        } else {
+            $startLine -= $oldDocSize;
         }
         // * ". $ref->getShortName() ." @doctodo write class description for ". $ref->getShortName() ."\n 
         
@@ -299,7 +302,7 @@ class PhpDocController extends Controller
         $updates = [];
         $fileContent = explode("\n", file_get_contents($file));
         if (trim($oldDoc) != trim($newDoc)) {
-            $start = $ref->getStartLine() - 1;
+            $start = $startLine;
             $updates[] = [
                 'inject' => $lines,
                 'length' => $oldDocSize,
