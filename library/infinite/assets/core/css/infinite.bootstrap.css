@@ -18,6 +18,11 @@ span.empty {
 }
 
 /* Bootstrap Bootstrap */
+.list-group-item-heading .badge, 
+.list-group-item-heading .label {
+    margin-left: 5px;
+}
+
 .modal-header {
     padding:9px 15px;
     border-bottom:1px solid #eee;
