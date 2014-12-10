@@ -17,6 +17,52 @@ span.empty {
     text-align: center;
 }
 
+/* Bootstrap Bootstrap */
+.modal-header {
+    padding:9px 15px;
+    border-bottom:1px solid #eee;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+     border-top-left-radius: 5px;
+     border-top-right-radius: 5px;
+ }
+
+.modal-default .modal-header {
+    background-image: linear-gradient(to bottom, #fff 0px, #e0e0e0 100%);
+    background-repeat: repeat-x;
+    border-color: #ccc;
+    text-shadow: 0 1px 0 #fff;
+}
+.modal-primary .modal-header {
+    background-image: linear-gradient(to bottom, #337ab7 0px, #265a88 100%);
+    background-repeat: repeat-x;
+    border-color: #245580;
+}
+.modal-success .modal-header {
+    background-image: linear-gradient(to bottom, #5cb85c 0px, #419641 100%);
+    background-repeat: repeat-x;
+    border-color: #3e8f3e;
+}
+.modal-info .modal-header {
+    background-image: linear-gradient(to bottom, #5bc0de 0px, #2aabd2 100%);
+    background-repeat: repeat-x;
+    border-color: #28a4c9;
+}
+.modal-warning .modal-header {
+    background-image: linear-gradient(to bottom, #f0ad4e 0px, #eb9316 100%);
+    background-repeat: repeat-x;
+    border-color: #e38d13;
+}
+.modal-danger .modal-header {
+    background-image: linear-gradient(to bottom, #d9534f 0px, #c12e2a 100%);
+    background-repeat: repeat-x;
+    border-color: #b92c28;
+    color: #fff;
+    text-shadow: 0 1px 0 #fff;
+}
+
 /* Forms */
 .form-vertical .control-label {
     padding-top: 7px;

@@ -127,6 +127,18 @@ InfiniteInstructionHandler.prototype.handleRefresh = function() {
 	return true;
 };
 
+InfiniteInstructionHandler.prototype.handleMessage = function() {
+	this.options.title = this.options.title || 'Notice';
+	this.options.state = this.options.state || false;
+	this.options.buttons = {
+		'Close': {
+			'state': this.options.buttonState || this.options.state || 'default'
+		}
+	};
+
+	return this.handleDialog();
+}
+
 InfiniteInstructionHandler.prototype.handleDialog = function() {
 	var self = this;
 	if (!this.content) {
@@ -137,10 +149,18 @@ InfiniteInstructionHandler.prototype.handleDialog = function() {
 	var options = {};
 	var $modal = $("<div />", {'class': 'modal fade', 'role': 'dialog', 'tabindex': '-1'});
 	var $dialog = $("<div />", {'class': 'modal-dialog'}).appendTo($modal);
+	if (this.options.state === undefined) {
+		this.options.state = 'default';
+	}
+	$dialog.addClass('modal-' + this.options.state);
+	if (this.options.modalClass !== undefined) {
+		$dialog.addClass(this.options.modalClass);
+	}
 	var $dialogContent = $("<div />", {'class': 'modal-content'}).appendTo($dialog);
 
 	if (this.options.title !== undefined) {
-		var title = $("<div />", {'class': 'modal-header'}).html(this.options.title).appendTo($dialogContent);
+		var titleTag = $("<h4 />", {'class': 'modal-title'}).html(this.options.title);
+		var title = $("<div />", {'class': 'modal-header'}).append(titleTag).appendTo($dialogContent);
 	}
 
 	var $body = $("<div />", {'class': 'modal-body'}).html(this.content).appendTo($dialogContent);

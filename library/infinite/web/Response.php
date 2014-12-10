@@ -53,6 +53,8 @@ class Response extends \yii\web\Response
      * @var __var_baseInstructions_type__ __var_baseInstructions_description__
      */
     public $baseInstructions = [];
+
+    public $taskSet = false;
     /**
      * @var __var_labels_type__ __var_labels_description__
      */
@@ -151,6 +153,7 @@ class Response extends \yii\web\Response
             $i['task'] = 'refresh';
         }
 
+
         if (!$keepProcessing) {
             // @todo set status flashes
             $this->handleFlashStatus();
@@ -187,6 +190,10 @@ class Response extends \yii\web\Response
             if (method_exists($this, $method) && !$this->$method($i)) {
                 throw new Exception("Invalid response task {$task}!");
             }
+        }
+        
+        if ($this->taskSet) {
+            $i['taskSet'] = $this->taskSet;
         }
         return $i;
     }
@@ -283,6 +290,13 @@ class Response extends \yii\web\Response
         return true;
     }
 
+    protected function handleMessage(&$i)
+    {
+
+
+        return true;
+    }
+
     /**
      * __method_handleFlashStatus_description__
      */
@@ -304,6 +318,9 @@ class Response extends \yii\web\Response
      */
     protected function renderContent($layout = true)
     {
+        if (isset($this->content)) {
+            return $this->content;
+        }
         if (is_null(Yii::$app->controller) && !is_null($this->controller)) {
             Yii::$app->controller = $this->controller;
         }
