@@ -33,11 +33,11 @@ $finder = Symfony\CS\Finder\DefaultFinder::create()
 ;
 
 $config = Symfony\CS\Config\Config::create();
-$config->addCustomFixer(new infinite\cs\ShortArrayFixer());
-$config->addCustomFixer(new infinite\cs\DocBlockGenerator());
-
+// $config->addCustomFixer(new infinite\cs\ShortArrayFixer());
+//$config->addCustomFixer(new infinite\cs\DocBlockGenerator());
+//'doc_block_gen', 
 return $config
-    ->fixers(array('short_array', 'doc_block_gen', 'indentation', 'linefeed', 'trailing_spaces', 'unused_use', 'phpdoc_params', 'return', 'php_closing_tag', 'braces', 'extra_empty_lines', 'function_declaration', 'controls_spaces', 'eof_ending', 'elseif'))
+    ->fixers(array('indentation', 'linefeed', 'trailing_spaces', 'unused_use', 'phpdoc_params', 'return', 'php_closing_tag', 'braces', 'extra_empty_lines', 'function_declaration', 'controls_spaces', 'eof_ending', 'elseif', 'short_array_syntax', 'phpdoc_indent', 'phpdoc_params'))
     ->finder($finder);
 
 ?>

@@ -7,7 +7,8 @@
 
 namespace infinite\cs;
 
-use Symfony\CS\FixerInterface;
+use Symfony\CS\AbstractFixer;
+use Symfony\CS\Tokenizer\Tokens;
 
 /**
  * @author Thomas Bachem <mail@thomasbachem.com>
@@ -15,7 +16,7 @@ use Symfony\CS\FixerInterface;
  *
  * All actual conversion from https://github.com/thomasbachem/php-short-array-syntax-converter
  */
-class DocBlockGenerator implements FixerInterface
+class DocBlockGenerator extends AbstractFixer
 {
     public $tokens;
     public $content;
@@ -28,7 +29,6 @@ class DocBlockGenerator implements FixerInterface
         $this->_classes = $this->match('#\n(?:abstract )?class (?<name>\w+)( extends .+)?( implements .+)?\n\{(?<content>.*)\n\}(\n|$)#', $content);
 
         $this->tokens = token_get_all($content);
-        var_dump($this->getClassName());
         return $content;
     }
 
@@ -57,20 +57,6 @@ class DocBlockGenerator implements FixerInterface
         return $sets;
     }
 
-    public function getLevel()
-    {
-        return FixerInterface::ALL_LEVEL;
-    }
-
-    public function getPriority()
-    {
-        return 100;
-    }
-
-    public function supports(\SplFileInfo $file)
-    {
-        return 'php' == pathinfo($file->getFilename(), PATHINFO_EXTENSION);
-    }
 
     public function getName()
     {
