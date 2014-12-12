@@ -618,10 +618,10 @@ InfiniteBrowserRequest.prototype.callback = function(data) {
 (function ($) { 
    $.fn.infiniteBrowser = function (opts) {
    		var $this = this;
-      	if ($this.objectBrowser === undefined) {
-      		$this.objectBrowser = new InfiniteBrowser($this, opts);
+      	if ($this.infiniteBrowserObject === undefined) {
+      		$this.infiniteBrowserObject = new InfiniteBrowser($this, opts);
       	}
 
-         return $this.objectBrowser;
+         return $this.infiniteBrowserObject;
    };
 }(jQuery));
