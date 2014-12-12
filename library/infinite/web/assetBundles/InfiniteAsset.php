@@ -49,6 +49,7 @@ class InfiniteAsset extends AssetBundle
         'yii\jui\JuiAsset',
         'infinite\web\assetBundles\UnderscoreAsset',
         'infinite\web\assetBundles\FontAwesomeAsset',
-        'infinite\web\assetBundles\AjaxFormAsset'
+        'infinite\web\assetBundles\AjaxFormAsset',
+        'infinite\web\assetBundles\BootstrapTypeaheadAsset'
     ];
 }
