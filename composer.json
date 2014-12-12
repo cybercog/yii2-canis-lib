@@ -19,7 +19,8 @@
 		"eternicode/bootstrap-datepicker": "*",
 		"phpdocumentor/reflection-docblock": "2.0.*@dev",
         "bshaffer/oauth2-server-php": "v1.3",
-        "bower-asset/smart-time-ago": "*"
+        "bower-asset/smart-time-ago": "*",
+		"twitter/typeahead.js": "*",
 	},
 	"require-dev": {
 		"phpunit/phpunit": "3.7.*",
