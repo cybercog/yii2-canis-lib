@@ -7,8 +7,6 @@
 
 namespace infinite\web\assetBundles;
 
-use yii\web\AssetBundle;
-
 /**
  * BootstrapTypeaheadAsset [@doctodo write class description for BootstrapTypeaheadAsset]
  *
