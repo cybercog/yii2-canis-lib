@@ -370,6 +370,39 @@ div.required label:after {
     animation: 6s linear 0s normal none infinite running fa-spin;
 }
 
+
+/* Search */
+.infinite-search-result, 
+.infinite-search-result:hover {
+  text-decoration: none;
+  display: block;
+  padding: 10px;
+}
+
+.tt-cursor .infinite-search-result {
+  background-color: rgba(0, 0, 0, .1);
+}
+
+.infinite-search-empty {
+  padding: 5px;
+}
+
+.infinite-search-result .infinite-search-header {
+  font-size: 1.1em;
+  font-weight: 600;
+  margin: 1px;
+}
+.infinite-search-result .infinite-search-sub {
+  font-size: .9em;
+}
+
+.infinite-search-result .infinite-search-icon {
+  float: left;
+  font-size: 1.1em;
+  margin-right: 5px;
+}
+
+
 @media (max-width: 400px) {
     .smart-double-line {
         white-space: normal;
