@@ -68,6 +68,47 @@ span.empty {
     text-shadow: 0 1px 0 #fff;
 }
 
+
+/* Hack for Typeahead */
+.twitter-typeahead {
+  display: block;
+  display: block!important;
+}
+
+.twitter-typeahead .tt-query,
+.twitter-typeahead .tt-hint {
+  margin-bottom: 0;
+}
+
+.tt-hint {
+  display: none;
+}
+.tt-dropdown-menu {
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  background-clip: padding-box;
+  max-height: 300px;
+  padding-right: 5px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.tt-suggestion {
+  display: block;
+  padding: 0;
+  border-bottom: 1px solid #cccccc;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.tt-suggestion:last-child {
+  border-bottom: none;
+}
+
+
 /* Forms */
 .form-vertical .control-label {
     padding-top: 7px;
