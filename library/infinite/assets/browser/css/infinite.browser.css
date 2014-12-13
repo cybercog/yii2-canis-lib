@@ -46,6 +46,10 @@
   margin-left: 5px;
 }
 
+.infinite-browse .browser-item-subdescriptor {
+  font-size: 90%;
+}
+
 .infinite-browse .section .canvas {
   margin: 5px 20px;
 }

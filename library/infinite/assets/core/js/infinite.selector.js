@@ -25,6 +25,7 @@ function InfiniteSelector(parent, options) {
    };
 
    this.options = jQuery.extend(true, {}, defaultOptions, options);
+   console.log(this.options);
    var baseQueryData = {};
    if (this.options.context.relationship && this.options.context.role) {
       var relationshipParts = this.options.context.relationship.id.split(this.options.relationshipSeparator);

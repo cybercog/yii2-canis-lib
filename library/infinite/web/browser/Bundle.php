@@ -313,7 +313,6 @@ class Bundle extends \infinite\base\Object
                 'bundle' => $this
             ]);
         }
-
         return false;
     }
 

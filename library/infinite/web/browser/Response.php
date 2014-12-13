@@ -23,7 +23,7 @@ abstract class Response extends \infinite\base\Object
     /**
      * @var __var__instance_type__ __var__instance_description__
      */
-    protected static $_instance;
+    protected static $_instances = [];
     /**
      * @var __var__bundles_type__ __var__bundles_description__
      */
@@ -37,11 +37,11 @@ abstract class Response extends \infinite\base\Object
     public static function getInstance($static = true)
     {
         if ($static) {
-            if (!isset(static::$_instance)) {
-                static::$_instance = Yii::createObject(['class' => get_called_class()]);
+            $calledClass = get_called_class();
+            if (!isset(static::$_instances[$calledClass])) {
+                static::$_instances[$calledClass] = Yii::createObject(['class' => get_called_class()]);
             }
-
-            return static::$_instance;
+            return static::$_instances[$calledClass];
         } else {
             return Yii::createObject(['class' => get_called_class()]);
         }

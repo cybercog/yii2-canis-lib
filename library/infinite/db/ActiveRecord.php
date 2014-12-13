@@ -36,6 +36,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
      * @var __var_descriptorField_type__ __var_descriptorField_description__
      */
     public $descriptorField;
+    public $descriptorLabel = 'Name';
     public $shortDescriptorField = false;
     public $shortDescriptorLength = 100;
     /**
@@ -573,6 +574,56 @@ class ActiveRecord extends \yii\db\ActiveRecord
         return false;
     }
 
+    public function getSortOptions()
+    {
+        $options = [];
+        $descriptorSort = [];
+        $modelDescriptorFields = $this->descriptorField;
+        if (!is_array($modelDescriptorFields)) {
+            $modelDescriptorFields = [$modelDescriptorFields];
+        }
+        foreach ($modelDescriptorFields as $field) {
+            if ($this->hasAttribute($field)) {
+                $descriptorSort[$field] = SORT_ASC;
+            }
+        }
+        if (!empty($descriptorSort)) {
+            $options[$this->descriptorLabel] = $descriptorSort;
+        }
+        if (empty($options) && $this->hasAttribute('created')) {
+            $options['Created'] = ['created' => SORT_ASC];
+        }
+
+        return $options;
+    }
+
+    public function getDescriptorDefaultOrder($alias = '{alias}', $order = SORT_ASC)
+    {
+        $descriptorField = $this->descriptorField;
+        if (!is_array($descriptorField)) {
+            $descriptorField = [$descriptorField];
+        }
+        $descriptorField = array_reverse($descriptorField);
+        $sortBy = [];
+        foreach ($descriptorField as $field) {
+            if (!$this->hasAttribute($field)) { continue; }
+            $sortBy[$alias . '.'. $field] = $order;
+        }
+        return $sortBy;
+    }
+
+    public function getDefaultOrder($alias = 't')
+    {
+        if (is_null($this->_defaultOrder)) {
+            $this->_defaultOrder = $this->getDescriptorDefaultOrder('{alias}');
+        }
+        $sortBy = [];
+        foreach ($this->_defaultOrder as $key => $value) {
+            $sortBy[strtr($key, ['{alias}' => $alias])] = $value;
+        }
+        return $sortBy;
+    }
+
     protected function parseDescriptorField($config)
     {
         if (is_array($config)) {
@@ -659,7 +710,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
      */
     public function isForeignField($field)
     {
-        return !$this->hasAttribute($field);
+        return !isset($this->{$field});
     }
 
     /**

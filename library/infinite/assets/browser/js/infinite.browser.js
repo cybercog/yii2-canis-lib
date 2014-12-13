@@ -422,10 +422,12 @@ InfiniteBrowserBundle.prototype.initializeList = function(search) {
       var previousStackItem = self.browser.stack[self.getPosition()-1];
       $("<a />", {'href': '#', 'class': 'infinite-browse-back list-group-item'}).html('<i class="glyphicon glyphicon-chevron-left pull-left"></i> Back to <em>'+previousStackItem.descriptor+'</em>').appendTo(self.list).click(function() {
          self.browser.goToPositionIndex(self.getPosition()-1);
+         return false;
       });
       if (previousStackItem.isSelectable) {
          $("<a />", {'href': '#', 'class': 'infinite-browse-select list-group-item'}).html('<i class="glyphicon glyphicon-check pull-right"></i> Select <em>'+previousStackItem.descriptor+'</em>').appendTo(self.list).click(function() {
             self.browser.select(previousStackItem);
+            return false;
          });
       }
    }
@@ -455,6 +457,9 @@ InfiniteBrowserBundle.prototype.appendItem = function(item) {
    this.initializeList();
    if (this.list === null) { return false; }
    var element = $("<a />", {'href': '#', 'class': 'browser-item list-group-item'}).html(item.descriptor).appendTo(self.list);
+   if (item.subdescriptor) {
+      $("<div />", {'class': 'list-group-item-text browser-item-subdescriptor'}).html(item.subdescriptor).appendTo(element);
+   }
    var clickable = false;
    if (item.hasChildren) {
       $("<i />", {'class': 'glyphicon glyphicon-chevron-right pull-right'}).prependTo(element);
@@ -462,6 +467,7 @@ InfiniteBrowserBundle.prototype.appendItem = function(item) {
          self.browser.appendStackItem(self, item);
          self.list.find('.browser-item.active').removeClass('active');
          $(this).addClass('active');
+         return false;
       });
       clickable = true;
    }
@@ -469,6 +475,7 @@ InfiniteBrowserBundle.prototype.appendItem = function(item) {
       var selectIcon = $("<a />", {'href': '#', 'class': 'glyphicon glyphicon-check pull-right'}).prependTo(element);
       var selectFunction = function() {
          self.browser.select(item);
+         return false;
       };
       selectIcon.click(selectFunction);
       if (!clickable) {
