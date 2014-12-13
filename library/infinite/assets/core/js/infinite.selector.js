@@ -25,7 +25,14 @@ function InfiniteSelector(parent, options) {
    };
 
    this.options = jQuery.extend(true, {}, defaultOptions, options);
-   console.log(this.options);
+
+   if (InfiniteLister !== undefined && this.options.callback instanceof InfiniteLister) {
+      var lister = this.options.callback;
+      this.options.callback = function ($selector, item) {
+         lister.addItem(item);
+      };
+   }
+
    var baseQueryData = {};
    if (this.options.context.relationship && this.options.context.role) {
       var relationshipParts = this.options.context.relationship.id.split(this.options.relationshipSeparator);
@@ -57,7 +64,9 @@ function InfiniteSelector(parent, options) {
       this.selectorElements.canvas = $("<div />").addClass('object-selector-canvas').prependTo(this.options.canvasTarget);
    }
    this.selectorElements.selector = $("<div />").addClass('object-selector').appendTo(this.selectorElements.canvas);
-   this.selectorElements.label = $("<label />", {'for': this.searchInputId}).html(this.options.inputLabel).appendTo(this.selectorElements.selector);
+   if (this.options.inputLabel) {
+      this.selectorElements.label = $("<label />", {'for': this.searchInputId}).html(this.options.inputLabel).appendTo(this.selectorElements.selector);
+   }
    this.selectorElements.inputGroup = $("<div />", {'class': 'input-group'}).appendTo(this.selectorElements.selector);
    this.selectorElements.input = $("<input />", {'type': 'text', 'class': 'form-control', 'id': this.searchInputId}).appendTo(this.selectorElements.inputGroup);
    var searchSelectCallback = function(object, datum) {
