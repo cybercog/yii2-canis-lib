@@ -3,13 +3,13 @@ function InfiniteLister($element, config) {
 	this.$element = $element;
 	this.config = jQuery.extend(true, {}, this.defaultConfig, config);
 	this.elements = {};
+	this.items = {};
+	this.init();
 	if (this.config.items !== undefined && !_.isEmpty(this.config.items)) {
 		jQuery.each(this.config.items, function (index, item) {
 			self.addItem(item);
 		});
 	}
-	this.items = {};
-	this.init();
 }
 
 InfiniteLister.prototype.defaultConfig = {
