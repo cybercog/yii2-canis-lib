@@ -1,5 +1,6 @@
 function InfiniteLister($element, config) {
 	var self = this;
+	this.isInitializing = true;
 	this.$element = $element;
 	this.config = jQuery.extend(true, {}, this.defaultConfig, config);
 	this.elements = {};
@@ -10,12 +11,14 @@ function InfiniteLister($element, config) {
 			self.addItem(item);
 		});
 	}
+	this.isInitializing = false;
 }
 
 InfiniteLister.prototype.defaultConfig = {
 	emptyMessage: false
 };
 
+InfiniteLister.prototype.isInitializing = true;
 InfiniteLister.prototype.init = function() {
 	this.elements.$canvas = $("<div />", {'class': 'list-group'}).appendTo(this.$element);
 	this.elements.$emptyMessage = $("<div />", {'class': 'list-group-item list-group-item-warning'}).html(this.config.emptyMessage).appendTo(this.elements.$canvas);
@@ -31,9 +34,11 @@ InfiniteLister.prototype.addItem = function(item) {
 		this.items[item.id] = {};
 		this.items[item.id].$element = this.getItemElement(item);
 		this.items[item.id].meta = item;
-		this.items[item.id].$element.appendTo(this.elements.$canvas)
-		this.$element.trigger('addItem.infiniteLister');
-		this.$element.trigger('changeItems.infiniteLister');
+		this.items[item.id].$element.appendTo(this.elements.$canvas);
+		if (!this.isInitializing) {
+			this.$element.trigger('addItem.infiniteLister');
+			this.$element.trigger('changeItems.infiniteLister');
+		}
 	}
 };
 
