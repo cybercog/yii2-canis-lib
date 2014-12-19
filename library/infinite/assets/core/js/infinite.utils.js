@@ -27,7 +27,6 @@ $.fn.renderSelect = function(options, blank, values) {
     } else if (_.isString(values)) {
         values = [values];
     }
-    $.debug(values);
 
     var $this = $(this);
     $this.html('');
@@ -51,6 +50,31 @@ $.fn.renderSelect = function(options, blank, values) {
             $this.append(option);
         }
     });
+    return this;
+};
+
+
+$.fn.smartSelectConflict = function($conflictSelect, testConflict) {
+    $this = $(this);
+    var currentValue = $this.val();
+    var currentConflictSelectValue = $conflictSelect.val();
+    $conflictSelect.find('option').each(function() {
+        if (testConflict(currentValue, $(this).attr('value'))) {
+            $(this).addClass('disabled');
+        } else {
+            $(this).removeClass('disabled');
+        }
+    });
+    if (!$conflictSelect.data('triggering') && testConflict(currentValue, currentConflictSelectValue)) {
+        var $firstOption = $conflictSelect.find('option:not(.disabled)').first();
+        $conflictSelect.data('triggering', true);
+        $conflictSelect.val($firstOption.attr('value')).change();
+        $conflictSelect.data('triggering', false);
+    }
+    if ($conflictSelect.selectpicker !== undefined) {
+        $conflictSelect.selectpicker('refresh');
+    }
+    return this;
 };
 
 function Timer(callback, delay) {

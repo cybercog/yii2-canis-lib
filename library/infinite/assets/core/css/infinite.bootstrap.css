@@ -189,10 +189,18 @@ span.empty {
 .list-group-item .btn {
 }
 
+/*
+this makes bootstrap-select funky
 .list-group-item .btn.dropdown-toggle {
     padding: 0;
     margin-top: -3px;
 }
+
+.list-group-item .dropdown-toggle,
+.list-group-item .dropdown-toggle:active {
+    background-color: transparent;
+    box-shadow: none;
+}*/
 
 .list-group-item .list-group-item-text.help-text {
     font-size: .85em;
@@ -207,11 +215,6 @@ span.empty {
     width: 15px;
 }
 
-.list-group-item .dropdown-toggle,
-.list-group-item .dropdown-toggle:active {
-    background-color: transparent;
-    box-shadow: none;
-}
 
 .list-group-item.active,
 .list-group-item.active > a,
@@ -411,7 +414,11 @@ div.required label:after {
     animation: 6s linear 0s normal none infinite running fa-spin;
 }
 
-
+/* Bootstrap Select */
+.dropdown-menu > li > a.disabled {
+  color: #b6b6b6;
+  color: #b6b6b6!important;
+}
 /* Search */
 .infinite-search-result, 
 .infinite-search-result:hover {
