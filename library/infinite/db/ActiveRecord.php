@@ -530,9 +530,6 @@ class ActiveRecord extends \yii\db\ActiveRecord
             ],
             'Archivable' => [
                 'class' => 'infinite\db\behaviors\ActiveArchivable',
-            ],
-            'ActiveAccess' => [
-                'class' => 'infinite\db\behaviors\ActiveAccess',
             ]
         ];
     }
