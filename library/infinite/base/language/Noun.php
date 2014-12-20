@@ -63,6 +63,11 @@ class Noun extends \infinite\base\language\Word
         return $this->_singular;
     }
 
+    public function getBase()
+    {
+        return $this->_singular;
+    }
+
     /**
      * Get upper singular
      * @return __return_getUpperSingular_type__ __return_getUpperSingular_description__

@@ -56,6 +56,11 @@ class Verb extends \infinite\base\language\Word
         return $this->_base;
     }
 
+    public function getBase()
+    {
+        return $this->_base;
+    }
+
     /**
      * Get active
      * @param unknown $upper (optional)

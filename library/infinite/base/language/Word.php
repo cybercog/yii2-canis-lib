@@ -12,9 +12,10 @@ namespace infinite\base\language;
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class Word extends \infinite\base\Object
+abstract class Word extends \infinite\base\Object
 {
 
+    abstract public function getBase();
     /**
      * __method_prepare_description__
      * @param unknown $s
