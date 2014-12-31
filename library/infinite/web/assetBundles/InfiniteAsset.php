@@ -27,6 +27,7 @@ class InfiniteAsset extends AssetBundle
      * @inheritdoc
      */
     public $js = [
+        'js/infinite.component.js',
         'js/infinite.utils.js',
         'js/infinite.core.js',
         'js/infinite.bootstrap.js',
@@ -43,13 +44,13 @@ class InfiniteAsset extends AssetBundle
      * @inheritdoc
      */
     public $depends = [
-        'yii\bootstrap\BootstrapAsset',
         'yii\bootstrap\BootstrapThemeAsset',
         'yii\web\JqueryAsset',
         'yii\jui\JuiAsset',
         'infinite\web\assetBundles\UnderscoreAsset',
         'infinite\web\assetBundles\FontAwesomeAsset',
         'infinite\web\assetBundles\AjaxFormAsset',
-        'infinite\web\assetBundles\BootstrapTypeaheadAsset'
+        'infinite\web\assetBundles\BootstrapTypeaheadAsset',
+        'yii\bootstrap\BootstrapAsset',
     ];
 }

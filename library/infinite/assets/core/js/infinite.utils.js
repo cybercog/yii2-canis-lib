@@ -6,6 +6,7 @@ Object.size = function(obj) {
     return size;
 };
 
+
 var waitForFinalEvent = (function () {
   var timers = {};
   return function (callback, ms, uniqueId) {
@@ -18,6 +19,8 @@ var waitForFinalEvent = (function () {
     timers[uniqueId] = setTimeout(callback, ms);
   };
 })();
+
+
 
 $.fn.renderSelect = function(options, blank, values) {
     if (values === undefined) {
