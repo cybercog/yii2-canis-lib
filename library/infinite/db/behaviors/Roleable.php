@@ -424,6 +424,12 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
         return $this->_currentRoles;
     }
 
+
+    public function clearRoleCache()
+    {
+        $this->_roleCurrent = [];
+    }
+    
     /**
      * __method_clearAroRole_description__
      * @param __param_aro_type__ $aro __param_aro_description__
@@ -433,9 +439,12 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
     {
         $aclRole = $this->getRole($aro, false);
         if ($aclRole) {
-            $aclRole->delete();
+            if (!$aclRole->delete()) {
+                \d($aclRole); 
+                exit;
+                return false;
+            }
         }
-
         return true;
     }
 

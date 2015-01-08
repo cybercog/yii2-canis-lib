@@ -95,6 +95,7 @@ class Response extends \yii\web\Response
      * @var __var_forceInstructions_type__ __var_forceInstructions_description__
      */
     public $forceInstructions = false;
+    public $forceFlash = false;
     /**
      * @var __var_disableInstructions_type__ __var_disableInstructions_description__
      */
@@ -158,6 +159,8 @@ class Response extends \yii\web\Response
             // @todo set status flashes
             $this->handleFlashStatus();
             return $i;
+        } elseif ($this->forceFlash) {
+            $this->handleFlashStatus();
         }
         if (!in_array($this->getStatusCode(), [302])) {
             $delayedInstructions = json_decode(Yii::$app->session->getFlash('delayed-instructions', json_encode([])), true);
