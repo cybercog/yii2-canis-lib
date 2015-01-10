@@ -7,6 +7,8 @@
 
 namespace infinite\db\models;
 
+use yii\web\IdentityInterface;
+
 /**
  * Group is the model class for table "group".
  *
@@ -21,7 +23,7 @@ namespace infinite\db\models;
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class Group extends \infinite\db\ActiveRecord
+class Group extends \infinite\db\ActiveRecord implements IdentityInterface
 {
     /**
      * @inheritdoc
@@ -176,5 +178,48 @@ class Group extends \infinite\db\ActiveRecord
         }
 
         return $group;
+    }
+
+    public static function findIdentity($id)
+    {
+        $primaryKey = static::primaryKey();
+
+        return static::find()->disableAccessCheck()->andWhere([$primaryKey[0] => $id])->one();
+    }
+
+    /**
+     * __method_findIdentityByAccessToken_description__
+     * @param __param_token_type__ $token __param_token_description__
+     */
+    public static function findIdentityByAccessToken($token, $type = NULL)
+    {
+    }
+
+    /**
+     * Get id
+     * @return int|string current user ID
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Get auth key
+     * @return string current user auth key
+     */
+    public function getAuthKey()
+    {
+        return $this->auth_key;
+    }
+
+    /**
+     * __method_validateAuthKey_description__
+     * @param string  $authKey
+     * @return boolean if auth key is valid for current user
+     */
+    public function validateAuthKey($authKey)
+    {
+        return $this->getAuthKey() === $authKey;
     }
 }

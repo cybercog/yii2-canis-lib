@@ -52,6 +52,16 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
         ];
     }
 
+
+    public function clearActiveAccessCache()
+    {
+        $this->_objectAccess = null;
+        $this->_access = null;
+        $this->_acaId = null;
+        $this->_accessingObject = null;
+        $this->_accessMap = [];
+    }
+
     /**
      * __method_fillAccessMap_description__
      * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__ [optional]

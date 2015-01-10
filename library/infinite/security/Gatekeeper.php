@@ -78,6 +78,9 @@ class Gatekeeper extends \infinite\base\Component
 
     public function clearCache() {
         static::$_cache = [];
+        $this->_primaryAro = null;
+        $this->_requestors = null;
+        $this->_objectCanCache = [];
     }
     /**
      * Set authority

@@ -14,6 +14,8 @@ class Cron extends Component
     const EVENT_MORNING = '__CRON_MORNING';
     const EVENT_EVENING = '__CRON_EVENING';
     const EVENT_MIDNIGHT = '__CRON_MIDNIGHT';
+    const EVENT_WEEKLY = '__CRON_WEEKLY';
+    const EVENT_MONTHLY = '__CRON_MONTHLY';
 
     protected static $_instance;
 
@@ -32,6 +34,8 @@ class Cron extends Component
                 'morningHour' => '9',
                 'eveningHour' => '18',
                 'midnightHour' => '00',
+                'weeklyDay' => '0',
+                'monthlyDay' => '1',
             ];
             if (isset(Yii::$app->params['cron'])) {
                 $this->_settings = array_merge($this->_settings, Yii::$app->params['cron']);
@@ -53,6 +57,12 @@ class Cron extends Component
         }
         if ($this->isHour($this->settings['midnightHour'])) {
             $this->trigger(static::EVENT_MIDNIGHT, $event);
+            if ($this->isDayOfWeek($this->settings['weeklyDay'])) {
+                $this->trigger(static::EVENT_WEEKLY, $event);
+            }
+            if ($this->isDayOfMonth($this->settings['monthlyDay'])) {
+                $this->trigger(static::EVENT_MONTHLY, $event);
+            }
         }
         return $event->isValid;
     }
@@ -61,5 +71,15 @@ class Cron extends Component
     {
         $currentHour = (int) date("G");
         return $currentHour == $hour;
+    }
+    public function isDayOfWeek($dayOfWeek)
+    {
+        $currentDayOfWeek = (int) date("w");
+        return $currentDayOfWeek == $dayOfWeek;
+    }
+    public function isDayOfMonth($dayOfMonth)
+    {
+        $currentDayOfMonth = (int) date("j");
+        return $currentDayOfMonth == $dayOfMonth;
     }
 }
