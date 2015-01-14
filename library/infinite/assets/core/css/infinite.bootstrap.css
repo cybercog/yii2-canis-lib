@@ -246,6 +246,22 @@ h5.list-group-item-heading {
     color: rgba(255,255,255,.8);
 }
 
+h2.panel-title .btn-group {
+  margin-top: -7px;
+}
+
+h3.panel-title .btn-group {
+  margin-top: -7px;
+}
+
+h4.panel-title .btn-group {
+  margin-top: -7px;
+}
+
+.btn .icon-with-label {
+  margin-right: 5px;
+}
+
 .list-group-item-heading,
 .list-group-item-text,
 .list-group-item-pre {

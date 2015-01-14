@@ -141,3 +141,82 @@ InfiniteComponent.prototype.set = function(name, value) {
 		this.trigger('change ' + eventName);
 	}
 }
+
+InfiniteComponent.prototype.generatePanel = function($parent, title, state) {
+	if (title === undefined) {
+		title = false;
+	}
+	if (state === undefined) {
+		state = 'default';
+	}
+	var view = {};
+	view.$canvas = $("<div />", {'class': 'panel panel-'+state}).appendTo($parent);
+	if (title) {
+		if (typeof title === 'string') {
+			title = {'label': title};
+		}
+		if (title.menu === undefined) {
+			title.menu = false;
+		}
+		if (title.level === undefined) {
+			title.level = 1;
+		}
+		title.level  = parseInt(title.level , 10);
+		title.level  = title.level  + 2;
+		view.$header = $("<div />", {'class': 'panel-heading'}).appendTo(view.$canvas);
+		view.$title = $("<h"+title.level+" />", {'class': 'panel-title'}).html(title.label).appendTo(view.$header);
+		if (title.menu) {
+			var $btnGroup = this.generateButtonGroup(title.menu).appendTo(view.$title).addClass('pull-right');
+		}
+	}
+	view.$body = $("<div />", {'class': 'panel-body'}).appendTo(view.$canvas);
+	return view;
+};
+
+InfiniteComponent.prototype.generateButtonGroup = function(buttons, options) {
+	var self = this;
+	if (options === undefined) {
+		options = {};
+	}
+	var defaultButtonConfig = {
+		'field': 'button',
+		'onClick': false,
+		'icon': false,
+		'label': false,
+		'url': false,
+		'state': 'primary',
+		'options': {}
+	};
+	var size = options.size || 'sm';
+	delete options.size;
+	var $btnGroup = $("<div />", options).addClass('btn-group btn-group-'+size);
+	jQuery.each(buttons, function(index, button) {
+		button = jQuery.extend(true, {}, defaultButtonConfig, button);
+		if (button.url) {
+			button.field = 'a';
+			button.options.href = button.url;
+		}
+		var $btn = $("<"+button.field+"/>", button.options).appendTo($btnGroup).addClass('btn btn-'+button.state);
+		var $icon = false;
+		if (button.icon) {
+			$icon = $("<span />").addClass(button.icon).addClass('icon').appendTo($btn);
+		}
+		if (button.label) {
+			$("<span />").html(button.label).appendTo($btn);
+			if ($icon) {
+				$icon.addClass('icon-with-label');
+			}
+			$btn.attr('title', button.label);
+		}
+		if (button.onClick) {
+			$btn.click(function(event) {
+				var result = button.onClick(event, button);
+				if (result === null) {
+					return false;
+				}
+				return result;
+			});
+		}
+	});
+	return $btnGroup;
+};
