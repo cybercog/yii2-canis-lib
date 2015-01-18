@@ -49,7 +49,7 @@ class Bundle extends \infinite\base\Object
     /**
      * @var __var__items_type__ __var__items_description__
      */
-    protected $_items;
+    protected $_items = [];
     /**
      * @var __var__handled_type__ __var__handled_description__
      */
@@ -155,11 +155,9 @@ class Bundle extends \infinite\base\Object
         $package['typeOptions'] = $this->typeOptions;
         $package['total'] = $this->total;
         $package['bundle'] = false;
-        if (isset($this->_items)) {
-            $package['bundle'] = ['offset' => $this->offset, 'size' => count($this->_items), 'items' => []];
-            foreach ($this->_items as $item) {
-                $package['bundle']['items'][$item->id] = $item->package();
-            }
+        $package['bundle'] = ['offset' => $this->offset, 'size' => count($this->_items), 'items' => []];
+        foreach ($this->_items as $item) {
+            $package['bundle']['items'][$item->id] = $item->package();
         }
 
         return $package;

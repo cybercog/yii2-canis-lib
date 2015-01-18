@@ -333,7 +333,7 @@ InfiniteBrowserBundle.prototype.isLoaded = function() {
 
 InfiniteBrowserBundle.prototype.loadBundleResponse = function(bundleResponse, request) {
    var self = this;
-
+   console.log(['bundleResponse', bundleResponse]);
    this.fetched = true;
    if (bundleResponse.filterQuery === false) {
       // update instructions
@@ -379,6 +379,7 @@ InfiniteBrowserBundle.prototype.loadBundleResponse = function(bundleResponse, re
 };
 
 InfiniteBrowserBundle.prototype.emptyListNotice = function() {
+   if (this.$list === null ) { return false; }
    this.initializeList(false);
    $("<div />", {'class': 'list-group-item browser-none-message'}).append($("<div />", {'class': 'alert alert-danger'}).html('None found!')).appendTo(this.$list);
 };
@@ -420,6 +421,7 @@ InfiniteBrowserBundle.prototype.handleSearch = function() {
 InfiniteBrowserBundle.prototype.initializeList = function(search) {
    var self = this;
    if (this.listInitialized) { return true; }
+   if (this.$list === null ) { return false; }
    if (search === undefined) {
       search = true;
    }
