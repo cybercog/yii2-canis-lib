@@ -176,7 +176,10 @@ InfiniteComponent.prototype.generatePanel = function($parent, title, state) {
 InfiniteComponent.prototype.generateButtonGroup = function(buttons, options) {
 	var self = this;
 	if (options === undefined) {
-		options = {};
+		options = {
+			'replace': {
+			}
+		};
 	}
 	var defaultButtonConfig = {
 		'field': 'button',
@@ -194,7 +197,7 @@ InfiniteComponent.prototype.generateButtonGroup = function(buttons, options) {
 		button = jQuery.extend(true, {}, defaultButtonConfig, button);
 		if (button.url) {
 			button.field = 'a';
-			button.options.href = button.url;
+			button.options.href = button.url.template(options.replace);
 		}
 		var $btn = $("<"+button.field+"/>", button.options).appendTo($btnGroup).addClass('btn btn-'+button.state);
 		var $icon = false;
@@ -206,7 +209,7 @@ InfiniteComponent.prototype.generateButtonGroup = function(buttons, options) {
 			if ($icon) {
 				$icon.addClass('icon-with-label');
 			}
-			$btn.attr('title', button.label);
+			$btn.attr('title', button.label.template(options.replace));
 		}
 		if (button.onClick) {
 			$btn.click(function(event) {

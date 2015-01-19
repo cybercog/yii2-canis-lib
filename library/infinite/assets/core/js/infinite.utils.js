@@ -6,6 +6,12 @@ Object.size = function(obj) {
     return size;
 };
 
+String.prototype.template = function(values) {
+    console.log(['replace', this, values]);
+    return this.replace(/{(\w)}/g, function(match, name) {
+        return values[name] || match;
+    });
+};
 
 var waitForFinalEvent = (function () {
   var timers = {};

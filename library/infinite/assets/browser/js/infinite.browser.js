@@ -220,6 +220,7 @@ function InfiniteBrowserBundle (browser, options) {
       'total': null,
       'bundle': false
    };
+   InfiniteComponent.call(this);
    this.browser = browser;
    this.$element = null;
    this.fetched = false;
@@ -242,6 +243,7 @@ function InfiniteBrowserBundle (browser, options) {
    }
 }
 
+InfiniteBrowserBundle.prototype = jQuery.extend(true, {}, InfiniteComponent.prototype);
 
 InfiniteBrowserBundle.prototype.getInstructions = function() {
    var instructions = this.options.instructions;

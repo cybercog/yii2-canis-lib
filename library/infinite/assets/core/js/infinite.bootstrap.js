@@ -17,6 +17,7 @@ jQuery.fn.isElementInViewport = function() {
     );
 }
 
+
 jQuery.fn.extend({
 	matchPositionSize: function($base, minimums) {
 		return this.each(function() {
