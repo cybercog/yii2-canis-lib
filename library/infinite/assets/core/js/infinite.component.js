@@ -197,7 +197,7 @@ InfiniteComponent.prototype.generateButtonGroup = function(buttons, options) {
 		button = jQuery.extend(true, {}, defaultButtonConfig, button);
 		if (button.url) {
 			button.field = 'a';
-			button.options.href = button.url.template(options.replace);
+			button.options.href = decodeURIComponent(button.url).template(options.replace);
 		}
 		var $btn = $("<"+button.field+"/>", button.options).appendTo($btnGroup).addClass('btn btn-'+button.state);
 		var $icon = false;
@@ -205,7 +205,7 @@ InfiniteComponent.prototype.generateButtonGroup = function(buttons, options) {
 			$icon = $("<span />").addClass(button.icon).addClass('icon').appendTo($btn);
 		}
 		if (button.label) {
-			$("<span />").html(button.label).appendTo($btn);
+			$("<span />").html(button.label.template(options.replace)).appendTo($btn);
 			if ($icon) {
 				$icon.addClass('icon-with-label');
 			}

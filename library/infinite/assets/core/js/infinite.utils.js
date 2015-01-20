@@ -6,11 +6,15 @@ Object.size = function(obj) {
     return size;
 };
 
-String.prototype.template = function(values) {
-    console.log(['replace', this, values]);
-    return this.replace(/{(\w)}/g, function(match, name) {
-        return values[name] || match;
-    });
+String.prototype.template = function (o) {
+    return this.replace(/{([^{}]*)}/g,
+              function (a, b) {
+                var r = o[b];
+                return typeof r === 'string' ||
+                       typeof r === 'number' ?
+                       r : a;
+              }
+       );
 };
 
 var waitForFinalEvent = (function () {

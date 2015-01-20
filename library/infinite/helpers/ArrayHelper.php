@@ -15,6 +15,23 @@ namespace infinite\helpers;
 class ArrayHelper extends \yii\helpers\ArrayHelper
 {
 
+    public static function fingerprint($item)
+    {
+        if (is_array($item)) {
+            ksort($item);
+            $fingers = [];
+            foreach ($item as $k => $i) {
+                $fingers[$k] = static::fingerprint($i);
+            }
+            return md5(json_encode($fingers));
+        } elseif(is_object($item)) {
+            if ($item instanceof \yii\db\ActiveRecord) {
+                return $item->primaryKey;
+            }
+        }
+        return md5(json_encode($item));
+    }
+
     /**
     * @inheritdoc
      */

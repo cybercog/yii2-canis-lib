@@ -180,4 +180,30 @@ trait QueryTrait
 
         return false;
     }
+
+    public static function generateLikeWhere($like, $operator = 'and')
+    {
+        $where = [$operator];
+        foreach ($like as $column => $value) {
+            $id = ':'. md5(microtime(true) . uniqid() . rand(0,1000));
+            $this->params[$id] = $value;
+            $where[] = $column .' LIKE ' . $id;
+        }
+        return $where;
+    }
+
+    public function like($like, $operator = 'and')
+    {
+        $this->where(static::generateLikeWhere($like, $operator));
+    }
+
+    public function orLike($like, $operator = 'and')
+    {
+        $this->orWhere(static::generateLikeWhere($like, $operator));
+    }
+
+    public function andLike($like, $operator = 'and')
+    {
+        $this->andWhere(static::generateLikeWhere($like, $operator));
+    }
 }
