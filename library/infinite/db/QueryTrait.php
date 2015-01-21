@@ -181,7 +181,7 @@ trait QueryTrait
         return false;
     }
 
-    public static function generateLikeWhere($like, $operator = 'and')
+    public function generateLikeWhere($like, $operator = 'and')
     {
         $where = [$operator];
         foreach ($like as $column => $value) {
@@ -194,16 +194,16 @@ trait QueryTrait
 
     public function like($like, $operator = 'and')
     {
-        $this->where(static::generateLikeWhere($like, $operator));
+        return $this->where($this->generateLikeWhere($like, $operator));
     }
 
     public function orLike($like, $operator = 'and')
     {
-        $this->orWhere(static::generateLikeWhere($like, $operator));
+        return $this->orWhere($this->generateLikeWhere($like, $operator));
     }
 
     public function andLike($like, $operator = 'and')
     {
-        $this->andWhere(static::generateLikeWhere($like, $operator));
+        return $this->andWhere($this->generateLikeWhere($like, $operator));
     }
 }
