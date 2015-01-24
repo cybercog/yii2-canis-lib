@@ -133,13 +133,18 @@ class Cacher extends \infinite\base\Component
     {
         if (!is_null($category)) {
             $chain = [];
-            $chain[] = new TagDependency(['tags' => ['category', $category], 'reusable' => $reusable]);
-            $chain[] = new TagDependency(['tags' => $group, 'reusable' => $reusable]);
+            $chain[] = static::categoryDependency($category, $reusable);
+            $chain[] = new TagDependency(['tags' => [$group], 'reusable' => $reusable]);
 
             return static::chainedDependency($chain);
         } else {
-            return new TagDependency(['tags' => $group, 'reusable' => $reusable]);
+            return new TagDependency(['tags' => [$group], 'reusable' => $reusable]);
         }
+    }
+
+    public static function categoryDependency($category, $reusable = true)
+    {
+        return new TagDependency(['tags' => ['category-' .$category], 'reusable' => $reusable]);
     }
 
     /**
@@ -148,6 +153,11 @@ class Cacher extends \infinite\base\Component
      */
     public static function invalidateGroup($group)
     {
-        TagDependency::invalidate(Yii::$app->{static::$component}, $group);
+        TagDependency::invalidate(Yii::$app->{static::$component}, [$group]);
+    }
+
+    public static function invalidateCategory($category)
+    {
+        TagDependency::invalidate(Yii::$app->{static::$component}, ['category-'.$category]);
     }
 }
