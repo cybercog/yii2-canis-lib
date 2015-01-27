@@ -161,7 +161,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     {
         $result = parent::afterSave($insert, $changedAttributes);
         if (static::$groupCache && $this->wasDirty) {
-            Cacher::invalidateGroup(self::cacheGroupKey());
+            Cacher::invalidateGroup(static::cacheGroupKey());
         }
         $this->_wasDirty = false;
 
@@ -217,7 +217,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
      */
     public static function cacheDependency()
     {
-        return Cacher::groupDependency(self::cacheGroupKey());
+        return Cacher::groupDependency(static::cacheGroupKey());
     }
 
     /**
@@ -248,7 +248,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     public function setTabularId($value)
     {
         $this->tabularIdHuman = $value;
-        $this->_tabularId = self::generateTabularId($value);
+        $this->_tabularId = static::generateTabularId($value);
     }
 
     public function getTabularId()
@@ -276,9 +276,9 @@ class ActiveRecord extends \yii\db\ActiveRecord
     public static function generateTabularId($id)
     {
         if ($id === false) { return false; }
-        if (substr($id, 0, strlen(self::TABULAR_PREFIX)) === self::TABULAR_PREFIX) { return $id; }
+        if (substr($id, 0, strlen(static::TABULAR_PREFIX)) === static::TABULAR_PREFIX) { return $id; }
 
-        return self::TABULAR_PREFIX.substr(md5($id), 0, 10);
+        return static::TABULAR_PREFIX.substr(md5($id), 0, 10);
     }
 
     /**
@@ -288,7 +288,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     public static function getPrimaryTabularId()
     {
         return false;
-        return self::generateTabularId(self::FORM_PRIMARY_MODEL);
+        return static::generateTabularId(static::FORM_PRIMARY_MODEL);
     }
 
     /**
@@ -301,7 +301,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
         if (empty($models)) { return false; }
         \d($models);exit;
         foreach ($models as $tabKey => $model) {
-            if ($tabKey === self::getPrimaryTabularId(self::baseClassName())) {
+            if ($tabKey === static::getPrimaryTabularId(static::baseClassName())) {
                 return $model;
             }
         }
@@ -337,7 +337,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
      */
     public function getModelAlias()
     {
-        return self::modelAlias();
+        return static::modelAlias();
     }
 
     /**
@@ -374,9 +374,9 @@ class ActiveRecord extends \yii\db\ActiveRecord
     public static function clearCache($model = null)
     {
         if (is_null($model)) {
-            self::$_cache = [];
-        } elseif (isset(self::$_cache[$model])) {
-            self::$_cache[$model] = [];
+            static::$_cache = [];
+        } elseif (isset(static::$_cache[$model])) {
+            static::$_cache[$model] = [];
         }
 
         return true;
@@ -385,7 +385,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     public function getCacheSize()
     {
         $n = 0;
-        foreach (self::$_cache as $model => $cache) {
+        foreach (static::$_cache as $model => $cache) {
             $n += count($cache);
         }
         return $n;
@@ -402,7 +402,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
         $class = get_called_class();
         $dummy = new $class;
 
-        return self::findOne([$dummy->tableName() .'.'. $dummy->primaryKey()[0] => $id], $checkAccess);
+        return static::findOne([$dummy->tableName() .'.'. $dummy->primaryKey()[0] => $id], $checkAccess);
     }
 
     /**
@@ -410,7 +410,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
      */
     public static function findOne($where, $checkAccess = true)
     {
-        return self::_findCache('one', $where, $checkAccess);
+        return static::_findCache('one', $where, $checkAccess);
     }
 
     /**
@@ -418,7 +418,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
      */
     public static function findAll($where = false, $checkAccess = true)
     {
-        return self::_findCache('all', $where, $checkAccess);
+        return static::_findCache('all', $where, $checkAccess);
     }
 
     /**
@@ -429,7 +429,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
      */
     public static function findAllCache($where = false, $checkAccess = true)
     {
-        return self::_findCache('all', $where, $checkAccess);
+        return static::_findCache('all', $where, $checkAccess);
     }
 
     /**
@@ -444,13 +444,13 @@ class ActiveRecord extends \yii\db\ActiveRecord
         if (is_array($where)) {
             ksort($where);
         }
-        $model = self::className();
+        $model = static::className();
         $key = md5(serialize(['type' => $type, 'where' => $where, 'access' => $checkAccess]));
-        if (!isset(self::$_cache[$model])) {
-            self::$_cache[$model] = [];
+        if (!isset(static::$_cache[$model])) {
+            static::$_cache[$model] = [];
         }
-        if (!isset(self::$_cache[$model][$key])) {
-            $r = self::find();
+        if (!isset(static::$_cache[$model][$key])) {
+            $r = static::find();
             if ($where) {
                 $r->where($where);
             }
@@ -459,7 +459,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
             }
             $r = $r->$type();
             if ($r) {
-                self::$_cache[$model][$key] = $r;
+                static::$_cache[$model][$key] = $r;
             } else {
                 if ($type === 'one') {
                     return false;
@@ -468,7 +468,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
             }
         }
 
-        return self::$_cache[$model][$key];
+        return static::$_cache[$model][$key];
     }
 
     /**
@@ -478,7 +478,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     public static function tableExists()
     {
         try {
-            self::getTableSchema();
+            static::getTableSchema();
         } catch (\Exception $e) {
             return false;
         }
@@ -773,7 +773,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
             return false;
         }
 
-        return self::find()->pk($this->primaryKey)->count() > 0;
+        return static::find()->pk($this->primaryKey)->count() > 0;
     }
 
     /**
@@ -808,7 +808,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
             return true;
         } else {
             $event = new ModelEvent;
-            $this->trigger(self::EVENT_AFTER_SAVE_FAIL, $event);
+            $this->trigger(static::EVENT_AFTER_SAVE_FAIL, $event);
 
             return false;
         }
