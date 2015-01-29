@@ -140,6 +140,7 @@ InfiniteComponent.prototype.set = function(name, value) {
 	if (triggerChange && !this.isInitializing && !this.isLoading) {
 		this.trigger('change ' + eventName);
 	}
+	return triggerChange;
 }
 
 InfiniteComponent.prototype.generatePanel = function($parent, title, state) {
