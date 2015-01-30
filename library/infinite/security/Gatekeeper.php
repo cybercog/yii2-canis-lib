@@ -137,7 +137,7 @@ class Gatekeeper extends \infinite\base\Component
      */
     public function canPublic($controlledObject, $action = 'read')
     {
-        $requestKey = md5(serialize([__FUNCTION__, func_get_args()]));
+        $requestKey = md5(json_encode([__FUNCTION__, func_get_args()]));
         if (!array_key_exists($requestKey, self::$_cache)) {
             self::$_cache[$requestKey] = false;
             $accessGroups = ['public', 'clients'];
@@ -168,10 +168,10 @@ class Gatekeeper extends \infinite\base\Component
      */
     public function is($group, $accessingObject = null)
     {
-        $requestKey = md5(serialize([__FUNCTION__, func_get_args()]));
+        $accessingObject = $this->getAccessingObject($accessingObject);
+        $accessingObjectKey = is_object($accessingObject) ? $accessingObject->primaryKey : $accessingObject;
+        $requestKey = md5(json_encode([__FUNCTION__, func_get_args(), $accessingObjectKey]));
         if (!array_key_exists($requestKey, self::$_cache)) {
-            $accessingObject = $this->getAccessingObject($accessingObject);
-
             if (is_array($group)) {
                 foreach ($group as $g) {
                     if ($this->is($g, $accessingObject)) {
@@ -773,7 +773,9 @@ class Gatekeeper extends \infinite\base\Component
         if ($this->proxy) {
             return $this->proxy;
         }
-
+        if (isset(Yii::$app->user) && Yii::$app->user->isAnonymous) {
+            return $this->getPublicGroup();
+        }
         if (is_null($this->_primaryAro)) {
             if (isset(Yii::$app->user) && !Yii::$app->user->isGuest && !empty(Yii::$app->user->id)) {
                 $this->_primaryAro = Yii::$app->user->identity;
@@ -889,7 +891,8 @@ class Gatekeeper extends \infinite\base\Component
     {
         $accessingObject = $this->getAccessingObject($accessingObject);
         $groupClass = Yii::$app->classes['Group'];
-        $cacheKey = Cacher::key([__FUNCTION__, is_object($accessingObject) ? $accessingObject->primaryKey : $accessingObject], true);
+        $accessingObjectKey = is_object($accessingObject) ? $accessingObject->primaryKey : $accessingObject;
+        $cacheKey = Cacher::key([__FUNCTION__, $accessingObjectKey], true);
         if (!isset(self::$_cache[$cacheKey])) {
             self::$_cache[$cacheKey] = $accessingObject->parents($groupClass, [], ['disableAccessCheck' => true]);
         }
@@ -923,10 +926,11 @@ class Gatekeeper extends \infinite\base\Component
      */
     public function getGroups($accessingObject = null, $flatten = false)
     {
-        $requestKey = md5(serialize([__FUNCTION__, func_get_args()]));
+        $accessingObject = $this->getAccessingObject($accessingObject);
+        $accessingObjectKey = is_object($accessingObject) ? $accessingObject->primaryKey : $accessingObject;
+        $requestKey = md5(json_encode([__FUNCTION__, func_get_args(), $accessingObjectKey]));
 
         if (!isset(self::$_cache[$requestKey])) {
-            $accessingObject = $this->getAccessingObject($accessingObject);
             $groups = [];
             $parents = $accessingObject->parents(Yii::$app->classes['Group'], [], ['disableAccessCheck' => 1]);
             if (!empty($parents)) {

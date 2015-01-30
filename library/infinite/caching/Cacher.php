@@ -56,7 +56,7 @@ class Cacher extends \infinite\base\Component
             }
         }
         if ($hash) {
-            $key = md5(json_encode($key));
+            $key = md5(Yii::$app->params['salt'] . json_encode($key));
         }
 
         return $key;

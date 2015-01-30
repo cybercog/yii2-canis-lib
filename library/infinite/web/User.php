@@ -16,6 +16,16 @@ use Yii;
  */
 class User extends \yii\web\User
 {
+    public $isAnonymous = false;
+
+    public function getIdentity($autoRenew = true)
+    {
+        if ($this->isAnonymous) {
+            return;
+        }
+        return parent::getIdentity($autoRenew);
+    }
+    
     /**
     * @inheritdoc
      */
