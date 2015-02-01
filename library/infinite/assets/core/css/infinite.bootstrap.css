@@ -23,6 +23,15 @@ span.empty {
     margin-left: 5px;
 }
 
+.panel-title .form-inline .form-group {
+    margin-top: -8px;
+    margin-left: 5px;
+}
+
+.panel-title .inline-title {
+  display: inline-block;
+}
+
 .modal-header {
     padding:9px 15px;
     border-bottom:1px solid #eee;

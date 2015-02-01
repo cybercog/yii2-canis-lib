@@ -166,6 +166,9 @@ InfiniteComponent.prototype.generatePanel = function($parent, title, state) {
 		title.level  = title.level  + 2;
 		view.$header = $("<div />", {'class': 'panel-heading'}).appendTo(view.$canvas);
 		view.$title = $("<h"+title.level+" />", {'class': 'panel-title'}).html(title.label).appendTo(view.$header);
+		if (title.form) {
+			title.form.$element.appendTo(view.$title);
+		}
 		if (title.menu) {
 			var $btnGroup = this.generateButtonGroup(title.menu).appendTo(view.$title).addClass('pull-right');
 		}

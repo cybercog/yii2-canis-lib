@@ -64,4 +64,14 @@ $preparer.add(function(context) {
 		$(window).bind("resizeDone", fixParent);
 		fixParent();
 	});
+	$("[data-width-match]", context).each(function() {
+		if ($(this).hasClass('width-matched')) {
+			return true;
+		}
+		var widths = [];
+		$($(this).data('width-match')).each(function () {
+			widths.push($(this).width());
+		});
+		$($(this).data('width-match')).width(Math.max(widths)).addClass('width-matched');
+	});
 });
