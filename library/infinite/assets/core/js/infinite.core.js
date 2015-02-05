@@ -10,6 +10,13 @@ $(window).resize(function () {
     }, 250, "window-resize-event");
 });
 
+$(function() {
+	// When our page loads, check to see if it contains and anchor
+	infiniteAnchorScrollFix(false, window.location.hash);
+	// Intercept all anchor clicks
+	$("body").on("click", "a[href^='#']", infiniteAnchorScrollFix);
+});
+
 $preparer.add(function(context) {
 	$("form", context).submit(function(event) {
 		var e = jQuery.Event( "beforeSubmit" );

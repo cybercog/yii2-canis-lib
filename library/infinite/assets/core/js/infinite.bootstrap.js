@@ -16,6 +16,82 @@ jQuery.fn.isElementInViewport = function() {
         rect.right <= (window.innerWidth || document.documentElement.clientWidth) /*or $(window).width() */
     );
 }
+$.fn.infiniteNavBarHeight = function() {
+	var navOuterHeight = 0;
+	$('nav.navbar-fixed-top').each(function() {
+		navOuterHeight += $(this).outerHeight();
+	});
+	navOuterHeight += 10;
+	return navOuterHeight;
+};
+$.fn.infiniteAffix = function (options) {
+	var $self = $(this);
+	var $parent = $(this).parent().first();
+	console.log($parent);
+	$self.width($parent.innerWidth()-parseInt($parent.css('padding-left'), 10)-parseInt($parent.css('padding-right'), 10));
+	$(window).on('resizeDone', function() {
+		$self.width($parent.innerWidth()-parseInt($parent.css('padding-left'), 10)-parseInt($parent.css('padding-right'), 10));
+	});
+	if (options === undefined) {
+		options = {};
+	}
+	var navOuterHeight = $(this).infiniteNavBarHeight();
+	var calculateBottom = function() {
+		this.bottom = $('.footer').outerHeight(true);
+		return this.bottom;
+	};
+	var calculateTop = function () {
+		var offsetTop = $self.offset().top;
+		var margin = parseInt($self.css('margin-top'), 10);
+		this.top = offsetTop - navOuterHeight - margin;
+		return this.top;
+	};
+	if (options.offset === undefined) {
+		options.offset = {};
+	}
+	if (options.offset.top === undefined) {
+		options.offset.top = calculateTop;
+	}
+	if (options.offset.bottom === undefined) {
+		options.offset.bottom = calculateBottom;
+	}
+	setTimeout(function() {
+		$self.affix(options);
+	}, 200);
+	$self.on('affixed.bs.affix', function() {
+		$(this).css('top', navOuterHeight);
+	});
+	$self.on('affixed-top.bs.affix', function() {
+		$(this).css('top', null);
+	});
+	$self.on('affixed-bottom.bs.affix', function() {
+
+	});
+};
+
+/**
+  * Check an href for an anchor. If exists, and in document, scroll to it.
+  * If href argument omitted, assumes context (this) is HTML Element,
+  * which will be the case when invoked by jQuery after an event
+  */
+function infiniteAnchorScrollFix(event, href) {
+    href = typeof(href) == "string" ? href : $(this).attr("href");
+    if(!href) return;
+    var fromTop = $(this).infiniteNavBarHeight() + 10;
+    var $target = $(href);
+    if($target.length) {
+        $('html, body').animate({ scrollTop: $target.offset().top - fromTop });
+        if(history && "pushState" in history) {
+            // history.pushState({}, document.title, window.location.pathname + href);
+        }
+        if (event) {
+        	event.preventDefault();
+        	console.log(['fixScroll', event]);
+        	return true;
+        }
+        return false;
+    }
+}    
 
 jQuery.fn.extend({
 	matchPositionSize: function($base, minimums) {
