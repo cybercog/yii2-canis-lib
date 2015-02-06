@@ -57,6 +57,12 @@ class Cacher extends \infinite\base\Component
         }
         if ($hash) {
             $key = md5(Yii::$app->params['salt'] . json_encode($key));
+        } else {
+            if (is_array($key)) {
+                $key[] = Yii::$app->params['salt'];
+            } else {
+                $key = Yii::$app->params['salt'] . $key;
+            }
         }
 
         return $key;
