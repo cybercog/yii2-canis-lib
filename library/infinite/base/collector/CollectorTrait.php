@@ -55,7 +55,7 @@ trait CollectorTrait
 
     public function getCollectorItemClass()
     {
-        return 'infinite\\base\\collector\\Item';
+        return Item::className();
     }
 
     public function prepareComponent($component)
