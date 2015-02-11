@@ -7,6 +7,8 @@
 
 namespace infinite\helpers;
 
+use Yii;
+
 /**
  * StringHelper [@doctodo write class description for StringHelper]
  *
@@ -145,5 +147,11 @@ class StringHelper extends \yii\helpers\StringHelper
         }
 
         return ($score / $total) * 100;
+    }
+
+    public static function spellNumber($number)
+    {
+        $a = new \NumberFormatter(Yii::$app->language, \NumberFormatter::SPELLOUT); 
+        return $a->format($number);
     }
 }

@@ -11,29 +11,24 @@ use ReflectionClass;
 
 trait ObjectTrait
 {
-    protected $_memoryId;
-    protected $_backtrace;
-    public $watch = false;
+    protected $_m;
     public function init()
     {
         parent::init();
-        if ($this->watch) {
-            $this->_backtrace = array_slice(debug_backtrace(), 1);
-        }
     }
 
     public function clearMemoryId()
     {
-        $this->_memoryId = null;
+        $this->_m = null;
     }
 
     public function getMemoryId()
     {
-        if (is_null($this->_memoryId)) {
-            $this->_memoryId = self::classNamespace() .':'. md5(microtime() . mt_rand());
+        if (is_null($this->_m)) {
+            $this->_m = self::classNamespace() .':'. md5(microtime() . mt_rand());
         }
 
-        return $this->_memoryId;
+        return $this->_m;
     }
     public function configure($settings)
     {
