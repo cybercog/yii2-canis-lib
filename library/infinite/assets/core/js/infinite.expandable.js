@@ -42,6 +42,7 @@ jQuery.fn.checkExpandable = function() {
 
 		}
 	});
+	return $(this);
 }
 
 $preparer.add(function(context) {

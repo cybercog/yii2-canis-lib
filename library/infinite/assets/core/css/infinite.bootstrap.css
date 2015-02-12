@@ -3,6 +3,10 @@ a.disabled {
     color: #b6b6b6;
 }
 
+.preformatted {
+  white-space: pre;
+}
+
 button.disabled,
 input[type="button"].disabled,
 input[type="submit"].disabled {
@@ -17,7 +21,22 @@ span.empty {
     text-align: center;
 }
 
+.modal-xl {
+    width: 95%;
+}
+
 /* Bootstrap Bootstrap */
+@media (min-width: 920px) {
+  .modal-xl {
+      width: 900px;
+  }
+}
+@media (min-width: 1220px) {
+  .modal-xl {
+      width: 1200px;
+  }
+}
+
 .list-group-item-heading .badge, 
 .list-group-item-heading .label {
     margin-left: 5px;
