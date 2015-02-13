@@ -122,7 +122,6 @@ InfiniteComponent.prototype.set = function(name, value) {
 	var upperCamel = name.charAt(0).toUpperCase() + name.substr(1);
 	var functionName = 'set' + upperCamel;
 	var eventName = 'change' + upperCamel;
-	//console.log(functionName);
 	if (this[functionName] !== undefined) {
 		triggerChange = this[functionName](value);
 	} else if (this[name] !== undefined && this[name] instanceof InfiniteComponent) {
