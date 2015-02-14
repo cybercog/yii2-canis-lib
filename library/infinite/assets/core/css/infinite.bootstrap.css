@@ -47,6 +47,9 @@ span.empty {
     margin-left: 5px;
 }
 
+.breadcrumb li .dropdown {
+    display: inline-block;
+}
 .panel-title .inline-title {
   display: inline-block;
 }

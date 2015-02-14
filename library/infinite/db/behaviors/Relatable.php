@@ -646,9 +646,9 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
      * @param array $objectOptions __param_objectOptions_description__ [optional]
      * @return __return_getParentIds_type__ __return_getParentIds_description__
      */
-    public function getParentIds($model = false, $relationOptions = [], $objectOptions = [])
+    public function getParentIds($model = false, $relationOptions = [])
     {
-        return $this->queryParentRelations($model, $relationOptions, $objectOptions)->select('parent_object_id')->column();
+        return $this->queryParentRelations($model, $relationOptions)->select('parent_object_id')->column();
     }
 
     /**
@@ -658,9 +658,9 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
      * @param array $objectOptions __param_objectOptions_description__ [optional]
      * @return __return_getChildIds_type__ __return_getChildIds_description__
      */
-    public function getChildIds($model = false, $relationOptions = [], $objectOptions = [])
+    public function getChildIds($model = false, $relationOptions = [])
     {
-        return $this->queryChildRelations($model, $relationOptions, $objectOptions)->select('child_object_id')->column();
+        return $this->queryChildRelations($model, $relationOptions)->select('child_object_id')->column();
     }
 
     /**
@@ -719,9 +719,9 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
      * @param array $objectOptions __param_objectOptions_description__ [optional]
      * @return __return_queryParentRelations_type__ __return_queryParentRelations_description__
      */
-    public function queryParentRelations($model = false, $relationOptions = [], $objectOptions = [])
+    public function queryParentRelations($model = false, $relationOptions = [])
     {
-        return $this->queryRelations('parents', $model, $relationOptions, $objectOptions);
+        return $this->queryRelations('parents', $model, $relationOptions);
     }
 
     /**
@@ -741,9 +741,9 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
      * @param array $relationOptions __param_relationOptions_description__ [optional]
      * @return __return_queryAllRelations_type__ __return_queryAllRelations_description__
      */
-    public function queryAllRelations($model = false, $relationOptions = [])
+    public function queryAllRelations($model = false, $relationOptions = [], $objectOptions = [])
     {
-        return $this->queryRelations(false, $model, $relationOptions);
+        return $this->queryRelations(false, $model, $relationOptions, $objectOptions);
     }
 
     /**
@@ -761,7 +761,6 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
         $query->from([$this->relationAlias => $relationClass::tableName()]);
         $this->_prepareRelationQuery($query, $relationshipType, $model, $relationOptions);
         $this->_prepareRegistryModelCheck($query, $relationshipType, $model);
-
         return $query;
     }
 
@@ -942,7 +941,6 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
             unset($objectOptions['params']);
         }
         $this->_applyOptions($query, $objectOptions);
-
         return $query;
     }
 
