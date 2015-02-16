@@ -50,6 +50,9 @@ span.empty {
 .breadcrumb li .dropdown {
     display: inline-block;
 }
+.breadcrumb li .dropdown span {
+    color: #ccc;
+}
 .panel-title .inline-title {
   display: inline-block;
 }
