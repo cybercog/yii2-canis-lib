@@ -335,7 +335,6 @@ InfiniteBrowserBundle.prototype.isLoaded = function() {
 
 InfiniteBrowserBundle.prototype.loadBundleResponse = function(bundleResponse, request) {
    var self = this;
-   console.log(['bundleResponse', bundleResponse]);
    this.fetched = true;
    if (bundleResponse.filterQuery === false) {
       // update instructions
@@ -389,7 +388,7 @@ InfiniteBrowserBundle.prototype.emptyListNotice = function() {
 InfiniteBrowserBundle.prototype.updateState = function (state, filterQuery) {
    if (filterQuery === undefined) {
       filterQuery = false;
-   } else {
+   } else if (typeof filterQuery === 'string') {
       filterQuery = filterQuery.trim();
    }
    var currentState = this.state;
@@ -407,13 +406,13 @@ InfiniteBrowserBundle.prototype.updateState = function (state, filterQuery) {
 InfiniteBrowserBundle.prototype.handleSearch = function() {
    var self = this;
    if (!this.filterQuery) { return false; }
-   if (this.searchCache[this.filterQuery] !== undefined) {
+   var filterKey = JSON.stringify(this.filterQuery);
+   if (this.searchCache[filterKey] !== undefined) {
       this.drawItems(this.searchCache[this.filterQuery]);
    } else {
       clearTimeout(self.filterTimer);
       self.filterTimer = setTimeout(function() {         
          self.fetch(function(bundle) {
-
          });
       }, 250);
    }
