@@ -22,7 +22,7 @@ class BootstrapDatepickerAsset extends AssetBundle
     /**
      * @inheritdoc
      */
-    public $css = ['css/datepicker.css'];
+    //public $css = ['css/datepicker.css'];
     /**
      * @inheritdoc
      */
