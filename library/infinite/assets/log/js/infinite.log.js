@@ -28,7 +28,7 @@ InfiniteLog.prototype.updateData = function() {
 			this.elements.bars._overall.$canvas = $("<div />", {'class': 'list-group-item'}).appendTo(this.elements.$topProgressList);
 			this.elements.bars._overall.$title = $("<div />", {'class': 'list-group-item-heading'}).html('<strong>Overall Progress</strong>').appendTo(this.elements.bars._overall.$canvas);
 			this.elements.bars._overall.$wrapper = $("<div />", {'class': 'progress'}).appendTo(this.elements.bars._overall.$canvas);
-			this.elements.bars._overall.$progress = $("<div />", {'class': 'infinite-bar infinite-bar-striped active', 'role': 'progressbar', 'aria-valuenow': 0, 'aria-valuemin': 0, 'aria-valuemax': 100}).appendTo(this.elements.bars._overall.$wrapper);
+			this.elements.bars._overall.$progress = $("<div />", {'class': 'progress-bar progress-bar-striped active', 'role': 'progressbar', 'aria-valuenow': 0, 'aria-valuemin': 0, 'aria-valuemax': 100}).appendTo(this.elements.bars._overall.$wrapper);
 		}
 		this.elements.bars._overall.percentage = Math.round((this.data.progress.done / this.data.progress.total)*100, 1);
 		this.elements.bars._overall.$progress.html(this.elements.bars._overall.percentage +"%").attr('aria-valuenow', this.elements.bars._overall.percentage).css({'width': this.elements.bars._overall.percentage+'%'});
@@ -211,7 +211,7 @@ InfiniteLog.prototype.drawTasks = function ($wrapperCanvas, tasks, parentTask) {
 			self.elements.bars[id].$title = $("<div />", {'class': 'list-group-item-heading'}).html(task.name).appendTo(self.elements.bars[id].$canvas);
 			self.elements.bars[id].$estimate = $("<span />", {'class': 'label label-primary'}).html('').hide().appendTo(self.elements.bars[id].$title);
 			self.elements.bars[id].$wrapper = $("<div />", {'class': 'progress'}).appendTo(self.elements.bars[id].$canvas);
-			self.elements.bars[id].$progress = $("<div />", {'class': 'infinite-bar infinite-bar-striped infinite-bar-info active', 'role': 'progressbar', 'aria-valuenow': 0, 'aria-valuemin': 0, 'aria-valuemax': 100}).appendTo(self.elements.bars[id].$wrapper);
+			self.elements.bars[id].$progress = $("<div />", {'class': 'progress-bar progress-bar-striped progress-bar-info active', 'role': 'progressbar', 'aria-valuenow': 0, 'aria-valuemin': 0, 'aria-valuemax': 100}).appendTo(self.elements.bars[id].$wrapper);
 			self.elements.bars[id].$subtaskCanvas = $("<div />", {'class': 'well expanded-only'}).appendTo(self.elements.bars[id].$canvas);
 		}
 		if (task.estimate) {
