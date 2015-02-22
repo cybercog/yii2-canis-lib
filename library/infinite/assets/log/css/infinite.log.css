@@ -1,0 +1,72 @@
+.infinite-log .infinite-log-preformatted {
+	white-space: pre;
+}
+
+.infinite-log .list-group-item-heading .badge,
+.infinite-log .list-group-item-heading .label {
+	margin-left: 5px;
+}
+
+.infinite-log .infinite-log-output {
+  overflow: auto;
+  display: block;
+}
+
+.infinite-log .infinite-sidebar.affix {
+    position: fixed;
+    margin-top: -100px;
+}
+
+.infinite-log .infinite-sidebar .ic-column{
+  float: none;
+}
+
+.infinite-log .infinite-sidebar.affix-bottom {
+    position: absolute;
+}
+
+.infinite-log .list-group-item.row {
+    margin: 0;
+}
+.infinite-log .list-group-item .detail-value {
+    font-weight: bold;
+}
+
+.infinite-log .list-group-item .detail-icon {
+    font-size: 120%;
+}
+
+/* Affixed Sidebar */
+/*.infinite-log .infinite-sidebar {
+    width: 358px;
+    margin: 0;
+    padding: 0;
+}
+
+
+
+@media (max-width: 992px) {
+    .infinite-log .infinite-sidebar,
+    .infinite-log .infinite-sidebar.affix,
+    .infinite-log .infinite-sidebar.affix-bottom,
+    .infinite-log .infinite-sidebar.affix-top
+ {
+      position: relative;
+      width: 100%;
+      margin-bottom: 20px;
+      top: auto;
+      left: auto;
+    }
+}
+
+@media (min-width: 992px) {
+    .infinite-log .infinite-sidebar .nav > .active > ul {
+        display: block;
+    }
+}
+@media (max-width: 1200px) {
+	.infinite-log .infinite-sidebar {
+		width: 291px;
+	}
+
+}*/

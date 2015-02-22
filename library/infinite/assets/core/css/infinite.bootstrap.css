@@ -516,3 +516,35 @@ div.required label:after {
 }
 @media (max-width: 1200px) {
 }
+
+
+.infinite-affix.affix {
+
+}
+
+.infinite-affix.affix {
+    position: fixed;
+}
+
+.infinite-affix.affix-bottom {
+    position: absolute;
+}
+
+.infinite-affix .nav {
+    display: block;
+}
+
+
+@media (max-width: 992px) {
+    .infinite-affix,
+    .infinite-affix.affix,
+    .infinite-affix.affix-bottom,
+    .infinite-affix.affix-top
+ {
+      position: relative;
+      width: 100%;
+      margin-bottom: 20px;
+      top: auto;
+      left: auto;
+    }
+}

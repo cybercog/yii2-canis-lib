@@ -27,7 +27,7 @@ $.fn.infiniteNavBarHeight = function() {
 $.fn.infiniteAffix = function (options) {
 	var $self = $(this);
 	var $parent = $(this).parent().first();
-	console.log($parent);
+	$(this).addClass('infinite-affix');
 	$self.width($parent.innerWidth()-parseInt($parent.css('padding-left'), 10)-parseInt($parent.css('padding-right'), 10));
 	$(window).on('resizeDone', function() {
 		$self.width($parent.innerWidth()-parseInt($parent.css('padding-left'), 10)-parseInt($parent.css('padding-right'), 10));
@@ -58,6 +58,7 @@ $.fn.infiniteAffix = function (options) {
 	setTimeout(function() {
 		$self.affix(options);
 	}, 200);
+	
 	$self.on('affixed.bs.affix', function() {
 		$(this).css('top', navOuterHeight);
 	});
@@ -65,7 +66,6 @@ $.fn.infiniteAffix = function (options) {
 		$(this).css('top', null);
 	});
 	$self.on('affixed-bottom.bs.affix', function() {
-
 	});
 };
 

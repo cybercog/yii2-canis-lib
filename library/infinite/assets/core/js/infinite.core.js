@@ -33,7 +33,7 @@ $preparer.add(function(context) {
 		var $this = $(this);
 		var defaultSettings = {'min': false, 'max': false};
 		var settings = jQuery.extend({}, defaultSettings, $this.data('height'));
-		console.log(settings);
+		// console.log(settings);
 		jQuery.each(['max', 'min'], function(index, item) {
 			var cssProperty = item + "-height";
 
@@ -61,7 +61,7 @@ $preparer.add(function(context) {
 			var $parent = $this.parent();
 		}
 		$parent.css({display: 'block'});
-		console.log($parent);
+		// console.log($parent);
 		var fixParent = function() {
 			if ($parent.innerHeight() < $this.outerHeight()) {
 				var newHeight = parseInt($this.outerHeight(), 10) + offset;

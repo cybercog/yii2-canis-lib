@@ -3,34 +3,3 @@
     margin: 0;
     padding: 0;
 }
-
-.infinite-auto-nav.affix {
-
-}
-
-.infinite-auto-nav.affix {
-    position: fixed;
-}
-
-.infinite-auto-nav.affix-bottom {
-    position: absolute;
-}
-
-.infinite-auto-nav .nav {
-    display: block;
-}
-
-
-@media (max-width: 992px) {
-    .infinite-auto-nav,
-    .infinite-auto-nav.affix,
-    .infinite-auto-nav.affix-bottom,
-    .infinite-auto-nav.affix-top
- {
-      position: relative;
-      width: 100%;
-      margin-bottom: 20px;
-      top: auto;
-      left: auto;
-    }
-}
