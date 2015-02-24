@@ -145,12 +145,12 @@ class Task extends \infinite\base\Component
 
     public function getPercentageDone()
     {
-        return round(($this->progressDone / $this->progressTotal) * 100, 2);
+      return round(($this->progressDone / $this->progressTotal) * 100, 2);
     }
 
     public function getPercentageRemaining()
     {
-        return round(($this->progressRemaining / $this->progressTotal) * 100, 2);
+      return round(($this->progressRemaining / $this->progressTotal) * 100, 2);
     }
 
     /**
@@ -175,12 +175,14 @@ class Task extends \infinite\base\Component
         if (!empty($this->tasks)) {
             $n = [];
             foreach ($this->tasks as $task) {
+              if (empty($task->progressTotal)) { continue; }
                 $n[] = ($task->weight * ($task->progressDone / $task->progressTotal));
             }
 
             return array_sum($n);
         }
 
+        if (empty($this->progressTotal)) { return; }
         return $this->progressTotal - $this->progressRemaining;
     }
 
@@ -229,6 +231,7 @@ class Task extends \infinite\base\Component
 
     public function getRate($limit = null)
     {
+        if (!$this->status->linearTasks) { return false; }
         if (!empty($this->tasks) || count($this->_stepDurations) < max(5, $limit)) {
             return false;
         }
@@ -242,6 +245,7 @@ class Task extends \infinite\base\Component
 
     public function getRateGrowth($x)
     {
+        if (!$this->status->linearTasks) { return false; }
         if (!empty($this->tasks) || count($this->_stepDurations) < min(100, .1 * $this->progressTotal)) {
             return false;
         }
@@ -272,6 +276,7 @@ class Task extends \infinite\base\Component
 
     public function getDurationEstimate()
     {
+        if (!$this->status->linearTasks) { return false; }
         if (!empty($this->tasks)) {
             $n = 0;
             foreach ($this->tasks as $task) {
@@ -430,7 +435,7 @@ class Task extends \infinite\base\Component
             }
         }
 
-        if (isset($this->ended)) {
+        if (isset($this->ended) && !$this->status->linearTasks) {
             $task['duration'] = Date::shortDuration($this->ended - $this->started);
         }
 

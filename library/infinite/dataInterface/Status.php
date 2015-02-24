@@ -21,6 +21,7 @@ class Status extends \infinite\base\Component
     const MESSAGE_LEVEL_ERROR = '_e';
 
     public $lastUpdate;
+    public $linearTasks = true;
     public $cleaned = false;
     /**
      * @var __var__status_type__ __var__status_description__
@@ -154,6 +155,7 @@ class Status extends \infinite\base\Component
     {
         $n = [];
         foreach ($this->tasks as $task) {
+          if (empty($task->progressTotal)) { continue; }
             $n[] = ($task->weight * ($task->progressDone / $task->progressTotal));
         }
 
