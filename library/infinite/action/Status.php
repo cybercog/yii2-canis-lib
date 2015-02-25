@@ -5,7 +5,7 @@
  * @license http://www.infinitecascade.com/license/
  */
 
-namespace infinite\dataInterface;
+namespace infinite\action;
 
 use Yii;
 
@@ -20,9 +20,11 @@ class Status extends \infinite\base\Component
     const MESSAGE_LEVEL_WARNING = '_w';
     const MESSAGE_LEVEL_ERROR = '_e';
 
+    protected $_interactions = [];
     public $lastUpdate;
     public $linearTasks = true;
     public $cleaned = false;
+
     /**
      * @var __var__status_type__ __var__status_description__
      */

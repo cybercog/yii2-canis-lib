@@ -5,7 +5,7 @@
  * @license http://www.infinitecascade.com/license/
  */
 
-namespace infinite\dataInterface;
+namespace infinite\action;
 
 use Yii;
 use infinite\helpers\Math;

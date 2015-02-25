@@ -61,6 +61,11 @@ class Verb extends \infinite\base\language\Word
         return $this->_base;
     }
 
+    public function getSimplePresent($upper = false) 
+    {
+        return $this->prepare($this->base, $upper);
+    }
+    
     /**
      * Get active
      * @param unknown $upper (optional)

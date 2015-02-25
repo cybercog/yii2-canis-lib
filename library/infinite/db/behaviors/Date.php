@@ -32,7 +32,7 @@ class Date extends \infinite\db\behaviors\ActiveRecord
     /**
      * @var __var_humanTimeFormat_type__ __var_humanTimeFormat_description__
      */
-    public $humanTimeFormat = "g:i a";
+    public $humanTimeFormat = "g:i:s a";
     /**
      * @var __var_humanDateFormat_type__ __var_humanDateFormat_description__
      */
@@ -157,6 +157,37 @@ class Date extends \infinite\db\behaviors\ActiveRecord
         }
 
         return $field;
+    }
+
+    public function convertToDatabaseDate($attributes = null)
+    {
+        if ($attributes === null) {
+            $attributes = $this->owner->attributes;
+        }
+        $handles = $this->getHandle();
+        foreach ($attributes as $key => $value) {
+            if (!isset($handles[$key])) {
+                continue;
+            }
+            $attributes[$key] = $this->_formatForDatabase($value, $handles[$key]);
+        }
+        return $attributes;
+    }
+
+
+    public function convertToHumanDate($attributes = null)
+    {
+        if ($attributes === null) {
+            $attributes = $this->owner->attributes;
+        }
+        $handles = $this->getHandle();
+        foreach ($attributes as $key => $value) {
+            if (!isset($handles[$key])) {
+                continue;
+            }
+            $attributes[$key] = $this->_formatForHuman($value, $handles[$key]);
+        }
+        return $attributes;
     }
 
     /**
