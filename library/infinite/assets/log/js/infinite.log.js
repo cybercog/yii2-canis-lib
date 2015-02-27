@@ -73,7 +73,7 @@ InfiniteLog.prototype.drawInfo = function (info) {
 			'value': function(values, $detail, $detailValue) {
 				var value = values['estimatedTimeRemaining'];
 				$detailValue.html(value);
-				if (values['status'] !== 'running') {
+				if (values['status'] !== 'running' || values['status'] !== 'paused') {
 					$detail.hide();
 				} else {
 					$detail.show();
@@ -103,6 +103,10 @@ InfiniteLog.prototype.drawInfo = function (info) {
 					case 'running':
 						$detail.addClass('list-group-item-info');
 						$detailValue.html('Running');
+					break;
+					case 'paused':
+						$detail.addClass('list-group-item-warning');
+						$detailValue.html('Paused (Attention Required)');
 					break;
 					case 'error':
 						$detail.addClass('list-group-item-danger');

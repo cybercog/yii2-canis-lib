@@ -21,6 +21,12 @@ abstract class Action extends \infinite\base\Object implements InteractiveAction
     }
 
 
+    public function save()
+    {
+        \d("Whaaatt?");exit;
+        return true;
+    }
+
 	public function cancel()
 	{
 		return true;
@@ -34,6 +40,11 @@ abstract class Action extends \infinite\base\Object implements InteractiveAction
 	}
 
 
+    public function getInteractions()
+    {
+        return $this->_interactions;
+    }
+    
     public function hasInteractions()
     {
         return !empty($this->_interactions);
@@ -47,6 +58,9 @@ abstract class Action extends \infinite\base\Object implements InteractiveAction
                 unset($this->_interactions[$id]);
                 $resolved = true;
             }
+        }
+        if ($resolved) {
+            $this->save();
         }
     }
 
@@ -68,6 +82,21 @@ abstract class Action extends \infinite\base\Object implements InteractiveAction
         return $interaction;
     }
 
+    public function handleInteractions($sleep = 30)
+    {
+        return true;
+    }
+
+    public function pauseAction()
+    {
+        return true;
+    }
+
+    public function resumeAction()
+    {
+        return true;
+    }
+
     public function getInteractionsPackage()
     {
         if (empty($this->_interactions)) {
@@ -75,6 +104,7 @@ abstract class Action extends \infinite\base\Object implements InteractiveAction
         }
         $p = [];
         foreach ($this->_interactions as $key => $interaction) {
+            if ($interaction->resolved) { continue; }
             $p[$key] = $interaction->package();
         }
         return $p;

@@ -20,10 +20,10 @@ class Status extends \infinite\base\Component
     const MESSAGE_LEVEL_WARNING = '_w';
     const MESSAGE_LEVEL_ERROR = '_e';
 
-    protected $_interactions = [];
     public $lastUpdate;
     public $linearTasks = true;
     public $cleaned = false;
+    public $paused = false;
 
     /**
      * @var __var__status_type__ __var__status_description__
@@ -87,6 +87,20 @@ class Status extends \infinite\base\Component
                 $task->status = $this;
             }
         }
+    }
+
+    public function pause()
+    {
+        $this->paused = true;
+        $this->save();
+        return $this;
+    }
+    
+    public function resume()
+    {
+        $this->paused = false;
+        $this->save();
+        return $this;
     }
 
     public function getMessages()

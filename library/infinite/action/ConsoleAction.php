@@ -12,10 +12,14 @@ class ConsoleAction extends Action
             $response = false;
             switch ($interaction->inputType) {
                 case 'select':
+                    Console::output("Please select one: ");
                     $options = $interaction->options['options'];
-                    $response = Console::prompt($interaction->label, $options);
-                    while (empty($response)) {
-                        $response = Console::prompt($interaction->label, $options);
+                    foreach ($options as $key => $value) {
+                        Console::output("\t$key - $value");
+                    }
+                    $response = Console::select($interaction->label, $options);
+                    while (empty($response) || !isset($options[$response])) {
+                        $response = Console::select($interaction->label, $options);
                     }
                 break;
                 default:
