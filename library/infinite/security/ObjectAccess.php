@@ -266,7 +266,7 @@ class ObjectAccess extends \infinite\base\Component
             $this->_roles = Yii::$app->gk->getObjectRoles($this->object);
             foreach ($this->specialRequestors as $special => $requestor) {
                 if (!is_object($requestor['object'])) {
-                    \d($this->specialRequestors);exit;
+                    continue;
                 }
                 if (!array_key_exists($requestor['object']->primaryKey, $this->_roles)) {
                     $this->_roles[$requestor['object']->primaryKey] = $this->getRoleObject($requestor['object']);

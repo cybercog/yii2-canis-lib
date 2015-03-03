@@ -23,7 +23,6 @@ abstract class Action extends \infinite\base\Object implements InteractiveAction
 
     public function save()
     {
-        \d("Whaaatt?");exit;
         return true;
     }
 

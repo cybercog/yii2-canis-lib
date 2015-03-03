@@ -223,18 +223,17 @@ span.empty {
 .list-group-item .btn {
 }
 
-/*
-this makes bootstrap-select funky
-.list-group-item .btn.dropdown-toggle {
+
+.list-group-item .condensed-menu .btn.dropdown-toggle {
     padding: 0;
     margin-top: -3px;
 }
 
-.list-group-item .dropdown-toggle,
-.list-group-item .dropdown-toggle:active {
+.list-group-item .condensed-menu .dropdown-toggle,
+.list-group-item .condensed-menu .dropdown-toggle:active {
     background-color: transparent;
     box-shadow: none;
-}*/
+}
 
 .list-group-item .list-group-item-text.help-text {
     font-size: .85em;
