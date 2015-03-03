@@ -200,8 +200,8 @@ class Status extends \infinite\base\Component
     public function setCommandOutput($value)
     {
         $this->lastUpdate = microtime(true);
-
-        return $this->_commandOutput = $value;
+        $this->_commandOutput = $value;
+        return $this;
     }
 
     public function setLog($log)
