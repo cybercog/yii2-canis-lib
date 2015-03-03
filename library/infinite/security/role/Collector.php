@@ -47,7 +47,7 @@ class Collector extends \infinite\base\collector\Collector
      */
     public function getCollectorItemClass()
     {
-        return 'infinite\\security\\role\\Item';
+        return Item::className();
     }
 
     /**
@@ -96,6 +96,7 @@ class Collector extends \infinite\base\collector\Collector
         if (!Yii::$app->isDbAvailable) {
             return $component;
         }
+        Yii::beginProfile('Component:::role::prepare');
         if (!isset($component['systemId'])) { return false; }
         $roleClass = Yii::$app->classes['Role'];
         $component['object'] = isset($this->tableRegistry[$component['systemId']]) ? $this->tableRegistry[$component['systemId']] : false;
@@ -109,6 +110,7 @@ class Collector extends \infinite\base\collector\Collector
             $this->_tableRegistry[$component['systemId']] = $component['object'];
             Yii::trace("Role has been initialized {$component['name']} ({$component['systemId']})");
         }
+        Yii::endProfile('Component:::role::prepare');
 
         return $component;
     }

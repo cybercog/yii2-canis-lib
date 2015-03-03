@@ -72,10 +72,14 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
             $this->_init_collectors = null;
 
             // initialize
+            Yii::beginProfile(__CLASS__.'::'.__FUNCTION__.':::afterLoad');
             $this->trigger(self::EVENT_AFTER_LOAD);
+            Yii::endProfile(__CLASS__.'::'.__FUNCTION__.':::afterLoad');
 
             // final round
+            Yii::beginProfile(__CLASS__.'::'.__FUNCTION__.':::afterInit');
             $this->trigger(self::EVENT_AFTER_INIT);
+            Yii::endProfile(__CLASS__.'::'.__FUNCTION__.':::afterInit');
             Yii::endProfile(__CLASS__.'::'.__FUNCTION__);
             $this->_loaded = true;
         }

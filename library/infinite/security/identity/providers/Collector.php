@@ -72,7 +72,7 @@ class Collector extends \infinite\base\collector\Collector
      */
     public function getCollectorItemClass()
     {
-        return 'infinite\\security\\identity\\providers\\Item';
+        return Item::className();
     }
 
     public function attemptCreate($username, $password)
@@ -145,6 +145,7 @@ class Collector extends \infinite\base\collector\Collector
         if (!Yii::$app->isDbAvailable) {
             return $component;
         }
+        Yii::beginProfile('Component:::identityProviders::prepare');
         if (!isset($component['systemId'])) { return false; }
         $roleClass = Yii::$app->classes['IdentityProvider'];
         $component['object'] = isset($this->tableRegistry[$component['systemId']]) ? $this->tableRegistry[$component['systemId']] : false;
@@ -159,7 +160,7 @@ class Collector extends \infinite\base\collector\Collector
             $this->_tableRegistry[$component['systemId']] = $component['object'];
             Yii::trace("Identity Provider has been initialized {$component['name']} ({$component['systemId']})");
         }
-
+        Yii::endProfile('Component:::identityProviders::prepare');
         return $component;
     }
 

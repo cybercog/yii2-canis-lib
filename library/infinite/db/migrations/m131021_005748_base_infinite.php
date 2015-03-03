@@ -37,6 +37,7 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
         $this->createIndex('aclAccessingObject', 'acl', 'accessing_object_id', false);
         $this->createIndex('aclControlledObject', 'acl', 'controlled_object_id', false);
         $this->createIndex('aclAcaRegistry', 'acl', 'aca_id', false);
+        $this->createIndex('aclModifiedIndex', 'acl', 'modified', false);
         $this->createIndex('aclCombo', 'acl', 'accessing_object_id,controlled_object_id', false);
         $this->createIndex('aclComboAccess', 'acl', 'accessing_object_id,controlled_object_id,access', false);
         $this->createIndex('aclComboAca', 'acl', 'accessing_object_id,controlled_object_id,aca_id', false);
