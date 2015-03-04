@@ -2,8 +2,6 @@
 
 namespace infiniteunit\library\helpers;
 
-use Infinite;
-
 use infinite\helpers\Date;
 use infiniteunit\TestCase;
 
@@ -117,7 +115,7 @@ class DateTest extends TestCase
 
         $t = strtotime("+12 hours", $nd);
 
-        $this->assertEquals("tomorrow at ". Date::date("g:iA", $t), Date::relativeDate($t, null, true));
+        $this->assertEquals("tomorrow at ".Date::date("g:iA", $t), Date::relativeDate($t, null, true));
 
         $t = strtotime("+30 seconds", $nd);
         $this->assertEquals("in 30 seconds", Date::relativeDate($t));
@@ -125,6 +123,5 @@ class DateTest extends TestCase
         $t = strtotime("+30 minutes", $nd);
         $this->assertEquals("in 30 minutes", Date::relativeDate($t));
         Date::now(null);
-
     }
 }

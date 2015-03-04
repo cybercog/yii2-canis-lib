@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -12,7 +13,7 @@ use infinite\caching\Cacher;
 use infinite\helpers\ArrayHelper;
 
 /**
- * ObjectAccess [@doctodo write class description for ObjectAccess]
+ * ObjectAccess [@doctodo write class description for ObjectAccess].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -41,6 +42,7 @@ class ObjectAccess extends \infinite\base\Component
 
     /**
      * Prepares object for serialization.
+     *
      * @return __return___sleep_type__ __return___sleep_description__
      */
     public function __sleep()
@@ -61,8 +63,10 @@ class ObjectAccess extends \infinite\base\Component
     }
 
     /**
-     * Get
+     * Get.
+     *
      * @param __param_object_type__ $object __param_object_description__
+     *
      * @return __return_get_type__ __return_get_description__
      */
     public static function get($object)
@@ -81,7 +85,7 @@ class ObjectAccess extends \infinite\base\Component
     }
 
     /**
-     * __method_load_description__
+     * __method_load_description__.
      */
     public function load()
     {
@@ -90,8 +94,10 @@ class ObjectAccess extends \infinite\base\Component
     }
 
     /**
-     * __method_save_description__
+     * __method_save_description__.
+     *
      * @param __param_data_type__ $data __param_data_description__
+     *
      * @return __return_save_type__ __return_save_description__
      */
     public function save($data)
@@ -128,8 +134,10 @@ class ObjectAccess extends \infinite\base\Component
     }
 
     /**
-     * __method_fillValidationSettings_description__
+     * __method_fillValidationSettings_description__.
+     *
      * @param __param_validationSettings_type__ $validationSettings __param_validationSettings_description__
+     *
      * @return __return_fillValidationSettings_type__ __return_fillValidationSettings_description__
      */
     protected function fillValidationSettings($validationSettings)
@@ -138,7 +146,8 @@ class ObjectAccess extends \infinite\base\Component
     }
 
     /**
-     * Get universal max role level
+     * Get universal max role level.
+     *
      * @return __return_getUniversalMaxRoleLevel_type__ __return_getUniversalMaxRoleLevel_description__
      */
     public function getUniversalMaxRoleLevel()
@@ -147,9 +156,11 @@ class ObjectAccess extends \infinite\base\Component
     }
 
     /**
-     * __method_validateRole_description__
-     * @param __param_role_type__ $role __param_role_description__
+     * __method_validateRole_description__.
+     *
+     * @param __param_role_type__               $role               __param_role_description__
      * @param __param_validationSettings_type__ $validationSettings __param_validationSettings_description__
+     *
      * @return __return_validateRole_type__ __return_validateRole_description__
      */
     protected function validateRole($role, $validationSettings)
@@ -181,8 +192,10 @@ class ObjectAccess extends \infinite\base\Component
     }
 
     /**
-     * __method_validate_description__
+     * __method_validate_description__.
+     *
      * @param __param_data_type__ $data __param_data_description__
+     *
      * @return __return_validate_type__ __return_validate_description__
      */
     protected function validate($data)
@@ -212,7 +225,7 @@ class ObjectAccess extends \infinite\base\Component
                 $role = Yii::$app->collectors['roles']->getById($role);
                 if ($role && $role->exclusive) {
                     if (isset($exclusive[$role->object->primaryKey])) {
-                        $package['errors'][$requestor] = 'There can not be more than one '. $role->object->name;
+                        $package['errors'][$requestor] = 'There can not be more than one '.$role->object->name;
                         continue;
                     }
                     $exclusive[$role->object->primaryKey] = true;
@@ -230,7 +243,8 @@ class ObjectAccess extends \infinite\base\Component
     }
 
     /**
-     * Get requestors
+     * Get requestors.
+     *
      * @return __return_getRequestors_type__ __return_getRequestors_description__
      */
     public function getRequestors()
@@ -240,7 +254,9 @@ class ObjectAccess extends \infinite\base\Component
             $aros = Yii::$app->gk->getObjectAros($this->object);
 
             foreach ($this->specialRequestors as $special => $requestorSettings) {
-                if (empty($requestorSettings['object'])) { continue; }
+                if (empty($requestorSettings['object'])) {
+                    continue;
+                }
                 $requestor = $requestorSettings['object'];
                 if (!in_array($requestor->primaryKey, $aros)) {
                     $aros[] = $requestor->primaryKey;
@@ -257,7 +273,8 @@ class ObjectAccess extends \infinite\base\Component
     }
 
     /**
-     * Get roles
+     * Get roles.
+     *
      * @return __return_getRoles_type__ __return_getRoles_description__
      */
     public function getRoles()
@@ -278,7 +295,8 @@ class ObjectAccess extends \infinite\base\Component
     }
 
     /**
-     * Get role objects
+     * Get role objects.
+     *
      * @return __return_getRoleObjects_type__ __return_getRoleObjects_description__
      */
     public function getRoleObjects()
@@ -294,9 +312,11 @@ class ObjectAccess extends \infinite\base\Component
     }
 
     /**
-     * Get role object
+     * Get role object.
+     *
      * @param __param_requestorId_type__ $requestorId __param_requestorId_description__
-     * @param array $roleSet __param_roleSet_description__ [optional]
+     * @param array                      $roleSet     __param_roleSet_description__ [optional]
+     *
      * @return __return_getRoleObject_type__ __return_getRoleObject_description__
      */
     public function getRoleObject($requestorId, $roleSet = [])
@@ -327,7 +347,8 @@ class ObjectAccess extends \infinite\base\Component
     }
 
     /**
-     * Get special requestors
+     * Get special requestors.
+     *
      * @return __return_getSpecialRequestors_type__ __return_getSpecialRequestors_description__
      */
     public function getSpecialRequestors()
@@ -335,13 +356,14 @@ class ObjectAccess extends \infinite\base\Component
         return [
             'public' => [
                 'object' => Yii::$app->gk->publicGroup,
-                'maxRoleLevel' => Yii::$app->params['maxRoleLevels']['public']
-            ]
+                'maxRoleLevel' => Yii::$app->params['maxRoleLevels']['public'],
+            ],
         ];
     }
 
     /**
-     * Set object
+     * Set object.
+     *
      * @param __param_object_type__ $object __param_object_description__
      */
     public function setObject($object)
@@ -351,7 +373,8 @@ class ObjectAccess extends \infinite\base\Component
     }
 
     /**
-     * Get object
+     * Get object.
+     *
      * @return __return_getObject_type__ __return_getObject_description__
      */
     public function getObject()
@@ -365,17 +388,20 @@ class ObjectAccess extends \infinite\base\Component
     }
 
     /**
-     * Get role help text
+     * Get role help text.
+     *
      * @param __param_roleItem_type__ $roleItem __param_roleItem_description__
+     *
      * @return __return_getRoleHelpText_type__ __return_getRoleHelpText_description__
      */
     public function getRoleHelpText($roleItem)
     {
-        return null;
+        return;
     }
 
     /**
-     * __method_determineVisibility_description__
+     * __method_determineVisibility_description__.
+     *
      * @return __return_determineVisibility_type__ __return_determineVisibility_description__
      */
     public function determineVisibility()
@@ -391,7 +417,7 @@ class ObjectAccess extends \infinite\base\Component
         }
 
         foreach ($this->requestors as $aro => $access) {
-            if (preg_match('/^'. $groupPrefix .'\-/', $aro) === 0) {
+            if (preg_match('/^'.$groupPrefix.'\-/', $aro) === 0) {
                 return 'shared';
             }
         }
@@ -400,8 +426,10 @@ class ObjectAccess extends \infinite\base\Component
     }
 
     /**
-     * Get possible roles
+     * Get possible roles.
+     *
      * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__ [optional]
+     *
      * @return __return_getPossibleRoles_type__ __return_getPossibleRoles_description__
      */
     public function getPossibleRoles($accessingObject = null)
@@ -421,7 +449,6 @@ class ObjectAccess extends \infinite\base\Component
             $roles[$roleItem->id] = $roleItem->package;
             $roles[$roleItem->id]['available'] = $accessorRoleLevel === true || $roleItem->level <= $accessorRoleLevel;
             $roles[$roleItem->id]['helpText'] = $this->getRoleHelpText($roleItem);
-
         }
         ArrayHelper::multisort($roles, 'level', SORT_ASC);
 
@@ -429,7 +456,8 @@ class ObjectAccess extends \infinite\base\Component
     }
 
     /**
-     * Get visibility
+     * Get visibility.
+     *
      * @return __return_getVisibility_type__ __return_getVisibility_description__
      */
     public function getVisibility()
@@ -442,8 +470,10 @@ class ObjectAccess extends \infinite\base\Component
     }
 
     /**
-     * Get accessor role level
+     * Get accessor role level.
+     *
      * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__ [optional]
+     *
      * @return __return_getAccessorRoleLevel_type__ __return_getAccessorRoleLevel_description__
      */
     public function getAccessorRoleLevel($accessingObject = null)
@@ -456,7 +486,9 @@ class ObjectAccess extends \infinite\base\Component
         ArrayHelper::multisort($currentRoles, 'role.level', SORT_DESC);
         $accessingRequestors = Yii::$app->gk->getRequestors($accessingObject);
         foreach ($currentRoles as $roleObject) {
-            if (empty($roleObject['role'])) { continue; }
+            if (empty($roleObject['role'])) {
+                continue;
+            }
             $objectType = $roleObject['object']->objectType;
             if ($objectType->getBehavior('Authority') !== null) {
                 $test = true;

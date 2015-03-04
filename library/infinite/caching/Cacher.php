@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -8,13 +9,12 @@
 namespace infinite\caching;
 
 use Yii;
-
 use yii\caching\ChainedDependency;
 use yii\caching\TagDependency;
 use yii\caching\DbDependency;
 
 /**
- * Cacher [@doctodo write class description for Cacher]
+ * Cacher [@doctodo write class description for Cacher].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -22,9 +22,11 @@ class Cacher extends \infinite\base\Component
 {
     public static $component = 'cache';
     /**
-     * __method_key_description__
-     * @param __param_key_type__ $key __param_key_description__
-     * @param boolean $hash __param_hash_description__ [optional]
+     * __method_key_description__.
+     *
+     * @param __param_key_type__ $key  __param_key_description__
+     * @param boolean            $hash __param_hash_description__ [optional]
+     *
      * @return __return_key_type__ __return_key_description__
      */
     public static function key($key, $hash = false)
@@ -56,12 +58,12 @@ class Cacher extends \infinite\base\Component
             }
         }
         if ($hash) {
-            $key = md5(Yii::$app->params['salt'] . json_encode($key));
+            $key = md5(Yii::$app->params['salt'].json_encode($key));
         } else {
             if (is_array($key)) {
                 $key[] = Yii::$app->params['salt'];
             } else {
-                $key = Yii::$app->params['salt'] . $key;
+                $key = Yii::$app->params['salt'].$key;
             }
         }
 
@@ -70,8 +72,10 @@ class Cacher extends \infinite\base\Component
     }
 
     /**
-     * Get
+     * Get.
+     *
      * @param __param_key_type__ $key __param_key_description__
+     *
      * @return __return_get_type__ __return_get_description__
      */
     public static function get($key)
@@ -80,8 +84,10 @@ class Cacher extends \infinite\base\Component
     }
 
     /**
-     * __method_exists_description__
+     * __method_exists_description__.
+     *
      * @param __param_key_type__ $key __param_key_description__
+     *
      * @return __return_exists_type__ __return_exists_description__
      */
     public static function exists($key)
@@ -90,11 +96,13 @@ class Cacher extends \infinite\base\Component
     }
 
     /**
-     * Set
-     * @param __param_key_type__ $key __param_key_description__
-     * @param __param_value_type__ $value __param_value_description__
-     * @param integer $expire __param_expire_description__ [optional]
+     * Set.
+     *
+     * @param __param_key_type__        $key        __param_key_description__
+     * @param __param_value_type__      $value      __param_value_description__
+     * @param integer                   $expire     __param_expire_description__ [optional]
      * @param __param_dependency_type__ $dependency __param_dependency_description__ [optional]
+     *
      * @return __return_set_type__ __return_set_description__
      */
     public static function set($key, $value, $expire = 0, $dependency = null)
@@ -109,8 +117,10 @@ class Cacher extends \infinite\base\Component
     }
 
     /**
-     * __method_chainedDependency_description__
+     * __method_chainedDependency_description__.
+     *
      * @param array $chain __param_chain_description__ [optional]
+     *
      * @return __return_chainedDependency_type__ __return_chainedDependency_description__
      */
     public static function chainedDependency($chain = [], $reusable = true)
@@ -119,9 +129,11 @@ class Cacher extends \infinite\base\Component
     }
 
     /**
-     * __method_dbDependency_description__
-     * @param __param_sql_type__ $sql __param_sql_description__
-     * @param boolean $reusable __param_reusable_description__ [optional]
+     * __method_dbDependency_description__.
+     *
+     * @param __param_sql_type__ $sql      __param_sql_description__
+     * @param boolean            $reusable __param_reusable_description__ [optional]
+     *
      * @return __return_dbDependency_type__ __return_dbDependency_description__
      */
     public static function dbDependency($sql, $reusable = true)
@@ -130,9 +142,11 @@ class Cacher extends \infinite\base\Component
     }
 
     /**
-     * __method_groupDependency_description__
-     * @param __param_group_type__ $group __param_group_description__
+     * __method_groupDependency_description__.
+     *
+     * @param __param_group_type__    $group    __param_group_description__
      * @param __param_category_type__ $category __param_category_description__ [optional]
+     *
      * @return __return_groupDependency_type__ __return_groupDependency_description__
      */
     public static function groupDependency($group, $category = null, $reusable = true)
@@ -150,11 +164,12 @@ class Cacher extends \infinite\base\Component
 
     public static function categoryDependency($category, $reusable = true)
     {
-        return new TagDependency(['tags' => ['category-' .$category], 'reusable' => $reusable]);
+        return new TagDependency(['tags' => ['category-'.$category], 'reusable' => $reusable]);
     }
 
     /**
-     * __method_invalidateGroup_description__
+     * __method_invalidateGroup_description__.
+     *
      * @param __param_group_type__ $group __param_group_description__
      */
     public static function invalidateGroup($group)

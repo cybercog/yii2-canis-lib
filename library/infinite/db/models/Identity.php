@@ -14,14 +14,12 @@ use Yii;
  * @property string $meta
  * @property string $created
  * @property string $modified
- *
  * @property IdentityProvider $identityProvider
  * @property User $id0
  * @property User[] $users
  */
 class Identity extends \infinite\db\ActiveRecord
 {
-
     public function init()
     {
         parent::init();
@@ -29,7 +27,6 @@ class Identity extends \infinite\db\ActiveRecord
         $this->on(self::EVENT_AFTER_SAVE_FAIL, [$this, 'metaToSerial']);
         $this->on(self::EVENT_AFTER_FIND, [$this, 'metaToArray']);
     }
-
 
     public function metaToSerial()
     {
@@ -50,7 +47,7 @@ class Identity extends \infinite\db\ActiveRecord
     }
 
     /**
-    * @inheritdoc
+     * @inheritdoc
      */
     public function behaviors()
     {
@@ -58,11 +55,11 @@ class Identity extends \infinite\db\ActiveRecord
             [
                 'Registry' => [
                     'class' => 'infinite\db\behaviors\Registry',
-                ]
+                ],
             ]
         );
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -72,7 +69,7 @@ class Identity extends \infinite\db\ActiveRecord
             [['user_id', 'identity_provider_id'], 'required'],
             [['token', 'meta'], 'string'],
             [['created', 'modified'], 'safe'],
-            [['id', 'user_id', 'identity_provider_id'], 'string', 'max' => 36]
+            [['id', 'user_id', 'identity_provider_id'], 'string', 'max' => 36],
         ];
     }
 
@@ -92,8 +89,6 @@ class Identity extends \infinite\db\ActiveRecord
         ];
     }
 
-
-
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -103,6 +98,7 @@ class Identity extends \infinite\db\ActiveRecord
         if (!empty($idp) && $idp->object) {
             return $idp;
         }
+
         return false;
     }
 

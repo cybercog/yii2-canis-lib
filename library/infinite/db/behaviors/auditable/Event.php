@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -8,17 +9,16 @@
 namespace infinite\db\behaviors\auditable;
 
 use Yii;
-use yii\helpers\Url;
 
 /**
- * Event [@doctodo write class description for Event]
+ * Event [@doctodo write class description for Event].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 abstract class Event extends \infinite\base\Component
 {
     const EVENT_AUDIT_HOOK = 'auditHook';
-    const EVENT_BEFORE_MODEL_SAVE= 'beforeModelSave';
+    const EVENT_BEFORE_MODEL_SAVE = 'beforeModelSave';
     /**
      * @var __var_mergeWith_type__ __var_mergeWith_description__
      */
@@ -69,6 +69,7 @@ abstract class Event extends \infinite\base\Component
 
     /**
      * Prepares object for serialization.
+     *
      * @return __return___sleep_type__ __return___sleep_description__
      */
     public function __sleep()
@@ -83,11 +84,13 @@ abstract class Event extends \infinite\base\Component
                 $this->{$key} = $this->{$key}->primaryKey;
             }
         }
+
         return $keys;
     }
 
     /**
-     * Set agent
+     * Set agent.
+     *
      * @param __param_agent_type__ $agent __param_agent_description__
      */
     public function setAgent($agent)
@@ -96,7 +99,8 @@ abstract class Event extends \infinite\base\Component
     }
 
     /**
-     * Get agent
+     * Get agent.
+     *
      * @return __return_getAgent_type__ __return_getAgent_description__
      */
     public function getAgent()
@@ -113,7 +117,8 @@ abstract class Event extends \infinite\base\Component
     }
 
     /**
-     * Get agent
+     * Get agent.
+     *
      * @return __return_getAgentId_type__ __return_getAgentId_description__
      */
     public function getAgentId()
@@ -126,7 +131,8 @@ abstract class Event extends \infinite\base\Component
     }
 
     /**
-     * Set indirect object
+     * Set indirect object.
+     *
      * @param __param_object_type__ $object __param_object_description__
      */
     public function setIndirectObject($object)
@@ -135,7 +141,8 @@ abstract class Event extends \infinite\base\Component
     }
 
     /**
-     * Get indirect object
+     * Get indirect object.
+     *
      * @return __return_getIndirectObject_type__ __return_getIndirectObject_description__
      */
     public function getIndirectObject()
@@ -152,7 +159,8 @@ abstract class Event extends \infinite\base\Component
     }
 
     /**
-     * Get indirect object
+     * Get indirect object.
+     *
      * @return __return_getIndirectObjectId_type__ __return_getIndirectObjectId_description__
      */
     public function getIndirectObjectId()
@@ -165,7 +173,8 @@ abstract class Event extends \infinite\base\Component
     }
 
     /**
-     * Set direct object
+     * Set direct object.
+     *
      * @param __param_object_type__ $object __param_object_description__
      */
     public function setDirectObject($object)
@@ -174,7 +183,8 @@ abstract class Event extends \infinite\base\Component
     }
 
     /**
-     * Get direct object
+     * Get direct object.
+     *
      * @return __return_getDirectObject_type__ __return_getDirectObject_description__
      */
     public function getDirectObject()
@@ -191,7 +201,8 @@ abstract class Event extends \infinite\base\Component
     }
 
     /**
-     * Get direct object
+     * Get direct object.
+     *
      * @return __return_getDirectObjectId_type__ __return_getDirectObjectId_description__
      */
     public function getDirectObjectId()
@@ -204,8 +215,10 @@ abstract class Event extends \infinite\base\Component
     }
 
     /**
-     * Set id
+     * Set id.
+     *
      * @param __param_id_type__ $id __param_id_description__
+     *
      * @return __return_setId_type__ __return_setId_description__
      */
     public function setId($id)
@@ -214,7 +227,8 @@ abstract class Event extends \infinite\base\Component
     }
 
     /**
-     * Get id
+     * Get id.
+     *
      * @return __return_getId_type__ __return_getId_description__
      */
     public function getId()
@@ -224,20 +238,21 @@ abstract class Event extends \infinite\base\Component
 
     public function getTimestamp()
     {
-    	$microtime = microtime(true);
+        $microtime = microtime(true);
         $mtimeParts = explode(".", $microtime);
         if (isset($this->_timestamp)) {
             return $this->_timestamp;
         }
         if (isset($this->model) && isset($this->model->created)) {
-            return $this->_timestamp = strtotime($this->model->created) .".". $mtimeParts[1];
+            return $this->_timestamp = strtotime($this->model->created).".".$mtimeParts[1];
         }
+
         return $microtime;
     }
 
     public function setTimestamp($timestamp)
     {
-    	$microtime = microtime(true);
+        $microtime = microtime(true);
         $mtimeParts = explode(".", $microtime);
         if (!isset($mtimeParts[1])) {
             $mtimeParts[1] = 0;
@@ -246,13 +261,14 @@ abstract class Event extends \infinite\base\Component
             $timestamp = microtime(true);
         }
         if (!is_numeric($timestamp)) {
-            $timestamp = strtotime($timestamp) .".". $mtimeParts[1];
+            $timestamp = strtotime($timestamp).".".$mtimeParts[1];
         }
         $this->_timestamp = $timestamp;
     }
 
     /**
-     * Get hash
+     * Get hash.
+     *
      * @return __return_getHash_type__ __return_getHash_description__
      */
     public function getHash()
@@ -265,7 +281,8 @@ abstract class Event extends \infinite\base\Component
     }
 
     /**
-     * Get hash array
+     * Get hash array.
+     *
      * @return __return_getHashArray_type__ __return_getHashArray_description__
      */
     public function getHashArray()
@@ -274,13 +291,15 @@ abstract class Event extends \infinite\base\Component
             'class' => get_class($this),
             'id' => $this->id,
             'directObject' => $this->directObjectId,
-            'indirectObject' => $this->indirectObjectId
+            'indirectObject' => $this->indirectObjectId,
         ];
     }
 
     /**
-     * Set exclusive
+     * Set exclusive.
+     *
      * @param __param_exclusive_type__ $exclusive __param_exclusive_description__
+     *
      * @return __return_setExclusive_type__ __return_setExclusive_description__
      */
     public function setExclusive($exclusive)
@@ -289,7 +308,8 @@ abstract class Event extends \infinite\base\Component
     }
 
     /**
-     * Get exclusive
+     * Get exclusive.
+     *
      * @return __return_getExclusive_type__ __return_getExclusive_description__
      */
     public function getExclusive()
@@ -298,8 +318,10 @@ abstract class Event extends \infinite\base\Component
     }
 
     /**
-     * __method_merge_description__
+     * __method_merge_description__.
+     *
      * @param __param_with_type__ $with __param_with_description__
+     *
      * @return __return_merge_type__ __return_merge_description__
      */
     public function merge($with)
@@ -310,7 +332,8 @@ abstract class Event extends \infinite\base\Component
     }
 
     /**
-     * __method_isValid_description__
+     * __method_isValid_description__.
+     *
      * @return __return_isValid_type__ __return_isValid_description__
      */
     public function isValid()
@@ -329,12 +352,13 @@ abstract class Event extends \infinite\base\Component
     }
 
     /**
-     * __method_handleHooks_description__
+     * __method_handleHooks_description__.
+     *
      * @return __return_handleHooks_type__ __return_handleHooks_description__
      */
     public function handleHooks()
     {
-        $event = new AuditHookEvent;
+        $event = new AuditHookEvent();
         $event->auditEvent = $this;
         $this->trigger(self::EVENT_AUDIT_HOOK, $event);
 
@@ -342,7 +366,8 @@ abstract class Event extends \infinite\base\Component
     }
 
     /**
-     * __method_save_description__
+     * __method_save_description__.
+     *
      * @return __return_save_type__ __return_save_description__
      */
     public function save()
@@ -352,7 +377,7 @@ abstract class Event extends \infinite\base\Component
         }
         $this->_tmp['handled'] = true;
         $auditClass = Yii::$app->classes['Audit'];
-        $audit = new $auditClass;
+        $audit = new $auditClass();
         $audit->agent_id = $this->agentId;
         $audit->direct_object_id = $this->directObjectId;
         $audit->indirect_object_id = $this->indirectObjectId;
@@ -367,12 +392,13 @@ abstract class Event extends \infinite\base\Component
         if (!$audit->save()) {
             return false;
         }
+
         return $audit;
     }
 
     public function getStory()
     {
-        return '{{agent}} '. $this->verb->past .' {{directObjectType}} {{directObject}}' . $this->indirectStory;
+        return '{{agent}} '.$this->verb->past.' {{directObjectType}} {{directObject}}'.$this->indirectStory;
     }
 
     public function getIndirectStory()
@@ -384,7 +410,8 @@ abstract class Event extends \infinite\base\Component
         if ($this->context && $this->context === $this->indirectObject->primaryKey) {
             return '';
         }
-        return ' '. $this->indirectConnector .' {{indirectObject}}';
+
+        return ' '.$this->indirectConnector.' {{indirectObject}}';
     }
 
     public function getIndirectConnector()
@@ -410,7 +437,7 @@ abstract class Event extends \infinite\base\Component
             if ($this->directObject) {
                 $keys[] = $this->directObject->primaryKey;
             }
-            $replace['{{indirectObject}}'] = '{{' . implode(':', $keys) . '}}';
+            $replace['{{indirectObject}}'] = '{{'.implode(':', $keys).'}}';
             $replace['{{indirectObjectType}}'] = $this->indirectObject->getHumanType();
         } else {
             $objectKeys[] = null;
@@ -423,7 +450,7 @@ abstract class Event extends \infinite\base\Component
             if ($this->indirectObject) {
                 $keys[] = $this->indirectObject->primaryKey;
             }
-            $replace['{{directObject}}'] = '{{' . implode(':', $keys) . '}}';
+            $replace['{{directObject}}'] = '{{'.implode(':', $keys).'}}';
             $replace['{{directObjectType}}'] = $this->directObject->getHumanType();
         } else {
             $objectKeys[] = null;
@@ -432,12 +459,13 @@ abstract class Event extends \infinite\base\Component
             $package['agent'] = $this->agent->primaryKey;
             $package['objects']['agent'] = $this->agent;
             $objectKeys[] = $this->agent->primaryKey;
-            $replace['{{agent}}'] = '{{' . $this->agent->primaryKey . '}}';
+            $replace['{{agent}}'] = '{{'.$this->agent->primaryKey.'}}';
         } else {
             $objectKeys[] = null;
         }
         $package['key'] = md5(serialize($objectKeys));
         $package['story'] = strtr($package['story'], $replace);
+
         return $package;
     }
 }

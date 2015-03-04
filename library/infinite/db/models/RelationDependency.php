@@ -10,7 +10,6 @@ use Yii;
  * @property string $id
  * @property string $parent_relation_id
  * @property string $child_relation_id
- *
  * @property Relation $childRelation
  * @property Relation $parentRelation
  */
@@ -32,7 +31,7 @@ class RelationDependency extends \infinite\db\ActiveRecord
         return [
             [['parent_relation_id', 'child_relation_id'], 'required'],
             [['parent_relation_id', 'child_relation_id'], 'integer'],
-            [['parent_relation_id', 'child_relation_id'], 'unique', 'targetAttribute' => ['parent_relation_id', 'child_relation_id'], 'message' => 'The combination of Parent Relation ID and Child Relation ID has already been taken.']
+            [['parent_relation_id', 'child_relation_id'], 'unique', 'targetAttribute' => ['parent_relation_id', 'child_relation_id'], 'message' => 'The combination of Parent Relation ID and Child Relation ID has already been taken.'],
         ];
     }
 
@@ -66,6 +65,6 @@ class RelationDependency extends \infinite\db\ActiveRecord
 
     public function getDependencyId()
     {
-        return $this->parent_relation_id .'.'. $this->child_relation_id;
+        return $this->parent_relation_id.'.'.$this->child_relation_id;
     }
 }

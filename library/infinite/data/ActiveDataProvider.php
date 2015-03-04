@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -10,14 +11,14 @@ namespace infinite\data;
 use Yii;
 
 /**
- * ActiveDataProvider [@doctodo write class description for ActiveDataProvider]
+ * ActiveDataProvider [@doctodo write class description for ActiveDataProvider].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class ActiveDataProvider extends \yii\data\ActiveDataProvider
 {
     /**
-    * @inheritdoc
+     * @inheritdoc
      */
     public function setPagination($value)
     {
@@ -36,7 +37,7 @@ class ActiveDataProvider extends \yii\data\ActiveDataProvider
         if (is_array($value)) {
             $config = ['class' => Sort::className()];
             if ($this->id !== null) {
-                $config['sortVar'] = $this->id . '-sort';
+                $config['sortVar'] = $this->id.'-sort';
             }
             $value = Yii::createObject(array_merge($config, $value));
         }

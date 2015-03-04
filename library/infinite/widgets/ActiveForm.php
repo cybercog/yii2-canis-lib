@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -8,7 +9,7 @@
 namespace infinite\widgets;
 
 /**
- * ActiveForm [@doctodo write class description for ActiveForm]
+ * ActiveForm [@doctodo write class description for ActiveForm].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -20,7 +21,7 @@ class ActiveForm extends \yii\widgets\ActiveForm
     public $fieldConfig = ['class' => 'infinite\widgets\ActiveField'];
 
     /**
-    * @inheritdoc
+     * @inheritdoc
      */
     public static function begin($config = [], $echo = true)
     {
@@ -37,7 +38,7 @@ class ActiveForm extends \yii\widgets\ActiveForm
     }
 
     /**
-    * @inheritdoc
+     * @inheritdoc
      */
     public static function end($echo = true)
     {

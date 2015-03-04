@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -10,27 +11,27 @@ namespace infinite\helpers;
 use Yii;
 
 /**
- * StringHelper [@doctodo write class description for StringHelper]
+ * StringHelper [@doctodo write class description for StringHelper].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class StringHelper extends \yii\helpers\StringHelper
 {
-    /**
+    /*
      * __method_parseInstructions_description__
      * @return __return_parseInstructions_type__ __return_parseInstructions_description__
      */
-    static public function parseInstructions()
+    public static function parseInstructions()
     {
         return [];
     }
 
-    /**
+    /*
      * __method_neighborWordCombos_description__
      * @param __param_parts_type__ $parts __param_parts_description__
      * @return __return_neighborWordCombos_type__ __return_neighborWordCombos_description__
      */
-    static public function neighborWordCombos($parts)
+    public static function neighborWordCombos($parts)
     {
         if (is_string($parts)) {
             $parts = explode(' ', $parts);
@@ -58,24 +59,28 @@ class StringHelper extends \yii\helpers\StringHelper
         return array_unique(array_merge($newParts, $parts));
     }
 
-    /**
+    /*
      *   @source http://php.net/manual/en/function.filesize.php#106569
      */
-    static public function humanFilesize($bytes, $decimals = 1) {
-      $sz = 'BKMGTP';
-      $factor = floor((strlen($bytes) - 1) / 3);
-      return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$sz[$factor];
+    public static function humanFilesize($bytes, $decimals = 1)
+    {
+        $sz = 'BKMGTP';
+        $factor = floor((strlen($bytes) - 1) / 3);
+
+        return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)).@$sz[$factor];
     }
 
-    /**
+    /*
      * __method_parseText_description__
      * @param __param_text_type__ $text __param_text_description__
      * @param array $variables __param_variables_description__ [optional]
      * @return __return_parseText_type__ __return_parseText_description__
      */
-    static public function parseText($text, $variables = [])
+    public static function parseText($text, $variables = [])
     {
-        if (is_object($text)) { return $text; }
+        if (is_object($text)) {
+            return $text;
+        }
         preg_match_all("/\%\%([^\%]+)\%\%/i", $text, $extracted);
         $replace = [];
         $parseInstructionSet = static::parseInstructions();
@@ -110,7 +115,6 @@ class StringHelper extends \yii\helpers\StringHelper
         return trim(preg_replace(array_keys($replace), array_values($replace), $text));
     }
 
-    
     public static function compareStrings($str1, $str2, $weights = [])
     {
         if ($str1 === $str2) {
@@ -122,7 +126,7 @@ class StringHelper extends \yii\helpers\StringHelper
         // set options
         $defaultWeights = [
             'similar_text' => 70,
-            'levenshtein' => 30
+            'levenshtein' => 30,
         ];
         $weights = array_merge($defaultWeights, $weights);
 
@@ -151,7 +155,8 @@ class StringHelper extends \yii\helpers\StringHelper
 
     public static function spellNumber($number)
     {
-        $a = new \NumberFormatter(Yii::$app->language, \NumberFormatter::SPELLOUT); 
+        $a = new \NumberFormatter(Yii::$app->language, \NumberFormatter::SPELLOUT);
+
         return $a->format($number);
     }
 }

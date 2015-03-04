@@ -1,7 +1,6 @@
 <?php
 namespace infinite\action;
 
-use Yii;
 use infinite\helpers\Console;
 
 class ConsoleAction extends Action
@@ -34,7 +33,7 @@ class ConsoleAction extends Action
                 unset($this->_interactions[$id]);
             }
         }
+
         return true;
     }
 }
-?>

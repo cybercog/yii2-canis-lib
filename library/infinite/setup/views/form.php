@@ -1,20 +1,18 @@
 <?php
 /**
- * library/setup/views/form.php
+ * library/setup/views/form.php.
  *
  * @author Jacob Morrison <jacob@infinitecascade.com>
- * @package infinite
  */
-
 echo '<form id="setup-form" name="setup-form" method="post" action="">';
 echo '<input type="hidden" name="confirm" value="'.$this->getConfirmSalt($task->id).'" />';
 echo '<input type="hidden" name="task" value="'.$task->id.'" />';
 foreach ($fields as $fieldsetName => $fieldset) {
     echo '<fieldset>';
-    echo '<legend>'. $fieldset['label'] .'</legend>';
+    echo '<legend>'.$fieldset['label'].'</legend>';
     foreach ($fieldset['fields'] as $fieldNameShort => $settings) {
-        $fieldId = 'field_'.$task->id. '_'.$fieldsetName .'_'. $fieldNameShort .'';
-        $fieldName = $task->id. '['.$fieldsetName .']['. $fieldNameShort .']';
+        $fieldId = 'field_'.$task->id.'_'.$fieldsetName.'_'.$fieldNameShort.'';
+        $fieldName = $task->id.'['.$fieldsetName.']['.$fieldNameShort.']';
         $value = null;
         if (isset($settings['value'])) {
             if (is_callable($settings['value'])) {

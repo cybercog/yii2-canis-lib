@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -8,7 +9,7 @@
 namespace infinite\helpers;
 
 /**
- * Date [@doctodo write class description for Date]
+ * Date [@doctodo write class description for Date].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -20,9 +21,11 @@ class Date extends \infinite\base\Object
     protected static $_now;
 
     /**
-     * Sets the current time of the application
+     * Sets the current time of the application.
+     *
      * @param varies $now Either the int of the exact time or it could be a relative string
-     * @return int    Unix timestamp
+     *
+     * @return int Unix timestamp
      */
     public static function now($now)
     {
@@ -32,7 +35,8 @@ class Date extends \infinite\base\Object
     }
 
     /**
-     * Get the current time
+     * Get the current time.
+     *
      * @return int Unix timestamp
      */
     public static function time()
@@ -49,123 +53,165 @@ class Date extends \infinite\base\Object
     }
 
     /**
-     * Format date
+     * Format date.
+     *
      *                       @see php:date
      *
      * @param string $format date format
      * @param int    $time   Unix timestamp (optional)
+     *
      * @return string formatted date
+     *
      * @see php:date
      */
     public static function date($format, $time = null)
     {
-        if (is_null($time)) { $time = self::time(); }
+        if (is_null($time)) {
+            $time = self::time();
+        }
 
         return date($format, $time);
     }
 
     /**
-     * Strtotime with fallback on overriden application time
+     * Strtotime with fallback on overriden application time.
+     *
      *                     @see php:strtotime
      *
      * @param string $str  strtotime string
      * @param int    $time Unix timestamp (optional)
+     *
      * @return string formatted date
+     *
      * @see php:strtotime
      */
     public static function strtotime($str, $time = null)
     {
-        if (is_null($time)) { $time = self::time(); }
+        if (is_null($time)) {
+            $time = self::time();
+        }
 
         return strtotime($str, $time);
     }
 
     /**
-     * Gets the first second of a day
+     * Gets the first second of a day.
+     *
      * @param string $day  date string
      * @param int    $time Unix timestamp (optional)
+     *
      * @return string Unix timestamp
      */
     public static function startOfDay($day, $time = null)
     {
-        return self::strtotime($day .' 00:00:00', $time);
+        return self::strtotime($day.' 00:00:00', $time);
     }
 
     /**
-     * Gets the last second of a day
+     * Gets the last second of a day.
+     *
      * @param string $day  date string
      * @param int    $time Unix timestamp (optional)
+     *
      * @return string Unix timestamp
      */
     public static function endOfDay($day, $time = null)
     {
-        return self::strtotime($day .' 23:59:59', $time);
+        return self::strtotime($day.' 23:59:59', $time);
     }
 
     /**
      * Is the date in the past?
+     *
      * @param varies $date
      * @param int    $time (optional)
-     * @return bool   Is the time in the past or not
+     *
+     * @return bool Is the time in the past or not
      */
     public static function inPast($date, $time = null)
     {
-        if (is_null($time)) { $time = self::time(); }
-        if (!is_int($date)) { $date = self::strtotime($date); }
+        if (is_null($time)) {
+            $time = self::time();
+        }
+        if (!is_int($date)) {
+            $date = self::strtotime($date);
+        }
 
         return $time > $date;
     }
 
     /**
      * Is the date in the future?
+     *
      * @param varies $date
      * @param int    $time (optional)
-     * @return bool   Is the time in the past or not
+     *
+     * @return bool Is the time in the past or not
      */
     public static function inFuture($date, $time = null)
     {
-        if (is_null($time)) { $time = self::time(); }
-        if (!is_int($date)) { $date = self::strtotime($date); }
+        if (is_null($time)) {
+            $time = self::time();
+        }
+        if (!is_int($date)) {
+            $date = self::strtotime($date);
+        }
 
         return $time < $date;
     }
 
     /**
-     * Is it now
+     * Is it now.
+     *
      * @param varies $date
      * @param int    $time (optional)
-     * @return bool   Is the time in the past or not
+     *
+     * @return bool Is the time in the past or not
      */
     public static function isPresent($date, $time = null)
     {
-        if (is_null($time)) { $time = self::time(); }
-        if (!is_int($date)) { $date = self::strtotime($date); }
+        if (is_null($time)) {
+            $time = self::time();
+        }
+        if (!is_int($date)) {
+            $date = self::strtotime($date);
+        }
 
         return $time === $date;
     }
 
     public static function isToday($date, $time = null)
     {
-        if (is_null($time)) { $time = self::time(); }
-        if (!is_int($date)) { $date = self::strtotime($date); }
+        if (is_null($time)) {
+            $time = self::time();
+        }
+        if (!is_int($date)) {
+            $date = self::strtotime($date);
+        }
 
         return date("Y-m-d", $time) === date("Y-m-d", $date);
     }
 
     /**
-     * __method_relativeDate_description__
+     * __method_relativeDate_description__.
+     *
      * @param varies  $mdate         date to compare
      * @param int     $time          Unix timestamp         (optional)
      * @param unknown $showTime      (optional)
      * @param unknown $defaultFormat (optional)
-     * @return string  Formatted relative date
+     *
+     * @return string Formatted relative date
      */
     public static function relativeDate($mdate, $time = null, $showTime = false, $defaultFormat = 'F j, Y \a\t g:i A')
     {
-        if (!is_int($mdate)) { $mdate = self::strtotime($mdate); }
+        if (!is_int($mdate)) {
+            $mdate = self::strtotime($mdate);
+        }
         $pre = '';
         $post = ' ago';
-        if (is_null($time)) { $time = self::time(); }
+        if (is_null($time)) {
+            $time = self::time();
+        }
         $diff = $time - $mdate;
         $tomorrowString = 'yesterday';
         $today = self::date("Y-m-d", $mdate);
@@ -184,7 +230,7 @@ class Date extends \infinite\base\Object
             return self::date($defaultFormat, $mdate);
         } elseif ($today === $tomorrowDate) { // yesterday
             if ($showTime) {
-                return $tomorrowString. ' at '. self::date('g:iA', $mdate);
+                return $tomorrowString.' at '.self::date('g:iA', $mdate);
             } else {
                 return $tomorrowString;
             }
@@ -202,21 +248,29 @@ class Date extends \infinite\base\Object
             $unit .= 's';
         }
 
-        return $pre . $n .' '. $unit . $post;
+        return $pre.$n.' '.$unit.$post;
     }
 
     /**
-     * Nice time difference
+     * Nice time difference.
+     *
      * @param string $d1           Date string
      * @param string $d2           Date string
      * @param int    $limitPeriods Number of periods to show (optional)
+     *
      * @return string Nice duration
      */
     public static function niceTimeDiff($d1, $d2, $limitPeriods = 2)
     {
-        if (!is_int($d1)) { $d1 = self::strtotime($d1); }
-        if (!is_int($d2)) { $d2 = self::strtotime($d2); }
-        if (empty($d1) or empty($d2)) { return false; }
+        if (!is_int($d1)) {
+            $d1 = self::strtotime($d1);
+        }
+        if (!is_int($d2)) {
+            $d2 = self::strtotime($d2);
+        }
+        if (empty($d1) or empty($d2)) {
+            return false;
+        }
         $max = max($d1, $d2);
         $min = min($d1, $d2);
         $diff = $max - $min;
@@ -224,22 +278,25 @@ class Date extends \infinite\base\Object
         return self::niceDuration($diff, $limitPeriods);
     }
 
-    public static function shortDuration($seconds) {
+    public static function shortDuration($seconds)
+    {
         if ($seconds > (60*60)) { // hours
             return round($seconds/(60*60)).'h';
         } elseif ($seconds > 60) { // minutes
             return round($seconds/(60)).'m';
-        } elseif ($seconds >= 1)  { // seconds
-            return round($seconds) .'s';
+        } elseif ($seconds >= 1) { // seconds
+            return round($seconds).'s';
         } else {
             return round($seconds*100, 1).'ms';
         }
     }
     /**
-     * Get the human string of a duration
-     * @param int    $seconds      Number of seconds
-     * @param int    $limitPeriods (optional)
-     * @param bool   $zeros        Show zeros    (optional; default false)
+     * Get the human string of a duration.
+     *
+     * @param int  $seconds      Number of seconds
+     * @param int  $limitPeriods (optional)
+     * @param bool $zeros        Show zeros    (optional; default false)
+     *
      * @return string Nice human duration
      */
     public static function niceDuration($seconds, $limitPeriods = 7, $zeros = false)
@@ -252,7 +309,7 @@ class Date extends \infinite\base\Object
             'days'      => 86400,
             'hours'     => 3600,
             'minutes'   => 60,
-            'seconds'   => 1
+            'seconds'   => 1,
         ];
 
         // Break into periods
@@ -278,7 +335,7 @@ class Date extends \infinite\base\Object
         $string = [];
         foreach ($segments as $key => $value) {
             $segment_name = substr($key, 0, -1);
-            $segment = $value . ' ' . $segment_name;
+            $segment = $value.' '.$segment_name;
             if ($value != 1) {
                 $segment .= 's';
             }

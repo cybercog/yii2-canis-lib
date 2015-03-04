@@ -1,12 +1,14 @@
 <?php
 namespace infinite\web\bootstrap;
+
 use infinite\helpers\Html;
 use yii\bootstrap\Button;
 
 class ButtonDropdown extends \yii\bootstrap\ButtonDropdown
 {
-	/**
+    /**
      * @var array the HTML attributes for the icon in the button label.
+     *
      * @see \yii\helpers\Html::renderTagAttributes() for details on how attributes are being rendered.
      */
     public $iconOptions = [];
@@ -17,14 +19,15 @@ class ButtonDropdown extends \yii\bootstrap\ButtonDropdown
     {
         Html::addCssClass($this->containerOptions, 'btn-group');
         echo Html::beginTag('div', $this->containerOptions);
-        echo "\n" . $this->renderButton();
-        echo "\n" . $this->renderDropdown();
-        echo "\n" . Html::endTag('div');
+        echo "\n".$this->renderButton();
+        echo "\n".$this->renderDropdown();
+        echo "\n".Html::endTag('div');
         $this->registerPlugin('button');
     }
 
     /**
      * Generates the button dropdown.
+     *
      * @return string the rendering result.
      */
     protected function renderButton()
@@ -48,7 +51,7 @@ class ButtonDropdown extends \yii\bootstrap\ButtonDropdown
                 'view' => $this->getView(),
             ]);
         } else {
-            $label .= ' ' . Html::tag('span', '', $this->iconOptions);
+            $label .= ' '.Html::tag('span', '', $this->iconOptions);
             $options = $this->options;
             if (!isset($options['href'])) {
                 $options['href'] = '#';
@@ -64,6 +67,6 @@ class ButtonDropdown extends \yii\bootstrap\ButtonDropdown
             'options' => $options,
             'encodeLabel' => false,
             'view' => $this->getView(),
-        ]) . "\n" . $splitButton;
+        ])."\n".$splitButton;
     }
 }

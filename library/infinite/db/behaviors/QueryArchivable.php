@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -8,7 +9,7 @@
 namespace infinite\db\behaviors;
 
 /**
- * QueryArchivable [@doctodo write class description for QueryArchivable]
+ * QueryArchivable [@doctodo write class description for QueryArchivable].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -20,7 +21,7 @@ class QueryArchivable extends QueryBehavior
     protected $_allowArchives;
 
     /**
-    * @inheritdoc
+     * @inheritdoc
      */
     public function events()
     {
@@ -30,7 +31,8 @@ class QueryArchivable extends QueryBehavior
     }
 
     /**
-     * Get allow archives
+     * Get allow archives.
+     *
      * @return __return_getAllowArchives_type__ __return_getAllowArchives_description__
      */
     public function getAllowArchives()
@@ -39,8 +41,10 @@ class QueryArchivable extends QueryBehavior
     }
 
     /**
-     * Set allow archives
+     * Set allow archives.
+     *
      * @param __param_value_type__ $value __param_value_description__
+     *
      * @return __return_setAllowArchives_type__ __return_setAllowArchives_description__
      */
     public function setAllowArchives($value)
@@ -51,7 +55,8 @@ class QueryArchivable extends QueryBehavior
     }
 
     /**
-     * __method_includeArchives_description__
+     * __method_includeArchives_description__.
+     *
      * @return __return_includeArchives_type__ __return_includeArchives_description__
      */
     public function includeArchives()
@@ -62,7 +67,8 @@ class QueryArchivable extends QueryBehavior
     }
 
     /**
-     * __method_onlyArchives_description__
+     * __method_onlyArchives_description__.
+     *
      * @return __return_onlyArchives_type__ __return_onlyArchives_description__
      */
     public function onlyArchives()
@@ -73,7 +79,8 @@ class QueryArchivable extends QueryBehavior
     }
 
     /**
-     * __method_excludeArchives_description__
+     * __method_excludeArchives_description__.
+     *
      * @return __return_excludeArchives_type__ __return_excludeArchives_description__
      */
     public function excludeArchives()
@@ -84,8 +91,10 @@ class QueryArchivable extends QueryBehavior
     }
 
     /**
-     * __method_beforeQuery_description__
+     * __method_beforeQuery_description__.
+     *
      * @param __param_event_type__ $event __param_event_description__
+     *
      * @return __return_beforeQuery_type__ __return_beforeQuery_description__
      */
     public function beforeQuery($event)
@@ -97,9 +106,9 @@ class QueryArchivable extends QueryBehavior
             return true;
         }
         if ($this->allowArchives === true) {
-            $this->owner->andWhere('{{'. $this->owner->primaryAlias .'}}.[['. $this->owner->model->getBehavior('Archivable')->archiveField .']] IS NOT NULL');
+            $this->owner->andWhere('{{'.$this->owner->primaryAlias.'}}.[['.$this->owner->model->getBehavior('Archivable')->archiveField.']] IS NOT NULL');
         } elseif ($this->allowArchives === false) {
-            $this->owner->andWhere('{{'. $this->owner->primaryAlias .'}}.[['. $this->owner->model->getBehavior('Archivable')->archiveField .']] IS NULL');
+            $this->owner->andWhere('{{'.$this->owner->primaryAlias.'}}.[['.$this->owner->model->getBehavior('Archivable')->archiveField.']] IS NULL');
         }
 
         return true;

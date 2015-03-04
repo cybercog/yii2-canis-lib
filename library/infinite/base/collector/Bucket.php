@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -12,7 +13,7 @@ use ArrayIterator;
 use IteratorAggregate;
 
 /**
- * Bucket [@doctodo write class description for Bucket]
+ * Bucket [@doctodo write class description for Bucket].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -28,7 +29,7 @@ class Bucket extends \infinite\base\Object implements IteratorAggregate, ArrayAc
     protected $_collector;
 
     /**
-    * @inheritdoc
+     * @inheritdoc
      */
     public function __construct($collector)
     {
@@ -36,9 +37,10 @@ class Bucket extends \infinite\base\Object implements IteratorAggregate, ArrayAc
     }
 
     /**
-     * __method_add_description__
-     * @param __param_offset_type__ $offset __param_offset_description__
-     * @param infinite\base\collector\Item $item __param_item_description__
+     * __method_add_description__.
+     *
+     * @param __param_offset_type__        $offset __param_offset_description__
+     * @param infinite\base\collector\Item $item   __param_item_description__
      */
     public function add($offset, Item $item)
     {
@@ -46,7 +48,8 @@ class Bucket extends \infinite\base\Object implements IteratorAggregate, ArrayAc
     }
 
     /**
-     * __method_toArray_description__
+     * __method_toArray_description__.
+     *
      * @return __return_toArray_type__ __return_toArray_description__
      */
     public function toArray()
@@ -70,7 +73,8 @@ class Bucket extends \infinite\base\Object implements IteratorAggregate, ArrayAc
      * This method is required by the SPL interface `ArrayAccess`.
      * It is implicitly called when you use something like `isset($model[$offset])`.
      *
-     * @param mixed   $offset the offset to check on
+     * @param mixed $offset the offset to check on
+     *
      * @return boolean
      */
     public function offsetExists($offset)
@@ -84,6 +88,7 @@ class Bucket extends \infinite\base\Object implements IteratorAggregate, ArrayAc
      * It is implicitly called when you use something like `$value = $model[$offset];`.
      *
      * @param mixed $offset the offset to retrieve element.
+     *
      * @return mixed the element at the offset, null if no element is found at the offset
      */
     public function offsetGet($offset)
@@ -92,7 +97,7 @@ class Bucket extends \infinite\base\Object implements IteratorAggregate, ArrayAc
             return $this->_bucket[$offset];
         }
 
-        return null;
+        return;
     }
 
     /**

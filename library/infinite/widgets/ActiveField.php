@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -10,7 +11,7 @@ namespace infinite\widgets;
 use infinite\helpers\Html;
 
 /**
- * ActiveField [@doctodo write class description for ActiveField]
+ * ActiveField [@doctodo write class description for ActiveField].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -30,7 +31,7 @@ class ActiveField extends \yii\widgets\ActiveField
     public $inputGroupPostfix = false;
 
     /**
-    * @inheritdoc
+     * @inheritdoc
      */
     public function render($content = null)
     {

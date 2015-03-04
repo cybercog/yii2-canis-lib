@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -10,7 +11,7 @@ namespace infinite\security;
 use infinite\base\exceptions\Exception;
 
 /**
- * Authority [@doctodo write class description for Authority]
+ * Authority [@doctodo write class description for Authority].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -22,8 +23,10 @@ class Authority extends \infinite\base\Component
     protected $_handler;
 
     /**
-     * Set handler
+     * Set handler.
+     *
      * @param __param_handler_type__ $handler __param_handler_description__
+     *
      * @throws Exception __exception_Exception_description__
      */
     public function setHandler($handler)
@@ -35,7 +38,8 @@ class Authority extends \infinite\base\Component
     }
 
     /**
-     * Get handler
+     * Get handler.
+     *
      * @return __return_getHandler_type__ __return_getHandler_description__
      */
     public function getHandler()
@@ -44,8 +48,10 @@ class Authority extends \infinite\base\Component
     }
 
     /**
-     * Get requestors
+     * Get requestors.
+     *
      * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__
+     *
      * @return __return_getRequestors_type__ __return_getRequestors_description__
      */
     public function getRequestors($accessingObject)
@@ -58,8 +64,10 @@ class Authority extends \infinite\base\Component
     }
 
     /**
-     * Get top requestors
+     * Get top requestors.
+     *
      * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__
+     *
      * @return __return_getTopRequestors_type__ __return_getTopRequestors_description__
      */
     public function getTopRequestors($accessingObject)

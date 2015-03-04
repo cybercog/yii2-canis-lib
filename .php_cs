@@ -37,7 +37,7 @@ $config = Symfony\CS\Config\Config::create();
 //$config->addCustomFixer(new infinite\cs\DocBlockGenerator());
 //'doc_block_gen', 
 return $config
-    ->fixers(array('indentation', 'linefeed', 'trailing_spaces', 'unused_use', 'phpdoc_params', 'return', 'php_closing_tag', 'braces', 'extra_empty_lines', 'function_declaration', 'controls_spaces', 'eof_ending', 'elseif', 'short_array_syntax', 'phpdoc_indent', 'phpdoc_params'))
+    ->fixers(array('operators_spaces', 'indentation', 'linefeed', 'trailing_spaces', 'unused_use', 'ordered_use', 'return', 'php_closing_tag', 'braces', 'extra_empty_lines', 'function_declaration', 'controls_spaces', 'eof_ending', 'elseif', 'short_array_syntax', 'phpdoc_indent', 'phpdoc_params', 'function_call_space', 'lowercase_constants', 'method_argument_space', 'single_line_after_imports', 'remove_leading_slash_use', 'spaces_cast', 'phpdoc_order', 'concat_with_spaces'))
     ->finder($finder);
 
 ?>

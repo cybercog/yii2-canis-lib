@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -12,7 +13,7 @@ use infinite\helpers\Math;
 use infinite\helpers\Date;
 
 /**
- * Status [@doctodo write class description for Status]
+ * Status [@doctodo write class description for Status].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -47,7 +48,7 @@ class Task extends \infinite\base\Component
     protected $_subtasks = [];
 
     /**
-    * @inheritdoc
+     * @inheritdoc
      */
     public function __construct($config = [])
     {
@@ -56,6 +57,7 @@ class Task extends \infinite\base\Component
 
     /**
      * Prepares object for serialization.
+     *
      * @return __return___sleep_type__ __return___sleep_description__
      */
     public function __sleep()
@@ -132,7 +134,8 @@ class Task extends \infinite\base\Component
     }
 
     /**
-     * Set progress total
+     * Set progress total.
+     *
      * @param __param_total_type__ $total __param_total_description__
      */
     public function setProgressTotal($total)
@@ -145,16 +148,17 @@ class Task extends \infinite\base\Component
 
     public function getPercentageDone()
     {
-      return round(($this->progressDone / $this->progressTotal) * 100, 2);
+        return round(($this->progressDone / $this->progressTotal) * 100, 2);
     }
 
     public function getPercentageRemaining()
     {
-      return round(($this->progressRemaining / $this->progressTotal) * 100, 2);
+        return round(($this->progressRemaining / $this->progressTotal) * 100, 2);
     }
 
     /**
-     * Get progress total
+     * Get progress total.
+     *
      * @return __return_getProgressTotal_type__ __return_getProgressTotal_description__
      */
     public function getProgressTotal()
@@ -167,7 +171,8 @@ class Task extends \infinite\base\Component
     }
 
     /**
-     * Get progress done
+     * Get progress done.
+     *
      * @return __return_getProgressDone_type__ __return_getProgressDone_description__
      */
     public function getProgressDone()
@@ -175,19 +180,25 @@ class Task extends \infinite\base\Component
         if (!empty($this->tasks)) {
             $n = [];
             foreach ($this->tasks as $task) {
-              if (empty($task->progressTotal)) { continue; }
+                if (empty($task->progressTotal)) {
+                    continue;
+                }
                 $n[] = ($task->weight * ($task->progressDone / $task->progressTotal));
             }
 
             return array_sum($n);
         }
 
-        if (empty($this->progressTotal)) { return; }
+        if (empty($this->progressTotal)) {
+            return;
+        }
+
         return $this->progressTotal - $this->progressRemaining;
     }
 
     /**
-     * Get progress remaining
+     * Get progress remaining.
+     *
      * @return __return_getProgressRemaining_type__ __return_getProgressRemaining_description__
      */
     public function getProgressRemaining()
@@ -204,8 +215,10 @@ class Task extends \infinite\base\Component
     }
 
     /**
-     * __method_reduceRemaining_description__
-     * @param  __param_n_type__                $n __param_n_description__
+     * __method_reduceRemaining_description__.
+     *
+     * @param __param_n_type__ $n __param_n_description__
+     *
      * @return __return_reduceRemaining_type__ __return_reduceRemaining_description__
      */
     public function reduceRemaining($n = 1)
@@ -231,7 +244,9 @@ class Task extends \infinite\base\Component
 
     public function getRate($limit = null)
     {
-        if (!$this->status->linearTasks) { return false; }
+        if (!$this->status->linearTasks) {
+            return false;
+        }
         if (!empty($this->tasks) || count($this->_stepDurations) < max(5, $limit)) {
             return false;
         }
@@ -245,7 +260,9 @@ class Task extends \infinite\base\Component
 
     public function getRateGrowth($x)
     {
-        if (!$this->status->linearTasks) { return false; }
+        if (!$this->status->linearTasks) {
+            return false;
+        }
         if (!empty($this->tasks) || count($this->_stepDurations) < min(100, .1 * $this->progressTotal)) {
             return false;
         }
@@ -276,7 +293,9 @@ class Task extends \infinite\base\Component
 
     public function getDurationEstimate()
     {
-        if (!$this->status->linearTasks) { return false; }
+        if (!$this->status->linearTasks) {
+            return false;
+        }
         if (!empty($this->tasks)) {
             $n = 0;
             foreach ($this->tasks as $task) {

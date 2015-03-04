@@ -1,9 +1,6 @@
 <?php
 namespace infinite\action;
 
-use Yii;
-use infinite\helpers\Math;
-use infinite\helpers\Date;
 use infinite\base\Callback;
 use infinite\base\Exception;
 use infinite\caching\Cacher;
@@ -11,7 +8,7 @@ use infinite\caching\Cacher;
 // use infinite\helpers\Console;
 
 /**
- * Status [@doctodo write class description for Status]
+ * Status [@doctodo write class description for Status].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -32,6 +29,7 @@ class Interaction extends \infinite\base\Component // implements \infinite\base\
         if (!isset($this->_id)) {
             $this->_id = md5(uniqid(rand(), true));
         }
+
         return $this->_id;
     }
 
@@ -51,10 +49,13 @@ class Interaction extends \infinite\base\Component // implements \infinite\base\
                 if (!$this->error) {
                     $this->error = 'Unable to resolve with given response';
                 }
+
                 return false;
             }
+
             return true;
         }
+
         return false;
     }
 
@@ -62,16 +63,17 @@ class Interaction extends \infinite\base\Component // implements \infinite\base\
     {
         $details = $this->details;
         if (is_object($details) || is_array($details)) {
-            $details = '<pre>'. print_r($details, true) .'</pre>';
+            $details = '<pre>'.print_r($details, true).'</pre>';
         }
+
         return [
             'id' => $this->id,
-            'hash' => md5($this->id .'-'. $this->lastResponse),
+            'hash' => md5($this->id.'-'.$this->lastResponse),
             'label' => $this->label,
             'details' => $details,
             'inputType' => $this->inputType,
             'options' => $this->options,
-            'error' => $this->error
+            'error' => $this->error,
         ];
     }
 
@@ -79,11 +81,12 @@ class Interaction extends \infinite\base\Component // implements \infinite\base\
     {
         // Console::output("Attempting resolve for {$this->id}: $response");
         if ($this->getCallback() === false) {
-        //    Console::output("\tNo callback!");
+            //    Console::output("\tNo callback!");
             return false;
         }
         if ($this->getCallback()->call($response)) {
             $this->resolved = true;
+
             return true;
         }
         // Console::output("\tCallback failed!");
@@ -98,6 +101,7 @@ class Interaction extends \infinite\base\Component // implements \infinite\base\
         if (is_string($this->_callback)) {
             return Callback::get($this->_callback);
         }
+
         return $this->_callback;
     }
 
@@ -109,9 +113,10 @@ class Interaction extends \infinite\base\Component // implements \infinite\base\
             $callback = $callback->id;
         }
         if (!is_string($callback)) {
-            throw new Exception("Invalid callback set: " . print_r($callback, true));
+            throw new Exception("Invalid callback set: ".print_r($callback, true));
         }
         $this->_callback = $callback;
+
         return $this;
     }
 }

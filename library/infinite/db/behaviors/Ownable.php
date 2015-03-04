@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -10,7 +11,7 @@ namespace infinite\db\behaviors;
 use Yii;
 
 /**
- * Ownable [@doctodo write class description for Ownable]
+ * Ownable [@doctodo write class description for Ownable].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -27,7 +28,7 @@ class Ownable extends \infinite\db\behaviors\ActiveRecord
     const ROLE_OWNER = 'owner';
 
     /**
-    * @inheritdoc
+     * @inheritdoc
      */
     public function events()
     {
@@ -41,7 +42,7 @@ class Ownable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-    * @inheritdoc
+     * @inheritdoc
      */
     public function safeAttributes()
     {
@@ -49,7 +50,8 @@ class Ownable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_isEnabled_description__
+     * __method_isEnabled_description__.
+     *
      * @return __return_isEnabled_type__ __return_isEnabled_description__
      */
     public function isEnabled()
@@ -66,7 +68,8 @@ class Ownable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_determineOwner_description__
+     * __method_determineOwner_description__.
+     *
      * @return __return_determineOwner_type__ __return_determineOwner_description__
      */
     public function determineOwner()
@@ -79,7 +82,8 @@ class Ownable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_ownerAccess_description__
+     * __method_ownerAccess_description__.
+     *
      * @return __return_ownerAccess_type__ __return_ownerAccess_description__
      */
     public function ownerAccess()
@@ -88,69 +92,95 @@ class Ownable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_beforeSave_description__
+     * __method_beforeSave_description__.
+     *
      * @param __param_event_type__ $event __param_event_description__
+     *
      * @return __return_beforeSave_type__ __return_beforeSave_description__
      */
     public function beforeSave($event)
     {
-        if (!$this->isEnabled()) { return; }
-        if ($this->owner->hasObjectOwner()) { return; }
+        if (!$this->isEnabled()) {
+            return;
+        }
+        if ($this->owner->hasObjectOwner()) {
+            return;
+        }
         if (($owner = $this->determineOwner()) && $owner) {
             $this->owner->objectOwner = $owner;
         }
     }
 
     /**
-     * __method_hasObjectOwner_description__
+     * __method_hasObjectOwner_description__.
+     *
      * @return __return_hasObjectOwner_type__ __return_hasObjectOwner_description__
      */
     public function hasObjectOwner()
     {
-        if (!$this->isEnabled()) { return false; }
+        if (!$this->isEnabled()) {
+            return false;
+        }
         $owner = $this->owner->getFirstAroByRole(['system_id' => self::ROLE_OWNER]);
 
         return !empty($owner);
     }
 
     /**
-     * Set object owner
+     * Set object owner.
+     *
      * @param __param_aro_type__ $aro __param_aro_description__
+     *
      * @return __return_setObjectOwner_type__ __return_setObjectOwner_description__
      */
     public function setObjectOwner($aro)
     {
-        if (!$this->isEnabled()) { return false; }
+        if (!$this->isEnabled()) {
+            return false;
+        }
 
         return $this->owner->setRole(['system_id' => self::ROLE_OWNER], $aro);
     }
 
     /**
-     * Get object owner
+     * Get object owner.
+     *
      * @return __return_getObjectOwner_type__ __return_getObjectOwner_description__
      */
     public function getObjectOwner()
     {
-        if (!$this->isEnabled()) { return false; }
+        if (!$this->isEnabled()) {
+            return false;
+        }
 
         return $this->owner->getFirstAroByRole(['system_id' => self::ROLE_OWNER]);
     }
 
     /**
-     * __method_afterSave_description__
+     * __method_afterSave_description__.
+     *
      * @param __param_event_type__ $event __param_event_description__
+     *
      * @return __return_afterSave_type__ __return_afterSave_description__
      */
     public function afterSave($event)
     {
-        if (!$this->isEnabled()) { return; }
-        if ($this->owner->getBehavior('ActiveAccess') === null) { return; }
+        if (!$this->isEnabled()) {
+            return;
+        }
+        if ($this->owner->getBehavior('ActiveAccess') === null) {
+            return;
+        }
         $ownerAccess = $this->owner->ownerAccess();
-        if ($ownerAccess === false) { return; }
+        if ($ownerAccess === false) {
+            return;
+        }
         if ($this->owner->getBehavior('Relatable') !== null) {
             $this->owner->handleRelationSave($event);
         }
-        if (!$this->owner->hasObjectOwner()) { return; }
+        if (!$this->owner->hasObjectOwner()) {
+            return;
+        }
 
         $owner = $this->owner->getFirstAroByRole(['system_id' => self::ROLE_OWNER]);
         foreach ($ownerAccess as $aca) {

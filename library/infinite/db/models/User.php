@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -20,8 +21,6 @@ use yii\web\IdentityInterface;
  * @property \yii\db\ActiveRelation $registry This property is read-only.
  *
  * Class User
- * @package common\models
- *
  * @property integer $id
  * @property string $password_hash
  * @property string $password_reset_token
@@ -31,13 +30,10 @@ use yii\web\IdentityInterface;
  * @property integer $status
  * @property integer $create_time
  * @property integer $update_time
- *
  * @property string $authKey Current user auth key. This property is read-only.
  * @property int|string $id Current user ID. This property is read-only.
- *
  * @property string $authKey Current user auth key. This property is read-only.
  * @property int|string $id Current user ID. This property is read-only.
- *
  * @property string $authKey Current user auth key. This property is read-only.
  * @property int|string $id Current user ID. This property is read-only.
  *
@@ -76,7 +72,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-    * @inheritdoc
+     * @inheritdoc
      */
     public function behaviors()
     {
@@ -90,7 +86,9 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Finds an identity by the given ID.
-     * @param string|integer         $id the ID to be looked for
+     *
+     * @param string|integer $id the ID to be looked for
+     *
      * @return IdentityInterface|null the identity object that matches the given ID.
      */
     public static function findIdentity($id)
@@ -101,13 +99,13 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * __method_findIdentityByAccessToken_description__
+     * __method_findIdentityByAccessToken_description__.
+     *
      * @param __param_token_type__ $token __param_token_description__
      */
-    public static function findIdentityByAccessToken($token, $type = NULL)
+    public static function findIdentityByAccessToken($token, $type = null)
     {
     }
-
 
     public static function findByEmail($email)
     {
@@ -122,6 +120,7 @@ class User extends ActiveRecord implements IdentityInterface
                 $this->identityMeta = $identityMeta[md5($this->primaryKey)];
             }
         }
+
         return $this->_identityMeta;
     }
 
@@ -130,7 +129,8 @@ class User extends ActiveRecord implements IdentityInterface
         $this->_identityMeta = $meta;
     }
     /**
-     * Get id
+     * Get id.
+     *
      * @return int|string current user ID
      */
     public function getId()
@@ -139,7 +139,8 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * Get auth key
+     * Get auth key.
+     *
      * @return string current user auth key
      */
     public function getAuthKey()
@@ -148,8 +149,10 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * __method_validateAuthKey_description__
-     * @param string  $authKey
+     * __method_validateAuthKey_description__.
+     *
+     * @param string $authKey
+     *
      * @return boolean if auth key is valid for current user
      */
     public function validateAuthKey($authKey)
@@ -158,9 +161,11 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * __method_validatePassword_description__
+     * __method_validatePassword_description__.
+     *
      * @param string $password password to validate
-     * @return bool   if password provided is valid for current user
+     *
+     * @return bool if password provided is valid for current user
      */
     public function validatePassword($password)
     {
@@ -182,15 +187,18 @@ class User extends ActiveRecord implements IdentityInterface
                     $identityMeta[md5($this->primaryKey)] = $this->identityMeta = $handler->serverMeta;
                     Yii::$app->session['identityMeta'] = $identityMeta;
                 }
+
                 return $result;
             }
+
             return false;
         }
+
         return Yii::$app->security->validatePassword($password, $this->password_hash);
     }
 
     /**
-    * @inheritdoc
+     * @inheritdoc
      */
     public function rules()
     {
@@ -210,12 +218,11 @@ class User extends ActiveRecord implements IdentityInterface
             [['password'], 'required'],
             [['password'], 'string', 'min' => 6],
 
-            
         ];
     }
 
     /**
-    * @inheritdoc
+     * @inheritdoc
      */
     public function scenarios()
     {
@@ -234,8 +241,9 @@ class User extends ActiveRecord implements IdentityInterface
             $this->_primaryIdentity = $identityClass::get($this->primary_identity_id, false);
         }
         if (empty($this->_primaryIdentity)) {
-            return null;
+            return;
         }
+
         return $this->_primaryIdentity;
     }
 
@@ -243,6 +251,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $identity = $this->setIdentity($identity);
         $this->_primaryIdentity = $identity;
+
         return $identity;
     }
 
@@ -251,7 +260,9 @@ class User extends ActiveRecord implements IdentityInterface
         if (!is_object($identity)) {
             $identityAttributes = $identity;
             $identity = null;
-            if (!isset($identityAttributes['identity_provider_id'])) { return false; }
+            if (!isset($identityAttributes['identity_provider_id'])) {
+                return false;
+            }
             if (isset($this->identitiesByProvider[$identityAttributes['identity_provider_id']])) {
                 $identity = $this->identitiesByProvider[$identityAttributes['identity_provider_id']];
                 Yii::configure($identity, $identityAttributes);
@@ -268,6 +279,7 @@ class User extends ActiveRecord implements IdentityInterface
             $identity->meta = $newIdentity->meta;
         }
         $this->_touchedIdentities[] = $identity;
+
         return $identity;
     }
 
@@ -281,6 +293,7 @@ class User extends ActiveRecord implements IdentityInterface
                 $this->_identities = ArrayHelper::index($rawIdentities, 'primaryKey');
             }
         }
+
         return $this->_identities;
     }
 
@@ -289,6 +302,7 @@ class User extends ActiveRecord implements IdentityInterface
         if (!isset($this->_identitiesByProvider)) {
             $this->_identitiesByProvider = ArrayHelper::index($this->identities, 'identity_provider_id');
         }
+
         return $this->_identitiesByProvider;
     }
 
@@ -300,6 +314,7 @@ class User extends ActiveRecord implements IdentityInterface
                 $this->_activeIdentity = $this->identities[$this->primary_identity_id];
             }
         }
+
         return $this->_activeIdentity;
     }
 
@@ -309,7 +324,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-    * @inheritdoc
+     * @inheritdoc
      */
     public function beforeSave($insert)
     {
@@ -335,6 +350,7 @@ class User extends ActiveRecord implements IdentityInterface
             } elseif (!isset($this->_primaryIdentity) && isset($this->primary_identity_id)) {
                 $this->primary_identity_id = null;
             }
+
             return true;
         }
 
@@ -342,7 +358,8 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * Get registry
+     * Get registry.
+     *
      * @return \yii\db\ActiveRelation
      */
     public function getRegistry()
@@ -351,7 +368,8 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * Get groups
+     * Get groups.
+     *
      * @return __return_getGroups_type__ __return_getGroups_description__
      */
     public function getGroups()
@@ -363,5 +381,4 @@ class User extends ActiveRecord implements IdentityInterface
 
         return $this->_groups;
     }
-
 }

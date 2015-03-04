@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -18,7 +19,6 @@ use Yii;
  * @property string $role_id
  * @property string $created
  * @property string $modified
- *
  * @property Acl[] $acls
  * @property Registry $accessingObject
  * @property Registry $controlledObject
@@ -60,7 +60,7 @@ class AclRole extends \infinite\db\ActiveRecord
         return [
             [['accessing_object_id', 'controlled_object_id'], 'required'],
             [['created', 'modified'], 'safe'],
-            [['accessing_object_id', 'controlled_object_id', 'role_id'], 'string', 'max' => 36]
+            [['accessing_object_id', 'controlled_object_id', 'role_id'], 'string', 'max' => 36],
         ];
     }
 
@@ -80,7 +80,8 @@ class AclRole extends \infinite\db\ActiveRecord
     }
 
     /**
-     * Get acls
+     * Get acls.
+     *
      * @return \yii\db\ActiveRelation
      */
     public function getAcls()
@@ -89,7 +90,8 @@ class AclRole extends \infinite\db\ActiveRecord
     }
 
     /**
-     * Get accessing object
+     * Get accessing object.
+     *
      * @return \yii\db\ActiveRelation
      */
     public function getAccessingObject()
@@ -98,7 +100,8 @@ class AclRole extends \infinite\db\ActiveRecord
     }
 
     /**
-     * Get controlled object
+     * Get controlled object.
+     *
      * @return \yii\db\ActiveRelation
      */
     public function getControlledObject()
@@ -107,7 +110,8 @@ class AclRole extends \infinite\db\ActiveRecord
     }
 
     /**
-     * Get role
+     * Get role.
+     *
      * @return \yii\db\ActiveRelation
      */
     public function getRole()

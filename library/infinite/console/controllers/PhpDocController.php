@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -15,11 +16,12 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Inflector;
 
 /**
- * PhpDocController is there to help maintaining PHPDoc annotation in class files
+ * PhpDocController is there to help maintaining PHPDoc annotation in class files.
  *
  * @author Carsten Brandt <mail@cebe.cc>
  * @author Alexander Makarov <sam@rmcreative.ru>
  * @author Jacob Morrison <email@ofjacob.com>
+ *
  * @since 2.0
  */
 class PhpDocController extends Controller
@@ -72,7 +74,7 @@ class PhpDocController extends Controller
                         $nFilesUpdated++;
                     }
                 } elseif (!empty($phpdoc)) {
-                    $this->stdout("\n[ " . $file . " ]\n\n", Console::BOLD);
+                    $this->stdout("\n[ ".$file." ]\n\n", Console::BOLD);
                     $this->stdout($phpdoc);
                 }
             }
@@ -84,7 +86,8 @@ class PhpDocController extends Controller
     }
 
     /**
-     * Fix some issues with PHPdoc in files
+     * Fix some issues with PHPdoc in files.
+     *
      * @param string $root the directory to parse files from. Defaults to YII_PATH.
      */
     public function actionFix($root = null)
@@ -112,7 +115,6 @@ class PhpDocController extends Controller
 
         $this->stdout("\nParsed $nFilesTotal files.\n");
         $this->stdout("Updated $nFilesUpdated files.\n");
-
     }
 
     /**
@@ -124,15 +126,17 @@ class PhpDocController extends Controller
     }
 
     /**
-     * __method_findFiles_description__
+     * __method_findFiles_description__.
+     *
      * @param __param_root_type__ $root __param_root_description__
+     *
      * @return __return_findFiles_type__ __return_findFiles_description__
      */
     protected function findFiles($root)
     {
         $except = [];
         if ($root === null) {
-            $root = INFINITE_APP_VENDOR_PATH . DIRECTORY_SEPARATOR . 'infiniteCascade';//. DIRECTORY_SEPARATOR .'cascade-lib';
+            $root = INFINITE_APP_VENDOR_PATH.DIRECTORY_SEPARATOR.'infiniteCascade';//. DIRECTORY_SEPARATOR .'cascade-lib';
 
             $except = [
                 '.git/',
@@ -163,7 +167,7 @@ class PhpDocController extends Controller
                         }
                     }
 
-                    return null;
+                    return;
                 },
             'only' => ['*.php'],
             'except' => array_merge($except, [
@@ -173,13 +177,15 @@ class PhpDocController extends Controller
                 'vendor/',
             ]),
         ];
+
         return FileHelper::findFiles($root, $options);
     }
 
     /**
-     * __method_fixFileDoc_description__
+     * __method_fixFileDoc_description__.
+     *
      * @param __param_lines_type__ $lines __param_lines_description__
-     * @param __param_file_type__ $file __param_file_description__
+     * @param __param_file_type__  $file  __param_file_description__
      */
     protected function fixFileDoc(&$lines, $file)
     {
@@ -187,7 +193,7 @@ class PhpDocController extends Controller
         $namespace = false;
         $namespaceLine = '';
         $contentAfterNamespace = false;
-        foreach($lines as $i => $line) {
+        foreach ($lines as $i => $line) {
             if (substr(trim($line), 0, 9) === 'namespace') {
                 $namespace = $i;
                 $namespaceLine = trim($line);
@@ -198,27 +204,29 @@ class PhpDocController extends Controller
         }
 
         if ($namespace !== false && $contentAfterNamespace !== false) {
-            while($contentAfterNamespace > 0) {
+            while ($contentAfterNamespace > 0) {
                 array_shift($lines);
                 $contentAfterNamespace--;
             }
             $lines = array_merge([
                 "<?php",
                 "/**",
-                " * @link " . $this->link,
-                " * @copyright ". $this->copyright,
-                " * @license ". $this->license,
+                " * @link ".$this->link,
+                " * @copyright ".$this->copyright,
+                " * @license ".$this->license,
                 " */",
                 "",
                 $namespaceLine,
-                ""
+                "",
             ], $lines);
         }
     }
 
     /**
-     * __method_guessClassDescription_description__
+     * __method_guessClassDescription_description__.
+     *
      * @param __param_ref_type__ $ref __param_ref_description__
+     *
      * @return __return_guessClassDescription_type__ __return_guessClassDescription_description__
      */
     protected function guessClassDescription($ref)
@@ -229,15 +237,18 @@ class PhpDocController extends Controller
             $tableName = $className::tableName();
             $description = "is the model class for table \"{$tableName}\".";
         }
+
         return $description;
     }
 
     /**
-     * __method_updateClassPropertyDocs_description__
-     * @param __param_file_type__ $file __param_file_description__
-     * @param __param_className_type__ $className __param_className_description__
-     * @param __param_propertyDoc_type__ $propertyDoc __param_propertyDoc_description__
+     * __method_updateClassPropertyDocs_description__.
+     *
+     * @param __param_file_type__              $file              __param_file_description__
+     * @param __param_className_type__         $className         __param_className_description__
+     * @param __param_propertyDoc_type__       $propertyDoc       __param_propertyDoc_description__
      * @param __param_coveredProperties_type__ $coveredProperties __param_coveredProperties_description__
+     *
      * @return __return_updateClassPropertyDocs_type__ __return_updateClassPropertyDocs_description__
      */
     protected function updateClassPropertyDocs($file, $className, $propertyDoc, $coveredProperties)
@@ -256,8 +267,8 @@ class PhpDocController extends Controller
         } else {
             $startLine -= $oldDocSize;
         }
-        // * ". $ref->getShortName() ." @doctodo write class description for ". $ref->getShortName() ."\n 
-        
+        // * ". $ref->getShortName() ." @doctodo write class description for ". $ref->getShortName() ."\n
+
         if (true || !$ref->isSubclassOf('yii\base\Object') && $className != 'yii\base\Object') {
             $newDoc = $oldDoc;
         } else {
@@ -269,9 +280,9 @@ class PhpDocController extends Controller
         // TODO move these checks to different action
         $lines = explode("\n", trim($newDoc));
 
-        $oldTest = ' * '. $ref->getShortName();
+        $oldTest = ' * '.$ref->getShortName();
         if (strpos($lines[1], $oldTest) !== 0) {
-            array_splice( $lines, 1, 0, [" * ". $ref->getShortName() ." ". $this->guessClassDescription($ref),' *']);
+            array_splice($lines, 1, 0, [" * ".$ref->getShortName()." ".$this->guessClassDescription($ref), ' *']);
         }
 
         if (trim($lines[1]) == '*' || substr(trim($lines[1]), 0, 3) == '* @') {
@@ -295,10 +306,10 @@ class PhpDocController extends Controller
                 $insertLines[] = ' *';
             }
             $insertLines[] = " * @author {$this->author}";
-            array_splice( $lines, count($lines)-1, 0, $insertLines);
+            array_splice($lines, count($lines)-1, 0, $insertLines);
             // $this->stderr("[ERR] No @author found in class doc in file: $file\n", Console::FG_RED);
         }
-        $newDoc = implode("\n", $lines) . "\n";
+        $newDoc = implode("\n", $lines)."\n";
         $updates = [];
         $fileContent = explode("\n", file_get_contents($file));
         if (trim($oldDoc) != trim($newDoc)) {
@@ -306,7 +317,7 @@ class PhpDocController extends Controller
             $updates[] = [
                 'inject' => $lines,
                 'length' => $oldDocSize,
-                'start' => $start
+                'start' => $start,
             ];
         }
         $updates = array_merge($updates, $this->updateMethodDocs($fileContent, $className, $file));
@@ -320,12 +331,15 @@ class PhpDocController extends Controller
             }
             file_put_contents($file, implode("\n", $fileContent));
         }
+
         return !empty($updates);
     }
 
     /**
-     * __method_guessMethodDescription_description__
+     * __method_guessMethodDescription_description__.
+     *
      * @param __param_method_type__ $method __param_method_description__
+     *
      * @return __return_guessMethodDescription_type__ __return_guessMethodDescription_description__
      */
     public function guessMethodDescription($method)
@@ -339,18 +353,21 @@ class PhpDocController extends Controller
         } elseif ($method->getName() === '__toString') {
             return 'Converts object to string.';
         } elseif (substr($method->getName(), 0, 3) === 'get') {
-            return 'Get '. strtolower(Inflector::titleize(substr($method->getName(), 3)));
+            return 'Get '.strtolower(Inflector::titleize(substr($method->getName(), 3)));
         } elseif (substr($method->getName(), 0, 3) === 'set') {
-            return 'Set '. strtolower(Inflector::titleize(substr($method->getName(), 3)));
+            return 'Set '.strtolower(Inflector::titleize(substr($method->getName(), 3)));
         }
+
         return '__method_'.$method->getName().'_description__';
     }
 
     /**
-     * __method_generatePropertyDocs_description__
-     * @param __param_class_type__ $class __param_class_description__
+     * __method_generatePropertyDocs_description__.
+     *
+     * @param __param_class_type__    $class    __param_class_description__
      * @param __param_property_type__ $property __param_property_description__
-     * @param __param_lines_type__ $lines __param_lines_description__
+     * @param __param_lines_type__    $lines    __param_lines_description__
+     *
      * @return __return_generatePropertyDocs_type__ __return_generatePropertyDocs_description__
      */
     public function generatePropertyDocs($class, $property, $lines)
@@ -380,37 +397,40 @@ class PhpDocController extends Controller
             }
             $varObject = new \phpDocumentor\Reflection\DocBlock\Tag\ParamTag(
                 'var',
-                $type . ' $'. $property->getName() .' __var_'.$property->getName().'_description__'
+                $type.' $'.$property->getName().' __var_'.$property->getName().'_description__'
             );
             $currentVars[$varObject->getVariableName()] = $varObject;
         }
         $lines = ['/**'];
         if (!empty($currentVars)) {
             foreach ($currentVars as $var) {
-                $lines[] = ' * @var '. trim($var->getType(), '\\') .' '. $var->getDescription();
+                $lines[] = ' * @var '.trim($var->getType(), '\\').' '.$var->getDescription();
                 break;
             }
         }
         $lines[] = ' */';
+
         return $lines;
     }
 
     /**
-     * __method_generateMethodDocs_description__
+     * __method_generateMethodDocs_description__.
+     *
      * @param __param_method_type__ $method __param_method_description__
-     * @param __param_lines_type__ $lines __param_lines_description__
+     * @param __param_lines_type__  $lines  __param_lines_description__
+     *
      * @return __return_generateMethodDocs_type__ __return_generateMethodDocs_description__
      */
     public function generateMethodDocs($method, $lines)
     {
         if (trim($lines[1]) == '*' || substr(trim($lines[1]), 0, 3) == '* @') {
-            array_splice( $lines, 1, 0, [" * ". $this->guessMethodDescription($method),' *']);
+            array_splice($lines, 1, 0, [" * ".$this->guessMethodDescription($method), ' *']);
         }
         $lineDescription = null;
         $longDescription = [];
         $phpdoc = new \phpDocumentor\Reflection\DocBlock($method);
         $currentTags = $phpdoc->getTags();
-        $currentParams = []; 
+        $currentParams = [];
         foreach ($phpdoc->getTagsByName('param') as $param) {
             $currentParams[$param->getVariableName()] = $param;
         }
@@ -430,7 +450,7 @@ class PhpDocController extends Controller
 
                 $paramObject = new \phpDocumentor\Reflection\DocBlock\Tag\ParamTag(
                     'param',
-                    $type . ' $'. $param->getName() .' __param_'.$param->getName().'_description__' . $extra
+                    $type.' $'.$param->getName().' __param_'.$param->getName().'_description__'.$extra
                 );
                 $currentParams[$paramObject->getVariableName()] = $paramObject;
             }
@@ -443,21 +463,21 @@ class PhpDocController extends Controller
         $currentReturn = $phpdoc->getTagsByName('return');
         foreach ($currentReturn as $return) {
             if ($return->getContent() === '\yii\db\ActiveRelation') {
-                $lineDescription = ' * Get related '. Inflector::titleize(substr($method->getName(), 3), true) .' objects';
+                $lineDescription = ' * Get related '.Inflector::titleize(substr($method->getName(), 3), true).' objects';
             }
         }
-        
-        if (substr(trim($lines[1]), 0, 2) === '* ' 
+
+        if (substr(trim($lines[1]), 0, 2) === '* '
             && substr(trim($lines[1]), 0, 3) !== '* @'
             ) {
-            $lineDescription = ' '. trim($lines[1]);
+            $lineDescription = ' '.trim($lines[1]);
         }
         if (!isset($lineDescription) || trim($lineDescription) === '* __method_'.$method->getName().'_description__') {
-            $lineDescription = ' * '. $this->guessMethodDescription($method);
+            $lineDescription = ' * '.$this->guessMethodDescription($method);
         }
 
         foreach (array_slice($lines, 2) as $line) {
-            if (substr(trim($line), 0, 2) === '* ' 
+            if (substr(trim($line), 0, 2) === '* '
                 && substr(trim($line), 0, 3) !== '* @'
                 ) {
                 $longDescription[] = $line;
@@ -474,13 +494,13 @@ class PhpDocController extends Controller
         if (!empty($parameters)) {
             foreach ($parameters as $param) {
                 if (isset($currentParams['$'.$param->getName()])) {
-                    $lines[] = ' * @param '. $currentParams['$'.$param->getName()]->getContent();
+                    $lines[] = ' * @param '.$currentParams['$'.$param->getName()]->getContent();
                 }
             }
         }
         $hasReturnInFunction = false;
         $methodCode = $this->getMethodCode($method);
-        $tokens = token_get_all('<?php '. $methodCode .' ?>');
+        $tokens = token_get_all('<?php '.$methodCode.' ?>');
         $returnType = [];
         foreach ($tokens as $i => $token) {
             if (is_array($token)) {
@@ -491,7 +511,7 @@ class PhpDocController extends Controller
                     case T_THROW:
                         if (isset($tokens[$i+4][1])) {
                             $type = $tokens[$i+4][1];
-                            $currentThrows[$type] = new \phpDocumentor\Reflection\DocBlock\Tag\ThrowsTag('throws', $type .' __exception_'.$type.'_description__');
+                            $currentThrows[$type] = new \phpDocumentor\Reflection\DocBlock\Tag\ThrowsTag('throws', $type.' __exception_'.$type.'_description__');
                         }
                     break;
                 }
@@ -503,32 +523,36 @@ class PhpDocController extends Controller
         $hasReturn = false;
         foreach ($currentReturn as $return) {
             $hasReturn = true;
-            $lines[] = ' * @return '. $return->getContent();
+            $lines[] = ' * @return '.$return->getContent();
         }
         if (!$hasReturn && $hasReturnInFunction) {
-            $lines[] = ' * @return '. implode('|', $returnType) .' __return_'.$method->getName().'_description__';
+            $lines[] = ' * @return '.implode('|', $returnType).' __return_'.$method->getName().'_description__';
         }
         if (count($currentThrows) > 2) {
-            \d($currentThrows);exit;
+            \d($currentThrows);
+            exit;
         }
         foreach ($currentThrows as $throw) {
-            $lines[] = ' * @throws '. $throw->getContent();
+            $lines[] = ' * @throws '.$throw->getContent();
         }
         foreach (['see', 'todo', 'deprecated', 'link', 'since', 'uses', 'var'] as $tagName) {
             foreach ($phpdoc->getTagsByName($tagName) as $tag) {
-                $lines[] = ' * @'.$tagName .' '. $tag->getContent();
+                $lines[] = ' * @'.$tagName.' '.$tag->getContent();
             }
         }
         if ($lines[count($lines)-1] === ' *') {
             unset($lines[count($lines)-1]);
-        } 
+        }
         $lines[] = ' */';
+
         return $lines;
     }
 
     /**
-     * Get method code
+     * Get method code.
+     *
      * @param __param_method_type__ $method __param_method_description__
+     *
      * @return __return_getMethodCode_type__ __return_getMethodCode_description__
      */
     public function getMethodCode($method)
@@ -537,17 +561,20 @@ class PhpDocController extends Controller
         $contents = file_get_contents($methodFile, true);
         if (!empty($contents)) {
             $contents = explode("\n", $contents);
+
             return trim(implode("\n", array_slice($contents, $method->getStartLine()-1, $method->getEndLine()-$method->getStartLine()+1)));
         }
+
         return false;
     }
 
-
     /**
-     * __method_updatePropertyDocs_description__
+     * __method_updatePropertyDocs_description__.
+     *
      * @param __param_fileContent_type__ $fileContent __param_fileContent_description__
-     * @param __param_className_type__ $className __param_className_description__
-     * @param __param_file_type__ $file __param_file_description__
+     * @param __param_className_type__   $className   __param_className_description__
+     * @param __param_file_type__        $file        __param_file_description__
+     *
      * @return __return_updatePropertyDocs_type__ __return_updatePropertyDocs_description__
      */
     public function updatePropertyDocs($fileContent, $className, $file)
@@ -598,35 +625,38 @@ class PhpDocController extends Controller
             $whitespace = isset($matches[1]) ? $matches[1] : '';
             $newDocs = '';
             foreach ($lines as $k => $line) {
-                $newDocs .= trim($line) ."\n";
+                $newDocs .= trim($line)."\n";
             }
             $originalDocs = '';
             foreach ($originalLines as $k => $line) {
-                $originalDocs .= trim($line) ."\n";
+                $originalDocs .= trim($line)."\n";
             }
             foreach ($lines as $k => $line) {
                 $extra = '';
                 if ($k !== 0) {
                     $extra = ' ';
                 }
-                $lines[$k] = $whitespace . $extra . trim($line);
+                $lines[$k] = $whitespace.$extra.trim($line);
             }
             if ($newDocs !== $originalDocs && $newDocs !== "/**\n */") {
                 $updates[] = [
                     'inject' => $lines,
                     'length' => $docsSize,
-                    'start' => $startLine - 1 - $docsSize
+                    'start' => $startLine - 1 - $docsSize,
                 ];
             }
         }
+
         return $updates;
     }
 
     /**
-     * __method_updateMethodDocs_description__
+     * __method_updateMethodDocs_description__.
+     *
      * @param __param_fileContent_type__ $fileContent __param_fileContent_description__
-     * @param __param_className_type__ $className __param_className_description__
-     * @param __param_file_type__ $file __param_file_description__
+     * @param __param_className_type__   $className   __param_className_description__
+     * @param __param_file_type__        $file        __param_file_description__
+     *
      * @return __return_updateMethodDocs_type__ __return_updateMethodDocs_description__
      */
     public function updateMethodDocs($fileContent, $className, $file)
@@ -659,34 +689,37 @@ class PhpDocController extends Controller
             $whitespace = isset($matches[1]) ? $matches[1] : '';
             $newDocs = '';
             foreach ($lines as $k => $line) {
-                $newDocs .= trim($line) ."\n";
+                $newDocs .= trim($line)."\n";
             }
             $originalDocs = '';
             foreach ($originalLines as $k => $line) {
-                $originalDocs .= trim($line) ."\n";
+                $originalDocs .= trim($line)."\n";
             }
             foreach ($lines as $k => $line) {
                 $extra = '';
                 if ($k !== 0) {
                     $extra = ' ';
                 }
-                $lines[$k] = $whitespace . $extra . trim($line);
+                $lines[$k] = $whitespace.$extra.trim($line);
             }
             if (trim($newDocs) !== trim($originalDocs) && $newDocs !== "/**\n */") {
                 $updates[] = [
                     'inject' => $lines,
                     'length' => $docsSize,
-                    'start' => $method->getStartLine() - 1 - $docsSize
+                    'start' => $method->getStartLine() - 1 - $docsSize,
                 ];
             }
         }
+
         return $updates;
     }
 
     /**
-     * __method_isPropertyReplacingParent_description__
-     * @param ReflectionClass $class __param_class_description__
+     * __method_isPropertyReplacingParent_description__.
+     *
+     * @param ReflectionClass    $class    __param_class_description__
      * @param ReflectionProperty $property __param_property_description__
+     *
      * @return __return_isPropertyReplacingParent_type__ __return_isPropertyReplacingParent_description__
      */
     public function isPropertyReplacingParent(\ReflectionClass $class, \ReflectionProperty $property)
@@ -698,13 +731,16 @@ class PhpDocController extends Controller
         if (property_exists($parentClass->getName(), $property->getName())) {
             return true;
         }
+
         return false;
     }
 
     /**
-     * __method_isMethodReplacingParent_description__
-     * @param ReflectionClass $class __param_class_description__
+     * __method_isMethodReplacingParent_description__.
+     *
+     * @param ReflectionClass  $class  __param_class_description__
      * @param ReflectionMethod $method __param_method_description__
+     *
      * @return __return_isMethodReplacingParent_type__ __return_isMethodReplacingParent_description__
      */
     public function isMethodReplacingParent(\ReflectionClass $class, \ReflectionMethod $method)
@@ -716,12 +752,15 @@ class PhpDocController extends Controller
         if (method_exists($parentClass->getName(), $method->getName())) {
             return true;
         }
+
         return false;
     }
 
     /**
-     * remove multi empty lines and trim trailing whitespace
+     * remove multi empty lines and trim trailing whitespace.
+     *
      * @param $doc
+     *
      * @return string
      */
     protected function cleanDocComment($doc)
@@ -739,11 +778,13 @@ class PhpDocController extends Controller
     }
 
     /**
-     * Replace property annotations in doc comment
+     * Replace property annotations in doc comment.
+     *
      * @param $doc
      * @param $properties
      * @param __param_coveredProperties_type__ $coveredProperties __param_coveredProperties_description__
-     * @param __param_ref_type__ $ref __param_ref_description__
+     * @param __param_ref_type__               $ref               __param_ref_description__
+     *
      * @return string
      */
     protected function updateDocComment($doc, $properties, $coveredProperties, $ref)
@@ -764,12 +805,12 @@ class PhpDocController extends Controller
             }
             if ($propertyPart && !$ref->isSubclassOf('yii\base\Model')) {
                 unset($lines[$i]);
-            } elseif ($ref->isSubclassOf('yii\db\ActiveRecord') 
+            } elseif ($ref->isSubclassOf('yii\db\ActiveRecord')
                 && preg_match('/^\* This is the model class for table/', trim($line)) === 1) {
                 unset($lines[$i]);
             } else {
                 foreach ($coveredProperties as $property) {
-                    if (preg_match('/^\* \@property[^\w]'. $property .'/', trim($line)) === 1) {
+                    if (preg_match('/^\* \@property[^\w]'.$property.'/', trim($line)) === 1) {
                         unset($lines[$i]);
                         break;
                     }
@@ -778,7 +819,7 @@ class PhpDocController extends Controller
         }
         $finalDoc = '';
         foreach ($lines as $i => $line) {
-            $finalDoc .= $line . "\n";
+            $finalDoc .= $line."\n";
             if ($i == $propertyPosition) {
                 $finalDoc .= $properties;
             }
@@ -788,8 +829,10 @@ class PhpDocController extends Controller
     }
 
     /**
-     * __method_generateClassPropertyDocs_description__
+     * __method_generateClassPropertyDocs_description__.
+     *
      * @param __param_fileName_type__ $fileName __param_fileName_description__
+     *
      * @return __return_generateClassPropertyDocs_type__ __return_generateClassPropertyDocs_description__
      */
     protected function generateClassPropertyDocs($fileName)
@@ -828,27 +871,28 @@ class PhpDocController extends Controller
 
         $className = null;
         foreach ($classes as &$class) {
-
-            $className = $namespace . '\\' . $class['name'];
+            $className = $namespace.'\\'.$class['name'];
 
             $gets = $this->match(
-                '#\* @return (?<type>[\w\\|\\\\\\[\\]]+)(?: (?<comment>(?:(?!\*/|\* @).)+?)(?:(?!\*/).)+|[\s\n]*)\*/' .
+                '#\* @return (?<type>[\w\\|\\\\\\[\\]]+)(?: (?<comment>(?:(?!\*/|\* @).)+?)(?:(?!\*/).)+|[\s\n]*)\*/'.
                 '[\s\n]{2,}public function (?<kind>get)(?<name>\w+)\((?:,? ?\$\w+ ?= ?[^,]+)*\)#',
                 $class['content']);
             $sets = $this->match(
-                '#\* @param (?<type>[\w\\|\\\\\\[\\]]+) \$\w+(?: (?<comment>(?:(?!\*/|\* @).)+?)(?:(?!\*/).)+|[\s\n]*)\*/' .
+                '#\* @param (?<type>[\w\\|\\\\\\[\\]]+) \$\w+(?: (?<comment>(?:(?!\*/|\* @).)+?)(?:(?!\*/).)+|[\s\n]*)\*/'.
                 '[\s\n]{2,}public function (?<kind>set)(?<name>\w+)\(\$\w+(?:, ?\$\w+ ?= ?[^,]+)*\)#',
                 $class['content']);
             // check for @property annotations in getter and setter
             $properties = $this->match(
-                '#\* @(?<kind>property) (?<type>[\w\\|\\\\\\[\\]]+)(?: (?<comment>(?:(?!\*/|\* @).)+?)(?:(?!\*/).)+|[\s\n]*)\*/' .
+                '#\* @(?<kind>property) (?<type>[\w\\|\\\\\\[\\]]+)(?: (?<comment>(?:(?!\*/|\* @).)+?)(?:(?!\*/).)+|[\s\n]*)\*/'.
                 '[\s\n]{2,}public function [g|s]et(?<name>\w+)\(((?:,? ?\$\w+ ?= ?[^,]+)*|\$\w+(?:, ?\$\w+ ?= ?[^,]+)*)\)#',
                 $class['content']);
             $acrs = array_merge($properties, $gets, $sets);
 
             $props = [];
             foreach ($acrs as &$acr) {
-                if ($acr['type'] === '\yii\db\ActiveRelation') { continue; }
+                if ($acr['type'] === '\yii\db\ActiveRelation') {
+                    continue;
+                }
                 $acr['name'] = lcfirst($acr['name']);
                 $acr['comment'] = trim(preg_replace('#(^|\n)\s+\*\s?#', '$1 * ', $acr['comment']));
                 $props[$acr['name']][$acr['kind']] = [
@@ -868,14 +912,14 @@ class PhpDocController extends Controller
                     if (isset($prop['get']) && isset($prop['set'])) {
                         if ($prop['get']['type'] != $prop['set']['type']) {
                             $note = ' Note that the type of this property differs in getter and setter.'
-                                  . ' See [[get' . ucfirst($propName) . '()]] and [[set' . ucfirst($propName) . '()]] for details.';
+                                  .' See [[get'.ucfirst($propName).'()]] and [[set'.ucfirst($propName).'()]] for details.';
                         }
                     } elseif (isset($prop['get'])) {
                         // check if parent class has setter defined
                         $c = $className;
                         $parentSetter = false;
                         while ($parent = get_parent_class($c)) {
-                            if (method_exists($parent, 'set' . ucfirst($propName))) {
+                            if (method_exists($parent, 'set'.ucfirst($propName))) {
                                 $parentSetter = true;
                                 break;
                             }
@@ -890,7 +934,7 @@ class PhpDocController extends Controller
                         $c = $className;
                         $parentGetter = false;
                         while ($parent = get_parent_class($c)) {
-                            if (method_exists($parent, 'set' . ucfirst($propName))) {
+                            if (method_exists($parent, 'set'.ucfirst($propName))) {
                                 $parentGetter = true;
                                 break;
                             }
@@ -904,12 +948,12 @@ class PhpDocController extends Controller
                         continue;
                     }
                     $coveredProperties[] = $propName;
-                    $docline .= ' ' . $this->getPropParam($prop, 'type') . " $$propName ";
-                    $comment = explode("\n", $this->getPropParam($prop, 'comment') . $note);
+                    $docline .= ' '.$this->getPropParam($prop, 'type')." $$propName ";
+                    $comment = explode("\n", $this->getPropParam($prop, 'comment').$note);
                     foreach ($comment as &$cline) {
                         $cline = ltrim($cline, '* ');
                     }
-                    $docline = wordwrap($docline . implode(' ', $comment), 110, "\n * ") . "\n";
+                    $docline = wordwrap($docline.implode(' ', $comment), 110, "\n * ")."\n";
 
                     $phpdoc .= $docline;
                 }
@@ -921,40 +965,51 @@ class PhpDocController extends Controller
     }
 
     /**
-     * __method_match_description__
+     * __method_match_description__.
+     *
      * @param __param_pattern_type__ $pattern __param_pattern_description__
      * @param __param_subject_type__ $subject __param_subject_description__
+     *
      * @return __return_match_type__ __return_match_description__
      */
     protected function match($pattern, $subject)
     {
         $sets = [];
-        preg_match_all($pattern . 'suU', $subject, $sets, PREG_SET_ORDER);
-        foreach ($sets as &$set)
-            foreach ($set as $i => $match)
-                if (is_numeric($i) /*&& $i != 0*/)
+        preg_match_all($pattern.'suU', $subject, $sets, PREG_SET_ORDER);
+        foreach ($sets as &$set) {
+            foreach ($set as $i => $match) {
+                if (is_numeric($i) /*&& $i != 0*/) {
                     unset($set[$i]);
+                }
+            }
+        }
 
         return $sets;
     }
 
     /**
-     * __method_fixSentence_description__
+     * __method_fixSentence_description__.
+     *
      * @param __param_str_type__ $str __param_str_description__
+     *
      * @return __return_fixSentence_type__ __return_fixSentence_description__
      */
     protected function fixSentence($str)
     {
         // TODO fix word wrap
-        if ($str == '')
+        if ($str == '') {
             return '';
-        return strtoupper(substr($str, 0, 1)) . substr($str, 1) . ($str[strlen($str) - 1] != '.' ? '.' : '');
+        }
+
+        return strtoupper(substr($str, 0, 1)).substr($str, 1).($str[strlen($str) - 1] != '.' ? '.' : '');
     }
 
     /**
-     * Get prop param
-     * @param __param_prop_type__ $prop __param_prop_description__
+     * Get prop param.
+     *
+     * @param __param_prop_type__  $prop  __param_prop_description__
      * @param __param_param_type__ $param __param_param_description__
+     *
      * @return __return_getPropParam_type__ __return_getPropParam_description__
      */
     protected function getPropParam($prop, $param)

@@ -1,15 +1,15 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
 
 namespace infinite\console\controllers;
 
-use Yii;
-use infinite\base\exceptions\Exception;
 use infinite\base\Daemon;
+
 ini_set('memory_limit', -1);
 
 class DaemonController extends \infinite\console\Controller
@@ -35,7 +35,6 @@ class DaemonController extends \infinite\console\Controller
         }
     }
 
-
     protected function runPostTick()
     {
         $cmd = [PHP_BINARY];
@@ -60,7 +59,6 @@ class DaemonController extends \infinite\console\Controller
     {
         $this->postTick();
     }
-
 
     protected function tick()
     {

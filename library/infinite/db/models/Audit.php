@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -20,7 +21,6 @@ use Yii;
  * @property string $event
  * @property bool $hooks_handled
  * @property string $created
- *
  * @property Registry $agent
  * @property Registry $directObject
  * @property Registry $indirectObject
@@ -72,7 +72,7 @@ class Audit extends \infinite\db\ActiveRecord
             [['event'], 'string'],
             [['hooks_handled'], 'boolean'],
             [['agent_id', 'direct_object_id', 'indirect_object_id'], 'string', 'max' => 36],
-            [['event_id'], 'string', 'max' => 50]
+            [['event_id'], 'string', 'max' => 50],
         ];
     }
 
@@ -94,7 +94,8 @@ class Audit extends \infinite\db\ActiveRecord
     }
 
     /**
-     * Get event object
+     * Get event object.
+     *
      * @return __return_getEventObject_type__ __return_getEventObject_description__
      */
     public function getEventObject()
@@ -105,12 +106,15 @@ class Audit extends \infinite\db\ActiveRecord
             $event = false;
         }
         $event->model = $this;
+
         return $event;
     }
 
     /**
-     * __method_handleHooks_description__
+     * __method_handleHooks_description__.
+     *
      * @param boolean $save __param_save_description__ [optional]
+     *
      * @return __return_handleHooks_type__ __return_handleHooks_description__
      */
     public function handleHooks($save = true)
@@ -132,7 +136,8 @@ class Audit extends \infinite\db\ActiveRecord
     }
 
     /**
-     * Get agent
+     * Get agent.
+     *
      * @return \yii\db\ActiveRelation
      */
     public function getAgent()
@@ -141,7 +146,8 @@ class Audit extends \infinite\db\ActiveRecord
     }
 
     /**
-     * Get direct object
+     * Get direct object.
+     *
      * @return \yii\db\ActiveRelation
      */
     public function getDirectObject()
@@ -150,7 +156,8 @@ class Audit extends \infinite\db\ActiveRecord
     }
 
     /**
-     * Get indirect object
+     * Get indirect object.
+     *
      * @return \yii\db\ActiveRelation
      */
     public function getIndirectObject()

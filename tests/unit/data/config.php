@@ -4,5 +4,5 @@ return [
         'fileStorage' => [
             'class' => 'infinite\helpers\FileStorage',
         ],
-    ]
+    ],
 ];

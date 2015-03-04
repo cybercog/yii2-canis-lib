@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -10,7 +11,7 @@ namespace infinite\action;
 use Yii;
 
 /**
- * Status [@doctodo write class description for Status]
+ * Status [@doctodo write class description for Status].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -53,7 +54,7 @@ class Status extends \infinite\base\Component
     protected $_ended;
 
     /**
-    * @inheritdoc
+     * @inheritdoc
      */
     public function __construct($log = null)
     {
@@ -65,6 +66,7 @@ class Status extends \infinite\base\Component
 
     /**
      * Prepares object for serialization.
+     *
      * @return __return___sleep_type__ __return___sleep_description__
      */
     public function __sleep()
@@ -93,13 +95,15 @@ class Status extends \infinite\base\Component
     {
         $this->paused = true;
         $this->save();
+
         return $this;
     }
-    
+
     public function resume()
     {
         $this->paused = false;
         $this->save();
+
         return $this;
     }
 
@@ -108,7 +112,8 @@ class Status extends \infinite\base\Component
         return $this->_messages;
     }
     /**
-     * __method_addError_description__
+     * __method_addError_description__.
+     *
      * @param __param_message_type__ $message __param_message_description__
      */
     public function addMessage($message, $data = null, $messageLevel = null)
@@ -171,7 +176,9 @@ class Status extends \infinite\base\Component
     {
         $n = [];
         foreach ($this->tasks as $task) {
-          if (empty($task->progressTotal)) { continue; }
+            if (empty($task->progressTotal)) {
+                continue;
+            }
             $n[] = ($task->weight * ($task->progressDone / $task->progressTotal));
         }
 
@@ -179,7 +186,8 @@ class Status extends \infinite\base\Component
     }
 
     /**
-     * Get error
+     * Get error.
+     *
      * @return __return_getError_type__ __return_getError_description__
      */
     public function getHasError()
@@ -201,6 +209,7 @@ class Status extends \infinite\base\Component
     {
         $this->lastUpdate = microtime(true);
         $this->_commandOutput = $value;
+
         return $this;
     }
 

@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -25,7 +26,7 @@ trait ObjectTrait
     public function getMemoryId()
     {
         if (is_null($this->_m)) {
-            $this->_m = self::classNamespace() .':'. md5(microtime() . mt_rand());
+            $this->_m = self::classNamespace().':'.md5(microtime().mt_rand());
         }
 
         return $this->_m;
@@ -77,19 +78,21 @@ trait ObjectTrait
      * that can be directly accessed in the expression. See {@link http://us.php.net/manual/en/function.extract.php PHP extract}
      * for more details. In the expression, the component object can be accessed using $this.
      *
-     * @param  mixed $_expression_ a PHP expression or PHP callback to be evaluated.
-     * @param  array $_data_       additional parameters to be passed to the above expression/callback.
+     * @param mixed $_expression_ a PHP expression or PHP callback to be evaluated.
+     * @param array $_data_       additional parameters to be passed to the above expression/callback.
+     *
      * @return mixed the expression result
+     *
      *                            @since 1.1.0
      */
-    public function evaluateExpression($_expression_,$_data_=[])
+    public function evaluateExpression($_expression_, $_data_ = [])
     {
         if (is_string($_expression_)) {
             extract($_data_);
 
             return eval('return '.$_expression_.';');
         } else {
-            $_data_[]=$this;
+            $_data_[] = $this;
 
             return call_user_func_array($_expression_, $_data_);
         }

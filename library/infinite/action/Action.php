@@ -2,14 +2,12 @@
 namespace infinite\action;
 
 use Yii;
-use infinite\deferred\models\DeferredAction;
 use yii\base\InvalidConfigException;
-use yii\helpers\Url;
 
 abstract class Action extends \infinite\base\Object implements InteractiveActionInterface
 {
     protected $_id;
-	protected $_interactions = [];
+    protected $_interactions = [];
     protected $_config;
 
     public function getId()
@@ -17,33 +15,33 @@ abstract class Action extends \infinite\base\Object implements InteractiveAction
         if (!isset($this->_id)) {
             $this->_id = md5(uniqid(rand(), true));
         }
+
         return $this->_id;
     }
-
 
     public function save()
     {
         return true;
     }
 
-	public function cancel()
-	{
-		return true;
-	}
+    public function cancel()
+    {
+        return true;
+    }
 
-	public function packageData($details = false)
-	{
-		$d = [];
+    public function packageData($details = false)
+    {
+        $d = [];
         $d['interactions'] = $this->interactionsPackage;
-		return $d;
-	}
 
+        return $d;
+    }
 
     public function getInteractions()
     {
         return $this->_interactions;
     }
-    
+
     public function hasInteractions()
     {
         return !empty($this->_interactions);
@@ -78,6 +76,7 @@ abstract class Action extends \infinite\base\Object implements InteractiveAction
         if ($handleNow) {
             $this->handleInteractions();
         }
+
         return $interaction;
     }
 
@@ -103,48 +102,53 @@ abstract class Action extends \infinite\base\Object implements InteractiveAction
         }
         $p = [];
         foreach ($this->_interactions as $key => $interaction) {
-            if ($interaction->resolved) { continue; }
+            if ($interaction->resolved) {
+                continue;
+            }
             $p[$key] = $interaction->package();
         }
+
         return $p;
     }
 
     public function setConfig($config)
-	{
-		$checkParams = false;
-		if (!isset($this->_config)) {
-			$checkParams = true;
-		}
-		$this->_config = $config;
-		if ($checkParams) {
-			$this->checkParams($this->configFatal);
-		}
-	}
+    {
+        $checkParams = false;
+        if (!isset($this->_config)) {
+            $checkParams = true;
+        }
+        $this->_config = $config;
+        if ($checkParams) {
+            $this->checkParams($this->configFatal);
+        }
+    }
 
-	public function getConfig()
-	{
-		if (!isset($this->_config)) {
-			return [];
-		}
-		return $this->_config;
-	}
+    public function getConfig()
+    {
+        if (!isset($this->_config)) {
+            return [];
+        }
 
-	public function checkParams($fatal = true)
-	{
-		foreach ($this->requiredConfigParams() as $param) {
-			if (!isset($this->config[$param])) {
-				if ($fatal) {
-					throw new InvalidConfigException("Config setting {$param} is required for ". get_called_class());
-				}
-				return false;
-			}
-		}
-		return true;
-	}
+        return $this->_config;
+    }
+
+    public function checkParams($fatal = true)
+    {
+        foreach ($this->requiredConfigParams() as $param) {
+            if (!isset($this->config[$param])) {
+                if ($fatal) {
+                    throw new InvalidConfigException("Config setting {$param} is required for ".get_called_class());
+                }
+
+                return false;
+            }
+        }
+
+        return true;
+    }
 
     public function requiredConfigParams()
-	{
-		return [];
-	}
+    {
+        return [];
+    }
 }
-?>

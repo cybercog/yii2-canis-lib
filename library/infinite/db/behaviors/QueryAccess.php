@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -10,7 +11,7 @@ namespace infinite\db\behaviors;
 use Yii;
 
 /**
- * QueryAccess [@doctodo write class description for QueryAccess]
+ * QueryAccess [@doctodo write class description for QueryAccess].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -38,7 +39,7 @@ class QueryAccess extends QueryBehavior
     protected $_bannedRoles;
 
     /**
-    * @inheritdoc
+     * @inheritdoc
      */
     public function events()
     {
@@ -48,7 +49,7 @@ class QueryAccess extends QueryBehavior
     }
 
     /**
-     * __method_allowInherit_description__
+     * __method_allowInherit_description__.
      */
     public static function allowInherit()
     {
@@ -56,7 +57,7 @@ class QueryAccess extends QueryBehavior
     }
 
     /**
-     * __method_denyInherit_description__
+     * __method_denyInherit_description__.
      */
     public static function denyInherit()
     {
@@ -64,8 +65,10 @@ class QueryAccess extends QueryBehavior
     }
 
     /**
-     * __method_asUser_description__
+     * __method_asUser_description__.
+     *
      * @param __param_userName_type__ $userName __param_userName_description__
+     *
      * @return __return_asUser_type__ __return_asUser_description__
      */
     public function asUser($userName)
@@ -79,8 +82,10 @@ class QueryAccess extends QueryBehavior
     }
 
     /**
-     * __method_asGroup_description__
+     * __method_asGroup_description__.
+     *
      * @param __param_groupSystemName_type__ $groupSystemName __param_groupSystemName_description__
+     *
      * @return __return_asGroup_type__ __return_asGroup_description__
      */
     public function asGroup($groupSystemName)
@@ -94,8 +99,10 @@ class QueryAccess extends QueryBehavior
     }
 
     /**
-     * __method_asInternal_description__
+     * __method_asInternal_description__.
+     *
      * @param __param_acr_type__ $acr __param_acr_description__
+     *
      * @return __return_asInternal_type__ __return_asInternal_description__
      */
     public function asInternal($acr)
@@ -106,8 +113,10 @@ class QueryAccess extends QueryBehavior
     }
 
     /**
-     * Set accessing object
+     * Set accessing object.
+     *
      * @param __param_value_type__ $value __param_value_description__
+     *
      * @return __return_setAccessingObject_type__ __return_setAccessingObject_description__
      */
     public function setAccessingObject($value)
@@ -116,7 +125,8 @@ class QueryAccess extends QueryBehavior
     }
 
     /**
-     * Get accessing object
+     * Get accessing object.
+     *
      * @return __return_getAccessingObject_type__ __return_getAccessingObject_description__
      */
     public function getAccessingObject()
@@ -125,13 +135,16 @@ class QueryAccess extends QueryBehavior
     }
 
     /**
-     * __method_aclSummary_description__
+     * __method_aclSummary_description__.
+     *
      * @return __return_aclSummary_type__ __return_aclSummary_description__
      */
     public function aclSummary()
     {
         $summary = [];
-        if (!isset(Yii::$app->gk)) { return $summary; }
+        if (!isset(Yii::$app->gk)) {
+            return $summary;
+        }
         $access = Yii::$app->gk->getAccess($this->owner);
         $actions = Yii::$app->gk->getActionsById();
         foreach ($actions as $actionId => $action) {
@@ -146,7 +159,8 @@ class QueryAccess extends QueryBehavior
     }
 
     /**
-     * Get query access model
+     * Get query access model.
+     *
      * @return __return_getQueryAccessModel_type__ __return_getQueryAccessModel_description__
      */
     public function getQueryAccessModel()
@@ -159,8 +173,10 @@ class QueryAccess extends QueryBehavior
     }
 
     /**
-     * Set action
+     * Set action.
+     *
      * @param __param_action_type__ $action __param_action_description__
+     *
      * @return __return_setAction_type__ __return_setAction_description__
      */
     public function setAction($action)
@@ -171,7 +187,8 @@ class QueryAccess extends QueryBehavior
     }
 
     /**
-     * Get action
+     * Get action.
+     *
      * @return __return_getAction_type__ __return_getAction_description__
      */
     public function getAction()
@@ -184,9 +201,12 @@ class QueryAccess extends QueryBehavior
     }
 
     /**
-     * __method_addCheckAccess_description__
+     * __method_addCheckAccess_description__.
+     *
      * @param __param_aca_type__ $aca __param_aca_description__ [optional]
+     *
      * @return __return_addCheckAccess_type__ __return_addCheckAccess_description__
+     *
      * @throws Exception __exception_Exception_description__
      */
     public function addCheckAccess($aca = null)
@@ -195,7 +215,9 @@ class QueryAccess extends QueryBehavior
             $aca = $this->action;
         }
         $query = $this->owner;
-        if ($this->owner->accessAdded) { return $query; }
+        if ($this->owner->accessAdded) {
+            return $query;
+        }
         $this->owner->accessAdded = true;
         $parentClass = $this->owner->modelClass;
         $classAlias = $parentClass::modelAlias();
@@ -215,8 +237,10 @@ class QueryAccess extends QueryBehavior
     }
 
     /**
-     * __method_can_description__
+     * __method_can_description__.
+     *
      * @param __param_action_type__ $action __param_action_description__ [optional]
+     *
      * @return __return_can_type__ __return_can_description__
      */
     public function can($action = null)
@@ -235,8 +259,10 @@ class QueryAccess extends QueryBehavior
     }
 
     /**
-     * __method_canPublic_description__
+     * __method_canPublic_description__.
+     *
      * @param string $action __param_action_description__ [optional]
+     *
      * @return __return_canPublic_type__ __return_canPublic_description__
      */
     public function canPublic($action = 'read')
@@ -245,8 +271,10 @@ class QueryAccess extends QueryBehavior
     }
 
     /**
-     * __method_beforeQuery_description__
+     * __method_beforeQuery_description__.
+     *
      * @param __param_event_type__ $event __param_event_description__
+     *
      * @return __return_beforeQuery_type__ __return_beforeQuery_description__
      */
     public function beforeQuery($event)
@@ -257,7 +285,8 @@ class QueryAccess extends QueryBehavior
     }
 
     /**
-     * __method_assignCreationRole_description__
+     * __method_assignCreationRole_description__.
+     *
      * @return __return_assignCreationRole_type__ __return_assignCreationRole_description__
      */
     public function assignCreationRole()
@@ -266,13 +295,17 @@ class QueryAccess extends QueryBehavior
     }
 
     /**
-     * __method_beforeSave_description__
+     * __method_beforeSave_description__.
+     *
      * @param __param_event_type__ $event __param_event_description__
+     *
      * @return __return_beforeSave_type__ __return_beforeSave_description__
      */
     public function beforeSave($event)
     {
-        if ($this->owner->isNewRecord) { return; }
+        if ($this->owner->isNewRecord) {
+            return;
+        }
         // return true;
         if (!$this->can('update')) {
             $event->isValid = false;
@@ -282,8 +315,10 @@ class QueryAccess extends QueryBehavior
     }
 
     /**
-     * __method_afterSave_description__
+     * __method_afterSave_description__.
+     *
      * @param __param_event_type__ $event __param_event_description__
+     *
      * @return __return_afterSave_type__ __return_afterSave_description__
      */
     public function afterSave($event)

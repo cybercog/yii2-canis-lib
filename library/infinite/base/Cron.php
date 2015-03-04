@@ -1,11 +1,13 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
 
 namespace infinite\base;
+
 use Yii;
 
 class Cron extends Component
@@ -22,8 +24,9 @@ class Cron extends Component
     public static function getInstance()
     {
         if (!isset(static::$_instance)) {
-            static::$_instance = new static;
+            static::$_instance = new static();
         }
+
         return static::$_instance;
     }
 
@@ -41,13 +44,13 @@ class Cron extends Component
                 $this->_settings = array_merge($this->_settings, Yii::$app->params['cron']);
             }
         }
+
         return $this->_settings;
     }
 
-
     public function hourly()
     {
-        $event = new CronEvent;
+        $event = new CronEvent();
         $this->trigger(static::EVENT_HOURLY, $event);
         if ($this->isHour($this->settings['morningHour'])) {
             $this->trigger(static::EVENT_MORNING, $event);
@@ -64,22 +67,26 @@ class Cron extends Component
                 $this->trigger(static::EVENT_MONTHLY, $event);
             }
         }
+
         return $event->isValid;
     }
 
     public function isHour($hour)
     {
         $currentHour = (int) date("G");
+
         return $currentHour == $hour;
     }
     public function isDayOfWeek($dayOfWeek)
     {
         $currentDayOfWeek = (int) date("w");
+
         return $currentDayOfWeek == $dayOfWeek;
     }
     public function isDayOfMonth($dayOfMonth)
     {
         $currentDayOfMonth = (int) date("j");
+
         return $currentDayOfMonth == $dayOfMonth;
     }
 }

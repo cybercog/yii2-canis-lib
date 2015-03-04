@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -9,7 +10,6 @@ namespace infinite\db;
 
 use Yii;
 use ReflectionClass;
-
 use yii\base\ModelEvent;
 use infinite\base\ObjectTrait;
 use infinite\base\ModelTrait;
@@ -84,7 +84,6 @@ class ActiveRecord extends \yii\db\ActiveRecord
      */
     const EVENT_AFTER_SAVE_FAIL = 'afterSaveFail';
 
-
     public function __get($name)
     {
         if (isset($this->_specialFields[$name])) {
@@ -103,7 +102,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
                 if (!isset($this->_specialFields[$fieldParts[0]])) {
                     $this->_specialFields[$fieldParts[0]] = [];
                 }
-                $this->_specialFields[$fieldParts[0]][$fieldParts[1]] = $value; 
+                $this->_specialFields[$fieldParts[0]][$fieldParts[1]] = $value;
             }
         } elseif (isset($this->_specialFields[$name])) {
             $this->_specialFields[$name] = $value;
@@ -135,10 +134,11 @@ class ActiveRecord extends \yii\db\ActiveRecord
         if (substr($name, 0, 2) === '__') {
             return true;
         }
+
         return parent::canSetProperty($name, $checkVars, $checkBehaviors);
     }
     /**
-    * @inheritdoc
+     * @inheritdoc
      */
     public function beforeSave($insert)
     {
@@ -155,7 +155,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
-    * @inheritdoc
+     * @inheritdoc
      */
     public function afterSave($insert, $changedAttributes)
     {
@@ -170,22 +170,24 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
     public function badFields()
     {
-    	return [];
+        return [];
     }
 
     protected function resolveFields(array $fields, array $expand)
     {
-    	$fields = parent::resolveFields($fields, $expand);
-    	foreach ($this->badFields() as $badField) {
-    		unset($fields[$badField]);
-    	}
+        $fields = parent::resolveFields($fields, $expand);
+        foreach ($this->badFields() as $badField) {
+            unset($fields[$badField]);
+        }
         $fields['descriptor'] = 'descriptor';
         $fields['subdescriptor'] = 'subdescriptor';
         $fields['icon'] = 'icon';
-    	return $fields;
+
+        return $fields;
     }
     /**
-     * Get was dirty
+     * Get was dirty.
+     *
      * @return __return_getWasDirty_type__ __return_getWasDirty_description__
      */
     public function getWasDirty()
@@ -194,7 +196,8 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
-     * __method_modelPrefix_description__
+     * __method_modelPrefix_description__.
+     *
      * @return __return_modelPrefix_type__ __return_modelPrefix_description__
      */
     public static function modelPrefix()
@@ -203,16 +206,18 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
-     * __method_cacheGroupKey_description__
+     * __method_cacheGroupKey_description__.
+     *
      * @return __return_cacheGroupKey_type__ __return_cacheGroupKey_description__
      */
     public static function cacheGroupKey()
     {
-        return 'model:' . get_called_class();
+        return 'model:'.get_called_class();
     }
 
     /**
-     * __method_cacheDependency_description__
+     * __method_cacheDependency_description__.
+     *
      * @return __return_cacheDependency_type__ __return_cacheDependency_description__
      */
     public static function cacheDependency()
@@ -221,7 +226,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
-    * @inheritdoc
+     * @inheritdoc
      */
     public static function populateRecord($record, $row)
     {
@@ -234,15 +239,16 @@ class ActiveRecord extends \yii\db\ActiveRecord
         }
     }
 
-
     public function getHumanType()
     {
         $reflector = new ReflectionClass(get_called_class());
-        return $reflector->getShortName(); 
+
+        return $reflector->getShortName();
     }
 
     /**
-     * Set tabular
+     * Set tabular.
+     *
      * @param __param_value_type__ $value __param_value_description__
      */
     public function setTabularId($value)
@@ -257,7 +263,8 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
-     * Get tabular prefix
+     * Get tabular prefix.
+     *
      * @return __return_getTabularPrefix_type__ __return_getTabularPrefix_description__
      */
     public function getTabularPrefix()
@@ -265,41 +272,55 @@ class ActiveRecord extends \yii\db\ActiveRecord
         if ($this->tabularId === false) {
             return '';
         }
-        return '['. $this->tabularId .']';
+
+        return '['.$this->tabularId.']';
     }
 
     /**
-     * __method_generateTabularId_description__
+     * __method_generateTabularId_description__.
+     *
      * @param __param_id_type__ $id __param_id_description__
+     *
      * @return __return_generateTabularId_type__ __return_generateTabularId_description__
      */
     public static function generateTabularId($id)
     {
-        if ($id === false) { return false; }
-        if (substr($id, 0, strlen(static::TABULAR_PREFIX)) === static::TABULAR_PREFIX) { return $id; }
+        if ($id === false) {
+            return false;
+        }
+        if (substr($id, 0, strlen(static::TABULAR_PREFIX)) === static::TABULAR_PREFIX) {
+            return $id;
+        }
 
         return static::TABULAR_PREFIX.substr(md5($id), 0, 10);
     }
 
     /**
-     * Get primary tabular
+     * Get primary tabular.
+     *
      * @return __return_getPrimaryTabularId_type__ __return_getPrimaryTabularId_description__
      */
     public static function getPrimaryTabularId()
     {
         return false;
+
         return static::generateTabularId(static::FORM_PRIMARY_MODEL);
     }
 
     /**
-     * Get primary model
+     * Get primary model.
+     *
      * @param __param_models_type__ $models __param_models_description__
+     *
      * @return __return_getPrimaryModel_type__ __return_getPrimaryModel_description__
      */
     public static function getPrimaryModel($models)
     {
-        if (empty($models)) { return false; }
-        \d($models);exit;
+        if (empty($models)) {
+            return false;
+        }
+        \d($models);
+        exit;
         foreach ($models as $tabKey => $model) {
             if ($tabKey === static::getPrimaryTabularId(static::baseClassName())) {
                 return $model;
@@ -310,8 +331,10 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
-     * __method_parseModelAlias_description__
+     * __method_parseModelAlias_description__.
+     *
      * @param __param_alias_type__ $alias __param_alias_description__
+     *
      * @return __return_parseModelAlias_type__ __return_parseModelAlias_description__
      */
     public static function parseModelAlias($alias)
@@ -323,16 +346,17 @@ class ActiveRecord extends \yii\db\ActiveRecord
         $pos = strpos($alias, '\\');
         $root = $pos === false ? $alias : substr($alias, 0, $pos);
         if ($root === ':app') {
-            return 'app\models' . substr($alias, $pos);
+            return 'app\models'.substr($alias, $pos);
         } elseif (isset(Yii::$app->modelAliases[$root])) {
-            return Yii::$app->modelAliases[$root] . substr($alias, $pos);
+            return Yii::$app->modelAliases[$root].substr($alias, $pos);
         }
 
         return $alias;
     }
 
     /**
-     * Get model alias
+     * Get model alias.
+     *
      * @return __return_getModelAlias_type__ __return_getModelAlias_description__
      */
     public function getModelAlias()
@@ -341,8 +365,10 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
-     * __method_modelAlias_description__
+     * __method_modelAlias_description__.
+     *
      * @param __param_className_type__ $className __param_className_description__ [optional]
+     *
      * @return __return_modelAlias_type__ __return_modelAlias_description__
      */
     public static function modelAlias($className = null)
@@ -352,23 +378,25 @@ class ActiveRecord extends \yii\db\ActiveRecord
         } elseif (is_object($className)) {
             $className = get_class($className);
         }
-         if (!strncmp($className, ':', 1)) {
+        if (!strncmp($className, ':', 1)) {
             // already an alias
             return $className;
         }
         $class = new ReflectionClass($className);
         if ($class->getNamespaceName() === 'app\models') {
-            return ':app\\' . $class->getShortName();
+            return ':app\\'.$class->getShortName();
         } elseif (($alias = array_search($class->getNamespaceName(), Yii::$app->modelAliases)) !== false) {
-            return $alias .'\\' . $class->getShortName();
+            return $alias.'\\'.$class->getShortName();
         }
 
         return $className;
     }
 
     /**
-     * __method_clearCache_description__
+     * __method_clearCache_description__.
+     *
      * @param __param_model_type__ $model __param_model_description__ [optional]
+     *
      * @return __return_clearCache_type__ __return_clearCache_description__
      */
     public static function clearCache($model = null)
@@ -388,25 +416,28 @@ class ActiveRecord extends \yii\db\ActiveRecord
         foreach (static::$_cache as $model => $cache) {
             $n += count($cache);
         }
+
         return $n;
     }
 
     /**
-     * Get
-     * @param __param_id_type__ $id __param_id_description__
-     * @param boolean $checkAccess __param_checkAccess_description__ [optional]
+     * Get.
+     *
+     * @param __param_id_type__ $id          __param_id_description__
+     * @param boolean           $checkAccess __param_checkAccess_description__ [optional]
+     *
      * @return __return_get_type__ __return_get_description__
      */
     public static function get($id, $checkAccess = true)
     {
         $class = get_called_class();
-        $dummy = new $class;
+        $dummy = new $class();
 
-        return static::findOne([$dummy->tableName() .'.'. $dummy->primaryKey()[0] => $id], $checkAccess);
+        return static::findOne([$dummy->tableName().'.'.$dummy->primaryKey()[0] => $id], $checkAccess);
     }
 
     /**
-    * @inheritdoc
+     * @inheritdoc
      */
     public static function findOne($where, $checkAccess = true)
     {
@@ -414,7 +445,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
-    * @inheritdoc
+     * @inheritdoc
      */
     public static function findAll($where = false, $checkAccess = true)
     {
@@ -422,9 +453,11 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
-     * __method_findAllCache_description__
-     * @param boolean $where __param_where_description__ [optional]
+     * __method_findAllCache_description__.
+     *
+     * @param boolean $where       __param_where_description__ [optional]
      * @param boolean $checkAccess __param_checkAccess_description__ [optional]
+     *
      * @return __return_findAllCache_type__ __return_findAllCache_description__
      */
     public static function findAllCache($where = false, $checkAccess = true)
@@ -433,10 +466,12 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
-     * __method__findCache_description__
-     * @param __param_type_type__ $type __param_type_description__
-     * @param boolean $where __param_where_description__ [optional]
-     * @param boolean $checkAccess __param_checkAccess_description__ [optional]
+     * __method__findCache_description__.
+     *
+     * @param __param_type_type__ $type        __param_type_description__
+     * @param boolean             $where       __param_where_description__ [optional]
+     * @param boolean             $checkAccess __param_checkAccess_description__ [optional]
+     *
      * @return __return__findCache_type__ __return__findCache_description__
      */
     protected static function _findCache($type, $where = false, $checkAccess = true)
@@ -464,6 +499,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
                 if ($type === 'one') {
                     return false;
                 }
+
                 return [];
             }
         }
@@ -472,7 +508,8 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
-     * __method_tableExists_description__
+     * __method_tableExists_description__.
+     *
      * @return __return_tableExists_type__ __return_tableExists_description__
      */
     public static function tableExists()
@@ -490,7 +527,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
      * Creates an [[ActiveQuery]] instance.
      * This method is called by [[find()]], [[findBySql()]] and [[count()]] to start a SELECT query.
      * You may override this method to return a customized query (e.g. `CustomerQuery` specified
-     * written for querying `Customer` purpose.)
+     * written for querying `Customer` purpose.).
      *
      * @return ActiveQuery the newly created [[ActiveQuery]] instance.
      */
@@ -508,7 +545,8 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
-     * __method_isAccessControlled_description__
+     * __method_isAccessControlled_description__.
+     *
      * @return __return_isAccessControlled_type__ __return_isAccessControlled_description__
      */
     public static function isAccessControlled()
@@ -517,7 +555,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
-    * @inheritdoc
+     * @inheritdoc
      */
     public function behaviors()
     {
@@ -530,12 +568,13 @@ class ActiveRecord extends \yii\db\ActiveRecord
             ],
             'Archivable' => [
                 'class' => 'infinite\db\behaviors\ActiveArchivable',
-            ]
+            ],
         ];
     }
 
     /**
-     * __method_queryBehaviors_description__
+     * __method_queryBehaviors_description__.
+     *
      * @return __return_queryBehaviors_type__ __return_queryBehaviors_description__
      */
     public static function queryBehaviors()
@@ -551,9 +590,10 @@ class ActiveRecord extends \yii\db\ActiveRecord
     {
         return [];
     }
-    
+
     /**
-     * Get descriptor
+     * Get descriptor.
+     *
      * @return __return_getDescriptor_type__ __return_getDescriptor_description__
      */
     public function getDescriptor()
@@ -603,9 +643,12 @@ class ActiveRecord extends \yii\db\ActiveRecord
         $descriptorField = array_reverse($descriptorField);
         $sortBy = [];
         foreach ($descriptorField as $field) {
-            if (!$this->hasAttribute($field)) { continue; }
-            $sortBy[$alias . '.'. $field] = $order;
+            if (!$this->hasAttribute($field)) {
+                continue;
+            }
+            $sortBy[$alias.'.'.$field] = $order;
         }
+
         return $sortBy;
     }
 
@@ -618,6 +661,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
         foreach ($this->_defaultOrder as $key => $value) {
             $sortBy[strtr($key, ['{alias}' => $alias])] = $value;
         }
+
         return $sortBy;
     }
 
@@ -646,9 +690,10 @@ class ActiveRecord extends \yii\db\ActiveRecord
         }
         if ($this->shortDescriptorLength) {
             if (strlen($value) > $this->shortDescriptorLength) {
-                $value = substr($value, 0, $this->shortDescriptorLength) . '…';
+                $value = substr($value, 0, $this->shortDescriptorLength).'…';
             }
         }
+
         return $value;
     }
 
@@ -656,10 +701,10 @@ class ActiveRecord extends \yii\db\ActiveRecord
     {
         return false;
     }
-    
+
     public function getIcon()
     {
-        return null;
+        return;
     }
 
     public function getPrimarySubdescriptor($context = null)
@@ -676,11 +721,13 @@ class ActiveRecord extends \yii\db\ActiveRecord
                 }
             }
         }
+
         return isset($subdescriptor[0]) ? $subdescriptor[0] : null;
     }
 
     /**
-     * Get subdescriptor
+     * Get subdescriptor.
+     *
      * @return __return_getSubdescriptor_type__ __return_getSubdescriptor_description__
      */
     public function getSubdescriptor($context = null)
@@ -701,8 +748,10 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
-     * __method_isForeignField_description__
+     * __method_isForeignField_description__.
+     *
      * @param __param_field_type__ $field __param_field_description__
+     *
      * @return __return_isForeignField_type__ __return_isForeignField_description__
      */
     public function isForeignField($field)
@@ -711,8 +760,10 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
-     * Get field value
+     * Get field value.
+     *
      * @param __param_field_type__ $field __param_field_description__
+     *
      * @return __return_getFieldValue_type__ __return_getFieldValue_description__
      */
     public function getFieldValue($field, $options = [], $context = null, $formatted = true)
@@ -730,7 +781,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
                 }
             }
 
-            return null;
+            return;
         }
         if ($this->isForeignField($field)) {
             return $this->getForeignFieldValue($field, $options, $context, $formatted);
@@ -740,8 +791,10 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
-     * Get local field value
+     * Get local field value.
+     *
      * @param __param_field_type__ $field __param_field_description__
+     *
      * @return __return_getLocalFieldValue_type__ __return_getLocalFieldValue_description__
      */
     public function getLocalFieldValue($field, $options = [], $context = null, $formatted = true)
@@ -750,21 +803,24 @@ class ActiveRecord extends \yii\db\ActiveRecord
             return $this->{$field};
         }
 
-        return null;
+        return;
     }
 
     /**
-     * Get foreign field value
+     * Get foreign field value.
+     *
      * @param __param_field_type__ $field __param_field_description__
+     *
      * @return __return_getForeignFieldValue_type__ __return_getForeignFieldValue_description__
      */
     public function getForeignFieldValue($field, $options = [], $context = null, $formatted = true)
     {
-        return null;
+        return;
     }
 
     /**
-     * __method_checkExistence_description__
+     * __method_checkExistence_description__.
+     *
      * @return __return_checkExistence_type__ __return_checkExistence_description__
      */
     public function checkExistence()
@@ -777,8 +833,10 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
-     * __method_quote_description__
+     * __method_quote_description__.
+     *
      * @param unknown $value
+     *
      * @return unknown
      */
     public function quote($value)
@@ -790,24 +848,29 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
             return $value;
         }
-        if (is_null($value)) { return $value; }
+        if (is_null($value)) {
+            return $value;
+        }
 
         return $this->db->quoteValue($value);
     }
 
     /**
-     * __method_save_description__
+     * __method_save_description__.
+     *
      * @param unknown $runValidation (optional)
      * @param unknown $attributes    (optional)
+     *
      * @return unknown
+     *
      * @todo see if they added an event in the final version of Yii2
      */
-    public function save($runValidation=true, $attributes=NULL)
+    public function save($runValidation = true, $attributes = null)
     {
         if (parent::save($runValidation, $attributes)) {
             return true;
         } else {
-            $event = new ModelEvent;
+            $event = new ModelEvent();
             $this->trigger(static::EVENT_AFTER_SAVE_FAIL, $event);
 
             return false;
@@ -823,6 +886,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
         if (method_exists($this, 'getUrl')) {
             $p['url'] = Url::to($this->getUrl($urlAction));
         }
+
         return $p;
     }
 }

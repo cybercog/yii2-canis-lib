@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -11,7 +12,7 @@ use Yii;
 use infinite\security\Access;
 
 /**
- * ActiveAccess [@doctodo write class description for ActiveAccess]
+ * ActiveAccess [@doctodo write class description for ActiveAccess].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -43,15 +44,14 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     protected $_accessMap = [];
 
     /**
-    * @inheritdoc
+     * @inheritdoc
      */
     public function events()
     {
         return [
-            \infinite\db\ActiveRecord::EVENT_AFTER_FIND => 'afterFind'
+            \infinite\db\ActiveRecord::EVENT_AFTER_FIND => 'afterFind',
         ];
     }
-
 
     public function clearActiveAccessCache()
     {
@@ -63,9 +63,10 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_fillAccessMap_description__
+     * __method_fillAccessMap_description__.
+     *
      * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__ [optional]
-     * @param __param_ensureAca_type__ $ensureAca __param_ensureAca_description__ [optional]
+     * @param __param_ensureAca_type__       $ensureAca       __param_ensureAca_description__ [optional]
      */
     public function fillAccessMap($accessingObject = null, $ensureAca = null)
     {
@@ -89,7 +90,8 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * Set access debug
+     * Set access debug.
+     *
      * @param __param_debug_type__ $debug __param_debug_description__
      */
     public function setAccessDebug($debug)
@@ -99,10 +101,12 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_can_description__
-     * @param __param_aca_type__ $aca __param_aca_description__
+     * __method_can_description__.
+     *
+     * @param __param_aca_type__             $aca             __param_aca_description__
      * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__ [optional]
-     * @param boolean $relatedObject __param_relatedObject_description__ [optional]
+     * @param boolean                        $relatedObject   __param_relatedObject_description__ [optional]
+     *
      * @return __return_can_type__ __return_can_description__
      */
     public function can($aca, $accessingObject = null, $relatedObject = false)
@@ -120,7 +124,8 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
             return false;
         }
         if (!is_object($this->_accessMap[$aca->primaryKey])) {
-            \d($this->_accessMap);exit;
+            \d($this->_accessMap);
+            exit;
         }
         $results = [true];
         $additionalTest = false;
@@ -136,8 +141,10 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_canDeleteAssociation_description__
+     * __method_canDeleteAssociation_description__.
+     *
      * @param __param_relatedObject_type__ $relatedObject __param_relatedObject_description__
+     *
      * @return __return_canDeleteAssociation_type__ __return_canDeleteAssociation_description__
      */
     public function canDeleteAssociation($relatedObject)
@@ -147,8 +154,10 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_canUpdateAssociation_description__
+     * __method_canUpdateAssociation_description__.
+     *
      * @param __param_relatedObject_type__ $relatedObject __param_relatedObject_description__
+     *
      * @return __return_canUpdateAssociation_type__ __return_canUpdateAssociation_description__
      */
     public function canUpdateAssociation($relatedObject)
@@ -158,9 +167,11 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_parentCan_description__
-     * @param __param_aca_type__ $aca __param_aca_description__
+     * __method_parentCan_description__.
+     *
+     * @param __param_aca_type__             $aca             __param_aca_description__
      * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__ [optional]
+     *
      * @return __return_parentCan_type__ __return_parentCan_description__
      */
     public function parentCan($aca, $accessingObject = null)
@@ -182,7 +193,8 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_afterFind_description__
+     * __method_afterFind_description__.
+     *
      * @param __param_event_type__ $event __param_event_description__
      */
     public function afterFind($event)
@@ -199,7 +211,8 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * Get object access
+     * Get object access.
+     *
      * @return __return_getObjectAccess_type__ __return_getObjectAccess_description__
      */
     public function getObjectAccess()
@@ -212,11 +225,13 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * Set access level
-     * @param __param_action_type__ $action __param_action_description__
-     * @param __param_access_type__ $access __param_access_description__
+     * Set access level.
+     *
+     * @param __param_action_type__          $action          __param_action_description__
+     * @param __param_access_type__          $access          __param_access_description__
      * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__ [optional]
-     * @param __param_aclRole_type__ $aclRole __param_aclRole_description__ [optional]
+     * @param __param_aclRole_type__         $aclRole         __param_aclRole_description__ [optional]
+     *
      * @return __return_setAccessLevel_type__ __return_setAccessLevel_description__
      */
     public function setAccessLevel($action, $access, $accessingObject = null, $aclRole = null)
@@ -230,10 +245,12 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_allow_description__
-     * @param __param_action_type__ $action __param_action_description__
+     * __method_allow_description__.
+     *
+     * @param __param_action_type__          $action          __param_action_description__
      * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__ [optional]
-     * @param __param_aclRole_type__ $aclRole __param_aclRole_description__ [optional]
+     * @param __param_aclRole_type__         $aclRole         __param_aclRole_description__ [optional]
+     *
      * @return __return_allow_type__ __return_allow_description__
      */
     public function allow($action, $accessingObject = null, $aclRole = null)
@@ -246,10 +263,12 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_parentAccess_description__
-     * @param __param_action_type__ $action __param_action_description__
+     * __method_parentAccess_description__.
+     *
+     * @param __param_action_type__          $action          __param_action_description__
      * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__ [optional]
-     * @param __param_aclRole_type__ $aclRole __param_aclRole_description__ [optional]
+     * @param __param_aclRole_type__         $aclRole         __param_aclRole_description__ [optional]
+     *
      * @return __return_parentAccess_type__ __return_parentAccess_description__
      */
     public function parentAccess($action, $accessingObject = null, $aclRole = null)
@@ -262,10 +281,12 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_clear_description__
-     * @param __param_action_type__ $action __param_action_description__
+     * __method_clear_description__.
+     *
+     * @param __param_action_type__          $action          __param_action_description__
      * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__ [optional]
-     * @param __param_aclRole_type__ $aclRole __param_aclRole_description__ [optional]
+     * @param __param_aclRole_type__         $aclRole         __param_aclRole_description__ [optional]
+     *
      * @return __return_clear_type__ __return_clear_description__
      */
     public function clear($action, $accessingObject = null, $aclRole = null)
@@ -278,10 +299,12 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_requireDirectAdmin_description__
-     * @param __param_action_type__ $action __param_action_description__
+     * __method_requireDirectAdmin_description__.
+     *
+     * @param __param_action_type__          $action          __param_action_description__
      * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__ [optional]
-     * @param __param_aclRole_type__ $aclRole __param_aclRole_description__ [optional]
+     * @param __param_aclRole_type__         $aclRole         __param_aclRole_description__ [optional]
+     *
      * @return __return_requireDirectAdmin_type__ __return_requireDirectAdmin_description__
      */
     public function requireDirectAdmin($action, $accessingObject = null, $aclRole = null)
@@ -294,10 +317,12 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_requireAdmin_description__
-     * @param __param_action_type__ $action __param_action_description__
+     * __method_requireAdmin_description__.
+     *
+     * @param __param_action_type__          $action          __param_action_description__
      * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__ [optional]
-     * @param __param_aclRole_type__ $aclRole __param_aclRole_description__ [optional]
+     * @param __param_aclRole_type__         $aclRole         __param_aclRole_description__ [optional]
+     *
      * @return __return_requireAdmin_type__ __return_requireAdmin_description__
      */
     public function requireAdmin($action, $accessingObject = null, $aclRole = null)
@@ -310,10 +335,12 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_requireSuperAdmin_description__
-     * @param __param_action_type__ $action __param_action_description__
+     * __method_requireSuperAdmin_description__.
+     *
+     * @param __param_action_type__          $action          __param_action_description__
      * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__ [optional]
-     * @param __param_aclRole_type__ $aclRole __param_aclRole_description__ [optional]
+     * @param __param_aclRole_type__         $aclRole         __param_aclRole_description__ [optional]
+     *
      * @return __return_requireSuperAdmin_type__ __return_requireSuperAdmin_description__
      */
     public function requireSuperAdmin($action, $accessingObject = null, $aclRole = null)
@@ -326,7 +353,8 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * Set access
+     * Set access.
+     *
      * @param __param_value_type__ $value __param_value_description__
      */
     public function setAccess($value)
@@ -335,7 +363,8 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * Set aca
+     * Set aca.
+     *
      * @param __param_value_type__ $value __param_value_description__
      */
     public function setAca_id($value)
@@ -348,8 +377,10 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_asUser_description__
+     * __method_asUser_description__.
+     *
      * @param __param_userName_type__ $userName __param_userName_description__
+     *
      * @return __return_asUser_type__ __return_asUser_description__
      */
     public function asUser($userName)
@@ -363,8 +394,10 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_asGroup_description__
+     * __method_asGroup_description__.
+     *
      * @param __param_groupSystemName_type__ $groupSystemName __param_groupSystemName_description__
+     *
      * @return __return_asGroup_type__ __return_asGroup_description__
      */
     public function asGroup($groupSystemName)
@@ -378,8 +411,10 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_asInternal_description__
+     * __method_asInternal_description__.
+     *
      * @param __param_acr_type__ $acr __param_acr_description__
+     *
      * @return __return_asInternal_type__ __return_asInternal_description__
      */
     public function asInternal($acr)
@@ -390,8 +425,10 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * Set accessing object
+     * Set accessing object.
+     *
      * @param __param_value_type__ $value __param_value_description__
+     *
      * @return __return_setAccessingObject_type__ __return_setAccessingObject_description__
      */
     public function setAccessingObject($value)
@@ -400,7 +437,8 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * Get accessing object
+     * Get accessing object.
+     *
      * @return __return_getAccessingObject_type__ __return_getAccessingObject_description__
      */
     public function getAccessingObject()

@@ -13,7 +13,6 @@ use Yii;
  * @property resource $action
  * @property string $created
  * @property string $modified
- *
  * @property User $user
  */
 class DeferredAction extends \infinite\db\ActiveRecord
@@ -35,7 +34,7 @@ class DeferredAction extends \infinite\db\ActiveRecord
             [['status', 'action'], 'string'],
             [['action', 'type'], 'required'],
             [['created', 'modified', 'expired'], 'safe'],
-            [['user_id'], 'string', 'max' => 36]
+            [['user_id'], 'string', 'max' => 36],
         ];
     }
 
@@ -69,18 +68,23 @@ class DeferredAction extends \infinite\db\ActiveRecord
         if (is_null($user) && !empty(Yii::$app->user->id)) {
             $user = Yii::$app->user->id;
         }
-        if (empty($user)) { return false; }
-        if (is_object($user)) { $user = $user->primaryKey; }
+        if (empty($user)) {
+            return false;
+        }
+        if (is_object($user)) {
+            $user = $user->primaryKey;
+        }
 
         $query = static::find();
         $query->andWhere(['user_id' => $user]);
-        $query->andWhere(['or', 
+        $query->andWhere(['or',
             ['status' => 'queued'],
-            ['or', 'expired IS NULL', 'expired > NOW()']
+            ['or', 'expired IS NULL', 'expired > NOW()'],
         ]);
         if (!is_null($type)) {
             $query->andWhere(['type' => $type]);
         }
+
         return $query;
     }
 }

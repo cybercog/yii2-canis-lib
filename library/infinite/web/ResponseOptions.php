@@ -1,22 +1,20 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
 
 namespace infinite\web;
 
-use infinite\base\ObjectTrait;
-
 /**
- * ResponseOptions [@doctodo write class description for ResponseOptions]
+ * ResponseOptions [@doctodo write class description for ResponseOptions].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class ResponseOptions extends \infinite\base\Object
 {
-
     /**
      * @var __var_justStatus_type__ __var_justStatus_description__
      */
@@ -47,5 +45,4 @@ class ResponseOptions extends \infinite\base\Object
      * @var __var_ajaxDialogSettings_type__ __var_ajaxDialogSettings_description__
      */
     public $ajaxDialogSettings;
-
 }

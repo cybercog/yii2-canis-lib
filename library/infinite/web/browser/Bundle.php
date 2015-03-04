@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -12,7 +13,7 @@ use infinite\base\exceptions\Exception;
 use yii\base\InvalidConfigException;
 
 /**
- * Bundle [@doctodo write class description for Bundle]
+ * Bundle [@doctodo write class description for Bundle].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -68,7 +69,8 @@ class Bundle extends \infinite\base\Object
     protected $_baseInstructions = ['task' => null];
 
     /**
-     * Get id
+     * Get id.
+     *
      * @return __return_getId_type__ __return_getId_description__
      */
     public function getId()
@@ -81,8 +83,10 @@ class Bundle extends \infinite\base\Object
     }
 
     /**
-     * Get instructions
+     * Get instructions.
+     *
      * @return __return_getInstructions_type__ __return_getInstructions_description__
+     *
      * @throws InvalidConfigException __exception_InvalidConfigException_description__
      */
     public function getInstructions()
@@ -95,8 +99,10 @@ class Bundle extends \infinite\base\Object
     }
 
     /**
-     * Set instructions
+     * Set instructions.
+     *
      * @param __param_instructions_type__ $instructions __param_instructions_description__
+     *
      * @throws Exception __exception_Exception_description__
      */
     public function setInstructions($instructions)
@@ -120,8 +126,10 @@ class Bundle extends \infinite\base\Object
     }
 
     /**
-     * __method_addItem_description__
+     * __method_addItem_description__.
+     *
      * @param __param_item_type__ $item __param_item_description__
+     *
      * @return __return_addItem_type__ __return_addItem_description__
      */
     public function addItem($item)
@@ -142,7 +150,8 @@ class Bundle extends \infinite\base\Object
     }
 
     /**
-     * __method_package_description__
+     * __method_package_description__.
+     *
      * @return __return_package_type__ __return_package_description__
      */
     public function package()
@@ -164,7 +173,8 @@ class Bundle extends \infinite\base\Object
     }
 
     /**
-     * Set filter query
+     * Set filter query.
+     *
      * @param __param_value_type__ $value __param_value_description__
      */
     public function setFilterQuery($value)
@@ -176,7 +186,8 @@ class Bundle extends \infinite\base\Object
     }
 
     /**
-     * Get filter query
+     * Get filter query.
+     *
      * @return __return_getFilterQuery_type__ __return_getFilterQuery_description__
      */
     public function getFilterQuery()
@@ -185,7 +196,8 @@ class Bundle extends \infinite\base\Object
     }
 
     /**
-     * Set type options
+     * Set type options.
+     *
      * @param __param_options_type__ $options __param_options_description__
      */
     public function setTypeOptions($options)
@@ -194,7 +206,8 @@ class Bundle extends \infinite\base\Object
     }
 
     /**
-     * Get type options
+     * Get type options.
+     *
      * @return __return_getTypeOptions_type__ __return_getTypeOptions_description__
      */
     public function getTypeOptions()
@@ -203,21 +216,24 @@ class Bundle extends \infinite\base\Object
     }
 
     /**
-     * Set type
+     * Set type.
+     *
      * @param __param_type_type__ $type __param_type_description__
+     *
      * @throws InvalidConfigException __exception_InvalidConfigException_description__
      */
     public function setType($type)
     {
         $acceptableTypes = ['pivot', 'item'];
         if (!in_array($type, $acceptableTypes)) {
-            throw new InvalidConfigException('Browser response bundle must be one of the following types: '. implode(', ', $acceptableTypes));
+            throw new InvalidConfigException('Browser response bundle must be one of the following types: '.implode(', ', $acceptableTypes));
         }
         $this->_type = $type;
     }
 
     /**
-     * Get type
+     * Get type.
+     *
      * @return __return_getType_type__ __return_getType_description__
      */
     public function getType()
@@ -230,7 +246,8 @@ class Bundle extends \infinite\base\Object
     }
 
     /**
-     * __method_predictTotal_description__
+     * __method_predictTotal_description__.
+     *
      * @return __return_predictTotal_type__ __return_predictTotal_description__
      */
     public function predictTotal()
@@ -243,7 +260,8 @@ class Bundle extends \infinite\base\Object
     }
 
     /**
-     * Get total
+     * Get total.
+     *
      * @return __return_getTotal_type__ __return_getTotal_description__
      */
     public function getTotal()
@@ -262,7 +280,8 @@ class Bundle extends \infinite\base\Object
     }
 
     /**
-     * Set total
+     * Set total.
+     *
      * @param __param_total_type__ $total __param_total_description__
      */
     public function setTotal($total)
@@ -271,7 +290,8 @@ class Bundle extends \infinite\base\Object
     }
 
     /**
-     * Get offset
+     * Get offset.
+     *
      * @return __return_getOffset_type__ __return_getOffset_description__
      */
     public function getOffset()
@@ -280,7 +300,8 @@ class Bundle extends \infinite\base\Object
     }
 
     /**
-     * Set offset
+     * Set offset.
+     *
      * @param __param_offset_type__ $offset __param_offset_description__
      */
     public function setOffset($offset)
@@ -289,7 +310,8 @@ class Bundle extends \infinite\base\Object
     }
 
     /**
-     * Get handlers
+     * Get handlers.
+     *
      * @return __return_getHandlers_type__ __return_getHandlers_description__
      */
     public function getHandlers()
@@ -298,7 +320,8 @@ class Bundle extends \infinite\base\Object
     }
 
     /**
-     * Get handler
+     * Get handler.
+     *
      * @return __return_getHandler_type__ __return_getHandler_description__
      */
     public function getHandler()
@@ -308,23 +331,31 @@ class Bundle extends \infinite\base\Object
             && isset($handlers[$this->instructions['handler']])) {
             return Yii::createObject([
                 'class' => $handlers[$this->instructions['handler']],
-                'bundle' => $this
+                'bundle' => $this,
             ]);
         }
+
         return false;
     }
 
     /**
-     * __method_handle_description__
+     * __method_handle_description__.
+     *
      * @return __return_handle_type__ __return_handle_description__
      */
     public function handle()
     {
-        if ($this->_handled) { return true; }
+        if ($this->_handled) {
+            return true;
+        }
         $handler = $this->handler;
-        if (!$handler) { return false; }
+        if (!$handler) {
+            return false;
+        }
         $items = $handler->items;
-        if ($items === false) { return false; }
+        if ($items === false) {
+            return false;
+        }
         foreach ($items as $item) {
             $this->addItem($item);
         }

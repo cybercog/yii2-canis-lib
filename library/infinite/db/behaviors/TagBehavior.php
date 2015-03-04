@@ -1,17 +1,14 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
 
 namespace infinite\db\behaviors;
 
-use Yii;
-
 use infinite\base\exceptions\Exception;
-use infinite\helpers\ArrayHelper;
-use infinite\caching\Cacher;
 
 class TagBehavior extends \infinite\db\behaviors\ActiveRecord
 {
@@ -26,7 +23,7 @@ class TagBehavior extends \infinite\db\behaviors\ActiveRecord
     protected $_tagsDirty = false;
 
     /**
-    * @inheritdoc
+     * @inheritdoc
      */
     public function events()
     {
@@ -35,7 +32,7 @@ class TagBehavior extends \infinite\db\behaviors\ActiveRecord
             \infinite\db\ActiveRecord::EVENT_AFTER_UPDATE => 'afterSave',
         ];
     }
-    
+
     // public function __call($name, $params)
     // {
     //     if ($this->tagField) {
@@ -57,6 +54,7 @@ class TagBehavior extends \infinite\db\behaviors\ActiveRecord
                 return call_user_func_array([$this, 'setTags'], [$value]);
             }
         }
+
         return parent::__set($name, $value);
     }
 
@@ -67,6 +65,7 @@ class TagBehavior extends \infinite\db\behaviors\ActiveRecord
                 return call_user_func_array([$this, 'getTags'], []);
             }
         }
+
         return parent::__get($name);
     }
 
@@ -77,6 +76,7 @@ class TagBehavior extends \infinite\db\behaviors\ActiveRecord
                 return true;
             }
         }
+
         return parent::hasMethod($name);
     }
 
@@ -87,6 +87,7 @@ class TagBehavior extends \infinite\db\behaviors\ActiveRecord
                 return true;
             }
         }
+
         return parent::hasProperty($name, $checkVars);
     }
 
@@ -97,7 +98,7 @@ class TagBehavior extends \infinite\db\behaviors\ActiveRecord
                 return true;
             }
         }
-        
+
         return parent::canGetProperty($name, $checkVars, $checkBehaviors);
     }
 
@@ -108,9 +109,10 @@ class TagBehavior extends \infinite\db\behaviors\ActiveRecord
                 return true;
             }
         }
+
         return parent::canSetProperty($name, $checkVars, $checkBehaviors);
     }
-    
+
     public function setTags($tags)
     {
         $this->_tags = $tags;
@@ -123,6 +125,7 @@ class TagBehavior extends \infinite\db\behaviors\ActiveRecord
         if (is_null($this->_tags)) {
             return $this->getCurrentTags();
         }
+
         return $this->_tags;
     }
 
@@ -131,28 +134,31 @@ class TagBehavior extends \infinite\db\behaviors\ActiveRecord
         if (!isset($this->_currentTags)) {
             if (!$this->viaClass) {
                 throw new \Exception("boom");
+
                 return [];
             }
             $viaClass = $this->viaClass;
             $params = [$this->viaLocalField => $this->owner->primaryKey];
             $rawTags = $viaClass::find()->disableAccessCheck()->where($params)->select($this->viaForeignField)->column();
-            
+
             $this->_currentTags = [];
             foreach ($rawTags as $tag) {
                 $this->_currentTags[$tag] = $tag;
             }
         }
+
         return $this->_currentTags;
     }
 
     /**
-    * @inheritdoc
+     * @inheritdoc
      */
     public function safeAttributes()
     {
         if ($this->isTagBehaviorReady()) {
             return [$this->tagField];
         }
+
         return [];
     }
 
@@ -176,7 +182,7 @@ class TagBehavior extends \infinite\db\behaviors\ActiveRecord
                 $tag = $tag->primaryKey;
             }
             if (!isset($currentTags[$tag])) {
-                $viaTag = new $viaClass;
+                $viaTag = new $viaClass();
                 $viaTag->attributes = $baseAttributes;
                 $viaTag->{$this->viaForeignField} = $tag;
                 if (!$viaTag->save()) {

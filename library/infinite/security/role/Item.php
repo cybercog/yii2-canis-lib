@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -10,7 +11,7 @@ namespace infinite\security\role;
 use infinite\helpers\ArrayHelper;
 
 /**
- * Item [@doctodo write class description for Item]
+ * Item [@doctodo write class description for Item].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -34,7 +35,8 @@ class Item extends \infinite\base\collector\Item
     public $level = 100;
 
     /**
-     * Get package
+     * Get package.
+     *
      * @return __return_getPackage_type__ __return_getPackage_description__
      */
     public function getPackage()
@@ -50,7 +52,8 @@ class Item extends \infinite\base\collector\Item
     }
 
     /**
-     * Get id
+     * Get id.
+     *
      * @return __return_getId_type__ __return_getId_description__
      */
     public function getId()
@@ -63,7 +66,7 @@ class Item extends \infinite\base\collector\Item
     }
 
     /**
-    * @inheritdoc
+     * @inheritdoc
      */
     public function getSystemId()
     {
@@ -75,7 +78,8 @@ class Item extends \infinite\base\collector\Item
     }
 
     /**
-     * Get level section
+     * Get level section.
+     *
      * @return __return_getLevelSection_type__ __return_getLevelSection_description__
      */
     public function getLevelSection()

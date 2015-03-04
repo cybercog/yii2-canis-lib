@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -11,7 +12,7 @@ use Yii;
 use yii\base\ModelEvent;
 
 /**
- * ActiveArchivable [@doctodo write class description for ActiveArchivable]
+ * ActiveArchivable [@doctodo write class description for ActiveArchivable].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -42,16 +43,17 @@ class ActiveArchivable extends ActiveRecord
      */
     public static $_userID;
     /**
-     * @var string Audit archive event class 
+     * @var string Audit archive event class
      */
     public $archiveEventClass = 'infinite\db\behaviors\auditable\ArchiveEvent';
     /**
-     * @var string Audit unarchive event class 
+     * @var string Audit unarchive event class
      */
     public $unarchiveEventClass = 'infinite\db\behaviors\auditable\UnarchiveEvent';
 
     /**
-     * __method_isArchivable_description__
+     * __method_isArchivable_description__.
+     *
      * @return __return_isArchivable_type__ __return_isArchivable_description__
      */
     public function isArchivable()
@@ -70,12 +72,15 @@ class ActiveArchivable extends ActiveRecord
     }
 
     /**
-     * Get archived
+     * Get archived.
+     *
      * @return __return_getArchived_type__ __return_getArchived_description__
      */
     public function getArchived()
     {
-        if (!$this->isArchivable()) { return false; }
+        if (!$this->isArchivable()) {
+            return false;
+        }
         if (empty($this->owner->{$this->archiveField})) {
             return false;
         }
@@ -84,7 +89,8 @@ class ActiveArchivable extends ActiveRecord
     }
 
     /**
-     * __method_trackUserArchive_description__
+     * __method_trackUserArchive_description__.
+     *
      * @return __return_trackUserArchive_type__ __return_trackUserArchive_description__
      */
     public function trackUserArchive()
@@ -103,14 +109,22 @@ class ActiveArchivable extends ActiveRecord
     }
 
     /**
-     * __method_archive_description__
+     * __method_archive_description__.
+     *
      * @param yii\base\ModelEvent $event __param_event_description__ [optional]
+     *
      * @return __return_archive_type__ __return_archive_description__
      */
     public function archive(ModelEvent $event = null, $baseAuditEvent = [])
     {
-        if (is_null($event)) { $event = new ModelEvent; }
-        if (!$this->isArchivable()) { $event->isValid = false; return false; }
+        if (is_null($event)) {
+            $event = new ModelEvent();
+        }
+        if (!$this->isArchivable()) {
+            $event->isValid = false;
+
+            return false;
+        }
 
         $nowDate = date($this->databaseTimeFormat);
         $this->owner->{$this->archiveField} = $nowDate;
@@ -118,36 +132,47 @@ class ActiveArchivable extends ActiveRecord
             $this->owner->archiveUserField = self::_getUserId();
         }
         $this->registerArchiveAuditEvent($baseAuditEvent);
+
         return $this->owner->save();
     }
 
     /**
-     * __method_unarchive_description__
+     * __method_unarchive_description__.
+     *
      * @param yii\base\ModelEvent $event __param_event_description__ [optional]
+     *
      * @return __return_unarchive_type__ __return_unarchive_description__
      */
     public function unarchive(ModelEvent $event = null, $baseAuditEvent = [])
     {
-        if (is_null($event)) { $event = new ModelEvent; }
-        if (!$this->isArchivable()) { $event->isValid = false; return false; }
+        if (is_null($event)) {
+            $event = new ModelEvent();
+        }
+        if (!$this->isArchivable()) {
+            $event->isValid = false;
+
+            return false;
+        }
 
         $this->owner->{$this->archiveField} = null;
         if ($this->trackUserArchive()) {
             $this->owner->archiveUserField = null;
         }
         $this->registerUnarchiveAuditEvent($baseAuditEvent);
+
         return $this->owner->save();
     }
 
     /**
-     * __method__getUserId_description__
+     * __method__getUserId_description__.
+     *
      * @return __return__getUserId_type__ __return__getUserId_description__
      */
     protected static function _getUserId()
     {
         if (is_null(self::$_userID)) {
             self::$_userID = null;
-            if (isset(Yii::$app->user) AND !empty(Yii::$app->user->id)) {
+            if (isset(Yii::$app->user) and !empty(Yii::$app->user->id)) {
                 self::$_userID = Yii::$app->user->id;
             }
         }
@@ -157,31 +182,40 @@ class ActiveArchivable extends ActiveRecord
 
     public function registerArchiveAuditEvent($base = [])
     {
-        if ($this->owner->getBehavior('Auditable') === null) { return false; }
+        if ($this->owner->getBehavior('Auditable') === null) {
+            return false;
+        }
         if (!isset($base['class'])) {
             $base['class'] = $this->archiveEventClass;
         }
+
         return $this->registerArchivableAuditEvent($base);
     }
 
     public function registerUnarchiveAuditEvent($base = [])
     {
-        if ($this->owner->getBehavior('Auditable') === null) { return false; }
+        if ($this->owner->getBehavior('Auditable') === null) {
+            return false;
+        }
         if (!isset($base['class'])) {
             $base['class'] = $this->unarchiveEventClass;
         }
+
         return $this->registerArchivableAuditEvent($base);
     }
 
     protected function registerArchivableAuditEvent($base = [])
     {
-        if ($this->owner->getBehavior('Auditable') === null) { return false; }
+        if ($this->owner->getBehavior('Auditable') === null) {
+            return false;
+        }
         $eventLog = $base;
         if (!isset($eventLog['class'])) {
             return false;
         }
         $eventLog['directObject'] = $this->owner;
         $eventLog['indirectObject'] = $this->owner->indirectObject;
-        return $this->owner->registerAuditEvent($eventLog);   
+
+        return $this->owner->registerAuditEvent($eventLog);
     }
 }

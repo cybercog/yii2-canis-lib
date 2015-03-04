@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -8,14 +9,15 @@
 namespace infinite\web;
 
 /**
- * UploadedFile [@doctodo write class description for UploadedFile]
+ * UploadedFile [@doctodo write class description for UploadedFile].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class UploadedFile extends \yii\web\UploadedFile implements \infinite\base\FileInterface
 {
     /**
-     * Get error message
+     * Get error message.
+     *
      * @return __return_getErrorMessage_type__ __return_getErrorMessage_description__
      */
     public function getErrorMessage()
@@ -30,17 +32,17 @@ class UploadedFile extends \yii\web\UploadedFile implements \infinite\base\FileI
                 return 'The file upload process was interupted. Please try again.';
             break;
             case UPLOAD_ERR_NO_TMP_DIR:
-                return $baseInternalError. ' (TMP_DIR)';
+                return $baseInternalError.' (TMP_DIR)';
             break;
             case UPLOAD_ERR_CANT_WRITE:
-                return $baseInternalError. ' (CANT_WRITE)';
+                return $baseInternalError.' (CANT_WRITE)';
             break;
             case UPLOAD_ERR_EXTENSION:
-                return $baseInternalError. ' (PHP_EXTENSION)';
+                return $baseInternalError.' (PHP_EXTENSION)';
             break;
 
         }
 
-        return null;
+        return;
     }
 }

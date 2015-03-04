@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -26,16 +27,20 @@ trait ApplicationTrait
         }
         parent::init();
         $duration = round((microtime(true) - $start) * 1000, 2);
-        Yii::trace("Init took ". $duration .'ms');
+        Yii::trace("Init took ".$duration.'ms');
     }
 
     public function getIsDbAvailable()
     {
-        if (!isset($this->db)) { return false; }
+        if (!isset($this->db)) {
+            return false;
+        }
         $infiniteSetup = defined('INFINITE_SETUP') && INFINITE_SETUP;
         $infiniteSetupDbReady = defined('INFINITE_SETUP_DB_READY') && INFINITE_SETUP_DB_READY;
         $infiniteSetupDb = $infiniteSetup && !$infiniteSetupDbReady;
-        if ($infiniteSetupDb) { return false; }
+        if ($infiniteSetupDb) {
+            return false;
+        }
 
         return true;
     }
@@ -43,7 +48,7 @@ trait ApplicationTrait
     public function registerModelAlias($alias, $namespace)
     {
         if (strncmp($alias, ':', 1)) {
-            $alias = ':' . $alias;
+            $alias = ':'.$alias;
         }
         if (!isset($this->_modelAliases[$alias])) {
             $this->_modelAliases[$alias] = $namespace;

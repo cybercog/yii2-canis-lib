@@ -1,16 +1,18 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
 
 namespace infinite\base;
+
 use Yii;
 use infinite\helpers\FileHelper;
 
 /**
- * File [@doctodo write class description for File]
+ * File [@doctodo write class description for File].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -31,6 +33,7 @@ class RawFile extends File
             }
         }
         $size = filesize($tmp);
+
         return static::createInstance($name, $tmp, $type, $size, $error);
     }
 }

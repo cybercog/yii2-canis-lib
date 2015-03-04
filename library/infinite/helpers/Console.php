@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -8,17 +9,14 @@
 namespace infinite\helpers;
 
 use Yii;
-use yii\base\InvalidParamException;
 
-use infinite\web\View;
 /**
- * Html [@doctodo write class description for Html]
+ * Html [@doctodo write class description for Html].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class Console extends \yii\helpers\Console
 {
-
     private static $_progressPrefixSpecial;
     private static $_progressStartSpecial;
     private static $_progressWidthSpecial;
@@ -66,7 +64,7 @@ class Console extends \yii\helpers\Console
                 $status .= ">";
                 $status .= str_repeat(" ", $width - $bar - 1);
             }
-            static::output("$prefix" . "[$status] $info");
+            static::output("$prefix"."[$status] $info");
         }
     }
     public static function startProgressSpecial($done, $total, $prefix = '', $width = null)
@@ -85,7 +83,7 @@ class Console extends \yii\helpers\Console
             if (static::streamSupportsAnsiColors(STDOUT)) {
                 static::clearLine();
             }
-            static::stdout("\r" . ($keepPrefix ? self::$_progressPrefixSpecial : '') . (is_string($remove) ? $remove : ''));
+            static::stdout("\r".($keepPrefix ? self::$_progressPrefixSpecial : '').(is_string($remove) ? $remove : ''));
         }
         flush();
 

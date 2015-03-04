@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -11,13 +12,12 @@ use Yii;
 use ArrayAccess;
 use ArrayIterator;
 use IteratorAggregate;
-
 use yii\base\BootstrapInterface;
 use yii\base\Event;
 use infinite\caching\Cacher;
 
 /**
- * Component [@doctodo write class description for Component]
+ * Component [@doctodo write class description for Component].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -41,9 +41,9 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
      */
     protected $_loaded = false;
 
-
     /**
-     * __method_bootstrap_description__
+     * __method_bootstrap_description__.
+     *
      * @param __param_app_type__ $app __param_app_description__
      */
     public function bootstrap($app)
@@ -52,41 +52,52 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
     }
 
     /**
-     * __method_beforeRequest_description__
+     * __method_beforeRequest_description__.
+     *
      * @param __param_event_type__ $event __param_event_description__
+     *
      * @return __return_beforeRequest_type__ __return_beforeRequest_description__
      */
     public function beforeRequest($event)
     {
-        if (empty($this->_init_collectors)) { return; }
+        if (empty($this->_init_collectors)) {
+            return;
+        }
         // load
         $this->load();
     }
 
     protected function loadFromCache($cacheKey)
     {
-        if (!$this->cacheTime) { return false; }
+        if (!$this->cacheTime) {
+            return false;
+        }
         Yii::beginProfile('Collector::loadFromCache');
         if (($collectors = Cacher::get($cacheKey))) {
             $this->_collectors = $collectors;
             Yii::trace('Restored collectors from cache');
             Yii::endProfile('Collector::loadFromCache');
+
             return true;
         }
         Yii::endProfile('Collector::loadFromCache');
+
         return false;
     }
 
     protected function saveCache($cacheKey)
     {
-        if (!$this->cacheTime) { return false; }
+        if (!$this->cacheTime) {
+            return false;
+        }
         //\d($this->_collectors);exit;
         Cacher::set($cacheKey, $this->_collectors, $this->cacheTime);
+
         return true;
     }
 
     /**
-     * __method_load_description__
+     * __method_load_description__.
      */
     public function load()
     {
@@ -94,6 +105,7 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
             $cacheKey = [__CLASS__, md5(json_encode($this->_init_collectors))];
             if ($this->loadFromCache($cacheKey)) {
                 $this->_loaded = true;
+
                 return true;
             }
 
@@ -119,7 +131,8 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
     }
 
     /**
-     * __method_areReady_description__
+     * __method_areReady_description__.
+     *
      * @return __return_areReady_type__ __return_areReady_description__
      */
     public function areReady()
@@ -127,15 +140,17 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
         $this->load();
         Yii::beginProfile(__CLASS__.'::'.__FUNCTION__);
         foreach ($this->_collectors as $collector) {
-            if (!is_object($collector)) { continue; }
-            Yii::beginProfile(__CLASS__.'::'.__FUNCTION__ .'::'.$collector->systemId);
+            if (!is_object($collector)) {
+                continue;
+            }
+            Yii::beginProfile(__CLASS__.'::'.__FUNCTION__.'::'.$collector->systemId);
             if (!$collector->isReady()) {
-                Yii::endProfile(__CLASS__.'::'.__FUNCTION__ .'::'.$collector->systemId);
+                Yii::endProfile(__CLASS__.'::'.__FUNCTION__.'::'.$collector->systemId);
                 Yii::endProfile(__CLASS__.'::'.__FUNCTION__);
 
                 return false;
             }
-            Yii::endProfile(__CLASS__.'::'.__FUNCTION__ .'::'.$collector->systemId);
+            Yii::endProfile(__CLASS__.'::'.__FUNCTION__.'::'.$collector->systemId);
         }
         Yii::endProfile(__CLASS__.'::'.__FUNCTION__);
 
@@ -143,13 +158,16 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
     }
 
     /**
-     * __method_initialize_description__
+     * __method_initialize_description__.
+     *
      * @return __return_initialize_type__ __return_initialize_description__
      */
     public function initialize()
     {
         foreach ($this->_collectors as $collector) {
-            if (!is_object($collector)) { continue; }
+            if (!is_object($collector)) {
+                continue;
+            }
             if (!$collector->initialize()) {
                 return false;
             }
@@ -159,7 +177,8 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
     }
 
     /**
-     * Get collectors
+     * Get collectors.
+     *
      * @return __return_getCollectors_type__ __return_getCollectors_description__
      */
     public function getCollectors()
@@ -168,7 +187,8 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
     }
 
     /**
-     * Set collectors
+     * Set collectors.
+     *
      * @param __param_collectors_type__ $collectors __param_collectors_description__
      */
     public function setCollectors($collectors)
@@ -177,8 +197,10 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
     }
 
     /**
-     * __method_onAfterLoad_description__
+     * __method_onAfterLoad_description__.
+     *
      * @param __param_action_type__ $action __param_action_description__
+     *
      * @return __return_onAfterLoad_type__ __return_onAfterLoad_description__
      */
     public function onAfterLoad($action)
@@ -187,8 +209,10 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
     }
 
     /**
-     * __method_onAfterInit_description__
+     * __method_onAfterInit_description__.
+     *
      * @param __param_action_type__ $action __param_action_description__
+     *
      * @return __return_onAfterInit_type__ __return_onAfterInit_description__
      */
     public function onAfterInit($action)
@@ -197,9 +221,11 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
     }
 
     /**
-     * __method_internalRegisterCollector_description__
-     * @param __param_id_type__ $id __param_id_description__
+     * __method_internalRegisterCollector_description__.
+     *
+     * @param __param_id_type__        $id        __param_id_description__
      * @param __param_collector_type__ $collector __param_collector_description__
+     *
      * @return __return_internalRegisterCollector_type__ __return_internalRegisterCollector_description__
      */
     protected function internalRegisterCollector($id, $collector)
@@ -216,7 +242,8 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
     }
 
     /**
-     * __method_toArray_description__
+     * __method_toArray_description__.
+     *
      * @return __return_toArray_type__ __return_toArray_description__
      */
     public function toArray()
@@ -225,7 +252,8 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
     }
 
     /**
-     * Get sleeping count
+     * Get sleeping count.
+     *
      * @return __return_getSleepingCount_type__ __return_getSleepingCount_description__
      */
     public function getSleepingCount()
@@ -234,7 +262,8 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
     }
 
     /**
-     * __method_sleeping_description__
+     * __method_sleeping_description__.
+     *
      * @return __return_sleeping_type__ __return_sleeping_description__
      */
     public function sleeping()
@@ -265,7 +294,8 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
      * This method is required by the SPL interface `ArrayAccess`.
      * It is implicitly called when you use something like `isset($model[$offset])`.
      *
-     * @param mixed   $offset the offset to check on
+     * @param mixed $offset the offset to check on
+     *
      * @return boolean
      */
     public function offsetExists($offset)
@@ -279,6 +309,7 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
      * It is implicitly called when you use something like `$value = $model[$offset];`.
      *
      * @param mixed $offset the offset to retrieve element.
+     *
      * @return mixed the element at the offset, null if no element is found at the offset
      */
     public function offsetGet($offset)
@@ -287,13 +318,13 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
             if (is_array($this->_collectors[$offset])) {
                 $this->_collectors[$offset] = Yii::createObject($this->_collectors[$offset]);
                 $this->_collectors[$offset]->systemId = $offset;
-                $this->_collectors[$offset]->beforeRequest(new Event);
+                $this->_collectors[$offset]->beforeRequest(new Event());
             }
 
             return $this->_collectors[$offset];
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -320,5 +351,4 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
     {
         unset($this->_collectors[$offset]);
     }
-
 }

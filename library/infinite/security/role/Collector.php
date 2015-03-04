@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -11,7 +12,7 @@ use Yii;
 use infinite\helpers\ArrayHelper;
 
 /**
- * Collector [@doctodo write class description for Collector]
+ * Collector [@doctodo write class description for Collector].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -26,7 +27,7 @@ class Collector extends \infinite\base\collector\Collector
      */
     protected $_initialItems = [];
     /**
-    * @inheritdoc
+     * @inheritdoc
      */
     public function getInitialItems()
     {
@@ -34,7 +35,8 @@ class Collector extends \infinite\base\collector\Collector
     }
 
     /**
-     * Set initial items
+     * Set initial items.
+     *
      * @param __param_value_type__ $value __param_value_description__
      */
     public function setInitialItems($value)
@@ -43,7 +45,7 @@ class Collector extends \infinite\base\collector\Collector
     }
 
     /**
-    * @inheritdoc
+     * @inheritdoc
      */
     public function getCollectorItemClass()
     {
@@ -51,8 +53,10 @@ class Collector extends \infinite\base\collector\Collector
     }
 
     /**
-     * Get by
+     * Get by.
+     *
      * @param __param_id_type__ $id __param_id_description__
+     *
      * @return __return_getById_type__ __return_getById_description__
      */
     public function getById($id)
@@ -71,7 +75,8 @@ class Collector extends \infinite\base\collector\Collector
     }
 
     /**
-     * Get table registry
+     * Get table registry.
+     *
      * @return __return_getTableRegistry_type__ __return_getTableRegistry_description__
      */
     public function getTableRegistry()
@@ -89,7 +94,7 @@ class Collector extends \infinite\base\collector\Collector
     }
 
     /**
-    * @inheritdoc
+     * @inheritdoc
      */
     public function prepareComponent($component)
     {
@@ -97,15 +102,17 @@ class Collector extends \infinite\base\collector\Collector
             return $component;
         }
         Yii::beginProfile('Component:::role::prepare');
-        if (!isset($component['systemId'])) { return false; }
+        if (!isset($component['systemId'])) {
+            return false;
+        }
         $roleClass = Yii::$app->classes['Role'];
         $component['object'] = isset($this->tableRegistry[$component['systemId']]) ? $this->tableRegistry[$component['systemId']] : false;
         if (empty($component['object'])) {
-            $component['object'] = new $roleClass;
+            $component['object'] = new $roleClass();
             $component['object']->name = $component['name'];
             $component['object']->system_id = $component['systemId'];
             if (!$component['object']->save()) {
-                throw new Exception("Couldn't save new role {$component['systemId']} ". print_r($component['object']->getFirstErrors(), true));
+                throw new Exception("Couldn't save new role {$component['systemId']} ".print_r($component['object']->getFirstErrors(), true));
             }
             $this->_tableRegistry[$component['systemId']] = $component['object'];
             Yii::trace("Role has been initialized {$component['name']} ({$component['systemId']})");
@@ -114,5 +121,4 @@ class Collector extends \infinite\base\collector\Collector
 
         return $component;
     }
-
 }

@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -10,7 +11,7 @@ namespace infinite\db\behaviors;
 use Yii;
 
 /**
- * Blame [@doctodo write class description for Blame]
+ * Blame [@doctodo write class description for Blame].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -58,7 +59,7 @@ class Blame extends \infinite\db\behaviors\ActiveRecord
     protected static $_fields = [];
 
     /**
-    * @inheritdoc
+     * @inheritdoc
      */
     public function events()
     {
@@ -69,7 +70,8 @@ class Blame extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * Get fields
+     * Get fields.
+     *
      * @return __return_getFields_type__ __return_getFields_description__
      */
     public function getFields()
@@ -105,10 +107,12 @@ class Blame extends \infinite\db\behaviors\ActiveRecord
         if (isset($this->fields['createdByField'])) {
             unset($values[$this->fields['createdByField']]);
         }
+
         return !empty($values);
     }
     /**
-     * __method_beforeSave_description__
+     * __method_beforeSave_description__.
+     *
      * @param __param_event_type__ $event __param_event_description__
      */
     public function beforeInsert($event)
@@ -135,7 +139,8 @@ class Blame extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_beforeSave_description__
+     * __method_beforeSave_description__.
+     *
      * @param __param_event_type__ $event __param_event_description__
      */
     public function beforeUpdate($event)
@@ -155,14 +160,15 @@ class Blame extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method__getUserId_description__
+     * __method__getUserId_description__.
+     *
      * @return __return__getUserId_type__ __return__getUserId_description__
      */
     protected static function _getUserId()
     {
         if (is_null(self::$_userID)) {
             self::$_userID = null;
-            if (isset(Yii::$app->user) AND !empty(Yii::$app->user->id)) {
+            if (isset(Yii::$app->user) and !empty(Yii::$app->user->id)) {
                 self::$_userID = Yii::$app->user->id;
             }
         }

@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -8,13 +9,12 @@
 namespace infinite\web;
 
 use Yii;
-
 use yii\helpers\Url;
 use infinite\base\exceptions\Exception;
 use infinite\base\ObjectTrait;
 
 /**
- * Response [@doctodo write class description for Response]
+ * Response [@doctodo write class description for Response].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -102,7 +102,7 @@ class Response extends \yii\web\Response
     public $disableInstructions = false;
 
     /**
-    * @inheritdoc
+     * @inheritdoc
      */
     public function init()
     {
@@ -111,7 +111,8 @@ class Response extends \yii\web\Response
     }
 
     /**
-     * Get is instructable
+     * Get is instructable.
+     *
      * @return __return_getIsInstructable_type__ __return_getIsInstructable_description__
      */
     public function getIsInstructable()
@@ -131,8 +132,10 @@ class Response extends \yii\web\Response
     }
 
     /**
-     * __method_generateInstructions_description__
+     * __method_generateInstructions_description__.
+     *
      * @return __return_generateInstructions_type__ __return_generateInstructions_description__
+     *
      * @throws Exception __exception_Exception_description__
      */
     protected function generateInstructions()
@@ -154,10 +157,10 @@ class Response extends \yii\web\Response
             $i['task'] = 'refresh';
         }
 
-
         if (!$keepProcessing) {
             // @todo set status flashes
             $this->handleFlashStatus();
+
             return $i;
         } elseif ($this->forceFlash) {
             $this->handleFlashStatus();
@@ -171,7 +174,7 @@ class Response extends \yii\web\Response
                 var_dump($delayedInstructions);
             }
         }
-            
+
         if (!empty($this->trigger)) {
             $i['trigger'] = $this->trigger;
         }
@@ -194,16 +197,19 @@ class Response extends \yii\web\Response
                 throw new Exception("Invalid response task {$task}!");
             }
         }
-        
+
         if ($this->taskSet) {
             $i['taskSet'] = $this->taskSet;
         }
+
         return $i;
     }
 
     /**
-     * __method_handleFill_description__
+     * __method_handleFill_description__.
+     *
      * @param __param_i_type__ $i __param_i_description__
+     *
      * @return __return_handleFill_type__ __return_handleFill_description__
      */
     protected function handleFill(&$i)
@@ -212,19 +218,24 @@ class Response extends \yii\web\Response
     }
 
     /**
-     * __method_handleFill_description__
+     * __method_handleFill_description__.
+     *
      * @param __param_i_type__ $i __param_i_description__
+     *
      * @return __return_handleFill_type__ __return_handleFill_description__
      */
     protected function handleClient(&$i)
     {
         $this->task = $this->clientTask;
+
         return true;
     }
 
     /**
-     * __method_handleStatus_description__
+     * __method_handleStatus_description__.
+     *
      * @param __param_i_type__ $i __param_i_description__
+     *
      * @return __return_handleStatus_type__ __return_handleStatus_description__
      */
     protected function handleStatus(&$i)
@@ -241,8 +252,10 @@ class Response extends \yii\web\Response
     }
 
     /**
-     * __method_handleTrigger_description__
+     * __method_handleTrigger_description__.
+     *
      * @param __param_i_type__ $i __param_i_description__
+     *
      * @return __return_handleTrigger_type__ __return_handleTrigger_description__
      */
     protected function handleTrigger(&$i)
@@ -255,8 +268,10 @@ class Response extends \yii\web\Response
     }
 
     /**
-     * __method_handleDialog_description__
+     * __method_handleDialog_description__.
+     *
      * @param __param_i_type__ $i __param_i_description__
+     *
      * @return __return_handleDialog_type__ __return_handleDialog_description__
      */
     protected function handleDialog(&$i)
@@ -287,7 +302,6 @@ class Response extends \yii\web\Response
             } else {
                 $this->taskOptions['buttons'][$this->labels['close']] = ['role' => 'close'];
             }
-
         }
 
         return true;
@@ -295,13 +309,11 @@ class Response extends \yii\web\Response
 
     protected function handleMessage(&$i)
     {
-
-
         return true;
     }
 
     /**
-     * __method_handleFlashStatus_description__
+     * __method_handleFlashStatus_description__.
      */
     protected function handleFlashStatus()
     {
@@ -315,8 +327,10 @@ class Response extends \yii\web\Response
     }
 
     /**
-     * __method_renderContent_description__
+     * __method_renderContent_description__.
+     *
      * @param boolean $layout __param_layout_description__ [optional]
+     *
      * @return __return_renderContent_type__ __return_renderContent_description__
      */
     protected function renderContent($layout = true)
@@ -339,10 +353,10 @@ class Response extends \yii\web\Response
             }
         }
 
-        return null;
+        return;
     }
     /**
-    * @inheritdoc
+     * @inheritdoc
      */
     public function send()
     {
@@ -353,7 +367,8 @@ class Response extends \yii\web\Response
     }
 
     /**
-     * __method_beforeSend_description__
+     * __method_beforeSend_description__.
+     *
      * @param __param_event_type__ $event __param_event_description__ [optional]
      */
     public function beforeSend($event = null)
@@ -381,17 +396,17 @@ class Response extends \yii\web\Response
     }
 
     /**
-    * @inheritdoc
+     * @inheritdoc
      */
     public function redirect($url, $statusCode = 302, $checkAjax = true)
     {
         if (is_array($url) && isset($url[0])) {
             // ensure the route is absolute
-            $url[0] = '/' . ltrim($url[0], '/');
+            $url[0] = '/'.ltrim($url[0], '/');
         }
         $url = Url::to($url);
         if (strpos($url, '/') === 0 && strpos($url, '//') !== 0) {
-            $url = Yii::$app->getRequest()->getHostInfo() . $url;
+            $url = Yii::$app->getRequest()->getHostInfo().$url;
         }
 
         $this->getHeaders()->set('Location', $url);
@@ -401,12 +416,15 @@ class Response extends \yii\web\Response
     }
 
     /**
-     * Get route
+     * Get route.
+     *
      * @return __return_getRoute_type__ __return_getRoute_description__
      */
     public function getRoute()
     {
-        if (is_null($this->action)) { return; }
+        if (is_null($this->action)) {
+            return;
+        }
 
         return $this->action->getUniqueId();
     }

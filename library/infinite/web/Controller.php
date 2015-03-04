@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -10,7 +11,7 @@ namespace infinite\web;
 use Yii;
 
 /**
- * Controller [@doctodo write class description for Controller]
+ * Controller [@doctodo write class description for Controller].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -27,7 +28,7 @@ class Controller extends \yii\web\Controller
     protected static $_response = [];
 
     /**
-    * @inheritdoc
+     * @inheritdoc
      */
     public function init()
     {
@@ -36,7 +37,8 @@ class Controller extends \yii\web\Controller
     }
 
     /**
-     * __method_beforeActionResponse_description__
+     * __method_beforeActionResponse_description__.
+     *
      * @param __param_actionEvent_type__ $actionEvent __param_actionEvent_description__
      */
     public function beforeActionResponse($actionEvent)
@@ -59,7 +61,7 @@ class Controller extends \yii\web\Controller
      */
     public function render($view, $params = [])
     {
-        Yii::trace('Called render: '. $view);
+        Yii::trace('Called render: '.$view);
 
         return parent::render($view, array_merge($params, $this->params));
     }
@@ -69,7 +71,7 @@ class Controller extends \yii\web\Controller
      */
     public function renderPartial($view, $params = [])
     {
-        Yii::trace('Called renderPartial: '. $view);
+        Yii::trace('Called renderPartial: '.$view);
 
         return parent::renderPartial($view, array_merge($params, $this->params));
     }

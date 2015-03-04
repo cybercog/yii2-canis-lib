@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -8,9 +9,7 @@
 namespace infinite\base\collector;
 
 use Yii;
-
 use infinite\helpers\ArrayHelper;
-
 use yii\base\Event;
 
 trait CollectorTrait
@@ -30,7 +29,7 @@ trait CollectorTrait
 
     public function getBaseOwner()
     {
-        return null;
+        return;
     }
 
     public function getInitialItems()
@@ -71,10 +70,12 @@ trait CollectorTrait
         if (!isset($this->_distributedFields[$field])) {
             foreach ($this->bucket as $item) {
                 $value = ArrayHelper::getValue($item, $field);
-                if (!isset($value)) { continue; }
+                if (!isset($value)) {
+                    continue;
+                }
                 if (is_array($value)) {
                     foreach ($value as $itemField) {
-                        $this->getBucket($field .':'. $itemField)->add($item->systemId, $item);
+                        $this->getBucket($field.':'.$itemField)->add($item->systemId, $item);
                     }
                 } else {
                     $this->getBucket($field)->add($value, $item);
@@ -166,14 +167,13 @@ trait CollectorTrait
         }
 
         $item = Yii::createObject($itemComponent);
-        Yii::trace(get_called_class() . ": Registering {$item->systemId}");
+        Yii::trace(get_called_class().": Registering {$item->systemId}");
         if (isset($itemComponentObject)) {
             $item->object = $itemComponentObject->getCollectedObject($item);
         }
         if (empty($item->systemId)) {
-        	\d($item);
-        	throw new \Exception("");
-
+            \d($item);
+            throw new \Exception("");
         }
         if (isset($this->bucket[$item->systemId])) {
             $item = $this->mergeExistingItems($this->bucket[$item->systemId], $item);

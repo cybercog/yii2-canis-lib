@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -8,7 +9,7 @@
 namespace infinite\base\language;
 
 /**
- * Verb [@doctodo write class description for Verb]
+ * Verb [@doctodo write class description for Verb].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -29,6 +30,7 @@ class Verb extends \infinite\base\language\Word
 
     /**
      * Constructor.
+     *
      * @param unknown $base
      * @param unknown $variants (optional)
      */
@@ -49,6 +51,7 @@ class Verb extends \infinite\base\language\Word
 
     /**
      * Converts object to string.
+     *
      * @return unknown
      */
     public function __toString()
@@ -61,25 +64,27 @@ class Verb extends \infinite\base\language\Word
         return $this->_base;
     }
 
-    public function getSimplePresent($upper = false) 
+    public function getSimplePresent($upper = false)
     {
         return $this->prepare($this->base, $upper);
     }
-    
+
     /**
-     * Get active
+     * Get active.
+     *
      * @param unknown $upper (optional)
+     *
      * @return unknown
      */
     public function getActive($upper = false)
     {
         if (is_null($this->_active)) {
             if (substr($this->_base, -1) === 'e') {
-                $this->_active = substr($this->_base, 0, -1) .'ing';
+                $this->_active = substr($this->_base, 0, -1).'ing';
             } elseif ($this->isCVC($this->_base)) {
-                $this->_active = $this->_base . substr($this->_base, -1) . 'ing';
+                $this->_active = $this->_base.substr($this->_base, -1).'ing';
             } else {
-                $this->_active = $this->_base .'ing';
+                $this->_active = $this->_base.'ing';
             }
         }
 
@@ -87,21 +92,23 @@ class Verb extends \infinite\base\language\Word
     }
 
     /**
-     * Get past
+     * Get past.
+     *
      * @param unknown $upper (optional)
+     *
      * @return unknown
      */
     public function getPast($upper = false)
     {
         if (is_null($this->_past)) {
             if (substr($this->_base, -1) === 'y') {
-                $this->_past = substr($this->_base, 0, -1) .'ied';
+                $this->_past = substr($this->_base, 0, -1).'ied';
             } elseif ($this->isCVC($this->_base) and !in_array(substr($this->_base, -1), ['w', 'x', 'z'])) {
-                $this->_past = $this->_base . substr($this->_base, -1) . 'ed';
+                $this->_past = $this->_base.substr($this->_base, -1).'ed';
             } elseif (in_array(substr($this->_base, -1), ['e'])) {
-                $this->_past = $this->_base . 'd';
+                $this->_past = $this->_base.'d';
             } else {
-                $this->_past = $this->_base .'ed';
+                $this->_past = $this->_base.'ed';
             }
         }
 

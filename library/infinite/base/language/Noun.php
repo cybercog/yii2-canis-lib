@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -8,7 +9,7 @@
 namespace infinite\base\language;
 
 /**
- * Noun [@doctodo write class description for Noun]
+ * Noun [@doctodo write class description for Noun].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -33,6 +34,7 @@ class Noun extends \infinite\base\language\Word
 
     /**
      * Constructor.
+     *
      * @param unknown $singular
      * @param unknown $variants (optional)
      */
@@ -56,6 +58,7 @@ class Noun extends \infinite\base\language\Word
 
     /**
      * Converts object to string.
+     *
      * @return unknown
      */
     public function __toString()
@@ -69,7 +72,8 @@ class Noun extends \infinite\base\language\Word
     }
 
     /**
-     * Get upper singular
+     * Get upper singular.
+     *
      * @return __return_getUpperSingular_type__ __return_getUpperSingular_description__
      */
     public function getUpperSingular()
@@ -78,8 +82,10 @@ class Noun extends \infinite\base\language\Word
     }
 
     /**
-     * Get singular
+     * Get singular.
+     *
      * @param unknown $upper (optional)
+     *
      * @return unknown
      */
     public function getSingular($upper = false)
@@ -88,7 +94,8 @@ class Noun extends \infinite\base\language\Word
     }
 
     /**
-     * Get upper plural
+     * Get upper plural.
+     *
      * @return __return_getUpperPlural_type__ __return_getUpperPlural_description__
      */
     public function getUpperPlural()
@@ -97,8 +104,10 @@ class Noun extends \infinite\base\language\Word
     }
 
     /**
-     * Get plural
+     * Get plural.
+     *
      * @param unknown $upper (optional)
+     *
      * @return unknown
      */
     public function getPlural($upper = false)
@@ -111,17 +120,19 @@ class Noun extends \infinite\base\language\Word
     }
 
     /**
-     * Get possessive
+     * Get possessive.
+     *
      * @param unknown $upper (optional)
+     *
      * @return unknown
      */
     public function getPossessive($upper = false)
     {
         if (is_null($this->_possessive)) {
             if (substr($this->_singular, -1) === 's') {
-                $this->_possessive = $this->_singular .'\'';
+                $this->_possessive = $this->_singular.'\'';
             } else {
-                $this->_possessive = $this->_singular .'\'s';
+                $this->_possessive = $this->_singular.'\'s';
             }
         }
 
@@ -129,17 +140,19 @@ class Noun extends \infinite\base\language\Word
     }
 
     /**
-     * Get possessive plural
+     * Get possessive plural.
+     *
      * @param unknown $upper (optional)
+     *
      * @return unknown
      */
     public function getPossessivePlural($upper = false)
     {
         if (is_null($this->_possessive_plural)) {
             if (substr($this->plural, -1) === 's') {
-                $this->_possessive_plural = $this->plural .'\'';
+                $this->_possessive_plural = $this->plural.'\'';
             } else { // wahuh?
-                $this->_possessive_plural = $this->_singular .'\'s';
+                $this->_possessive_plural = $this->_singular.'\'s';
             }
         }
 
@@ -152,7 +165,7 @@ class Noun extends \infinite\base\language\Word
             'singular' => $this->getSingular($upper),
             'plural' => $this->getPlural($upper),
             'possessivePlural' => $this->getPossessivePlural($upper),
-            'possessive' => $this->getPossessive($upper)
+            'possessive' => $this->getPossessive($upper),
         ];
     }
 }

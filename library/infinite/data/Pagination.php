@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -8,7 +9,7 @@
 namespace infinite\data;
 
 /**
- * Pagination [@doctodo write class description for Pagination]
+ * Pagination [@doctodo write class description for Pagination].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -20,7 +21,7 @@ class Pagination extends \yii\data\Pagination
     protected $_state;
 
     /**
-    * @inheritdoc
+     * @inheritdoc
      */
     public function createUrl($page, $pageSize = null, $absolute = false)
     {

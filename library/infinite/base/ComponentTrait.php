@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -13,7 +14,7 @@ trait ComponentTrait
 {
     public function trigger($name, \yii\base\Event $event = null)
     {
-        Yii::trace("Firing ". get_class($this) ."::{$name}");
+        Yii::trace("Firing ".get_class($this)."::{$name}");
 
         return parent::trigger($name, $event);
     }

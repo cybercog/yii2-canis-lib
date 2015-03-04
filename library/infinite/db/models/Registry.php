@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -13,7 +14,6 @@ namespace infinite\db\models;
  * @property string $id
  * @property string $object_model
  * @property string $created
- *
  * @property Aca $aca
  * @property Acl[] $acls
  * @property Acl[] $acls0
@@ -56,7 +56,7 @@ class Registry extends \infinite\db\ActiveRecord
             [['id'], 'required'],
             [['created'], 'safe'],
             [['id', 'owner_id'], 'string', 'max' => 36],
-            [['object_model'], 'string', 'max' => 100]
+            [['object_model'], 'string', 'max' => 100],
         ];
     }
 
@@ -74,7 +74,7 @@ class Registry extends \infinite\db\ActiveRecord
     }
 
     /**
-    * @inheritdoc
+     * @inheritdoc
      */
     public function behaviors()
     {
@@ -86,9 +86,11 @@ class Registry extends \infinite\db\ActiveRecord
     }
 
     /**
-     * Get object
+     * Get object.
+     *
      * @param unknown $id
      * @param boolean $checkAccess __param_checkAccess_description__ [optional]
+     *
      * @return unknown
      */
     public static function getObject($id, $checkAccess = true)
@@ -101,7 +103,9 @@ class Registry extends \infinite\db\ActiveRecord
         if (!isset(self::$_cache[$classKey][$requestKey])) {
             self::$_cache[$classKey][$requestKey] = false;
             $registry = self::get($id, false);
-            if (empty($registry)) { return false; }
+            if (empty($registry)) {
+                return false;
+            }
             $model = self::parseModelAlias($registry->object_model);
             $object = $model::find();
             if (!$checkAccess) {
@@ -115,7 +119,8 @@ class Registry extends \infinite\db\ActiveRecord
     }
 
     /**
-     * __method_registerObject_description__
+     * __method_registerObject_description__.
+     *
      * @param __param_object_type__ $object __param_object_description__
      */
     public static function registerObject($object)
@@ -129,5 +134,4 @@ class Registry extends \infinite\db\ActiveRecord
             self::$_cache[$classKey][$requestKey] = $object;
         }
     }
-
 }

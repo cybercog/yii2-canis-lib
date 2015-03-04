@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -18,21 +19,20 @@ use yii\web\IdentityInterface;
  * @property integer $level
  * @property string $created
  * @property string $modified
- *
  * @property Registry $id
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class Group extends \infinite\db\ActiveRecord implements IdentityInterface
 {
-    /**
+    /*
      * @inheritdoc
      */
     static protected $_cache = ['id' => [], 'system' => []];
-    /**
+    /*
      * @var __var__doCache_type__ __var__doCache_description__
      */
-    static protected $_doCache = true;
+    protected static $_doCache = true;
     /**
      * @inheritdoc
      */
@@ -42,7 +42,7 @@ class Group extends \infinite\db\ActiveRecord implements IdentityInterface
     }
 
     /**
-    * @inheritdoc
+     * @inheritdoc
      */
     public function behaviors()
     {
@@ -53,7 +53,7 @@ class Group extends \infinite\db\ActiveRecord implements IdentityInterface
                 ],
                 'Relatable' => [
                     'class' => 'infinite\db\behaviors\Relatable',
-                ]
+                ],
             ]
         );
     }
@@ -69,7 +69,7 @@ class Group extends \infinite\db\ActiveRecord implements IdentityInterface
             [['created', 'modified'], 'safe'],
             [['id'], 'string', 'max' => 36],
             [['name'], 'string', 'max' => 100],
-            [['system'], 'string', 'max' => 20]
+            [['system'], 'string', 'max' => 20],
         ];
     }
 
@@ -89,7 +89,8 @@ class Group extends \infinite\db\ActiveRecord implements IdentityInterface
     }
 
     /**
-     * Get registry
+     * Get registry.
+     *
      * @return \yii\db\ActiveRelation
      */
     public function getRegistry()
@@ -97,12 +98,12 @@ class Group extends \infinite\db\ActiveRecord implements IdentityInterface
         return $this->hasOne('Registry', ['id' => 'id']);
     }
 
-    /**
+    /*
      * Get system group
      * @param unknown $system
      * @return unknown
      */
-    static public function getSystemGroup($system)
+    public static function getSystemGroup($system)
     {
         // @todo add cache
         $system = Group::model()->field('system', $system)->find();
@@ -110,26 +111,28 @@ class Group extends \infinite\db\ActiveRecord implements IdentityInterface
         return $system;
     }
 
-    /**
+    /*
      * __method_enableCache_description__
      */
-    static function enableCache()
+    public static function enableCache()
     {
         self::$_doCache = true;
     }
 
-    /**
+    /*
      * __method_disableCache_description__
      */
-    static function disableCache()
+    public static function disableCache()
     {
         self::$_doCache = false;
     }
 
     /**
-     * Get by
+     * Get by.
+     *
      * @param unknown $id
      * @param boolean $checkAccess __param_checkAccess_description__ [optional]
+     *
      * @return unknown
      */
     public static function getById($id, $checkAccess = true)
@@ -142,7 +145,9 @@ class Group extends \infinite\db\ActiveRecord implements IdentityInterface
             $group->disableAccessCheck();
         }
         $group = $group->findByPk($id);
-        if (empty($group)) { return false; }
+        if (empty($group)) {
+            return false;
+        }
         // @todo security of both items?
 
         if ($group and self::$_doCache) {
@@ -152,13 +157,13 @@ class Group extends \infinite\db\ActiveRecord implements IdentityInterface
         return $group;
     }
 
-    /**
+    /*
      * Get by system name
      * @param unknown $id
      * @param boolean $checkAccess __param_checkAccess_description__ [optional]
      * @return unknown
      */
-    static function getBySystemName($id, $checkAccess = true)
+    public static function getBySystemName($id, $checkAccess = true)
     {
         if (isset(self::$_cache['system'][$id])) {
             return self::$_cache['system'][$id];
@@ -170,7 +175,9 @@ class Group extends \infinite\db\ActiveRecord implements IdentityInterface
         $group = $group->one();
         if (!$group || $group->system !== $id) {
         }
-        if (empty($group)) { return false; }
+        if (empty($group)) {
+            return false;
+        }
         // @todo security of both items?
 
         if ($group && self::$_doCache) {
@@ -188,15 +195,17 @@ class Group extends \infinite\db\ActiveRecord implements IdentityInterface
     }
 
     /**
-     * __method_findIdentityByAccessToken_description__
+     * __method_findIdentityByAccessToken_description__.
+     *
      * @param __param_token_type__ $token __param_token_description__
      */
-    public static function findIdentityByAccessToken($token, $type = NULL)
+    public static function findIdentityByAccessToken($token, $type = null)
     {
     }
 
     /**
-     * Get id
+     * Get id.
+     *
      * @return int|string current user ID
      */
     public function getId()
@@ -205,7 +214,8 @@ class Group extends \infinite\db\ActiveRecord implements IdentityInterface
     }
 
     /**
-     * Get auth key
+     * Get auth key.
+     *
      * @return string current user auth key
      */
     public function getAuthKey()
@@ -214,8 +224,10 @@ class Group extends \infinite\db\ActiveRecord implements IdentityInterface
     }
 
     /**
-     * __method_validateAuthKey_description__
-     * @param string  $authKey
+     * __method_validateAuthKey_description__.
+     *
+     * @param string $authKey
+     *
      * @return boolean if auth key is valid for current user
      */
     public function validateAuthKey($authKey)

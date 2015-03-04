@@ -1,9 +1,8 @@
 <?php
 /**
- * library/Infinite.php
+ * library/Infinite.php.
  *
  * @author Jacob Morrison <jacob@infinitecascade.com>
- * @package infinite
  */
 defined('INFINITE_ROLE_LEVEL_OWNER') || define('INFINITE_ROLE_LEVEL_OWNER', 600); // owner levels: 501-600
 defined('INFINITE_ROLE_LEVEL_MANAGER') || define('INFINITE_ROLE_LEVEL_MANAGER', 500); // manager levels: 401-500
@@ -22,14 +21,16 @@ function b($backtrace)
 {
     echo '<pre>';
     foreach ($backtrace as $b) {
-        if (!isset($b['file'])) { continue; }
+        if (!isset($b['file'])) {
+            continue;
+        }
         echo "{$b['file']}:{$b['line']} {$b['function']}\n";
     }
     echo '</pre>';
 }
 
 /**
- * Infinite [@doctodo write class description for Infinite]
+ * Infinite [@doctodo write class description for Infinite].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -44,10 +45,10 @@ class Infinite implements \yii\base\BootstrapInterface
         Yii::$app->registerMigrationAlias('@infinite/db/migrations');
         if ($app instanceof \yii\console\Application) {
             $app->controllerMap['cron'] = [
-                'class' => 'infinite\console\controllers\CronController'
+                'class' => 'infinite\console\controllers\CronController',
             ];
             $app->controllerMap['daemon'] = [
-                'class' => 'infinite\console\controllers\DaemonController'
+                'class' => 'infinite\console\controllers\DaemonController',
             ];
         }
     }

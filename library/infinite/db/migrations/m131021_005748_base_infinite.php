@@ -15,7 +15,7 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
             'id' => 'char(36) CHARACTER SET ascii COLLATE ascii_bin NOT NULL PRIMARY KEY',
             'name' => 'string NOT NULL',
             'created' => 'datetime DEFAULT NULL',
-            'modified' => 'datetime DEFAULT NULL'
+            'modified' => 'datetime DEFAULT NULL',
         ]);
 
         $this->addForeignKey('acaRegistry', 'aca', 'id', 'registry', 'id', 'CASCADE', 'CASCADE');
@@ -31,7 +31,7 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
             'aca_id' => 'char(36) CHARACTER SET ascii COLLATE ascii_bin DEFAULT NULL',
             'access' => 'tinyint(4) DEFAULT NULL', // -1 explicitly deny access (rare); 1 allow access; 2 inherit from parent
             'created' => 'datetime DEFAULT NULL',
-            'modified' => 'datetime DEFAULT NULL'
+            'modified' => 'datetime DEFAULT NULL',
         ]);
 
         $this->createIndex('aclAccessingObject', 'acl', 'accessing_object_id', false);
@@ -56,7 +56,7 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
             'controlled_object_id' => 'char(36) CHARACTER SET ascii COLLATE ascii_bin NOT NULL',
             'role_id' => 'char(36) CHARACTER SET ascii COLLATE ascii_bin DEFAULT NULL',
             'created' => 'datetime DEFAULT NULL',
-            'modified' => 'datetime DEFAULT NULL'
+            'modified' => 'datetime DEFAULT NULL',
         ]);
 
         $this->createIndex('aclRoleAccessingObject', 'acl_role', 'accessing_object_id', false);
@@ -78,7 +78,7 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
             'event_id' => 'string(50) NOT NULL',
             'event' => 'longblob DEFAULT NULL',
             'hooks_handled' => 'bool NOT NULL DEFAULT 0',
-            'created' => 'datetime DEFAULT NULL'
+            'created' => 'datetime DEFAULT NULL',
         ]);
 
         $this->createIndex('auditAgent', 'audit', 'agent_id', false);
@@ -100,7 +100,7 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
             'system' => 'string DEFAULT NULL',
             'level' => 'integer NOT NULL DEFAULT 0',
             'created' => 'datetime DEFAULT NULL',
-            'modified' => 'datetime DEFAULT NULL'
+            'modified' => 'datetime DEFAULT NULL',
         ]);
 
         $this->addForeignKey('groupRegistry', 'group', 'id', 'registry', 'id', 'CASCADE', 'CASCADE');
@@ -125,7 +125,7 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
             'system_id' => 'string(100) NOT NULL DEFAULT \'\'',
             'handler' => 'string(100) NOT NULL DEFAULT \'\'',
             'created' => 'datetime DEFAULT NULL',
-            'modified' => 'datetime DEFAULT NULL'
+            'modified' => 'datetime DEFAULT NULL',
         ]);
 
         $this->createIndex('idpSystemId', 'identity_provider', 'system_id', true);
@@ -141,7 +141,7 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
             'token' => 'text DEFAULT NULL',
             'meta' => 'blob DEFAULT NULL',
             'created' => 'datetime DEFAULT NULL',
-            'modified' => 'datetime DEFAULT NULL'
+            'modified' => 'datetime DEFAULT NULL',
         ]);
 
         $this->createIndex('identityIdp', 'identity', 'identity_provider_id', false);
@@ -156,7 +156,7 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
         $this->createTable('registry', [
             'id' => 'char(36) CHARACTER SET ascii COLLATE ascii_bin NOT NULL PRIMARY KEY',
             'object_model' => 'string DEFAULT NULL',
-            'created' => 'datetime DEFAULT NULL'
+            'created' => 'datetime DEFAULT NULL',
         ]);
 
         $this->createIndex('registryIndex', 'registry', 'id,object_model', false);
@@ -175,7 +175,7 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
             'primary_child' => 'bool NOT NULL DEFAULT 0',
             'special' => 'string DEFAULT NULL',
             'created' => 'datetime DEFAULT NULL',
-            'modified' => 'datetime DEFAULT NULL'
+            'modified' => 'datetime DEFAULT NULL',
         ]);
 
         // $this->createIndex('relationParentChild', 'relation', 'parent_object_id,child_object_id', true);
@@ -201,7 +201,6 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
         $this->addForeignKey('relationDependencyParent', 'relation_dependency', 'parent_relation_id', 'relation', 'id', 'CASCADE', 'CASCADE');
         $this->addForeignKey('relationDependencyChild', 'relation_dependency', 'child_relation_id', 'relation', 'id', 'CASCADE', 'CASCADE');
 
-
         // role
         $this->dropExistingTable('role');
 
@@ -210,7 +209,7 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
             'name' => 'string DEFAULT NULL',
             'system_id' => 'string NOT NULL DEFAULT \'\'',
             'created' => 'datetime DEFAULT NULL',
-            'modified' => 'datetime DEFAULT NULL'
+            'modified' => 'datetime DEFAULT NULL',
         ]);
 
         $this->createIndex('roleName', 'role', 'system_id', false);
@@ -236,14 +235,13 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
             'modified' => 'datetime DEFAULT NULL',
             'modified_user_id' => 'char(36) CHARACTER SET ascii COLLATE ascii_bin DEFAULT NULL',
             'deleted' => 'datetime DEFAULT NULL',
-            'deleted_user_id' => 'char(36) CHARACTER SET ascii COLLATE ascii_bin DEFAULT NULL'
+            'deleted_user_id' => 'char(36) CHARACTER SET ascii COLLATE ascii_bin DEFAULT NULL',
         ]);
 
         $this->createIndex('userIdentityPrivider', 'user', 'primary_identity_id', false);
         $this->createIndex('userEmail', 'user', 'email', true);
         $this->addForeignKey('userIdentity', 'user', 'primary_identity_id', 'identity', 'id', 'SET NULL', 'CASCADE');
         $this->addForeignKey('userRegistry', 'user', 'id', 'registry', 'id', 'CASCADE', 'CASCADE');
-
 
         $this->dropExistingTable('deferred_action');
 
@@ -255,7 +253,7 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
             'status' => 'enum(\'queued\',\'running\',\'error\',\'success\') NOT NULL DEFAULT \'queued\'',
             'created' => 'datetime DEFAULT NULL',
             'modified' => 'datetime DEFAULT NULL',
-            'expired' => 'datetime DEFAULT NULL'
+            'expired' => 'datetime DEFAULT NULL',
         ]);
 
         $this->createIndex('deferredActionUser', 'deferred_action', 'user_id', false);
@@ -265,9 +263,7 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
         $this->createIndex('deferredActionExpired', 'deferred_action', 'expired', false);
         $this->addForeignKey('deferredActionUser', 'deferred_action', 'user_id', 'user', 'id', 'CASCADE', 'CASCADE');
 
-
         $this->db->createCommand()->checkIntegrity(true)->execute();
-
     }
 
     public function down()
@@ -290,6 +286,6 @@ class m131021_005748_base_infinite extends \infinite\db\Migration
 
         $this->db->createCommand()->checkIntegrity(true)->execute();
 
-      return true;
+        return true;
     }
 }

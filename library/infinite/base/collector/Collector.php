@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -8,7 +9,7 @@
 namespace infinite\base\collector;
 
 /**
- * Collector [@doctodo write class description for Collector]
+ * Collector [@doctodo write class description for Collector].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -26,7 +27,8 @@ abstract class Collector extends \infinite\base\Component
     const EVENT_BEFORE_BUCKET_ACCESS = 'beforeBucketAccess';
 
     /**
-     * Set system
+     * Set system.
+     *
      * @param unknown $value
      */
     public function setSystemId($value)
@@ -35,7 +37,8 @@ abstract class Collector extends \infinite\base\Component
     }
 
     /**
-     * Get system
+     * Get system.
+     *
      * @return unknown
      */
     public function getSystemId()

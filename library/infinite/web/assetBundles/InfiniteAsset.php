@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -8,9 +9,10 @@
 namespace infinite\web\assetBundles;
 
 /**
- * InfiniteAsset [@doctodo write class description for InfiniteAsset]
+ * InfiniteAsset [@doctodo write class description for InfiniteAsset].
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
+ *
  * @since 2.0
  */
 class InfiniteAsset extends AssetBundle
@@ -38,7 +40,7 @@ class InfiniteAsset extends AssetBundle
         'js/infinite.expandable.js',
         'js/infinite.timing.js',
         'js/infinite.selector.js',
-        'js/infinite.search.js'
+        'js/infinite.search.js',
     ];
     /**
      * @inheritdoc

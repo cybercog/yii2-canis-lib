@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -55,7 +56,9 @@ trait QueryTrait
 
     public function ensureAccessControl()
     {
-        if (!isset($this->modelClass) || $this->disableFutureAccessCheck) { return; }
+        if (!isset($this->modelClass) || $this->disableFutureAccessCheck) {
+            return;
+        }
         $modelClass = $this->modelClass;
         if ($modelClass::isAccessControlled()) {
             $this->enableAccessCheck();
@@ -65,7 +68,7 @@ trait QueryTrait
     public function createCommand($db = null)
     {
         $this->_db = $db;
-        $modelEvent = new ModelEvent;
+        $modelEvent = new ModelEvent();
         $this->trigger(Query::EVENT_BEFORE_QUERY, $modelEvent);
 
         return self::basicCreateCommand($db);
@@ -76,14 +79,13 @@ trait QueryTrait
         if (is_null($db) && !is_null($this->_db)) {
             $db = $this->_db;
         }
-        $rawSql = '('. $this->basicCreateCommand($db)->rawSql .')';
+        $rawSql = '('.$this->basicCreateCommand($db)->rawSql.')';
         $this->resetQuery();
         $this->from([$alias => $rawSql]);
     }
 
     protected function resetQuery()
     {
-
         foreach (get_class_vars(BaseQuery::className()) as $var => $default) {
             $this->{$var} = $default;
         }
@@ -119,7 +121,7 @@ trait QueryTrait
 
     public function pk($pk)
     {
-        return $this->andWhere([$this->primaryAlias .'.'. $this->primaryTablePk => $pk]);
+        return $this->andWhere([$this->primaryAlias.'.'.$this->primaryTablePk => $pk]);
     }
 
     public function getPrimaryAlias($db = null)
@@ -185,10 +187,11 @@ trait QueryTrait
     {
         $where = [$operator];
         foreach ($like as $column => $value) {
-            $id = ':'. md5(microtime(true) . uniqid() . rand(0,1000));
+            $id = ':'.md5(microtime(true).uniqid().rand(0, 1000));
             $this->params[$id] = $value;
-            $where[] = $column .' LIKE ' . $id;
+            $where[] = $column.' LIKE '.$id;
         }
+
         return $where;
     }
 

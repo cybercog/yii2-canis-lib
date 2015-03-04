@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -8,9 +9,10 @@
 namespace infinite\web\assetBundles;
 
 /**
- * BootstrapDatepickerAsset [@doctodo write class description for BootstrapDatepickerAsset]
+ * BootstrapDatepickerAsset [@doctodo write class description for BootstrapDatepickerAsset].
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
+ *
  * @since 2.0
  */
 class BootstrapDatepickerAsset extends AssetBundle
@@ -33,7 +35,7 @@ class BootstrapDatepickerAsset extends AssetBundle
     public $depends = ['yii\web\JqueryAsset', 'yii\bootstrap\BootstrapAsset'];
 
     /**
-    * @inheritdoc
+     * @inheritdoc
      */
     public function init()
     {

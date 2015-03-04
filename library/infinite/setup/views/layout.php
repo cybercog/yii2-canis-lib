@@ -1,11 +1,9 @@
 <?php
 /**
- * library/setup/views/layout.php
+ * library/setup/views/layout.php.
  *
  * @author Jacob Morrison <jacob@infinitecascade.com>
- * @package infinite
  */
-
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -147,14 +145,14 @@ if (isset($_GET['message'])) {
 
 if (isset($task)) {
     echo '<div class="section">';
-    echo '<h2>Set Up '. $task->title .'</h2>';
+    echo '<h2>Set Up '.$task->title.'</h2>';
 }
 echo $content;
 if (isset($task)) {
     echo '</div>';
 }
 
-if (empty($error) AND ($this->isAvailable or !empty($forceContinue))) {
+if (empty($error) and ($this->isAvailable or !empty($forceContinue))) {
     echo '<a class="visit-app" href="/">Go to Application &gt;&gt;</a>';
 }
 ?>

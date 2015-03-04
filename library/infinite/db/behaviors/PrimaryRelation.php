@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -10,7 +11,7 @@ namespace infinite\db\behaviors;
 use infinite\db\models\Relation;
 
 /**
- * PrimaryRelation [@doctodo write class description for PrimaryRelation]
+ * PrimaryRelation [@doctodo write class description for PrimaryRelation].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -30,7 +31,7 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
     public $wasPrimary = ['parent' => false, 'child' => false];
 
     /**
-    * @inheritdoc
+     * @inheritdoc
      */
     public function events()
     {
@@ -38,12 +39,13 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
             \infinite\db\ActiveRecord::EVENT_BEFORE_INSERT => 'beforeInsert',
             \infinite\db\ActiveRecord::EVENT_BEFORE_UPDATE => 'beforeUpdate',
             \infinite\db\ActiveRecord::EVENT_AFTER_UPDATE => 'afterUpdate',
-            \infinite\db\ActiveRecord::EVENT_AFTER_DELETE => 'afterDelete'
+            \infinite\db\ActiveRecord::EVENT_AFTER_DELETE => 'afterDelete',
         ];
     }
 
     /**
-     * __method_handlePrimary_description__
+     * __method_handlePrimary_description__.
+     *
      * @return __return_handlePrimary_type__ __return_handlePrimary_description__
      */
     public function handlePrimary($role)
@@ -56,13 +58,15 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
         if (in_array($role, ['child', 'children'])) {
             return $this->primaryChildField;
         } else {
-            return $this->primaryParentField;;
+            return $this->primaryParentField;
         }
     }
 
     /**
-     * Get siblings
+     * Get siblings.
+     *
      * @param boolean $primaryOnly __param_primaryOnly_description__ [optional]
+     *
      * @return __return_getSiblings_type__ __return_getSiblings_description__
      */
     public function getSiblings($role, $primaryOnly = false)
@@ -70,24 +74,30 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
         $primaryField = $this->getPrimaryField($role);
         $parentObject = $this->owner->parentObject;
         $childObject = $this->owner->childObject;
-        if (empty($childObject)) { return []; }
+        if (empty($childObject)) {
+            return [];
+        }
         $relationFields = [];
         if ($primaryOnly) {
-            $relationFields['{{%alias%}}.[['. $primaryField .']]'] = 1;
+            $relationFields['{{%alias%}}.[['.$primaryField.']]'] = 1;
         }
 
         return $childObject->siblingRelationQuery($parentObject, ['where' => $relationFields], ['disableAccess' => true])->all();
     }
 
     /**
-     * __method_beforeInsert_description__
+     * __method_beforeInsert_description__.
+     *
      * @param __param_event_type__ $event __param_event_description__ [optional]
+     *
      * @return __return_beforeInsert_type__ __return_beforeInsert_description__
      */
     public function beforeInsert($event = null)
     {
         foreach (['child', 'parent'] as $role) {
-            if (!$this->handlePrimary($role)) { continue; }
+            if (!$this->handlePrimary($role)) {
+                continue;
+            }
             $primaryField = $this->getPrimaryField($role);
             $primarySiblings = $this->getSiblings($role, true);
 
@@ -98,12 +108,15 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
                 $this->owner->{$primaryField} = 1;
             }
         }
+
         return true;
     }
 
     /**
-     * __method_beforeUpdate_description__
+     * __method_beforeUpdate_description__.
+     *
      * @param __param_event_type__ $event __param_event_description__ [optional]
+     *
      * @return __return_beforeUpdate_type__ __return_beforeUpdate_description__
      */
     public function beforeUpdate($event = null)
@@ -120,8 +133,10 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_afterUpdate_description__
+     * __method_afterUpdate_description__.
+     *
      * @param __param_event_type__ $event __param_event_description__ [optional]
+     *
      * @return __return_afterUpdate_type__ __return_afterUpdate_description__
      */
     public function afterUpdate($event = null)
@@ -134,8 +149,10 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_afterDelete_description__
+     * __method_afterDelete_description__.
+     *
      * @param __param_event_type__ $event __param_event_description__ [optional]
+     *
      * @return __return_afterDelete_type__ __return_afterDelete_description__
      */
     public function afterDelete($event = null)
@@ -144,13 +161,16 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_handOffPrimary_description__
+     * __method_handOffPrimary_description__.
+     *
      * @return __return_handOffPrimary_type__ __return_handOffPrimary_description__
      */
     public function handOffPrimary()
     {
         foreach (['child', 'parent'] as $role) {
-            if (!$this->handlePrimary($role)) { continue; }
+            if (!$this->handlePrimary($role)) {
+                continue;
+            }
             if ($this->owner->isPrimary($role) || $this->owner->wasPrimary[$role]) {
                 // assign a new primary
                 $siblings = $this->getSiblings($role, false);
@@ -165,12 +185,15 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * Set primary
+     * Set primary.
+     *
      * @return __return_setPrimary_type__ __return_setPrimary_description__
      */
     public function setPrimary($role)
     {
-        if (!$this->handlePrimary($role)) { return false; }
+        if (!$this->handlePrimary($role)) {
+            return false;
+        }
         $primaryField = $this->getPrimaryField($role);
         $primarySiblings = $this->getSiblings($role, true);
         foreach ($primarySiblings as $sibling) {
@@ -185,13 +208,17 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * Get is primary
+     * Get is primary.
+     *
      * @return __return_getIsPrimary_type__ __return_getIsPrimary_description__
      */
     public function isPrimary($role)
     {
-        if (!$this->handlePrimary($role)) { return false; }
+        if (!$this->handlePrimary($role)) {
+            return false;
+        }
         $primaryField = $this->getPrimaryField($role);
+
         return !empty($this->owner->{$primaryField});
     }
 }

@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -11,7 +12,7 @@ use Yii;
 use infinite\base\exceptions\Exception;
 
 /**
- * MigrateController [@doctodo write class description for MigrateController]
+ * MigrateController [@doctodo write class description for MigrateController].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -33,7 +34,7 @@ class MigrateController extends \yii\console\controllers\MigrateController
     public $templateFile = '@infinite/views/system/migration.phpt';
 
     /**
-    * @inheritdoc
+     * @inheritdoc
      */
     protected function createMigration($class)
     {
@@ -41,37 +42,42 @@ class MigrateController extends \yii\console\controllers\MigrateController
             return false;
         }
         $file = $this->migrationsMap[$class];
-        require_once($file);
+        require_once $file;
 
         return new $class(['db' => $this->db]);
     }
 
     /**
      * Returns the migrations that are not applied.
+     *
      * @return array list of new migrations
+     *
      * @throws Exception __exception_Exception_description__
      */
     protected function getNewMigrations()
     {
         $applied = [];
-        foreach ($this->getMigrationHistory(-1) as $version=>$time) {
+        foreach ($this->getMigrationHistory(-1) as $version => $time) {
             $applied[$version] = true;
         }
 
         $migrations = [];
         foreach (array_merge($this->migrationPaths, Yii::$app->migrationAliases) as $migrationPathAlias) {
             $migrationPath = Yii::getAlias($migrationPathAlias);
-            if (!is_dir($migrationPath)) { throw new Exception("Bad migration path {$migrationPath}!"); continue; }
+            if (!is_dir($migrationPath)) {
+                throw new Exception("Bad migration path {$migrationPath}!");
+                continue;
+            }
             $handle = opendir($migrationPath);
-            while (($file = readdir($handle))!==false) {
+            while (($file = readdir($handle)) !== false) {
                 if ($file === '.' || $file === '..') {
                     continue;
                 }
-                $path = $migrationPath . DIRECTORY_SEPARATOR . $file;
-                if (preg_match('/^(m(\d{6}_\d{6})_.*?)\.php$/',$file,$matches) AND is_file($path)) {
-                    $migrationClassName = str_replace('/', '\\', substr($migrationPathAlias, 1)) .'\\'.  $matches[1];
+                $path = $migrationPath.DIRECTORY_SEPARATOR.$file;
+                if (preg_match('/^(m(\d{6}_\d{6})_.*?)\.php$/', $file, $matches) and is_file($path)) {
+                    $migrationClassName = str_replace('/', '\\', substr($migrationPathAlias, 1)).'\\'.$matches[1];
                     if (!isset($applied[$migrationClassName])) {
-                        $key = $migrationClassName::baseClassName() .'-'. md5($migrationClassName);
+                        $key = $migrationClassName::baseClassName().'-'.md5($migrationClassName);
                         $migrations[$key] = $migrationClassName;
                         $this->migrationsMap[$migrationClassName] = $path;
                     }
@@ -80,6 +86,7 @@ class MigrateController extends \yii\console\controllers\MigrateController
             closedir($handle);
         }
         ksort($migrations);
+
         return $migrations;
     }
 
@@ -89,6 +96,7 @@ class MigrateController extends \yii\console\controllers\MigrateController
         if ($result !== static::EXIT_CODE_ERROR) {
             echo "\n\nMigrated up successfully.";
         }
+
         return $result;
     }
 
@@ -109,10 +117,10 @@ class MigrateController extends \yii\console\controllers\MigrateController
             echo 'None';
         } else {
             $n = count($migrations);
-            echo "Found $n new " . ($n === 1 ? 'migration' : 'migrations') . ":\n";
+            echo "Found $n new ".($n === 1 ? 'migration' : 'migrations').":\n";
 
             foreach ($migrations as $migration) {
-                echo $migration . "\n";
+                echo $migration."\n";
             }
         }
     }

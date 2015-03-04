@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -70,7 +71,7 @@ class Aca extends \infinite\db\ActiveRecord
             [['name'], 'required'],
             [['created', 'modified'], 'safe'],
             [['id'], 'string', 'max' => 36],
-            [['name'], 'string', 'max' => 100]
+            [['name'], 'string', 'max' => 100],
         ];
     }
 
@@ -88,7 +89,8 @@ class Aca extends \infinite\db\ActiveRecord
     }
 
     /**
-     * Get registry
+     * Get registry.
+     *
      * @return \yii\db\ActiveRelation
      */
     public function getRegistry()

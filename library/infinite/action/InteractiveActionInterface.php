@@ -8,4 +8,3 @@ interface InteractiveActionInterface
     public function createInteraction($label, $options, $callback, $handleNow = true);
     public function getInteractionsPackage();
 }
-?>

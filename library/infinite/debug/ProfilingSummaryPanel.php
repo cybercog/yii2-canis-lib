@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.yiiframework.com/
+ *
  * @copyright Copyright (c) 2008 Yii Software LLC
  * @license http://www.yiiframework.com/license/
  */
@@ -9,13 +10,13 @@ namespace infinite\debug;
 
 use Yii;
 use yii\debug\Panel;
-use yii\log\Logger;
 use yii\debug\models\search\Profile;
 
 /**
  * Debugger panel that collects and displays performance profiling info.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
+ *
  * @since 2.0
  */
 class ProfilingSummaryPanel extends Panel
@@ -25,7 +26,6 @@ class ProfilingSummaryPanel extends Panel
      */
     private $_models;
 
-
     /**
      * @inheritdoc
      */
@@ -33,7 +33,6 @@ class ProfilingSummaryPanel extends Panel
     {
         return 'Profiling Summary';
     }
-
 
     /**
      * @inheritdoc
@@ -48,7 +47,7 @@ class ProfilingSummaryPanel extends Panel
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
             'memory' => sprintf('%.1f MB', $this->data['memory'] / 1048576),
-            'time' => number_format($this->data['time'] * 1000) . ' ms',
+            'time' => number_format($this->data['time'] * 1000).' ms',
         ]);
     }
 
@@ -58,6 +57,7 @@ class ProfilingSummaryPanel extends Panel
     public function save()
     {
         $target = $this->module->logTarget;
+
         return [
             'memory' => memory_get_peak_usage(),
             'time' => microtime(true) - YII_BEGIN_TIME,
@@ -66,6 +66,7 @@ class ProfilingSummaryPanel extends Panel
 
     /**
      * Returns array of profiling models that can be used in a data provider.
+     *
      * @return array models
      */
     protected function getModels()
@@ -76,7 +77,7 @@ class ProfilingSummaryPanel extends Panel
             $timings = Yii::getLogger()->calculateTimings($this->data['messages']);
 
             foreach ($timings as $seq => $profileTiming) {
-                $key = md5($profileTiming['category'] . $profileTiming['info']);
+                $key = md5($profileTiming['category'].$profileTiming['info']);
                 if (!isset($a[$key])) {
                     $a[$key] =  [
                         'durations' => [], // in milliseconds

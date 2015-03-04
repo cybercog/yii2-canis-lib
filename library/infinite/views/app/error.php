@@ -1,16 +1,15 @@
 <?php
 /**
- * ./app/views/app/error.php
+ * ./app/views/app/error.php.
  *
  * @author Jacob Morrison <jacob@infinitecascade.com>
- * @package cascade
  */
 
 /* @var $this SiteController */
 /* @var $error array */
 
-$this->pageTitle=Yii::$app->name . ' - Error';
-$this->breadcrumbs=[
+$this->pageTitle = Yii::$app->name.' - Error';
+$this->breadcrumbs = [
     'Error',
 ];
 ?>

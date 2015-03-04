@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -10,9 +11,10 @@ namespace infinite\web\assetBundles;
 use yii\web\AssetBundle;
 
 /**
- * AppAsset [@doctodo write class description for AppAsset]
+ * AppAsset [@doctodo write class description for AppAsset].
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
+ *
  * @since 2.0
  */
 class LogAsset extends AssetBundle

@@ -2,8 +2,6 @@
 
 namespace infiniteunit\library\helpers;
 
-use Infinite;
-
 use infiniteunit\TestCase;
 use infinite\helpers\ArrayHelper;
 
@@ -12,12 +10,12 @@ class ArrayHelperTest extends TestCase
     public function testMap()
     {
         $objects = [];
-        $o1 = new \infiniteunit\library\helpers\testHelpers\DummyObject;
+        $o1 = new \infiniteunit\library\helpers\testHelpers\DummyObject();
         $o1->id = 'a';
         $o1->name = 'A Test';
         $objects[] = $o1;
 
-        $o2 = new \infiniteunit\library\helpers\testHelpers\DummyObject;
+        $o2 = new \infiniteunit\library\helpers\testHelpers\DummyObject();
         $o2->id = 'b';
         $o2->name = 'B Test';
         $objects[] = $o2;

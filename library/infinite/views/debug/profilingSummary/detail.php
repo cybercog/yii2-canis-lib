@@ -24,7 +24,7 @@ echo GridView::widget([
         [
             'attribute' => 'info',
             'value' => function ($data) {
-                return str_repeat('<span class="indent">→</span>', $data['level']) . Html::encode($data['info']);
+                return str_repeat('<span class="indent">→</span>', $data['level']).Html::encode($data['info']);
             },
             'format' => 'html',
             'options' => [
@@ -40,8 +40,8 @@ echo GridView::widget([
                 'width' => '10%',
             ],
             'headerOptions' => [
-                'class' => 'sort-numerical'
-            ]
+                'class' => 'sort-numerical',
+            ],
         ],
         [
             'attribute' => 'maxDuration',
@@ -52,8 +52,8 @@ echo GridView::widget([
                 'width' => '10%',
             ],
             'headerOptions' => [
-                'class' => 'sort-numerical'
-            ]
+                'class' => 'sort-numerical',
+            ],
         ],
         [
             'attribute' => 'minDuration',
@@ -64,8 +64,8 @@ echo GridView::widget([
                 'width' => '10%',
             ],
             'headerOptions' => [
-                'class' => 'sort-numerical'
-            ]
+                'class' => 'sort-numerical',
+            ],
         ],
         [
             'attribute' => 'totalDuration',
@@ -76,10 +76,10 @@ echo GridView::widget([
                 'width' => '10%',
             ],
             'headerOptions' => [
-                'class' => 'sort-numerical'
-            ]
+                'class' => 'sort-numerical',
+            ],
         ],
-        'number'
-        
+        'number',
+
     ],
 ]);

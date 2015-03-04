@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -18,7 +19,6 @@ use infinite\base\collector\CollectedObjectTrait;
  * @property double $system_version
  * @property string $created
  * @property string $modified
- *
  * @property Registry $id
  *
  * @author Jacob Morrison <email@ofjacob.com>
@@ -60,7 +60,7 @@ class Role extends \infinite\db\ActiveRecord implements \infinite\base\collector
         return [
             [['created', 'modified'], 'safe'],
             [['id'], 'string', 'max' => 36],
-            [['name', 'system_id'], 'string', 'max' => 100]
+            [['name', 'system_id'], 'string', 'max' => 100],
         ];
     }
 
@@ -80,7 +80,8 @@ class Role extends \infinite\db\ActiveRecord implements \infinite\base\collector
     }
 
     /**
-     * Get registry
+     * Get registry.
+     *
      * @return \yii\db\ActiveRelation
      */
     public function getRegistry()

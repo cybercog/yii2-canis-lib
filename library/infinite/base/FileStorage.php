@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -10,7 +11,7 @@ namespace infinite\base;
 use infinite\base\exceptions\Exception;
 
 /**
- * FileStorage [@doctodo write class description for FileStorage]
+ * FileStorage [@doctodo write class description for FileStorage].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -30,7 +31,8 @@ class FileStorage extends \infinite\base\Component
     protected $_tempFiles = [];
 
     /**
-     * Initializes the component
+     * Initializes the component.
+     *
      * @return __return_init_type__ __return_init_description__
      */
     public function init()
@@ -41,7 +43,8 @@ class FileStorage extends \infinite\base\Component
     }
 
     /**
-     * Delete the tracked temporary file
+     * Delete the tracked temporary file.
+     *
      * @return boolean status of temp file deletion
      */
     public function deleteTempFiles()
@@ -54,10 +57,12 @@ class FileStorage extends \infinite\base\Component
     }
 
     /**
-     * Get a temporary file
+     * Get a temporary file.
+     *
      * @param boolean $keep Keep the file after request has been processed (optional)
      * @param unknown $ext  Extension of temporary file (optional)
-     * @return string  Temporary file path
+     *
+     * @return string Temporary file path
      */
     public function getTempFile($keep = false, $ext = null)
     {
@@ -69,12 +74,12 @@ class FileStorage extends \infinite\base\Component
         if (!$keep) {
             $this->_tempFiles[] = $tmp;
             if (!empty($tmpExt)) {
-                $tmp = $tmp . $tmpExt;
+                $tmp = $tmp.$tmpExt;
                 $this->_tempFiles[] = $tmp;
             }
         } else {
             if (!empty($tmpExt)) {
-                $tmp = $tmp . $tmpExt;
+                $tmp = $tmp.$tmpExt;
             }
         }
 
@@ -82,8 +87,10 @@ class FileStorage extends \infinite\base\Component
     }
 
     /**
-     * Get a temporary path
-     * @return string  Temporary file path
+     * Get a temporary path.
+     *
+     * @return string Temporary file path
+     *
      * @throws Exception __exception_Exception_description__
      */
     public function getTempPath()

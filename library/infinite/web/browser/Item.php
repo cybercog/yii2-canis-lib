@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -8,7 +9,7 @@
 namespace infinite\web\browser;
 
 /**
- * Item [@doctodo write class description for Item]
+ * Item [@doctodo write class description for Item].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -40,7 +41,8 @@ class Item extends \infinite\base\Object
     public $hasChildren = false;
 
     /**
-     * __method_package_description__
+     * __method_package_description__.
+     *
      * @return __return_package_type__ __return_package_description__
      */
     public function package()
@@ -51,7 +53,7 @@ class Item extends \infinite\base\Object
             'descriptor' => $this->descriptor,
             'subdescriptor' => $this->subdescriptor,
             'hasChildren' => $this->hasChildren,
-            'isSelectable' => $this->isSelectable
+            'isSelectable' => $this->isSelectable,
         ];
     }
 }

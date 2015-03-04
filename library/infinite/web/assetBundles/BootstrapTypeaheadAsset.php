@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -8,7 +9,7 @@
 namespace infinite\web\assetBundles;
 
 /**
- * BootstrapTypeaheadAsset [@doctodo write class description for BootstrapTypeaheadAsset]
+ * BootstrapTypeaheadAsset [@doctodo write class description for BootstrapTypeaheadAsset].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -26,7 +27,7 @@ class BootstrapTypeaheadAsset extends AssetBundle
      * @inheritdoc
      */
     public $js = [
-        'typeahead.bundle.min.js'
+        'typeahead.bundle.min.js',
     ];
     /**
      * @inheritdoc

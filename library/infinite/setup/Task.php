@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -8,7 +9,7 @@
 namespace infinite\setup;
 
 /**
- * Task [@doctodo write class description for Task]
+ * Task [@doctodo write class description for Task].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -36,7 +37,7 @@ abstract class Task extends \infinite\base\Object
     public $skipComplete = false;
 
     /**
-    * @inheritdoc
+     * @inheritdoc
      */
     public function __construct($setup)
     {
@@ -44,7 +45,8 @@ abstract class Task extends \infinite\base\Object
     }
 
     /**
-     * Get setup
+     * Get setup.
+     *
      * @return __return_getSetup_type__ __return_getSetup_description__
      */
     public function getSetup()
@@ -53,7 +55,8 @@ abstract class Task extends \infinite\base\Object
     }
 
     /**
-     * Get id
+     * Get id.
+     *
      * @return __return_getId_type__ __return_getId_description__
      */
     public function getId()
@@ -62,7 +65,8 @@ abstract class Task extends \infinite\base\Object
     }
 
     /**
-     * __method_skip_description__
+     * __method_skip_description__.
+     *
      * @return __return_skip_type__ __return_skip_description__
      */
     public function skip()
@@ -71,8 +75,10 @@ abstract class Task extends \infinite\base\Object
     }
 
     /**
-     * __method_loadInput_description__
+     * __method_loadInput_description__.
+     *
      * @param __param_input_type__ $input __param_input_description__
+     *
      * @return __return_loadInput_type__ __return_loadInput_description__
      */
     public function loadInput($input)
@@ -82,17 +88,16 @@ abstract class Task extends \infinite\base\Object
         foreach ($this->fields as $fieldset => $fields) {
             $this->input[$fieldset] = [];
             foreach ($fields['fields'] as $key => $settings) {
-                $fieldId = 'field_'.$this->id. '_'.$fieldset .'_'. $key .'';
+                $fieldId = 'field_'.$this->id.'_'.$fieldset.'_'.$key.'';
 
                 $this->input[$fieldset][$key] = null;
 
                 if (!empty($input[$fieldset][$key])) {
                     $this->input[$fieldset][$key] = $input[$fieldset][$key];
                 } elseif (!empty($settings['required'])) {
-                    $this->fieldErrors[$fieldId] = $settings['label'] .' is a required field';
+                    $this->fieldErrors[$fieldId] = $settings['label'].' is a required field';
                     $error = true;
                 }
-
             }
         }
 
@@ -100,19 +105,20 @@ abstract class Task extends \infinite\base\Object
     }
 
     /**
-     * Get title
+     * Get title.
      */
     abstract public function getTitle();
     /**
-     * __method_test_description__
+     * __method_test_description__.
      */
     abstract public function test();
     /**
-     * __method_run_description__
+     * __method_run_description__.
      */
     abstract public function run();
     /**
-     * Get fields
+     * Get fields.
+     *
      * @return __return_getFields_type__ __return_getFields_description__
      */
     public function getFields()
@@ -120,7 +126,8 @@ abstract class Task extends \infinite\base\Object
         return false;
     }
     /**
-     * Get verification
+     * Get verification.
+     *
      * @return __return_getVerification_type__ __return_getVerification_description__
      */
     public function getVerification()
@@ -129,9 +136,11 @@ abstract class Task extends \infinite\base\Object
     }
 
     /**
-     * __method_templatize_description__
+     * __method_templatize_description__.
+     *
      * @param unknown $template
-     * @param array $vars __param_vars_description__ [optional]
+     * @param array   $vars     __param_vars_description__ [optional]
+     *
      * @return unknown
      */
     public function templatize($template, $vars = [])
@@ -143,7 +152,7 @@ abstract class Task extends \infinite\base\Object
                 $value = $value();
             }
             if (!is_array($value)) {
-                $tmp["/\%\%". $name ."\%\%/i"] = preg_replace('#(\\$|\\\\)#', '\\\\$1', $value);
+                $tmp["/\%\%".$name."\%\%/i"] = preg_replace('#(\\$|\\\\)#', '\\\\$1', $value);
             }
         }
         $tmp["/\%\%.*\%\%/i"] = '';
@@ -157,14 +166,18 @@ abstract class Task extends \infinite\base\Object
     }
 
     /**
-     * __method_parseText_description__
-     * @param __param_text_type__ $text __param_text_description__
-     * @param array $variables __param_variables_description__ [optional]
+     * __method_parseText_description__.
+     *
+     * @param __param_text_type__ $text      __param_text_description__
+     * @param array               $variables __param_variables_description__ [optional]
+     *
      * @return __return_parseText_type__ __return_parseText_description__
      */
     public static function parseText($text, $variables = [])
     {
-        if (is_object($text)) { return $text; }
+        if (is_object($text)) {
+            return $text;
+        }
         preg_match_all("/\%\%([^\%]+)\%\%/i", $text, $extracted);
         $replace = [];
         if (!empty($extracted)) {
@@ -175,7 +188,7 @@ abstract class Task extends \infinite\base\Object
                 $instructions = explode('.', $parse);
 
                 $placementItem = $variables;
-                while (!empty($placementItem) AND is_array($placementItem) AND !empty($instructions)) {
+                while (!empty($placementItem) and is_array($placementItem) and !empty($instructions)) {
                     $nextInstruction = array_shift($instructions);
                     if (isset($placementItem[$nextInstruction])) {
                         $placementItem = $placementItem[$nextInstruction];

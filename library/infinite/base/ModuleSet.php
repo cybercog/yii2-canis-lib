@@ -1,15 +1,17 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
 
 namespace infinite\base;
+
 use Yii;
 
 /**
- * Module [@doctodo write class description for Module]
+ * Module [@doctodo write class description for Module].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -18,7 +20,7 @@ abstract class ModuleSet extends \yii\base\Module
     use ObjectTrait;
 
     /**
-     * Get module type
+     * Get module type.
      */
     abstract public function getSubmodules();
 

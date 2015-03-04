@@ -1,11 +1,9 @@
 <?php
 /**
- * library/setup/views/confirm.php
+ * library/setup/views/confirm.php.
  *
  * @author Jacob Morrison <jacob@infinitecascade.com>
- * @package infinite
  */
-
 echo '<div class="flash-confirm">';
 if (!isset($question)) {
     $question = 'Would you like to continue?';

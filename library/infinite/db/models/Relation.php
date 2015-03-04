@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -8,6 +9,7 @@
 namespace infinite\db\models;
 
 use Yii;
+
 /**
  * Relation is the model class for table "relation".
  *
@@ -22,7 +24,6 @@ use Yii;
  * @property string $special
  * @property string $created
  * @property string $modified
- *
  * @property Registry $childObject
  * @property Registry $parentObject
  *
@@ -44,10 +45,10 @@ class Relation extends \infinite\db\ActiveRecord
     protected $_newDependencies = [];
     protected $_dirtyAttributes = [];
 
-    /**
+    /*
      * @var __var__callCache_type__ __var__callCache_description__
      */
-    static $_modelRegistry = [];
+    public static $_modelRegistry = [];
     /**
      * @inheritdoc
      */
@@ -69,6 +70,7 @@ class Relation extends \infinite\db\ActiveRecord
         if (!isset(self::$_modelRegistry[$id])) {
             self::$_modelRegistry[$id] = parent::get($id, false);
         }
+
         return self::$_modelRegistry[$id];
     }
 
@@ -76,13 +78,15 @@ class Relation extends \infinite\db\ActiveRecord
     {
         if (!is_object($model)) {
             $modelAttributes = $model;
-            $model = new static;
+            $model = new static();
             self::populateRecord($model, $modelAttributes);
         }
         if (!empty($model->primaryKey)) {
             self::$_modelRegistry[$model->primaryKey] = $model;
+
             return $model;
         }
+
         return false;
     }
 
@@ -95,6 +99,7 @@ class Relation extends \infinite\db\ActiveRecord
         if (!$actualModel) {
             return self::registerModel($model);
         }
+
         return $actualModel;
     }
 
@@ -103,8 +108,10 @@ class Relation extends \infinite\db\ActiveRecord
         $parentFormName = parent::formName();
         if (isset($this->_parentModel)) {
             $parentModelClass = get_class($this->_parentModel);
-            return $this->_parentModel->formName() . $this->_parentModel->tabularPrefix . '[relations]';
+
+            return $this->_parentModel->formName().$this->_parentModel->tabularPrefix.'[relations]';
         }
+
         return $parentFormName;
     }
 
@@ -141,7 +148,7 @@ class Relation extends \infinite\db\ActiveRecord
             [['start', 'end', 'created', 'modified'], 'safe'],
             [['active', 'primary_parent', 'primary_child'], 'boolean'],
             [['parent_object_id', 'child_object_id'], 'string', 'max' => 36],
-            [['special'], 'string', 'max' => 100]
+            [['special'], 'string', 'max' => 100],
         ];
     }
 
@@ -150,16 +157,16 @@ class Relation extends \infinite\db\ActiveRecord
         if (empty($this->start)) {
             $this->start = null;
         } else {
-            $this->start = date("Y-m-d", strtotime($this->start . " 12:00"));
+            $this->start = date("Y-m-d", strtotime($this->start." 12:00"));
         }
         if (empty($this->end)) {
             $this->end = null;
         } else {
-            $this->end = date("Y-m-d", strtotime($this->end . " 12:00"));
+            $this->end = date("Y-m-d", strtotime($this->end." 12:00"));
         }
+
         return true;
     }
-
 
     public function afterInsertRelation($event)
     {
@@ -172,8 +179,10 @@ class Relation extends \infinite\db\ActiveRecord
     }
 
     /**
-     * __method_afterSaveRelation_description__
+     * __method_afterSaveRelation_description__.
+     *
      * @param __param_event_type__ $event __param_event_description__
+     *
      * @return __return_afterSaveRelation_type__ __return_afterSaveRelation_description__
      */
     public function afterSaveRelation($event)
@@ -181,7 +190,7 @@ class Relation extends \infinite\db\ActiveRecord
         $relationDependencyClass = Yii::$app->classes['RelationDependency'];
         foreach ($this->newDependencies as $dependency) {
             if (!isset($this->dependencies[$dependency])) {
-                $relationDependency = new $relationDependencyClass;
+                $relationDependency = new $relationDependencyClass();
                 $relationDependency->attributes = ['parent_relation_id' => $this->primaryKey, 'child_relation_id' => $dependency];
                 if (!$relationDependency->save()) {
                     $event->handled = false;
@@ -190,12 +199,14 @@ class Relation extends \infinite\db\ActiveRecord
                 }
             }
         }
+
         return true;
     }
 
     public function beforeUpdateRelation($event)
     {
         $this->_dirtyAttributes = $this->getDirtyAttributes();
+
         return true;
     }
 
@@ -204,48 +215,54 @@ class Relation extends \infinite\db\ActiveRecord
         $dirty = $this->_dirtyAttributes;
         $this->_dirtyAttributes = [];
         unset($dirty['parent_object_id'], $dirty['child_object_id'], $dirty['id'], $dirty['created'], $dirty['modified']);
-        if (empty($dirty)) { return true; }
+        if (empty($dirty)) {
+            return true;
+        }
         foreach ($this->dependencies as $dependency) {
             $dependency->childRelation->attributes = $dirty;
             if (!$dependency->childRelation->save()) {
                 $event->handled = false;
             }
         }
-        
+
         if ($this->_enableAuditLogging) {
             $parentObject = $this->parentObject;
             if (!empty($parentObject) && $parentObject->getBehavior('Relatable') !== null) {
                 $parentObject->registerUpdateRelationAuditEvent($this);
             }
         }
+
         return true;
     }
-
 
     public function suppressAudit()
     {
         $this->_enableAuditLogging = false;
+
         return $this;
     }
 
     public function enableLogging()
     {
         $this->_enableAuditLogging = true;
+
         return $this;
     }
-
 
     public function beforeDeleteRelation($event)
     {
         foreach ($this->dependencies as $dependency) {
             $dependency->childRelation->delete();
         }
+
         return true;
     }
 
     /**
-     * __method_afterDeleteRelation_description__
+     * __method_afterDeleteRelation_description__.
+     *
      * @param __param_event_type__ $event __param_event_description__
+     *
      * @return __return_afterDeleteRelation_type__ __return_afterDeleteRelation_description__
      */
     public function afterDeleteRelation($event)
@@ -256,6 +273,7 @@ class Relation extends \infinite\db\ActiveRecord
                 $parentObject->registerDeleteRelationAuditEvent($this);
             }
         }
+
         return true;
     }
 
@@ -280,8 +298,10 @@ class Relation extends \infinite\db\ActiveRecord
     }
 
     /**
-     * Get child object
+     * Get child object.
+     *
      * @param boolean $checkAccess __param_checkAccess_description__ [optional]
+     *
      * @return __return_getChildObject_type__ __return_getChildObject_description__
      */
     public function getChildObject($checkAccess = true)
@@ -290,12 +310,15 @@ class Relation extends \infinite\db\ActiveRecord
         if (empty($this->child_object_id)) {
             return false;
         }
+
         return $registryClass::getObject($this->child_object_id, $checkAccess);
     }
 
     /**
-     * Get parent object
+     * Get parent object.
+     *
      * @param boolean $checkAccess __param_checkAccess_description__ [optional]
+     *
      * @return __return_getParentObject_type__ __return_getParentObject_description__
      */
     public function getParentObject($checkAccess = true)
@@ -304,11 +327,13 @@ class Relation extends \infinite\db\ActiveRecord
         if (empty($this->parent_object_id)) {
             return false;
         }
+
         return $registryClass::getObject($this->parent_object_id, $checkAccess);
     }
 
     /**
-     * __method_endRelationship_description__
+     * __method_endRelationship_description__.
+     *
      * @return __return_endRelationship_type__ __return_endRelationship_description__
      */
     public function endRelationship()
@@ -321,11 +346,13 @@ class Relation extends \infinite\db\ActiveRecord
                 $parentObject->registerEndRelationAuditEvent($this);
             }
         }
+
         return $this->save();
     }
 
     /**
-     * Get is active
+     * Get is active.
+     *
      * @return __return_getIsActive_type__ __return_getIsActive_description__
      */
     public function getIsActive()
@@ -334,16 +361,16 @@ class Relation extends \infinite\db\ActiveRecord
             return false;
         }
 
-        $today = strtotime(date("Y-m-d") . " 12:00:00");
+        $today = strtotime(date("Y-m-d")." 12:00:00");
         if (!empty($this->start)) {
-            $start = strtotime($this->start . " 12:00:00");
+            $start = strtotime($this->start." 12:00:00");
             if ($start > $today) {
                 return false;
             }
         }
 
         if (!empty($this->end)) {
-            $end = strtotime($this->end . " 12:00:00");
+            $end = strtotime($this->end." 12:00:00");
             if ($end < $today) {
                 return false;
             }
@@ -385,6 +412,7 @@ class Relation extends \infinite\db\ActiveRecord
                 $this->_dependencies[$dependency->child_relation_id] = $dependency;
             }
         }
+
         return $this->_dependencies;
     }
 }

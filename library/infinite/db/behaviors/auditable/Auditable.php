@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -12,14 +13,14 @@ use yii\base\InvalidConfigException;
 use infinite\caching\Cacher;
 
 /**
- * Auditable [@doctodo write class description for Auditable]
+ * Auditable [@doctodo write class description for Auditable].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class Auditable extends \infinite\db\behaviors\ActiveRecord
 {
     /**
-     * @var int What is defined as recent? Used when ignoring relation saves 
+     * @var int What is defined as recent? Used when ignoring relation saves
      */
     const RECENT_IN_SECONDS = 300;
     /**
@@ -27,15 +28,15 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
      */
     public $baseEventClass = 'infinite\db\behaviors\auditable\BaseEvent';
     /**
-     * @var string Audit insert event class 
+     * @var string Audit insert event class
      */
     public $createEventClass = 'infinite\db\behaviors\auditable\CreateEvent';
     /**
-     * @var string Audit uodate event class 
+     * @var string Audit uodate event class
      */
     public $updateEventClass = 'infinite\db\behaviors\auditable\UpdateEvent';
     /**
-     * @var string Audit delete event class 
+     * @var string Audit delete event class
      */
     public $deleteEventClass = 'infinite\db\behaviors\auditable\DeleteEvent';
     /**
@@ -102,8 +103,8 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     const EVENT_COLLECT_AUDIT_DELETE = 'collectAuditDelete';
 
     /**
-    * @inheritdoc
-    */
+     * @inheritdoc
+     */
     public function events()
     {
         return [
@@ -112,21 +113,22 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
             \infinite\db\ActiveRecord::EVENT_AFTER_INSERT => 'afterInsert',
             \infinite\db\ActiveRecord::EVENT_AFTER_UPDATE => 'afterUpdate',
 
-            \infinite\db\ActiveRecord::EVENT_BEFORE_DELETE=> 'beforeDelete',
-            \infinite\db\ActiveRecord::EVENT_AFTER_DELETE=> 'afterDelete'
+            \infinite\db\ActiveRecord::EVENT_BEFORE_DELETE => 'beforeDelete',
+            \infinite\db\ActiveRecord::EVENT_AFTER_DELETE => 'afterDelete',
         ];
     }
 
     /**
-    * @inheritdoc
-    */
+     * @inheritdoc
+     */
     public function safeAttributes()
     {
         return ['directObject', 'indirectObject', 'auditAgent', 'auditTimestamp'];
     }
 
     /**
-     * Get audit dirty attributes
+     * Get audit dirty attributes.
+     *
      * @return __return_getAuditDirtyAttributes_type__ __return_getAuditDirtyAttributes_description__
      */
     public function getAuditDirtyAttributes()
@@ -137,18 +139,21 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     public function suppressAudit()
     {
         $this->_enableLogging = false;
+
         return $this->owner;
     }
 
     public function enableLogging()
     {
         $this->_enableLogging = true;
+
         return $this->owner;
     }
 
     public function setEnableLogging($value)
     {
         $this->_enableLogging = $value;
+
         return $this->owner;
     }
 
@@ -168,9 +173,12 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_registerAuditEvent_description__
+     * __method_registerAuditEvent_description__.
+     *
      * @param __param_event_type__ $event __param_event_description__
+     *
      * @return __return_registerAuditEvent_type__ __return_registerAuditEvent_description__
+     *
      * @throws InvalidConfigException __exception_InvalidConfigException_description__
      */
     public function registerAuditEvent($event)
@@ -199,6 +207,7 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
                     return false;
                 }
             }
+
             return $event;
         }
 
@@ -206,12 +215,15 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_handleAuditSave_description__
+     * __method_handleAuditSave_description__.
+     *
      * @return __return_handleAuditSave_type__ __return_handleAuditSave_description__
      */
     public function handleAuditSave()
     {
-        if (!$this->owner->isAuditEnabled() || empty($this->_auditEvents)) { return true; }
+        if (!$this->owner->isAuditEnabled() || empty($this->_auditEvents)) {
+            return true;
+        }
         $exclusive = false;
         $events = $this->_auditEvents;
 
@@ -257,10 +269,12 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
 
     public function registerRecentEventSave($auditModel, Event $event)
     {
-        if (empty($auditModel) || !is_object($auditModel)) { return; }
+        if (empty($auditModel) || !is_object($auditModel)) {
+            return;
+        }
         $cacheKeys = [
             ['eventSave', $event->id, $event->directObjectId],
-            ['eventSave', 'any', $event->directObjectId]
+            ['eventSave', 'any', $event->directObjectId],
         ];
         foreach ($cacheKeys as $key) {
             Cacher::set($key, $auditModel->primaryKey, static::RECENT_IN_SECONDS);
@@ -272,11 +286,13 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
         if (empty($this->owner->primaryKey)) {
             return false;
         }
+
         return Cacher::get(['eventSave', $eventId, $this->owner->primaryKey]);
     }
 
     /**
-     * Set audit agent
+     * Set audit agent.
+     *
      * @param __param_object_type__ $object __param_object_description__
      */
     public function setAuditAgent($object)
@@ -285,7 +301,8 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * Set audit agent
+     * Set audit agent.
+     *
      * @param __param_object_type__ $object __param_object_description__
      */
     public function setAuditTimestamp($audit)
@@ -299,7 +316,8 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * Get audit agent
+     * Get audit agent.
+     *
      * @return __return_getAuditAgent_type__ __return_getAuditAgent_description__
      */
     public function getAuditAgent()
@@ -317,7 +335,8 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * Set direct object
+     * Set direct object.
+     *
      * @param __param_object_type__ $object __param_object_description__
      */
     public function setDirectObject($object)
@@ -326,7 +345,8 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * Get direct object
+     * Get direct object.
+     *
      * @return __return_getDirectObject_type__ __return_getDirectObject_description__
      */
     public function getDirectObject()
@@ -339,7 +359,8 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * Set indirect object
+     * Set indirect object.
+     *
      * @param __param_object_type__ $object __param_object_description__
      */
     public function setIndirectObject($object)
@@ -348,7 +369,8 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * Get indirect object
+     * Get indirect object.
+     *
      * @return __return_getIndirectObject_type__ __return_getIndirectObject_description__
      */
     public function getIndirectObject()
@@ -357,13 +379,17 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_beforeSave_description__
+     * __method_beforeSave_description__.
+     *
      * @param __param_event_type__ $event __param_event_description__
+     *
      * @return __return_beforeSave_type__ __return_beforeSave_description__
      */
     public function beforeSave($event)
     {
-        if (!$this->owner->isAuditEnabled()) { return true; }
+        if (!$this->owner->isAuditEnabled()) {
+            return true;
+        }
         $this->muteAudit();
         // capture dirty attributes
         $this->_dirtyAttributes = $this->owner->dirtyAttributes;
@@ -375,13 +401,17 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_afterUpdate_description__
+     * __method_afterUpdate_description__.
+     *
      * @param __param_event_type__ $event __param_event_description__
+     *
      * @return __return_afterUpdate_type__ __return_afterUpdate_description__
      */
     public function afterUpdate($event)
     {
-        if (!$this->owner->isAuditEnabled()) { return true; }
+        if (!$this->owner->isAuditEnabled()) {
+            return true;
+        }
         if ($this->owner->enableSaveLog && !empty($this->auditDirtyAttributes)) {
             $this->registerAuditEvent([
                 'class' => $this->updateEventClass,
@@ -389,7 +419,7 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
                 'indirectObject' => $this->indirectObject,
                 'attributes' => $this->auditDirtyAttributes,
                 'timestamp' => $this->auditTimestamp,
-                'agent' => $this->auditAgent
+                'agent' => $this->auditAgent,
             ]);
         }
         if ($this->collectBehaviorLogs) {
@@ -401,13 +431,17 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_afterInsert_description__
+     * __method_afterInsert_description__.
+     *
      * @param __param_event_type__ $event __param_event_description__
+     *
      * @return __return_afterInsert_type__ __return_afterInsert_description__
      */
     public function afterInsert($event)
     {
-        if (!$this->owner->isAuditEnabled()) { return true; }
+        if (!$this->owner->isAuditEnabled()) {
+            return true;
+        }
         if ($this->owner->enableSaveLog && !empty($this->auditDirtyAttributes)) {
             $this->registerAuditEvent([
                 'class' => $this->createEventClass,
@@ -415,7 +449,7 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
                 'indirectObject' => $this->indirectObject,
                 'attributes' => $this->auditDirtyAttributes,
                 'timestamp' => $this->auditTimestamp,
-                'agent' => $this->auditAgent
+                'agent' => $this->auditAgent,
             ]);
         }
         if ($this->collectBehaviorLogs) {
@@ -427,25 +461,33 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_beforeDelete_description__
+     * __method_beforeDelete_description__.
+     *
      * @param __param_event_type__ $event __param_event_description__
+     *
      * @return __return_beforeDelete_type__ __return_beforeDelete_description__
      */
     public function beforeDelete($event)
     {
-        if (!$this->owner->isAuditEnabled()) { return true; }
+        if (!$this->owner->isAuditEnabled()) {
+            return true;
+        }
         $this->muteAudit();
         $this->_dirtyAttributes = $this->owner->attributes;
     }
 
     /**
-     * __method_afterDelete_description__
+     * __method_afterDelete_description__.
+     *
      * @param __param_event_type__ $event __param_event_description__
+     *
      * @return __return_afterDelete_type__ __return_afterDelete_description__
      */
     public function afterDelete($event)
     {
-        if (!$this->owner->isAuditEnabled()) { return true; }
+        if (!$this->owner->isAuditEnabled()) {
+            return true;
+        }
         if ($this->collectBehaviorLogs) {
             $this->owner->trigger(self::EVENT_COLLECT_AUDIT_DELETE);
         }
@@ -456,7 +498,7 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
                 'indirectObject' => $this->indirectObject,
                 'attributes' => $this->auditDirtyAttributes,
                 'timestamp' => $this->auditTimestamp,
-                'agent' => $this->auditAgent
+                'agent' => $this->auditAgent,
             ]);
         }
         $this->handleAuditSave();
@@ -464,7 +506,8 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * Set ignore attributes
+     * Set ignore attributes.
+     *
      * @param __param_value_type__ $value __param_value_description__
      */
     public function setIgnoreAttributes($value)
@@ -477,7 +520,8 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * Get ignore attributes
+     * Get ignore attributes.
+     *
      * @return __return_getIgnoreAttributes_type__ __return_getIgnoreAttributes_description__
      */
     public function getIgnoreAttributes()
@@ -486,7 +530,8 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_isAuditEnabled_description__
+     * __method_isAuditEnabled_description__.
+     *
      * @return __return_isAuditEnabled_type__ __return_isAuditEnabled_description__
      */
     public function isAuditEnabled()
@@ -506,7 +551,8 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_muteAudit_description__
+     * __method_muteAudit_description__.
+     *
      * @return __return_muteAudit_type__ __return_muteAudit_description__
      */
     public function muteAudit()
@@ -524,7 +570,8 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_unmuteAudit_description__
+     * __method_unmuteAudit_description__.
+     *
      * @return __return_unmuteAudit_type__ __return_unmuteAudit_description__
      */
     public function unmuteAudit()

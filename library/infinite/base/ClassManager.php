@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -12,7 +13,7 @@ use ArrayIterator;
 use IteratorAggregate;
 
 /**
- * ClassManager [@doctodo write class description for ClassManager]
+ * ClassManager [@doctodo write class description for ClassManager].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -23,7 +24,7 @@ class ClassManager extends Component implements IteratorAggregate, ArrayAccess
      */
     protected $_classes = [];
     /**
-    * @inheritdoc
+     * @inheritdoc
      */
     public function init()
     {
@@ -31,7 +32,8 @@ class ClassManager extends Component implements IteratorAggregate, ArrayAccess
     }
 
     /**
-     * __method_baseClasses_description__
+     * __method_baseClasses_description__.
+     *
      * @return __return_baseClasses_type__ __return_baseClasses_description__
      */
     public function baseClasses()
@@ -54,9 +56,10 @@ class ClassManager extends Component implements IteratorAggregate, ArrayAccess
     }
 
     /**
-     * Set classes
-     * @param __param_classes_type__ $classes __param_classes_description__
-     * @param boolean $override __param_override_description__ [optional]
+     * Set classes.
+     *
+     * @param __param_classes_type__ $classes  __param_classes_description__
+     * @param boolean                $override __param_override_description__ [optional]
      */
     public function setClasses($classes, $override = true)
     {
@@ -83,7 +86,8 @@ class ClassManager extends Component implements IteratorAggregate, ArrayAccess
      * This method is required by the SPL interface `ArrayAccess`.
      * It is implicitly called when you use something like `isset($model[$offset])`.
      *
-     * @param mixed   $offset the offset to check on
+     * @param mixed $offset the offset to check on
+     *
      * @return boolean
      */
     public function offsetExists($offset)
@@ -97,7 +101,9 @@ class ClassManager extends Component implements IteratorAggregate, ArrayAccess
      * It is implicitly called when you use something like `$value = $model[$offset];`.
      *
      * @param mixed $offset the offset to retrieve element.
+     *
      * @return mixed the element at the offset, null if no element is found at the offset
+     *
      * @throws \ __exception_\_description__
      * @throws \ __exception_\_description__
      */
@@ -110,7 +116,7 @@ class ClassManager extends Component implements IteratorAggregate, ArrayAccess
         \d($offset);
         throw new \Exception("Looking for missing class '{$offset}'");
 
-        return null;
+        return;
     }
 
     /**

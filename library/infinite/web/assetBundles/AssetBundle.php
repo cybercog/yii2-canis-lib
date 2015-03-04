@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -8,14 +9,14 @@
 namespace infinite\web\assetBundles;
 
 /**
- * AssetBundle [@doctodo write class description for AssetBundle]
+ * AssetBundle [@doctodo write class description for AssetBundle].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class AssetBundle extends \yii\web\AssetBundle
 {
     /**
-    * @inheritdoc
+     * @inheritdoc
      */
     public function init()
     {

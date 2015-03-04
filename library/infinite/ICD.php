@@ -1,11 +1,10 @@
 <?php
 /**
- * ICD [@doctodo write class description for ICD]
+ * ICD [@doctodo write class description for ICD].
  *
  * library/ICD.php
  *
  * @author Jacob Morrison <jacob@infinitecascade.com>
- * @package infinite
  */
 class ICD extends \yii\helpers\VarDumper
 {
@@ -49,8 +48,9 @@ class ICD extends \yii\helpers\VarDumper
 
     /**
      * Constructor.
-     * @param __param_var_type__ $var __param_var_description__
-     * @param array $settings __param_settings_description__ [optional]
+     *
+     * @param __param_var_type__ $var      __param_var_description__
+     * @param array              $settings __param_settings_description__ [optional]
      */
     public function __construct($var, $settings = [])
     {
@@ -58,16 +58,18 @@ class ICD extends \yii\helpers\VarDumper
         $this->_var = $var;
 
         foreach ($settings as $k => $v) {
-            $kk = '_'. $k;
+            $kk = '_'.$k;
             $this->$kk = $v;
         }
 
         $this->_backtrace = array_slice($backtrace, $this->_skipSteps);
     }
     /**
-     * __method_d_description__
-     * @param __param_var_type__ $var __param_var_description__
-     * @param array $settings __param_settings_description__ [optional]
+     * __method_d_description__.
+     *
+     * @param __param_var_type__ $var      __param_var_description__
+     * @param array              $settings __param_settings_description__ [optional]
+     *
      * @return __return_d_type__ __return_d_description__
      */
     public static function d($var, $settings = [])
@@ -76,9 +78,11 @@ class ICD extends \yii\helpers\VarDumper
     }
 
     /**
-     * __method_btnice_description__
+     * __method_btnice_description__.
+     *
      * @param __param_backtrace_type__ $backtrace __param_backtrace_description__ [optional]
-     * @param array $settings __param_settings_description__ [optional]
+     * @param array                    $settings  __param_settings_description__ [optional]
+     *
      * @return __return_btnice_type__ __return_btnice_description__
      */
     public static function btnice($backtrace = null, $settings = [])
@@ -95,17 +99,19 @@ class ICD extends \yii\helpers\VarDumper
             if (!isset($bt['line'])) {
                 $bt['line'] = '#';
             }
-            $nice[] = $bt['file'] .':'. $bt['function'] .':'. $bt['line'];
+            $nice[] = $bt['file'].':'.$bt['function'].':'.$bt['line'];
         }
 
         return $nice;
     }
 
     /**
-     * __method_btdiff_description__
-     * @param __param_a_type__ $a __param_a_description__
-     * @param __param_b_type__ $b __param_b_description__
-     * @param boolean $return __param_return_description__ [optional]
+     * __method_btdiff_description__.
+     *
+     * @param __param_a_type__ $a      __param_a_description__
+     * @param __param_b_type__ $b      __param_b_description__
+     * @param boolean          $return __param_return_description__ [optional]
+     *
      * @return __return_btdiff_type__ __return_btdiff_description__
      */
     public static function btdiff($a, $b, $return = true)
@@ -135,7 +141,7 @@ class ICD extends \yii\helpers\VarDumper
             if ($cb !== $cc) {
                 $diff[$n] = [
                     $baseDesc = $cb,
-                    $compDesc = $cc
+                    $compDesc = $cc,
                 ];
             }
             $n++;
@@ -148,8 +154,10 @@ class ICD extends \yii\helpers\VarDumper
     }
 
     /**
-     * __method_exclude_description__
+     * __method_exclude_description__.
+     *
      * @param __param_exclude_type__ $exclude __param_exclude_description__
+     *
      * @return __return_exclude_type__ __return_exclude_description__
      */
     public function exclude($exclude)
@@ -160,7 +168,8 @@ class ICD extends \yii\helpers\VarDumper
     }
 
     /**
-     * __method_html_description__
+     * __method_html_description__.
+     *
      * @return __return_html_type__ __return_html_description__
      */
     public function html()
@@ -171,7 +180,8 @@ class ICD extends \yii\helpers\VarDumper
     }
 
     /**
-     * __method_fatal_description__
+     * __method_fatal_description__.
+     *
      * @return __return_fatal_type__ __return_fatal_description__
      */
     public function fatal()
@@ -182,7 +192,8 @@ class ICD extends \yii\helpers\VarDumper
     }
 
     /**
-     * __method_safe_description__
+     * __method_safe_description__.
+     *
      * @return __return_safe_type__ __return_safe_description__
      */
     public function safe()
@@ -193,7 +204,8 @@ class ICD extends \yii\helpers\VarDumper
     }
 
     /**
-     * __method_plaintext_description__
+     * __method_plaintext_description__.
+     *
      * @return __return_plaintext_type__ __return_plaintext_description__
      */
     public function plaintext()
@@ -204,7 +216,8 @@ class ICD extends \yii\helpers\VarDumper
     }
 
     /**
-     * Get format
+     * Get format.
+     *
      * @return __return_getFormat_type__ __return_getFormat_description__
      */
     public function getFormat()
@@ -221,16 +234,18 @@ class ICD extends \yii\helpers\VarDumper
     }
 
     /**
-     * __method_outputHtml_description__
+     * __method_outputHtml_description__.
      */
     public function outputHtml()
     {
         echo '<div style="display: block; margin: 5px; padding: 5px; background-color: #fff; border: 1px solid black; z-index: 999999999; position:relative;">';
-        echo '<h3 style="font-size: 14px; margin: 3px">'.$this->_backtrace[0]['file'] .':'. $this->_backtrace[1]['function'].':'. $this->_backtrace[0]['line'].'</h3>';
+        echo '<h3 style="font-size: 14px; margin: 3px">'.$this->_backtrace[0]['file'].':'.$this->_backtrace[1]['function'].':'.$this->_backtrace[0]['line'].'</h3>';
         $backtrace = array_slice($this->_backtrace, 1, $this->_showSteps);
         foreach ($backtrace as $bt) {
-            if (!isset($bt['file'])) { continue; }
-            echo '<div style="font-size: 12px; margin: 1px">'.$bt['file'] .':'. $bt['function'].':'. $bt['line'].'</div>';
+            if (!isset($bt['file'])) {
+                continue;
+            }
+            echo '<div style="font-size: 12px; margin: 1px">'.$bt['file'].':'.$bt['function'].':'.$bt['line'].'</div>';
         }
         echo '<hr />';
         echo self::dump($this->_var, $this->_depth, true);
@@ -238,24 +253,27 @@ class ICD extends \yii\helpers\VarDumper
     }
 
     /**
-     * __method_outputPlaintext_description__
+     * __method_outputPlaintext_description__.
      */
     public function outputPlaintext()
     {
-        echo str_repeat('=', 100) ."\n";
-        echo $this->_backtrace[0]['file'] .':'. $this->_backtrace[1]['function'].':'. $this->_backtrace[0]['line'] ."\n";
-        echo str_repeat('-', 100) ."\n";
+        echo str_repeat('=', 100)."\n";
+        echo $this->_backtrace[0]['file'].':'.$this->_backtrace[1]['function'].':'.$this->_backtrace[0]['line']."\n";
+        echo str_repeat('-', 100)."\n";
         echo self::dump($this->_var, $this->_depth, false);
-        echo str_repeat('=', 100) ."\n";
+        echo str_repeat('=', 100)."\n";
     }
 
     /**
-     * __method_output_description__
+     * __method_output_description__.
+     *
      * @return __return_output_type__ __return_output_description__
      */
     public function output()
     {
-        if ($this->_output) { return; }
+        if ($this->_output) {
+            return;
+        }
         if ($this->getFormat() === 'html') {
             $this->outputHtml();
         } else {
@@ -265,7 +283,7 @@ class ICD extends \yii\helpers\VarDumper
     }
 
     /**
-     * __method___destruct_description__
+     * __method___destruct_description__.
      */
     public function __destruct()
     {

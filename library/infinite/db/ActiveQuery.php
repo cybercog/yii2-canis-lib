@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -10,7 +11,7 @@ namespace infinite\db;
 use infinite\base\ComponentTrait;
 
 /**
- * ActiveQuery [@doctodo write class description for ActiveQuery]
+ * ActiveQuery [@doctodo write class description for ActiveQuery].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -24,7 +25,7 @@ class ActiveQuery extends \yii\db\ActiveQuery
     protected $_model;
     /**
      * Get is aco
-     * __method_getIsAco_description__
+     * __method_getIsAco_description__.
      *
      * @return __return_getIsAco_type__ __return_getIsAco_description__
      */
@@ -36,14 +37,15 @@ class ActiveQuery extends \yii\db\ActiveQuery
     }
 
     /**
-     * Get model
+     * Get model.
+     *
      * @return __return_getModel_type__ __return_getModel_description__
      */
     public function getModel()
     {
         if (is_null($this->_model)) {
             $modelClass = $this->modelClass;
-            $this->_model = new $modelClass;
+            $this->_model = new $modelClass();
         }
 
         return $this->_model;

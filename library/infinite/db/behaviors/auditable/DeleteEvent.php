@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -8,7 +9,7 @@
 namespace infinite\db\behaviors\auditable;
 
 /**
- * DeleteEvent [@doctodo write class description for DeleteEvent]
+ * DeleteEvent [@doctodo write class description for DeleteEvent].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -34,7 +35,7 @@ class DeleteEvent extends AttributesEvent
     }
 
     /**
-    * @inheritdoc
+     * @inheritdoc
      */
     public function setDirectObject($object)
     {
@@ -48,6 +49,6 @@ class DeleteEvent extends AttributesEvent
 
     public function getStory()
     {
-        return '{{agent}} '. $this->verb->past .' [['. $this->descriptor .']]' . $this->indirectStory;
+        return '{{agent}} '.$this->verb->past.' [['.$this->descriptor.']]'.$this->indirectStory;
     }
 }

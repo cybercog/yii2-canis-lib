@@ -14,7 +14,6 @@ use infinite\base\collector\CollectedObjectTrait;
  * @property string $handler
  * @property string $created
  * @property string $modified
- *
  * @property Identity[] $identities
  * @property Registry $id0
  */
@@ -30,7 +29,7 @@ class IdentityProvider extends \infinite\db\ActiveRecord implements \infinite\ba
     }
 
     /**
-    * @inheritdoc
+     * @inheritdoc
      */
     public function behaviors()
     {
@@ -38,7 +37,7 @@ class IdentityProvider extends \infinite\db\ActiveRecord implements \infinite\ba
             [
                 'Registry' => [
                     'class' => 'infinite\db\behaviors\Registry',
-                ]
+                ],
             ]
         );
     }
@@ -53,7 +52,7 @@ class IdentityProvider extends \infinite\db\ActiveRecord implements \infinite\ba
             [['id'], 'string', 'max' => 36],
             [['name'], 'string', 'max' => 200],
             [['system_id', 'handler'], 'string', 'max' => 100],
-            [['system_id'], 'unique']
+            [['system_id'], 'unique'],
         ];
     }
 

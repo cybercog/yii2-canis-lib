@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -8,13 +9,12 @@
 namespace infinite\helpers;
 
 /**
- * ArrayHelper [@doctodo write class description for ArrayHelper]
+ * ArrayHelper [@doctodo write class description for ArrayHelper].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class ArrayHelper extends \yii\helpers\ArrayHelper
 {
-
     public static function fingerprint($item)
     {
         if (is_array($item)) {
@@ -23,17 +23,19 @@ class ArrayHelper extends \yii\helpers\ArrayHelper
             foreach ($item as $k => $i) {
                 $fingers[$k] = static::fingerprint($i);
             }
+
             return md5(json_encode($fingers));
-        } elseif(is_object($item)) {
+        } elseif (is_object($item)) {
             if ($item instanceof \yii\db\ActiveRecord) {
                 return $item->primaryKey;
             }
         }
+
         return md5(json_encode($item));
     }
 
     /**
-    * @inheritdoc
+     * @inheritdoc
      */
     public static function getValue($array, $key, $default = null)
     {
@@ -51,13 +53,15 @@ class ArrayHelper extends \yii\helpers\ArrayHelper
     }
 
     /**
-     * 	Extends ArrayHelper's map capability by letting it map to its parent object
+     * 	Extends ArrayHelper's map capability by letting it map to its parent object.
+     *
      * 	@see \yii\helpers\ArrayHelper:map
      *
      * @param __param_array_type__ $array __param_array_description__
-     * @param __param_from_type__ $from __param_from_description__
-     * @param __param_to_type__ $to __param_to_description__ [optional]
+     * @param __param_from_type__  $from  __param_from_description__
+     * @param __param_to_type__    $to    __param_to_description__ [optional]
      * @param __param_group_type__ $group __param_group_description__ [optional]
+     *
      * @return __return_map_type__ __return_map_description__
      */
     public static function map($array, $from, $to = null, $group = null)
@@ -70,18 +74,24 @@ class ArrayHelper extends \yii\helpers\ArrayHelper
     }
 
     /**
-     * __method_cartesian_description__
+     * __method_cartesian_description__.
+     *
      * @param __param_arrays_type__ $arrays __param_arrays_description__
-     * @param boolean $first __param_first_description__ [optional]
+     * @param boolean               $first  __param_first_description__ [optional]
+     *
      * @return __return_cartesian_type__ __return_cartesian_description__
      */
     public static function cartesian($arrays, $first = true)
     {
-        if (empty($arrays)) { return []; }
+        if (empty($arrays)) {
+            return [];
+        }
         $arrayKeys = array_keys($arrays);
         $firstKey  = $arrayKeys[0];
         $arrayLength = count($arrays);
-        if (!$first && $arrayLength === 1) { return $arrays[$firstKey]; }
+        if (!$first && $arrayLength === 1) {
+            return $arrays[$firstKey];
+        }
         $restKeys = array_slice($arrayKeys, 1, $arrayLength);
         $restKeyValues = [];
         foreach ($restKeys as $v) {
@@ -149,10 +159,12 @@ class ArrayHelper extends \yii\helpers\ArrayHelper
     }
 
     /**
-     * __method_permutations_description__
+     * __method_permutations_description__.
+     *
      * @param __param_array_type__ $array __param_array_description__
-     * @param integer $min __param_min_description__ [optional]
-     * @param boolean $max __param_max_description__ [optional]
+     * @param integer              $min   __param_min_description__ [optional]
+     * @param boolean              $max   __param_max_description__ [optional]
+     *
      * @return __return_permutations_type__ __return_permutations_description__
      */
     public static function permutations($array, $min = 1, $max = false)
@@ -167,9 +179,9 @@ class ArrayHelper extends \yii\helpers\ArrayHelper
         }
 
         foreach ($results as $k => $result) {
-            if ($min !== false AND count($result) < $min) {
+            if ($min !== false and count($result) < $min) {
                 unset($results[$k]);
-            } elseif ($max !== false AND count($result) > $max) {
+            } elseif ($max !== false and count($result) > $max) {
                 unset($results[$k]);
             }
         }

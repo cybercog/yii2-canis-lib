@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -8,7 +9,7 @@
 namespace infinite\web\browser;
 
 /**
- * Handler [@doctodo write class description for Handler]
+ * Handler [@doctodo write class description for Handler].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -19,16 +20,17 @@ abstract class Handler extends \infinite\base\Object
      */
     public $bundle;
     /**
-     * Get total
+     * Get total.
      */
     abstract public function getTotal();
     /**
-     * Get items
+     * Get items.
      */
     abstract public function getItems();
 
     /**
-     * Get instructions
+     * Get instructions.
+     *
      * @return __return_getInstructions_type__ __return_getInstructions_description__
      */
     public function getInstructions()
@@ -41,7 +43,8 @@ abstract class Handler extends \infinite\base\Object
     }
 
     /**
-     * Get filter query
+     * Get filter query.
+     *
      * @return __return_getFilterQuery_type__ __return_getFilterQuery_description__
      */
     public function getFilterQuery()

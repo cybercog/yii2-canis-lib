@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -17,9 +18,9 @@ use infinite\helpers\Html;
  * or [[\yii\widgets\Menu]] to build up such content. For example,
  *
  * @see http://twitter.github.io/bootstrap/components.html#navbar
+ *
  * @author Antonio Ramirez <amigo.cobos@gmail.com>; Jacob Morrison <jacob@infinitecascade.org>
  */
-
 class SubNavBar extends \yii\bootstrap\NavBar
 {
     /**
@@ -30,5 +31,4 @@ class SubNavBar extends \yii\bootstrap\NavBar
         Html::addCssClass($this->options, 'sub-navbar');
         parent::init();
     }
-
 }

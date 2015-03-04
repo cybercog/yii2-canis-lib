@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -11,7 +12,7 @@ use Yii;
 use infinite\helpers\Html;
 
 /**
- * Grid [@doctodo write class description for Grid]
+ * Grid [@doctodo write class description for Grid].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -45,7 +46,7 @@ class Grid extends \infinite\base\Object
     protected $_currentRow;
 
     /**
-     * __method_output_description__
+     * __method_output_description__.
      */
     public function output()
     {
@@ -53,7 +54,8 @@ class Grid extends \infinite\base\Object
     }
 
     /**
-     * __method_generate_description__
+     * __method_generate_description__.
+     *
      * @return __return_generate_type__ __return_generate_description__
      */
     public function generate()
@@ -71,11 +73,13 @@ class Grid extends \infinite\base\Object
             $items[] = $item->generate();
         }
         $items[] = Html::endTag('div');
+
         return implode('', $items);
     }
 
     /**
-     * __method_prepend_description__
+     * __method_prepend_description__.
+     *
      * @param __param_item_type__ $item __param_item_description__
      */
     public function prepend($item)
@@ -84,7 +88,8 @@ class Grid extends \infinite\base\Object
     }
 
     /**
-     * __method_append_description__
+     * __method_append_description__.
+     *
      * @param __param_item_type__ $item __param_item_description__
      */
     public function append($item)
@@ -93,14 +98,16 @@ class Grid extends \infinite\base\Object
     }
 
     /**
-     * __method_addRow_description__
+     * __method_addRow_description__.
+     *
      * @param __param_item_type__ $item __param_item_description__
+     *
      * @return __return_addRow_type__ __return_addRow_description__
      */
     public function addRow($item)
     {
         if (is_array($item)) {
-        	$item = array_merge($this->baseRow, ['class' => $this->rowClass, 'cells' => $item]);
+            $item = array_merge($this->baseRow, ['class' => $this->rowClass, 'cells' => $item]);
             $item = Yii::createObject($item);
         }
         $this->_rows[] = $item;
@@ -110,7 +117,8 @@ class Grid extends \infinite\base\Object
     }
 
     /**
-     * __method_addRows_description__
+     * __method_addRows_description__.
+     *
      * @param __param_items_type__ $items __param_items_description__
      */
     public function addRows($items)
@@ -122,23 +130,25 @@ class Grid extends \infinite\base\Object
     }
 
     /**
-     * Set cells
+     * Set cells.
+     *
      * @param __param_items_type__ $items __param_items_description__
      */
     public function setCells($items)
     {
-        Yii::beginProfile(__CLASS__ . ':'. __FUNCTION__);
+        Yii::beginProfile(__CLASS__.':'.__FUNCTION__);
         while (!empty($items)) {
             $this->currentRow->addCells($items);
             if (!empty($items)) {
                 $this->_currentRow = null;
             }
         }
-        Yii::endProfile(__CLASS__ . ':'. __FUNCTION__);
+        Yii::endProfile(__CLASS__.':'.__FUNCTION__);
     }
 
     /**
-     * Get current row
+     * Get current row.
+     *
      * @return __return_getCurrentRow_type__ __return_getCurrentRow_description__
      */
     public function getCurrentRow()
@@ -155,13 +165,14 @@ class Grid extends \infinite\base\Object
     }
 
     /**
-     * Get id
+     * Get id.
+     *
      * @return __return_getId_type__ __return_getId_description__
      */
     public function getId()
     {
         if (is_null($this->_id)) {
-            $this->_id = md5(microtime() . mt_rand());
+            $this->_id = md5(microtime().mt_rand());
         }
 
         return $this->_id;

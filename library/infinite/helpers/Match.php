@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -8,7 +9,7 @@
 namespace infinite\helpers;
 
 /**
- * Match [@doctodo write class description for Match]
+ * Match [@doctodo write class description for Match].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -29,6 +30,7 @@ class Match extends \infinite\base\Component
 
     /**
      * Constructor.
+     *
      * @param unknown $value
      * @param unknown $not   (optional)
      * @param unknown $type  (optional)
@@ -44,8 +46,10 @@ class Match extends \infinite\base\Component
     }
 
     /**
-     * __method_test_description__
+     * __method_test_description__.
+     *
      * @param unknown $test
+     *
      * @return unknown
      */
     public function test($test)

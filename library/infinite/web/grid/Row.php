@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -10,7 +11,7 @@ namespace infinite\web\grid;
 use infinite\helpers\Html;
 
 /**
- * Row [@doctodo write class description for Row]
+ * Row [@doctodo write class description for Row].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -34,7 +35,7 @@ class Row extends \infinite\base\Object
     protected $_fillAttempted = false;
 
     /**
-     * __method_output_description__
+     * __method_output_description__.
      */
     public function output()
     {
@@ -42,7 +43,8 @@ class Row extends \infinite\base\Object
     }
 
     /**
-     * __method_generate_description__
+     * __method_generate_description__.
+     *
      * @return __return_generate_type__ __return_generate_description__
      */
     public function generate()
@@ -57,7 +59,7 @@ class Row extends \infinite\base\Object
     }
 
     /**
-     * __method_fill_description__
+     * __method_fill_description__.
      */
     public function fill()
     {
@@ -87,10 +89,16 @@ class Row extends \infinite\base\Object
             }
 
             foreach ($fillSizes as $size => $toFill) {
-                if ($toFill <= 0) { continue; }
+                if ($toFill <= 0) {
+                    continue;
+                }
                 foreach ($this->getColumnFlex($size) as $columnId => $flex) {
-                    if ($toFill <= 0) { break; }
-                    if (empty($flex)) { continue; }
+                    if ($toFill <= 0) {
+                        break;
+                    }
+                    if (empty($flex)) {
+                        continue;
+                    }
 
                     $columnItem = $this->_cells[$columnId];
                     $addColumns = min($toFill, $columnItem->getFlex($size));
@@ -103,8 +111,10 @@ class Row extends \infinite\base\Object
     }
 
     /**
-     * Get column flex
+     * Get column flex.
+     *
      * @param string $size __param_size_description__ [optional]
+     *
      * @return __return_getColumnFlex_type__ __return_getColumnFlex_description__
      */
     public function getColumnFlex($size = 'phone')
@@ -119,8 +129,10 @@ class Row extends \infinite\base\Object
     }
 
     /**
-     * Get distribution columns
+     * Get distribution columns.
+     *
      * @param __param_size_type__ $size __param_size_description__ [optional]
+     *
      * @return __return_getDistributionColumns_type__ __return_getDistributionColumns_description__
      */
     public function getDistributionColumns($size = null)
@@ -136,7 +148,8 @@ class Row extends \infinite\base\Object
     }
 
     /**
-     * __method_isFilled_description__
+     * __method_isFilled_description__.
+     *
      * @return __return_isFilled_type__ __return_isFilled_description__
      */
     public function isFilled()
@@ -145,14 +158,17 @@ class Row extends \infinite\base\Object
     }
 
     /**
-     * Get column count
+     * Get column count.
+     *
      * @return __return_getColumnCount_type__ __return_getColumnCount_description__
      */
     public function getColumnCount()
     {
         $columnCount = 0;
         foreach ($this->_cells as $item) {
-            if ($item->columns === 'auto') { continue; }
+            if ($item->columns === 'auto') {
+                continue;
+            }
             $columnCount += $item->columns;
         }
 
@@ -160,8 +176,10 @@ class Row extends \infinite\base\Object
     }
 
     /**
-     * __method_hasRoom_description__
+     * __method_hasRoom_description__.
+     *
      * @param __param_additional_type__ $additional __param_additional_description__
+     *
      * @return __return_hasRoom_type__ __return_hasRoom_description__
      */
     public function hasRoom($additional)
@@ -174,9 +192,11 @@ class Row extends \infinite\base\Object
     }
 
     /**
-     * __method_addCell_description__
-     * @param infinite\web\grid\Cell $item __param_item_description__
-     * @param boolean $check __param_check_description__ [optional]
+     * __method_addCell_description__.
+     *
+     * @param infinite\web\grid\Cell $item  __param_item_description__
+     * @param boolean                $check __param_check_description__ [optional]
+     *
      * @return __return_addCell_type__ __return_addCell_description__
      */
     public function addCell(Cell $item, $check = false)
@@ -191,7 +211,8 @@ class Row extends \infinite\base\Object
     }
 
     /**
-     * __method_addCells_description__
+     * __method_addCells_description__.
+     *
      * @param __param_items_type__ $items __param_items_description__
      */
     public function addCells(&$items)
@@ -206,7 +227,8 @@ class Row extends \infinite\base\Object
     }
 
     /**
-     * Set cells
+     * Set cells.
+     *
      * @param __param_cells_type__ $cells __param_cells_description__
      */
     public function setCells($cells)
@@ -218,14 +240,15 @@ class Row extends \infinite\base\Object
 
     public function getTrueWidth()
     {
-    	if (is_null($this->_trueWidth)) {
-    		return self::TOTAL_COLUMNS;
-    	}
-    	return $this->_trueWidth;
+        if (is_null($this->_trueWidth)) {
+            return self::TOTAL_COLUMNS;
+        }
+
+        return $this->_trueWidth;
     }
 
     public function setTrueWidth($width)
     {
-    	$this->_trueWidth = $width;
+        $this->_trueWidth = $width;
     }
 }

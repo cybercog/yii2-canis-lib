@@ -1,6 +1,7 @@
 <?php
 /**
  * @link http://www.infinitecascade.com/
+ *
  * @copyright Copyright (c) 2014 Infinite Cascade
  * @license http://www.infinitecascade.com/license/
  */
@@ -8,7 +9,6 @@
 namespace infinite\db\behaviors;
 
 use Yii;
-
 use yii\db\Query;
 use infinite\helpers\ArrayHelper;
 use infinite\helpers\StringHelper;
@@ -26,7 +26,9 @@ trait SearchTerm
         } else {
             $searchFields = static::searchFields();
         }
-        if (empty($searchTerms) || empty($searchFields)) { return []; }
+        if (empty($searchTerms) || empty($searchFields)) {
+            return [];
+        }
         $fields = self::parseSearchFields($searchFields);
         $localFields = $fields['local'];
         self::buildSearchQuery($query, $localFields, $searchTerms);
@@ -46,11 +48,15 @@ trait SearchTerm
         } else {
             $searchFields = static::searchFields();
         }
-        if (empty($searchTerms) || empty($searchFields)) { return []; }
+        if (empty($searchTerms) || empty($searchFields)) {
+            return [];
+        }
         $fields = self::parseSearchFields($searchFields);
         $localFields = $fields['local'];
         $foreignFields = $fields['foreign'];
-        if (empty($localFields) && empty($foreignFields)) { return []; }
+        if (empty($localFields) && empty($foreignFields)) {
+            return [];
+        }
         if (!$params['skipForeign']) {
             foreach ($foreignFields as $fieldList) {
                 foreach ($fieldList as $field) {
@@ -77,7 +83,9 @@ trait SearchTerm
             $raw = $localQuery->all();
             foreach ($raw as $object) {
                 $localResult = self::createSearchResult($object, $localFields);
-                if (!$localResult) { continue; }
+                if (!$localResult) {
+                    continue;
+                }
                 $localResults[$object->primaryKey] = $localResult;
             }
         }
@@ -94,9 +102,8 @@ trait SearchTerm
 
     public static function implementParams($query, $params)
     {
-
         $modelClass = get_called_class();
-        $model = new $modelClass;
+        $model = new $modelClass();
 
         if (!isset($params['ignore'])) {
             $params['ignore'] = [];
@@ -114,20 +121,24 @@ trait SearchTerm
 
         if (!empty($params['ignoreChildren'])) {
             foreach ($params['ignoreChildren'] as $parentId) {
-                if (!($object = $registryClass::get($parentId))) { continue; }
+                if (!($object = $registryClass::get($parentId))) {
+                    continue;
+                }
                 $params['ignore'] = array_merge($params['ignore'], $object->queryRelations('children', $searchModel)->select(['child_object_id'])->column());
             }
         }
 
         if (!empty($params['ignoreParents'])) {
             foreach ($params['ignoreParents'] as $childId) {
-                if (!($object = $registryClass::get($childId))) { continue; }
+                if (!($object = $registryClass::get($childId))) {
+                    continue;
+                }
                 $params['ignore'] = array_merge($params['ignore'], $object->queryRelations('parents', $searchModel)->select(['parent_object_id'])->column());
             }
         }
 
         if (!empty($params['ignore'])) {
-            $query->andWhere(['not in', $query->primaryAlias .'.'. self::primaryKey()[0], $params['ignore']]);
+            $query->andWhere(['not in', $query->primaryAlias.'.'.self::primaryKey()[0], $params['ignore']]);
         }
 
         if (!empty($params['action'])) {
@@ -141,11 +152,11 @@ trait SearchTerm
         foreach ($fields as $fieldList) {
             foreach ($fieldList as &$field) {
                 if (!in_array(substr($field, 0, 1), ['[', '{'])) {
-                    $field = '[['. $field .']]';
+                    $field = '[['.$field.']]';
                 }
 
                 if (!in_array(substr($field, 0, 1), ['{'])) {
-                    $field = '{{'. $query->primaryAlias . '}}.' . $field;
+                    $field = '{{'.$query->primaryAlias.'}}.'.$field;
                 }
                 foreach ($searchTerms as $term) {
                     //$term = '%'.strtr($term, ['%'=>'\%', '_'=>'\_', '\\'=>'\\\\']).'%';
@@ -161,13 +172,13 @@ trait SearchTerm
                 foreach ($searchTerms as $n => $term) {
                     $searchTermTag = ":term".$n;
                     $query->params[$searchTermTag] = strtolower($term);
-                    $orders[] = 'IF(ISNULL('. $field .'), 0, '. ($weight * 1) . '*(length(' . $field . ')-length(replace(LOWER(' . $field . '),' . $searchTermTag . ',\'\')))/length(' . $searchTermTag . '))';
+                    $orders[] = 'IF(ISNULL('.$field.'), 0, '.($weight * 1).'*(length('.$field.')-length(replace(LOWER('.$field.'),'.$searchTermTag.',\'\')))/length('.$searchTermTag.'))';
                 }
             }
             $weight = $weight - 1;
         }
         $relavance = implode('+', $orders);
-        $query->select = [$query->primaryAlias . ".*", "({$relavance}) as [[searchScore]]"];
+        $query->select = [$query->primaryAlias.".*", "({$relavance}) as [[searchScore]]"];
         if (empty($query->orderBy)) {
             $query->orderBy = [];
         }
@@ -181,7 +192,12 @@ trait SearchTerm
         if (is_null($score) && !is_null($object->searchScore)) {
             $score = $object->searchScore;
         }
-        if (empty($score)) { \d($object); exit; return false; }
+        if (empty($score)) {
+            \d($object);
+            exit;
+
+            return false;
+        }
         if (is_null($terms)) {
             $terms = self::prepareObjectTerms($object, $fields);
         }
@@ -209,7 +225,7 @@ trait SearchTerm
     public static function searchFields()
     {
         $modelClass = get_called_class();
-        $model = new $modelClass;
+        $model = new $modelClass();
         $fields = [];
         if (!is_null($model->descriptorField)) {
             if (is_array($model->descriptorField)) {
@@ -254,14 +270,15 @@ trait SearchTerm
     }
 
     /**
+     * @param unknown $query
      *
-     *
-     * @param  unknown $query
      * @return unknown
      */
     public static function prepareSearchTerms($query)
     {
-        if (is_array($query)) { return $query; }
+        if (is_array($query)) {
+            return $query;
+        }
         $badSearchWords = ["a", "about", "above", "above", "across", "after", "afterwards", "again", "against", "all", "almost", "alone", "along", "already", "also", "although", "always", "am", "among", "amongst", "amoungst", "amount", "an", "and", "another", "any", "anyhow", "anyone", "anything", "anyway", "anywhere", "are", "around", "as", "at", "back", "be", "became", "because", "become", "becomes", "becoming", "been", "before", "beforehand", "behind", "being", "below", "beside", "besides", "between", "beyond", "bill", "both", "bottom", "but", "by", "call", "can", "cannot", "cant", "co", "con", "could", "couldnt", "cry", "de", "describe", "detail", "do", "done", "down", "due", "during", "each", "eg", "eight", "either", "eleven", "else", "elsewhere", "empty", "enough", "etc", "even", "ever", "every", "everyone", "everything", "everywhere", "except", "few", "fifteen", "fify", "fill", "find", "fire", "first", "five", "for", "former", "formerly", "forty", "found", "four", "from", "front", "full", "further", "get", "give", "go", "had", "has", "hasnt", "have", "he", "hence", "her", "here", "hereafter", "hereby", "herein", "hereupon", "hers", "herself", "him", "himself", "his", "how", "however", "hundred", "ie", "if", "in", "inc", "indeed", "interest", "into", "is", "it", "its", "itself", "keep", "last", "latter", "latterly", "least", "less", "ltd", "made", "many", "may", "me", "meanwhile", "might", "mill", "mine", "more", "moreover", "most", "mostly", "move", "much", "must", "my", "myself", "name", "namely", "neither", "never", "nevertheless", "next", "nine", "no", "nobody", "none", "noone", "nor", "not", "nothing", "now", "nowhere", "of", "off", "often", "on", "once", "one", "only", "onto", "or", "other", "others", "otherwise", "our", "ours", "ourselves", "out", "over", "own", "part", "per", "perhaps", "please", "put", "rather", "re", "same", "see", "seem", "seemed", "seeming", "seems", "serious", "several", "she", "should", "show", "side", "since", "sincere", "six", "sixty", "so", "some", "somehow", "someone", "something", "sometime", "sometimes", "somewhere", "still", "such", "system", "take", "ten", "than", "that", "the", "their", "them", "themselves", "then", "thence", "there", "thereafter", "thereby", "therefore", "therein", "thereupon", "these", "they", "thickv", "thin", "third", "this", "those", "though", "three", "through", "throughout", "thru", "thus", "to", "together", "too", "top", "toward", "towards", "twelve", "twenty", "two", "un", "under", "until", "up", "upon", "us", "very", "via", "was", "we", "well", "were", "what", "whatever", "when", "whence", "whenever", "where", "whereafter", "whereas", "whereby", "wherein", "whereupon", "wherever", "whether", "which", "while", "whither", "who", "whoever", "whole", "whom", "whose", "why", "will", "with", "within", "without", "would", "yet", "you", "your", "yours", "yourself", "yourselves", "the"];
         $oquery = $query;
         $query = preg_replace('/[^0-9a-z\-\'\% ]/i', '', strtolower($query));
@@ -273,7 +290,7 @@ trait SearchTerm
                 unset($parts[$k]);
             }
         }
+
         return $parts;
     }
-
 }
