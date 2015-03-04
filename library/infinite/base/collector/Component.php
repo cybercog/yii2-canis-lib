@@ -14,6 +14,7 @@ use IteratorAggregate;
 
 use yii\base\BootstrapInterface;
 use yii\base\Event;
+use infinite\caching\Cacher;
 
 /**
  * Component [@doctodo write class description for Component]
@@ -24,6 +25,8 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
 {
     const EVENT_AFTER_LOAD = 'afterLoad';
     const EVENT_AFTER_INIT = 'afterInit';
+
+    public $cacheTime = false;
 
     /**
      * @var __var__collectors_type__ __var__collectors_description__
@@ -37,6 +40,7 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
      * @var __var__loaded_type__ __var__loaded_description__
      */
     protected $_loaded = false;
+
 
     /**
      * __method_bootstrap_description__
@@ -59,12 +63,40 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
         $this->load();
     }
 
+    protected function loadFromCache($cacheKey)
+    {
+        if (!$this->cacheTime) { return false; }
+        Yii::beginProfile('Collector::loadFromCache');
+        if (($collectors = Cacher::get($cacheKey))) {
+            $this->_collectors = $collectors;
+            Yii::trace('Restored collectors from cache');
+            Yii::endProfile('Collector::loadFromCache');
+            return true;
+        }
+        Yii::endProfile('Collector::loadFromCache');
+        return false;
+    }
+
+    protected function saveCache($cacheKey)
+    {
+        if (!$this->cacheTime) { return false; }
+        //\d($this->_collectors);exit;
+        Cacher::set($cacheKey, $this->_collectors, $this->cacheTime);
+        return true;
+    }
+
     /**
      * __method_load_description__
      */
     public function load()
     {
         if (!$this->_loaded) {
+            $cacheKey = [__CLASS__, md5(json_encode($this->_init_collectors))];
+            if ($this->loadFromCache($cacheKey)) {
+                $this->_loaded = true;
+                return true;
+            }
+
             Yii::beginProfile(__CLASS__.'::'.__FUNCTION__);
             foreach ($this->_init_collectors as $id => $collector) {
                 $this->internalRegisterCollector($id, $collector);
@@ -82,6 +114,7 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
             Yii::endProfile(__CLASS__.'::'.__FUNCTION__.':::afterInit');
             Yii::endProfile(__CLASS__.'::'.__FUNCTION__);
             $this->_loaded = true;
+            $this->saveCache($cacheKey);
         }
     }
 
