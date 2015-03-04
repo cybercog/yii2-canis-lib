@@ -63,12 +63,12 @@ class Interaction extends \infinite\base\Component // implements \infinite\base\
     {
         $details = $this->details;
         if (is_object($details) || is_array($details)) {
-            $details = '<pre>'.print_r($details, true).'</pre>';
+            $details = '<pre>' . print_r($details, true) . '</pre>';
         }
 
         return [
             'id' => $this->id,
-            'hash' => md5($this->id.'-'.$this->lastResponse),
+            'hash' => md5($this->id . '-' . $this->lastResponse),
             'label' => $this->label,
             'details' => $details,
             'inputType' => $this->inputType,
@@ -113,7 +113,7 @@ class Interaction extends \infinite\base\Component // implements \infinite\base\
             $callback = $callback->id;
         }
         if (!is_string($callback)) {
-            throw new Exception("Invalid callback set: ".print_r($callback, true));
+            throw new Exception("Invalid callback set: " . print_r($callback, true));
         }
         $this->_callback = $callback;
 

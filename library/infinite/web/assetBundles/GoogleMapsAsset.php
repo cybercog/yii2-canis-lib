@@ -23,7 +23,7 @@ class GoogleMapsAsset extends AssetBundle
      * @inheritdoc
      */
     public $js = [
-        'https://maps.googleapis.com/maps/api/js?key='.INFINITE_APP_GOOGLE_API_BROWSER_KEY,
+        'https://maps.googleapis.com/maps/api/js?key=' . INFINITE_APP_GOOGLE_API_BROWSER_KEY,
     ];
 
     /**

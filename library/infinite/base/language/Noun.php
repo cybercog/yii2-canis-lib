@@ -130,9 +130,9 @@ class Noun extends \infinite\base\language\Word
     {
         if (is_null($this->_possessive)) {
             if (substr($this->_singular, -1) === 's') {
-                $this->_possessive = $this->_singular.'\'';
+                $this->_possessive = $this->_singular . '\'';
             } else {
-                $this->_possessive = $this->_singular.'\'s';
+                $this->_possessive = $this->_singular . '\'s';
             }
         }
 
@@ -150,9 +150,9 @@ class Noun extends \infinite\base\language\Word
     {
         if (is_null($this->_possessive_plural)) {
             if (substr($this->plural, -1) === 's') {
-                $this->_possessive_plural = $this->plural.'\'';
+                $this->_possessive_plural = $this->plural . '\'';
             } else { // wahuh?
-                $this->_possessive_plural = $this->_singular.'\'s';
+                $this->_possessive_plural = $this->_singular . '\'s';
             }
         }
 

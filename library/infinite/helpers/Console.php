@@ -64,7 +64,7 @@ class Console extends \yii\helpers\Console
                 $status .= ">";
                 $status .= str_repeat(" ", $width - $bar - 1);
             }
-            static::output("$prefix"."[$status] $info");
+            static::output("$prefix" . "[$status] $info");
         }
     }
     public static function startProgressSpecial($done, $total, $prefix = '', $width = null)
@@ -83,7 +83,7 @@ class Console extends \yii\helpers\Console
             if (static::streamSupportsAnsiColors(STDOUT)) {
                 static::clearLine();
             }
-            static::stdout("\r".($keepPrefix ? self::$_progressPrefixSpecial : '').(is_string($remove) ? $remove : ''));
+            static::stdout("\r" . ($keepPrefix ? self::$_progressPrefixSpecial : '') . (is_string($remove) ? $remove : ''));
         }
         flush();
 

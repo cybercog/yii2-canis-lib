@@ -37,7 +37,7 @@ class ActiveDataProvider extends \yii\data\ActiveDataProvider
         if (is_array($value)) {
             $config = ['class' => Sort::className()];
             if ($this->id !== null) {
-                $config['sortVar'] = $this->id.'-sort';
+                $config['sortVar'] = $this->id . '-sort';
             }
             $value = Yii::createObject(array_merge($config, $value));
         }

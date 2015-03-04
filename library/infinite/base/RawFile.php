@@ -8,8 +8,8 @@
 
 namespace infinite\base;
 
-use Yii;
 use infinite\helpers\FileHelper;
+use Yii;
 
 /**
  * File [@doctodo write class description for File].

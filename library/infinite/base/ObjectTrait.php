@@ -26,7 +26,7 @@ trait ObjectTrait
     public function getMemoryId()
     {
         if (is_null($this->_m)) {
-            $this->_m = self::classNamespace().':'.md5(microtime().mt_rand());
+            $this->_m = self::classNamespace() . ':' . md5(microtime() . mt_rand());
         }
 
         return $this->_m;
@@ -90,7 +90,7 @@ trait ObjectTrait
         if (is_string($_expression_)) {
             extract($_data_);
 
-            return eval('return '.$_expression_.';');
+            return eval('return ' . $_expression_ . ';');
         } else {
             $_data_[] = $this;
 

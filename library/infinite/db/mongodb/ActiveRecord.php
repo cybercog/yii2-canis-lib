@@ -8,8 +8,8 @@
 
 namespace infinite\db\mongodb;
 
-use Yii;
 use infinite\base\ComponentTrait;
+use Yii;
 
 class ActiveRecord extends \yii\mongodb\ActiveRecord
 {

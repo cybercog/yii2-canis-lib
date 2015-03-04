@@ -31,6 +31,6 @@ class UpdateRelationEvent extends RelationEvent
 
     public function getStory()
     {
-        return '{{agent}} '.$this->verb->past.' link with {{directObject}}'.$this->indirectStory;
+        return '{{agent}} ' . $this->verb->past . ' link with {{directObject}}' . $this->indirectStory;
     }
 }

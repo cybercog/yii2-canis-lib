@@ -8,9 +8,9 @@
 
 namespace infinite\security\identity\providers;
 
-use Yii;
-use infinite\helpers\ArrayHelper;
 use infinite\base\exceptions\Exception;
+use infinite\helpers\ArrayHelper;
+use Yii;
 
 /**
  * Collector [@doctodo write class description for Collector].
@@ -82,7 +82,7 @@ class Collector extends \infinite\base\collector\Collector
         foreach ($this->getAll() as $identityProvider) {
             if ($identityProvider->getCreatorPriority() !== false) {
                 $creators[] = [
-                    'priority' => sprintf("%1$010d", $identityProvider->getCreatorPriority()).'---'.md5($identityProvider->systemId),
+                    'priority' => sprintf("%1$010d", $identityProvider->getCreatorPriority()) . '---' . md5($identityProvider->systemId),
                     'provider' => $identityProvider,
                 ];
             }
@@ -163,7 +163,7 @@ class Collector extends \infinite\base\collector\Collector
             $component['object']->system_id = $component['systemId'];
             $component['object']->handler = $component['handler'];
             if (!$component['object']->save()) {
-                throw new Exception("Couldn't save new identity provider {$component['systemId']} ".print_r($component['object']->getFirstErrors(), true));
+                throw new Exception("Couldn't save new identity provider {$component['systemId']} " . print_r($component['object']->getFirstErrors(), true));
             }
             $this->_tableRegistry[$component['systemId']] = $component['object'];
             Yii::trace("Identity Provider has been initialized {$component['name']} ({$component['systemId']})");

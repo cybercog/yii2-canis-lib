@@ -30,7 +30,7 @@ abstract class TestCase extends \yii\test\TestCase
     public function getParam($name, $default = null)
     {
         if (self::$params === null) {
-            self::$params = require __DIR__.'/data/config.php';
+            self::$params = require __DIR__ . '/data/config.php';
         }
 
         return isset(self::$params[$name]) ? self::$params[$name] : $default;
@@ -48,7 +48,7 @@ abstract class TestCase extends \yii\test\TestCase
         if (empty($config)) {
             $config = [];
         }
-        $config = array_merge($config, require(__DIR__.'/data/config.php'));
+        $config = array_merge($config, require(__DIR__ . '/data/config.php'));
 
         static $defaultConfig = [
             'id' => 'testapp',

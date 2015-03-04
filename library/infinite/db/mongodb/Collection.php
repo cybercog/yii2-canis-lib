@@ -8,9 +8,9 @@
 
 namespace infinite\db\mongodb;
 
+use infinite\base\ComponentTrait;
 use Yii;
 use yii\mongodb\Exception;
-use infinite\base\ComponentTrait;
 
 class Collection extends \yii\mongodb\Collection
 {
@@ -36,8 +36,8 @@ class Collection extends \yii\mongodb\Collection
             Yii::beginProfile($token, __METHOD__);
             $mongo = $this->db->mongoClient;
             $query = [
-                "renameCollection" => $this->db->database->name.'.'.$this->name,
-                "to" => $this->db->database->name.'.'.$newName,
+                "renameCollection" => $this->db->database->name . '.' . $this->name,
+                "to" => $this->db->database->name . '.' . $newName,
                 "dropTarget" => "true",
             ];
             $options = [

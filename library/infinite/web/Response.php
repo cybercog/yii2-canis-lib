@@ -8,10 +8,10 @@
 
 namespace infinite\web;
 
-use Yii;
-use yii\helpers\Url;
 use infinite\base\exceptions\Exception;
 use infinite\base\ObjectTrait;
+use Yii;
+use yii\helpers\Url;
 
 /**
  * Response [@doctodo write class description for Response].
@@ -134,9 +134,9 @@ class Response extends \yii\web\Response
     /**
      * __method_generateInstructions_description__.
      *
-     * @return __return_generateInstructions_type__ __return_generateInstructions_description__
-     *
      * @throws Exception __exception_Exception_description__
+     *
+     * @return __return_generateInstructions_type__ __return_generateInstructions_description__
      */
     protected function generateInstructions()
     {
@@ -182,7 +182,7 @@ class Response extends \yii\web\Response
         if (!in_array($this->task, $this->staticTasks)) {
             $i['content'] = $this->renderContent(false);
 
-            $method = 'handle'.ucfirst($this->task);
+            $method = 'handle' . ucfirst($this->task);
             if (method_exists($this, $method) && $this->$method($i)) {
                 $i['task'] = $this->task;
                 $i['taskOptions'] = $this->taskOptions;
@@ -192,7 +192,7 @@ class Response extends \yii\web\Response
         }
 
         foreach ($this->staticTasks as $task) {
-            $method = 'handle'.ucfirst($task);
+            $method = 'handle' . ucfirst($task);
             if (method_exists($this, $method) && !$this->$method($i)) {
                 throw new Exception("Invalid response task {$task}!");
             }
@@ -402,11 +402,11 @@ class Response extends \yii\web\Response
     {
         if (is_array($url) && isset($url[0])) {
             // ensure the route is absolute
-            $url[0] = '/'.ltrim($url[0], '/');
+            $url[0] = '/' . ltrim($url[0], '/');
         }
         $url = Url::to($url);
         if (strpos($url, '/') === 0 && strpos($url, '//') !== 0) {
-            $url = Yii::$app->getRequest()->getHostInfo().$url;
+            $url = Yii::$app->getRequest()->getHostInfo() . $url;
         }
 
         $this->getHeaders()->set('Location', $url);

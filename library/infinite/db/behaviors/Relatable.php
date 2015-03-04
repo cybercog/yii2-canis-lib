@@ -8,11 +8,11 @@
 
 namespace infinite\db\behaviors;
 
-use Yii;
-use yii\db\Query;
-use yii\base\Event;
-use infinite\helpers\ArrayHelper;
 use infinite\caching\Cacher;
+use infinite\helpers\ArrayHelper;
+use Yii;
+use yii\base\Event;
+use yii\db\Query;
 
 /**
  * Relatable [@doctodo write class description for Relatable].
@@ -230,7 +230,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
             $subquery->select(['{{innerRelation}}.[[child_object_id]]']);
             $subquery->from(['innerRelation' => $relationTable]);
             // $subquery->andWhere(['{{innerRelation}}.[[parent_object_id]]' => $this->owner->primaryKey]);
-            $query->andWhere(['and', '{{outerRelation}}.[[child_object_id]] IN ('.$subquery->createCommand()->rawSql.')']);
+            $query->andWhere(['and', '{{outerRelation}}.[[child_object_id]] IN (' . $subquery->createCommand()->rawSql . ')']);
             $query->select(['{{outerRelation}}.[[child_object_id]]', '{{outerRelation}}.[[parent_object_id]]']);
             $childParentsRaw = $query->all();
             $childParents = [];
@@ -443,10 +443,10 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
      */
     public function setRelationModels($models)
     {
-        $setBase = md5(microtime().mt_rand());
+        $setBase = md5(microtime() . mt_rand());
         foreach ($models as $key => $model) {
             if (is_numeric($key)) {
-                $key = $key.'-'.$setBase;
+                $key = $key . '-' . $setBase;
             }
             $this->registerRelationModel($model, $key);
         }
@@ -479,7 +479,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
         }
         $oid = $id;
         if (!is_null($key) && $key !== $id) {
-            $id .= '-'.$key;
+            $id .= '-' . $key;
         }
 
         if (empty($model->{$this->parentObjectField}) && empty($model->{$this->childObjectField})) {
@@ -881,7 +881,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
             $relationOptions['params'] = [];
         }
         $objectClass = get_class($this->owner);
-        $relationOptions['where'][] =  ['and', '%alias%.'.$this->parentObjectField.' != :ownerPrimaryKey'];
+        $relationOptions['where'][] =  ['and', '%alias%.' . $this->parentObjectField . ' != :ownerPrimaryKey'];
         $relationOptions['params'][':ownerPrimaryKey'] = $this->owner->primaryKey;
     }
 
@@ -1021,7 +1021,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     protected function _prepareObjectQuery(Query $query, $relationshipType = false, $model = false, $objectOptions = [])
     {
         $relationClass = Yii::$app->classes['Relation'];
-        $relationTableAlias = $relationClass::tableName().' '.$this->relationAlias;
+        $relationTableAlias = $relationClass::tableName() . ' ' . $this->relationAlias;
         if (!empty($objectOptions['where'])) {
             $query->andWhere($this->_aliasKeys($objectOptions['where'], $this->objectAlias));
             unset($objectOptions['where']);
@@ -1047,17 +1047,17 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
         if ($model) {
             $relationClass = Yii::$app->classes['Relation'];
             $registryClass = Yii::$app->classes['Registry'];
-            $registryTableAlias = $registryClass::tableName().' '.$this->registryAlias;
+            $registryTableAlias = $registryClass::tableName() . ' ' . $this->registryAlias;
             if ($relationshipType === 'children') {
-                $relationKey = $this->relationAlias.'.'.$this->childObjectField;
+                $relationKey = $this->relationAlias . '.' . $this->childObjectField;
             } else {
-                $relationKey = $this->relationAlias.'.'.$this->parentObjectField;
+                $relationKey = $this->relationAlias . '.' . $this->parentObjectField;
             }
             if (!is_object($model)) {
                 $model = new $model();
             }
-            $query->leftJoin($registryTableAlias, $this->registryAlias.'.'.$registryClass::primaryKey()[0].'='.$relationKey);
-            $query->andWhere([$this->registryAlias.'.'.$this->registryModelField => $model::modelAlias()]);
+            $query->leftJoin($registryTableAlias, $this->registryAlias . '.' . $registryClass::primaryKey()[0] . '=' . $relationKey);
+            $query->andWhere([$this->registryAlias . '.' . $this->registryModelField => $model::modelAlias()]);
         }
     }
 
@@ -1084,7 +1084,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
         $skipAssociation = isset($relationOptions['skipAssociation']) && $relationOptions['skipAssociation'];
         $relationClass = Yii::$app->classes['Relation'];
         $relationAlias = isset($relationOptions['alias']) ? $relationOptions['alias'] : $this->relationAlias;
-        $relationTableAlias = $relationClass::tableName().' '.$relationAlias;
+        $relationTableAlias = $relationClass::tableName() . ' ' . $relationAlias;
         $conditions = [];
         $conditions[] = 'and';
         $params = isset($relationOptions['params']) ? $relationOptions['params'] : [];
@@ -1126,8 +1126,8 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
             } else {
                 $conditions[] = [
                     'or',
-                    ['{{'.$relationAlias.'}}.[['.$this->parentObjectField.']]' => $this->owner->primaryKey],
-                    ['{{'.$relationAlias.'}}.[['.$this->childObjectField.']]' => $this->owner->primaryKey],
+                    ['{{' . $relationAlias . '}}.[[' . $this->parentObjectField . ']]' => $this->owner->primaryKey],
+                    ['{{' . $relationAlias . '}}.[[' . $this->childObjectField . ']]' => $this->owner->primaryKey],
                 ];
             }
 
@@ -1135,36 +1135,36 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
                 if ($modelPrefix) {
                     $modelPrefix .= '-';
                     $modelPrefixLength = strlen($modelPrefix);
-                    $conditions[] = ['LEFT({{'.$relationAlias.'}}.[['.$primaryKey.']], '.$modelPrefixLength.')' => $modelPrefix];
+                    $conditions[] = ['LEFT({{' . $relationAlias . '}}.[[' . $primaryKey . ']], ' . $modelPrefixLength . ')' => $modelPrefix];
                     //$conditions[] = '{{'. $relationAlias .'}}.[['. $primaryKey .']] LIKE "'. $modelPrefix.'%"';
                 }
-                $conditions[] = '{{'.$relationAlias.'}}.[['.$primaryKey.']] = {{'.$this->objectAlias.'}}.[['.$modelPrimaryKey.']]';
+                $conditions[] = '{{' . $relationAlias . '}}.[[' . $primaryKey . ']] = {{' . $this->objectAlias . '}}.[[' . $modelPrimaryKey . ']]';
             }
         }
 
         if (isset($foreignKey)) {
-            $query->andWhere(['{{'.$relationAlias.'}}.[['.$foreignKey.']]' => $this->owner->primaryKey]);
+            $query->andWhere(['{{' . $relationAlias . '}}.[[' . $foreignKey . ']]' => $this->owner->primaryKey]);
         }
 
         if ($activeOnly) {
-            $isActiveCondition = [$relationAlias.'.'.$this->activeField => 1];
+            $isActiveCondition = [$relationAlias . '.' . $this->activeField => 1];
             if (isset($activeConditions[$this->activeField])) {
                 $isActiveCondition = $activeConditions[$this->activeField];
                 unset($activeConditions[$this->activeField]);
             }
-            $startDateCondition = ['or', '{{'.$relationAlias.'}}.[['.$this->startDateField.']] IS NULL', '{{'.$relationAlias.'}}.[['.$this->startDateField.']] <= CURDATE()'];
+            $startDateCondition = ['or', '{{' . $relationAlias . '}}.[[' . $this->startDateField . ']] IS NULL', '{{' . $relationAlias . '}}.[[' . $this->startDateField . ']] <= CURDATE()'];
             if (isset($activeConditions[$this->startDateField])) {
                 $startDateCondition = $activeConditions[$this->startDateField];
                 unset($activeConditions[$this->startDateField]);
             }
-            $endDateCondition = ['or', '{{'.$relationAlias.'}}.[['.$this->endDateField.']] IS NULL', '{{'.$relationAlias.'}}.[['.$this->endDateField.']] >= CURDATE()'];
+            $endDateCondition = ['or', '{{' . $relationAlias . '}}.[[' . $this->endDateField . ']] IS NULL', '{{' . $relationAlias . '}}.[[' . $this->endDateField . ']] >= CURDATE()'];
             if (isset($activeConditions[$this->endDateField])) {
                 $endDateCondition = $activeConditions[$this->endDateField];
                 unset($activeConditions[$this->endDateField]);
             }
             $parts = ['isActive', 'endDate', 'startDate'];
             foreach ($parts as $part) {
-                $var = $part.'Condition';
+                $var = $part . 'Condition';
                 if (isset($$var) && $$var) {
                     $conditions[] = $this->_aliasKeys($$var, $relationAlias);
                 }
@@ -1203,8 +1203,8 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
             $relationTable = $relationClass::tableName();
             $relationFields = Yii::$app->db->getTableSchema($relationTable)->columnNames;
             foreach ($relationFields as $field) {
-                $fieldAlias = '__relationModel*'.$field;
-                $query->ensureSelect[$fieldAlias] = '{{'.$relationAlias.'}}.[['.$field.']]';
+                $fieldAlias = '__relationModel*' . $field;
+                $query->ensureSelect[$fieldAlias] = '{{' . $relationAlias . '}}.[[' . $field . ']]';
             }
         }
 
@@ -1231,12 +1231,12 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
         if ($alias === false) {
             $alias = '';
         } else {
-            $alias = '{{'.$alias.'}}.';
+            $alias = '{{' . $alias . '}}.';
         }
         $conditions = ['and'];
-        $conditions[] = [$alias.'[['.$instance->activeField.']]' => 1];
-        $conditions[] = ['or', $alias.'[['.$instance->startDateField.']] IS NULL', $alias.'[['.$instance->startDateField.']] <= CURDATE()'];
-        $conditions[] = ['or', $alias.'[['.$instance->endDateField.']] IS NULL', $alias.'[['.$instance->endDateField.']] >= CURDATE()'];
+        $conditions[] = [$alias . '[[' . $instance->activeField . ']]' => 1];
+        $conditions[] = ['or', $alias . '[[' . $instance->startDateField . ']] IS NULL', $alias . '[[' . $instance->startDateField . ']] <= CURDATE()'];
+        $conditions[] = ['or', $alias . '[[' . $instance->endDateField . ']] IS NULL', $alias . '[[' . $instance->endDateField . ']] >= CURDATE()'];
         $query->andWhere($conditions);
     }
 
@@ -1268,7 +1268,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
      */
     public function isParentPrimary($companionId)
     {
-        $key = 'parent-'.$companionId;
+        $key = 'parent-' . $companionId;
         if (isset($this->_relations[$key]) && isset($this->_relations[$key]['primary'])) {
             return $this->_relations[$key]['primary'];
         } else {
@@ -1291,7 +1291,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
      */
     public function isChildPrimary($companionId)
     {
-        $key = 'child-'.$companionId;
+        $key = 'child-' . $companionId;
         if (isset($this->_relations[$key]) && isset($this->_relations[$key]['primary'])) {
             return $this->_relations[$key]['primary'];
         } else {
@@ -1314,7 +1314,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
      */
     public function parentModel($companionId)
     {
-        $key = 'parent-'.$companionId;
+        $key = 'parent-' . $companionId;
         if (isset($this->_relations[$key]) && isset($this->_relations[$key]['primary'])) {
             return $this->_relations[$key]['model'];
         } else {
@@ -1337,7 +1337,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
      */
     public function childModel($companionId)
     {
-        $key = 'child-'.$companionId;
+        $key = 'child-' . $companionId;
         if (isset($this->_relations[$key]) && isset($this->_relations[$key]['primary'])) {
             return $this->_relations[$key]['primary'];
         } else {

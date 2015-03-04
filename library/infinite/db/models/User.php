@@ -8,9 +8,9 @@
 
 namespace infinite\db\models;
 
-use Yii;
 use infinite\db\ActiveRecord;
 use infinite\helpers\ArrayHelper;
+use Yii;
 use yii\web\IdentityInterface;
 
 /**

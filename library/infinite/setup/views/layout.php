@@ -145,7 +145,7 @@ if (isset($_GET['message'])) {
 
 if (isset($task)) {
     echo '<div class="section">';
-    echo '<h2>Set Up '.$task->title.'</h2>';
+    echo '<h2>Set Up ' . $task->title . '</h2>';
 }
 echo $content;
 if (isset($task)) {

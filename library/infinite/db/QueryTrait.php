@@ -79,7 +79,7 @@ trait QueryTrait
         if (is_null($db) && !is_null($this->_db)) {
             $db = $this->_db;
         }
-        $rawSql = '('.$this->basicCreateCommand($db)->rawSql.')';
+        $rawSql = '(' . $this->basicCreateCommand($db)->rawSql . ')';
         $this->resetQuery();
         $this->from([$alias => $rawSql]);
     }
@@ -121,7 +121,7 @@ trait QueryTrait
 
     public function pk($pk)
     {
-        return $this->andWhere([$this->primaryAlias.'.'.$this->primaryTablePk => $pk]);
+        return $this->andWhere([$this->primaryAlias . '.' . $this->primaryTablePk => $pk]);
     }
 
     public function getPrimaryAlias($db = null)
@@ -187,9 +187,9 @@ trait QueryTrait
     {
         $where = [$operator];
         foreach ($like as $column => $value) {
-            $id = ':'.md5(microtime(true).uniqid().rand(0, 1000));
+            $id = ':' . md5(microtime(true) . uniqid() . rand(0, 1000));
             $this->params[$id] = $value;
-            $where[] = $column.' LIKE '.$id;
+            $where[] = $column . ' LIKE ' . $id;
         }
 
         return $where;

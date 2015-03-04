@@ -24,7 +24,7 @@ echo GridView::widget([
         [
             'attribute' => 'info',
             'value' => function ($data) {
-                return str_repeat('<span class="indent">→</span>', $data['level']).Html::encode($data['info']);
+                return str_repeat('<span class="indent">→</span>', $data['level']) . Html::encode($data['info']);
             },
             'format' => 'html',
             'options' => [

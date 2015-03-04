@@ -8,10 +8,10 @@
 
 namespace infinite\db\behaviors;
 
-use Yii;
 use infinite\base\exceptions\Exception;
-use infinite\helpers\ArrayHelper;
 use infinite\caching\Cacher;
+use infinite\helpers\ArrayHelper;
+use Yii;
 
 /**
  * Roleable [@doctodo write class description for Roleable].
@@ -497,10 +497,10 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
      *
      * @param __param_event_type__ $event __param_event_description__
      *
-     * @return __return_afterSave_type__ __return_afterSave_description__
+     * @throws \ __exception_\_description__
+     * @throws \ __exception_\_description__
      *
-     * @throws \ __exception_\_description__
-     * @throws \ __exception_\_description__
+     * @return __return_afterSave_type__ __return_afterSave_description__
      */
     public function afterSave($event)
     {

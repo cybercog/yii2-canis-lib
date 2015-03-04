@@ -9,8 +9,8 @@
 namespace infinite\setup;
 
 use Exception;
-use Task;
 use Migrator;
+use Task;
 use Yii;
 
 defined('STDOUT') or define('STDOUT', fopen('php://stdout', 'w'));
@@ -214,11 +214,11 @@ class Setup extends \infinite\base\Object
     public function refresh($message = null, $skip = false)
     {
         //echo '<pre>';var_dump($_SERVER);exit;
-        $url = $_SERVER['SCRIPT_NAME'].'?message='.$message;
+        $url = $_SERVER['SCRIPT_NAME'] . '?message=' . $message;
         if (isset($skip)) {
-            $url .= '&skip='.implode(',', $skip);
+            $url .= '&skip=' . implode(',', $skip);
         }
-        header('Location: '.$url);
+        header('Location: ' . $url);
         exit(0);
     }
 
@@ -248,7 +248,7 @@ class Setup extends \infinite\base\Object
     {
         $self = $this;
         $tasks = [];
-        $tasksPath = $this->applicationPath.DIRECTORY_SEPARATOR.'setup'.DIRECTORY_SEPARATOR.'tasks';
+        $tasksPath = $this->applicationPath . DIRECTORY_SEPARATOR . 'setup' . DIRECTORY_SEPARATOR . 'tasks';
         if (!is_dir($tasksPath)) {
             return $tasks;
         }
@@ -257,9 +257,9 @@ class Setup extends \infinite\base\Object
             if ($file === '.' || $file === '..') {
                 continue;
             }
-            $path = $tasksPath.DIRECTORY_SEPARATOR.$file;
+            $path = $tasksPath . DIRECTORY_SEPARATOR . $file;
             if (preg_match('/^Task_(\d{6}\_.*?)\.php$/', $file, $matches) and is_file($path)) {
-                $className = $this->applicationNamespace.'\\setup\\tasks\\Task_'.$matches[1];
+                $className = $this->applicationNamespace . '\\setup\\tasks\\Task_' . $matches[1];
                 if (!include_once($path)) {
                     continue;
                 }
@@ -314,7 +314,7 @@ class Setup extends \infinite\base\Object
      */
     public function getConfirmLink($task)
     {
-        return $_SERVER['REQUEST_URI'].'?task='.$task.'&confirm='.$this->getConfirmSalt($task);
+        return $_SERVER['REQUEST_URI'] . '?task=' . $task . '&confirm=' . $this->getConfirmSalt($task);
     }
 
     /**
@@ -326,7 +326,7 @@ class Setup extends \infinite\base\Object
      */
     public function getConfirmSalt($task = null)
     {
-        return md5(date("Y-m-d").__FILE__.':'.$task);
+        return md5(date("Y-m-d") . __FILE__ . ':' . $task);
     }
 
     /**
@@ -359,7 +359,7 @@ class Setup extends \infinite\base\Object
      */
     public function getVersion()
     {
-        return trim(file_get_contents($this->basePath.DIRECTORY_SEPARATOR.'VERSION'));
+        return trim(file_get_contents($this->basePath . DIRECTORY_SEPARATOR . 'VERSION'));
     }
 
     /**
@@ -379,15 +379,15 @@ class Setup extends \infinite\base\Object
     /**
      * __method_app_description__.
      *
-     * @return __return_app_type__ __return_app_description__
-     *
      * @throws Exception __exception_Exception_description__
+     *
+     * @return __return_app_type__ __return_app_description__
      */
     public function app()
     {
         if ($this->isEnvironmented) {
             if (is_null(self::$_app)) {
-                $configPath = $this->environmentPath.DIRECTORY_SEPARATOR.'console.php';
+                $configPath = $this->environmentPath . DIRECTORY_SEPARATOR . 'console.php';
                 if (!file_exists($configPath)) {
                     throw new Exception("Couldn't find environment config {$configPath}!");
                 }
@@ -437,13 +437,13 @@ class Setup extends \infinite\base\Object
     /**
      * Get config path.
      *
-     * @return __return_getConfigPath_type__ __return_getConfigPath_description__
-     *
      * @throws Exception __exception_Exception_description__
+     *
+     * @return __return_getConfigPath_type__ __return_getConfigPath_description__
      */
     public function getConfigPath()
     {
-        $path = $this->basePath.DIRECTORY_SEPARATOR.'config';
+        $path = $this->basePath . DIRECTORY_SEPARATOR . 'config';
         if (!is_dir($path)) {
             throw new Exception("Config path does not exist: {$path}");
         }
@@ -458,7 +458,7 @@ class Setup extends \infinite\base\Object
      */
     public function getEnvironmentFilePath()
     {
-        $path = $this->configPath.DIRECTORY_SEPARATOR.'env.php';
+        $path = $this->configPath . DIRECTORY_SEPARATOR . 'env.php';
 
         return $path;
     }
@@ -470,7 +470,7 @@ class Setup extends \infinite\base\Object
      */
     public function getEnvironmentTemplateFilePath()
     {
-        $path = $this->environmentFilePath.'.sample';
+        $path = $this->environmentFilePath . '.sample';
 
         return $path;
     }
@@ -478,13 +478,13 @@ class Setup extends \infinite\base\Object
     /**
      * Get library config path.
      *
-     * @return __return_getLibraryConfigPath_type__ __return_getLibraryConfigPath_description__
-     *
      * @throws Exception __exception_Exception_description__
+     *
+     * @return __return_getLibraryConfigPath_type__ __return_getLibraryConfigPath_description__
      */
     public function getLibraryConfigPath()
     {
-        $path = INFINITE_APP_PATH.DIRECTORY_SEPARATOR.'config';
+        $path = INFINITE_APP_PATH . DIRECTORY_SEPARATOR . 'config';
         if (!is_dir($path)) {
             throw new Exception("Library config path does not exist: {$path}");
         }
@@ -495,13 +495,13 @@ class Setup extends \infinite\base\Object
     /**
      * Get common config path.
      *
-     * @return __return_getCommonConfigPath_type__ __return_getCommonConfigPath_description__
-     *
      * @throws Exception __exception_Exception_description__
+     *
+     * @return __return_getCommonConfigPath_type__ __return_getCommonConfigPath_description__
      */
     public function getCommonConfigPath()
     {
-        $path = $this->libraryConfigPath.DIRECTORY_SEPARATOR.'common';
+        $path = $this->libraryConfigPath . DIRECTORY_SEPARATOR . 'common';
         if (!is_dir($path)) {
             throw new Exception("Base environment path does not exist: {$path}");
         }
@@ -512,13 +512,13 @@ class Setup extends \infinite\base\Object
     /**
      * Get environment templates path.
      *
-     * @return __return_getEnvironmentTemplatesPath_type__ __return_getEnvironmentTemplatesPath_description__
-     *
      * @throws Exception __exception_Exception_description__
+     *
+     * @return __return_getEnvironmentTemplatesPath_type__ __return_getEnvironmentTemplatesPath_description__
      */
     public function getEnvironmentTemplatesPath()
     {
-        $path = $this->libraryConfigPath.DIRECTORY_SEPARATOR.'templates';
+        $path = $this->libraryConfigPath . DIRECTORY_SEPARATOR . 'templates';
         if (!is_dir($path)) {
             throw new Exception("Environment templates path does not exist: {$path}");
         }
@@ -535,9 +535,9 @@ class Setup extends \infinite\base\Object
      */
     public function render($view)
     {
-        $basePath = dirname(__FILE__).DIRECTORY_SEPARATOR.'views';
-        $viewFile = $basePath.DIRECTORY_SEPARATOR.$view.'.php';
-        $layoutFile = $basePath.DIRECTORY_SEPARATOR.'layout.php';
+        $basePath = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'views';
+        $viewFile = $basePath . DIRECTORY_SEPARATOR . $view . '.php';
+        $layoutFile = $basePath . DIRECTORY_SEPARATOR . 'layout.php';
         if (!file_exists($viewFile)) {
             throw new Exception("Invalid setup view file!");
         }

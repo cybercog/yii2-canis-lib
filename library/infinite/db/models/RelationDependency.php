@@ -65,6 +65,6 @@ class RelationDependency extends \infinite\db\ActiveRecord
 
     public function getDependencyId()
     {
-        return $this->parent_relation_id.'.'.$this->child_relation_id;
+        return $this->parent_relation_id . '.' . $this->child_relation_id;
     }
 }

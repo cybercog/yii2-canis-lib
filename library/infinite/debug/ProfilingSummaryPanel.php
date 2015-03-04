@@ -9,8 +9,8 @@
 namespace infinite\debug;
 
 use Yii;
-use yii\debug\Panel;
 use yii\debug\models\search\Profile;
+use yii\debug\Panel;
 
 /**
  * Debugger panel that collects and displays performance profiling info.
@@ -47,7 +47,7 @@ class ProfilingSummaryPanel extends Panel
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
             'memory' => sprintf('%.1f MB', $this->data['memory'] / 1048576),
-            'time' => number_format($this->data['time'] * 1000).' ms',
+            'time' => number_format($this->data['time'] * 1000) . ' ms',
         ]);
     }
 
@@ -77,7 +77,7 @@ class ProfilingSummaryPanel extends Panel
             $timings = Yii::getLogger()->calculateTimings($this->data['messages']);
 
             foreach ($timings as $seq => $profileTiming) {
-                $key = md5($profileTiming['category'].$profileTiming['info']);
+                $key = md5($profileTiming['category'] . $profileTiming['info']);
                 if (!isset($a[$key])) {
                     $a[$key] =  [
                         'durations' => [], // in milliseconds

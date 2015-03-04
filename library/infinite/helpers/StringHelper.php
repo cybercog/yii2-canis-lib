@@ -67,7 +67,7 @@ class StringHelper extends \yii\helpers\StringHelper
         $sz = 'BKMGTP';
         $factor = floor((strlen($bytes) - 1) / 3);
 
-        return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)).@$sz[$factor];
+        return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$sz[$factor];
     }
 
     /*
@@ -86,7 +86,7 @@ class StringHelper extends \yii\helpers\StringHelper
         $parseInstructionSet = static::parseInstructions();
         if (!empty($extracted)) {
             foreach ($extracted[0] as $k => $v) {
-                $key = '/'.$v.'/';
+                $key = '/' . $v . '/';
                 $parse = $extracted[1][$k];
                 $replace[$key] = null;
                 $instructions = explode('.', $parse);

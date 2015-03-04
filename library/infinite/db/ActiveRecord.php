@@ -8,14 +8,14 @@
 
 namespace infinite\db;
 
-use Yii;
-use ReflectionClass;
-use yii\base\ModelEvent;
-use infinite\base\ObjectTrait;
 use infinite\base\ModelTrait;
-use infinite\db\models\Relation;
-use infinite\db\models\Registry;
+use infinite\base\ObjectTrait;
 use infinite\caching\Cacher;
+use infinite\db\models\Registry;
+use infinite\db\models\Relation;
+use ReflectionClass;
+use Yii;
+use yii\base\ModelEvent;
 use yii\helpers\Url;
 
 /**
@@ -212,7 +212,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
      */
     public static function cacheGroupKey()
     {
-        return 'model:'.get_called_class();
+        return 'model:' . get_called_class();
     }
 
     /**
@@ -273,7 +273,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
             return '';
         }
 
-        return '['.$this->tabularId.']';
+        return '[' . $this->tabularId . ']';
     }
 
     /**
@@ -292,7 +292,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
             return $id;
         }
 
-        return static::TABULAR_PREFIX.substr(md5($id), 0, 10);
+        return static::TABULAR_PREFIX . substr(md5($id), 0, 10);
     }
 
     /**
@@ -346,9 +346,9 @@ class ActiveRecord extends \yii\db\ActiveRecord
         $pos = strpos($alias, '\\');
         $root = $pos === false ? $alias : substr($alias, 0, $pos);
         if ($root === ':app') {
-            return 'app\models'.substr($alias, $pos);
+            return 'app\models' . substr($alias, $pos);
         } elseif (isset(Yii::$app->modelAliases[$root])) {
-            return Yii::$app->modelAliases[$root].substr($alias, $pos);
+            return Yii::$app->modelAliases[$root] . substr($alias, $pos);
         }
 
         return $alias;
@@ -384,9 +384,9 @@ class ActiveRecord extends \yii\db\ActiveRecord
         }
         $class = new ReflectionClass($className);
         if ($class->getNamespaceName() === 'app\models') {
-            return ':app\\'.$class->getShortName();
+            return ':app\\' . $class->getShortName();
         } elseif (($alias = array_search($class->getNamespaceName(), Yii::$app->modelAliases)) !== false) {
-            return $alias.'\\'.$class->getShortName();
+            return $alias . '\\' . $class->getShortName();
         }
 
         return $className;
@@ -433,7 +433,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
         $class = get_called_class();
         $dummy = new $class();
 
-        return static::findOne([$dummy->tableName().'.'.$dummy->primaryKey()[0] => $id], $checkAccess);
+        return static::findOne([$dummy->tableName() . '.' . $dummy->primaryKey()[0] => $id], $checkAccess);
     }
 
     /**
@@ -646,7 +646,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
             if (!$this->hasAttribute($field)) {
                 continue;
             }
-            $sortBy[$alias.'.'.$field] = $order;
+            $sortBy[$alias . '.' . $field] = $order;
         }
 
         return $sortBy;
@@ -690,7 +690,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
         }
         if ($this->shortDescriptorLength) {
             if (strlen($value) > $this->shortDescriptorLength) {
-                $value = substr($value, 0, $this->shortDescriptorLength).'…';
+                $value = substr($value, 0, $this->shortDescriptorLength) . '…';
             }
         }
 

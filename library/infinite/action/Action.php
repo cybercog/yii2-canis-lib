@@ -137,7 +137,7 @@ abstract class Action extends \infinite\base\Object implements InteractiveAction
         foreach ($this->requiredConfigParams() as $param) {
             if (!isset($this->config[$param])) {
                 if ($fatal) {
-                    throw new InvalidConfigException("Config setting {$param} is required for ".get_called_class());
+                    throw new InvalidConfigException("Config setting {$param} is required for " . get_called_class());
                 }
 
                 return false;

@@ -74,12 +74,12 @@ class FileStorage extends \infinite\base\Component
         if (!$keep) {
             $this->_tempFiles[] = $tmp;
             if (!empty($tmpExt)) {
-                $tmp = $tmp.$tmpExt;
+                $tmp = $tmp . $tmpExt;
                 $this->_tempFiles[] = $tmp;
             }
         } else {
             if (!empty($tmpExt)) {
-                $tmp = $tmp.$tmpExt;
+                $tmp = $tmp . $tmpExt;
             }
         }
 
@@ -89,9 +89,9 @@ class FileStorage extends \infinite\base\Component
     /**
      * Get a temporary path.
      *
-     * @return string Temporary file path
-     *
      * @throws Exception __exception_Exception_description__
+     *
+     * @return string Temporary file path
      */
     public function getTempPath()
     {

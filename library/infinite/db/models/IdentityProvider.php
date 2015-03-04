@@ -2,8 +2,8 @@
 
 namespace infinite\db\models;
 
-use Yii;
 use infinite\base\collector\CollectedObjectTrait;
+use Yii;
 
 /**
  * This is the model class for table "identity_provider".

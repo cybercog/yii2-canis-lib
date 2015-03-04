@@ -10,8 +10,8 @@ namespace infinite\caching;
 
 use Yii;
 use yii\caching\ChainedDependency;
-use yii\caching\TagDependency;
 use yii\caching\DbDependency;
+use yii\caching\TagDependency;
 
 /**
  * Cacher [@doctodo write class description for Cacher].
@@ -58,12 +58,12 @@ class Cacher extends \infinite\base\Component
             }
         }
         if ($hash) {
-            $key = md5(Yii::$app->params['salt'].json_encode($key));
+            $key = md5(Yii::$app->params['salt'] . json_encode($key));
         } else {
             if (is_array($key)) {
                 $key[] = Yii::$app->params['salt'];
             } else {
-                $key = Yii::$app->params['salt'].$key;
+                $key = Yii::$app->params['salt'] . $key;
             }
         }
 
@@ -164,7 +164,7 @@ class Cacher extends \infinite\base\Component
 
     public static function categoryDependency($category, $reusable = true)
     {
-        return new TagDependency(['tags' => ['category-'.$category], 'reusable' => $reusable]);
+        return new TagDependency(['tags' => ['category-' . $category], 'reusable' => $reusable]);
     }
 
     /**
@@ -179,6 +179,6 @@ class Cacher extends \infinite\base\Component
 
     public static function invalidateCategory($category)
     {
-        TagDependency::invalidate(Yii::$app->{static::$component}, ['category-'.$category]);
+        TagDependency::invalidate(Yii::$app->{static::$component}, ['category-' . $category]);
     }
 }

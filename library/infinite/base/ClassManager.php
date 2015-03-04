@@ -102,10 +102,10 @@ class ClassManager extends Component implements IteratorAggregate, ArrayAccess
      *
      * @param mixed $offset the offset to retrieve element.
      *
-     * @return mixed the element at the offset, null if no element is found at the offset
+     * @throws \ __exception_\_description__
+     * @throws \ __exception_\_description__
      *
-     * @throws \ __exception_\_description__
-     * @throws \ __exception_\_description__
+     * @return mixed the element at the offset, null if no element is found at the offset
      */
     public function offsetGet($offset)
     {

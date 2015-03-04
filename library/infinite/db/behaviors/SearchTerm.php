@@ -8,10 +8,10 @@
 
 namespace infinite\db\behaviors;
 
-use Yii;
-use yii\db\Query;
 use infinite\helpers\ArrayHelper;
 use infinite\helpers\StringHelper;
+use Yii;
+use yii\db\Query;
 
 trait SearchTerm
 {
@@ -138,7 +138,7 @@ trait SearchTerm
         }
 
         if (!empty($params['ignore'])) {
-            $query->andWhere(['not in', $query->primaryAlias.'.'.self::primaryKey()[0], $params['ignore']]);
+            $query->andWhere(['not in', $query->primaryAlias . '.' . self::primaryKey()[0], $params['ignore']]);
         }
 
         if (!empty($params['action'])) {
@@ -152,11 +152,11 @@ trait SearchTerm
         foreach ($fields as $fieldList) {
             foreach ($fieldList as &$field) {
                 if (!in_array(substr($field, 0, 1), ['[', '{'])) {
-                    $field = '[['.$field.']]';
+                    $field = '[[' . $field . ']]';
                 }
 
                 if (!in_array(substr($field, 0, 1), ['{'])) {
-                    $field = '{{'.$query->primaryAlias.'}}.'.$field;
+                    $field = '{{' . $query->primaryAlias . '}}.' . $field;
                 }
                 foreach ($searchTerms as $term) {
                     //$term = '%'.strtr($term, ['%'=>'\%', '_'=>'\_', '\\'=>'\\\\']).'%';
@@ -170,15 +170,15 @@ trait SearchTerm
         foreach ($fields as $fieldList) {
             foreach ($fieldList as $field) {
                 foreach ($searchTerms as $n => $term) {
-                    $searchTermTag = ":term".$n;
+                    $searchTermTag = ":term" . $n;
                     $query->params[$searchTermTag] = strtolower($term);
-                    $orders[] = 'IF(ISNULL('.$field.'), 0, '.($weight * 1).'*(length('.$field.')-length(replace(LOWER('.$field.'),'.$searchTermTag.',\'\')))/length('.$searchTermTag.'))';
+                    $orders[] = 'IF(ISNULL(' . $field . '), 0, ' . ($weight * 1) . '*(length(' . $field . ')-length(replace(LOWER(' . $field . '),' . $searchTermTag . ',\'\')))/length(' . $searchTermTag . '))';
                 }
             }
             $weight = $weight - 1;
         }
         $relavance = implode('+', $orders);
-        $query->select = [$query->primaryAlias.".*", "({$relavance}) as [[searchScore]]"];
+        $query->select = [$query->primaryAlias . ".*", "({$relavance}) as [[searchScore]]"];
         if (empty($query->orderBy)) {
             $query->orderBy = [];
         }

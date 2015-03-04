@@ -8,8 +8,8 @@
 
 namespace infinite\console\controllers;
 
-use Yii;
 use infinite\base\exceptions\Exception;
+use Yii;
 
 /**
  * MigrateController [@doctodo write class description for MigrateController].
@@ -50,9 +50,9 @@ class MigrateController extends \yii\console\controllers\MigrateController
     /**
      * Returns the migrations that are not applied.
      *
-     * @return array list of new migrations
-     *
      * @throws Exception __exception_Exception_description__
+     *
+     * @return array list of new migrations
      */
     protected function getNewMigrations()
     {
@@ -73,11 +73,11 @@ class MigrateController extends \yii\console\controllers\MigrateController
                 if ($file === '.' || $file === '..') {
                     continue;
                 }
-                $path = $migrationPath.DIRECTORY_SEPARATOR.$file;
+                $path = $migrationPath . DIRECTORY_SEPARATOR . $file;
                 if (preg_match('/^(m(\d{6}_\d{6})_.*?)\.php$/', $file, $matches) and is_file($path)) {
-                    $migrationClassName = str_replace('/', '\\', substr($migrationPathAlias, 1)).'\\'.$matches[1];
+                    $migrationClassName = str_replace('/', '\\', substr($migrationPathAlias, 1)) . '\\' . $matches[1];
                     if (!isset($applied[$migrationClassName])) {
-                        $key = $migrationClassName::baseClassName().'-'.md5($migrationClassName);
+                        $key = $migrationClassName::baseClassName() . '-' . md5($migrationClassName);
                         $migrations[$key] = $migrationClassName;
                         $this->migrationsMap[$migrationClassName] = $path;
                     }
@@ -117,10 +117,10 @@ class MigrateController extends \yii\console\controllers\MigrateController
             echo 'None';
         } else {
             $n = count($migrations);
-            echo "Found $n new ".($n === 1 ? 'migration' : 'migrations').":\n";
+            echo "Found $n new " . ($n === 1 ? 'migration' : 'migrations') . ":\n";
 
             foreach ($migrations as $migration) {
-                echo $migration."\n";
+                echo $migration . "\n";
             }
         }
     }

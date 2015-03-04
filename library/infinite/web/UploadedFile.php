@@ -32,13 +32,13 @@ class UploadedFile extends \yii\web\UploadedFile implements \infinite\base\FileI
                 return 'The file upload process was interupted. Please try again.';
             break;
             case UPLOAD_ERR_NO_TMP_DIR:
-                return $baseInternalError.' (TMP_DIR)';
+                return $baseInternalError . ' (TMP_DIR)';
             break;
             case UPLOAD_ERR_CANT_WRITE:
-                return $baseInternalError.' (CANT_WRITE)';
+                return $baseInternalError . ' (CANT_WRITE)';
             break;
             case UPLOAD_ERR_EXTENSION:
-                return $baseInternalError.' (PHP_EXTENSION)';
+                return $baseInternalError . ' (PHP_EXTENSION)';
             break;
 
         }

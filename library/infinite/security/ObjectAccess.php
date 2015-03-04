@@ -8,9 +8,9 @@
 
 namespace infinite\security;
 
-use Yii;
 use infinite\caching\Cacher;
 use infinite\helpers\ArrayHelper;
+use Yii;
 
 /**
  * ObjectAccess [@doctodo write class description for ObjectAccess].
@@ -72,7 +72,7 @@ class ObjectAccess extends \infinite\base\Component
     public static function get($object)
     {
         $objectId = is_object($object) ? $object->primaryKey : $object;
-        $accessKey = [__CLASS__.'.'.__FUNCTION__, $objectId];
+        $accessKey = [__CLASS__ . '.' . __FUNCTION__, $objectId];
         $accessObject = Cacher::get($accessKey);
         if ($accessObject) {
             return $accessObject;
@@ -225,7 +225,7 @@ class ObjectAccess extends \infinite\base\Component
                 $role = Yii::$app->collectors['roles']->getById($role);
                 if ($role && $role->exclusive) {
                     if (isset($exclusive[$role->object->primaryKey])) {
-                        $package['errors'][$requestor] = 'There can not be more than one '.$role->object->name;
+                        $package['errors'][$requestor] = 'There can not be more than one ' . $role->object->name;
                         continue;
                     }
                     $exclusive[$role->object->primaryKey] = true;
@@ -417,7 +417,7 @@ class ObjectAccess extends \infinite\base\Component
         }
 
         foreach ($this->requestors as $aro => $access) {
-            if (preg_match('/^'.$groupPrefix.'\-/', $aro) === 0) {
+            if (preg_match('/^' . $groupPrefix . '\-/', $aro) === 0) {
                 return 'shared';
             }
         }

@@ -19,9 +19,9 @@ class ButtonDropdown extends \yii\bootstrap\ButtonDropdown
     {
         Html::addCssClass($this->containerOptions, 'btn-group');
         echo Html::beginTag('div', $this->containerOptions);
-        echo "\n".$this->renderButton();
-        echo "\n".$this->renderDropdown();
-        echo "\n".Html::endTag('div');
+        echo "\n" . $this->renderButton();
+        echo "\n" . $this->renderDropdown();
+        echo "\n" . Html::endTag('div');
         $this->registerPlugin('button');
     }
 
@@ -51,7 +51,7 @@ class ButtonDropdown extends \yii\bootstrap\ButtonDropdown
                 'view' => $this->getView(),
             ]);
         } else {
-            $label .= ' '.Html::tag('span', '', $this->iconOptions);
+            $label .= ' ' . Html::tag('span', '', $this->iconOptions);
             $options = $this->options;
             if (!isset($options['href'])) {
                 $options['href'] = '#';
@@ -67,6 +67,6 @@ class ButtonDropdown extends \yii\bootstrap\ButtonDropdown
             'options' => $options,
             'encodeLabel' => false,
             'view' => $this->getView(),
-        ])."\n".$splitButton;
+        ]) . "\n" . $splitButton;
     }
 }

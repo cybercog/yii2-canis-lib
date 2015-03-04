@@ -8,13 +8,13 @@
 
 namespace infinite\security;
 
-use Yii;
 use infinite\base\exceptions\Exception;
-use infinite\helpers\ArrayHelper;
+use infinite\caching\Cacher;
+use infinite\db\ActiveQuery;
 use infinite\db\ActiveRecord;
 use infinite\db\Query;
-use infinite\db\ActiveQuery;
-use infinite\caching\Cacher;
+use infinite\helpers\ArrayHelper;
+use Yii;
 
 /**
  * Gatekeeper [@doctodo write class description for Gatekeeper].
@@ -118,7 +118,7 @@ class Gatekeeper extends \infinite\base\Component
     {
         $aclClass = Yii::$app->classes['Acl'];
         $query = new Query();
-        $query->from([$aclClass::tableName().' acl']);
+        $query->from([$aclClass::tableName() . ' acl']);
         $query->orderBy(['modified' => SORT_DESC]);
         $query->select(['modified']);
         $query->limit(1);
@@ -505,7 +505,7 @@ class Gatekeeper extends \infinite\base\Component
         if (is_array($controlledObject)) {
             $modelPrefix = $modelClass::modelPrefix();
             foreach ($controlledObject as $objectId) {
-                if (preg_match('/^'.preg_quote($modelPrefix.'-').'/', $objectId) !== 1) {
+                if (preg_match('/^' . preg_quote($modelPrefix . '-') . '/', $objectId) !== 1) {
                     $orderControlledObject[] = $objectId;
                 }
             }
@@ -513,12 +513,12 @@ class Gatekeeper extends \infinite\base\Component
         $subquery = new Query();
         $innerAlias = 'inner_acl_role';
         $innerOnConditions = ['or'];
-        $innerOnConditions[] = ['[['.$innerAlias.']].[[controlled_object_id]]' => $controlledObject];
-        $innerOnConditions[] = '[['.$innerAlias.']].[[controlled_object_id]] = {{'.$query->primaryAlias.'}}.[['.$query->primaryTablePk.']]';
+        $innerOnConditions[] = ['[[' . $innerAlias . ']].[[controlled_object_id]]' => $controlledObject];
+        $innerOnConditions[] = '[[' . $innerAlias . ']].[[controlled_object_id]] = {{' . $query->primaryAlias . '}}.[[' . $query->primaryTablePk . ']]';
         $this->buildInnerRoleCheckConditions($innerOnConditions, $innerAlias, $query);
 
         if (!empty($bannedRoles)) {
-            $innerOnConditions = ['and', $innerOnConditions, ['and', ['not', ['[['.$innerAlias.']].[[role_id]]' => $bannedRoles]]]];
+            $innerOnConditions = ['and', $innerOnConditions, ['and', ['not', ['[[' . $innerAlias . ']].[[role_id]]' => $bannedRoles]]]];
         }
         $subquery->from([$aclRoleTable => $aclRoleTable]);
         if ($expandAros) {
@@ -542,19 +542,19 @@ class Gatekeeper extends \infinite\base\Component
 
         $where = ['and'];
         if (!empty($aroIn)) {
-            $where[] = ['{{'.$aclRoleTable.'}}.[[accessing_object_id]]' => $aroIn];
+            $where[] = ['{{' . $aclRoleTable . '}}.[[accessing_object_id]]' => $aroIn];
         } else {
-            $where[] = ['{{'.$aclRoleTable.'}}.[[accessing_object_id]]' => null]; //never!
+            $where[] = ['{{' . $aclRoleTable . '}}.[[accessing_object_id]]' => null]; //never!
         }
 
         // $subquery->where($innerOnConditions)->select(['[[role_id]]']);
         if (!empty($orderControlledObject)) {
-            $subquery->orderBy(['IF([[controlled_object_id]] IN ("'.implode('", "', $orderControlledObject).'"), 1, 0)' => SORT_ASC]);
+            $subquery->orderBy(['IF([[controlled_object_id]] IN ("' . implode('", "', $orderControlledObject) . '"), 1, 0)' => SORT_ASC]);
         }
         // $subquery->limit = '1';
         $subquery->where($where);
         $query->leftJoin([$innerAlias => $subquery], $innerOnConditions);
-        $query->groupBy('{{'.$query->primaryAlias.'}}.[['.$query->primaryTablePk.']]');
+        $query->groupBy('{{' . $query->primaryAlias . '}}.[[' . $query->primaryTablePk . ']]');
         $query->having(['and', '[[accessRoleCheck]] IS NOT NULL']);
         if (!isset($query->ensureSelect)) {
             $query->ensureSelect = [];
@@ -608,9 +608,9 @@ class Gatekeeper extends \infinite\base\Component
         $aroN = 0;
         $aroIn = [];
 
-        $aclOrder[$alias.'.access'] = SORT_ASC;
+        $aclOrder[$alias . '.access'] = SORT_ASC;
 
-        $aclOrder['IF('.$alias.'.accessing_object_id IS NULL, 0, 1)'] = SORT_DESC;
+        $aclOrder['IF(' . $alias . '.accessing_object_id IS NULL, 0, 1)'] = SORT_DESC;
         foreach ($aros as $aro) {
             if (is_array($aro)) {
                 $subInIf = [];
@@ -626,21 +626,21 @@ class Gatekeeper extends \infinite\base\Component
         }
 
         if (!empty($aroIn)) {
-            $aclOnConditions[] = ['or', [$alias.'.accessing_object_id' => $aroIn], [$alias.'.accessing_object_id' => null]];
+            $aclOnConditions[] = ['or', [$alias . '.accessing_object_id' => $aroIn], [$alias . '.accessing_object_id' => null]];
         } else {
-            $aclOnConditions[] = [$alias.'.accessing_object_id' => null];
+            $aclOnConditions[] = [$alias . '.accessing_object_id' => null];
         }
 
-        $aclOrder['IF('.$alias.'.aca_id IS NULL, 0, 1)'] = SORT_DESC;
-        $aclOrder['IF('.$alias.'.controlled_object_id IS NULL, 0, 1)'] = SORT_DESC;
+        $aclOrder['IF(' . $alias . '.aca_id IS NULL, 0, 1)'] = SORT_DESC;
+        $aclOrder['IF(' . $alias . '.controlled_object_id IS NULL, 0, 1)'] = SORT_DESC;
 
         $innerOnConditions = ['or'];
 
         if ($limitAccess) {
             if ($allowParentInherit) {
-                $aclConditions = [$alias.'.access' => [0, 1]];
+                $aclConditions = [$alias . '.access' => [0, 1]];
             } else {
-                $aclConditions = [$alias.'.access' => 1];
+                $aclConditions = [$alias . '.access' => 1];
             }
         }
 
@@ -650,11 +650,11 @@ class Gatekeeper extends \infinite\base\Component
             if (is_object($controlledObject)) {
                 $controlledObject = $controlledObject->primaryKey;
             }
-            $innerOnConditions[] = [$alias.'.controlled_object_id' => $controlledObject];
+            $innerOnConditions[] = [$alias . '.controlled_object_id' => $controlledObject];
         }
 
-        $innerOnConditions[] = $alias.'.controlled_object_id ='.$query->primaryAlias.'.'.$query->primaryTablePk;
-        $innerOnConditions[] = [$alias.'.controlled_object_id' => null];
+        $innerOnConditions[] = $alias . '.controlled_object_id =' . $query->primaryAlias . '.' . $query->primaryTablePk;
+        $innerOnConditions[] = [$alias . '.controlled_object_id' => null];
 
         $aclOnConditions[] = $innerOnConditions;
 
@@ -666,9 +666,9 @@ class Gatekeeper extends \infinite\base\Component
             }
             $query->andWhere($aclOnConditions);
         } else {
-            $query->join('INNER JOIN', $aclClass::tableName().' '.$alias.' USE INDEX(`aclComboAcaAccess`)', $aclOnConditions);
+            $query->join('INNER JOIN', $aclClass::tableName() . ' ' . $alias . ' USE INDEX(`aclComboAcaAccess`)', $aclOnConditions);
             $query->andWhere($aclConditions);
-            $query->groupBy($query->primaryAlias.'.'.$query->primaryTablePk);
+            $query->groupBy($query->primaryAlias . '.' . $query->primaryTablePk);
         }
         if (!isset($query->orderBy)) {
             $query->orderBy($aclOrder);
@@ -766,7 +766,7 @@ class Gatekeeper extends \infinite\base\Component
         }
 
         $aclKey = [
-            __CLASS__.'.'.__FUNCTION__,
+            __CLASS__ . '.' . __FUNCTION__,
             is_object($controlledObject) ? $controlledObject->primaryKey : $controlledObject,
             is_object($accessingObject) ? $accessingObject->primaryKey : $accessingObject,
             is_object($acaIds) ? $acaIds->primaryKey : $acaIds,
@@ -781,10 +781,10 @@ class Gatekeeper extends \infinite\base\Component
         $subquery = new Query();
         $aclClass = Yii::$app->classes['Acl'];
         $alias = $aclClass::tableName();
-        $subquery->from = [$aclClass::tableName().' '.$alias];
+        $subquery->from = [$aclClass::tableName() . ' ' . $alias];
         $this->generateAclCheckCriteria($subquery, $controlledObject, $accessingObject, true, get_class($controlledObject), $expandAros, false);
         if ($acaIds !== true) {
-            $subquery->andWhere(['or', [$alias.'.[[aca_id]]' => $acaIds], [$alias.'.[[aca_id]]' => null]]);
+            $subquery->andWhere(['or', [$alias . '.[[aca_id]]' => $acaIds], [$alias . '.[[aca_id]]' => null]]);
         }
 
         $query = new Query();
@@ -851,9 +851,9 @@ class Gatekeeper extends \infinite\base\Component
     {
         $accessingObject = $this->getAccessingObject($accessingObject);
         if (is_object($accessingObject)) {
-            $arosKey = md5(json_encode([__CLASS__.'.'.__FUNCTION__, $accessingObject->primaryKey]));
+            $arosKey = md5(json_encode([__CLASS__ . '.' . __FUNCTION__, $accessingObject->primaryKey]));
         } else {
-            $arosKey = md5(json_encode([__CLASS__.'.'.__FUNCTION__, false]));
+            $arosKey = md5(json_encode([__CLASS__ . '.' . __FUNCTION__, false]));
         }
 
         if (!isset($this->_requestors[$arosKey])) {
@@ -877,9 +877,9 @@ class Gatekeeper extends \infinite\base\Component
     {
         $accessingObject = $this->getAccessingObject($accessingObject);
         if (is_object($accessingObject)) {
-            $arosKey = md5(json_encode([__CLASS__.'.'.__FUNCTION__, $accessingObject->primaryKey]));
+            $arosKey = md5(json_encode([__CLASS__ . '.' . __FUNCTION__, $accessingObject->primaryKey]));
         } else {
-            $arosKey = md5(json_encode([__CLASS__.'.'.__FUNCTION__, false]));
+            $arosKey = md5(json_encode([__CLASS__ . '.' . __FUNCTION__, false]));
         }
 
         if (!isset($this->_requestors[$arosKey])) {
@@ -1013,9 +1013,9 @@ class Gatekeeper extends \infinite\base\Component
      *
      * @param __param_action_type__ $action __param_action_description__
      *
-     * @return __return_getActionObjectByName_type__ __return_getActionObjectByName_description__
-     *
      * @throws Exception __exception_Exception_description__
+     *
+     * @return __return_getActionObjectByName_type__ __return_getActionObjectByName_description__
      */
     public function getActionObjectByName($action)
     {
@@ -1249,9 +1249,9 @@ class Gatekeeper extends \infinite\base\Component
      * @param __param_accessingObject_type__  $accessingObject  __param_accessingObject_description__ [optional]
      * @param __param_aclRole_type__          $aclRole          __param_aclRole_description__ [optional]
      *
-     * @return __return_setAccess_type__ __return_setAccess_description__
-     *
      * @throws Exception __exception_Exception_description__
+     *
+     * @return __return_setAccess_type__ __return_setAccess_description__
      */
     public function setAccess($action, $access, $controlledObject = null, $accessingObject = null, $aclRole = null)
     {

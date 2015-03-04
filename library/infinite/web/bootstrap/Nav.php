@@ -50,7 +50,7 @@ class Nav extends \yii\bootstrap\Nav
             }
             $itemRouteParts = explode('/', $itemRoute);
             if ((empty($itemRouteParts) || $itemRouteParts[0] !== '') && Yii::$app->controller) {
-                $itemRoute = Yii::$app->controller->module->getUniqueId().'/'.$itemRoute;
+                $itemRoute = Yii::$app->controller->module->getUniqueId() . '/' . $itemRoute;
                 $itemRoute = ltrim($itemRoute, '/');
                 $itemRouteParts = explode('/', $itemRoute);
             }

@@ -8,8 +8,8 @@
 
 namespace infinite\db\behaviors;
 
-use Yii;
 use infinite\security\Access;
+use Yii;
 
 /**
  * ActiveAccess [@doctodo write class description for ActiveAccess].

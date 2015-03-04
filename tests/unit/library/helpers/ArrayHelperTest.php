@@ -2,8 +2,8 @@
 
 namespace infiniteunit\library\helpers;
 
-use infiniteunit\TestCase;
 use infinite\helpers\ArrayHelper;
+use infiniteunit\TestCase;
 
 class ArrayHelperTest extends TestCase
 {

@@ -8,9 +8,9 @@
 
 namespace infinite\db\behaviors\auditable;
 
+use infinite\caching\Cacher;
 use Yii;
 use yii\base\InvalidConfigException;
-use infinite\caching\Cacher;
 
 /**
  * Auditable [@doctodo write class description for Auditable].
@@ -177,9 +177,9 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
      *
      * @param __param_event_type__ $event __param_event_description__
      *
-     * @return __return_registerAuditEvent_type__ __return_registerAuditEvent_description__
-     *
      * @throws InvalidConfigException __exception_InvalidConfigException_description__
+     *
+     * @return __return_registerAuditEvent_type__ __return_registerAuditEvent_description__
      */
     public function registerAuditEvent($event)
     {

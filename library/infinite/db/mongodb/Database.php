@@ -8,8 +8,8 @@
 
 namespace infinite\db\mongodb;
 
-use Yii;
 use infinite\base\ComponentTrait;
+use Yii;
 
 class Database extends \yii\mongodb\Database
 {

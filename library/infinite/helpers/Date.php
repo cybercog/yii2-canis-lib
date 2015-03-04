@@ -104,7 +104,7 @@ class Date extends \infinite\base\Object
      */
     public static function startOfDay($day, $time = null)
     {
-        return self::strtotime($day.' 00:00:00', $time);
+        return self::strtotime($day . ' 00:00:00', $time);
     }
 
     /**
@@ -117,7 +117,7 @@ class Date extends \infinite\base\Object
      */
     public static function endOfDay($day, $time = null)
     {
-        return self::strtotime($day.' 23:59:59', $time);
+        return self::strtotime($day . ' 23:59:59', $time);
     }
 
     /**
@@ -230,7 +230,7 @@ class Date extends \infinite\base\Object
             return self::date($defaultFormat, $mdate);
         } elseif ($today === $tomorrowDate) { // yesterday
             if ($showTime) {
-                return $tomorrowString.' at '.self::date('g:iA', $mdate);
+                return $tomorrowString . ' at ' . self::date('g:iA', $mdate);
             } else {
                 return $tomorrowString;
             }
@@ -248,7 +248,7 @@ class Date extends \infinite\base\Object
             $unit .= 's';
         }
 
-        return $pre.$n.' '.$unit.$post;
+        return $pre . $n . ' ' . $unit . $post;
     }
 
     /**
@@ -281,13 +281,13 @@ class Date extends \infinite\base\Object
     public static function shortDuration($seconds)
     {
         if ($seconds > (60*60)) { // hours
-            return round($seconds/(60*60)).'h';
+            return round($seconds/(60*60)) . 'h';
         } elseif ($seconds > 60) { // minutes
-            return round($seconds/(60)).'m';
+            return round($seconds/(60)) . 'm';
         } elseif ($seconds >= 1) { // seconds
-            return round($seconds).'s';
+            return round($seconds) . 's';
         } else {
-            return round($seconds*100, 1).'ms';
+            return round($seconds*100, 1) . 'ms';
         }
     }
     /**
@@ -335,7 +335,7 @@ class Date extends \infinite\base\Object
         $string = [];
         foreach ($segments as $key => $value) {
             $segment_name = substr($key, 0, -1);
-            $segment = $value.' '.$segment_name;
+            $segment = $value . ' ' . $segment_name;
             if ($value != 1) {
                 $segment .= 's';
             }

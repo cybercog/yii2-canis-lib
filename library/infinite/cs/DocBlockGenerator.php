@@ -51,7 +51,7 @@ class DocBlockGenerator extends AbstractFixer
     protected function match($pattern, $subject)
     {
         $sets = [];
-        preg_match_all($pattern.'suU', $subject, $sets, PREG_SET_ORDER);
+        preg_match_all($pattern . 'suU', $subject, $sets, PREG_SET_ORDER);
         foreach ($sets as &$set) {
             foreach ($set as $i => $match) {
                 if (is_numeric($i) /*&& $i != 0*/) {

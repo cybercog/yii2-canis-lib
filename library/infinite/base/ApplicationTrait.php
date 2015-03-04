@@ -27,7 +27,7 @@ trait ApplicationTrait
         }
         parent::init();
         $duration = round((microtime(true) - $start) * 1000, 2);
-        Yii::trace("Init took ".$duration.'ms');
+        Yii::trace("Init took " . $duration . 'ms');
     }
 
     public function getIsDbAvailable()
@@ -48,7 +48,7 @@ trait ApplicationTrait
     public function registerModelAlias($alias, $namespace)
     {
         if (strncmp($alias, ':', 1)) {
-            $alias = ':'.$alias;
+            $alias = ':' . $alias;
         }
         if (!isset($this->_modelAliases[$alias])) {
             $this->_modelAliases[$alias] = $namespace;

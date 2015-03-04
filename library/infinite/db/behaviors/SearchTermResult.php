@@ -265,7 +265,7 @@ class SearchTermResult extends Object
 
     public function getScoreSort()
     {
-        return sprintf('%010f', $this->score/100).'-'.$this->object->primaryKey;
+        return sprintf('%010f', $this->score/100) . '-' . $this->object->primaryKey;
     }
 
     /**

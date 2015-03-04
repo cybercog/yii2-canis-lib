@@ -79,7 +79,7 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
         }
         $relationFields = [];
         if ($primaryOnly) {
-            $relationFields['{{%alias%}}.[['.$primaryField.']]'] = 1;
+            $relationFields['{{%alias%}}.[[' . $primaryField . ']]'] = 1;
         }
 
         return $childObject->siblingRelationQuery($parentObject, ['where' => $relationFields], ['disableAccess' => true])->all();

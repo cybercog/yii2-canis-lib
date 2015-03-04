@@ -244,7 +244,7 @@ abstract class Event extends \infinite\base\Component
             return $this->_timestamp;
         }
         if (isset($this->model) && isset($this->model->created)) {
-            return $this->_timestamp = strtotime($this->model->created).".".$mtimeParts[1];
+            return $this->_timestamp = strtotime($this->model->created) . "." . $mtimeParts[1];
         }
 
         return $microtime;
@@ -261,7 +261,7 @@ abstract class Event extends \infinite\base\Component
             $timestamp = microtime(true);
         }
         if (!is_numeric($timestamp)) {
-            $timestamp = strtotime($timestamp).".".$mtimeParts[1];
+            $timestamp = strtotime($timestamp) . "." . $mtimeParts[1];
         }
         $this->_timestamp = $timestamp;
     }
@@ -398,7 +398,7 @@ abstract class Event extends \infinite\base\Component
 
     public function getStory()
     {
-        return '{{agent}} '.$this->verb->past.' {{directObjectType}} {{directObject}}'.$this->indirectStory;
+        return '{{agent}} ' . $this->verb->past . ' {{directObjectType}} {{directObject}}' . $this->indirectStory;
     }
 
     public function getIndirectStory()
@@ -411,7 +411,7 @@ abstract class Event extends \infinite\base\Component
             return '';
         }
 
-        return ' '.$this->indirectConnector.' {{indirectObject}}';
+        return ' ' . $this->indirectConnector . ' {{indirectObject}}';
     }
 
     public function getIndirectConnector()
@@ -437,7 +437,7 @@ abstract class Event extends \infinite\base\Component
             if ($this->directObject) {
                 $keys[] = $this->directObject->primaryKey;
             }
-            $replace['{{indirectObject}}'] = '{{'.implode(':', $keys).'}}';
+            $replace['{{indirectObject}}'] = '{{' . implode(':', $keys) . '}}';
             $replace['{{indirectObjectType}}'] = $this->indirectObject->getHumanType();
         } else {
             $objectKeys[] = null;
@@ -450,7 +450,7 @@ abstract class Event extends \infinite\base\Component
             if ($this->indirectObject) {
                 $keys[] = $this->indirectObject->primaryKey;
             }
-            $replace['{{directObject}}'] = '{{'.implode(':', $keys).'}}';
+            $replace['{{directObject}}'] = '{{' . implode(':', $keys) . '}}';
             $replace['{{directObjectType}}'] = $this->directObject->getHumanType();
         } else {
             $objectKeys[] = null;
@@ -459,7 +459,7 @@ abstract class Event extends \infinite\base\Component
             $package['agent'] = $this->agent->primaryKey;
             $package['objects']['agent'] = $this->agent;
             $objectKeys[] = $this->agent->primaryKey;
-            $replace['{{agent}}'] = '{{'.$this->agent->primaryKey.'}}';
+            $replace['{{agent}}'] = '{{' . $this->agent->primaryKey . '}}';
         } else {
             $objectKeys[] = null;
         }

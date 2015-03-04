@@ -53,17 +53,17 @@ abstract class Module extends Collector
     {
         if (!$this->_loaded && ($force || $this->autoload)) {
             $this->_loaded = true;
-            Yii::beginProfile($this->modulePrefix.'::load');
+            Yii::beginProfile($this->modulePrefix . '::load');
             foreach (Yii::$app->modules as $module => $settings) {
-                if (preg_match('/^'.$this->modulePrefix.'/', $module) === 0) {
+                if (preg_match('/^' . $this->modulePrefix . '/', $module) === 0) {
                     continue;
                 }
-                Yii::beginProfile($this->modulePrefix.'::load::'.$module);
+                Yii::beginProfile($this->modulePrefix . '::load::' . $module);
                 $mod = Yii::$app->getModule($module);
-                Yii::endProfile($this->modulePrefix.'::load::'.$module);
+                Yii::endProfile($this->modulePrefix . '::load::' . $module);
             }
             $this->trigger(self::EVENT_AFTER_LOAD);
-            Yii::endProfile($this->modulePrefix.'::load');
+            Yii::endProfile($this->modulePrefix . '::load');
         }
     }
 

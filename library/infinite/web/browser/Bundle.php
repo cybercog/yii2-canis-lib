@@ -8,8 +8,8 @@
 
 namespace infinite\web\browser;
 
-use Yii;
 use infinite\base\exceptions\Exception;
+use Yii;
 use yii\base\InvalidConfigException;
 
 /**
@@ -85,9 +85,9 @@ class Bundle extends \infinite\base\Object
     /**
      * Get instructions.
      *
-     * @return __return_getInstructions_type__ __return_getInstructions_description__
-     *
      * @throws InvalidConfigException __exception_InvalidConfigException_description__
+     *
+     * @return __return_getInstructions_type__ __return_getInstructions_description__
      */
     public function getInstructions()
     {
@@ -226,7 +226,7 @@ class Bundle extends \infinite\base\Object
     {
         $acceptableTypes = ['pivot', 'item'];
         if (!in_array($type, $acceptableTypes)) {
-            throw new InvalidConfigException('Browser response bundle must be one of the following types: '.implode(', ', $acceptableTypes));
+            throw new InvalidConfigException('Browser response bundle must be one of the following types: ' . implode(', ', $acceptableTypes));
         }
         $this->_type = $type;
     }

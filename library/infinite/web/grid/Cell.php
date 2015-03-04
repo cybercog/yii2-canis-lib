@@ -160,7 +160,7 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
         }
         Html::addCssClass($this->htmlOptions, $this->classes);
 
-        return Html::tag('div', implode($this->_prepend).$content.implode($this->_append), $this->htmlOptions);
+        return Html::tag('div', implode($this->_prepend) . $content . implode($this->_append), $this->htmlOptions);
     }
 
     /**
@@ -213,16 +213,16 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
         $classes = [];
         $sizes = $this->sizes;
         if (isset($sizes['phone'])) {
-            $classes[] = 'col-xs-'.$sizes['phone'];
+            $classes[] = 'col-xs-' . $sizes['phone'];
         }
         if (isset($sizes['tablet'])) {
-            $classes[] = 'col-sm-'.$sizes['tablet'];
+            $classes[] = 'col-sm-' . $sizes['tablet'];
         }
         if (isset($sizes['mediumDesktop'])) {
-            $classes[] = 'col-md-'.$sizes['mediumDesktop'];
+            $classes[] = 'col-md-' . $sizes['mediumDesktop'];
         }
         if (isset($sizes['largeDesktop'])) {
-            $classes[] = 'col-lg-'.$sizes['largeDesktop'];
+            $classes[] = 'col-lg-' . $sizes['largeDesktop'];
         }
 
         return implode(' ', $classes);
@@ -268,7 +268,7 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
     public function getId()
     {
         if (is_null($this->_id)) {
-            $this->_id = md5(microtime().mt_rand());
+            $this->_id = md5(microtime() . mt_rand());
         }
 
         return $this->_id;
@@ -287,8 +287,8 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
         if (is_null($size)) {
             $size = $this->baseSize;
         }
-        $columnAttribute = $size.'Columns';
-        $hasAttribute = 'has'.ucfirst($size).'Columns';
+        $columnAttribute = $size . 'Columns';
+        $hasAttribute = 'has' . ucfirst($size) . 'Columns';
         if (!$this->{$hasAttribute}) {
             $this->{$columnAttribute} = $this->{$columnAttribute};
         }
@@ -309,7 +309,7 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
         if (is_null($size)) {
             $size = $this->baseSize;
         }
-        $columnAttribute = $size.'Columns';
+        $columnAttribute = $size . 'Columns';
 
         $this->{$columnAttribute} = $this->getMaxColumns($size);
 
@@ -331,7 +331,7 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
         if (is_null($size)) {
             $size = $this->baseSize;
         }
-        $columnAttribute = 'max'.ucfirst($size).'Columns';
+        $columnAttribute = 'max' . ucfirst($size) . 'Columns';
 
         return $this->{$columnAttribute};
     }
@@ -347,7 +347,7 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
         if (is_null($size)) {
             $size = $this->baseSize;
         }
-        $columnAttribute = 'max'.ucfirst($size).'Columns';
+        $columnAttribute = 'max' . ucfirst($size) . 'Columns';
         $this->{$columnAttribute} = $columns;
     }
 
@@ -362,7 +362,7 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
         if (is_null($size)) {
             $size = $this->baseSize;
         }
-        $columnAttribute = $size.'Columns';
+        $columnAttribute = $size . 'Columns';
         $this->{$columnAttribute} = $columns;
     }
 
@@ -382,7 +382,7 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
         if (is_null($size)) {
             $size = $this->baseSize;
         }
-        $columnAttribute = $size.'Columns';
+        $columnAttribute = $size . 'Columns';
 
         return $this->{$columnAttribute};
     }
@@ -635,7 +635,7 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
         if (is_null($size)) {
             $size = $this->baseSize;
         }
-        $getter = $size.'Columns';
+        $getter = $size . 'Columns';
         $flex = $this->getMaxColumns($size) - $this->{$getter};
         if ($flex < 0) {
             return 0;

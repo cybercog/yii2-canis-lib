@@ -30,7 +30,7 @@ class LDAP extends \infinite\security\identity\providers\Handler
         }
         $username = $ousername = $this->meta['username'];
         if (isset($this->config['domain']) && strpos($username, '\\') === false) {
-            $username = $this->config['domain'].'\\'.$username;
+            $username = $this->config['domain'] . '\\' . $username;
         }
         $ldapAuth = $this->ldapAuth($username, $password);
         if ($ldapAuth) {

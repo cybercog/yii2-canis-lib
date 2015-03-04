@@ -127,9 +127,9 @@ class Date extends \infinite\db\behaviors\ActiveRecord
             break;
             case 'datetime':
                 if (strlen($field) > 10) {
-                    $field = DateHelper::date($this->dbDateFormat." ".$this->dbTimeFormat, DateHelper::strtotime($field));
+                    $field = DateHelper::date($this->dbDateFormat . " " . $this->dbTimeFormat, DateHelper::strtotime($field));
                 } else {
-                    $field = DateHelper::date($this->dbDateFormat." ".$this->dbTimeFormat, DateHelper::strtotime($field." 00:00:00"));
+                    $field = DateHelper::date($this->dbDateFormat . " " . $this->dbTimeFormat, DateHelper::strtotime($field . " 00:00:00"));
                 }
             break;
         }
@@ -166,7 +166,7 @@ class Date extends \infinite\db\behaviors\ActiveRecord
                 if (substr($field, -8) === "00:00:00") {
                     $field = DateHelper::date($this->humanDateFormat, DateHelper::strtotime($field));
                 } else {
-                    $field = DateHelper::date($this->humanDateFormat." ".$this->humanTimeFormat, DateHelper::strtotime($field));
+                    $field = DateHelper::date($this->humanDateFormat . " " . $this->humanTimeFormat, DateHelper::strtotime($field));
                 }
             break;
         }

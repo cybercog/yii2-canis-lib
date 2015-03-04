@@ -205,9 +205,9 @@ class QueryAccess extends QueryBehavior
      *
      * @param __param_aca_type__ $aca __param_aca_description__ [optional]
      *
-     * @return __return_addCheckAccess_type__ __return_addCheckAccess_description__
-     *
      * @throws Exception __exception_Exception_description__
+     *
+     * @return __return_addCheckAccess_type__ __return_addCheckAccess_description__
      */
     public function addCheckAccess($aca = null)
     {
@@ -228,7 +228,7 @@ class QueryAccess extends QueryBehavior
             if (empty($aca)) {
                 throw new Exception("ACL is not set up correctly. No '{$aca}' action!");
             }
-            $query->andWhere(['or', [$alias.'.aca_id' => $aca->primaryKey], [$alias.'.aca_id' => null]]);
+            $query->andWhere(['or', [$alias . '.aca_id' => $aca->primaryKey], [$alias . '.aca_id' => null]]);
         }
 
         Yii::$app->gk->generateAclCheckCriteria($query, false, $this->accessingObject, static::$_acceptInherit, $classAlias);

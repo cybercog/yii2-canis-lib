@@ -61,7 +61,7 @@ class Controller extends \yii\web\Controller
      */
     public function render($view, $params = [])
     {
-        Yii::trace('Called render: '.$view);
+        Yii::trace('Called render: ' . $view);
 
         return parent::render($view, array_merge($params, $this->params));
     }
@@ -71,7 +71,7 @@ class Controller extends \yii\web\Controller
      */
     public function renderPartial($view, $params = [])
     {
-        Yii::trace('Called renderPartial: '.$view);
+        Yii::trace('Called renderPartial: ' . $view);
 
         return parent::renderPartial($view, array_merge($params, $this->params));
     }

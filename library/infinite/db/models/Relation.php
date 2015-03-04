@@ -109,7 +109,7 @@ class Relation extends \infinite\db\ActiveRecord
         if (isset($this->_parentModel)) {
             $parentModelClass = get_class($this->_parentModel);
 
-            return $this->_parentModel->formName().$this->_parentModel->tabularPrefix.'[relations]';
+            return $this->_parentModel->formName() . $this->_parentModel->tabularPrefix . '[relations]';
         }
 
         return $parentFormName;
@@ -157,12 +157,12 @@ class Relation extends \infinite\db\ActiveRecord
         if (empty($this->start)) {
             $this->start = null;
         } else {
-            $this->start = date("Y-m-d", strtotime($this->start." 12:00"));
+            $this->start = date("Y-m-d", strtotime($this->start . " 12:00"));
         }
         if (empty($this->end)) {
             $this->end = null;
         } else {
-            $this->end = date("Y-m-d", strtotime($this->end." 12:00"));
+            $this->end = date("Y-m-d", strtotime($this->end . " 12:00"));
         }
 
         return true;
@@ -361,16 +361,16 @@ class Relation extends \infinite\db\ActiveRecord
             return false;
         }
 
-        $today = strtotime(date("Y-m-d")." 12:00:00");
+        $today = strtotime(date("Y-m-d") . " 12:00:00");
         if (!empty($this->start)) {
-            $start = strtotime($this->start." 12:00:00");
+            $start = strtotime($this->start . " 12:00:00");
             if ($start > $today) {
                 return false;
             }
         }
 
         if (!empty($this->end)) {
-            $end = strtotime($this->end." 12:00:00");
+            $end = strtotime($this->end . " 12:00:00");
             if ($end < $today) {
                 return false;
             }

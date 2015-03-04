@@ -8,8 +8,8 @@
 
 namespace infinite\web\grid;
 
-use Yii;
 use infinite\helpers\Html;
+use Yii;
 
 /**
  * Grid [@doctodo write class description for Grid].
@@ -136,14 +136,14 @@ class Grid extends \infinite\base\Object
      */
     public function setCells($items)
     {
-        Yii::beginProfile(__CLASS__.':'.__FUNCTION__);
+        Yii::beginProfile(__CLASS__ . ':' . __FUNCTION__);
         while (!empty($items)) {
             $this->currentRow->addCells($items);
             if (!empty($items)) {
                 $this->_currentRow = null;
             }
         }
-        Yii::endProfile(__CLASS__.':'.__FUNCTION__);
+        Yii::endProfile(__CLASS__ . ':' . __FUNCTION__);
     }
 
     /**
@@ -172,7 +172,7 @@ class Grid extends \infinite\base\Object
     public function getId()
     {
         if (is_null($this->_id)) {
-            $this->_id = md5(microtime().mt_rand());
+            $this->_id = md5(microtime() . mt_rand());
         }
 
         return $this->_id;

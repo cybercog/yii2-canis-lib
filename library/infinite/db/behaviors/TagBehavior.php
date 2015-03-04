@@ -72,7 +72,7 @@ class TagBehavior extends \infinite\db\behaviors\ActiveRecord
     public function hasMethod($name)
     {
         if ($this->isTagBehaviorReady()) {
-            if (in_array($name, ['get'.ucfirst($this->tagField), 'set'.ucfirst($this->tagField)])) {
+            if (in_array($name, ['get' . ucfirst($this->tagField), 'set' . ucfirst($this->tagField)])) {
                 return true;
             }
         }
@@ -186,7 +186,7 @@ class TagBehavior extends \infinite\db\behaviors\ActiveRecord
                 $viaTag->attributes = $baseAttributes;
                 $viaTag->{$this->viaForeignField} = $tag;
                 if (!$viaTag->save()) {
-                    throw new \Exception("Unable to save tag: ".print_r($viaTag, true));
+                    throw new \Exception("Unable to save tag: " . print_r($viaTag, true));
                 }
             }
             unset($currentTags[$tag]);

@@ -4,12 +4,12 @@
  *
  * @author Jacob Morrison <jacob@infinitecascade.com>
  */
-echo '<div class="flash-'.(!empty($error) ? 'error' : 'success').'">';
+echo '<div class="flash-' . (!empty($error) ? 'error' : 'success') . '">';
 echo isset($message) ? $message : "Unknown error!";
 if (!empty($errors)) {
     echo '<ul>';
     foreach ($errors as $error) {
-        echo '<li>'.$error.'</li>';
+        echo '<li>' . $error . '</li>';
     }
     echo '</ul>';
 }

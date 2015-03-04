@@ -2,8 +2,8 @@
 
 namespace infiniteunit\library\helpers;
 
-use Yii;
 use infiniteunit\TestCase;
+use Yii;
 
 class FileStorageTest extends TestCase
 {
@@ -20,6 +20,6 @@ class FileStorageTest extends TestCase
         $this->assertTrue($tmp && file_exists($tmp));
 
         $tmp = Yii::$app->fileStorage->getTempFile(false, 'test');
-        $this->assertTrue(substr($tmp, -4) === 'test' && !file_exists($tmp), $tmp.' does not have correct file extension (test !== '.substr($tmp, -4).')');
+        $this->assertTrue(substr($tmp, -4) === 'test' && !file_exists($tmp), $tmp . ' does not have correct file extension (test !== ' . substr($tmp, -4) . ')');
     }
 }

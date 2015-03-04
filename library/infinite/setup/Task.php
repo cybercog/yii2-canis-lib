@@ -88,14 +88,14 @@ abstract class Task extends \infinite\base\Object
         foreach ($this->fields as $fieldset => $fields) {
             $this->input[$fieldset] = [];
             foreach ($fields['fields'] as $key => $settings) {
-                $fieldId = 'field_'.$this->id.'_'.$fieldset.'_'.$key.'';
+                $fieldId = 'field_' . $this->id . '_' . $fieldset . '_' . $key . '';
 
                 $this->input[$fieldset][$key] = null;
 
                 if (!empty($input[$fieldset][$key])) {
                     $this->input[$fieldset][$key] = $input[$fieldset][$key];
                 } elseif (!empty($settings['required'])) {
-                    $this->fieldErrors[$fieldId] = $settings['label'].' is a required field';
+                    $this->fieldErrors[$fieldId] = $settings['label'] . ' is a required field';
                     $error = true;
                 }
             }
@@ -152,7 +152,7 @@ abstract class Task extends \infinite\base\Object
                 $value = $value();
             }
             if (!is_array($value)) {
-                $tmp["/\%\%".$name."\%\%/i"] = preg_replace('#(\\$|\\\\)#', '\\\\$1', $value);
+                $tmp["/\%\%" . $name . "\%\%/i"] = preg_replace('#(\\$|\\\\)#', '\\\\$1', $value);
             }
         }
         $tmp["/\%\%.*\%\%/i"] = '';
@@ -182,7 +182,7 @@ abstract class Task extends \infinite\base\Object
         $replace = [];
         if (!empty($extracted)) {
             foreach ($extracted[0] as $k => $v) {
-                $key = '/'.$v.'/';
+                $key = '/' . $v . '/';
                 $parse = $extracted[1][$k];
                 $replace[$key] = null;
                 $instructions = explode('.', $parse);

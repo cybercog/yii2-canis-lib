@@ -8,9 +8,9 @@
 
 namespace infinite\helpers;
 
+use infinite\web\View;
 use Yii;
 use yii\base\InvalidParamException;
-use infinite\web\View;
 
 /**
  * Html [@doctodo write class description for Html].
@@ -47,9 +47,9 @@ class Html extends \yii\helpers\Html
      * @param __param_attribute_type__    $attribute    __param_attribute_description__
      * @param __param_subattribute_type__ $subattribute __param_subattribute_description__
      *
-     * @return __return_addSubAttribute_type__ __return_addSubAttribute_description__
-     *
      * @throws InvalidParamException __exception_InvalidParamException_description__
+     *
+     * @return __return_addSubAttribute_type__ __return_addSubAttribute_description__
      */
     public static function addSubAttribute($attribute, $subattribute)
     {
@@ -59,7 +59,7 @@ class Html extends \yii\helpers\Html
         $prefix = $matches[1];
         $attribute = $matches[2];
 
-        return $prefix."[{$attribute}]".$subattribute;
+        return $prefix . "[{$attribute}]" . $subattribute;
     }
 
     /**
@@ -68,9 +68,9 @@ class Html extends \yii\helpers\Html
      * @param __param_attribute_type__    $attribute    __param_attribute_description__
      * @param __param_preattribute_type__ $preattribute __param_preattribute_description__
      *
-     * @return __return_addPreAttribute_type__ __return_addPreAttribute_description__
-     *
      * @throws InvalidParamException __exception_InvalidParamException_description__
+     *
+     * @return __return_addPreAttribute_type__ __return_addPreAttribute_description__
      */
     public static function addPreAttribute($attribute, $preattribute)
     {
@@ -80,7 +80,7 @@ class Html extends \yii\helpers\Html
         $prefix = $matches[1];
         $attribute = $matches[2];
 
-        return $prefix."[{$preattribute}]".$attribute;
+        return $prefix . "[{$preattribute}]" . $attribute;
     }
 
     /**
@@ -89,18 +89,18 @@ class Html extends \yii\helpers\Html
      * @param __param_attribute_type__    $attribute    __param_attribute_description__
      * @param __param_newAttribute_type__ $newAttribute __param_newAttribute_description__
      *
-     * @return __return_changeAttribute_type__ __return_changeAttribute_description__
-     *
      * @throws InvalidParamException __exception_InvalidParamException_description__
+     *
+     * @return __return_changeAttribute_type__ __return_changeAttribute_description__
      */
     public static function changeAttribute($attribute, $newAttribute)
     {
         if (!preg_match('/(^|.*\])(\w+)(\[.*|$)/', $attribute, $matches)) {
-            throw new InvalidParamException('Attribute name must contain word characters only '.$attribute.'.');
+            throw new InvalidParamException('Attribute name must contain word characters only ' . $attribute . '.');
         }
         $prefix = $matches[1];
 
-        return $prefix.$newAttribute;
+        return $prefix . $newAttribute;
     }
 
     public static function pageHeader($title, $options = [])
@@ -120,7 +120,7 @@ class Html extends \yii\helpers\Html
         static::addCssClass($options['htmlOptions'], 'infinite-page-title');
         static::addCssClass($options['wrapperOptions'], 'panelOptions');
 
-        return static::tag($options['wrapperTag'], static::tag('h'.$options['level'], $title, $options['htmlOptions']), $options['wrapperOptions']);
+        return static::tag($options['wrapperTag'], static::tag('h' . $options['level'], $title, $options['htmlOptions']), $options['wrapperOptions']);
     }
 
     public static function buttonGroup($items, $htmlOptions = [])
@@ -141,7 +141,7 @@ class Html extends \yii\helpers\Html
             if (!isset($item['state'])) {
                 $item['state'] = 'default';
             }
-            static::addCssClass($item['htmlOptions'], 'btn btn-'.$item['state']);
+            static::addCssClass($item['htmlOptions'], 'btn btn-' . $item['state']);
             $o[] = static::a($item['label'], $item['url'], $item['htmlOptions']);
         }
         $o[] = static::endTag('div');

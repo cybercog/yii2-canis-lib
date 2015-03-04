@@ -106,9 +106,9 @@ class QueryArchivable extends QueryBehavior
             return true;
         }
         if ($this->allowArchives === true) {
-            $this->owner->andWhere('{{'.$this->owner->primaryAlias.'}}.[['.$this->owner->model->getBehavior('Archivable')->archiveField.']] IS NOT NULL');
+            $this->owner->andWhere('{{' . $this->owner->primaryAlias . '}}.[[' . $this->owner->model->getBehavior('Archivable')->archiveField . ']] IS NOT NULL');
         } elseif ($this->allowArchives === false) {
-            $this->owner->andWhere('{{'.$this->owner->primaryAlias.'}}.[['.$this->owner->model->getBehavior('Archivable')->archiveField.']] IS NULL');
+            $this->owner->andWhere('{{' . $this->owner->primaryAlias . '}}.[[' . $this->owner->model->getBehavior('Archivable')->archiveField . ']] IS NULL');
         }
 
         return true;

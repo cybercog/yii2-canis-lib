@@ -46,7 +46,7 @@ class Controller extends \yii\console\Controller
      */
     public function out($string)
     {
-        $string = $string.PHP_EOL;
+        $string = $string . PHP_EOL;
         if ($this->isColorEnabled()) {
             $args = func_get_args();
             array_shift($args);

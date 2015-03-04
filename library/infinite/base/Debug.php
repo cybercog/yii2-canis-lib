@@ -8,9 +8,9 @@
 
 namespace infinite\base;
 
+use infinite\db\ActiveRecord;
 use Yii;
 use yii\helpers\VarDumper;
-use infinite\db\ActiveRecord;
 
 /**
  * Debug [@doctodo write class description for Debug].
@@ -56,8 +56,8 @@ class Debug extends \infinite\base\Object
                 if (!defined('ROOT')) {
                     define('ROOT', '');
                 }
-                echo '<strong>'.substr(str_replace(ROOT, '', $calledFrom[$stepsBack]['file']), 1).'</strong>';
-                echo ' (line <strong>'.$calledFrom[$stepsBack]['line'].'</strong>)<br />';
+                echo '<strong>' . substr(str_replace(ROOT, '', $calledFrom[$stepsBack]['file']), 1) . '</strong>';
+                echo ' (line <strong>' . $calledFrom[$stepsBack]['line'] . '</strong>)<br />';
             }
             echo VarDumper::dumpAsString($what, 15, true);
             echo '</div>';
@@ -79,7 +79,7 @@ class Debug extends \infinite\base\Object
             if (is_object($value) and $value instanceof ActiveRecord) {
                 $a = $value->attributes;
             } elseif (is_object($value) and $value instanceof ActiveRecord) {
-                $a = '#OBJECT('.get_class($value).')';
+                $a = '#OBJECT(' . get_class($value) . ')';
             } elseif (is_array($value)) {
                 $a = $self::ar($value, false);
             } else {
@@ -128,8 +128,8 @@ class Debug extends \infinite\base\Object
                 if (!defined('ROOT')) {
                     define('ROOT', '');
                 }
-                echo '<strong>'.substr(str_replace(ROOT, '', $calledFrom[0]['file']), 1).'</strong>';
-                echo ' (line <strong>'.$calledFrom[0]['line'].'</strong>)<br />';
+                echo '<strong>' . substr(str_replace(ROOT, '', $calledFrom[0]['file']), 1) . '</strong>';
+                echo ' (line <strong>' . $calledFrom[0]['line'] . '</strong>)<br />';
             }
             echo VarDumper::dumpAsString($what, 10, true);
             echo '</div>';

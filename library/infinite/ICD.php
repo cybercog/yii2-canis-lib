@@ -58,7 +58,7 @@ class ICD extends \yii\helpers\VarDumper
         $this->_var = $var;
 
         foreach ($settings as $k => $v) {
-            $kk = '_'.$k;
+            $kk = '_' . $k;
             $this->$kk = $v;
         }
 
@@ -99,7 +99,7 @@ class ICD extends \yii\helpers\VarDumper
             if (!isset($bt['line'])) {
                 $bt['line'] = '#';
             }
-            $nice[] = $bt['file'].':'.$bt['function'].':'.$bt['line'];
+            $nice[] = $bt['file'] . ':' . $bt['function'] . ':' . $bt['line'];
         }
 
         return $nice;
@@ -239,13 +239,13 @@ class ICD extends \yii\helpers\VarDumper
     public function outputHtml()
     {
         echo '<div style="display: block; margin: 5px; padding: 5px; background-color: #fff; border: 1px solid black; z-index: 999999999; position:relative;">';
-        echo '<h3 style="font-size: 14px; margin: 3px">'.$this->_backtrace[0]['file'].':'.$this->_backtrace[1]['function'].':'.$this->_backtrace[0]['line'].'</h3>';
+        echo '<h3 style="font-size: 14px; margin: 3px">' . $this->_backtrace[0]['file'] . ':' . $this->_backtrace[1]['function'] . ':' . $this->_backtrace[0]['line'] . '</h3>';
         $backtrace = array_slice($this->_backtrace, 1, $this->_showSteps);
         foreach ($backtrace as $bt) {
             if (!isset($bt['file'])) {
                 continue;
             }
-            echo '<div style="font-size: 12px; margin: 1px">'.$bt['file'].':'.$bt['function'].':'.$bt['line'].'</div>';
+            echo '<div style="font-size: 12px; margin: 1px">' . $bt['file'] . ':' . $bt['function'] . ':' . $bt['line'] . '</div>';
         }
         echo '<hr />';
         echo self::dump($this->_var, $this->_depth, true);
@@ -257,11 +257,11 @@ class ICD extends \yii\helpers\VarDumper
      */
     public function outputPlaintext()
     {
-        echo str_repeat('=', 100)."\n";
-        echo $this->_backtrace[0]['file'].':'.$this->_backtrace[1]['function'].':'.$this->_backtrace[0]['line']."\n";
-        echo str_repeat('-', 100)."\n";
+        echo str_repeat('=', 100) . "\n";
+        echo $this->_backtrace[0]['file'] . ':' . $this->_backtrace[1]['function'] . ':' . $this->_backtrace[0]['line'] . "\n";
+        echo str_repeat('-', 100) . "\n";
         echo self::dump($this->_var, $this->_depth, false);
-        echo str_repeat('=', 100)."\n";
+        echo str_repeat('=', 100) . "\n";
     }
 
     /**

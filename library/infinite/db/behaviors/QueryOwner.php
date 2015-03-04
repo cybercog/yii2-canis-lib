@@ -45,11 +45,11 @@ class QueryOwner extends QueryBehavior
             return true;
         }
         $aclRoleClass = Yii::$app->classes['AclRole'];
-        $fieldName = $aclRoleClass::tableName().'.accessing_object_id';
+        $fieldName = $aclRoleClass::tableName() . '.accessing_object_id';
         $newWhere = $this->fixOwnerKey($fieldName, $this->owner->where);
         if ($newWhere !== $this->owner->where) {
             $this->owner->where = $newWhere;
-            $this->owner->leftJoin($aclRoleClass::tableName(), $aclRoleClass::tableName().'.controlled_object_id ='.$this->owner->primaryAlias.'.'.$this->owner->primaryTablePk);
+            $this->owner->leftJoin($aclRoleClass::tableName(), $aclRoleClass::tableName() . '.controlled_object_id =' . $this->owner->primaryAlias . '.' . $this->owner->primaryTablePk);
         }
 
         return true;

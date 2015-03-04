@@ -80,11 +80,11 @@ class Verb extends \infinite\base\language\Word
     {
         if (is_null($this->_active)) {
             if (substr($this->_base, -1) === 'e') {
-                $this->_active = substr($this->_base, 0, -1).'ing';
+                $this->_active = substr($this->_base, 0, -1) . 'ing';
             } elseif ($this->isCVC($this->_base)) {
-                $this->_active = $this->_base.substr($this->_base, -1).'ing';
+                $this->_active = $this->_base . substr($this->_base, -1) . 'ing';
             } else {
-                $this->_active = $this->_base.'ing';
+                $this->_active = $this->_base . 'ing';
             }
         }
 
@@ -102,13 +102,13 @@ class Verb extends \infinite\base\language\Word
     {
         if (is_null($this->_past)) {
             if (substr($this->_base, -1) === 'y') {
-                $this->_past = substr($this->_base, 0, -1).'ied';
+                $this->_past = substr($this->_base, 0, -1) . 'ied';
             } elseif ($this->isCVC($this->_base) and !in_array(substr($this->_base, -1), ['w', 'x', 'z'])) {
-                $this->_past = $this->_base.substr($this->_base, -1).'ed';
+                $this->_past = $this->_base . substr($this->_base, -1) . 'ed';
             } elseif (in_array(substr($this->_base, -1), ['e'])) {
-                $this->_past = $this->_base.'d';
+                $this->_past = $this->_base . 'd';
             } else {
-                $this->_past = $this->_base.'ed';
+                $this->_past = $this->_base . 'ed';
             }
         }
 

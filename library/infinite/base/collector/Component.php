@@ -8,13 +8,13 @@
 
 namespace infinite\base\collector;
 
-use Yii;
 use ArrayAccess;
 use ArrayIterator;
+use infinite\caching\Cacher;
 use IteratorAggregate;
+use Yii;
 use yii\base\BootstrapInterface;
 use yii\base\Event;
-use infinite\caching\Cacher;
 
 /**
  * Component [@doctodo write class description for Component].
@@ -109,22 +109,22 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
                 return true;
             }
 
-            Yii::beginProfile(__CLASS__.'::'.__FUNCTION__);
+            Yii::beginProfile(__CLASS__ . '::' . __FUNCTION__);
             foreach ($this->_init_collectors as $id => $collector) {
                 $this->internalRegisterCollector($id, $collector);
             }
             $this->_init_collectors = null;
 
             // initialize
-            Yii::beginProfile(__CLASS__.'::'.__FUNCTION__.':::afterLoad');
+            Yii::beginProfile(__CLASS__ . '::' . __FUNCTION__ . ':::afterLoad');
             $this->trigger(self::EVENT_AFTER_LOAD);
-            Yii::endProfile(__CLASS__.'::'.__FUNCTION__.':::afterLoad');
+            Yii::endProfile(__CLASS__ . '::' . __FUNCTION__ . ':::afterLoad');
 
             // final round
-            Yii::beginProfile(__CLASS__.'::'.__FUNCTION__.':::afterInit');
+            Yii::beginProfile(__CLASS__ . '::' . __FUNCTION__ . ':::afterInit');
             $this->trigger(self::EVENT_AFTER_INIT);
-            Yii::endProfile(__CLASS__.'::'.__FUNCTION__.':::afterInit');
-            Yii::endProfile(__CLASS__.'::'.__FUNCTION__);
+            Yii::endProfile(__CLASS__ . '::' . __FUNCTION__ . ':::afterInit');
+            Yii::endProfile(__CLASS__ . '::' . __FUNCTION__);
             $this->_loaded = true;
             $this->saveCache($cacheKey);
         }
@@ -138,21 +138,21 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
     public function areReady()
     {
         $this->load();
-        Yii::beginProfile(__CLASS__.'::'.__FUNCTION__);
+        Yii::beginProfile(__CLASS__ . '::' . __FUNCTION__);
         foreach ($this->_collectors as $collector) {
             if (!is_object($collector)) {
                 continue;
             }
-            Yii::beginProfile(__CLASS__.'::'.__FUNCTION__.'::'.$collector->systemId);
+            Yii::beginProfile(__CLASS__ . '::' . __FUNCTION__ . '::' . $collector->systemId);
             if (!$collector->isReady()) {
-                Yii::endProfile(__CLASS__.'::'.__FUNCTION__.'::'.$collector->systemId);
-                Yii::endProfile(__CLASS__.'::'.__FUNCTION__);
+                Yii::endProfile(__CLASS__ . '::' . __FUNCTION__ . '::' . $collector->systemId);
+                Yii::endProfile(__CLASS__ . '::' . __FUNCTION__);
 
                 return false;
             }
-            Yii::endProfile(__CLASS__.'::'.__FUNCTION__.'::'.$collector->systemId);
+            Yii::endProfile(__CLASS__ . '::' . __FUNCTION__ . '::' . $collector->systemId);
         }
-        Yii::endProfile(__CLASS__.'::'.__FUNCTION__);
+        Yii::endProfile(__CLASS__ . '::' . __FUNCTION__);
 
         return true;
     }
@@ -230,13 +230,13 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
      */
     protected function internalRegisterCollector($id, $collector)
     {
-        Yii::beginProfile(__CLASS__.'::'.__FUNCTION__.'::'.$id);
+        Yii::beginProfile(__CLASS__ . '::' . __FUNCTION__ . '::' . $id);
         if (is_array($collector) && empty($collector['lazyLoad'])) {
             $collector = Yii::createObject($collector);
             $collector->systemId = $id;
         }
         $this->_collectors[$id] = $collector;
-        Yii::endProfile(__CLASS__.'::'.__FUNCTION__.'::'.$id);
+        Yii::endProfile(__CLASS__ . '::' . __FUNCTION__ . '::' . $id);
 
         return $collector;
     }

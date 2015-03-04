@@ -8,8 +8,8 @@
 
 namespace infinite\base\collector;
 
-use Yii;
 use infinite\base\exceptions\Exception;
+use Yii;
 
 /**
  * Item [@doctodo write class description for Item].

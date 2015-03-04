@@ -49,6 +49,6 @@ class DeleteEvent extends AttributesEvent
 
     public function getStory()
     {
-        return '{{agent}} '.$this->verb->past.' [['.$this->descriptor.']]'.$this->indirectStory;
+        return '{{agent}} ' . $this->verb->past . ' [[' . $this->descriptor . ']]' . $this->indirectStory;
     }
 }
