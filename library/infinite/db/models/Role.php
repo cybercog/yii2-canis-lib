@@ -46,8 +46,8 @@ class Role extends \infinite\db\ActiveRecord implements \infinite\base\collector
     {
         return array_merge(parent::behaviors(),
             [
-                'Registry' => 'infinite\\db\\behaviors\\Registry',
-                'Relatable' => 'infinite\\db\\behaviors\\Relatable',
+                'Registry' => 'infinite\db\behaviors\Registry',
+                'Relatable' => 'infinite\db\behaviors\Relatable',
             ]
         );
     }

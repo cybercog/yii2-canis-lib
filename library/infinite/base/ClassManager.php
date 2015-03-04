@@ -49,7 +49,7 @@ class ClassManager extends Component implements IteratorAggregate, ArrayAccess
             'User' => 'app\\models\\User',
             'Identity' => 'app\\models\\Identity',
             'IdentityProvider' => 'app\\models\\IdentityProvider',
-            'SearchTermResult' => 'infinite\\db\\behaviors\\SearchTermResult',
+            'SearchTermResult' => 'infinite\db\behaviors\SearchTermResult',
         ];
     }
 

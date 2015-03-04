@@ -40,6 +40,6 @@ class LogAsset extends AssetBundle
      * @inheritdoc
      */
     public $depends = [
-        'infinite\\web\\assetBundles\\InfiniteAsset',
+        'infinite\web\assetBundles\InfiniteAsset',
     ];
 }

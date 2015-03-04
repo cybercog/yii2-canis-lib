@@ -24,19 +24,19 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     /**
      * @var string Audit event class for relation class
      */
-    public $createRelationAuditEventClass = 'infinite\\db\\behaviors\\auditable\\CreateRelationEvent';
+    public $createRelationAuditEventClass = 'infinite\db\behaviors\auditable\CreateRelationEvent';
     /**
      * @var string Audit event class for relation class
      */
-    public $deleteRelationAuditEventClass = 'infinite\\db\\behaviors\\auditable\\DeleteRelationEvent';
+    public $deleteRelationAuditEventClass = 'infinite\db\behaviors\auditable\DeleteRelationEvent';
     /**
      * @var string Audit event class for relation class
      */
-    public $endRelationAuditEventClass = 'infinite\\db\\behaviors\\auditable\\EndRelationEvent';
+    public $endRelationAuditEventClass = 'infinite\db\behaviors\auditable\EndRelationEvent';
     /**
      * @var string Audit event class for relation class
      */
-    public $updateRelationAuditEventClass = 'infinite\\db\\behaviors\\auditable\\UpdateRelationEvent';
+    public $updateRelationAuditEventClass = 'infinite\db\behaviors\auditable\UpdateRelationEvent';
     /**
      * @var __var_parentObjectField_type__ __var_parentObjectField_description__
      */

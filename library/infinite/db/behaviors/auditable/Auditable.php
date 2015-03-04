@@ -25,19 +25,19 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     /**
      * @var string Audit event base class
      */
-    public $baseEventClass = 'infinite\\db\\behaviors\\auditable\\BaseEvent';
+    public $baseEventClass = 'infinite\db\behaviors\auditable\BaseEvent';
     /**
      * @var string Audit insert event class 
      */
-    public $createEventClass = 'infinite\\db\\behaviors\\auditable\\CreateEvent';
+    public $createEventClass = 'infinite\db\behaviors\auditable\CreateEvent';
     /**
      * @var string Audit uodate event class 
      */
-    public $updateEventClass = 'infinite\\db\\behaviors\\auditable\\UpdateEvent';
+    public $updateEventClass = 'infinite\db\behaviors\auditable\UpdateEvent';
     /**
      * @var string Audit delete event class 
      */
-    public $deleteEventClass = 'infinite\\db\\behaviors\\auditable\\DeleteEvent';
+    public $deleteEventClass = 'infinite\db\behaviors\auditable\DeleteEvent';
     /**
      * @var bool Enable all log events
      */

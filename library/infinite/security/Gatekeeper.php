@@ -62,15 +62,15 @@ class Gatekeeper extends \infinite\base\Component
     /**
      * @var __var_authorityClass_type__ __var_authorityClass_description__
      */
-    public $authorityClass = 'infinite\\security\\Authority';
+    public $authorityClass = 'infinite\security\Authority';
     /**
      * @var __var_objectAccessClass_type__ __var_objectAccessClass_description__
      */
-    public $objectAccessClass = 'infinite\\security\\ObjectAccess';
+    public $objectAccessClass = 'infinite\security\ObjectAccess';
     /**
      * @var __var_accessClass_type__ __var_accessClass_description__
      */
-    public $accessClass = 'infinite\\security\\Access';
+    public $accessClass = 'infinite\security\Access';
     /**
      * @var __var__authority_type__ __var__authority_description__
      */

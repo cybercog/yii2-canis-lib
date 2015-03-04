@@ -97,7 +97,7 @@ trait QueryTrait
     public function getAccessBehaviorConfiguration()
     {
         return [
-            'class' => 'infinite\\db\\behaviors\\QueryAccess',
+            'class' => 'infinite\db\behaviors\QueryAccess',
         ];
     }
 

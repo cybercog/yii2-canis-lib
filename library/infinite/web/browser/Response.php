@@ -19,7 +19,7 @@ abstract class Response extends \infinite\base\Object
     /**
      * @var __var_bundleClass_type__ __var_bundleClass_description__
      */
-    public $bundleClass = 'infinite\\web\\browser\\Bundle';
+    public $bundleClass = 'infinite\web\browser\Bundle';
     /**
      * @var __var__instance_type__ __var__instance_description__
      */

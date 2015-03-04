@@ -497,7 +497,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     public static function find()
     {
         if (is_null(static::$queryClass)) {
-            $queryClass = 'infinite\\db\\ActiveQuery';
+            $queryClass = 'infinite\db\ActiveQuery';
         } else {
             $queryClass = static::$queryClass;
         }

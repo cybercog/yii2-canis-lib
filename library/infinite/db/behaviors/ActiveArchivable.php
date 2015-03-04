@@ -44,11 +44,11 @@ class ActiveArchivable extends ActiveRecord
     /**
      * @var string Audit archive event class 
      */
-    public $archiveEventClass = 'infinite\\db\\behaviors\\auditable\\ArchiveEvent';
+    public $archiveEventClass = 'infinite\db\behaviors\auditable\ArchiveEvent';
     /**
      * @var string Audit unarchive event class 
      */
-    public $unarchiveEventClass = 'infinite\\db\\behaviors\\auditable\\UnarchiveEvent';
+    public $unarchiveEventClass = 'infinite\db\behaviors\auditable\UnarchiveEvent';
 
     /**
      * __method_isArchivable_description__

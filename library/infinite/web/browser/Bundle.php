@@ -21,7 +21,7 @@ class Bundle extends \infinite\base\Object
     /**
      * @var __var_itemClass_type__ __var_itemClass_description__
      */
-    public $itemClass = 'infinite\\web\\browser\\Item';
+    public $itemClass = 'infinite\web\browser\Item';
     /**
      * @var __var_limit_type__ __var_limit_description__
      */

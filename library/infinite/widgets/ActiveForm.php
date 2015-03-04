@@ -17,7 +17,7 @@ class ActiveForm extends \yii\widgets\ActiveForm
     /**
      * @inheritdoc
      */
-    public $fieldConfig = ['class' => 'infinite\\widgets\\ActiveField'];
+    public $fieldConfig = ['class' => 'infinite\widgets\ActiveField'];
 
     /**
     * @inheritdoc
