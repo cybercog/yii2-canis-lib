@@ -20,11 +20,9 @@ use IteratorAggregate;
 class Bucket extends \infinite\base\Object implements IteratorAggregate, ArrayAccess
 {
     /**
-     * @var __var__bucket_type__ __var__bucket_description__
      */
     protected $_bucket = [];
     /**
-     * @var __var__collector_type__ __var__collector_description__
      */
     protected $_collector;
 
@@ -37,10 +35,7 @@ class Bucket extends \infinite\base\Object implements IteratorAggregate, ArrayAc
     }
 
     /**
-     * __method_add_description__.
      *
-     * @param __param_offset_type__        $offset __param_offset_description__
-     * @param infinite\base\collector\Item $item   __param_item_description__
      */
     public function add($offset, Item $item)
     {
@@ -48,9 +43,7 @@ class Bucket extends \infinite\base\Object implements IteratorAggregate, ArrayAc
     }
 
     /**
-     * __method_toArray_description__.
      *
-     * @return __return_toArray_type__ __return_toArray_description__
      */
     public function toArray()
     {

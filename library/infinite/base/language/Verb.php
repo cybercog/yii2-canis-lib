@@ -16,15 +16,12 @@ namespace infinite\base\language;
 class Verb extends \infinite\base\language\Word
 {
     /**
-     * @var __var__base_type__ __var__base_description__
      */
     protected $_base;
     /**
-     * @var __var__active_type__ __var__active_description__
      */
     protected $_active;
     /**
-     * @var __var__past_type__ __var__past_description__
      */
     protected $_past;
 

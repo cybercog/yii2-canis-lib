@@ -24,55 +24,43 @@ use Yii;
 class Gatekeeper extends \infinite\base\Component
 {
     /**
-     * @var __var_proxy_type__ __var_proxy_description__
      */
     public $proxy = false;
     /**
-     * @var __var_debug_type__ __var_debug_description__
      */
     public $debug = false;
 
     /**
-     * @var __var__requestors_type__ __var__requestors_description__
      */
     protected $_requestors;
     /**
-     * @var __var__actionsById_type__ __var__actionsById_description__
      */
     protected $_actionsById;
     /**
-     * @var __var__actionsByName_type__ __var__actionsByName_description__
      */
     protected $_actionsByName;
     /**
-     * @var __var__primaryAro_type__ __var__primaryAro_description__
      */
     protected $_primaryAro;
 
     /*
-     * @var __var__cache_type__ __var__cache_description__
      */
     public static $_cache = [];
 
     /**
-     * @var __var__objectCanCache_type__ __var__objectCanCache_description__
      */
     protected $_objectCanCache = [];
 
     /**
-     * @var __var_authorityClass_type__ __var_authorityClass_description__
      */
     public $authorityClass = 'infinite\security\Authority';
     /**
-     * @var __var_objectAccessClass_type__ __var_objectAccessClass_description__
      */
     public $objectAccessClass = 'infinite\security\ObjectAccess';
     /**
-     * @var __var_accessClass_type__ __var_accessClass_description__
      */
     public $accessClass = 'infinite\security\Access';
     /**
-     * @var __var__authority_type__ __var__authority_description__
      */
     protected $_authority;
 
@@ -85,8 +73,6 @@ class Gatekeeper extends \infinite\base\Component
     }
     /**
      * Set authority.
-     *
-     * @param __param_authority_type__ $authority __param_authority_description__
      */
     public function setAuthority($authority)
     {
@@ -101,8 +87,6 @@ class Gatekeeper extends \infinite\base\Component
 
     /**
      * Get authority.
-     *
-     * @return __return_getAuthority_type__ __return_getAuthority_description__
      */
     public function getAuthority()
     {
@@ -111,8 +95,6 @@ class Gatekeeper extends \infinite\base\Component
 
     /**
      * Get acl cache dependency.
-     *
-     * @return __return_getAclCacheDependency_type__ __return_getAclCacheDependency_description__
      */
     public function getAclCacheDependency()
     {
@@ -134,12 +116,7 @@ class Gatekeeper extends \infinite\base\Component
     }
 
     /**
-     * __method_canPublic_description__.
      *
-     * @param __param_controlledObject_type__ $controlledObject __param_controlledObject_description__
-     * @param string                          $action           __param_action_description__ [optional]
-     *
-     * @return __return_canPublic_type__ __return_canPublic_description__
      */
     public function canPublic($controlledObject, $action = 'read')
     {
@@ -167,12 +144,7 @@ class Gatekeeper extends \infinite\base\Component
     }
 
     /**
-     * __method_is_description__.
      *
-     * @param __param_group_type__           $group           __param_group_description__
-     * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__ [optional]
-     *
-     * @return __return_is_type__ __return_is_description__
      */
     public function is($group, $accessingObject = null)
     {
@@ -210,13 +182,7 @@ class Gatekeeper extends \infinite\base\Component
     }
 
     /**
-     * __method_can_description__.
      *
-     * @param __param_action_type__           $action           __param_action_description__
-     * @param __param_controlledObject_type__ $controlledObject __param_controlledObject_description__
-     * @param __param_accessingObject_type__  $accessingObject  __param_accessingObject_description__ [optional]
-     *
-     * @return __return_can_type__ __return_can_description__
      */
     public function can($action, $controlledObject, $accessingObject = null)
     {
@@ -238,14 +204,7 @@ class Gatekeeper extends \infinite\base\Component
     }
 
     /**
-     * __method_fillActions_description__.
      *
-     * @param __param_acls_type__             $acls             __param_acls_description__
-     * @param array                           $baseAccess       __param_baseAccess_description__ [optional]
-     * @param __param_controlledObject_type__ $controlledObject __param_controlledObject_description__ [optional]
-     * @param __param_acaIds_type__           $acaIds           __param_acaIds_description__ [optional]
-     *
-     * @return __return_fillActions_type__ __return_fillActions_description__
      */
     public function fillActions($acls, $baseAccess = [], $controlledObject = null, $acaIds = null)
     {
@@ -298,10 +257,6 @@ class Gatekeeper extends \infinite\base\Component
 
     /**
      * Get action map.
-     *
-     * @param __param_controlledObject_type__ $controlledObject __param_controlledObject_description__ [optional]
-     *
-     * @return __return_getActionMap_type__ __return_getActionMap_description__
      */
     protected function getActionMap($controlledObject = null)
     {
@@ -310,12 +265,6 @@ class Gatekeeper extends \infinite\base\Component
 
     /**
      * Get action link.
-     *
-     * @param __param_action_type__           $action           __param_action_description__
-     * @param array                           $accessMap        __param_accessMap_description__ [optional]
-     * @param __param_controlledObject_type__ $controlledObject __param_controlledObject_description__ [optional]
-     *
-     * @return __return_getActionLink_type__ __return_getActionLink_description__
      */
     protected function getActionLink($action, $accessMap = [], $controlledObject = null)
     {
@@ -342,10 +291,6 @@ class Gatekeeper extends \infinite\base\Component
 
     /**
      * Get base action name.
-     *
-     * @param __param_actionName_type__ $actionName __param_actionName_description__
-     *
-     * @return __return_getBaseActionName_type__ __return_getBaseActionName_description__
      */
     protected static function getBaseActionName($actionName)
     {
@@ -355,12 +300,7 @@ class Gatekeeper extends \infinite\base\Component
     }
 
     /**
-     * __method_createAccess_description__.
      *
-     * @param __param_acl_type__ $acl    __param_acl_description__
-     * @param array              $config __param_config_description__ [optional]
-     *
-     * @return __return_createAccess_type__ __return_createAccess_description__
      */
     protected function createAccess($acl, $config = [])
     {
@@ -391,11 +331,7 @@ class Gatekeeper extends \infinite\base\Component
     }
 
     /**
-     * __method_findNullAction_description__.
      *
-     * @param __param_acls_type__ $acls __param_acls_description__
-     *
-     * @return __return_findNullAction_type__ __return_findNullAction_description__
      */
     public function findNullAction($acls)
     {
@@ -411,13 +347,7 @@ class Gatekeeper extends \infinite\base\Component
     }
 
     /**
-     * __method_canGeneral_description__.
      *
-     * @param __param_action_type__          $action          __param_action_description__
-     * @param __param_model_type__           $model           __param_model_description__
-     * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__ [optional]
-     *
-     * @return __return_canGeneral_type__ __return_canGeneral_description__
      */
     public function canGeneral($action, $model, $accessingObject = null)
     {
@@ -430,11 +360,6 @@ class Gatekeeper extends \infinite\base\Component
 
     /**
      * Get controlled object.
-     *
-     * @param __param_object_type__     $object     __param_object_description__
-     * @param __param_modelClass_type__ $modelClass __param_modelClass_description__ [optional]
-     *
-     * @return __return_getControlledObject_type__ __return_getControlledObject_description__
      */
     public function getControlledObject($object, $modelClass = null)
     {
@@ -454,13 +379,7 @@ class Gatekeeper extends \infinite\base\Component
     }
 
     /**
-     * __method_buildInnerRoleCheckConditions_description__.
      *
-     * @param __param_innerOnConditions_type__ $innerOnConditions __param_innerOnConditions_description__
-     * @param __param_innerAlias_type__        $innerAlias        __param_innerAlias_description__
-     * @param __param_query_type__             $query             __param_query_description__
-     *
-     * @return __return_buildInnerRoleCheckConditions_type__ __return_buildInnerRoleCheckConditions_description__
      */
     public function buildInnerRoleCheckConditions(&$innerOnConditions, $innerAlias, $query)
     {
@@ -469,16 +388,7 @@ class Gatekeeper extends \infinite\base\Component
 
     // this function is not possible because it loses inheritance from object types two levels up
     /**
-     * __method_BADgenerateAclRoleCheckCriteria_description__.
      *
-     * @param __param_query_type__            $query            __param_query_description__
-     * @param __param_controlledObject_type__ $controlledObject __param_controlledObject_description__
-     * @param __param_accessingObject_type__  $accessingObject  __param_accessingObject_description__ [optional]
-     * @param __param_modelClass_type__       $modelClass       __param_modelClass_description__ [optional]
-     * @param array                           $bannedRoles      __param_bannedRoles_description__ [optional]
-     * @param boolean                         $expandAros       __param_expandAros_description__ [optional]
-     *
-     * @return __return_BADgenerateAclRoleCheckCriteria_type__ __return_BADgenerateAclRoleCheckCriteria_description__
      */
     public function BADgenerateAclRoleCheckCriteria($query, $controlledObject, $accessingObject = null, $modelClass = null, $bannedRoles = [], $expandAros = true)
     {
@@ -565,17 +475,7 @@ class Gatekeeper extends \infinite\base\Component
     }
 
     /**
-     * __method_generateAclCheckCriteria_description__.
      *
-     * @param __param_query_type__            $query              __param_query_description__
-     * @param __param_controlledObject_type__ $controlledObject   __param_controlledObject_description__
-     * @param __param_accessingObject_type__  $accessingObject    __param_accessingObject_description__ [optional]
-     * @param boolean                         $allowParentInherit __param_allowParentInherit_description__ [optional]
-     * @param __param_modelClass_type__       $modelClass         __param_modelClass_description__ [optional]
-     * @param boolean                         $expandAros         __param_expandAros_description__ [optional]
-     * @param boolean                         $limitAccess        __param_limitAccess_description__ [optional]
-     *
-     * @return __return_generateAclCheckCriteria_type__ __return_generateAclCheckCriteria_description__
      */
     public function generateAclCheckCriteria($query, $controlledObject, $accessingObject = null, $allowParentInherit = false, $modelClass = null, $expandAros = true, $limitAccess = true)
     {
@@ -680,11 +580,7 @@ class Gatekeeper extends \infinite\base\Component
     }
 
     /**
-     * __method_isAclQuery_description__.
      *
-     * @param yii\db\Query $query __param_query_description__
-     *
-     * @return __return_isAclQuery_type__ __return_isAclQuery_description__
      */
     protected function isAclQuery(\yii\db\Query $query)
     {
@@ -702,11 +598,6 @@ class Gatekeeper extends \infinite\base\Component
 
     /**
      * Get general access.
-     *
-     * @param __param_model_type__           $model           __param_model_description__
-     * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__ [optional]
-     *
-     * @return __return_getGeneralAccess_type__ __return_getGeneralAccess_description__
      */
     public function getGeneralAccess($model, $accessingObject = null)
     {
@@ -715,8 +606,6 @@ class Gatekeeper extends \infinite\base\Component
 
     /**
      * Get parent action translations.
-     *
-     * @return __return_getParentActionTranslations_type__ __return_getParentActionTranslations_description__
      */
     public function getParentActionTranslations()
     {
@@ -726,12 +615,7 @@ class Gatekeeper extends \infinite\base\Component
     }
 
     /**
-     * __method_translateParentAction_description__.
      *
-     * @param __param_object_type__ $object __param_object_description__
-     * @param __param_action_type__ $action __param_action_description__
-     *
-     * @return __return_translateParentAction_type__ __return_translateParentAction_description__
      */
     public function translateParentAction($object, $action)
     {
@@ -745,13 +629,6 @@ class Gatekeeper extends \infinite\base\Component
 
     /**
      * Get access.
-     *
-     * @param __param_controlledObject_type__ $controlledObject __param_controlledObject_description__
-     * @param __param_accessingObject_type__  $accessingObject  __param_accessingObject_description__ [optional]
-     * @param __param_acaIds_type__           $acaIds           __param_acaIds_description__ [optional]
-     * @param boolean                         $expandAros       __param_expandAros_description__ [optional]
-     *
-     * @return __return_getAccess_type__ __return_getAccess_description__
      */
     public function getAccess($controlledObject, $accessingObject = null, $acaIds = null, $expandAros = true)
     {
@@ -799,10 +676,7 @@ class Gatekeeper extends \infinite\base\Component
     }
 
     /**
-     * __method_clearCanCache_description__.
      *
-     * @param __param_controlledObject_type__ $controlledObject __param_controlledObject_description__
-     * @param __param_accessingObject_type__  $accessingObject  __param_accessingObject_description__ [optional]
      */
     public function clearCanCache($controlledObject, $accessingObject = null)
     {
@@ -812,8 +686,6 @@ class Gatekeeper extends \infinite\base\Component
 
     /**
      * Get primary requestor.
-     *
-     * @return __return_getPrimaryRequestor_type__ __return_getPrimaryRequestor_description__
      */
     public function getPrimaryRequestor()
     {
@@ -842,10 +714,6 @@ class Gatekeeper extends \infinite\base\Component
 
     /**
      * Get top requestors.
-     *
-     * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__ [optional]
-     *
-     * @return __return_getTopRequestors_type__ __return_getTopRequestors_description__
      */
     public function getTopRequestors($accessingObject = null)
     {
@@ -868,10 +736,6 @@ class Gatekeeper extends \infinite\base\Component
 
     /**
      * Get requestors.
-     *
-     * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__ [optional]
-     *
-     * @return __return_getRequestors_type__ __return_getRequestors_description__
      */
     public function getRequestors($accessingObject = null)
     {
@@ -907,12 +771,7 @@ class Gatekeeper extends \infinite\base\Component
     }
 
     /**
-     * __method_accessorHasGroup_description__.
      *
-     * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__
-     * @param __param_groupSystemId_type__   $groupSystemId   __param_groupSystemId_description__
-     *
-     * @return __return_accessorHasGroup_type__ __return_accessorHasGroup_description__
      */
     public function accessorHasGroup($accessingObject, $groupSystemId)
     {
@@ -936,10 +795,6 @@ class Gatekeeper extends \infinite\base\Component
 
     /**
      * Get accessor groups.
-     *
-     * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__
-     *
-     * @return __return_getAccessorGroups_type__ __return_getAccessorGroups_description__
      */
     public function getAccessorGroups($accessingObject)
     {
@@ -956,10 +811,6 @@ class Gatekeeper extends \infinite\base\Component
 
     /**
      * Get accessing object.
-     *
-     * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__
-     *
-     * @return __return_getAccessingObject_type__ __return_getAccessingObject_description__
      */
     public function getAccessingObject($accessingObject)
     {
@@ -976,11 +827,6 @@ class Gatekeeper extends \infinite\base\Component
 
     /**
      * Get groups.
-     *
-     * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__ [optional]
-     * @param boolean                        $flatten         __param_flatten_description__ [optional]
-     *
-     * @return __return_getGroups_type__ __return_getGroups_description__
      */
     public function getGroups($accessingObject = null, $flatten = false)
     {
@@ -1010,12 +856,6 @@ class Gatekeeper extends \infinite\base\Component
 
     /**
      * Get action object by name.
-     *
-     * @param __param_action_type__ $action __param_action_description__
-     *
-     * @throws Exception __exception_Exception_description__
-     *
-     * @return __return_getActionObjectByName_type__ __return_getActionObjectByName_description__
      */
     public function getActionObjectByName($action)
     {
@@ -1040,9 +880,7 @@ class Gatekeeper extends \infinite\base\Component
     }
 
     /**
-     * __method__getActions_description__.
      *
-     * @return __return__getActions_type__ __return__getActions_description__
      */
     protected function _getActions()
     {
@@ -1056,8 +894,6 @@ class Gatekeeper extends \infinite\base\Component
 
     /**
      * Get actions by name.
-     *
-     * @return __return_getActionsByName_type__ __return_getActionsByName_description__
      */
     public function getActionsByName()
     {
@@ -1069,7 +905,6 @@ class Gatekeeper extends \infinite\base\Component
     }
 
     /**
-     * __method_clearActionsCache_description__.
      */
     public function clearActionsCache()
     {
@@ -1079,8 +914,6 @@ class Gatekeeper extends \infinite\base\Component
 
     /**
      * Get actions by.
-     *
-     * @return __return_getActionsById_type__ __return_getActionsById_description__
      */
     public function getActionsById()
     {
@@ -1093,8 +926,6 @@ class Gatekeeper extends \infinite\base\Component
 
     /**
      * Get public group.
-     *
-     * @return __return_getPublicGroup_type__ __return_getPublicGroup_description__
      */
     public function getPublicGroup()
     {
@@ -1103,8 +934,6 @@ class Gatekeeper extends \infinite\base\Component
 
     /**
      * Get top group.
-     *
-     * @return __return_getTopGroup_type__ __return_getTopGroup_description__
      */
     public function getTopGroup()
     {
@@ -1113,11 +942,6 @@ class Gatekeeper extends \infinite\base\Component
 
     /**
      * Get group.
-     *
-     * @param __param_systemName_type__ $systemName  __param_systemName_description__
-     * @param boolean                   $checkAccess __param_checkAccess_description__ [optional]
-     *
-     * @return __return_getGroup_type__ __return_getGroup_description__
      */
     public function getGroup($systemName, $checkAccess = false)
     {
@@ -1127,12 +951,7 @@ class Gatekeeper extends \infinite\base\Component
     }
 
     /**
-     * __method_clearExplicitRules_description__.
      *
-     * @param __param_controlledObject_type__ $controlledObject __param_controlledObject_description__
-     * @param boolean                         $accessingObject  __param_accessingObject_description__ [optional]
-     *
-     * @return __return_clearExplicitRules_type__ __return_clearExplicitRules_description__
      */
     public function clearExplicitRules($controlledObject, $accessingObject = false)
     {
@@ -1151,14 +970,7 @@ class Gatekeeper extends \infinite\base\Component
     }
 
     /**
-     * __method_allow_description__.
      *
-     * @param __param_action_type__           $action           __param_action_description__
-     * @param __param_controlledObject_type__ $controlledObject __param_controlledObject_description__ [optional]
-     * @param __param_accessingObject_type__  $accessingObject  __param_accessingObject_description__ [optional]
-     * @param __param_aclRole_type__          $aclRole          __param_aclRole_description__ [optional]
-     *
-     * @return __return_allow_type__ __return_allow_description__
      */
     public function allow($action, $controlledObject = null, $accessingObject = null, $aclRole = null)
     {
@@ -1166,14 +978,7 @@ class Gatekeeper extends \infinite\base\Component
     }
 
     /**
-     * __method_clear_description__.
      *
-     * @param __param_action_type__           $action           __param_action_description__
-     * @param __param_controlledObject_type__ $controlledObject __param_controlledObject_description__ [optional]
-     * @param __param_accessingObject_type__  $accessingObject  __param_accessingObject_description__ [optional]
-     * @param __param_aclRole_type__          $aclRole          __param_aclRole_description__ [optional]
-     *
-     * @return __return_clear_type__ __return_clear_description__
      */
     public function clear($action, $controlledObject = null, $accessingObject = null, $aclRole = null)
     {
@@ -1181,14 +986,7 @@ class Gatekeeper extends \infinite\base\Component
     }
 
     /**
-     * __method_requireDirectAdmin_description__.
      *
-     * @param __param_action_type__           $action           __param_action_description__
-     * @param __param_controlledObject_type__ $controlledObject __param_controlledObject_description__ [optional]
-     * @param __param_accessingObject_type__  $accessingObject  __param_accessingObject_description__ [optional]
-     * @param __param_aclRole_type__          $aclRole          __param_aclRole_description__ [optional]
-     *
-     * @return __return_requireDirectAdmin_type__ __return_requireDirectAdmin_description__
      */
     public function requireDirectAdmin($action, $controlledObject = null, $accessingObject = null, $aclRole = null)
     {
@@ -1196,14 +994,7 @@ class Gatekeeper extends \infinite\base\Component
     }
 
     /**
-     * __method_requireAdmin_description__.
      *
-     * @param __param_action_type__           $action           __param_action_description__
-     * @param __param_controlledObject_type__ $controlledObject __param_controlledObject_description__ [optional]
-     * @param __param_accessingObject_type__  $accessingObject  __param_accessingObject_description__ [optional]
-     * @param __param_aclRole_type__          $aclRole          __param_aclRole_description__ [optional]
-     *
-     * @return __return_requireAdmin_type__ __return_requireAdmin_description__
      */
     public function requireAdmin($action, $controlledObject = null, $accessingObject = null, $aclRole = null)
     {
@@ -1211,14 +1002,7 @@ class Gatekeeper extends \infinite\base\Component
     }
 
     /**
-     * __method_requireSuperAdmin_description__.
      *
-     * @param __param_action_type__           $action           __param_action_description__
-     * @param __param_controlledObject_type__ $controlledObject __param_controlledObject_description__ [optional]
-     * @param __param_accessingObject_type__  $accessingObject  __param_accessingObject_description__ [optional]
-     * @param __param_aclRole_type__          $aclRole          __param_aclRole_description__ [optional]
-     *
-     * @return __return_requireSuperAdmin_type__ __return_requireSuperAdmin_description__
      */
     public function requireSuperAdmin($action, $controlledObject = null, $accessingObject = null, $aclRole = null)
     {
@@ -1226,14 +1010,7 @@ class Gatekeeper extends \infinite\base\Component
     }
 
     /**
-     * __method_parentAccess_description__.
      *
-     * @param __param_action_type__           $action           __param_action_description__
-     * @param __param_controlledObject_type__ $controlledObject __param_controlledObject_description__ [optional]
-     * @param __param_accessingObject_type__  $accessingObject  __param_accessingObject_description__ [optional]
-     * @param __param_aclRole_type__          $aclRole          __param_aclRole_description__ [optional]
-     *
-     * @return __return_parentAccess_type__ __return_parentAccess_description__
      */
     public function parentAccess($action, $controlledObject = null, $accessingObject = null, $aclRole = null)
     {
@@ -1242,16 +1019,6 @@ class Gatekeeper extends \infinite\base\Component
 
     /**
      * Set access.
-     *
-     * @param __param_action_type__           $action           __param_action_description__
-     * @param __param_access_type__           $access           __param_access_description__
-     * @param __param_controlledObject_type__ $controlledObject __param_controlledObject_description__ [optional]
-     * @param __param_accessingObject_type__  $accessingObject  __param_accessingObject_description__ [optional]
-     * @param __param_aclRole_type__          $aclRole          __param_aclRole_description__ [optional]
-     *
-     * @throws Exception __exception_Exception_description__
-     *
-     * @return __return_setAccess_type__ __return_setAccess_description__
      */
     public function setAccess($action, $access, $controlledObject = null, $accessingObject = null, $aclRole = null)
     {
@@ -1326,10 +1093,6 @@ class Gatekeeper extends \infinite\base\Component
 
     /**
      * Get object access.
-     *
-     * @param __param_object_type__ $object __param_object_description__
-     *
-     * @return __return_getObjectAccess_type__ __return_getObjectAccess_description__
      */
     public function getObjectAccess($object)
     {
@@ -1340,10 +1103,6 @@ class Gatekeeper extends \infinite\base\Component
 
     /**
      * Get object aros.
-     *
-     * @param __param_object_type__ $object __param_object_description__
-     *
-     * @return __return_getObjectAros_type__ __return_getObjectAros_description__
      */
     public function getObjectAros($object)
     {
@@ -1358,11 +1117,6 @@ class Gatekeeper extends \infinite\base\Component
 
     /**
      * Get object inherited roles.
-     *
-     * @param __param_object_type__ $object __param_object_description__
-     * @param array                 $params __param_params_description__ [optional]
-     *
-     * @return __return_getObjectInheritedRoles_type__ __return_getObjectInheritedRoles_description__
      */
     public function getObjectInheritedRoles($object, $params = [])
     {
@@ -1376,11 +1130,6 @@ class Gatekeeper extends \infinite\base\Component
 
     /**
      * Get object roles.
-     *
-     * @param __param_object_type__ $object __param_object_description__
-     * @param array                 $params __param_params_description__ [optional]
-     *
-     * @return __return_getObjectRoles_type__ __return_getObjectRoles_description__
      */
     public function getObjectRoles($object, $params = [])
     {
@@ -1416,10 +1165,6 @@ class Gatekeeper extends \infinite\base\Component
 
     /**
      * Get top access.
-     *
-     * @param array $baseAccess __param_baseAccess_description__ [optional]
-     *
-     * @return __return_getTopAccess_type__ __return_getTopAccess_description__
      */
     protected function getTopAccess($baseAccess = [])
     {

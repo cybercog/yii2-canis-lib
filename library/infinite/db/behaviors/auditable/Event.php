@@ -20,57 +20,44 @@ abstract class Event extends \infinite\base\Component
     const EVENT_AUDIT_HOOK = 'auditHook';
     const EVENT_BEFORE_MODEL_SAVE = 'beforeModelSave';
     /**
-     * @var __var_mergeWith_type__ __var_mergeWith_description__
      */
     public $mergeWith = false;
     /**
-     * @var __var_handleHooksOnCreate_type__ __var_handleHooksOnCreate_description__
      */
     public $handleHooksOnCreate = false;
     /**
-     * @var __var_handleHooksOnCreate_type__ __var_handleHooksOnCreate_description__
      */
     public $saveOnRegister = false;
     public $model;
     public $context = false;
     /**
-     * @var __var__exclusive_type__ __var__exclusive_description__
      */
     protected $_exclusive = false;
     /**
-     * @var __var__id_type__ __var__id_description__
      */
     protected $_id;
     /**
-     * @var __var__hash_type__ __var__hash_description__
      */
     protected $_hash;
     /**
-     * @var __var__agent_type__ __var__agent_description__
      */
     protected $_agent;
     /**
-     * @var __var__directObject_type__ __var__directObject_description__
      */
     protected $_directObject;
     /**
-     * @var __var__indirectObject_type__ __var__indirectObject_description__
      */
     protected $_indirectObject;
     /**
-     * @var __var__tmp_type__ __var__tmp_description__
      */
     protected $_tmp = [];
     /**
-     * @var __var__merged_type__ __var__merged_description__
      */
     protected $_merged = [];
     protected $_timestamp;
 
     /**
      * Prepares object for serialization.
-     *
-     * @return __return___sleep_type__ __return___sleep_description__
      */
     public function __sleep()
     {
@@ -90,8 +77,6 @@ abstract class Event extends \infinite\base\Component
 
     /**
      * Set agent.
-     *
-     * @param __param_agent_type__ $agent __param_agent_description__
      */
     public function setAgent($agent)
     {
@@ -100,8 +85,6 @@ abstract class Event extends \infinite\base\Component
 
     /**
      * Get agent.
-     *
-     * @return __return_getAgent_type__ __return_getAgent_description__
      */
     public function getAgent()
     {
@@ -118,8 +101,6 @@ abstract class Event extends \infinite\base\Component
 
     /**
      * Get agent.
-     *
-     * @return __return_getAgentId_type__ __return_getAgentId_description__
      */
     public function getAgentId()
     {
@@ -132,8 +113,6 @@ abstract class Event extends \infinite\base\Component
 
     /**
      * Set indirect object.
-     *
-     * @param __param_object_type__ $object __param_object_description__
      */
     public function setIndirectObject($object)
     {
@@ -142,8 +121,6 @@ abstract class Event extends \infinite\base\Component
 
     /**
      * Get indirect object.
-     *
-     * @return __return_getIndirectObject_type__ __return_getIndirectObject_description__
      */
     public function getIndirectObject()
     {
@@ -160,8 +137,6 @@ abstract class Event extends \infinite\base\Component
 
     /**
      * Get indirect object.
-     *
-     * @return __return_getIndirectObjectId_type__ __return_getIndirectObjectId_description__
      */
     public function getIndirectObjectId()
     {
@@ -174,8 +149,6 @@ abstract class Event extends \infinite\base\Component
 
     /**
      * Set direct object.
-     *
-     * @param __param_object_type__ $object __param_object_description__
      */
     public function setDirectObject($object)
     {
@@ -184,8 +157,6 @@ abstract class Event extends \infinite\base\Component
 
     /**
      * Get direct object.
-     *
-     * @return __return_getDirectObject_type__ __return_getDirectObject_description__
      */
     public function getDirectObject()
     {
@@ -202,8 +173,6 @@ abstract class Event extends \infinite\base\Component
 
     /**
      * Get direct object.
-     *
-     * @return __return_getDirectObjectId_type__ __return_getDirectObjectId_description__
      */
     public function getDirectObjectId()
     {
@@ -216,10 +185,6 @@ abstract class Event extends \infinite\base\Component
 
     /**
      * Set id.
-     *
-     * @param __param_id_type__ $id __param_id_description__
-     *
-     * @return __return_setId_type__ __return_setId_description__
      */
     public function setId($id)
     {
@@ -228,8 +193,6 @@ abstract class Event extends \infinite\base\Component
 
     /**
      * Get id.
-     *
-     * @return __return_getId_type__ __return_getId_description__
      */
     public function getId()
     {
@@ -268,8 +231,6 @@ abstract class Event extends \infinite\base\Component
 
     /**
      * Get hash.
-     *
-     * @return __return_getHash_type__ __return_getHash_description__
      */
     public function getHash()
     {
@@ -282,8 +243,6 @@ abstract class Event extends \infinite\base\Component
 
     /**
      * Get hash array.
-     *
-     * @return __return_getHashArray_type__ __return_getHashArray_description__
      */
     public function getHashArray()
     {
@@ -297,10 +256,6 @@ abstract class Event extends \infinite\base\Component
 
     /**
      * Set exclusive.
-     *
-     * @param __param_exclusive_type__ $exclusive __param_exclusive_description__
-     *
-     * @return __return_setExclusive_type__ __return_setExclusive_description__
      */
     public function setExclusive($exclusive)
     {
@@ -309,8 +264,6 @@ abstract class Event extends \infinite\base\Component
 
     /**
      * Get exclusive.
-     *
-     * @return __return_getExclusive_type__ __return_getExclusive_description__
      */
     public function getExclusive()
     {
@@ -318,11 +271,7 @@ abstract class Event extends \infinite\base\Component
     }
 
     /**
-     * __method_merge_description__.
      *
-     * @param __param_with_type__ $with __param_with_description__
-     *
-     * @return __return_merge_type__ __return_merge_description__
      */
     public function merge($with)
     {
@@ -332,9 +281,7 @@ abstract class Event extends \infinite\base\Component
     }
 
     /**
-     * __method_isValid_description__.
      *
-     * @return __return_isValid_type__ __return_isValid_description__
      */
     public function isValid()
     {
@@ -352,9 +299,7 @@ abstract class Event extends \infinite\base\Component
     }
 
     /**
-     * __method_handleHooks_description__.
      *
-     * @return __return_handleHooks_type__ __return_handleHooks_description__
      */
     public function handleHooks()
     {
@@ -366,9 +311,7 @@ abstract class Event extends \infinite\base\Component
     }
 
     /**
-     * __method_save_description__.
      *
-     * @return __return_save_type__ __return_save_description__
      */
     public function save()
     {

@@ -18,16 +18,11 @@ use infinite\base\exceptions\Exception;
 class Authority extends \infinite\base\Component
 {
     /**
-     * @var __var__handler_type__ __var__handler_description__
      */
     protected $_handler;
 
     /**
      * Set handler.
-     *
-     * @param __param_handler_type__ $handler __param_handler_description__
-     *
-     * @throws Exception __exception_Exception_description__
      */
     public function setHandler($handler)
     {
@@ -39,8 +34,6 @@ class Authority extends \infinite\base\Component
 
     /**
      * Get handler.
-     *
-     * @return __return_getHandler_type__ __return_getHandler_description__
      */
     public function getHandler()
     {
@@ -49,10 +42,6 @@ class Authority extends \infinite\base\Component
 
     /**
      * Get requestors.
-     *
-     * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__
-     *
-     * @return __return_getRequestors_type__ __return_getRequestors_description__
      */
     public function getRequestors($accessingObject)
     {
@@ -65,10 +54,6 @@ class Authority extends \infinite\base\Component
 
     /**
      * Get top requestors.
-     *
-     * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__
-     *
-     * @return __return_getTopRequestors_type__ __return_getTopRequestors_description__
      */
     public function getTopRequestors($accessingObject)
     {

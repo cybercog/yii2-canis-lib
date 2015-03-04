@@ -16,19 +16,15 @@ namespace infinite\base\language;
 class Noun extends \infinite\base\language\Word
 {
     /**
-     * @var __var__singular_type__ __var__singular_description__
      */
     protected $_singular;
     /**
-     * @var __var__plural_type__ __var__plural_description__
      */
     protected $_plural;
     /**
-     * @var __var__possessive_type__ __var__possessive_description__
      */
     protected $_possessive;
     /**
-     * @var __var__possessive_plural_type__ __var__possessive_plural_description__
      */
     protected $_possessive_plural;
 
@@ -73,8 +69,6 @@ class Noun extends \infinite\base\language\Word
 
     /**
      * Get upper singular.
-     *
-     * @return __return_getUpperSingular_type__ __return_getUpperSingular_description__
      */
     public function getUpperSingular()
     {
@@ -95,8 +89,6 @@ class Noun extends \infinite\base\language\Word
 
     /**
      * Get upper plural.
-     *
-     * @return __return_getUpperPlural_type__ __return_getUpperPlural_description__
      */
     public function getUpperPlural()
     {

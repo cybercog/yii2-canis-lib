@@ -20,30 +20,23 @@ class Item extends \infinite\base\Object
 {
     //public $name;
     /**
-     * @var __var__owner_type__ __var__owner_description__
      */
     protected $_owner;
     /**
-     * @var __var__collector_type__ __var__collector_description__
      */
     protected $_collector;
     /**
-     * @var __var__settings_type__ __var__settings_description__
      */
     protected $_settings;
     /**
-     * @var __var__object_type__ __var__object_description__
      */
     protected $_object;
     /**
-     * @var __var__systemId_type__ __var__systemId_description__
      */
     protected $_systemId;
 
     /**
      * Set system.
-     *
-     * @param __param_id_type__ $id __param_id_description__
      */
     public function setSystemId($id)
     {
@@ -52,8 +45,6 @@ class Item extends \infinite\base\Object
 
     /**
      * Get system.
-     *
-     * @return __return_getSystemId_type__ __return_getSystemId_description__
      */
     public function getSystemId()
     {
@@ -66,8 +57,6 @@ class Item extends \infinite\base\Object
 
     /**
      * Set collector.
-     *
-     * @param __param_collector_type__ $collector __param_collector_description__
      */
     public function setCollector($collector)
     {
@@ -75,9 +64,7 @@ class Item extends \infinite\base\Object
     }
 
     /**
-     * __method_hasObject_description__.
      *
-     * @return __return_hasObject_type__ __return_hasObject_description__
      */
     public function hasObject()
     {
@@ -86,8 +73,6 @@ class Item extends \infinite\base\Object
 
     /**
      * Get object.
-     *
-     * @return __return_getObject_type__ __return_getObject_description__
      */
     public function getObject()
     {
@@ -96,10 +81,6 @@ class Item extends \infinite\base\Object
 
     /**
      * Set object.
-     *
-     * @param __param_object_type__ $object __param_object_description__
-     *
-     * @throws Exception __exception_Exception_description__
      */
     public function setObject($object)
     {
@@ -116,8 +97,6 @@ class Item extends \infinite\base\Object
 
     /**
      * Set owner.
-     *
-     * @param __param_owner_type__ $owner __param_owner_description__
      */
     public function setOwner($owner)
     {
@@ -126,8 +105,6 @@ class Item extends \infinite\base\Object
 
     /**
      * Get owner.
-     *
-     * @return __return_getOwner_type__ __return_getOwner_description__
      */
     public function getOwner()
     {
@@ -136,8 +113,6 @@ class Item extends \infinite\base\Object
 
     /**
      * Get collector.
-     *
-     * @return __return_getCollector_type__ __return_getCollector_description__
      */
     public function getCollector()
     {

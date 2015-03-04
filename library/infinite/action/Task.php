@@ -24,15 +24,12 @@ class Task extends \infinite\base\Component
     public $saveEvery = 5;
     protected $_weight = 100;
     /**
-     * @var __var__status_type__ __var__status_description__
      */
     protected $_status;
     /**
-     * @var __var__progressTotal_type__ __var__progressTotal_description__
      */
     protected $_progressTotal = 100;
     /**
-     * @var __var__progressRemaining_type__ __var__progressRemaining_description__
      */
     protected $_progressRemaining = 100;
 
@@ -57,8 +54,6 @@ class Task extends \infinite\base\Component
 
     /**
      * Prepares object for serialization.
-     *
-     * @return __return___sleep_type__ __return___sleep_description__
      */
     public function __sleep()
     {
@@ -135,8 +130,6 @@ class Task extends \infinite\base\Component
 
     /**
      * Set progress total.
-     *
-     * @param __param_total_type__ $total __param_total_description__
      */
     public function setProgressTotal($total)
     {
@@ -158,8 +151,6 @@ class Task extends \infinite\base\Component
 
     /**
      * Get progress total.
-     *
-     * @return __return_getProgressTotal_type__ __return_getProgressTotal_description__
      */
     public function getProgressTotal()
     {
@@ -172,8 +163,6 @@ class Task extends \infinite\base\Component
 
     /**
      * Get progress done.
-     *
-     * @return __return_getProgressDone_type__ __return_getProgressDone_description__
      */
     public function getProgressDone()
     {
@@ -198,8 +187,6 @@ class Task extends \infinite\base\Component
 
     /**
      * Get progress remaining.
-     *
-     * @return __return_getProgressRemaining_type__ __return_getProgressRemaining_description__
      */
     public function getProgressRemaining()
     {
@@ -215,11 +202,7 @@ class Task extends \infinite\base\Component
     }
 
     /**
-     * __method_reduceRemaining_description__.
      *
-     * @param __param_n_type__ $n __param_n_description__
-     *
-     * @return __return_reduceRemaining_type__ __return_reduceRemaining_description__
      */
     public function reduceRemaining($n = 1)
     {

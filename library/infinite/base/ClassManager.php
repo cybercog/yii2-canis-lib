@@ -20,7 +20,6 @@ use IteratorAggregate;
 class ClassManager extends Component implements IteratorAggregate, ArrayAccess
 {
     /**
-     * @var __var__classes_type__ __var__classes_description__
      */
     protected $_classes = [];
     /**
@@ -32,9 +31,7 @@ class ClassManager extends Component implements IteratorAggregate, ArrayAccess
     }
 
     /**
-     * __method_baseClasses_description__.
      *
-     * @return __return_baseClasses_type__ __return_baseClasses_description__
      */
     public function baseClasses()
     {
@@ -57,9 +54,6 @@ class ClassManager extends Component implements IteratorAggregate, ArrayAccess
 
     /**
      * Set classes.
-     *
-     * @param __param_classes_type__ $classes  __param_classes_description__
-     * @param boolean                $override __param_override_description__ [optional]
      */
     public function setClasses($classes, $override = true)
     {
@@ -101,9 +95,6 @@ class ClassManager extends Component implements IteratorAggregate, ArrayAccess
      * It is implicitly called when you use something like `$value = $model[$offset];`.
      *
      * @param mixed $offset the offset to retrieve element.
-     *
-     * @throws \ __exception_\_description__
-     * @throws \ __exception_\_description__
      *
      * @return mixed the element at the offset, null if no element is found at the offset
      */

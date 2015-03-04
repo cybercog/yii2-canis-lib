@@ -19,11 +19,9 @@ use Yii;
 class Collector extends \infinite\base\collector\Collector
 {
     /**
-     * @var __var__tableRegistry_type__ __var__tableRegistry_description__
      */
     protected $_tableRegistry;
     /**
-     * @var __var__initialItems_type__ __var__initialItems_description__
      */
     protected $_initialItems = [];
     /**
@@ -36,8 +34,6 @@ class Collector extends \infinite\base\collector\Collector
 
     /**
      * Set initial items.
-     *
-     * @param __param_value_type__ $value __param_value_description__
      */
     public function setInitialItems($value)
     {
@@ -54,10 +50,6 @@ class Collector extends \infinite\base\collector\Collector
 
     /**
      * Get by.
-     *
-     * @param __param_id_type__ $id __param_id_description__
-     *
-     * @return __return_getById_type__ __return_getById_description__
      */
     public function getById($id)
     {
@@ -76,8 +68,6 @@ class Collector extends \infinite\base\collector\Collector
 
     /**
      * Get table registry.
-     *
-     * @return __return_getTableRegistry_type__ __return_getTableRegistry_description__
      */
     public function getTableRegistry()
     {

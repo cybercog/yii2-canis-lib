@@ -16,7 +16,6 @@ namespace infinite\web;
 class View extends \yii\web\View
 {
     /**
-     * @var __var_bodyHtmlOptions_type__ __var_bodyHtmlOptions_description__
      */
     public $bodyHtmlOptions = [];
 }

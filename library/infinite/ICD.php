@@ -9,48 +9,36 @@
 class ICD extends \yii\helpers\VarDumper
 {
     /**
-     * @var __var__var_type__ __var__var_description__
      */
     protected $_var;
     /**
-     * @var __var__exclude_type__ __var__exclude_description__
      */
     protected $_exclude = [];
     /**
-     * @var __var__backtrace_type__ __var__backtrace_description__
      */
     protected $_backtrace;
     /**
-     * @var __var__format_type__ __var__format_description__
      */
     protected $_format = 'auto';
     /**
-     * @var __var__depth_type__ __var__depth_description__
      */
     protected $_depth = 10;
     /**
-     * @var __var__skipSteps_type__ __var__skipSteps_description__
      */
     protected $_skipSteps = 2;
     /**
-     * @var __var__showSteps_type__ __var__showSteps_description__
      */
     protected $_showSteps = 8;
 
     /**
-     * @var __var__output_type__ __var__output_description__
      */
     protected $_output = false;
     /**
-     * @var __var__die_type__ __var__die_description__
      */
     protected $_die = false;
 
     /**
      * Constructor.
-     *
-     * @param __param_var_type__ $var      __param_var_description__
-     * @param array              $settings __param_settings_description__ [optional]
      */
     public function __construct($var, $settings = [])
     {
@@ -65,12 +53,7 @@ class ICD extends \yii\helpers\VarDumper
         $this->_backtrace = array_slice($backtrace, $this->_skipSteps);
     }
     /**
-     * __method_d_description__.
      *
-     * @param __param_var_type__ $var      __param_var_description__
-     * @param array              $settings __param_settings_description__ [optional]
-     *
-     * @return __return_d_type__ __return_d_description__
      */
     public static function d($var, $settings = [])
     {
@@ -78,12 +61,7 @@ class ICD extends \yii\helpers\VarDumper
     }
 
     /**
-     * __method_btnice_description__.
      *
-     * @param __param_backtrace_type__ $backtrace __param_backtrace_description__ [optional]
-     * @param array                    $settings  __param_settings_description__ [optional]
-     *
-     * @return __return_btnice_type__ __return_btnice_description__
      */
     public static function btnice($backtrace = null, $settings = [])
     {
@@ -106,13 +84,7 @@ class ICD extends \yii\helpers\VarDumper
     }
 
     /**
-     * __method_btdiff_description__.
      *
-     * @param __param_a_type__ $a      __param_a_description__
-     * @param __param_b_type__ $b      __param_b_description__
-     * @param boolean          $return __param_return_description__ [optional]
-     *
-     * @return __return_btdiff_type__ __return_btdiff_description__
      */
     public static function btdiff($a, $b, $return = true)
     {
@@ -154,11 +126,7 @@ class ICD extends \yii\helpers\VarDumper
     }
 
     /**
-     * __method_exclude_description__.
      *
-     * @param __param_exclude_type__ $exclude __param_exclude_description__
-     *
-     * @return __return_exclude_type__ __return_exclude_description__
      */
     public function exclude($exclude)
     {
@@ -168,9 +136,7 @@ class ICD extends \yii\helpers\VarDumper
     }
 
     /**
-     * __method_html_description__.
      *
-     * @return __return_html_type__ __return_html_description__
      */
     public function html()
     {
@@ -180,9 +146,7 @@ class ICD extends \yii\helpers\VarDumper
     }
 
     /**
-     * __method_fatal_description__.
      *
-     * @return __return_fatal_type__ __return_fatal_description__
      */
     public function fatal()
     {
@@ -192,9 +156,7 @@ class ICD extends \yii\helpers\VarDumper
     }
 
     /**
-     * __method_safe_description__.
      *
-     * @return __return_safe_type__ __return_safe_description__
      */
     public function safe()
     {
@@ -204,9 +166,7 @@ class ICD extends \yii\helpers\VarDumper
     }
 
     /**
-     * __method_plaintext_description__.
      *
-     * @return __return_plaintext_type__ __return_plaintext_description__
      */
     public function plaintext()
     {
@@ -217,8 +177,6 @@ class ICD extends \yii\helpers\VarDumper
 
     /**
      * Get format.
-     *
-     * @return __return_getFormat_type__ __return_getFormat_description__
      */
     public function getFormat()
     {
@@ -234,7 +192,6 @@ class ICD extends \yii\helpers\VarDumper
     }
 
     /**
-     * __method_outputHtml_description__.
      */
     public function outputHtml()
     {
@@ -253,7 +210,6 @@ class ICD extends \yii\helpers\VarDumper
     }
 
     /**
-     * __method_outputPlaintext_description__.
      */
     public function outputPlaintext()
     {
@@ -265,9 +221,7 @@ class ICD extends \yii\helpers\VarDumper
     }
 
     /**
-     * __method_output_description__.
      *
-     * @return __return_output_type__ __return_output_description__
      */
     public function output()
     {
@@ -283,7 +237,6 @@ class ICD extends \yii\helpers\VarDumper
     }
 
     /**
-     * __method___destruct_description__.
      */
     public function __destruct()
     {

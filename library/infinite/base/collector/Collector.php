@@ -18,7 +18,6 @@ abstract class Collector extends \infinite\base\Component
     use CollectorTrait;
 
     /**
-     * @var __var__systemId_type__ __var__systemId_description__
      */
     protected $_systemId;
 

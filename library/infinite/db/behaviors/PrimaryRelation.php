@@ -18,15 +18,12 @@ use infinite\db\models\Relation;
 class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
 {
     /**
-     * @var __var_primaryField_type__ __var_primaryField_description__
      */
     public $primaryChildField = 'primary_child';
     /**
-     * @var __var_primaryField_type__ __var_primaryField_description__
      */
     public $primaryParentField = 'primary_parent';
     /**
-     * @var __var_wasPrimary_type__ __var_wasPrimary_description__
      */
     public $wasPrimary = ['parent' => false, 'child' => false];
 
@@ -44,9 +41,7 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_handlePrimary_description__.
      *
-     * @return __return_handlePrimary_type__ __return_handlePrimary_description__
      */
     public function handlePrimary($role)
     {
@@ -64,10 +59,6 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Get siblings.
-     *
-     * @param boolean $primaryOnly __param_primaryOnly_description__ [optional]
-     *
-     * @return __return_getSiblings_type__ __return_getSiblings_description__
      */
     public function getSiblings($role, $primaryOnly = false)
     {
@@ -86,11 +77,7 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_beforeInsert_description__.
      *
-     * @param __param_event_type__ $event __param_event_description__ [optional]
-     *
-     * @return __return_beforeInsert_type__ __return_beforeInsert_description__
      */
     public function beforeInsert($event = null)
     {
@@ -113,11 +100,7 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_beforeUpdate_description__.
      *
-     * @param __param_event_type__ $event __param_event_description__ [optional]
-     *
-     * @return __return_beforeUpdate_type__ __return_beforeUpdate_description__
      */
     public function beforeUpdate($event = null)
     {
@@ -133,11 +116,7 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_afterUpdate_description__.
      *
-     * @param __param_event_type__ $event __param_event_description__ [optional]
-     *
-     * @return __return_afterUpdate_type__ __return_afterUpdate_description__
      */
     public function afterUpdate($event = null)
     {
@@ -149,11 +128,7 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_afterDelete_description__.
      *
-     * @param __param_event_type__ $event __param_event_description__ [optional]
-     *
-     * @return __return_afterDelete_type__ __return_afterDelete_description__
      */
     public function afterDelete($event = null)
     {
@@ -161,9 +136,7 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_handOffPrimary_description__.
      *
-     * @return __return_handOffPrimary_type__ __return_handOffPrimary_description__
      */
     public function handOffPrimary()
     {
@@ -186,8 +159,6 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Set primary.
-     *
-     * @return __return_setPrimary_type__ __return_setPrimary_description__
      */
     public function setPrimary($role)
     {
@@ -209,8 +180,6 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Get is primary.
-     *
-     * @return __return_getIsPrimary_type__ __return_getIsPrimary_description__
      */
     public function isPrimary($role)
     {

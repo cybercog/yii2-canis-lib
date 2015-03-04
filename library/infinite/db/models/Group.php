@@ -30,7 +30,6 @@ class Group extends \infinite\db\ActiveRecord implements IdentityInterface
      */
     static protected $_cache = ['id' => [], 'system' => []];
     /*
-     * @var __var__doCache_type__ __var__doCache_description__
      */
     protected static $_doCache = true;
     /**
@@ -112,7 +111,6 @@ class Group extends \infinite\db\ActiveRecord implements IdentityInterface
     }
 
     /*
-     * __method_enableCache_description__
      */
     public static function enableCache()
     {
@@ -120,7 +118,6 @@ class Group extends \infinite\db\ActiveRecord implements IdentityInterface
     }
 
     /*
-     * __method_disableCache_description__
      */
     public static function disableCache()
     {
@@ -131,7 +128,6 @@ class Group extends \infinite\db\ActiveRecord implements IdentityInterface
      * Get by.
      *
      * @param unknown $id
-     * @param boolean $checkAccess __param_checkAccess_description__ [optional]
      *
      * @return unknown
      */
@@ -160,7 +156,6 @@ class Group extends \infinite\db\ActiveRecord implements IdentityInterface
     /*
      * Get by system name
      * @param unknown $id
-     * @param boolean $checkAccess __param_checkAccess_description__ [optional]
      * @return unknown
      */
     public static function getBySystemName($id, $checkAccess = true)
@@ -195,9 +190,7 @@ class Group extends \infinite\db\ActiveRecord implements IdentityInterface
     }
 
     /**
-     * __method_findIdentityByAccessToken_description__.
      *
-     * @param __param_token_type__ $token __param_token_description__
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
@@ -224,8 +217,6 @@ class Group extends \infinite\db\ActiveRecord implements IdentityInterface
     }
 
     /**
-     * __method_validateAuthKey_description__.
-     *
      * @param string $authKey
      *
      * @return boolean if auth key is valid for current user

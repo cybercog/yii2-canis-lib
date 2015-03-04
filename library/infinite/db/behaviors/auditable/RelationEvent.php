@@ -16,7 +16,6 @@ namespace infinite\db\behaviors\auditable;
 class RelationEvent extends AttributesEvent
 {
     /**
-     * @var __var_descriptor_type__ __var_descriptor_description__
      */
     public $descriptor;
     /**
@@ -32,8 +31,6 @@ class RelationEvent extends AttributesEvent
 
     /**
      * Prepares object for serialization.
-     *
-     * @return __return___sleep_type__ __return___sleep_description__
      */
     public function __sleep()
     {

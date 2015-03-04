@@ -20,7 +20,6 @@ abstract class Module extends \yii\base\Module
     use ObjectTrait;
 
     /**
-     * @var __var__systemId_type__ __var__systemId_description__
      */
     protected $_systemId;
 
@@ -42,7 +41,6 @@ abstract class Module extends \yii\base\Module
     /**
      * Get system.
      *
-     * @throws Exception __exception_Exception_description__
      *
      * @return unknown
      */

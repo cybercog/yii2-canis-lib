@@ -28,7 +28,6 @@ class Controller extends \yii\console\Controller
         return parent::runAction($id, $params);
     }
     /**
-     * __method_hr_description__.
      */
     public function hr()
     {
@@ -38,11 +37,7 @@ class Controller extends \yii\console\Controller
     }
 
     /**
-     * __method_out_description__.
      *
-     * @param __param_string_type__ $string __param_string_description__
-     *
-     * @return __return_out_type__ __return_out_description__
      */
     public function out($string)
     {

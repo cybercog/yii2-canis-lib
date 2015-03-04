@@ -95,8 +95,6 @@ class Audit extends \infinite\db\ActiveRecord
 
     /**
      * Get event object.
-     *
-     * @return __return_getEventObject_type__ __return_getEventObject_description__
      */
     public function getEventObject()
     {
@@ -111,11 +109,7 @@ class Audit extends \infinite\db\ActiveRecord
     }
 
     /**
-     * __method_handleHooks_description__.
      *
-     * @param boolean $save __param_save_description__ [optional]
-     *
-     * @return __return_handleHooks_type__ __return_handleHooks_description__
      */
     public function handleHooks($save = true)
     {

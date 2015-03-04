@@ -17,8 +17,6 @@ class UploadedFile extends \yii\web\UploadedFile implements \infinite\base\FileI
 {
     /**
      * Get error message.
-     *
-     * @return __return_getErrorMessage_type__ __return_getErrorMessage_description__
      */
     public function getErrorMessage()
     {

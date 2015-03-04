@@ -16,7 +16,6 @@ namespace infinite\db\behaviors\auditable;
 class DeleteEvent extends AttributesEvent
 {
     /**
-     * @var __var_descriptor_type__ __var_descriptor_description__
      */
     public $descriptor;
     /**

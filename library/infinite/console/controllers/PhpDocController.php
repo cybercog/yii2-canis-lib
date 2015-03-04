@@ -31,19 +31,15 @@ class PhpDocController extends Controller
      */
     public $defaultAction = 'property';
     /**
-     * @var __var_author_type__ __var_author_description__
      */
     public $author = "Jacob Morrison <email@ofjacob.com>";
     /**
-     * @var __var_copyright_type__ __var_copyright_description__
      */
     public $copyright = "Copyright (c) 2014 Infinite Cascade";
     /**
-     * @var __var_link_type__ __var_link_description__
      */
     public $link = "http://www.infinitecascade.com/";
     /**
-     * @var __var_license_type__ __var_license_description__
      */
     public $license = "http://www.infinitecascade.com/license";
     /**
@@ -126,11 +122,7 @@ class PhpDocController extends Controller
     }
 
     /**
-     * __method_findFiles_description__.
      *
-     * @param __param_root_type__ $root __param_root_description__
-     *
-     * @return __return_findFiles_type__ __return_findFiles_description__
      */
     protected function findFiles($root)
     {
@@ -182,10 +174,7 @@ class PhpDocController extends Controller
     }
 
     /**
-     * __method_fixFileDoc_description__.
      *
-     * @param __param_lines_type__ $lines __param_lines_description__
-     * @param __param_file_type__  $file  __param_file_description__
      */
     protected function fixFileDoc(&$lines, $file)
     {
@@ -223,11 +212,7 @@ class PhpDocController extends Controller
     }
 
     /**
-     * __method_guessClassDescription_description__.
      *
-     * @param __param_ref_type__ $ref __param_ref_description__
-     *
-     * @return __return_guessClassDescription_type__ __return_guessClassDescription_description__
      */
     protected function guessClassDescription($ref)
     {
@@ -242,14 +227,7 @@ class PhpDocController extends Controller
     }
 
     /**
-     * __method_updateClassPropertyDocs_description__.
      *
-     * @param __param_file_type__              $file              __param_file_description__
-     * @param __param_className_type__         $className         __param_className_description__
-     * @param __param_propertyDoc_type__       $propertyDoc       __param_propertyDoc_description__
-     * @param __param_coveredProperties_type__ $coveredProperties __param_coveredProperties_description__
-     *
-     * @return __return_updateClassPropertyDocs_type__ __return_updateClassPropertyDocs_description__
      */
     protected function updateClassPropertyDocs($file, $className, $propertyDoc, $coveredProperties)
     {
@@ -336,11 +314,7 @@ class PhpDocController extends Controller
     }
 
     /**
-     * __method_guessMethodDescription_description__.
      *
-     * @param __param_method_type__ $method __param_method_description__
-     *
-     * @return __return_guessMethodDescription_type__ __return_guessMethodDescription_description__
      */
     public function guessMethodDescription($method)
     {
@@ -362,13 +336,7 @@ class PhpDocController extends Controller
     }
 
     /**
-     * __method_generatePropertyDocs_description__.
      *
-     * @param __param_class_type__    $class    __param_class_description__
-     * @param __param_property_type__ $property __param_property_description__
-     * @param __param_lines_type__    $lines    __param_lines_description__
-     *
-     * @return __return_generatePropertyDocs_type__ __return_generatePropertyDocs_description__
      */
     public function generatePropertyDocs($class, $property, $lines)
     {
@@ -414,12 +382,7 @@ class PhpDocController extends Controller
     }
 
     /**
-     * __method_generateMethodDocs_description__.
      *
-     * @param __param_method_type__ $method __param_method_description__
-     * @param __param_lines_type__  $lines  __param_lines_description__
-     *
-     * @return __return_generateMethodDocs_type__ __return_generateMethodDocs_description__
      */
     public function generateMethodDocs($method, $lines)
     {
@@ -550,10 +513,6 @@ class PhpDocController extends Controller
 
     /**
      * Get method code.
-     *
-     * @param __param_method_type__ $method __param_method_description__
-     *
-     * @return __return_getMethodCode_type__ __return_getMethodCode_description__
      */
     public function getMethodCode($method)
     {
@@ -569,13 +528,7 @@ class PhpDocController extends Controller
     }
 
     /**
-     * __method_updatePropertyDocs_description__.
      *
-     * @param __param_fileContent_type__ $fileContent __param_fileContent_description__
-     * @param __param_className_type__   $className   __param_className_description__
-     * @param __param_file_type__        $file        __param_file_description__
-     *
-     * @return __return_updatePropertyDocs_type__ __return_updatePropertyDocs_description__
      */
     public function updatePropertyDocs($fileContent, $className, $file)
     {
@@ -651,13 +604,7 @@ class PhpDocController extends Controller
     }
 
     /**
-     * __method_updateMethodDocs_description__.
      *
-     * @param __param_fileContent_type__ $fileContent __param_fileContent_description__
-     * @param __param_className_type__   $className   __param_className_description__
-     * @param __param_file_type__        $file        __param_file_description__
-     *
-     * @return __return_updateMethodDocs_type__ __return_updateMethodDocs_description__
      */
     public function updateMethodDocs($fileContent, $className, $file)
     {
@@ -715,12 +662,7 @@ class PhpDocController extends Controller
     }
 
     /**
-     * __method_isPropertyReplacingParent_description__.
      *
-     * @param ReflectionClass    $class    __param_class_description__
-     * @param ReflectionProperty $property __param_property_description__
-     *
-     * @return __return_isPropertyReplacingParent_type__ __return_isPropertyReplacingParent_description__
      */
     public function isPropertyReplacingParent(\ReflectionClass $class, \ReflectionProperty $property)
     {
@@ -736,12 +678,7 @@ class PhpDocController extends Controller
     }
 
     /**
-     * __method_isMethodReplacingParent_description__.
      *
-     * @param ReflectionClass  $class  __param_class_description__
-     * @param ReflectionMethod $method __param_method_description__
-     *
-     * @return __return_isMethodReplacingParent_type__ __return_isMethodReplacingParent_description__
      */
     public function isMethodReplacingParent(\ReflectionClass $class, \ReflectionMethod $method)
     {
@@ -782,8 +719,6 @@ class PhpDocController extends Controller
      *
      * @param $doc
      * @param $properties
-     * @param __param_coveredProperties_type__ $coveredProperties __param_coveredProperties_description__
-     * @param __param_ref_type__               $ref               __param_ref_description__
      *
      * @return string
      */
@@ -829,11 +764,7 @@ class PhpDocController extends Controller
     }
 
     /**
-     * __method_generateClassPropertyDocs_description__.
      *
-     * @param __param_fileName_type__ $fileName __param_fileName_description__
-     *
-     * @return __return_generateClassPropertyDocs_type__ __return_generateClassPropertyDocs_description__
      */
     protected function generateClassPropertyDocs($fileName)
     {
@@ -965,12 +896,7 @@ class PhpDocController extends Controller
     }
 
     /**
-     * __method_match_description__.
      *
-     * @param __param_pattern_type__ $pattern __param_pattern_description__
-     * @param __param_subject_type__ $subject __param_subject_description__
-     *
-     * @return __return_match_type__ __return_match_description__
      */
     protected function match($pattern, $subject)
     {
@@ -988,11 +914,7 @@ class PhpDocController extends Controller
     }
 
     /**
-     * __method_fixSentence_description__.
      *
-     * @param __param_str_type__ $str __param_str_description__
-     *
-     * @return __return_fixSentence_type__ __return_fixSentence_description__
      */
     protected function fixSentence($str)
     {
@@ -1006,11 +928,6 @@ class PhpDocController extends Controller
 
     /**
      * Get prop param.
-     *
-     * @param __param_prop_type__  $prop  __param_prop_description__
-     * @param __param_param_type__ $param __param_param_description__
-     *
-     * @return __return_getPropParam_type__ __return_getPropParam_description__
      */
     protected function getPropParam($prop, $param)
     {

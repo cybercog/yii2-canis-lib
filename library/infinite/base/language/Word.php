@@ -17,8 +17,6 @@ abstract class Word extends \infinite\base\Object
 {
     abstract public function getBase();
     /**
-     * __method_prepare_description__.
-     *
      * @param unknown $s
      * @param unknown $upper (optional)
      *
@@ -34,8 +32,6 @@ abstract class Word extends \infinite\base\Object
     }
 
     /**
-     * __method_vowel_description__.
-     *
      * @param unknown $l
      * @param unknown $includeY (optional)
      *
@@ -51,8 +47,6 @@ abstract class Word extends \infinite\base\Object
     }
 
     /**
-     * __method_isCVC_description__.
-     *
      * @param unknown $s
      *
      * @return unknown

@@ -46,7 +46,6 @@ class Relation extends \infinite\db\ActiveRecord
     protected $_dirtyAttributes = [];
 
     /*
-     * @var __var__callCache_type__ __var__callCache_description__
      */
     public static $_modelRegistry = [];
     /**
@@ -179,11 +178,7 @@ class Relation extends \infinite\db\ActiveRecord
     }
 
     /**
-     * __method_afterSaveRelation_description__.
      *
-     * @param __param_event_type__ $event __param_event_description__
-     *
-     * @return __return_afterSaveRelation_type__ __return_afterSaveRelation_description__
      */
     public function afterSaveRelation($event)
     {
@@ -259,11 +254,7 @@ class Relation extends \infinite\db\ActiveRecord
     }
 
     /**
-     * __method_afterDeleteRelation_description__.
      *
-     * @param __param_event_type__ $event __param_event_description__
-     *
-     * @return __return_afterDeleteRelation_type__ __return_afterDeleteRelation_description__
      */
     public function afterDeleteRelation($event)
     {
@@ -299,10 +290,6 @@ class Relation extends \infinite\db\ActiveRecord
 
     /**
      * Get child object.
-     *
-     * @param boolean $checkAccess __param_checkAccess_description__ [optional]
-     *
-     * @return __return_getChildObject_type__ __return_getChildObject_description__
      */
     public function getChildObject($checkAccess = true)
     {
@@ -316,10 +303,6 @@ class Relation extends \infinite\db\ActiveRecord
 
     /**
      * Get parent object.
-     *
-     * @param boolean $checkAccess __param_checkAccess_description__ [optional]
-     *
-     * @return __return_getParentObject_type__ __return_getParentObject_description__
      */
     public function getParentObject($checkAccess = true)
     {
@@ -332,9 +315,7 @@ class Relation extends \infinite\db\ActiveRecord
     }
 
     /**
-     * __method_endRelationship_description__.
      *
-     * @return __return_endRelationship_type__ __return_endRelationship_description__
      */
     public function endRelationship()
     {
@@ -352,8 +333,6 @@ class Relation extends \infinite\db\ActiveRecord
 
     /**
      * Get is active.
-     *
-     * @return __return_getIsActive_type__ __return_getIsActive_description__
      */
     public function getIsActive()
     {

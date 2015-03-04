@@ -33,7 +33,6 @@ class TagBehavior extends \infinite\db\behaviors\ActiveRecord
         ];
     }
 
-    // public function __call($name, $params)
     // {
     //     if ($this->tagField) {
     //         $getter = 'get'.ucfirst($this->tagField);
@@ -44,7 +43,6 @@ class TagBehavior extends \infinite\db\behaviors\ActiveRecord
     //             return call_user_func_array([$this, 'setTags'], $params);
     //         }
     //     }
-    //     return parent::__call($name, $params);
     // }
 
     public function __set($name, $value)

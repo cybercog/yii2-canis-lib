@@ -42,7 +42,6 @@ use yii\web\IdentityInterface;
 class User extends ActiveRecord implements IdentityInterface
 {
     /**
-     * @var __var__groups_type__ __var__groups_description__
      */
     protected $_groups;
     /**
@@ -99,9 +98,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * __method_findIdentityByAccessToken_description__.
      *
-     * @param __param_token_type__ $token __param_token_description__
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
@@ -149,8 +146,6 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * __method_validateAuthKey_description__.
-     *
      * @param string $authKey
      *
      * @return boolean if auth key is valid for current user
@@ -161,8 +156,6 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * __method_validatePassword_description__.
-     *
      * @param string $password password to validate
      *
      * @return bool if password provided is valid for current user
@@ -369,8 +362,6 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Get groups.
-     *
-     * @return __return_getGroups_type__ __return_getGroups_description__
      */
     public function getGroups()
     {

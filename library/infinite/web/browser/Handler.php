@@ -16,7 +16,6 @@ namespace infinite\web\browser;
 abstract class Handler extends \infinite\base\Object
 {
     /**
-     * @var __var_bundle_type__ __var_bundle_description__
      */
     public $bundle;
     /**
@@ -30,8 +29,6 @@ abstract class Handler extends \infinite\base\Object
 
     /**
      * Get instructions.
-     *
-     * @return __return_getInstructions_type__ __return_getInstructions_description__
      */
     public function getInstructions()
     {
@@ -44,8 +41,6 @@ abstract class Handler extends \infinite\base\Object
 
     /**
      * Get filter query.
-     *
-     * @return __return_getFilterQuery_type__ __return_getFilterQuery_description__
      */
     public function getFilterQuery()
     {

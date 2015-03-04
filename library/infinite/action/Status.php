@@ -27,15 +27,12 @@ class Status extends \infinite\base\Component
     public $paused = false;
 
     /**
-     * @var __var__status_type__ __var__status_description__
      */
     protected $_status;
     /**
-     * @var __var__log_type__ __var__log_description__
      */
     protected $_log;
     /**
-     * @var __var__settings_type__ __var__settings_description__
      */
     protected $_tasks;
 
@@ -66,8 +63,6 @@ class Status extends \infinite\base\Component
 
     /**
      * Prepares object for serialization.
-     *
-     * @return __return___sleep_type__ __return___sleep_description__
      */
     public function __sleep()
     {
@@ -112,9 +107,7 @@ class Status extends \infinite\base\Component
         return $this->_messages;
     }
     /**
-     * __method_addError_description__.
      *
-     * @param __param_message_type__ $message __param_message_description__
      */
     public function addMessage($message, $data = null, $messageLevel = null)
     {
@@ -187,8 +180,6 @@ class Status extends \infinite\base\Component
 
     /**
      * Get error.
-     *
-     * @return __return_getError_type__ __return_getError_description__
      */
     public function getHasError()
     {

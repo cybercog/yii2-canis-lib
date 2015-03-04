@@ -29,22 +29,17 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
     public $cacheTime = false;
 
     /**
-     * @var __var__collectors_type__ __var__collectors_description__
      */
     protected $_collectors = [];
     /**
-     * @var __var__init_collectors_type__ __var__init_collectors_description__
      */
     protected $_init_collectors = [];
     /**
-     * @var __var__loaded_type__ __var__loaded_description__
      */
     protected $_loaded = false;
 
     /**
-     * __method_bootstrap_description__.
      *
-     * @param __param_app_type__ $app __param_app_description__
      */
     public function bootstrap($app)
     {
@@ -52,11 +47,7 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
     }
 
     /**
-     * __method_beforeRequest_description__.
      *
-     * @param __param_event_type__ $event __param_event_description__
-     *
-     * @return __return_beforeRequest_type__ __return_beforeRequest_description__
      */
     public function beforeRequest($event)
     {
@@ -97,7 +88,6 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
     }
 
     /**
-     * __method_load_description__.
      */
     public function load()
     {
@@ -131,9 +121,7 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
     }
 
     /**
-     * __method_areReady_description__.
      *
-     * @return __return_areReady_type__ __return_areReady_description__
      */
     public function areReady()
     {
@@ -158,9 +146,7 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
     }
 
     /**
-     * __method_initialize_description__.
      *
-     * @return __return_initialize_type__ __return_initialize_description__
      */
     public function initialize()
     {
@@ -178,8 +164,6 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
 
     /**
      * Get collectors.
-     *
-     * @return __return_getCollectors_type__ __return_getCollectors_description__
      */
     public function getCollectors()
     {
@@ -188,8 +172,6 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
 
     /**
      * Set collectors.
-     *
-     * @param __param_collectors_type__ $collectors __param_collectors_description__
      */
     public function setCollectors($collectors)
     {
@@ -197,11 +179,7 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
     }
 
     /**
-     * __method_onAfterLoad_description__.
      *
-     * @param __param_action_type__ $action __param_action_description__
-     *
-     * @return __return_onAfterLoad_type__ __return_onAfterLoad_description__
      */
     public function onAfterLoad($action)
     {
@@ -209,11 +187,7 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
     }
 
     /**
-     * __method_onAfterInit_description__.
      *
-     * @param __param_action_type__ $action __param_action_description__
-     *
-     * @return __return_onAfterInit_type__ __return_onAfterInit_description__
      */
     public function onAfterInit($action)
     {
@@ -221,12 +195,7 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
     }
 
     /**
-     * __method_internalRegisterCollector_description__.
      *
-     * @param __param_id_type__        $id        __param_id_description__
-     * @param __param_collector_type__ $collector __param_collector_description__
-     *
-     * @return __return_internalRegisterCollector_type__ __return_internalRegisterCollector_description__
      */
     protected function internalRegisterCollector($id, $collector)
     {
@@ -242,9 +211,7 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
     }
 
     /**
-     * __method_toArray_description__.
      *
-     * @return __return_toArray_type__ __return_toArray_description__
      */
     public function toArray()
     {
@@ -253,8 +220,6 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
 
     /**
      * Get sleeping count.
-     *
-     * @return __return_getSleepingCount_type__ __return_getSleepingCount_description__
      */
     public function getSleepingCount()
     {
@@ -262,9 +227,7 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
     }
 
     /**
-     * __method_sleeping_description__.
      *
-     * @return __return_sleeping_type__ __return_sleeping_description__
      */
     public function sleeping()
     {

@@ -16,23 +16,18 @@ namespace infinite\setup;
 abstract class Task extends \infinite\base\Object
 {
     /**
-     * @var __var__setup_type__ __var__setup_description__
      */
     protected $_setup;
     /**
-     * @var __var_errors_type__ __var_errors_description__
      */
     public $errors = [];
     /**
-     * @var __var_fieldErrors_type__ __var_fieldErrors_description__
      */
     public $fieldErrors = [];
     /**
-     * @var __var_input_type__ __var_input_description__
      */
     public $input = [];
     /**
-     * @var __var_skipComplete_type__ __var_skipComplete_description__
      */
     public $skipComplete = false;
 
@@ -46,8 +41,6 @@ abstract class Task extends \infinite\base\Object
 
     /**
      * Get setup.
-     *
-     * @return __return_getSetup_type__ __return_getSetup_description__
      */
     public function getSetup()
     {
@@ -56,8 +49,6 @@ abstract class Task extends \infinite\base\Object
 
     /**
      * Get id.
-     *
-     * @return __return_getId_type__ __return_getId_description__
      */
     public function getId()
     {
@@ -65,9 +56,7 @@ abstract class Task extends \infinite\base\Object
     }
 
     /**
-     * __method_skip_description__.
      *
-     * @return __return_skip_type__ __return_skip_description__
      */
     public function skip()
     {
@@ -75,11 +64,7 @@ abstract class Task extends \infinite\base\Object
     }
 
     /**
-     * __method_loadInput_description__.
      *
-     * @param __param_input_type__ $input __param_input_description__
-     *
-     * @return __return_loadInput_type__ __return_loadInput_description__
      */
     public function loadInput($input)
     {
@@ -109,17 +94,13 @@ abstract class Task extends \infinite\base\Object
      */
     abstract public function getTitle();
     /**
-     * __method_test_description__.
      */
     abstract public function test();
     /**
-     * __method_run_description__.
      */
     abstract public function run();
     /**
      * Get fields.
-     *
-     * @return __return_getFields_type__ __return_getFields_description__
      */
     public function getFields()
     {
@@ -127,8 +108,6 @@ abstract class Task extends \infinite\base\Object
     }
     /**
      * Get verification.
-     *
-     * @return __return_getVerification_type__ __return_getVerification_description__
      */
     public function getVerification()
     {
@@ -136,10 +115,7 @@ abstract class Task extends \infinite\base\Object
     }
 
     /**
-     * __method_templatize_description__.
-     *
      * @param unknown $template
-     * @param array   $vars     __param_vars_description__ [optional]
      *
      * @return unknown
      */
@@ -166,12 +142,7 @@ abstract class Task extends \infinite\base\Object
     }
 
     /**
-     * __method_parseText_description__.
      *
-     * @param __param_text_type__ $text      __param_text_description__
-     * @param array               $variables __param_variables_description__ [optional]
-     *
-     * @return __return_parseText_type__ __return_parseText_description__
      */
     public static function parseText($text, $variables = [])
     {

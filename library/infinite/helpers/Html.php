@@ -28,13 +28,7 @@ class Html extends \yii\helpers\Html
     // }
 
     /**
-     * __method_registerJsBlock_description__.
      *
-     * @param __param_script_type__ $script   __param_script_description__
-     * @param integer               $position __param_position_description__ [optional]
-     * @param __param_key_type__    $key      __param_key_description__ [optional]
-     *
-     * @return __return_registerJsBlock_type__ __return_registerJsBlock_description__
      */
     public static function registerJsBlock($script, $position = View::POS_READY, $key = null)
     {
@@ -42,14 +36,7 @@ class Html extends \yii\helpers\Html
     }
 
     /**
-     * __method_addSubAttribute_description__.
      *
-     * @param __param_attribute_type__    $attribute    __param_attribute_description__
-     * @param __param_subattribute_type__ $subattribute __param_subattribute_description__
-     *
-     * @throws InvalidParamException __exception_InvalidParamException_description__
-     *
-     * @return __return_addSubAttribute_type__ __return_addSubAttribute_description__
      */
     public static function addSubAttribute($attribute, $subattribute)
     {
@@ -63,14 +50,7 @@ class Html extends \yii\helpers\Html
     }
 
     /**
-     * __method_addPreAttribute_description__.
      *
-     * @param __param_attribute_type__    $attribute    __param_attribute_description__
-     * @param __param_preattribute_type__ $preattribute __param_preattribute_description__
-     *
-     * @throws InvalidParamException __exception_InvalidParamException_description__
-     *
-     * @return __return_addPreAttribute_type__ __return_addPreAttribute_description__
      */
     public static function addPreAttribute($attribute, $preattribute)
     {
@@ -84,14 +64,7 @@ class Html extends \yii\helpers\Html
     }
 
     /**
-     * __method_changeAttribute_description__.
      *
-     * @param __param_attribute_type__    $attribute    __param_attribute_description__
-     * @param __param_newAttribute_type__ $newAttribute __param_newAttribute_description__
-     *
-     * @throws InvalidParamException __exception_InvalidParamException_description__
-     *
-     * @return __return_changeAttribute_type__ __return_changeAttribute_description__
      */
     public static function changeAttribute($attribute, $newAttribute)
     {

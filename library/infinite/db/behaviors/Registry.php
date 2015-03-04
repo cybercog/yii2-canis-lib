@@ -20,11 +20,9 @@ use yii\db\Expression;
 class Registry extends \infinite\db\behaviors\ActiveRecord
 {
     /**
-     * @var __var__table_type__ __var__table_description__
      */
     public static $_table;
     /**
-     * @var __var__model_type__ __var__model_description__
      */
     protected $_model;
 
@@ -50,8 +48,6 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Get registry model.
-     *
-     * @return __return_getRegistryModel_type__ __return_getRegistryModel_description__
      */
     public function getRegistryModel()
     {
@@ -72,8 +68,6 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Get table.
-     *
-     * @return __return_getTable_type__ __return_getTable_description__
      */
     public function getTable()
     {
@@ -86,11 +80,7 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_beforeInsert_description__.
      *
-     * @param __param_event_type__ $event __param_event_description__
-     *
-     * @throws Exception __exception_Exception_description__
      */
     public function beforeInsert($event)
     {
@@ -106,9 +96,7 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_uuid_description__.
      *
-     * @return __return_uuid_type__ __return_uuid_description__
      */
     public function uuid()
     {
@@ -118,10 +106,6 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_generateUuid_description__.
-     *
-     * @param __param_modelPrefix_type__ $modelPrefix __param_modelPrefix_description__
-     *
      * @return unknown
      */
     public static function generateUuid($modelPrefix)
@@ -139,8 +123,6 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_afterSaveFail_description__.
-     *
      * @param unknown $event
      */
     public function afterSaveFail($event)
@@ -151,8 +133,6 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_afterDelete_description__.
-     *
      * @param unknown $event
      *
      * @return unknown
@@ -163,8 +143,6 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method__deleteRegistry_description__.
-     *
      * @return unknown
      */
     protected function _deleteRegistry()

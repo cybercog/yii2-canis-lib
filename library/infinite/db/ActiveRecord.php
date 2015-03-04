@@ -29,50 +29,40 @@ class ActiveRecord extends \yii\db\ActiveRecord
     use ModelTrait;
 
     /**
-     * @var __var_tabularIdHuman_type__ __var_tabularIdHuman_description__
      */
     public $tabularIdHuman;
     /**
-     * @var __var_descriptorField_type__ __var_descriptorField_description__
      */
     public $descriptorField;
     public $descriptorLabel = 'Name';
     public $shortDescriptorField = false;
     public $shortDescriptorLength = 100;
     /**
-     * @var __var__wasDirty_type__ __var__wasDirty_description__
      */
     protected $_wasDirty = false;
     /**
-     * @var __var__tabularId_type__ __var__tabularId_description__
      */
     protected $_tabularId;
 
     /**
-     * @var __var_queryClass_type__ __var_queryClass_description__
      */
     public static $queryClass;
     /**
-     * @var __var_registryCache_type__ __var_registryCache_description__
      */
     public static $registryCache = true;
     /**
-     * @var __var_relationCache_type__ __var_relationCache_description__
      */
     public static $relationCache = true;
     /**
-     * @var __var_isAco_type__ __var_isAco_description__
      */
     public static $isAco = true;
     /**
-     * @var __var_groupCache_type__ __var_groupCache_description__
      */
     public static $groupCache = false;
 
     protected $_specialFields = [];
 
     /**
-     * @var __var__cache_type__ __var__cache_description__
      */
     protected static $_cache = [];
 
@@ -187,8 +177,6 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
     /**
      * Get was dirty.
-     *
-     * @return __return_getWasDirty_type__ __return_getWasDirty_description__
      */
     public function getWasDirty()
     {
@@ -196,9 +184,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
-     * __method_modelPrefix_description__.
      *
-     * @return __return_modelPrefix_type__ __return_modelPrefix_description__
      */
     public static function modelPrefix()
     {
@@ -206,9 +192,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
-     * __method_cacheGroupKey_description__.
      *
-     * @return __return_cacheGroupKey_type__ __return_cacheGroupKey_description__
      */
     public static function cacheGroupKey()
     {
@@ -216,9 +200,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
-     * __method_cacheDependency_description__.
      *
-     * @return __return_cacheDependency_type__ __return_cacheDependency_description__
      */
     public static function cacheDependency()
     {
@@ -248,8 +230,6 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
     /**
      * Set tabular.
-     *
-     * @param __param_value_type__ $value __param_value_description__
      */
     public function setTabularId($value)
     {
@@ -264,8 +244,6 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
     /**
      * Get tabular prefix.
-     *
-     * @return __return_getTabularPrefix_type__ __return_getTabularPrefix_description__
      */
     public function getTabularPrefix()
     {
@@ -277,11 +255,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
-     * __method_generateTabularId_description__.
      *
-     * @param __param_id_type__ $id __param_id_description__
-     *
-     * @return __return_generateTabularId_type__ __return_generateTabularId_description__
      */
     public static function generateTabularId($id)
     {
@@ -297,8 +271,6 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
     /**
      * Get primary tabular.
-     *
-     * @return __return_getPrimaryTabularId_type__ __return_getPrimaryTabularId_description__
      */
     public static function getPrimaryTabularId()
     {
@@ -309,10 +281,6 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
     /**
      * Get primary model.
-     *
-     * @param __param_models_type__ $models __param_models_description__
-     *
-     * @return __return_getPrimaryModel_type__ __return_getPrimaryModel_description__
      */
     public static function getPrimaryModel($models)
     {
@@ -331,11 +299,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
-     * __method_parseModelAlias_description__.
      *
-     * @param __param_alias_type__ $alias __param_alias_description__
-     *
-     * @return __return_parseModelAlias_type__ __return_parseModelAlias_description__
      */
     public static function parseModelAlias($alias)
     {
@@ -356,8 +320,6 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
     /**
      * Get model alias.
-     *
-     * @return __return_getModelAlias_type__ __return_getModelAlias_description__
      */
     public function getModelAlias()
     {
@@ -365,11 +327,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
-     * __method_modelAlias_description__.
      *
-     * @param __param_className_type__ $className __param_className_description__ [optional]
-     *
-     * @return __return_modelAlias_type__ __return_modelAlias_description__
      */
     public static function modelAlias($className = null)
     {
@@ -393,11 +351,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
-     * __method_clearCache_description__.
      *
-     * @param __param_model_type__ $model __param_model_description__ [optional]
-     *
-     * @return __return_clearCache_type__ __return_clearCache_description__
      */
     public static function clearCache($model = null)
     {
@@ -422,11 +376,6 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
     /**
      * Get.
-     *
-     * @param __param_id_type__ $id          __param_id_description__
-     * @param boolean           $checkAccess __param_checkAccess_description__ [optional]
-     *
-     * @return __return_get_type__ __return_get_description__
      */
     public static function get($id, $checkAccess = true)
     {
@@ -453,12 +402,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
-     * __method_findAllCache_description__.
      *
-     * @param boolean $where       __param_where_description__ [optional]
-     * @param boolean $checkAccess __param_checkAccess_description__ [optional]
-     *
-     * @return __return_findAllCache_type__ __return_findAllCache_description__
      */
     public static function findAllCache($where = false, $checkAccess = true)
     {
@@ -466,13 +410,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
-     * __method__findCache_description__.
      *
-     * @param __param_type_type__ $type        __param_type_description__
-     * @param boolean             $where       __param_where_description__ [optional]
-     * @param boolean             $checkAccess __param_checkAccess_description__ [optional]
-     *
-     * @return __return__findCache_type__ __return__findCache_description__
      */
     protected static function _findCache($type, $where = false, $checkAccess = true)
     {
@@ -508,9 +446,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
-     * __method_tableExists_description__.
      *
-     * @return __return_tableExists_type__ __return_tableExists_description__
      */
     public static function tableExists()
     {
@@ -545,9 +481,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
-     * __method_isAccessControlled_description__.
      *
-     * @return __return_isAccessControlled_type__ __return_isAccessControlled_description__
      */
     public static function isAccessControlled()
     {
@@ -573,9 +507,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
-     * __method_queryBehaviors_description__.
      *
-     * @return __return_queryBehaviors_type__ __return_queryBehaviors_description__
      */
     public static function queryBehaviors()
     {
@@ -593,8 +525,6 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
     /**
      * Get descriptor.
-     *
-     * @return __return_getDescriptor_type__ __return_getDescriptor_description__
      */
     public function getDescriptor()
     {
@@ -727,8 +657,6 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
     /**
      * Get subdescriptor.
-     *
-     * @return __return_getSubdescriptor_type__ __return_getSubdescriptor_description__
      */
     public function getSubdescriptor($context = null)
     {
@@ -748,11 +676,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
-     * __method_isForeignField_description__.
      *
-     * @param __param_field_type__ $field __param_field_description__
-     *
-     * @return __return_isForeignField_type__ __return_isForeignField_description__
      */
     public function isForeignField($field)
     {
@@ -761,10 +685,6 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
     /**
      * Get field value.
-     *
-     * @param __param_field_type__ $field __param_field_description__
-     *
-     * @return __return_getFieldValue_type__ __return_getFieldValue_description__
      */
     public function getFieldValue($field, $options = [], $context = null, $formatted = true)
     {
@@ -792,10 +712,6 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
     /**
      * Get local field value.
-     *
-     * @param __param_field_type__ $field __param_field_description__
-     *
-     * @return __return_getLocalFieldValue_type__ __return_getLocalFieldValue_description__
      */
     public function getLocalFieldValue($field, $options = [], $context = null, $formatted = true)
     {
@@ -808,10 +724,6 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
     /**
      * Get foreign field value.
-     *
-     * @param __param_field_type__ $field __param_field_description__
-     *
-     * @return __return_getForeignFieldValue_type__ __return_getForeignFieldValue_description__
      */
     public function getForeignFieldValue($field, $options = [], $context = null, $formatted = true)
     {
@@ -819,9 +731,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
-     * __method_checkExistence_description__.
      *
-     * @return __return_checkExistence_type__ __return_checkExistence_description__
      */
     public function checkExistence()
     {
@@ -833,8 +743,6 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
-     * __method_quote_description__.
-     *
      * @param unknown $value
      *
      * @return unknown
@@ -856,8 +764,6 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
-     * __method_save_description__.
-     *
      * @param unknown $runValidation (optional)
      * @param unknown $attributes    (optional)
      *

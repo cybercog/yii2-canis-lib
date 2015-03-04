@@ -20,7 +20,6 @@ class ArchiveEvent extends UpdateEvent
      */
     protected $_id = 'archive';
     /**
-     * @var __var__exclusive_type__ __var__exclusive_description__
      */
     protected $_exclusive = true;
 }

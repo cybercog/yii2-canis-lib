@@ -24,7 +24,6 @@ class MigrateController extends \yii\console\controllers\MigrateController
     public $migrationPaths = [];
 
     /**
-     * @var __var_migrationsMap_type__ __var_migrationsMap_description__
      */
     protected $migrationsMap = [];
 
@@ -50,7 +49,6 @@ class MigrateController extends \yii\console\controllers\MigrateController
     /**
      * Returns the migrations that are not applied.
      *
-     * @throws Exception __exception_Exception_description__
      *
      * @return array list of new migrations
      */

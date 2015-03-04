@@ -16,7 +16,6 @@ namespace infinite\helpers;
 class Date extends \infinite\base\Object
 {
     /**
-     * @var __var__now_type__ __var__now_description__
      */
     protected static $_now;
 
@@ -193,8 +192,6 @@ class Date extends \infinite\base\Object
     }
 
     /**
-     * __method_relativeDate_description__.
-     *
      * @param varies  $mdate         date to compare
      * @param int     $time          Unix timestamp         (optional)
      * @param unknown $showTime      (optional)

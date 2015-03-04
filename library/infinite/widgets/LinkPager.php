@@ -18,7 +18,6 @@ use infinite\helpers\Html;
 class LinkPager extends \yii\widgets\LinkPager
 {
     /**
-     * @var __var_pageStateKey_type__ __var_pageStateKey_description__
      */
     public $pageStateKey = 'page';
     /**
@@ -41,12 +40,7 @@ class LinkPager extends \yii\widgets\LinkPager
     }
 
     /**
-     * __method_buildButtonAttributes_description__.
      *
-     * @param __param_page_type__ $page    __param_page_description__
-     * @param array               $options __param_options_description__ [optional]
-     *
-     * @return __return_buildButtonAttributes_type__ __return_buildButtonAttributes_description__
      */
     public function buildButtonAttributes($page, $options = [])
     {

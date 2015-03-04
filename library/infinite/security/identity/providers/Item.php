@@ -19,7 +19,6 @@ use Yii;
 class Item extends \infinite\base\collector\Item
 {
     /**
-     * @var __var_name_type__ __var_name_description__
      */
     public $name;
     public $handler;
@@ -61,8 +60,6 @@ class Item extends \infinite\base\collector\Item
 
     /**
      * Get package.
-     *
-     * @return __return_getPackage_type__ __return_getPackage_description__
      */
     public function getPackage()
     {
@@ -75,8 +72,6 @@ class Item extends \infinite\base\collector\Item
 
     /**
      * Get id.
-     *
-     * @return __return_getId_type__ __return_getId_description__
      */
     public function getId()
     {

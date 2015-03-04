@@ -18,11 +18,9 @@ use Yii;
 class Ownable extends \infinite\db\behaviors\ActiveRecord
 {
     /**
-     * @var __var__table_type__ __var__table_description__
      */
     public static $_table;
     /**
-     * @var __var_ownableEnabled_type__ __var_ownableEnabled_description__
      */
     public $ownableEnabled = true;
     const ROLE_OWNER = 'owner';
@@ -50,9 +48,7 @@ class Ownable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_isEnabled_description__.
      *
-     * @return __return_isEnabled_type__ __return_isEnabled_description__
      */
     public function isEnabled()
     {
@@ -68,9 +64,7 @@ class Ownable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_determineOwner_description__.
      *
-     * @return __return_determineOwner_type__ __return_determineOwner_description__
      */
     public function determineOwner()
     {
@@ -82,9 +76,7 @@ class Ownable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_ownerAccess_description__.
      *
-     * @return __return_ownerAccess_type__ __return_ownerAccess_description__
      */
     public function ownerAccess()
     {
@@ -92,11 +84,7 @@ class Ownable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_beforeSave_description__.
      *
-     * @param __param_event_type__ $event __param_event_description__
-     *
-     * @return __return_beforeSave_type__ __return_beforeSave_description__
      */
     public function beforeSave($event)
     {
@@ -112,9 +100,7 @@ class Ownable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_hasObjectOwner_description__.
      *
-     * @return __return_hasObjectOwner_type__ __return_hasObjectOwner_description__
      */
     public function hasObjectOwner()
     {
@@ -128,10 +114,6 @@ class Ownable extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Set object owner.
-     *
-     * @param __param_aro_type__ $aro __param_aro_description__
-     *
-     * @return __return_setObjectOwner_type__ __return_setObjectOwner_description__
      */
     public function setObjectOwner($aro)
     {
@@ -144,8 +126,6 @@ class Ownable extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Get object owner.
-     *
-     * @return __return_getObjectOwner_type__ __return_getObjectOwner_description__
      */
     public function getObjectOwner()
     {
@@ -157,11 +137,7 @@ class Ownable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_afterSave_description__.
      *
-     * @param __param_event_type__ $event __param_event_description__
-     *
-     * @return __return_afterSave_type__ __return_afterSave_description__
      */
     public function afterSave($event)
     {

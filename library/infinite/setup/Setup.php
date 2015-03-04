@@ -23,52 +23,38 @@ defined('STDOUT') or define('STDOUT', fopen('php://stdout', 'w'));
 class Setup extends \infinite\base\Object
 {
     /**
-     * @var __var__instance_type__ __var__instance_description__
      */
     public static $_instance;
     /**
-     * @var __var__migrator_type__ __var__migrator_description__
      */
     public static $_migrator;
     /**
-     * @var __var__app_type__ __var__app_description__
      */
     public static $_app;
     /**
-     * @var __var_basePath_type__ __var_basePath_description__
      */
     public $basePath;
     /**
-     * @var __var_applicationPath_type__ __var_applicationPath_description__
      */
     public $applicationPath;
     /**
-     * @var __var_name_type__ __var_name_description__
      */
     public $name = 'Application';
     /**
-     * @var __var_pageTitle_type__ __var_pageTitle_description__
      */
     public $pageTitle = 'Setup';
     /**
-     * @var __var_applicationNamespace_type__ __var_applicationNamespace_description__
      */
     public $applicationNamespace = 'app';
     /**
-     * @var __var_params_type__ __var_params_description__
      */
     public $params = [];
     /**
-     * @var __var_neededInformation_type__ __var_neededInformation_description__
      */
     public $neededInformation = [];
 
     /**
-     * __method_createSetupApplication_description__.
      *
-     * @param array $config __param_config_description__ [optional]
-     *
-     * @return __return_createSetupApplication_type__ __return_createSetupApplication_description__
      */
     public static function createSetupApplication($config = [])
     {
@@ -96,9 +82,7 @@ class Setup extends \infinite\base\Object
     }
 
     /**
-     * __method_beforeRun_description__.
      *
-     * @return __return_beforeRun_type__ __return_beforeRun_description__
      */
     public function beforeRun()
     {
@@ -106,9 +90,7 @@ class Setup extends \infinite\base\Object
     }
 
     /**
-     * __method_afterRun_description__.
      *
-     * @return __return_afterRun_type__ __return_afterRun_description__
      */
     public function afterRun()
     {
@@ -116,9 +98,7 @@ class Setup extends \infinite\base\Object
     }
 
     /**
-     * __method_run_description__.
      *
-     * @return __return_run_type__ __return_run_description__
      */
     public function run()
     {
@@ -206,10 +186,7 @@ class Setup extends \infinite\base\Object
     }
 
     /**
-     * __method_refresh_description__.
      *
-     * @param __param_message_type__ $message __param_message_description__ [optional]
-     * @param boolean                $skip    __param_skip_description__ [optional]
      */
     public function refresh($message = null, $skip = false)
     {
@@ -224,8 +201,6 @@ class Setup extends \infinite\base\Object
 
     /**
      * Get is setup.
-     *
-     * @return __return_getIsSetup_type__ __return_getIsSetup_description__
      */
     public function getIsSetup()
     {
@@ -241,8 +216,6 @@ class Setup extends \infinite\base\Object
 
     /**
      * Get setup tasks.
-     *
-     * @return __return_getSetupTasks_type__ __return_getSetupTasks_description__
      */
     public function getSetupTasks()
     {
@@ -275,8 +248,6 @@ class Setup extends \infinite\base\Object
 
     /**
      * Get is available.
-     *
-     * @return __return_getIsAvailable_type__ __return_getIsAvailable_description__
      */
     public function getIsAvailable()
     {
@@ -291,9 +262,7 @@ class Setup extends \infinite\base\Object
     }
 
     /**
-     * __method_markDbReady_description__.
      *
-     * @return __return_markDbReady_type__ __return_markDbReady_description__
      */
     public function markDbReady()
     {
@@ -307,10 +276,6 @@ class Setup extends \infinite\base\Object
 
     /**
      * Get confirm link.
-     *
-     * @param __param_task_type__ $task __param_task_description__
-     *
-     * @return __return_getConfirmLink_type__ __return_getConfirmLink_description__
      */
     public function getConfirmLink($task)
     {
@@ -319,10 +284,6 @@ class Setup extends \infinite\base\Object
 
     /**
      * Get confirm salt.
-     *
-     * @param __param_task_type__ $task __param_task_description__ [optional]
-     *
-     * @return __return_getConfirmSalt_type__ __return_getConfirmSalt_description__
      */
     public function getConfirmSalt($task = null)
     {
@@ -331,10 +292,6 @@ class Setup extends \infinite\base\Object
 
     /**
      * Get confirmed.
-     *
-     * @param __param_task_type__ $task __param_task_description__
-     *
-     * @return __return_getConfirmed_type__ __return_getConfirmed_description__
      */
     public function getConfirmed($task)
     {
@@ -354,8 +311,6 @@ class Setup extends \infinite\base\Object
 
     /**
      * Get version.
-     *
-     * @return __return_getVersion_type__ __return_getVersion_description__
      */
     public function getVersion()
     {
@@ -364,8 +319,6 @@ class Setup extends \infinite\base\Object
 
     /**
      * Get instance version.
-     *
-     * @return __return_getInstanceVersion_type__ __return_getInstanceVersion_description__
      */
     public function getInstanceVersion()
     {
@@ -377,11 +330,7 @@ class Setup extends \infinite\base\Object
     }
 
     /**
-     * __method_app_description__.
      *
-     * @throws Exception __exception_Exception_description__
-     *
-     * @return __return_app_type__ __return_app_description__
      */
     public function app()
     {
@@ -405,8 +354,6 @@ class Setup extends \infinite\base\Object
 
     /**
      * Get is environmented.
-     *
-     * @return __return_getIsEnvironmented_type__ __return_getIsEnvironmented_description__
      */
     public function getIsEnvironmented()
     {
@@ -422,8 +369,6 @@ class Setup extends \infinite\base\Object
 
     /**
      * Get environment path.
-     *
-     * @return __return_getEnvironmentPath_type__ __return_getEnvironmentPath_description__
      */
     public function getEnvironmentPath()
     {
@@ -436,10 +381,6 @@ class Setup extends \infinite\base\Object
 
     /**
      * Get config path.
-     *
-     * @throws Exception __exception_Exception_description__
-     *
-     * @return __return_getConfigPath_type__ __return_getConfigPath_description__
      */
     public function getConfigPath()
     {
@@ -453,8 +394,6 @@ class Setup extends \infinite\base\Object
 
     /**
      * Get environment file path.
-     *
-     * @return __return_getEnvironmentFilePath_type__ __return_getEnvironmentFilePath_description__
      */
     public function getEnvironmentFilePath()
     {
@@ -465,8 +404,6 @@ class Setup extends \infinite\base\Object
 
     /**
      * Get environment template file path.
-     *
-     * @return __return_getEnvironmentTemplateFilePath_type__ __return_getEnvironmentTemplateFilePath_description__
      */
     public function getEnvironmentTemplateFilePath()
     {
@@ -477,10 +414,6 @@ class Setup extends \infinite\base\Object
 
     /**
      * Get library config path.
-     *
-     * @throws Exception __exception_Exception_description__
-     *
-     * @return __return_getLibraryConfigPath_type__ __return_getLibraryConfigPath_description__
      */
     public function getLibraryConfigPath()
     {
@@ -494,10 +427,6 @@ class Setup extends \infinite\base\Object
 
     /**
      * Get common config path.
-     *
-     * @throws Exception __exception_Exception_description__
-     *
-     * @return __return_getCommonConfigPath_type__ __return_getCommonConfigPath_description__
      */
     public function getCommonConfigPath()
     {
@@ -511,10 +440,6 @@ class Setup extends \infinite\base\Object
 
     /**
      * Get environment templates path.
-     *
-     * @throws Exception __exception_Exception_description__
-     *
-     * @return __return_getEnvironmentTemplatesPath_type__ __return_getEnvironmentTemplatesPath_description__
      */
     public function getEnvironmentTemplatesPath()
     {
@@ -527,11 +452,7 @@ class Setup extends \infinite\base\Object
     }
 
     /**
-     * __method_render_description__.
      *
-     * @param __param_view_type__ $view __param_view_description__
-     *
-     * @throws Exception __exception_Exception_description__
      */
     public function render($view)
     {

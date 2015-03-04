@@ -20,30 +20,23 @@ use Yii;
 class ObjectAccess extends \infinite\base\Component
 {
     /**
-     * @var __var__object_type__ __var__object_description__
      */
     protected $_object;
     /**
-     * @var __var__requestors_type__ __var__requestors_description__
      */
     protected $_requestors;
     /**
-     * @var __var__roles_type__ __var__roles_description__
      */
     protected $_roles;
     /**
-     * @var __var__visibility_type__ __var__visibility_description__
      */
     protected $_visibility;
     /**
-     * @var __var__tempCache_type__ __var__tempCache_description__
      */
     protected $_tempCache = [];
 
     /**
      * Prepares object for serialization.
-     *
-     * @return __return___sleep_type__ __return___sleep_description__
      */
     public function __sleep()
     {
@@ -64,10 +57,6 @@ class ObjectAccess extends \infinite\base\Component
 
     /**
      * Get.
-     *
-     * @param __param_object_type__ $object __param_object_description__
-     *
-     * @return __return_get_type__ __return_get_description__
      */
     public static function get($object)
     {
@@ -85,7 +74,6 @@ class ObjectAccess extends \infinite\base\Component
     }
 
     /**
-     * __method_load_description__.
      */
     public function load()
     {
@@ -94,11 +82,7 @@ class ObjectAccess extends \infinite\base\Component
     }
 
     /**
-     * __method_save_description__.
      *
-     * @param __param_data_type__ $data __param_data_description__
-     *
-     * @return __return_save_type__ __return_save_description__
      */
     public function save($data)
     {
@@ -134,11 +118,7 @@ class ObjectAccess extends \infinite\base\Component
     }
 
     /**
-     * __method_fillValidationSettings_description__.
      *
-     * @param __param_validationSettings_type__ $validationSettings __param_validationSettings_description__
-     *
-     * @return __return_fillValidationSettings_type__ __return_fillValidationSettings_description__
      */
     protected function fillValidationSettings($validationSettings)
     {
@@ -147,8 +127,6 @@ class ObjectAccess extends \infinite\base\Component
 
     /**
      * Get universal max role level.
-     *
-     * @return __return_getUniversalMaxRoleLevel_type__ __return_getUniversalMaxRoleLevel_description__
      */
     public function getUniversalMaxRoleLevel()
     {
@@ -156,12 +134,7 @@ class ObjectAccess extends \infinite\base\Component
     }
 
     /**
-     * __method_validateRole_description__.
      *
-     * @param __param_role_type__               $role               __param_role_description__
-     * @param __param_validationSettings_type__ $validationSettings __param_validationSettings_description__
-     *
-     * @return __return_validateRole_type__ __return_validateRole_description__
      */
     protected function validateRole($role, $validationSettings)
     {
@@ -192,11 +165,7 @@ class ObjectAccess extends \infinite\base\Component
     }
 
     /**
-     * __method_validate_description__.
      *
-     * @param __param_data_type__ $data __param_data_description__
-     *
-     * @return __return_validate_type__ __return_validate_description__
      */
     protected function validate($data)
     {
@@ -244,8 +213,6 @@ class ObjectAccess extends \infinite\base\Component
 
     /**
      * Get requestors.
-     *
-     * @return __return_getRequestors_type__ __return_getRequestors_description__
      */
     public function getRequestors()
     {
@@ -274,8 +241,6 @@ class ObjectAccess extends \infinite\base\Component
 
     /**
      * Get roles.
-     *
-     * @return __return_getRoles_type__ __return_getRoles_description__
      */
     public function getRoles()
     {
@@ -296,8 +261,6 @@ class ObjectAccess extends \infinite\base\Component
 
     /**
      * Get role objects.
-     *
-     * @return __return_getRoleObjects_type__ __return_getRoleObjects_description__
      */
     public function getRoleObjects()
     {
@@ -313,11 +276,6 @@ class ObjectAccess extends \infinite\base\Component
 
     /**
      * Get role object.
-     *
-     * @param __param_requestorId_type__ $requestorId __param_requestorId_description__
-     * @param array                      $roleSet     __param_roleSet_description__ [optional]
-     *
-     * @return __return_getRoleObject_type__ __return_getRoleObject_description__
      */
     public function getRoleObject($requestorId, $roleSet = [])
     {
@@ -348,8 +306,6 @@ class ObjectAccess extends \infinite\base\Component
 
     /**
      * Get special requestors.
-     *
-     * @return __return_getSpecialRequestors_type__ __return_getSpecialRequestors_description__
      */
     public function getSpecialRequestors()
     {
@@ -363,8 +319,6 @@ class ObjectAccess extends \infinite\base\Component
 
     /**
      * Set object.
-     *
-     * @param __param_object_type__ $object __param_object_description__
      */
     public function setObject($object)
     {
@@ -374,8 +328,6 @@ class ObjectAccess extends \infinite\base\Component
 
     /**
      * Get object.
-     *
-     * @return __return_getObject_type__ __return_getObject_description__
      */
     public function getObject()
     {
@@ -389,10 +341,6 @@ class ObjectAccess extends \infinite\base\Component
 
     /**
      * Get role help text.
-     *
-     * @param __param_roleItem_type__ $roleItem __param_roleItem_description__
-     *
-     * @return __return_getRoleHelpText_type__ __return_getRoleHelpText_description__
      */
     public function getRoleHelpText($roleItem)
     {
@@ -400,9 +348,7 @@ class ObjectAccess extends \infinite\base\Component
     }
 
     /**
-     * __method_determineVisibility_description__.
      *
-     * @return __return_determineVisibility_type__ __return_determineVisibility_description__
      */
     public function determineVisibility()
     {
@@ -427,10 +373,6 @@ class ObjectAccess extends \infinite\base\Component
 
     /**
      * Get possible roles.
-     *
-     * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__ [optional]
-     *
-     * @return __return_getPossibleRoles_type__ __return_getPossibleRoles_description__
      */
     public function getPossibleRoles($accessingObject = null)
     {
@@ -457,8 +399,6 @@ class ObjectAccess extends \infinite\base\Component
 
     /**
      * Get visibility.
-     *
-     * @return __return_getVisibility_type__ __return_getVisibility_description__
      */
     public function getVisibility()
     {
@@ -471,10 +411,6 @@ class ObjectAccess extends \infinite\base\Component
 
     /**
      * Get accessor role level.
-     *
-     * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__ [optional]
-     *
-     * @return __return_getAccessorRoleLevel_type__ __return_getAccessorRoleLevel_description__
      */
     public function getAccessorRoleLevel($accessingObject = null)
     {

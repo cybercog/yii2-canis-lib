@@ -16,7 +16,6 @@ namespace infinite\db\behaviors;
 class QueryArchivable extends QueryBehavior
 {
     /**
-     * @var __var__allowArchives_type__ __var__allowArchives_description__
      */
     protected $_allowArchives;
 
@@ -32,8 +31,6 @@ class QueryArchivable extends QueryBehavior
 
     /**
      * Get allow archives.
-     *
-     * @return __return_getAllowArchives_type__ __return_getAllowArchives_description__
      */
     public function getAllowArchives()
     {
@@ -42,10 +39,6 @@ class QueryArchivable extends QueryBehavior
 
     /**
      * Set allow archives.
-     *
-     * @param __param_value_type__ $value __param_value_description__
-     *
-     * @return __return_setAllowArchives_type__ __return_setAllowArchives_description__
      */
     public function setAllowArchives($value)
     {
@@ -55,9 +48,7 @@ class QueryArchivable extends QueryBehavior
     }
 
     /**
-     * __method_includeArchives_description__.
      *
-     * @return __return_includeArchives_type__ __return_includeArchives_description__
      */
     public function includeArchives()
     {
@@ -67,9 +58,7 @@ class QueryArchivable extends QueryBehavior
     }
 
     /**
-     * __method_onlyArchives_description__.
      *
-     * @return __return_onlyArchives_type__ __return_onlyArchives_description__
      */
     public function onlyArchives()
     {
@@ -79,9 +68,7 @@ class QueryArchivable extends QueryBehavior
     }
 
     /**
-     * __method_excludeArchives_description__.
      *
-     * @return __return_excludeArchives_type__ __return_excludeArchives_description__
      */
     public function excludeArchives()
     {
@@ -91,11 +78,7 @@ class QueryArchivable extends QueryBehavior
     }
 
     /**
-     * __method_beforeQuery_description__.
      *
-     * @param __param_event_type__ $event __param_event_description__
-     *
-     * @return __return_beforeQuery_type__ __return_beforeQuery_description__
      */
     public function beforeQuery($event)
     {

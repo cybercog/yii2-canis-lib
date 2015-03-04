@@ -20,9 +20,7 @@ use yii\helpers\VarDumper;
 class Debug extends \infinite\base\Object
 {
     /**
-     * __method_db_description__.
      *
-     * @param __param_query_type__ $query __param_query_description__
      */
     public static function db($query)
     {
@@ -39,11 +37,8 @@ class Debug extends \infinite\base\Object
     }
 
     /**
-     * __method_d_description__.
-     *
      * @param unknown $what
-     * @param unknown $showFrom  (optional)
-     * @param integer $stepsBack __param_stepsBack_description__ [optional]
+     * @param unknown $showFrom (optional)
      */
     public static function d($what, $showFrom = true, $stepsBack = 0)
     {
@@ -65,12 +60,7 @@ class Debug extends \infinite\base\Object
     }
 
     /**
-     * __method_ar_description__.
      *
-     * @param __param_what_type__ $what  __param_what_description__
-     * @param boolean             $print __param_print_description__ [optional]
-     *
-     * @return __return_ar_type__ __return_ar_description__
      */
     public static function ar($what, $print = true)
     {
@@ -95,9 +85,7 @@ class Debug extends \infinite\base\Object
     }
 
     /**
-     * __method_clean_description__.
      *
-     * @param __param_what_type__ $what __param_what_description__
      */
     public static function clean(&$what)
     {
@@ -111,8 +99,6 @@ class Debug extends \infinite\base\Object
         }
     }
     /**
-     * __method_c_description__.
-     *
      * @param unknown $what
      * @param unknown $showFrom (optional)
      */

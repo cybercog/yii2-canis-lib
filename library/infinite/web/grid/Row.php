@@ -22,20 +22,16 @@ class Row extends \infinite\base\Object
     protected $_trueWidth;
 
     /**
-     * @var __var_htmlOptions_type__ __var_htmlOptions_description__
      */
     public $htmlOptions = ['class' => 'row'];
     /**
-     * @var __var__cells_type__ __var__cells_description__
      */
     protected $_cells = [];
     /**
-     * @var __var__fillAttempted_type__ __var__fillAttempted_description__
      */
     protected $_fillAttempted = false;
 
     /**
-     * __method_output_description__.
      */
     public function output()
     {
@@ -43,9 +39,7 @@ class Row extends \infinite\base\Object
     }
 
     /**
-     * __method_generate_description__.
      *
-     * @return __return_generate_type__ __return_generate_description__
      */
     public function generate()
     {
@@ -59,7 +53,6 @@ class Row extends \infinite\base\Object
     }
 
     /**
-     * __method_fill_description__.
      */
     public function fill()
     {
@@ -112,10 +105,6 @@ class Row extends \infinite\base\Object
 
     /**
      * Get column flex.
-     *
-     * @param string $size __param_size_description__ [optional]
-     *
-     * @return __return_getColumnFlex_type__ __return_getColumnFlex_description__
      */
     public function getColumnFlex($size = 'phone')
     {
@@ -130,10 +119,6 @@ class Row extends \infinite\base\Object
 
     /**
      * Get distribution columns.
-     *
-     * @param __param_size_type__ $size __param_size_description__ [optional]
-     *
-     * @return __return_getDistributionColumns_type__ __return_getDistributionColumns_description__
      */
     public function getDistributionColumns($size = null)
     {
@@ -148,9 +133,7 @@ class Row extends \infinite\base\Object
     }
 
     /**
-     * __method_isFilled_description__.
      *
-     * @return __return_isFilled_type__ __return_isFilled_description__
      */
     public function isFilled()
     {
@@ -159,8 +142,6 @@ class Row extends \infinite\base\Object
 
     /**
      * Get column count.
-     *
-     * @return __return_getColumnCount_type__ __return_getColumnCount_description__
      */
     public function getColumnCount()
     {
@@ -176,11 +157,7 @@ class Row extends \infinite\base\Object
     }
 
     /**
-     * __method_hasRoom_description__.
      *
-     * @param __param_additional_type__ $additional __param_additional_description__
-     *
-     * @return __return_hasRoom_type__ __return_hasRoom_description__
      */
     public function hasRoom($additional)
     {
@@ -192,12 +169,7 @@ class Row extends \infinite\base\Object
     }
 
     /**
-     * __method_addCell_description__.
      *
-     * @param infinite\web\grid\Cell $item  __param_item_description__
-     * @param boolean                $check __param_check_description__ [optional]
-     *
-     * @return __return_addCell_type__ __return_addCell_description__
      */
     public function addCell(Cell $item, $check = false)
     {
@@ -211,9 +183,7 @@ class Row extends \infinite\base\Object
     }
 
     /**
-     * __method_addCells_description__.
      *
-     * @param __param_items_type__ $items __param_items_description__
      */
     public function addCells(&$items)
     {
@@ -228,8 +198,6 @@ class Row extends \infinite\base\Object
 
     /**
      * Set cells.
-     *
-     * @param __param_cells_type__ $cells __param_cells_description__
      */
     public function setCells($cells)
     {

@@ -18,19 +18,15 @@ use Yii;
 class Access extends \infinite\base\Object
 {
     /**
-     * @var __var__aclModel_type__ __var__aclModel_description__
      */
     protected $_aclModel;
     /**
-     * @var __var__accessLevel_type__ __var__accessLevel_description__
      */
     protected $_accessLevel;
     /**
-     * @var __var__action_type__ __var__action_description__
      */
     protected $_action;
     /**
-     * @var __var__tempCache_type__ __var__tempCache_description__
      */
     protected $_tempCache = [];
 
@@ -43,8 +39,6 @@ class Access extends \infinite\base\Object
 
     /**
      * Prepares object for serialization.
-     *
-     * @return __return___sleep_type__ __return___sleep_description__
      */
     public function __sleep()
     {
@@ -68,12 +62,7 @@ class Access extends \infinite\base\Object
     }
 
     /**
-     * __method_can_description__.
      *
-     * @param __param_object_type__          $object          __param_object_description__
-     * @param __param_accessingObject_type__ $accessingObject __param_accessingObject_description__ [optional]
-     *
-     * @return __return_can_type__ __return_can_description__
      */
     public function can($object, $accessingObject = null)
     {
@@ -131,10 +120,6 @@ class Access extends \infinite\base\Object
 
     /**
      * Get human access level.
-     *
-     * @param __param_accessLevel_type__ $accessLevel __param_accessLevel_description__ [optional]
-     *
-     * @return __return_getHumanAccessLevel_type__ __return_getHumanAccessLevel_description__
      */
     public function getHumanAccessLevel($accessLevel = null)
     {
@@ -167,8 +152,6 @@ class Access extends \infinite\base\Object
 
     /**
      * Set access level.
-     *
-     * @param __param_accessLevel_type__ $accessLevel __param_accessLevel_description__
      */
     public function setAccessLevel($accessLevel)
     {
@@ -177,8 +160,6 @@ class Access extends \infinite\base\Object
 
     /**
      * Get access level.
-     *
-     * @return __return_getAccessLevel_type__ __return_getAccessLevel_description__
      */
     public function getAccessLevel()
     {
@@ -193,8 +174,6 @@ class Access extends \infinite\base\Object
 
     /**
      * Set acl model.
-     *
-     * @param __param_object_type__ $object __param_object_description__
      */
     public function setAclModel($object)
     {
@@ -207,8 +186,6 @@ class Access extends \infinite\base\Object
 
     /**
      * Get acl model.
-     *
-     * @return __return_getAclModel_type__ __return_getAclModel_description__
      */
     public function getAclModel()
     {
@@ -222,8 +199,6 @@ class Access extends \infinite\base\Object
 
     /**
      * Set action.
-     *
-     * @param __param_object_type__ $object __param_object_description__
      */
     public function setAction($object)
     {
@@ -232,8 +207,6 @@ class Access extends \infinite\base\Object
 
     /**
      * Get action.
-     *
-     * @return __return_getAction_type__ __return_getAction_description__
      */
     public function getAction()
     {
@@ -246,11 +219,7 @@ class Access extends \infinite\base\Object
     }
 
     /**
-     * __method_translateTableAccessValue_description__.
      *
-     * @param __param_value_type__ $value __param_value_description__
-     *
-     * @return __return_translateTableAccessValue_type__ __return_translateTableAccessValue_description__
      */
     public static function translateTableAccessValue($value)
     {
@@ -270,11 +239,7 @@ class Access extends \infinite\base\Object
     }
 
     /**
-     * __method_translateAccessValue_description__.
      *
-     * @param __param_value_type__ $value __param_value_description__
-     *
-     * @return __return_translateAccessValue_type__ __return_translateAccessValue_description__
      */
     public static function translateAccessValue($value)
     {

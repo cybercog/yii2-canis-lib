@@ -30,11 +30,7 @@ class QueryOwner extends QueryBehavior
     }
 
     /**
-     * __method_beforeQuery_description__.
      *
-     * @param __param_event_type__ $event __param_event_description__
-     *
-     * @return __return_beforeQuery_type__ __return_beforeQuery_description__
      */
     public function beforeQuery($event)
     {

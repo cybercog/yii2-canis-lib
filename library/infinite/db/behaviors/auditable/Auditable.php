@@ -128,8 +128,6 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Get audit dirty attributes.
-     *
-     * @return __return_getAuditDirtyAttributes_type__ __return_getAuditDirtyAttributes_description__
      */
     public function getAuditDirtyAttributes()
     {
@@ -173,13 +171,7 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_registerAuditEvent_description__.
      *
-     * @param __param_event_type__ $event __param_event_description__
-     *
-     * @throws InvalidConfigException __exception_InvalidConfigException_description__
-     *
-     * @return __return_registerAuditEvent_type__ __return_registerAuditEvent_description__
      */
     public function registerAuditEvent($event)
     {
@@ -215,9 +207,7 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_handleAuditSave_description__.
      *
-     * @return __return_handleAuditSave_type__ __return_handleAuditSave_description__
      */
     public function handleAuditSave()
     {
@@ -292,8 +282,6 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Set audit agent.
-     *
-     * @param __param_object_type__ $object __param_object_description__
      */
     public function setAuditAgent($object)
     {
@@ -302,8 +290,6 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Set audit agent.
-     *
-     * @param __param_object_type__ $object __param_object_description__
      */
     public function setAuditTimestamp($audit)
     {
@@ -317,8 +303,6 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Get audit agent.
-     *
-     * @return __return_getAuditAgent_type__ __return_getAuditAgent_description__
      */
     public function getAuditAgent()
     {
@@ -336,8 +320,6 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Set direct object.
-     *
-     * @param __param_object_type__ $object __param_object_description__
      */
     public function setDirectObject($object)
     {
@@ -346,8 +328,6 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Get direct object.
-     *
-     * @return __return_getDirectObject_type__ __return_getDirectObject_description__
      */
     public function getDirectObject()
     {
@@ -360,8 +340,6 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Set indirect object.
-     *
-     * @param __param_object_type__ $object __param_object_description__
      */
     public function setIndirectObject($object)
     {
@@ -370,8 +348,6 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Get indirect object.
-     *
-     * @return __return_getIndirectObject_type__ __return_getIndirectObject_description__
      */
     public function getIndirectObject()
     {
@@ -379,11 +355,7 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_beforeSave_description__.
      *
-     * @param __param_event_type__ $event __param_event_description__
-     *
-     * @return __return_beforeSave_type__ __return_beforeSave_description__
      */
     public function beforeSave($event)
     {
@@ -401,11 +373,7 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_afterUpdate_description__.
      *
-     * @param __param_event_type__ $event __param_event_description__
-     *
-     * @return __return_afterUpdate_type__ __return_afterUpdate_description__
      */
     public function afterUpdate($event)
     {
@@ -431,11 +399,7 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_afterInsert_description__.
      *
-     * @param __param_event_type__ $event __param_event_description__
-     *
-     * @return __return_afterInsert_type__ __return_afterInsert_description__
      */
     public function afterInsert($event)
     {
@@ -461,11 +425,7 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_beforeDelete_description__.
      *
-     * @param __param_event_type__ $event __param_event_description__
-     *
-     * @return __return_beforeDelete_type__ __return_beforeDelete_description__
      */
     public function beforeDelete($event)
     {
@@ -477,11 +437,7 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_afterDelete_description__.
      *
-     * @param __param_event_type__ $event __param_event_description__
-     *
-     * @return __return_afterDelete_type__ __return_afterDelete_description__
      */
     public function afterDelete($event)
     {
@@ -507,8 +463,6 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Set ignore attributes.
-     *
-     * @param __param_value_type__ $value __param_value_description__
      */
     public function setIgnoreAttributes($value)
     {
@@ -521,8 +475,6 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Get ignore attributes.
-     *
-     * @return __return_getIgnoreAttributes_type__ __return_getIgnoreAttributes_description__
      */
     public function getIgnoreAttributes()
     {
@@ -530,9 +482,7 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_isAuditEnabled_description__.
      *
-     * @return __return_isAuditEnabled_type__ __return_isAuditEnabled_description__
      */
     public function isAuditEnabled()
     {
@@ -551,9 +501,7 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_muteAudit_description__.
      *
-     * @return __return_muteAudit_type__ __return_muteAudit_description__
      */
     public function muteAudit()
     {
@@ -570,9 +518,7 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method_unmuteAudit_description__.
      *
-     * @return __return_unmuteAudit_type__ __return_unmuteAudit_description__
      */
     public function unmuteAudit()
     {

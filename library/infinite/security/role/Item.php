@@ -18,26 +18,20 @@ use infinite\helpers\ArrayHelper;
 class Item extends \infinite\base\collector\Item
 {
     /**
-     * @var __var_exclusive_type__ __var_exclusive_description__
      */
     public $exclusive = false;
     /**
-     * @var __var_inheritedEditable_type__ __var_inheritedEditable_description__
      */
     public $inheritedEditable = true;
     /**
-     * @var __var_name_type__ __var_name_description__
      */
     public $name;
     /**
-     * @var __var_level_type__ __var_level_description__
      */
     public $level = 100;
 
     /**
      * Get package.
-     *
-     * @return __return_getPackage_type__ __return_getPackage_description__
      */
     public function getPackage()
     {
@@ -53,8 +47,6 @@ class Item extends \infinite\base\collector\Item
 
     /**
      * Get id.
-     *
-     * @return __return_getId_type__ __return_getId_description__
      */
     public function getId()
     {
@@ -79,8 +71,6 @@ class Item extends \infinite\base\collector\Item
 
     /**
      * Get level section.
-     *
-     * @return __return_getLevelSection_type__ __return_getLevelSection_description__
      */
     public function getLevelSection()
     {

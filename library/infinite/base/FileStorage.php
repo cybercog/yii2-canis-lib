@@ -18,22 +18,17 @@ use infinite\base\exceptions\Exception;
 class FileStorage extends \infinite\base\Component
 {
     /**
-     * @var __var__supportedImageTypes_type__ __var__supportedImageTypes_description__
      */
     protected $_supportedImageTypes;
     /**
-     * @var __var__tempPath_type__ __var__tempPath_description__
      */
     protected $_tempPath;
     /**
-     * @var __var__tempFiles_type__ __var__tempFiles_description__
      */
     protected $_tempFiles = [];
 
     /**
      * Initializes the component.
-     *
-     * @return __return_init_type__ __return_init_description__
      */
     public function init()
     {
@@ -89,7 +84,6 @@ class FileStorage extends \infinite\base\Component
     /**
      * Get a temporary path.
      *
-     * @throws Exception __exception_Exception_description__
      *
      * @return string Temporary file path
      */

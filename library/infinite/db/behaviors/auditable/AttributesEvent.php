@@ -16,7 +16,6 @@ namespace infinite\db\behaviors\auditable;
 class AttributesEvent extends Event
 {
     /**
-     * @var __var_attributes_type__ __var_attributes_description__
      */
     public $attributes;
 

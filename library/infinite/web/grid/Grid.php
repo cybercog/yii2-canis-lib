@@ -20,7 +20,6 @@ class Grid extends \infinite\base\Object
 {
     //public $fillPreviousRows = true;
     /**
-     * @var __var_rowClass_type__ __var_rowClass_description__
      */
     public $rowClass = 'infinite\web\grid\Row';
 
@@ -29,24 +28,19 @@ class Grid extends \infinite\base\Object
 
     protected $_id;
     /**
-     * @var __var__prepended_type__ __var__prepended_description__
      */
     protected $_prepended = [];
     /**
-     * @var __var__appended_type__ __var__appended_description__
      */
     protected $_appended = [];
     /**
-     * @var __var__rows_type__ __var__rows_description__
      */
     protected $_rows = [];
     /**
-     * @var __var__currentRow_type__ __var__currentRow_description__
      */
     protected $_currentRow;
 
     /**
-     * __method_output_description__.
      */
     public function output()
     {
@@ -54,9 +48,7 @@ class Grid extends \infinite\base\Object
     }
 
     /**
-     * __method_generate_description__.
      *
-     * @return __return_generate_type__ __return_generate_description__
      */
     public function generate()
     {
@@ -78,9 +70,7 @@ class Grid extends \infinite\base\Object
     }
 
     /**
-     * __method_prepend_description__.
      *
-     * @param __param_item_type__ $item __param_item_description__
      */
     public function prepend($item)
     {
@@ -88,9 +78,7 @@ class Grid extends \infinite\base\Object
     }
 
     /**
-     * __method_append_description__.
      *
-     * @param __param_item_type__ $item __param_item_description__
      */
     public function append($item)
     {
@@ -98,11 +86,7 @@ class Grid extends \infinite\base\Object
     }
 
     /**
-     * __method_addRow_description__.
      *
-     * @param __param_item_type__ $item __param_item_description__
-     *
-     * @return __return_addRow_type__ __return_addRow_description__
      */
     public function addRow($item)
     {
@@ -117,9 +101,7 @@ class Grid extends \infinite\base\Object
     }
 
     /**
-     * __method_addRows_description__.
      *
-     * @param __param_items_type__ $items __param_items_description__
      */
     public function addRows($items)
     {
@@ -131,8 +113,6 @@ class Grid extends \infinite\base\Object
 
     /**
      * Set cells.
-     *
-     * @param __param_items_type__ $items __param_items_description__
      */
     public function setCells($items)
     {
@@ -148,8 +128,6 @@ class Grid extends \infinite\base\Object
 
     /**
      * Get current row.
-     *
-     * @return __return_getCurrentRow_type__ __return_getCurrentRow_description__
      */
     public function getCurrentRow()
     {
@@ -166,8 +144,6 @@ class Grid extends \infinite\base\Object
 
     /**
      * Get id.
-     *
-     * @return __return_getId_type__ __return_getId_description__
      */
     public function getId()
     {

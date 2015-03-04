@@ -16,11 +16,9 @@ namespace infinite\db;
 class Tree extends \infinite\base\Object
 {
     /**
-     * @var __var_object_type__ __var_object_description__
      */
     public $object;
     /**
-     * @var __var_children_type__ __var_children_description__
      */
     public $children;
 

@@ -18,24 +18,19 @@ use infinite\helpers\Date as DateHelper;
 class Date extends \infinite\db\behaviors\ActiveRecord
 {
     /**
-     * @var __var__handle_type__ __var__handle_description__
      */
     protected static $_handle = [];
     /**
-     * @var __var_dbTimeFormat_type__ __var_dbTimeFormat_description__
      */
     public $dbTimeFormat = "G:i:s";
     /**
-     * @var __var_dbDateFormat_type__ __var_dbDateFormat_description__
      */
     public $dbDateFormat = "Y-m-d";
 
     /**
-     * @var __var_humanTimeFormat_type__ __var_humanTimeFormat_description__
      */
     public $humanTimeFormat = "g:i:s a";
     /**
-     * @var __var_humanDateFormat_type__ __var_humanDateFormat_description__
      */
     public $humanDateFormat = "m/d/Y";
 
@@ -55,11 +50,7 @@ class Date extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method__toDatabase_description__.
      *
-     * @param __param_event_type__ $event __param_event_description__
-     *
-     * @return __return__toDatabase_type__ __return__toDatabase_description__
      */
     public function _toDatabase($event)
     {
@@ -73,9 +64,7 @@ class Date extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method__toHumanErrorCheck_description__.
      *
-     * @param __param_event_type__ $event __param_event_description__
      */
     public function _toHumanErrorCheck($event)
     {
@@ -85,11 +74,7 @@ class Date extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method__toHuman_description__.
      *
-     * @param __param_event_type__ $event __param_event_description__
-     *
-     * @return __return__toHuman_type__ __return__toHuman_description__
      */
     public function _toHuman($event)
     {
@@ -101,12 +86,7 @@ class Date extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method__formatForDatabase_description__.
      *
-     * @param __param_field_type__  $field  __param_field_description__
-     * @param __param_format_type__ $format __param_format_description__
-     *
-     * @return __return__formatForDatabase_type__ __return__formatForDatabase_description__
      */
     protected function _formatForDatabase($field, $format)
     {
@@ -141,12 +121,7 @@ class Date extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     * __method__formatForHuman_description__.
      *
-     * @param __param_field_type__  $field  __param_field_description__
-     * @param __param_format_type__ $format __param_format_description__
-     *
-     * @return __return__formatForHuman_type__ __return__formatForHuman_description__
      */
     protected function _formatForHuman($field, $format)
     {
@@ -211,8 +186,6 @@ class Date extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Get handle.
-     *
-     * @return __return_getHandle_type__ __return_getHandle_description__
      */
     public function getHandle()
     {

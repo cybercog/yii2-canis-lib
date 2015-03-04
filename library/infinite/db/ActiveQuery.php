@@ -20,14 +20,10 @@ class ActiveQuery extends \yii\db\ActiveQuery
     use ComponentTrait;
     use QueryTrait;
     /**
-     * @var __var__model_type__ __var__model_description__
      */
     protected $_model;
     /**
-     * Get is aco
-     * __method_getIsAco_description__.
-     *
-     * @return __return_getIsAco_type__ __return_getIsAco_description__
+     * Get is aco.
      */
     public function getIsAco()
     {
@@ -38,8 +34,6 @@ class ActiveQuery extends \yii\db\ActiveQuery
 
     /**
      * Get model.
-     *
-     * @return __return_getModel_type__ __return_getModel_description__
      */
     public function getModel()
     {
