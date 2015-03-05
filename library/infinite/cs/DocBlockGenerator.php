@@ -605,7 +605,7 @@ class DocBlockGenerator extends AbstractFixer
             }
             $startLine = false;
             // \d(explode("\n", file_get_contents($file)));
-            foreach (explode("\n", file_get_contents($file)) as $line => $content) {
+            foreach (preg_split("/\\r\\n|\\r|\\n/", file_get_contents($file)) as $line => $content) {
                 if (preg_match(
                     '/
                         (private|protected|public|var|static|const) # match visibility or var
@@ -623,12 +623,12 @@ class DocBlockGenerator extends AbstractFixer
             }
             $inheritDocs = $this->isPropertyReplacingParent($ref, $property);
             $docs = $originalDocs = $property->getDocComment();
-            $docsSize = count(explode("\n", $docs));
+            $docsSize = count(preg_split("/\\r\\n|\\r|\\n/", $docs));
             if (empty($docs)) {
                 $docsSize = 0;
                 $docs = "/**\n */";
             }
-            $lines = $originalLines = explode("\n", $docs);
+            $lines = $originalLines = preg_split("/\\r\\n|\\r|\\n/", $docs);
             if ($inheritDocs && $docsSize === 0) {
                 array_splice($lines, 1, 0, [' * @inheritdoc']);
             }
@@ -639,6 +639,9 @@ class DocBlockGenerator extends AbstractFixer
             preg_match('/^([ \t\r\n\f]*)[a-zA-Z].*/', $currentStartLine, $matches);
             $whitespace = isset($matches[1]) ? $matches[1] : '';
             $newDocs = '';
+            // if (isset($lines[0]) && trim($lines[0]) === '/*') {
+            //     var_dump($lines);exit;
+            // }
             foreach ($lines as $k => $line) {
                 $newDocs .= trim($line) . "\n";
             }
@@ -683,12 +686,12 @@ class DocBlockGenerator extends AbstractFixer
             }
             $inheritDocs = $this->isMethodReplacingParent($ref, $method);
             $docs = $originalDocs = $method->getDocComment();
-            $docsSize = count(explode("\n", $docs));
+            $docsSize = count(preg_split("/\\r\\n|\\r|\\n/", $docs));
             if (empty($docs)) {
                 $docsSize = 0;
                 $docs = "/**\n */";
             }
-            $lines = $originalLines = explode("\n", $docs);
+            $lines = $originalLines = preg_split("/\\r\\n|\\r|\\n/", $docs);
             if ($inheritDocs && $docsSize === 0) {
                 array_splice($lines, 1, 0, [' * @inheritdoc']);
             }
@@ -766,7 +769,7 @@ class DocBlockGenerator extends AbstractFixer
      */
     protected function cleanDocComment($doc)
     {
-        $lines = explode("\n", $doc);
+        $lines = preg_split("/\\r\\n|\\r|\\n/", $doc);
         $n = count($lines);
         for ($i = 0; $i < $n; $i++) {
             $lines[$i] = rtrim($lines[$i]);

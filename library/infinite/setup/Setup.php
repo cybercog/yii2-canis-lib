@@ -8,7 +8,6 @@
 
 namespace infinite\setup;
 
-use Exception;
 use Migrator;
 use Task;
 use Yii;
