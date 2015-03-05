@@ -8,7 +8,6 @@
 
 namespace infinite\db\behaviors;
 
-use infinite\base\exceptions\Exception;
 use infinite\caching\Cacher;
 use infinite\helpers\ArrayHelper;
 use Yii;

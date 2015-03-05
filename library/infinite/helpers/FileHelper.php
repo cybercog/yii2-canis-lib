@@ -1,8 +1,18 @@
 <?php
 namespace infinite\helpers;
 
+/**
+ * FileHelper [[@doctodo class_description:infinite\helpers\FileHelper]].
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+ */
 class FileHelper extends \yii\helpers\FileHelper
 {
+    /**
+     * [[@doctodo method_description:extensionFromMime]].
+     *
+     * @return [[@doctodo return_type:extensionFromMime]] [[@doctodo return_description:extensionFromMime]]
+     */
     public static function extensionFromMime($mime)
     {
         $definitive = [

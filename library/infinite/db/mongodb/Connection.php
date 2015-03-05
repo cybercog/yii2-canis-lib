@@ -11,10 +11,18 @@ namespace infinite\db\mongodb;
 use infinite\base\ComponentTrait;
 use Yii;
 
+/**
+ * Connection [[@doctodo class_description:infinite\db\mongodb\Connection]].
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+ */
 class Connection extends \yii\mongodb\Connection
 {
     use ComponentTrait;
 
+    /**
+     * @inheritdoc
+     */
     protected function selectDatabase($name)
     {
         $this->open();

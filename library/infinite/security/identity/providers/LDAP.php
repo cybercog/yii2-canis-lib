@@ -9,16 +9,32 @@
 namespace infinite\security\identity\providers;
 
 /**
+ * LDAP [[@doctodo class_description:infinite\security\identity\providers\LDAP]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class LDAP extends \infinite\security\identity\providers\Handler
 {
+    /**
+     * @var [[@doctodo var_type:map]] [[@doctodo var_description:map]]
+     */
     public $map;
+    /**
+     * @var [[@doctodo var_type:search]] [[@doctodo var_description:search]]
+     */
     public $search = '';
+    /**
+     * @var [[@doctodo var_type:filter]] [[@doctodo var_description:filter]]
+     */
     public $filter = '(&(objectCategory=person)(anr={username}))';
+    /**
+     * @var [[@doctodo var_type:_ldap]] [[@doctodo var_description:_ldap]]
+     */
     protected $_ldap = false;
 
+    /**
+     * @inheritdoc
+     */
     public function validatePassword($username, $password)
     {
         if (!isset($this->meta['username'])) {
@@ -39,6 +55,11 @@ class LDAP extends \infinite\security\identity\providers\Handler
         return $ldapAuth;
     }
 
+    /**
+     * [[@doctodo method_description:extractOus]].
+     *
+     * @return [[@doctodo return_type:extractOus]] [[@doctodo return_description:extractOus]]
+     */
     protected function extractOus($dns)
     {
         $ous = [];
@@ -53,6 +74,11 @@ class LDAP extends \infinite\security\identity\providers\Handler
         return $ous;
     }
 
+    /**
+     * [[@doctodo method_description:extractMembership]].
+     *
+     * @return [[@doctodo return_type:extractMembership]] [[@doctodo return_description:extractMembership]]
+     */
     protected function extractMembership($cns)
     {
         $memberships = [];
@@ -67,6 +93,11 @@ class LDAP extends \infinite\security\identity\providers\Handler
         return $memberships;
     }
 
+    /**
+     * Get valid config.
+     *
+     * @return [[@doctodo return_type:getValidConfig]] [[@doctodo return_description:getValidConfig]]
+     */
     public function getValidConfig()
     {
         if (!isset($this->config['hostname'])) {
@@ -79,6 +110,11 @@ class LDAP extends \infinite\security\identity\providers\Handler
         return true;
     }
 
+    /**
+     * [[@doctodo method_description:ldapAuth]].
+     *
+     * @return [[@doctodo return_type:ldapAuth]] [[@doctodo return_description:ldapAuth]]
+     */
     public function ldapAuth($username, $password)
     {
         $ldap = ldap_connect($this->config['hostname']);
@@ -102,6 +138,11 @@ class LDAP extends \infinite\security\identity\providers\Handler
         return true;
     }
 
+    /**
+     * Get attributes.
+     *
+     * @return [[@doctodo return_type:getAttributes]] [[@doctodo return_description:getAttributes]]
+     */
     public function getAttributes($username)
     {
         if (!$this->_ldap) {
@@ -153,6 +194,11 @@ class LDAP extends \infinite\security\identity\providers\Handler
 
         return $attributes;
     }
+    /**
+     * Get ldap.
+     *
+     * @return [[@doctodo return_type:getLdap]] [[@doctodo return_description:getLdap]]
+     */
     public function getLdap()
     {
         return $this->_ldap;

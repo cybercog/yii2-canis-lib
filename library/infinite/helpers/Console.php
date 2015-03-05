@@ -11,15 +11,28 @@ namespace infinite\helpers;
 use Yii;
 
 /**
+ * Console [[@doctodo class_description:infinite\helpers\Console]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class Console extends \yii\helpers\Console
 {
+    /**
+     * @var [[@doctodo var_type:_progressPrefixSpecial]] [[@doctodo var_description:_progressPrefixSpecial]]
+     */
     private static $_progressPrefixSpecial;
+    /**
+     * @var [[@doctodo var_type:_progressStartSpecial]] [[@doctodo var_description:_progressStartSpecial]]
+     */
     private static $_progressStartSpecial;
+    /**
+     * @var [[@doctodo var_type:_progressWidthSpecial]] [[@doctodo var_description:_progressWidthSpecial]]
+     */
     private static $_progressWidthSpecial;
 
+    /**
+     * [[@doctodo method_description:updateProgressSpecial]].
+     */
     public static function updateProgressSpecial($done, $total, $prefix = null)
     {
         $width = self::$_progressWidthSpecial;
@@ -66,6 +79,11 @@ class Console extends \yii\helpers\Console
             static::output("$prefix" . "[$status] $info");
         }
     }
+    /**
+     * [[@doctodo method_description:startProgressSpecial]].
+     *
+     * @param string $prefix [[@doctodo param_description:prefix]] [optional]
+     */
     public static function startProgressSpecial($done, $total, $prefix = '', $width = null)
     {
         self::$_progressStartSpecial = time();
@@ -74,6 +92,12 @@ class Console extends \yii\helpers\Console
 
         static::updateProgressSpecial($done, $total);
     }
+    /**
+     * [[@doctodo method_description:endProgressSpecial]].
+     *
+     * @param boolean $remove     [[@doctodo param_description:remove]] [optional]
+     * @param boolean $keepPrefix [[@doctodo param_description:keepPrefix]] [optional]
+     */
     public static function endProgressSpecial($remove = false, $keepPrefix = true)
     {
         if ($remove === false) {

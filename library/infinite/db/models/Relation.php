@@ -60,8 +60,6 @@ class Relation extends \infinite\db\ActiveRecord
      */
     protected $_dirtyAttributes = [];
 
-    /*
-     */
     /**
      * @var [[@doctodo var_type:_modelRegistry]] [[@doctodo var_description:_modelRegistry]]
      */

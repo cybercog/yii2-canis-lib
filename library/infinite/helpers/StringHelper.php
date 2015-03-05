@@ -11,19 +11,26 @@ namespace infinite\helpers;
 use Yii;
 
 /**
+ * StringHelper [[@doctodo class_description:infinite\helpers\StringHelper]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class StringHelper extends \yii\helpers\StringHelper
 {
-    /*
+    /**
+     * [[@doctodo method_description:parseInstructions]].
+     *
+     * @return [[@doctodo return_type:parseInstructions]] [[@doctodo return_description:parseInstructions]]
      */
     public static function parseInstructions()
     {
         return [];
     }
 
-    /*
+    /**
+     * [[@doctodo method_description:neighborWordCombos]].
+     *
+     * @return [[@doctodo return_type:neighborWordCombos]] [[@doctodo return_description:neighborWordCombos]]
      */
     public static function neighborWordCombos($parts)
     {
@@ -53,8 +60,12 @@ class StringHelper extends \yii\helpers\StringHelper
         return array_unique(array_merge($newParts, $parts));
     }
 
-    /*
-     *   @source http://php.net/manual/en/function.filesize.php#106569
+    /**
+     * [[@doctodo method_description:humanFilesize]].
+     *
+     * @param integer $decimals [[@doctodo param_description:decimals]] [optional]
+     * @link http://php.net/manual/en/function.filesize.php#106569
+     * @return [[@doctodo return_type:humanFilesize]] [[@doctodo return_description:humanFilesize]]
      */
     public static function humanFilesize($bytes, $decimals = 1)
     {
@@ -64,7 +75,12 @@ class StringHelper extends \yii\helpers\StringHelper
         return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$sz[$factor];
     }
 
-    /*
+    /**
+     * [[@doctodo method_description:parseText]].
+     *
+     * @param array $variables [[@doctodo param_description:variables]] [optional]
+     *
+     * @return [[@doctodo return_type:parseText]] [[@doctodo return_description:parseText]]
      */
     public static function parseText($text, $variables = [])
     {
@@ -105,6 +121,13 @@ class StringHelper extends \yii\helpers\StringHelper
         return trim(preg_replace(array_keys($replace), array_values($replace), $text));
     }
 
+    /**
+     * [[@doctodo method_description:compareStrings]].
+     *
+     * @param array $weights [[@doctodo param_description:weights]] [optional]
+     *
+     * @return [[@doctodo return_type:compareStrings]] [[@doctodo return_description:compareStrings]]
+     */
     public static function compareStrings($str1, $str2, $weights = [])
     {
         if ($str1 === $str2) {
@@ -143,6 +166,11 @@ class StringHelper extends \yii\helpers\StringHelper
         return ($score / $total) * 100;
     }
 
+    /**
+     * [[@doctodo method_description:spellNumber]].
+     *
+     * @return [[@doctodo return_type:spellNumber]] [[@doctodo return_description:spellNumber]]
+     */
     public static function spellNumber($number)
     {
         $a = new \NumberFormatter(Yii::$app->language, \NumberFormatter::SPELLOUT);

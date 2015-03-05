@@ -11,6 +11,7 @@ namespace infinite\db;
 use infinite\base\ComponentTrait;
 
 /**
+ * Query [[@doctodo class_description:infinite\db\Query]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

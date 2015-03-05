@@ -30,6 +30,7 @@ function b($backtrace)
 }
 
 /**
+ * Infinite [[@doctodo class_description:Infinite]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

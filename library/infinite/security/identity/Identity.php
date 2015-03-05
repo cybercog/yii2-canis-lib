@@ -9,6 +9,7 @@
 namespace infinite\security\identity;
 
 /**
+ * Identity [[@doctodo class_description:infinite\security\identity\Identity]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

@@ -110,6 +110,7 @@ class ClassManager extends Component implements IteratorAggregate, ArrayAccess
         if ($this->offsetExists($offset)) {
             return $this->_classes[$offset];
         }
+
         return;
     }
 

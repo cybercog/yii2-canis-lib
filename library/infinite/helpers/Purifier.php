@@ -9,6 +9,7 @@
 namespace infinite\helpers;
 
 /**
+ * Purifier [[@doctodo class_description:infinite\helpers\Purifier]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

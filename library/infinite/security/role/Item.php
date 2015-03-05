@@ -11,26 +11,33 @@ namespace infinite\security\role;
 use infinite\helpers\ArrayHelper;
 
 /**
+ * Item [[@doctodo class_description:infinite\security\role\Item]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class Item extends \infinite\base\collector\Item
 {
     /**
+     * @var [[@doctodo var_type:exclusive]] [[@doctodo var_description:exclusive]]
      */
     public $exclusive = false;
     /**
+     * @var [[@doctodo var_type:inheritedEditable]] [[@doctodo var_description:inheritedEditable]]
      */
     public $inheritedEditable = true;
     /**
+     * @var [[@doctodo var_type:name]] [[@doctodo var_description:name]]
      */
     public $name;
     /**
+     * @var [[@doctodo var_type:level]] [[@doctodo var_description:level]]
      */
     public $level = 100;
 
     /**
      * Get package.
+     *
+     * @return [[@doctodo return_type:getPackage]] [[@doctodo return_description:getPackage]]
      */
     public function getPackage()
     {
@@ -46,6 +53,8 @@ class Item extends \infinite\base\collector\Item
 
     /**
      * Get id.
+     *
+     * @return [[@doctodo return_type:getId]] [[@doctodo return_description:getId]]
      */
     public function getId()
     {
@@ -70,6 +79,8 @@ class Item extends \infinite\base\collector\Item
 
     /**
      * Get level section.
+     *
+     * @return [[@doctodo return_type:getLevelSection]] [[@doctodo return_description:getLevelSection]]
      */
     public function getLevelSection()
     {

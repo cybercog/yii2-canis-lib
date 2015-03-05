@@ -1,43 +1,54 @@
 <?php
 /**
- *
- * library/ICD.php
+ * ICD [[@doctodo class_description:ICD]]
+ * library/ICD.php.
  *
  * @author Jacob Morrison <jacob@infinitecascade.com>
  */
 class ICD extends \yii\helpers\VarDumper
 {
     /**
+     * @var [[@doctodo var_type:_var]] [[@doctodo var_description:_var]]
      */
     protected $_var;
     /**
+     * @var [[@doctodo var_type:_exclude]] [[@doctodo var_description:_exclude]]
      */
     protected $_exclude = [];
     /**
+     * @var [[@doctodo var_type:_backtrace]] [[@doctodo var_description:_backtrace]]
      */
     protected $_backtrace;
     /**
+     * @var [[@doctodo var_type:_format]] [[@doctodo var_description:_format]]
      */
     protected $_format = 'auto';
     /**
+     * @var [[@doctodo var_type:_depth]] [[@doctodo var_description:_depth]]
      */
     protected $_depth = 10;
     /**
+     * @var [[@doctodo var_type:_skipSteps]] [[@doctodo var_description:_skipSteps]]
      */
     protected $_skipSteps = 2;
     /**
+     * @var [[@doctodo var_type:_showSteps]] [[@doctodo var_description:_showSteps]]
      */
     protected $_showSteps = 8;
 
     /**
+     * @var [[@doctodo var_type:_output]] [[@doctodo var_description:_output]]
      */
     protected $_output = false;
     /**
+     * @var [[@doctodo var_type:_die]] [[@doctodo var_description:_die]]
      */
     protected $_die = false;
 
     /**
      * Constructor.
+     *
+     * @param array $settings [[@doctodo param_description:settings]] [optional]
      */
     public function __construct($var, $settings = [])
     {
@@ -52,7 +63,11 @@ class ICD extends \yii\helpers\VarDumper
         $this->_backtrace = array_slice($backtrace, $this->_skipSteps);
     }
     /**
+     * [[@doctodo method_description:d]].
      *
+     * @param array $settings [[@doctodo param_description:settings]] [optional]
+     *
+     * @return [[@doctodo return_type:d]] [[@doctodo return_description:d]]
      */
     public static function d($var, $settings = [])
     {
@@ -60,7 +75,11 @@ class ICD extends \yii\helpers\VarDumper
     }
 
     /**
+     * [[@doctodo method_description:btnice]].
      *
+     * @param array $settings [[@doctodo param_description:settings]] [optional]
+     *
+     * @return [[@doctodo return_type:btnice]] [[@doctodo return_description:btnice]]
      */
     public static function btnice($backtrace = null, $settings = [])
     {
@@ -83,7 +102,11 @@ class ICD extends \yii\helpers\VarDumper
     }
 
     /**
+     * [[@doctodo method_description:btdiff]].
      *
+     * @param boolean $return [[@doctodo param_description:return]] [optional]
+     *
+     * @return [[@doctodo return_type:btdiff]] [[@doctodo return_description:btdiff]]
      */
     public static function btdiff($a, $b, $return = true)
     {
@@ -125,7 +148,9 @@ class ICD extends \yii\helpers\VarDumper
     }
 
     /**
+     * [[@doctodo method_description:exclude]].
      *
+     * @return [[@doctodo return_type:exclude]] [[@doctodo return_description:exclude]]
      */
     public function exclude($exclude)
     {
@@ -135,7 +160,9 @@ class ICD extends \yii\helpers\VarDumper
     }
 
     /**
+     * [[@doctodo method_description:html]].
      *
+     * @return [[@doctodo return_type:html]] [[@doctodo return_description:html]]
      */
     public function html()
     {
@@ -145,7 +172,9 @@ class ICD extends \yii\helpers\VarDumper
     }
 
     /**
+     * [[@doctodo method_description:fatal]].
      *
+     * @return [[@doctodo return_type:fatal]] [[@doctodo return_description:fatal]]
      */
     public function fatal()
     {
@@ -155,7 +184,9 @@ class ICD extends \yii\helpers\VarDumper
     }
 
     /**
+     * [[@doctodo method_description:safe]].
      *
+     * @return [[@doctodo return_type:safe]] [[@doctodo return_description:safe]]
      */
     public function safe()
     {
@@ -165,7 +196,9 @@ class ICD extends \yii\helpers\VarDumper
     }
 
     /**
+     * [[@doctodo method_description:plaintext]].
      *
+     * @return [[@doctodo return_type:plaintext]] [[@doctodo return_description:plaintext]]
      */
     public function plaintext()
     {
@@ -176,6 +209,8 @@ class ICD extends \yii\helpers\VarDumper
 
     /**
      * Get format.
+     *
+     * @return [[@doctodo return_type:getFormat]] [[@doctodo return_description:getFormat]]
      */
     public function getFormat()
     {
@@ -191,6 +226,7 @@ class ICD extends \yii\helpers\VarDumper
     }
 
     /**
+     * [[@doctodo method_description:outputHtml]].
      */
     public function outputHtml()
     {
@@ -209,6 +245,7 @@ class ICD extends \yii\helpers\VarDumper
     }
 
     /**
+     * [[@doctodo method_description:outputPlaintext]].
      */
     public function outputPlaintext()
     {
@@ -220,7 +257,9 @@ class ICD extends \yii\helpers\VarDumper
     }
 
     /**
+     * [[@doctodo method_description:output]].
      *
+     * @return [[@doctodo return_type:output]] [[@doctodo return_description:output]]
      */
     public function output()
     {
@@ -236,6 +275,7 @@ class ICD extends \yii\helpers\VarDumper
     }
 
     /**
+     * [[@doctodo method_description:__destruct]].
      */
     public function __destruct()
     {

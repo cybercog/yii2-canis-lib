@@ -13,6 +13,7 @@ use Yii;
 use yii\base\InvalidParamException;
 
 /**
+ * Html [[@doctodo class_description:infinite\helpers\Html]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -27,7 +28,11 @@ class Html extends \yii\helpers\Html
     // }
 
     /**
+     * [[@doctodo method_description:registerJsBlock]].
      *
+     * @param integer $position [[@doctodo param_description:position]] [optional]
+     *
+     * @return [[@doctodo return_type:registerJsBlock]] [[@doctodo return_description:registerJsBlock]]
      */
     public static function registerJsBlock($script, $position = View::POS_READY, $key = null)
     {
@@ -35,6 +40,10 @@ class Html extends \yii\helpers\Html
     }
 
     /**
+     * [[@doctodo method_description:addSubAttribute]].
+     *
+     * @throws InvalidParamException [[@doctodo exception_description:InvalidParamException]]
+     * @return [[@doctodo return_type:addSubAttribute]] [[@doctodo return_description:addSubAttribute]]
      *
      */
     public static function addSubAttribute($attribute, $subattribute)
@@ -49,6 +58,10 @@ class Html extends \yii\helpers\Html
     }
 
     /**
+     * [[@doctodo method_description:addPreAttribute]].
+     *
+     * @throws InvalidParamException [[@doctodo exception_description:InvalidParamException]]
+     * @return [[@doctodo return_type:addPreAttribute]] [[@doctodo return_description:addPreAttribute]]
      *
      */
     public static function addPreAttribute($attribute, $preattribute)
@@ -63,6 +76,10 @@ class Html extends \yii\helpers\Html
     }
 
     /**
+     * [[@doctodo method_description:changeAttribute]].
+     *
+     * @throws InvalidParamException [[@doctodo exception_description:InvalidParamException]]
+     * @return [[@doctodo return_type:changeAttribute]] [[@doctodo return_description:changeAttribute]]
      *
      */
     public static function changeAttribute($attribute, $newAttribute)
@@ -75,6 +92,13 @@ class Html extends \yii\helpers\Html
         return $prefix . $newAttribute;
     }
 
+    /**
+     * [[@doctodo method_description:pageHeader]].
+     *
+     * @param array $options [[@doctodo param_description:options]] [optional]
+     *
+     * @return [[@doctodo return_type:pageHeader]] [[@doctodo return_description:pageHeader]]
+     */
     public static function pageHeader($title, $options = [])
     {
         if (!isset($options['htmlOptions'])) {
@@ -95,6 +119,13 @@ class Html extends \yii\helpers\Html
         return static::tag($options['wrapperTag'], static::tag('h' . $options['level'], $title, $options['htmlOptions']), $options['wrapperOptions']);
     }
 
+    /**
+     * [[@doctodo method_description:buttonGroup]].
+     *
+     * @param array $htmlOptions [[@doctodo param_description:htmlOptions]] [optional]
+     *
+     * @return [[@doctodo return_type:buttonGroup]] [[@doctodo return_description:buttonGroup]]
+     */
     public static function buttonGroup($items, $htmlOptions = [])
     {
         if (empty($items)) {

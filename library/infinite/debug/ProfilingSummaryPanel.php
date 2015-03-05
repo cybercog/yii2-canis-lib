@@ -13,7 +13,7 @@ use yii\debug\models\search\Profile;
 use yii\debug\Panel;
 
 /**
- * Debugger panel that collects and displays performance profiling info.
+ * ProfilingSummaryPanel [[@doctodo class_description:infinite\debug\ProfilingSummaryPanel]].
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  *

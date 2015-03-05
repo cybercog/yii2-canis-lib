@@ -11,25 +11,48 @@ namespace infinite\security\identity\providers;
 use Yii;
 
 /**
+ * Creator [[@doctodo class_description:infinite\security\identity\providers\Creator]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 abstract class Creator extends \infinite\base\Component implements CreatorInterface
 {
+    /**
+     * @var [[@doctodo var_type:_identityProvider]] [[@doctodo var_description:_identityProvider]]
+     */
     protected $_identityProvider;
+    /**
+     * @var [[@doctodo var_type:priority]] [[@doctodo var_description:priority]]
+     */
     public $priority = 0;
+    /**
+     * @var [[@doctodo var_type:usernameFilter]] [[@doctodo var_description:usernameFilter]]
+     */
     public $usernameFilter = false;
 
+    /**
+     * Get identity provider.
+     *
+     * @return [[@doctodo return_type:getIdentityProvider]] [[@doctodo return_description:getIdentityProvider]]
+     */
     public function getIdentityProvider()
     {
         return $this->_identityProvider;
     }
 
+    /**
+     * Set identity provider.
+     */
     public function setIdentityProvider($idp)
     {
         $this->_identityProvider = $idp;
     }
 
+    /**
+     * [[@doctodo method_description:attemptCreate]].
+     *
+     * @return [[@doctodo return_type:attemptCreate]] [[@doctodo return_description:attemptCreate]]
+     */
     public function attemptCreate($username, $password)
     {
         $username = $this->getUsername($username);
@@ -37,8 +60,16 @@ abstract class Creator extends \infinite\base\Component implements CreatorInterf
         return $this->internalAttemptCreate($username, $password);
     }
 
+    /**
+     * [[@doctodo method_description:internalAttemptCreate]].
+     */
     abstract protected function internalAttemptCreate($username, $password);
 
+    /**
+     * Get username.
+     *
+     * @return [[@doctodo return_type:getUsername]] [[@doctodo return_description:getUsername]]
+     */
     public function getUsername($username)
     {
         if ($this->usernameFilter) {
@@ -48,6 +79,11 @@ abstract class Creator extends \infinite\base\Component implements CreatorInterf
         return $username;
     }
 
+    /**
+     * [[@doctodo method_description:createUser]].
+     *
+     * @return [[@doctodo return_type:createUser]] [[@doctodo return_description:createUser]]
+     */
     protected function createUser($attributes)
     {
         if (empty($attributes['email']) || empty($attributes['first_name']) || empty($attributes['last_name'])) {
@@ -78,6 +114,11 @@ abstract class Creator extends \infinite\base\Component implements CreatorInterf
 
         return $user;
     }
+    /**
+     * [[@doctodo method_description:userExists]].
+     *
+     * @return [[@doctodo return_type:userExists]] [[@doctodo return_description:userExists]]
+     */
     public function userExists($email)
     {
         $userClass = Yii::$app->classes['User'];

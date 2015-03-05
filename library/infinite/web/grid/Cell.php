@@ -10,74 +10,26 @@ namespace infinite\web\grid;
 
 use infinite\helpers\Html;
 
-/**
- *
- * @author Jacob Morrison <email@ofjacob.com>
- */
 class Cell extends \infinite\base\Object implements \infinite\web\RenderInterface
 {
-    /*
-        $*Size attributes values:
-            false: don't put it in the class
-            true: use the $_*Columns value
-            'auto': call generate*()
-    */
-    /**
-     */
     public $phoneSize = false;
-    /**
-     */
     public $tabletSize = 'auto';
-    /**
-     */
     public $mediumDesktopSize = 'auto'; // baseline
-    /**
-     */
     public $largeDesktopSize = false;
-    /**
-     */
     public $baseSize = 'mediumDesktop';
-    /**
-     */
     public $htmlOptions = [];
-
-    /**
-     */
     protected $_prepend = [];
-    /**
-     */
     protected $_content;
-    /**
-     */
     protected $_append = [];
-    /**
-     */
     protected $_id;
 
-    /**
-     */
     protected $_phoneColumns = 12;
-    /**
-     */
     protected $_tabletColumns = 6;
-    /**
-     */
     protected $_mediumDesktopColumns = 6;
-    /**
-     */
     protected $_largeDesktopColumns = 3;
-
-    /**
-     */
     protected $_maxPhoneColumns;
-    /**
-     */
     protected $_maxTabletColumns;
-    /**
-     */
     protected $_maxMediumDesktopColumns;
-    /**
-     */
     protected $_maxLargeDesktopColumns;
 
     /**

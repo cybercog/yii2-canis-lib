@@ -12,13 +12,16 @@ use jom\SubnationalDivisions;
 use Yii;
 
 /**
+ * Locations [[@doctodo class_description:infinite\helpers\Locations]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class Locations extends \infinite\base\Component
 {
     /**
+     * [[@doctodo method_description:countryList]].
      *
+     * @return [[@doctodo return_type:countryList]] [[@doctodo return_description:countryList]]
      */
     public static function countryList()
     {
@@ -34,7 +37,12 @@ class Locations extends \infinite\base\Component
     }
 
     /**
+     * [[@doctodo method_description:allSubnationalDivisions]].
      *
+     * @param boolean $shortName [[@doctodo param_description:shortName]] [optional]
+     * @param boolean $flat      [[@doctodo param_description:flat]] [optional]
+     *
+     * @return [[@doctodo return_type:allSubnationalDivisions]] [[@doctodo return_description:allSubnationalDivisions]]
      */
     public static function allSubnationalDivisions($shortName = false, $flat = false)
     {

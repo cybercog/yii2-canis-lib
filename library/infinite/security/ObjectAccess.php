@@ -13,29 +13,37 @@ use infinite\helpers\ArrayHelper;
 use Yii;
 
 /**
+ * ObjectAccess [[@doctodo class_description:infinite\security\ObjectAccess]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class ObjectAccess extends \infinite\base\Component
 {
     /**
+     * @var [[@doctodo var_type:_object]] [[@doctodo var_description:_object]]
      */
     protected $_object;
     /**
+     * @var [[@doctodo var_type:_requestors]] [[@doctodo var_description:_requestors]]
      */
     protected $_requestors;
     /**
+     * @var [[@doctodo var_type:_roles]] [[@doctodo var_description:_roles]]
      */
     protected $_roles;
     /**
+     * @var [[@doctodo var_type:_visibility]] [[@doctodo var_description:_visibility]]
      */
     protected $_visibility;
     /**
+     * @var [[@doctodo var_type:_tempCache]] [[@doctodo var_description:_tempCache]]
      */
     protected $_tempCache = [];
 
     /**
      * Prepares object for serialization.
+     *
+     * @return [[@doctodo return_type:__sleep]] [[@doctodo return_description:__sleep]]
      */
     public function __sleep()
     {
@@ -56,6 +64,8 @@ class ObjectAccess extends \infinite\base\Component
 
     /**
      * Get.
+     *
+     * @return [[@doctodo return_type:get]] [[@doctodo return_description:get]]
      */
     public static function get($object)
     {
@@ -73,6 +83,7 @@ class ObjectAccess extends \infinite\base\Component
     }
 
     /**
+     * [[@doctodo method_description:load]].
      */
     public function load()
     {
@@ -81,7 +92,9 @@ class ObjectAccess extends \infinite\base\Component
     }
 
     /**
+     * [[@doctodo method_description:save]].
      *
+     * @return [[@doctodo return_type:save]] [[@doctodo return_description:save]]
      */
     public function save($data)
     {
@@ -117,7 +130,9 @@ class ObjectAccess extends \infinite\base\Component
     }
 
     /**
+     * [[@doctodo method_description:fillValidationSettings]].
      *
+     * @return [[@doctodo return_type:fillValidationSettings]] [[@doctodo return_description:fillValidationSettings]]
      */
     protected function fillValidationSettings($validationSettings)
     {
@@ -126,6 +141,8 @@ class ObjectAccess extends \infinite\base\Component
 
     /**
      * Get universal max role level.
+     *
+     * @return [[@doctodo return_type:getUniversalMaxRoleLevel]] [[@doctodo return_description:getUniversalMaxRoleLevel]]
      */
     public function getUniversalMaxRoleLevel()
     {
@@ -133,7 +150,9 @@ class ObjectAccess extends \infinite\base\Component
     }
 
     /**
+     * [[@doctodo method_description:validateRole]].
      *
+     * @return [[@doctodo return_type:validateRole]] [[@doctodo return_description:validateRole]]
      */
     protected function validateRole($role, $validationSettings)
     {
@@ -164,7 +183,9 @@ class ObjectAccess extends \infinite\base\Component
     }
 
     /**
+     * [[@doctodo method_description:validate]].
      *
+     * @return [[@doctodo return_type:validate]] [[@doctodo return_description:validate]]
      */
     protected function validate($data)
     {
@@ -212,6 +233,8 @@ class ObjectAccess extends \infinite\base\Component
 
     /**
      * Get requestors.
+     *
+     * @return [[@doctodo return_type:getRequestors]] [[@doctodo return_description:getRequestors]]
      */
     public function getRequestors()
     {
@@ -240,6 +263,8 @@ class ObjectAccess extends \infinite\base\Component
 
     /**
      * Get roles.
+     *
+     * @return [[@doctodo return_type:getRoles]] [[@doctodo return_description:getRoles]]
      */
     public function getRoles()
     {
@@ -260,6 +285,8 @@ class ObjectAccess extends \infinite\base\Component
 
     /**
      * Get role objects.
+     *
+     * @return [[@doctodo return_type:getRoleObjects]] [[@doctodo return_description:getRoleObjects]]
      */
     public function getRoleObjects()
     {
@@ -275,6 +302,10 @@ class ObjectAccess extends \infinite\base\Component
 
     /**
      * Get role object.
+     *
+     * @param array $roleSet [[@doctodo param_description:roleSet]] [optional]
+     *
+     * @return [[@doctodo return_type:getRoleObject]] [[@doctodo return_description:getRoleObject]]
      */
     public function getRoleObject($requestorId, $roleSet = [])
     {
@@ -305,6 +336,8 @@ class ObjectAccess extends \infinite\base\Component
 
     /**
      * Get special requestors.
+     *
+     * @return [[@doctodo return_type:getSpecialRequestors]] [[@doctodo return_description:getSpecialRequestors]]
      */
     public function getSpecialRequestors()
     {
@@ -327,6 +360,8 @@ class ObjectAccess extends \infinite\base\Component
 
     /**
      * Get object.
+     *
+     * @return [[@doctodo return_type:getObject]] [[@doctodo return_description:getObject]]
      */
     public function getObject()
     {
@@ -340,6 +375,8 @@ class ObjectAccess extends \infinite\base\Component
 
     /**
      * Get role help text.
+     *
+     * @return [[@doctodo return_type:getRoleHelpText]] [[@doctodo return_description:getRoleHelpText]]
      */
     public function getRoleHelpText($roleItem)
     {
@@ -347,7 +384,9 @@ class ObjectAccess extends \infinite\base\Component
     }
 
     /**
+     * [[@doctodo method_description:determineVisibility]].
      *
+     * @return [[@doctodo return_type:determineVisibility]] [[@doctodo return_description:determineVisibility]]
      */
     public function determineVisibility()
     {
@@ -372,6 +411,8 @@ class ObjectAccess extends \infinite\base\Component
 
     /**
      * Get possible roles.
+     *
+     * @return [[@doctodo return_type:getPossibleRoles]] [[@doctodo return_description:getPossibleRoles]]
      */
     public function getPossibleRoles($accessingObject = null)
     {
@@ -398,6 +439,8 @@ class ObjectAccess extends \infinite\base\Component
 
     /**
      * Get visibility.
+     *
+     * @return [[@doctodo return_type:getVisibility]] [[@doctodo return_description:getVisibility]]
      */
     public function getVisibility()
     {
@@ -410,6 +453,8 @@ class ObjectAccess extends \infinite\base\Component
 
     /**
      * Get accessor role level.
+     *
+     * @return [[@doctodo return_type:getAccessorRoleLevel]] [[@doctodo return_description:getAccessorRoleLevel]]
      */
     public function getAccessorRoleLevel($accessingObject = null)
     {

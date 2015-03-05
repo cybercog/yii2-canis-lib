@@ -12,15 +12,18 @@ use infinite\helpers\ArrayHelper;
 use Yii;
 
 /**
+ * Collector [[@doctodo class_description:infinite\security\role\Collector]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class Collector extends \infinite\base\collector\Collector
 {
     /**
+     * @var [[@doctodo var_type:_tableRegistry]] [[@doctodo var_description:_tableRegistry]]
      */
     protected $_tableRegistry;
     /**
+     * @var [[@doctodo var_type:_initialItems]] [[@doctodo var_description:_initialItems]]
      */
     protected $_initialItems = [];
     /**
@@ -49,6 +52,8 @@ class Collector extends \infinite\base\collector\Collector
 
     /**
      * Get by.
+     *
+     * @return [[@doctodo return_type:getById]] [[@doctodo return_description:getById]]
      */
     public function getById($id)
     {
@@ -67,6 +72,8 @@ class Collector extends \infinite\base\collector\Collector
 
     /**
      * Get table registry.
+     *
+     * @return [[@doctodo return_type:getTableRegistry]] [[@doctodo return_description:getTableRegistry]]
      */
     public function getTableRegistry()
     {

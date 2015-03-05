@@ -11,21 +11,26 @@ namespace infinite\security;
 use Yii;
 
 /**
+ * Access [[@doctodo class_description:infinite\security\Access]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class Access extends \infinite\base\Object
 {
     /**
+     * @var [[@doctodo var_type:_aclModel]] [[@doctodo var_description:_aclModel]]
      */
     protected $_aclModel;
     /**
+     * @var [[@doctodo var_type:_accessLevel]] [[@doctodo var_description:_accessLevel]]
      */
     protected $_accessLevel;
     /**
+     * @var [[@doctodo var_type:_action]] [[@doctodo var_description:_action]]
      */
     protected $_action;
     /**
+     * @var [[@doctodo var_type:_tempCache]] [[@doctodo var_description:_tempCache]]
      */
     protected $_tempCache = [];
 
@@ -38,6 +43,8 @@ class Access extends \infinite\base\Object
 
     /**
      * Prepares object for serialization.
+     *
+     * @return [[@doctodo return_type:__sleep]] [[@doctodo return_description:__sleep]]
      */
     public function __sleep()
     {
@@ -61,7 +68,9 @@ class Access extends \infinite\base\Object
     }
 
     /**
+     * [[@doctodo method_description:can]].
      *
+     * @return [[@doctodo return_type:can]] [[@doctodo return_description:can]]
      */
     public function can($object, $accessingObject = null)
     {
@@ -119,6 +128,8 @@ class Access extends \infinite\base\Object
 
     /**
      * Get human access level.
+     *
+     * @return [[@doctodo return_type:getHumanAccessLevel]] [[@doctodo return_description:getHumanAccessLevel]]
      */
     public function getHumanAccessLevel($accessLevel = null)
     {
@@ -159,6 +170,8 @@ class Access extends \infinite\base\Object
 
     /**
      * Get access level.
+     *
+     * @return [[@doctodo return_type:getAccessLevel]] [[@doctodo return_description:getAccessLevel]]
      */
     public function getAccessLevel()
     {
@@ -185,6 +198,8 @@ class Access extends \infinite\base\Object
 
     /**
      * Get acl model.
+     *
+     * @return [[@doctodo return_type:getAclModel]] [[@doctodo return_description:getAclModel]]
      */
     public function getAclModel()
     {
@@ -206,6 +221,8 @@ class Access extends \infinite\base\Object
 
     /**
      * Get action.
+     *
+     * @return [[@doctodo return_type:getAction]] [[@doctodo return_description:getAction]]
      */
     public function getAction()
     {
@@ -218,7 +235,9 @@ class Access extends \infinite\base\Object
     }
 
     /**
+     * [[@doctodo method_description:translateTableAccessValue]].
      *
+     * @return [[@doctodo return_type:translateTableAccessValue]] [[@doctodo return_description:translateTableAccessValue]]
      */
     public static function translateTableAccessValue($value)
     {
@@ -238,7 +257,9 @@ class Access extends \infinite\base\Object
     }
 
     /**
+     * [[@doctodo method_description:translateAccessValue]].
      *
+     * @return [[@doctodo return_type:translateAccessValue]] [[@doctodo return_description:translateAccessValue]]
      */
     public static function translateAccessValue($value)
     {

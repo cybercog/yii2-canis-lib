@@ -11,11 +11,19 @@ namespace infinite\helpers;
 use Yii;
 
 /**
+ * Math [[@doctodo class_description:infinite\helpers\Math]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class Math extends \yii\base\Object
 {
+    /**
+     * [[@doctodo method_description:removeOutliers]].
+     *
+     * @param integer $magnitude [[@doctodo param_description:magnitude]] [optional]
+     *
+     * @return [[@doctodo return_type:removeOutliers]] [[@doctodo return_description:removeOutliers]]
+     */
     public static function removeOutliers($dataset, $magnitude = 1)
     {
         $count = count($dataset);

@@ -12,10 +12,20 @@ use infinite\base\ComponentTrait;
 use Yii;
 use yii\mongodb\Exception;
 
+/**
+ * Collection [[@doctodo class_description:infinite\db\mongodb\Collection]].
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+ */
 class Collection extends \yii\mongodb\Collection
 {
     use ComponentTrait;
 
+    /**
+     * Get db.
+     *
+     * @return [[@doctodo return_type:getDb]] [[@doctodo return_description:getDb]]
+     */
     public function getDb()
     {
         return Yii::$app->mongodb;
@@ -24,9 +34,9 @@ class Collection extends \yii\mongodb\Collection
     /**
      * Drops this collection.
      *
-     * @throws Exception on failure.
-     *
+     * @throws Exception [[@doctodo exception_description:Exception]]
      * @return boolean whether the operation successful.
+     *
      */
     public function rename($newName)
     {

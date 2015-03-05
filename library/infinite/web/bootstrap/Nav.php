@@ -9,7 +9,7 @@
 namespace infinite\web\bootstrap;
 
 use infinite\helpers\Html;
-/*
+/**
  * SubNavBar renders a sub-navbar HTML component.
  *
  * Any content enclosed between the [[begin()]] and [[end()]] calls of NavBar

@@ -9,6 +9,7 @@
 namespace infinite\security;
 
 /**
+ * AuthorityBehavior [[@doctodo class_description:infinite\security\AuthorityBehavior]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -24,6 +25,8 @@ class AuthorityBehavior extends \yii\base\Behavior
 
     /**
      * Get top requestors.
+     *
+     * @return [[@doctodo return_type:getTopRequestors]] [[@doctodo return_description:getTopRequestors]]
      */
     public function getTopRequestors($accessingObject)
     {

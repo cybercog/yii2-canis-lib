@@ -13,17 +13,23 @@ use infinite\helpers\ArrayHelper;
 use Yii;
 
 /**
+ * Collector [[@doctodo class_description:infinite\security\identity\providers\Collector]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class Collector extends \infinite\base\collector\Collector
 {
     /**
+     * @var [[@doctodo var_type:_tableRegistry]] [[@doctodo var_description:_tableRegistry]]
      */
     protected $_tableRegistry;
     /**
+     * @var [[@doctodo var_type:_initialItems]] [[@doctodo var_description:_initialItems]]
      */
     protected $_initialItems = [];
+    /**
+     * @var [[@doctodo var_type:_handlers]] [[@doctodo var_description:_handlers]]
+     */
     protected $_handlers = [];
 
     /**
@@ -41,11 +47,19 @@ class Collector extends \infinite\base\collector\Collector
         $this->_initialItems = $value;
     }
 
+    /**
+     * Get handlers.
+     *
+     * @return [[@doctodo return_type:getHandlers]] [[@doctodo return_description:getHandlers]]
+     */
     public function getHandlers()
     {
         return $this->_handlers;
     }
 
+    /**
+     * Set handlers.
+     */
     public function setHandlers($values)
     {
         foreach ($values as $key => $value) {
@@ -53,6 +67,9 @@ class Collector extends \infinite\base\collector\Collector
         }
     }
 
+    /**
+     * [[@doctodo method_description:registerHandler]].
+     */
     public function registerHandler($key, $handler)
     {
         if (!is_array($handler)) {
@@ -71,6 +88,11 @@ class Collector extends \infinite\base\collector\Collector
         return Item::className();
     }
 
+    /**
+     * [[@doctodo method_description:attemptCreate]].
+     *
+     * @return [[@doctodo return_type:attemptCreate]] [[@doctodo return_description:attemptCreate]]
+     */
     public function attemptCreate($username, $password)
     {
         $creators = [];
@@ -99,6 +121,8 @@ class Collector extends \infinite\base\collector\Collector
 
     /**
      * Get by.
+     *
+     * @return [[@doctodo return_type:getById]] [[@doctodo return_description:getById]]
      */
     public function getById($id)
     {
@@ -117,6 +141,8 @@ class Collector extends \infinite\base\collector\Collector
 
     /**
      * Get table registry.
+     *
+     * @return [[@doctodo return_type:getTableRegistry]] [[@doctodo return_description:getTableRegistry]]
      */
     public function getTableRegistry()
     {

@@ -11,17 +11,21 @@ namespace infinite\security;
 use infinite\base\exceptions\Exception;
 
 /**
+ * Authority [[@doctodo class_description:infinite\security\Authority]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class Authority extends \infinite\base\Component
 {
     /**
+     * @var [[@doctodo var_type:_handler]] [[@doctodo var_description:_handler]]
      */
     protected $_handler;
 
     /**
      * Set handler.
+     *
+     * @throws Exception [[@doctodo exception_description:Exception]]
      */
     public function setHandler($handler)
     {
@@ -33,6 +37,8 @@ class Authority extends \infinite\base\Component
 
     /**
      * Get handler.
+     *
+     * @return [[@doctodo return_type:getHandler]] [[@doctodo return_description:getHandler]]
      */
     public function getHandler()
     {
@@ -41,6 +47,8 @@ class Authority extends \infinite\base\Component
 
     /**
      * Get requestors.
+     *
+     * @return [[@doctodo return_type:getRequestors]] [[@doctodo return_description:getRequestors]]
      */
     public function getRequestors($accessingObject)
     {
@@ -53,6 +61,8 @@ class Authority extends \infinite\base\Component
 
     /**
      * Get top requestors.
+     *
+     * @return [[@doctodo return_type:getTopRequestors]] [[@doctodo return_description:getTopRequestors]]
      */
     public function getTopRequestors($accessingObject)
     {

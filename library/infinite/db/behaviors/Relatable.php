@@ -95,14 +95,10 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
      * @var [[@doctodo var_type:_relations]] [[@doctodo var_description:_relations]]
      */
     protected $_relations = [];
-    /*
-     */
     /**
      * @var [[@doctodo var_type:_setGlobalEvents]] [[@doctodo var_description:_setGlobalEvents]]
      */
     public static $_setGlobalEvents = false;
-    /*
-     */
     /**
      * @var [[@doctodo var_type:debug]] [[@doctodo var_description:debug]]
      */

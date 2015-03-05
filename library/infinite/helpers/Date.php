@@ -9,12 +9,14 @@
 namespace infinite\helpers;
 
 /**
+ * Date [[@doctodo class_description:infinite\helpers\Date]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class Date extends \infinite\base\Object
 {
     /**
+     * @var [[@doctodo var_type:_now]] [[@doctodo var_description:_now]]
      */
     protected static $_now;
 
@@ -178,6 +180,11 @@ class Date extends \infinite\base\Object
         return $time === $date;
     }
 
+    /**
+     * [[@doctodo method_description:isToday]].
+     *
+     * @return [[@doctodo return_type:isToday]] [[@doctodo return_description:isToday]]
+     */
     public static function isToday($date, $time = null)
     {
         if (is_null($time)) {
@@ -191,6 +198,8 @@ class Date extends \infinite\base\Object
     }
 
     /**
+     * [[@doctodo method_description:relativeDate]].
+     *
      * @param varies  $mdate         date to compare
      * @param int     $time          Unix timestamp         (optional)
      * @param unknown $showTime      (optional)
@@ -274,6 +283,11 @@ class Date extends \infinite\base\Object
         return self::niceDuration($diff, $limitPeriods);
     }
 
+    /**
+     * [[@doctodo method_description:shortDuration]].
+     *
+     * @return [[@doctodo return_type:shortDuration]] [[@doctodo return_description:shortDuration]]
+     */
     public static function shortDuration($seconds)
     {
         if ($seconds > (60*60)) { // hours

@@ -9,6 +9,7 @@
 namespace infinite\security\identity\providers;
 
 /**
+ * Handler [[@doctodo class_description:infinite\security\identity\providers\Handler]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

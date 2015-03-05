@@ -9,15 +9,18 @@
 namespace infinite\db;
 
 /**
+ * Tree [[@doctodo class_description:infinite\db\Tree]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class Tree extends \infinite\base\Object
 {
     /**
+     * @var [[@doctodo var_type:object]] [[@doctodo var_description:object]]
      */
     public $object;
     /**
+     * @var [[@doctodo var_type:children]] [[@doctodo var_description:children]]
      */
     public $children;
 

@@ -10,6 +10,11 @@ namespace infinite\db\mongodb;
 
 use infinite\base\ComponentTrait;
 
+/**
+ * ActiveQuery [[@doctodo class_description:infinite\db\mongodb\ActiveQuery]].
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+ */
 class ActiveQuery extends \yii\mongodb\ActiveQuery
 {
     use ComponentTrait;

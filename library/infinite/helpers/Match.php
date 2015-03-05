@@ -9,18 +9,22 @@
 namespace infinite\helpers;
 
 /**
+ * Match [[@doctodo class_description:infinite\helpers\Match]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class Match extends \infinite\base\Component
 {
     /**
+     * @var [[@doctodo var_type:regex]] [[@doctodo var_description:regex]]
      */
     public $regex;
     /**
+     * @var [[@doctodo var_type:value]] [[@doctodo var_description:value]]
      */
     public $value;
     /**
+     * @var [[@doctodo var_type:not]] [[@doctodo var_description:not]]
      */
     public $not = false;
 
@@ -42,6 +46,8 @@ class Match extends \infinite\base\Component
     }
 
     /**
+     * [[@doctodo method_description:test]].
+     *
      * @param unknown $test
      *
      * @return unknown

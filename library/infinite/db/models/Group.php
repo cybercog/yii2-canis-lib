@@ -25,19 +25,16 @@ use yii\web\IdentityInterface;
  */
 class Group extends \infinite\db\ActiveRecord implements IdentityInterface
 {
-    /*
-     * @inheritdoc
-     */
-    /*
+    /**
      * @inheritdoc
      */
     static protected $_cache = ['id' => [], 'system' => []];
-    /*
-     */
+
     /**
      * @var [[@doctodo var_type:_doCache]] [[@doctodo var_description:_doCache]]
      */
     protected static $_doCache = true;
+    
     /**
      * @inheritdoc
      */
@@ -103,11 +100,6 @@ class Group extends \infinite\db\ActiveRecord implements IdentityInterface
         return $this->hasOne('Registry', ['id' => 'id']);
     }
 
-    /*
-     * Get system group
-     * @param unknown $system
-     * @return unknown
-     */
     /**
      * Get system group.
      *
@@ -120,9 +112,7 @@ class Group extends \infinite\db\ActiveRecord implements IdentityInterface
 
         return $system;
     }
-
-    /*
-     */
+    
     /**
      * [[@doctodo method_description:enableCache]].
      */
@@ -131,8 +121,6 @@ class Group extends \infinite\db\ActiveRecord implements IdentityInterface
         self::$_doCache = true;
     }
 
-    /*
-     */
     /**
      * [[@doctodo method_description:disableCache]].
      */
@@ -171,11 +159,6 @@ class Group extends \infinite\db\ActiveRecord implements IdentityInterface
         return $group;
     }
 
-    /*
-     * Get by system name
-     * @param unknown $id
-     * @return unknown
-     */
     /**
      * Get by system name.
      *

@@ -9,11 +9,17 @@
 namespace infinite\helpers;
 
 /**
+ * ArrayHelper [[@doctodo class_description:infinite\helpers\ArrayHelper]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class ArrayHelper extends \yii\helpers\ArrayHelper
 {
+    /**
+     * [[@doctodo method_description:fingerprint]].
+     *
+     * @return [[@doctodo return_type:fingerprint]] [[@doctodo return_description:fingerprint]]
+     */
     public static function fingerprint($item)
     {
         if (is_array($item)) {
@@ -55,6 +61,8 @@ class ArrayHelper extends \yii\helpers\ArrayHelper
      * 	Extends ArrayHelper's map capability by letting it map to its parent object.
      *
      * 	@see \yii\helpers\ArrayHelper:map
+     *
+     * @return [[@doctodo return_type:map]] [[@doctodo return_description:map]]
      */
     public static function map($array, $from, $to = null, $group = null)
     {
@@ -66,7 +74,11 @@ class ArrayHelper extends \yii\helpers\ArrayHelper
     }
 
     /**
+     * [[@doctodo method_description:cartesian]].
      *
+     * @param boolean $first [[@doctodo param_description:first]] [optional]
+     *
+     * @return [[@doctodo return_type:cartesian]] [[@doctodo return_description:cartesian]]
      */
     public static function cartesian($arrays, $first = true)
     {
@@ -146,7 +158,12 @@ class ArrayHelper extends \yii\helpers\ArrayHelper
     }
 
     /**
+     * [[@doctodo method_description:permutations]].
      *
+     * @param integer $min [[@doctodo param_description:min]] [optional]
+     * @param boolean $max [[@doctodo param_description:max]] [optional]
+     *
+     * @return [[@doctodo return_type:permutations]] [[@doctodo return_description:permutations]]
      */
     public static function permutations($array, $min = 1, $max = false)
     {

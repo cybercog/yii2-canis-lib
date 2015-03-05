@@ -223,7 +223,8 @@ class TagBehavior extends \infinite\db\behaviors\ActiveRecord
     /**
      * [[@doctodo method_description:afterSave]].
      *
-     * @throws \ [[@doctodo exception_description:\]]
+     * @throws \         [[@doctodo exception_description:\]]
+     * @throws Exception [[@doctodo exception_description:Exception]]
      * @return [[@doctodo return_type:afterSave]] [[@doctodo return_description:afterSave]]
      *
      */
