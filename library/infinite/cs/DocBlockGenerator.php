@@ -553,10 +553,10 @@ class DocBlockGenerator extends AbstractFixer
         if (!$hasReturn && $hasReturnInFunction) {
             $lines[] = ' * @return ' . implode('|', $returnType) . ' [[@doctodo return_description:' . $method->getName() . ']]';
         }
-        if (count($currentThrows) > 2) {
-            \d($currentThrows);
-            exit;
-        }
+        // if (count($currentThrows) > 2) {
+        //     \d($currentThrows);
+        //     exit;
+        // }
         foreach ($currentThrows as $throw) {
             $lines[] = ' * @throws ' . $throw->getContent();
         }

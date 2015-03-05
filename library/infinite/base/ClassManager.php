@@ -110,10 +110,6 @@ class ClassManager extends Component implements IteratorAggregate, ArrayAccess
         if ($this->offsetExists($offset)) {
             return $this->_classes[$offset];
         }
-        \d($this->_classes);
-        \d($offset);
-        throw new \Exception("Looking for missing class '{$offset}'");
-
         return;
     }
 

@@ -193,8 +193,6 @@ class TagBehavior extends \infinite\db\behaviors\ActiveRecord
     {
         if (!isset($this->_currentTags)) {
             if (!$this->viaClass) {
-                throw new \Exception("boom");
-
                 return [];
             }
             $viaClass = $this->viaClass;
@@ -253,7 +251,7 @@ class TagBehavior extends \infinite\db\behaviors\ActiveRecord
                 $viaTag->attributes = $baseAttributes;
                 $viaTag->{$this->viaForeignField} = $tag;
                 if (!$viaTag->save()) {
-                    throw new \Exception("Unable to save tag: " . print_r($viaTag, true));
+                    throw new Exception("Unable to save tag: " . print_r($viaTag, true));
                 }
             }
             unset($currentTags[$tag]);

@@ -103,7 +103,6 @@ class Status extends \infinite\base\Component
     /**
      * Prepares object for serialization.
      *
-     * @return [[@doctodo return_type:__sleep]] [[@doctodo return_description:__sleep]]
      */
     public function __sleep()
     {
@@ -119,7 +118,6 @@ class Status extends \infinite\base\Component
     }
 
     /**
-     * [[@doctodo method_description:__wakeup]].
      */
     public function __wakeup()
     {

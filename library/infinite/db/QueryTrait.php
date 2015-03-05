@@ -155,7 +155,7 @@ trait QueryTrait
         if ($tableName) {
             $schema = $db->getTableSchema($tableName);
             if (!is_object($schema)) {
-                throw new \Exception("$tableName");
+                return false;
             }
 
             return $schema->primaryKey[0];

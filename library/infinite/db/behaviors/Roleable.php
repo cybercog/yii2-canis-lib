@@ -487,8 +487,7 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
             $this->owner->handleRelationSave($event);
         }
         if (!$this->handleRoleSave($event)) {
-            \d($this);
-            throw new \Exception("Unable to save roles!");
+            return false;
         }
     }
 }

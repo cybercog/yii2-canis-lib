@@ -44,8 +44,6 @@ class Callback extends Object
     public function call()
     {
         if (empty($this->callback) || !is_callable($this->callback)) {
-            throw new \Exception("Callback was not callable!");
-
             return false;
         }
         $params = array_merge($this->params, func_get_args());
