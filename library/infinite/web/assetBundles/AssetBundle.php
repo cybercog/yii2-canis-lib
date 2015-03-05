@@ -9,6 +9,7 @@
 namespace infinite\web\assetBundles;
 
 /**
+ * AssetBundle [[@doctodo class_description:infinite\web\assetBundles\AssetBundle]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

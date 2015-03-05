@@ -9,12 +9,14 @@
 namespace infinite\web\browser;
 
 /**
+ * Handler [[@doctodo class_description:infinite\web\browser\Handler]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 abstract class Handler extends \infinite\base\Object
 {
     /**
+     * @var [[@doctodo var_type:bundle]] [[@doctodo var_description:bundle]]
      */
     public $bundle;
     /**
@@ -28,6 +30,8 @@ abstract class Handler extends \infinite\base\Object
 
     /**
      * Get instructions.
+     *
+     * @return [[@doctodo return_type:getInstructions]] [[@doctodo return_description:getInstructions]]
      */
     public function getInstructions()
     {
@@ -40,6 +44,8 @@ abstract class Handler extends \infinite\base\Object
 
     /**
      * Get filter query.
+     *
+     * @return [[@doctodo return_type:getFilterQuery]] [[@doctodo return_description:getFilterQuery]]
      */
     public function getFilterQuery()
     {

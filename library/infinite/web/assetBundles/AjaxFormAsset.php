@@ -9,6 +9,7 @@
 namespace infinite\web\assetBundles;
 
 /**
+ * AjaxFormAsset [[@doctodo class_description:infinite\web\assetBundles\AjaxFormAsset]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

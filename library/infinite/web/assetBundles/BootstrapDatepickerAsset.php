@@ -9,6 +9,7 @@
 namespace infinite\web\assetBundles;
 
 /**
+ * BootstrapDatepickerAsset [[@doctodo class_description:infinite\web\assetBundles\BootstrapDatepickerAsset]].
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  *

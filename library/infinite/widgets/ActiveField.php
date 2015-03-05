@@ -11,18 +11,22 @@ namespace infinite\widgets;
 use infinite\helpers\Html;
 
 /**
+ * ActiveField [[@doctodo class_description:infinite\widgets\ActiveField]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class ActiveField extends \yii\widgets\ActiveField
 {
     /**
+     * @var [[@doctodo var_type:inputGroupHtmlOptions]] [[@doctodo var_description:inputGroupHtmlOptions]]
      */
     public $inputGroupHtmlOptions = ['class' => 'input-group'];
     /**
+     * @var [[@doctodo var_type:inputGroupPrefix]] [[@doctodo var_description:inputGroupPrefix]]
      */
     public $inputGroupPrefix = false;
     /**
+     * @var [[@doctodo var_type:inputGroupPostfix]] [[@doctodo var_description:inputGroupPostfix]]
      */
     public $inputGroupPostfix = false;
 

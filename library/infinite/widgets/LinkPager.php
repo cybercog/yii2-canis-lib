@@ -11,12 +11,14 @@ namespace infinite\widgets;
 use infinite\helpers\Html;
 
 /**
+ * LinkPager [[@doctodo class_description:infinite\widgets\LinkPager]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class LinkPager extends \yii\widgets\LinkPager
 {
     /**
+     * @var [[@doctodo var_type:pageStateKey]] [[@doctodo var_description:pageStateKey]]
      */
     public $pageStateKey = 'page';
     /**
@@ -39,7 +41,11 @@ class LinkPager extends \yii\widgets\LinkPager
     }
 
     /**
+     * [[@doctodo method_description:buildButtonAttributes]].
      *
+     * @param array $options [[@doctodo param_description:options]] [optional]
+     *
+     * @return [[@doctodo return_type:buildButtonAttributes]] [[@doctodo return_description:buildButtonAttributes]]
      */
     public function buildButtonAttributes($page, $options = [])
     {

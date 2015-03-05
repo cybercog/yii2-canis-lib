@@ -9,6 +9,7 @@
 namespace infinite\web\assetBundles;
 
 /**
+ * InfiniteListerAsset [[@doctodo class_description:infinite\web\assetBundles\InfiniteListerAsset]].
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  *

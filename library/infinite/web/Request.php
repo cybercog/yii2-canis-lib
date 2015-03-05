@@ -9,6 +9,7 @@
 namespace infinite\web;
 
 /**
+ * Request [[@doctodo class_description:infinite\web\Request]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

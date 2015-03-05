@@ -9,21 +9,31 @@
 namespace infinite\web\bootstrap;
 
 use infinite\helpers\Html;
+
 /**
- * SubNavBar renders a sub-navbar HTML component.
+ * Nav [[@doctodo class_description:infinite\web\bootstrap\Nav]].
+ /**
+ * Nav [[@doctodo class_description:infinite\web\bootstrap\Nav]]
  *
  * Any content enclosed between the [[begin()]] and [[end()]] calls of NavBar
  * is treated as the content of the navbar. You may use widgets such as [[Nav]]
  * or [[\yii\widgets\Menu]] to build up such content. For example,
  *
  * @see http://twitter.github.io/bootstrap/components.html#navbar
+ *
  * @author Antonio Ramirez <amigo.cobos@gmail.com>; Jacob Morrison <jacob@infinitecascade.org>
  */
-use Yii;
-
 class Nav extends \yii\bootstrap\Nav
 {
+    /**
+     * @var [[@doctodo var_type:_routeParts]] [[@doctodo var_description:_routeParts]]
+     */
     protected $_routeParts;
+    /**
+     * Get route parts.
+     *
+     * @return [[@doctodo return_type:getRouteParts]] [[@doctodo return_description:getRouteParts]]
+     */
     public function getRouteParts()
     {
         if (!isset($this->_routeParts) && isset($this->route)) {
@@ -39,6 +49,9 @@ class Nav extends \yii\bootstrap\Nav
         return $this->_routeParts;
     }
 
+    /**
+     * @inheritdoc
+     */
     protected function isItemActive($item)
     {
         if (isset($item['url']) && is_array($item['url']) && isset($item['url'][0])) {

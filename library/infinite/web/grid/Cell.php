@@ -10,30 +10,91 @@ namespace infinite\web\grid;
 
 use infinite\helpers\Html;
 
+/**
+ * Cell [[@doctodo class_description:infinite\web\grid\Cell]].
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+ */
 class Cell extends \infinite\base\Object implements \infinite\web\RenderInterface
 {
+    /**
+     * @var [[@doctodo var_type:phoneSize]] [[@doctodo var_description:phoneSize]]
+     */
     public $phoneSize = false;
+    /**
+     * @var [[@doctodo var_type:tabletSize]] [[@doctodo var_description:tabletSize]]
+     */
     public $tabletSize = 'auto';
+    /**
+     * @var [[@doctodo var_type:mediumDesktopSize]] [[@doctodo var_description:mediumDesktopSize]]
+     */
     public $mediumDesktopSize = 'auto'; // baseline
+    /**
+     * @var [[@doctodo var_type:largeDesktopSize]] [[@doctodo var_description:largeDesktopSize]]
+     */
     public $largeDesktopSize = false;
+    /**
+     * @var [[@doctodo var_type:baseSize]] [[@doctodo var_description:baseSize]]
+     */
     public $baseSize = 'mediumDesktop';
+    /**
+     * @var [[@doctodo var_type:htmlOptions]] [[@doctodo var_description:htmlOptions]]
+     */
     public $htmlOptions = [];
+    /**
+     * @var [[@doctodo var_type:_prepend]] [[@doctodo var_description:_prepend]]
+     */
     protected $_prepend = [];
+    /**
+     * @var [[@doctodo var_type:_content]] [[@doctodo var_description:_content]]
+     */
     protected $_content;
+    /**
+     * @var [[@doctodo var_type:_append]] [[@doctodo var_description:_append]]
+     */
     protected $_append = [];
+    /**
+     * @var [[@doctodo var_type:_id]] [[@doctodo var_description:_id]]
+     */
     protected $_id;
 
+    /**
+     * @var [[@doctodo var_type:_phoneColumns]] [[@doctodo var_description:_phoneColumns]]
+     */
     protected $_phoneColumns = 12;
+    /**
+     * @var [[@doctodo var_type:_tabletColumns]] [[@doctodo var_description:_tabletColumns]]
+     */
     protected $_tabletColumns = 6;
+    /**
+     * @var [[@doctodo var_type:_mediumDesktopColumns]] [[@doctodo var_description:_mediumDesktopColumns]]
+     */
     protected $_mediumDesktopColumns = 6;
+    /**
+     * @var [[@doctodo var_type:_largeDesktopColumns]] [[@doctodo var_description:_largeDesktopColumns]]
+     */
     protected $_largeDesktopColumns = 3;
+    /**
+     * @var [[@doctodo var_type:_maxPhoneColumns]] [[@doctodo var_description:_maxPhoneColumns]]
+     */
     protected $_maxPhoneColumns;
+    /**
+     * @var [[@doctodo var_type:_maxTabletColumns]] [[@doctodo var_description:_maxTabletColumns]]
+     */
     protected $_maxTabletColumns;
+    /**
+     * @var [[@doctodo var_type:_maxMediumDesktopColumns]] [[@doctodo var_description:_maxMediumDesktopColumns]]
+     */
     protected $_maxMediumDesktopColumns;
+    /**
+     * @var [[@doctodo var_type:_maxLargeDesktopColumns]] [[@doctodo var_description:_maxLargeDesktopColumns]]
+     */
     protected $_maxLargeDesktopColumns;
 
     /**
      * Get content.
+     *
+     * @return [[@doctodo return_type:getContent]] [[@doctodo return_description:getContent]]
      */
     public function getContent()
     {
@@ -49,6 +110,7 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
     }
 
     /**
+     * [[@doctodo method_description:output]].
      */
     public function output()
     {
@@ -56,7 +118,7 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
     }
 
     /**
-     *
+     * [[@doctodo method_description:prepend]].
      */
     public function prepend($pre)
     {
@@ -64,7 +126,7 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
     }
 
     /**
-     *
+     * [[@doctodo method_description:append]].
      */
     public function append($append)
     {
@@ -72,7 +134,9 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
     }
 
     /**
+     * [[@doctodo method_description:generate]].
      *
+     * @return [[@doctodo return_type:generate]] [[@doctodo return_description:generate]]
      */
     public function generate()
     {
@@ -86,7 +150,9 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
     }
 
     /**
+     * [[@doctodo method_description:generatePhoneSize]].
      *
+     * @return [[@doctodo return_type:generatePhoneSize]] [[@doctodo return_description:generatePhoneSize]]
      */
     public function generatePhoneSize()
     {
@@ -94,7 +160,9 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
     }
 
     /**
+     * [[@doctodo method_description:generateTabletSize]].
      *
+     * @return [[@doctodo return_type:generateTabletSize]] [[@doctodo return_description:generateTabletSize]]
      */
     public function generateTabletSize()
     {
@@ -102,7 +170,9 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
     }
 
     /**
+     * [[@doctodo method_description:generateMediumDesktopSize]].
      *
+     * @return [[@doctodo return_type:generateMediumDesktopSize]] [[@doctodo return_description:generateMediumDesktopSize]]
      */
     public function generateMediumDesktopSize()
     {
@@ -110,7 +180,9 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
     }
 
     /**
+     * [[@doctodo method_description:generateLargeDesktopSize]].
      *
+     * @return [[@doctodo return_type:generateLargeDesktopSize]] [[@doctodo return_description:generateLargeDesktopSize]]
      */
     public function generateLargeDesktopSize()
     {
@@ -119,6 +191,8 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
 
     /**
      * Get classes.
+     *
+     * @return [[@doctodo return_type:getClasses]] [[@doctodo return_description:getClasses]]
      */
     public function getClasses()
     {
@@ -142,6 +216,8 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
 
     /**
      * Get sizes.
+     *
+     * @return [[@doctodo return_type:getSizes]] [[@doctodo return_description:getSizes]]
      */
     public function getSizes()
     {
@@ -172,6 +248,8 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
 
     /**
      * Get id.
+     *
+     * @return [[@doctodo return_type:getId]] [[@doctodo return_description:getId]]
      */
     public function getId()
     {
@@ -183,7 +261,11 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
     }
 
     /**
+     * [[@doctodo method_description:addColumns]].
      *
+     * @param integer $n [[@doctodo param_description:n]] [optional]
+     *
+     * @return [[@doctodo return_type:addColumns]] [[@doctodo return_description:addColumns]]
      */
     public function addColumns($n = 1, $size = null)
     {
@@ -201,7 +283,9 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
     }
 
     /**
+     * [[@doctodo method_description:maxColumns]].
      *
+     * @return [[@doctodo return_type:maxColumns]] [[@doctodo return_description:maxColumns]]
      */
     public function maxColumns($size = null)
     {
@@ -217,6 +301,8 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
 
     /**
      * Get max columns.
+     *
+     * @return [[@doctodo return_type:getMaxColumns]] [[@doctodo return_description:getMaxColumns]]
      */
     public function getMaxColumns($size = null)
     {
@@ -257,6 +343,8 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
 
     /**
      * Get columns.
+     *
+     * @return [[@doctodo return_type:getColumns]] [[@doctodo return_description:getColumns]]
      */
     public function getColumns($size = null)
     {
@@ -342,6 +430,8 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
 
     /**
      * Get max phone columns.
+     *
+     * @return [[@doctodo return_type:getMaxPhoneColumns]] [[@doctodo return_description:getMaxPhoneColumns]]
      */
     public function getMaxPhoneColumns()
     {
@@ -354,6 +444,8 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
 
     /**
      * Get max tablet columns.
+     *
+     * @return [[@doctodo return_type:getMaxTabletColumns]] [[@doctodo return_description:getMaxTabletColumns]]
      */
     public function getMaxTabletColumns()
     {
@@ -366,6 +458,8 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
 
     /**
      * Get max medium desktop columns.
+     *
+     * @return [[@doctodo return_type:getMaxMediumDesktopColumns]] [[@doctodo return_description:getMaxMediumDesktopColumns]]
      */
     public function getMaxMediumDesktopColumns()
     {
@@ -378,6 +472,8 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
 
     /**
      * Get max large desktop columns.
+     *
+     * @return [[@doctodo return_type:getMaxLargeDesktopColumns]] [[@doctodo return_description:getMaxLargeDesktopColumns]]
      */
     public function getMaxLargeDesktopColumns()
     {
@@ -390,6 +486,8 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
 
     /**
      * Get phone columns.
+     *
+     * @return [[@doctodo return_type:getPhoneColumns]] [[@doctodo return_description:getPhoneColumns]]
      */
     public function getPhoneColumns()
     {
@@ -402,6 +500,8 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
 
     /**
      * Get tablet columns.
+     *
+     * @return [[@doctodo return_type:getTabletColumns]] [[@doctodo return_description:getTabletColumns]]
      */
     public function getTabletColumns()
     {
@@ -414,6 +514,8 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
 
     /**
      * Get medium desktop columns.
+     *
+     * @return [[@doctodo return_type:getMediumDesktopColumns]] [[@doctodo return_description:getMediumDesktopColumns]]
      */
     public function getMediumDesktopColumns()
     {
@@ -426,6 +528,8 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
 
     /**
      * Get large desktop columns.
+     *
+     * @return [[@doctodo return_type:getLargeDesktopColumns]] [[@doctodo return_description:getLargeDesktopColumns]]
      */
     public function getLargeDesktopColumns()
     {
@@ -438,6 +542,8 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
 
     /**
      * Get has phone columns.
+     *
+     * @return [[@doctodo return_type:getHasPhoneColumns]] [[@doctodo return_description:getHasPhoneColumns]]
      */
     public function getHasPhoneColumns()
     {
@@ -446,6 +552,8 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
 
     /**
      * Get has tablet columns.
+     *
+     * @return [[@doctodo return_type:getHasTabletColumns]] [[@doctodo return_description:getHasTabletColumns]]
      */
     public function getHasTabletColumns()
     {
@@ -454,6 +562,8 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
 
     /**
      * Get has medium desktop columns.
+     *
+     * @return [[@doctodo return_type:getHasMediumDesktopColumns]] [[@doctodo return_description:getHasMediumDesktopColumns]]
      */
     public function getHasMediumDesktopColumns()
     {
@@ -462,6 +572,8 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
 
     /**
      * Get has large desktop columns.
+     *
+     * @return [[@doctodo return_type:getHasLargeDesktopColumns]] [[@doctodo return_description:getHasLargeDesktopColumns]]
      */
     public function getHasLargeDesktopColumns()
     {
@@ -470,6 +582,8 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
 
     /**
      * Get flex.
+     *
+     * @return [[@doctodo return_type:getFlex]] [[@doctodo return_description:getFlex]]
      */
     public function getFlex($size = null)
     {

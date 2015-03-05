@@ -9,6 +9,7 @@
 namespace infinite\web;
 
 /**
+ * UploadedFile [[@doctodo class_description:infinite\web\UploadedFile]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -16,6 +17,8 @@ class UploadedFile extends \yii\web\UploadedFile implements \infinite\base\FileI
 {
     /**
      * Get error message.
+     *
+     * @return [[@doctodo return_type:getErrorMessage]] [[@doctodo return_description:getErrorMessage]]
      */
     public function getErrorMessage()
     {

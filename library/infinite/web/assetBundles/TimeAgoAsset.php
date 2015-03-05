@@ -9,6 +9,7 @@
 namespace infinite\web\assetBundles;
 
 /**
+ * TimeAgoAsset [[@doctodo class_description:infinite\web\assetBundles\TimeAgoAsset]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

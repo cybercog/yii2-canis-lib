@@ -13,50 +13,65 @@ use Yii;
 use yii\base\InvalidConfigException;
 
 /**
+ * Bundle [[@doctodo class_description:infinite\web\browser\Bundle]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class Bundle extends \infinite\base\Object
 {
     /**
+     * @var [[@doctodo var_type:itemClass]] [[@doctodo var_description:itemClass]]
      */
     public $itemClass = 'infinite\web\browser\Item';
     /**
+     * @var [[@doctodo var_type:limit]] [[@doctodo var_description:limit]]
      */
     public $limit = 30;
     /**
+     * @var [[@doctodo var_type:_id]] [[@doctodo var_description:_id]]
      */
     protected $_id; // never set, based on instructions
     /**
+     * @var [[@doctodo var_type:_instructions]] [[@doctodo var_description:_instructions]]
      */
     protected $_instructions;
     /**
+     * @var [[@doctodo var_type:_filterQuery]] [[@doctodo var_description:_filterQuery]]
      */
     protected $_filterQuery = false;
     /**
+     * @var [[@doctodo var_type:_type]] [[@doctodo var_description:_type]]
      */
     protected $_type; // pivot: category list; item: items list
     /**
+     * @var [[@doctodo var_type:_typeOptions]] [[@doctodo var_description:_typeOptions]]
      */
     protected $_typeOptions = [];
     /**
+     * @var [[@doctodo var_type:_items]] [[@doctodo var_description:_items]]
      */
     protected $_items = [];
     /**
+     * @var [[@doctodo var_type:_handled]] [[@doctodo var_description:_handled]]
      */
     protected $_handled = false;
     /**
+     * @var [[@doctodo var_type:_total]] [[@doctodo var_description:_total]]
      */
     protected $_total;
     /**
+     * @var [[@doctodo var_type:_offset]] [[@doctodo var_description:_offset]]
      */
     protected $_offset = 0;
     /**
+     * @var [[@doctodo var_type:_baseInstructions]] [[@doctodo var_description:_baseInstructions]]
      */
     protected $_baseInstructions = ['task' => null];
 
     /**
      * Get id.
+     *
+     * @return [[@doctodo return_type:getId]] [[@doctodo return_description:getId]]
      */
     public function getId()
     {
@@ -69,6 +84,10 @@ class Bundle extends \infinite\base\Object
 
     /**
      * Get instructions.
+     *
+     * @throws InvalidConfigException [[@doctodo exception_description:InvalidConfigException]]
+     * @return [[@doctodo return_type:getInstructions]] [[@doctodo return_description:getInstructions]]
+     *
      */
     public function getInstructions()
     {
@@ -81,6 +100,8 @@ class Bundle extends \infinite\base\Object
 
     /**
      * Set instructions.
+     *
+     * @throws Exception [[@doctodo exception_description:Exception]]
      */
     public function setInstructions($instructions)
     {
@@ -103,7 +124,9 @@ class Bundle extends \infinite\base\Object
     }
 
     /**
+     * [[@doctodo method_description:addItem]].
      *
+     * @return [[@doctodo return_type:addItem]] [[@doctodo return_description:addItem]]
      */
     public function addItem($item)
     {
@@ -123,7 +146,9 @@ class Bundle extends \infinite\base\Object
     }
 
     /**
+     * [[@doctodo method_description:package]].
      *
+     * @return [[@doctodo return_type:package]] [[@doctodo return_description:package]]
      */
     public function package()
     {
@@ -156,6 +181,8 @@ class Bundle extends \infinite\base\Object
 
     /**
      * Get filter query.
+     *
+     * @return [[@doctodo return_type:getFilterQuery]] [[@doctodo return_description:getFilterQuery]]
      */
     public function getFilterQuery()
     {
@@ -172,6 +199,8 @@ class Bundle extends \infinite\base\Object
 
     /**
      * Get type options.
+     *
+     * @return [[@doctodo return_type:getTypeOptions]] [[@doctodo return_description:getTypeOptions]]
      */
     public function getTypeOptions()
     {
@@ -180,6 +209,8 @@ class Bundle extends \infinite\base\Object
 
     /**
      * Set type.
+     *
+     * @throws InvalidConfigException [[@doctodo exception_description:InvalidConfigException]]
      */
     public function setType($type)
     {
@@ -192,6 +223,8 @@ class Bundle extends \infinite\base\Object
 
     /**
      * Get type.
+     *
+     * @return [[@doctodo return_type:getType]] [[@doctodo return_description:getType]]
      */
     public function getType()
     {
@@ -203,7 +236,9 @@ class Bundle extends \infinite\base\Object
     }
 
     /**
+     * [[@doctodo method_description:predictTotal]].
      *
+     * @return [[@doctodo return_type:predictTotal]] [[@doctodo return_description:predictTotal]]
      */
     public function predictTotal()
     {
@@ -216,6 +251,8 @@ class Bundle extends \infinite\base\Object
 
     /**
      * Get total.
+     *
+     * @return [[@doctodo return_type:getTotal]] [[@doctodo return_description:getTotal]]
      */
     public function getTotal()
     {
@@ -242,6 +279,8 @@ class Bundle extends \infinite\base\Object
 
     /**
      * Get offset.
+     *
+     * @return [[@doctodo return_type:getOffset]] [[@doctodo return_description:getOffset]]
      */
     public function getOffset()
     {
@@ -258,6 +297,8 @@ class Bundle extends \infinite\base\Object
 
     /**
      * Get handlers.
+     *
+     * @return [[@doctodo return_type:getHandlers]] [[@doctodo return_description:getHandlers]]
      */
     public function getHandlers()
     {
@@ -266,6 +307,8 @@ class Bundle extends \infinite\base\Object
 
     /**
      * Get handler.
+     *
+     * @return [[@doctodo return_type:getHandler]] [[@doctodo return_description:getHandler]]
      */
     public function getHandler()
     {
@@ -282,7 +325,9 @@ class Bundle extends \infinite\base\Object
     }
 
     /**
+     * [[@doctodo method_description:handle]].
      *
+     * @return [[@doctodo return_type:handle]] [[@doctodo return_description:handle]]
      */
     public function handle()
     {

@@ -9,6 +9,7 @@
 namespace infinite\web\assetBundles;
 
 /**
+ * AutoNavAsset [[@doctodo class_description:infinite\web\assetBundles\AutoNavAsset]].
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  *

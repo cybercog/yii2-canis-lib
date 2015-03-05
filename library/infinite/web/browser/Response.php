@@ -11,23 +11,31 @@ namespace infinite\web\browser;
 use Yii;
 
 /**
+ * Response [[@doctodo class_description:infinite\web\browser\Response]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 abstract class Response extends \infinite\base\Object
 {
     /**
+     * @var [[@doctodo var_type:bundleClass]] [[@doctodo var_description:bundleClass]]
      */
     public $bundleClass = 'infinite\web\browser\Bundle';
     /**
+     * @var [[@doctodo var_type:_instances]] [[@doctodo var_description:_instances]]
      */
     protected static $_instances = [];
     /**
+     * @var [[@doctodo var_type:_bundles]] [[@doctodo var_description:_bundles]]
      */
     protected $_bundles;
 
     /**
      * Get instance.
+     *
+     * @param boolean $static [[@doctodo param_description:static]] [optional]
+     *
+     * @return [[@doctodo return_type:getInstance]] [[@doctodo return_description:getInstance]]
      */
     public static function getInstance($static = true)
     {
@@ -44,7 +52,11 @@ abstract class Response extends \infinite\base\Object
     }
 
     /**
+     * [[@doctodo method_description:handleRequests]].
      *
+     * @param boolean $handle [[@doctodo param_description:handle]] [optional]
+     *
+     * @return [[@doctodo return_type:handleRequests]] [[@doctodo return_description:handleRequests]]
      */
     public static function handleRequests($requests, $baseInstructions, $handle = true)
     {
@@ -64,7 +76,11 @@ abstract class Response extends \infinite\base\Object
     }
 
     /**
+     * [[@doctodo method_description:handleInstructions]].
      *
+     * @param boolean $handle [[@doctodo param_description:handle]] [optional]
+     *
+     * @return [[@doctodo return_type:handleInstructions]] [[@doctodo return_description:handleInstructions]]
      */
     public static function handleInstructions($instructions, $handle = true)
     {
@@ -79,7 +95,9 @@ abstract class Response extends \infinite\base\Object
     }
 
     /**
+     * [[@doctodo method_description:package]].
      *
+     * @return [[@doctodo return_type:package]] [[@doctodo return_description:package]]
      */
     public function package()
     {
@@ -98,7 +116,9 @@ abstract class Response extends \infinite\base\Object
     }
 
     /**
+     * [[@doctodo method_description:addBundle]].
      *
+     * @return [[@doctodo return_type:addBundle]] [[@doctodo return_description:addBundle]]
      */
     public function addBundle($bundle)
     {
@@ -119,6 +139,8 @@ abstract class Response extends \infinite\base\Object
 
     /**
      * Get bundles.
+     *
+     * @return [[@doctodo return_type:getBundles]] [[@doctodo return_description:getBundles]]
      */
     public function getBundles()
     {

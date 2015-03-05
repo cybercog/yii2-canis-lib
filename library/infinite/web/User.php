@@ -11,13 +11,20 @@ namespace infinite\web;
 use Yii;
 
 /**
+ * User [[@doctodo class_description:infinite\web\User]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class User extends \yii\web\User
 {
+    /**
+     * @var [[@doctodo var_type:isAnonymous]] [[@doctodo var_description:isAnonymous]]
+     */
     public $isAnonymous = false;
 
+    /**
+     * @inheritdoc
+     */
     public function getIdentity($autoRenew = true)
     {
         if ($this->isAnonymous) {

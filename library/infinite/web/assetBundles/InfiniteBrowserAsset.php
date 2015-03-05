@@ -9,6 +9,7 @@
 namespace infinite\web\assetBundles;
 
 /**
+ * InfiniteBrowserAsset [[@doctodo class_description:infinite\web\assetBundles\InfiniteBrowserAsset]].
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  *

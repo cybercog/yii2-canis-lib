@@ -11,16 +11,19 @@ namespace infinite\web;
 use Yii;
 
 /**
+ * Controller [[@doctodo class_description:infinite\web\Controller]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class Controller extends \yii\web\Controller
 {
     /**
+     * @var [[@doctodo var_type:params]] [[@doctodo var_description:params]]
      */
     public $params = [];
 
     /**
+     * @var [[@doctodo var_type:_response]] [[@doctodo var_description:_response]]
      */
     protected static $_response = [];
 
@@ -34,7 +37,7 @@ class Controller extends \yii\web\Controller
     }
 
     /**
-     *
+     * [[@doctodo method_description:beforeActionResponse]].
      */
     public function beforeActionResponse($actionEvent)
     {

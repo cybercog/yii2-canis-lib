@@ -64,8 +64,10 @@ class StringHelper extends \yii\helpers\StringHelper
      * [[@doctodo method_description:humanFilesize]].
      *
      * @param integer $decimals [[@doctodo param_description:decimals]] [optional]
-     * @link http://php.net/manual/en/function.filesize.php#106569
+     *
      * @return [[@doctodo return_type:humanFilesize]] [[@doctodo return_description:humanFilesize]]
+     *
+     * @link http://php.net/manual/en/function.filesize.php#106569
      */
     public static function humanFilesize($bytes, $decimals = 1)
     {

@@ -9,6 +9,7 @@
 namespace infinite\web\assetBundles;
 
 /**
+ * InfiniteRestDrawAsset [[@doctodo class_description:infinite\web\assetBundles\InfiniteRestDrawAsset]].
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  *

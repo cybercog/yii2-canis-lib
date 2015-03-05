@@ -11,6 +11,7 @@ namespace infinite\web\grid;
 use infinite\helpers\Html;
 
 /**
+ * Row [[@doctodo class_description:infinite\web\grid\Row]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -18,19 +19,26 @@ class Row extends \infinite\base\Object
 {
     const TOTAL_COLUMNS = 12;
 
+    /**
+     * @var [[@doctodo var_type:_trueWidth]] [[@doctodo var_description:_trueWidth]]
+     */
     protected $_trueWidth;
 
     /**
+     * @var [[@doctodo var_type:htmlOptions]] [[@doctodo var_description:htmlOptions]]
      */
     public $htmlOptions = ['class' => 'row'];
     /**
+     * @var [[@doctodo var_type:_cells]] [[@doctodo var_description:_cells]]
      */
     protected $_cells = [];
     /**
+     * @var [[@doctodo var_type:_fillAttempted]] [[@doctodo var_description:_fillAttempted]]
      */
     protected $_fillAttempted = false;
 
     /**
+     * [[@doctodo method_description:output]].
      */
     public function output()
     {
@@ -38,7 +46,9 @@ class Row extends \infinite\base\Object
     }
 
     /**
+     * [[@doctodo method_description:generate]].
      *
+     * @return [[@doctodo return_type:generate]] [[@doctodo return_description:generate]]
      */
     public function generate()
     {
@@ -52,6 +62,7 @@ class Row extends \infinite\base\Object
     }
 
     /**
+     * [[@doctodo method_description:fill]].
      */
     public function fill()
     {
@@ -104,6 +115,10 @@ class Row extends \infinite\base\Object
 
     /**
      * Get column flex.
+     *
+     * @param string $size [[@doctodo param_description:size]] [optional]
+     *
+     * @return [[@doctodo return_type:getColumnFlex]] [[@doctodo return_description:getColumnFlex]]
      */
     public function getColumnFlex($size = 'phone')
     {
@@ -118,6 +133,8 @@ class Row extends \infinite\base\Object
 
     /**
      * Get distribution columns.
+     *
+     * @return [[@doctodo return_type:getDistributionColumns]] [[@doctodo return_description:getDistributionColumns]]
      */
     public function getDistributionColumns($size = null)
     {
@@ -132,7 +149,9 @@ class Row extends \infinite\base\Object
     }
 
     /**
+     * [[@doctodo method_description:isFilled]].
      *
+     * @return [[@doctodo return_type:isFilled]] [[@doctodo return_description:isFilled]]
      */
     public function isFilled()
     {
@@ -141,6 +160,8 @@ class Row extends \infinite\base\Object
 
     /**
      * Get column count.
+     *
+     * @return [[@doctodo return_type:getColumnCount]] [[@doctodo return_description:getColumnCount]]
      */
     public function getColumnCount()
     {
@@ -156,7 +177,9 @@ class Row extends \infinite\base\Object
     }
 
     /**
+     * [[@doctodo method_description:hasRoom]].
      *
+     * @return [[@doctodo return_type:hasRoom]] [[@doctodo return_description:hasRoom]]
      */
     public function hasRoom($additional)
     {
@@ -168,7 +191,12 @@ class Row extends \infinite\base\Object
     }
 
     /**
+     * [[@doctodo method_description:addCell]].
      *
+     * @param infinite\web\grid\Cell $item  [[@doctodo param_description:item]]
+     * @param boolean                $check [[@doctodo param_description:check]] [optional]
+     *
+     * @return [[@doctodo return_type:addCell]] [[@doctodo return_description:addCell]]
      */
     public function addCell(Cell $item, $check = false)
     {
@@ -182,7 +210,7 @@ class Row extends \infinite\base\Object
     }
 
     /**
-     *
+     * [[@doctodo method_description:addCells]].
      */
     public function addCells(&$items)
     {
@@ -205,6 +233,11 @@ class Row extends \infinite\base\Object
         }
     }
 
+    /**
+     * Get true width.
+     *
+     * @return [[@doctodo return_type:getTrueWidth]] [[@doctodo return_description:getTrueWidth]]
+     */
     public function getTrueWidth()
     {
         if (is_null($this->_trueWidth)) {
@@ -214,6 +247,9 @@ class Row extends \infinite\base\Object
         return $this->_trueWidth;
     }
 
+    /**
+     * Set true width.
+     */
     public function setTrueWidth($width)
     {
         $this->_trueWidth = $width;

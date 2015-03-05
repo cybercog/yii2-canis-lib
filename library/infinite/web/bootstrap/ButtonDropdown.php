@@ -4,17 +4,26 @@ namespace infinite\web\bootstrap;
 use infinite\helpers\Html;
 use yii\bootstrap\Button;
 
+/**
+ * ButtonDropdown [[@doctodo class_description:infinite\web\bootstrap\ButtonDropdown]].
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+ */
 class ButtonDropdown extends \yii\bootstrap\ButtonDropdown
 {
     /**
      * @var array the HTML attributes for the icon in the button label.
-     *
-     * @see \yii\helpers\Html::renderTagAttributes() for details on how attributes are being rendered.
      */
     public $iconOptions = [];
 
+    /**
+     * @inheritdoc
+     */
     public $containerOptions = [];
 
+    /**
+     * @inheritdoc
+     */
     public function run()
     {
         Html::addCssClass($this->containerOptions, 'btn-group');

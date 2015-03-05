@@ -9,24 +9,30 @@
 namespace infinite\setup;
 
 /**
+ * Task [[@doctodo class_description:infinite\setup\Task]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 abstract class Task extends \infinite\base\Object
 {
     /**
+     * @var [[@doctodo var_type:_setup]] [[@doctodo var_description:_setup]]
      */
     protected $_setup;
     /**
+     * @var [[@doctodo var_type:errors]] [[@doctodo var_description:errors]]
      */
     public $errors = [];
     /**
+     * @var [[@doctodo var_type:fieldErrors]] [[@doctodo var_description:fieldErrors]]
      */
     public $fieldErrors = [];
     /**
+     * @var [[@doctodo var_type:input]] [[@doctodo var_description:input]]
      */
     public $input = [];
     /**
+     * @var [[@doctodo var_type:skipComplete]] [[@doctodo var_description:skipComplete]]
      */
     public $skipComplete = false;
 
@@ -40,6 +46,8 @@ abstract class Task extends \infinite\base\Object
 
     /**
      * Get setup.
+     *
+     * @return [[@doctodo return_type:getSetup]] [[@doctodo return_description:getSetup]]
      */
     public function getSetup()
     {
@@ -48,6 +56,8 @@ abstract class Task extends \infinite\base\Object
 
     /**
      * Get id.
+     *
+     * @return [[@doctodo return_type:getId]] [[@doctodo return_description:getId]]
      */
     public function getId()
     {
@@ -55,7 +65,9 @@ abstract class Task extends \infinite\base\Object
     }
 
     /**
+     * [[@doctodo method_description:skip]].
      *
+     * @return [[@doctodo return_type:skip]] [[@doctodo return_description:skip]]
      */
     public function skip()
     {
@@ -63,7 +75,9 @@ abstract class Task extends \infinite\base\Object
     }
 
     /**
+     * [[@doctodo method_description:loadInput]].
      *
+     * @return [[@doctodo return_type:loadInput]] [[@doctodo return_description:loadInput]]
      */
     public function loadInput($input)
     {
@@ -93,13 +107,17 @@ abstract class Task extends \infinite\base\Object
      */
     abstract public function getTitle();
     /**
+     * [[@doctodo method_description:test]].
      */
     abstract public function test();
     /**
+     * [[@doctodo method_description:run]].
      */
     abstract public function run();
     /**
      * Get fields.
+     *
+     * @return [[@doctodo return_type:getFields]] [[@doctodo return_description:getFields]]
      */
     public function getFields()
     {
@@ -107,6 +125,8 @@ abstract class Task extends \infinite\base\Object
     }
     /**
      * Get verification.
+     *
+     * @return [[@doctodo return_type:getVerification]] [[@doctodo return_description:getVerification]]
      */
     public function getVerification()
     {
@@ -114,7 +134,10 @@ abstract class Task extends \infinite\base\Object
     }
 
     /**
+     * [[@doctodo method_description:templatize]].
+     *
      * @param unknown $template
+     * @param array   $vars     [[@doctodo param_description:vars]] [optional]
      *
      * @return unknown
      */
@@ -141,7 +164,11 @@ abstract class Task extends \infinite\base\Object
     }
 
     /**
+     * [[@doctodo method_description:parseText]].
      *
+     * @param array $variables [[@doctodo param_description:variables]] [optional]
+     *
+     * @return [[@doctodo return_type:parseText]] [[@doctodo return_description:parseText]]
      */
     public static function parseText($text, $variables = [])
     {

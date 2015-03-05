@@ -9,6 +9,7 @@
 namespace infinite\web\assetBundles;
 
 /**
+ * BootstrapTypeaheadAsset [[@doctodo class_description:infinite\web\assetBundles\BootstrapTypeaheadAsset]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

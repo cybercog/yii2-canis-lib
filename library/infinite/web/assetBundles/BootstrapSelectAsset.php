@@ -9,6 +9,7 @@
 namespace infinite\web\assetBundles;
 
 /**
+ * BootstrapSelectAsset [[@doctodo class_description:infinite\web\assetBundles\BootstrapSelectAsset]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

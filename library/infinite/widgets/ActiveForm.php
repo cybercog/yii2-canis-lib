@@ -9,6 +9,7 @@
 namespace infinite\widgets;
 
 /**
+ * ActiveForm [[@doctodo class_description:infinite\widgets\ActiveForm]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

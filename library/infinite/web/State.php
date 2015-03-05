@@ -11,6 +11,7 @@ namespace infinite\web;
 use Yii;
 
 /**
+ * State [[@doctodo class_description:infinite\web\State]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -18,11 +19,14 @@ class State extends \infinite\base\Object
 {
     const SESSION_STATE_KEY = '_s';
     /**
+     * @var [[@doctodo var_type:_temporaryState]] [[@doctodo var_description:_temporaryState]]
      */
     protected $_temporaryState = [];
 
     /**
      * Get.
+     *
+     * @return [[@doctodo return_type:get]] [[@doctodo return_description:get]]
      */
     public function get($key, $default = null)
     {
@@ -41,6 +45,8 @@ class State extends \infinite\base\Object
 
     /**
      * Set.
+     *
+     * @return [[@doctodo return_type:set]] [[@doctodo return_description:set]]
      */
     public function set($key, $value)
     {
@@ -61,7 +67,9 @@ class State extends \infinite\base\Object
     }
 
     /**
+     * [[@doctodo method_description:isTemporary]].
      *
+     * @return [[@doctodo return_type:isTemporary]] [[@doctodo return_description:isTemporary]]
      */
     public function isTemporary($key)
     {

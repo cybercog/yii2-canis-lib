@@ -15,44 +15,59 @@ use Yii;
 defined('STDOUT') or define('STDOUT', fopen('php://stdout', 'w'));
 
 /**
+ * Setup [[@doctodo class_description:infinite\setup\Setup]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class Setup extends \infinite\base\Object
 {
     /**
+     * @var [[@doctodo var_type:_instance]] [[@doctodo var_description:_instance]]
      */
     public static $_instance;
     /**
+     * @var [[@doctodo var_type:_migrator]] [[@doctodo var_description:_migrator]]
      */
     public static $_migrator;
     /**
+     * @var [[@doctodo var_type:_app]] [[@doctodo var_description:_app]]
      */
     public static $_app;
     /**
+     * @var [[@doctodo var_type:basePath]] [[@doctodo var_description:basePath]]
      */
     public $basePath;
     /**
+     * @var [[@doctodo var_type:applicationPath]] [[@doctodo var_description:applicationPath]]
      */
     public $applicationPath;
     /**
+     * @var [[@doctodo var_type:name]] [[@doctodo var_description:name]]
      */
     public $name = 'Application';
     /**
+     * @var [[@doctodo var_type:pageTitle]] [[@doctodo var_description:pageTitle]]
      */
     public $pageTitle = 'Setup';
     /**
+     * @var [[@doctodo var_type:applicationNamespace]] [[@doctodo var_description:applicationNamespace]]
      */
     public $applicationNamespace = 'app';
     /**
+     * @var [[@doctodo var_type:params]] [[@doctodo var_description:params]]
      */
     public $params = [];
     /**
+     * @var [[@doctodo var_type:neededInformation]] [[@doctodo var_description:neededInformation]]
      */
     public $neededInformation = [];
 
     /**
+     * [[@doctodo method_description:createSetupApplication]].
      *
+     * @param array $config [[@doctodo param_description:config]] [optional]
+     *
+     * @return [[@doctodo return_type:createSetupApplication]] [[@doctodo return_description:createSetupApplication]]
      */
     public static function createSetupApplication($config = [])
     {
@@ -80,7 +95,9 @@ class Setup extends \infinite\base\Object
     }
 
     /**
+     * [[@doctodo method_description:beforeRun]].
      *
+     * @return [[@doctodo return_type:beforeRun]] [[@doctodo return_description:beforeRun]]
      */
     public function beforeRun()
     {
@@ -88,7 +105,9 @@ class Setup extends \infinite\base\Object
     }
 
     /**
+     * [[@doctodo method_description:afterRun]].
      *
+     * @return [[@doctodo return_type:afterRun]] [[@doctodo return_description:afterRun]]
      */
     public function afterRun()
     {
@@ -96,7 +115,9 @@ class Setup extends \infinite\base\Object
     }
 
     /**
+     * [[@doctodo method_description:run]].
      *
+     * @return [[@doctodo return_type:run]] [[@doctodo return_description:run]]
      */
     public function run()
     {
@@ -184,7 +205,9 @@ class Setup extends \infinite\base\Object
     }
 
     /**
+     * [[@doctodo method_description:refresh]].
      *
+     * @param boolean $skip [[@doctodo param_description:skip]] [optional]
      */
     public function refresh($message = null, $skip = false)
     {
@@ -199,6 +222,8 @@ class Setup extends \infinite\base\Object
 
     /**
      * Get is setup.
+     *
+     * @return [[@doctodo return_type:getIsSetup]] [[@doctodo return_description:getIsSetup]]
      */
     public function getIsSetup()
     {
@@ -214,6 +239,8 @@ class Setup extends \infinite\base\Object
 
     /**
      * Get setup tasks.
+     *
+     * @return [[@doctodo return_type:getSetupTasks]] [[@doctodo return_description:getSetupTasks]]
      */
     public function getSetupTasks()
     {
@@ -246,6 +273,8 @@ class Setup extends \infinite\base\Object
 
     /**
      * Get is available.
+     *
+     * @return [[@doctodo return_type:getIsAvailable]] [[@doctodo return_description:getIsAvailable]]
      */
     public function getIsAvailable()
     {
@@ -260,7 +289,9 @@ class Setup extends \infinite\base\Object
     }
 
     /**
+     * [[@doctodo method_description:markDbReady]].
      *
+     * @return [[@doctodo return_type:markDbReady]] [[@doctodo return_description:markDbReady]]
      */
     public function markDbReady()
     {
@@ -274,6 +305,8 @@ class Setup extends \infinite\base\Object
 
     /**
      * Get confirm link.
+     *
+     * @return [[@doctodo return_type:getConfirmLink]] [[@doctodo return_description:getConfirmLink]]
      */
     public function getConfirmLink($task)
     {
@@ -282,6 +315,8 @@ class Setup extends \infinite\base\Object
 
     /**
      * Get confirm salt.
+     *
+     * @return [[@doctodo return_type:getConfirmSalt]] [[@doctodo return_description:getConfirmSalt]]
      */
     public function getConfirmSalt($task = null)
     {
@@ -290,6 +325,8 @@ class Setup extends \infinite\base\Object
 
     /**
      * Get confirmed.
+     *
+     * @return [[@doctodo return_type:getConfirmed]] [[@doctodo return_description:getConfirmed]]
      */
     public function getConfirmed($task)
     {
@@ -309,6 +346,8 @@ class Setup extends \infinite\base\Object
 
     /**
      * Get version.
+     *
+     * @return [[@doctodo return_type:getVersion]] [[@doctodo return_description:getVersion]]
      */
     public function getVersion()
     {
@@ -317,6 +356,8 @@ class Setup extends \infinite\base\Object
 
     /**
      * Get instance version.
+     *
+     * @return [[@doctodo return_type:getInstanceVersion]] [[@doctodo return_description:getInstanceVersion]]
      */
     public function getInstanceVersion()
     {
@@ -328,6 +369,10 @@ class Setup extends \infinite\base\Object
     }
 
     /**
+     * [[@doctodo method_description:app]].
+     *
+     * @throws Exception [[@doctodo exception_description:Exception]]
+     * @return [[@doctodo return_type:app]] [[@doctodo return_description:app]]
      *
      */
     public function app()
@@ -352,6 +397,8 @@ class Setup extends \infinite\base\Object
 
     /**
      * Get is environmented.
+     *
+     * @return [[@doctodo return_type:getIsEnvironmented]] [[@doctodo return_description:getIsEnvironmented]]
      */
     public function getIsEnvironmented()
     {
@@ -367,6 +414,8 @@ class Setup extends \infinite\base\Object
 
     /**
      * Get environment path.
+     *
+     * @return [[@doctodo return_type:getEnvironmentPath]] [[@doctodo return_description:getEnvironmentPath]]
      */
     public function getEnvironmentPath()
     {
@@ -379,6 +428,10 @@ class Setup extends \infinite\base\Object
 
     /**
      * Get config path.
+     *
+     * @throws Exception [[@doctodo exception_description:Exception]]
+     * @return [[@doctodo return_type:getConfigPath]] [[@doctodo return_description:getConfigPath]]
+     *
      */
     public function getConfigPath()
     {
@@ -392,6 +445,8 @@ class Setup extends \infinite\base\Object
 
     /**
      * Get environment file path.
+     *
+     * @return [[@doctodo return_type:getEnvironmentFilePath]] [[@doctodo return_description:getEnvironmentFilePath]]
      */
     public function getEnvironmentFilePath()
     {
@@ -402,6 +457,8 @@ class Setup extends \infinite\base\Object
 
     /**
      * Get environment template file path.
+     *
+     * @return [[@doctodo return_type:getEnvironmentTemplateFilePath]] [[@doctodo return_description:getEnvironmentTemplateFilePath]]
      */
     public function getEnvironmentTemplateFilePath()
     {
@@ -412,6 +469,10 @@ class Setup extends \infinite\base\Object
 
     /**
      * Get library config path.
+     *
+     * @throws Exception [[@doctodo exception_description:Exception]]
+     * @return [[@doctodo return_type:getLibraryConfigPath]] [[@doctodo return_description:getLibraryConfigPath]]
+     *
      */
     public function getLibraryConfigPath()
     {
@@ -425,6 +486,10 @@ class Setup extends \infinite\base\Object
 
     /**
      * Get common config path.
+     *
+     * @throws Exception [[@doctodo exception_description:Exception]]
+     * @return [[@doctodo return_type:getCommonConfigPath]] [[@doctodo return_description:getCommonConfigPath]]
+     *
      */
     public function getCommonConfigPath()
     {
@@ -438,6 +503,10 @@ class Setup extends \infinite\base\Object
 
     /**
      * Get environment templates path.
+     *
+     * @throws Exception [[@doctodo exception_description:Exception]]
+     * @return [[@doctodo return_type:getEnvironmentTemplatesPath]] [[@doctodo return_description:getEnvironmentTemplatesPath]]
+     *
      */
     public function getEnvironmentTemplatesPath()
     {
@@ -450,7 +519,9 @@ class Setup extends \infinite\base\Object
     }
 
     /**
+     * [[@doctodo method_description:render]].
      *
+     * @throws Exception [[@doctodo exception_description:Exception]]
      */
     public function render($view)
     {

@@ -13,6 +13,7 @@ if (!defined('INFINITE_APP_GOOGLE_API_BROWSER_KEY')) {
 }
 
 /**
+ * GoogleMapsAsset [[@doctodo class_description:infinite\web\assetBundles\GoogleMapsAsset]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

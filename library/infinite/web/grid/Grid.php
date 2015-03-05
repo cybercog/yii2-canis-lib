@@ -12,6 +12,7 @@ use infinite\helpers\Html;
 use Yii;
 
 /**
+ * Grid [[@doctodo class_description:infinite\web\grid\Grid]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -19,27 +20,42 @@ class Grid extends \infinite\base\Object
 {
     //public $fillPreviousRows = true;
     /**
+     * @var [[@doctodo var_type:rowClass]] [[@doctodo var_description:rowClass]]
      */
     public $rowClass = 'infinite\web\grid\Row';
 
+    /**
+     * @var [[@doctodo var_type:baseRow]] [[@doctodo var_description:baseRow]]
+     */
     public $baseRow = [];
+    /**
+     * @var [[@doctodo var_type:htmlOptions]] [[@doctodo var_description:htmlOptions]]
+     */
     public $htmlOptions = ['class' => 'infinite-grid'];
 
+    /**
+     * @var [[@doctodo var_type:_id]] [[@doctodo var_description:_id]]
+     */
     protected $_id;
     /**
+     * @var [[@doctodo var_type:_prepended]] [[@doctodo var_description:_prepended]]
      */
     protected $_prepended = [];
     /**
+     * @var [[@doctodo var_type:_appended]] [[@doctodo var_description:_appended]]
      */
     protected $_appended = [];
     /**
+     * @var [[@doctodo var_type:_rows]] [[@doctodo var_description:_rows]]
      */
     protected $_rows = [];
     /**
+     * @var [[@doctodo var_type:_currentRow]] [[@doctodo var_description:_currentRow]]
      */
     protected $_currentRow;
 
     /**
+     * [[@doctodo method_description:output]].
      */
     public function output()
     {
@@ -47,7 +63,9 @@ class Grid extends \infinite\base\Object
     }
 
     /**
+     * [[@doctodo method_description:generate]].
      *
+     * @return [[@doctodo return_type:generate]] [[@doctodo return_description:generate]]
      */
     public function generate()
     {
@@ -69,7 +87,7 @@ class Grid extends \infinite\base\Object
     }
 
     /**
-     *
+     * [[@doctodo method_description:prepend]].
      */
     public function prepend($item)
     {
@@ -77,7 +95,7 @@ class Grid extends \infinite\base\Object
     }
 
     /**
-     *
+     * [[@doctodo method_description:append]].
      */
     public function append($item)
     {
@@ -85,7 +103,9 @@ class Grid extends \infinite\base\Object
     }
 
     /**
+     * [[@doctodo method_description:addRow]].
      *
+     * @return [[@doctodo return_type:addRow]] [[@doctodo return_description:addRow]]
      */
     public function addRow($item)
     {
@@ -100,7 +120,7 @@ class Grid extends \infinite\base\Object
     }
 
     /**
-     *
+     * [[@doctodo method_description:addRows]].
      */
     public function addRows($items)
     {
@@ -127,6 +147,8 @@ class Grid extends \infinite\base\Object
 
     /**
      * Get current row.
+     *
+     * @return [[@doctodo return_type:getCurrentRow]] [[@doctodo return_description:getCurrentRow]]
      */
     public function getCurrentRow()
     {
@@ -143,6 +165,8 @@ class Grid extends \infinite\base\Object
 
     /**
      * Get id.
+     *
+     * @return [[@doctodo return_type:getId]] [[@doctodo return_description:getId]]
      */
     public function getId()
     {

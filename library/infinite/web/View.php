@@ -9,12 +9,14 @@
 namespace infinite\web;
 
 /**
+ * View [[@doctodo class_description:infinite\web\View]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class View extends \yii\web\View
 {
     /**
+     * @var [[@doctodo var_type:bodyHtmlOptions]] [[@doctodo var_description:bodyHtmlOptions]]
      */
     public $bodyHtmlOptions = [];
 }

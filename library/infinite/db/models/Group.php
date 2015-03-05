@@ -34,7 +34,7 @@ class Group extends \infinite\db\ActiveRecord implements IdentityInterface
      * @var [[@doctodo var_type:_doCache]] [[@doctodo var_description:_doCache]]
      */
     protected static $_doCache = true;
-    
+
     /**
      * @inheritdoc
      */
@@ -112,7 +112,7 @@ class Group extends \infinite\db\ActiveRecord implements IdentityInterface
 
         return $system;
     }
-    
+
     /**
      * [[@doctodo method_description:enableCache]].
      */

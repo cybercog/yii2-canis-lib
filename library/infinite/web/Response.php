@@ -14,6 +14,7 @@ use Yii;
 use yii\helpers\Url;
 
 /**
+ * Response [[@doctodo class_description:infinite\web\Response]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -22,32 +23,46 @@ class Response extends \yii\web\Response
     use ObjectTrait;
 
     /**
+     * @var [[@doctodo var_type:controller]] [[@doctodo var_description:controller]]
      */
     public $controller;
     /**
+     * @var [[@doctodo var_type:action]] [[@doctodo var_description:action]]
      */
     public $action;
     /**
+     * @var [[@doctodo var_type:view]] [[@doctodo var_description:view]]
      */
     public $view = false;
 
     /**
+     * @var [[@doctodo var_type:task]] [[@doctodo var_description:task]]
      */
     public $task = 'fill';
 
+    /**
+     * @var [[@doctodo var_type:clientTask]] [[@doctodo var_description:clientTask]]
+     */
     public $clientTask;
     /**
+     * @var [[@doctodo var_type:staticTasks]] [[@doctodo var_description:staticTasks]]
      */
     public $staticTasks = ['status', 'trigger'];
     /**
+     * @var [[@doctodo var_type:taskOptions]] [[@doctodo var_description:taskOptions]]
      */
     public $taskOptions = [];
     /**
+     * @var [[@doctodo var_type:baseInstructions]] [[@doctodo var_description:baseInstructions]]
      */
     public $baseInstructions = [];
 
+    /**
+     * @var [[@doctodo var_type:taskSet]] [[@doctodo var_description:taskSet]]
+     */
     public $taskSet = false;
     /**
+     * @var [[@doctodo var_type:labels]] [[@doctodo var_description:labels]]
      */
     public $labels = [
         'submit' => 'Save',
@@ -60,28 +75,38 @@ class Response extends \yii\web\Response
     ];
 
     /**
+     * @var [[@doctodo var_type:error]] [[@doctodo var_description:error]]
      */
     public $error;
     /**
+     * @var [[@doctodo var_type:success]] [[@doctodo var_description:success]]
      */
     public $success;
 
     /**
+     * @var [[@doctodo var_type:refresh]] [[@doctodo var_description:refresh]]
      */
     public $refresh = false;
     /**
+     * @var [[@doctodo var_type:redirect]] [[@doctodo var_description:redirect]]
      */
     public $redirect = false;
 
     /**
+     * @var [[@doctodo var_type:trigger]] [[@doctodo var_description:trigger]]
      */
     public $trigger = false;
 
     /**
+     * @var [[@doctodo var_type:forceInstructions]] [[@doctodo var_description:forceInstructions]]
      */
     public $forceInstructions = false;
+    /**
+     * @var [[@doctodo var_type:forceFlash]] [[@doctodo var_description:forceFlash]]
+     */
     public $forceFlash = false;
     /**
+     * @var [[@doctodo var_type:disableInstructions]] [[@doctodo var_description:disableInstructions]]
      */
     public $disableInstructions = false;
 
@@ -96,6 +121,8 @@ class Response extends \yii\web\Response
 
     /**
      * Get is instructable.
+     *
+     * @return [[@doctodo return_type:getIsInstructable]] [[@doctodo return_description:getIsInstructable]]
      */
     public function getIsInstructable()
     {
@@ -114,6 +141,10 @@ class Response extends \yii\web\Response
     }
 
     /**
+     * [[@doctodo method_description:generateInstructions]].
+     *
+     * @throws Exception [[@doctodo exception_description:Exception]]
+     * @return [[@doctodo return_type:generateInstructions]] [[@doctodo return_description:generateInstructions]]
      *
      */
     protected function generateInstructions()
@@ -184,7 +215,9 @@ class Response extends \yii\web\Response
     }
 
     /**
+     * [[@doctodo method_description:handleFill]].
      *
+     * @return [[@doctodo return_type:handleFill]] [[@doctodo return_description:handleFill]]
      */
     protected function handleFill(&$i)
     {
@@ -192,7 +225,9 @@ class Response extends \yii\web\Response
     }
 
     /**
+     * [[@doctodo method_description:handleClient]].
      *
+     * @return [[@doctodo return_type:handleClient]] [[@doctodo return_description:handleClient]]
      */
     protected function handleClient(&$i)
     {
@@ -202,7 +237,9 @@ class Response extends \yii\web\Response
     }
 
     /**
+     * [[@doctodo method_description:handleStatus]].
      *
+     * @return [[@doctodo return_type:handleStatus]] [[@doctodo return_description:handleStatus]]
      */
     protected function handleStatus(&$i)
     {
@@ -218,7 +255,9 @@ class Response extends \yii\web\Response
     }
 
     /**
+     * [[@doctodo method_description:handleTrigger]].
      *
+     * @return [[@doctodo return_type:handleTrigger]] [[@doctodo return_description:handleTrigger]]
      */
     protected function handleTrigger(&$i)
     {
@@ -230,7 +269,9 @@ class Response extends \yii\web\Response
     }
 
     /**
+     * [[@doctodo method_description:handleDialog]].
      *
+     * @return [[@doctodo return_type:handleDialog]] [[@doctodo return_description:handleDialog]]
      */
     protected function handleDialog(&$i)
     {
@@ -265,12 +306,18 @@ class Response extends \yii\web\Response
         return true;
     }
 
+    /**
+     * [[@doctodo method_description:handleMessage]].
+     *
+     * @return [[@doctodo return_type:handleMessage]] [[@doctodo return_description:handleMessage]]
+     */
     protected function handleMessage(&$i)
     {
         return true;
     }
 
     /**
+     * [[@doctodo method_description:handleFlashStatus]].
      */
     protected function handleFlashStatus()
     {
@@ -284,7 +331,11 @@ class Response extends \yii\web\Response
     }
 
     /**
+     * [[@doctodo method_description:renderContent]].
      *
+     * @param boolean $layout [[@doctodo param_description:layout]] [optional]
+     *
+     * @return [[@doctodo return_type:renderContent]] [[@doctodo return_description:renderContent]]
      */
     protected function renderContent($layout = true)
     {
@@ -320,7 +371,9 @@ class Response extends \yii\web\Response
     }
 
     /**
+     * [[@doctodo method_description:beforeSend]].
      *
+     * @return [[@doctodo return_type:beforeSend]] [[@doctodo return_description:beforeSend]]
      */
     public function beforeSend($event = null)
     {
@@ -368,6 +421,8 @@ class Response extends \yii\web\Response
 
     /**
      * Get route.
+     *
+     * @return [[@doctodo return_type:getRoute]] [[@doctodo return_description:getRoute]]
      */
     public function getRoute()
     {

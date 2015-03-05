@@ -9,6 +9,7 @@
 namespace infinite\web\assetBundles;
 
 /**
+ * UnderscoreAsset [[@doctodo class_description:infinite\web\assetBundles\UnderscoreAsset]].
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  *

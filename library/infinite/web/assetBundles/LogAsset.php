@@ -8,9 +8,8 @@
 
 namespace infinite\web\assetBundles;
 
-use yii\web\AssetBundle;
-
 /**
+ * LogAsset [[@doctodo class_description:infinite\web\assetBundles\LogAsset]].
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  *
