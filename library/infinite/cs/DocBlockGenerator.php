@@ -46,7 +46,7 @@ class DocBlockGenerator extends AbstractFixer
     {
         // file_put_contents($file->getRealPath(), $content);
         //echo $file->getRealPath() .'...'. PHP_EOL;
-        $classPropertyDocs = $this->generateClassPropertyDocs($file, $content);
+        $classPropertyDocs = static::generateClassPropertyDocs($file, $content);
         if ($classPropertyDocs === false) {
             return $content;
         }
@@ -54,7 +54,7 @@ class DocBlockGenerator extends AbstractFixer
 
         $ref = new \ReflectionClass($className);
         if (strtolower($ref->getFileName()) != strtolower($file->getRealPath())) {
-            $this->stderr("[ERR] Unable to create ReflectionClass for class: $className loaded class ({$ref->getFileName()}) is not from file: $file\n");
+            static::stderr("[ERR] Unable to create ReflectionClass for class: $className loaded class ({$ref->getFileName()}) is not from file: $file\n");
             return false;
         }
         $oldDoc = $ref->getDocComment();
@@ -70,7 +70,7 @@ class DocBlockGenerator extends AbstractFixer
         if (true || !$ref->isSubclassOf('yii\base\Object') && $className != 'yii\base\Object') {
             $newDoc = $oldDoc;
         } else {
-            $newDoc = $this->cleanDocComment($this->updateDocComment($oldDoc, $propertyDoc, $coveredProperties, $ref));
+            $newDoc = static::cleanDocComment(static::updateDocComment($oldDoc, $propertyDoc, $coveredProperties, $ref));
         }
         $seenSince = false;
         $seenAuthor = false;
@@ -81,9 +81,9 @@ class DocBlockGenerator extends AbstractFixer
         $oldTest = ' * ' . $ref->getShortName();
         if (strpos($lines[1], $oldTest) !== 0) {
             if ($originalCount > 2 && substr(trim($lines[1]), 0, 3) !== '* @') {
-                $lines[1] = " * " . $ref->getShortName() . " " . $this->guessClassDescription($ref);
+                $lines[1] = " * " . $ref->getShortName() . " " . static::guessClassDescription($ref);
             } else {
-                array_splice($lines, 1, 0, [" * " . $ref->getShortName() . " " . $this->guessClassDescription($ref), ' *']);
+                array_splice($lines, 1, 0, [" * " . $ref->getShortName() . " " . static::guessClassDescription($ref), ' *']);
             }
             // if ($originalCount > 2) {
             //     var_dump([$lines, $originalCount, $oldTest]);exit;
@@ -91,7 +91,7 @@ class DocBlockGenerator extends AbstractFixer
         }
 
         if (trim($lines[1]) == '*' || substr(trim($lines[1]), 0, 3) == '* @') {
-            $this->stderr("[WARN] Class $className has no short description.\n");
+            static::stderr("[WARN] Class $className has no short description.\n");
         }
         foreach ($lines as $line) {
             if (substr(trim($line), 0, 9) == '* @since ') {
@@ -102,7 +102,7 @@ class DocBlockGenerator extends AbstractFixer
         }
 
         if (!$seenSince) {
-            //$this->stderr("[ERR] No @since found in class doc in file: $file\n", Console::FG_RED);
+            //static::stderr("[ERR] No @since found in class doc in file: $file\n", Console::FG_RED);
         }
         if (!$seenAuthor) {
             $insertLines = [];
@@ -110,9 +110,9 @@ class DocBlockGenerator extends AbstractFixer
                 && $lines[count($lines)-2] !== ' *') {
                 $insertLines[] = ' *';
             }
-            $insertLines[] = " * @author ". $this->getParam('author', 'Jacob Morrison <email@ofjacob.com>');
+            $insertLines[] = " * @author ". static::getParam('author', 'Jacob Morrison <email@ofjacob.com>');
             array_splice($lines, count($lines)-1, 0, $insertLines);
-            // $this->stderr("[ERR] No @author found in class doc in file: $file\n", Console::FG_RED);
+            // static::stderr("[ERR] No @author found in class doc in file: $file\n", Console::FG_RED);
         }
         $newDoc = implode("\n", $lines) . "\n";
         $updates = [];
@@ -125,8 +125,8 @@ class DocBlockGenerator extends AbstractFixer
                 'start' => $start,
             ];
         }
-        $updates = array_merge($updates, $this->updateMethodDocs($fileContent, $className, $file));
-        $updates = array_merge($updates, $this->updatePropertyDocs($fileContent, $className, $file));
+        $updates = array_merge($updates, static::updateMethodDocs($fileContent, $className, $file));
+        $updates = array_merge($updates, static::updatePropertyDocs($fileContent, $className, $file));
         ArrayHelper::multisort($updates, 'start', SORT_ASC, SORT_NUMERIC);
         $offset = 0;
         // var_dump($updates);
@@ -143,8 +143,8 @@ class DocBlockGenerator extends AbstractFixer
 
     public function getParam($param, $default = false)
     {
-        if (isset($this->params[$param])) {
-            return $this->params[$param];
+        if (static::params[$param] !== null) {
+            return static::params[$param];
         }
         return $default;
     }
@@ -160,7 +160,7 @@ class DocBlockGenerator extends AbstractFixer
     }
 
 
-    protected function match($pattern, $subject)
+    protected static function match($pattern, $subject)
     {
         $sets = [];
         preg_match_all($pattern . 'suU', $subject, $sets, PREG_SET_ORDER);
@@ -182,30 +182,30 @@ class DocBlockGenerator extends AbstractFixer
     {
         $phpdoc = "";
         $file = str_replace("\r", "", str_replace("\t", " ", file_get_contents($fileName, true)));
-        $ns = $this->match('#\nnamespace (?<name>[\w\\\\]+);\n#', $file);
+        $ns = static::match('#\nnamespace (?<name>[\w\\\\]+);\n#', $file);
         $namespace = reset($ns);
         $namespace = $namespace['name'];
-        $classes = $this->match('#\n(?:abstract )?class (?<name>\w+)( extends .+)?( implements .+)?\n\{(?<content>.*)\n\}(\n|$)#', $file);
+        $classes = static::match('#\n(?:abstract )?class (?<name>\w+)( extends .+)?( implements .+)?\n\{(?<content>.*)\n\}(\n|$)#', $file);
 
         if (count($classes) > 1) {
-            $this->stderr("[ERR] There should be only one class in a file: $fileName\n");
+            static::stderr("[ERR] There should be only one class in a file: $fileName\n");
 
             return false;
         }
         if (count($classes) < 1) {
-            $interfaces = $this->match('#\ninterface (?<name>\w+)( extends .+)?\n\{(?<content>.+)\n\}(\n|$)#', $file);
+            $interfaces = static::match('#\ninterface (?<name>\w+)( extends .+)?\n\{(?<content>.+)\n\}(\n|$)#', $file);
             if (count($interfaces) == 1) {
                 return false;
             } elseif (count($interfaces) > 1) {
-                $this->stderr("[ERR] There should be only one interface in a file: $fileName\n");
+                static::stderr("[ERR] There should be only one interface in a file: $fileName\n");
             } else {
-                $traits = $this->match('#\ntrait (?<name>\w+)\n\{(?<content>.+)\n\}(\n|$)#', $file);
+                $traits = static::match('#\ntrait (?<name>\w+)\n\{(?<content>.+)\n\}(\n|$)#', $file);
                 if (count($traits) == 1) {
                     return false;
                 } elseif (count($traits) > 1) {
-                    $this->stderr("[ERR] There should be only one class/trait/interface in a file: $fileName\n");
+                    static::stderr("[ERR] There should be only one class/trait/interface in a file: $fileName\n");
                 } else {
-                    $this->stderr("[ERR] No class in file: $fileName\n");
+                    static::stderr("[ERR] No class in file: $fileName\n");
                 }
             }
 
@@ -216,16 +216,16 @@ class DocBlockGenerator extends AbstractFixer
         foreach ($classes as &$class) {
             $className = $namespace . '\\' . $class['name'];
 
-            $gets = $this->match(
+            $gets = static::match(
                 '#\* @return (?<type>[\w\\|\\\\\\[\\]]+)(?: (?<comment>(?:(?!\*/|\* @).)+?)(?:(?!\*/).)+|[\s\n]*)\*/' .
                 '[\s\n]{2,}public function (?<kind>get)(?<name>\w+)\((?:,? ?\$\w+ ?= ?[^,]+)*\)#',
                 $class['content']);
-            $sets = $this->match(
+            $sets = static::match(
                 '#\* @param (?<type>[\w\\|\\\\\\[\\]]+) \$\w+(?: (?<comment>(?:(?!\*/|\* @).)+?)(?:(?!\*/).)+|[\s\n]*)\*/' .
                 '[\s\n]{2,}public function (?<kind>set)(?<name>\w+)\(\$\w+(?:, ?\$\w+ ?= ?[^,]+)*\)#',
                 $class['content']);
             // check for @property annotations in getter and setter
-            $properties = $this->match(
+            $properties = static::match(
                 '#\* @(?<kind>property) (?<type>[\w\\|\\\\\\[\\]]+)(?: (?<comment>(?:(?!\*/|\* @).)+?)(?:(?!\*/).)+|[\s\n]*)\*/' .
                 '[\s\n]{2,}public function [g|s]et(?<name>\w+)\(((?:,? ?\$\w+ ?= ?[^,]+)*|\$\w+(?:, ?\$\w+ ?= ?[^,]+)*)\)#',
                 $class['content']);
@@ -240,7 +240,7 @@ class DocBlockGenerator extends AbstractFixer
                 $acr['comment'] = trim(preg_replace('#(^|\n)\s+\*\s?#', '$1 * ', $acr['comment']));
                 $props[$acr['name']][$acr['kind']] = [
                     'type' => $acr['type'],
-                    'comment' => $this->fixSentence($acr['comment']),
+                    'comment' => static::fixSentence($acr['comment']),
                 ];
             }
 
@@ -291,8 +291,8 @@ class DocBlockGenerator extends AbstractFixer
                         continue;
                     }
                     $coveredProperties[] = $propName;
-                    $docline .= ' ' . $this->getPropParam($prop, 'type') . " $$propName ";
-                    $comment = explode("\n", $this->getPropParam($prop, 'comment') . $note);
+                    $docline .= ' ' . static::getPropParam($prop, 'type') . " $$propName ";
+                    $comment = explode("\n", static::getPropParam($prop, 'comment') . $note);
                     foreach ($comment as &$cline) {
                         $cline = ltrim($cline, '* ');
                     }
@@ -334,20 +334,20 @@ class DocBlockGenerator extends AbstractFixer
             $baseDoc = [];
             $baseDoc[] = '<?php';
             $baseDoc[] = '/**';
-            if ($this->getParam('link', false)) {
-                $baseDoc[] = ' * @link ' . $this->getParam('link');
+            if (static::getParam('link', false)) {
+                $baseDoc[] = ' * @link ' . static::getParam('link');
             }
-            if ($this->getParam('copyright', false)) {
-                $baseDoc[] = ' * @copyright ' . $this->getParam('copyright');
+            if (static::getParam('copyright', false)) {
+                $baseDoc[] = ' * @copyright ' . static::getParam('copyright');
             }
-            if ($this->getParam('license', false)) {
-                $baseDoc[] = ' * @license ' . $this->getParam('license');
+            if (static::getParam('license', false)) {
+                $baseDoc[] = ' * @license ' . static::getParam('license');
             }
-            if ($this->getParam('package', false)) {
-                $baseDoc[] = ' * @package ' . $this->getParam('package');
+            if (static::getParam('package', false)) {
+                $baseDoc[] = ' * @package ' . static::getParam('package');
             }
-            if ($this->getParam('since', false)) {
-                $baseDoc[] = ' * @since ' . $this->getParam('since');
+            if (static::getParam('since', false)) {
+                $baseDoc[] = ' * @since ' . static::getParam('since');
             }
             $baseDoc[] = '*/';
             $baseDoc[] = '';
@@ -448,7 +448,7 @@ class DocBlockGenerator extends AbstractFixer
     public function generateMethodDocs($method, $lines)
     {
         if (trim($lines[1]) == '*' || substr(trim($lines[1]), 0, 3) == '* @') {
-            array_splice($lines, 1, 0, [" * " . $this->guessMethodDescription($method), ' *']);
+            array_splice($lines, 1, 0, [" * " . static::guessMethodDescription($method), ' *']);
         }
         $lineDescription = null;
         $longDescription = [];
@@ -497,7 +497,7 @@ class DocBlockGenerator extends AbstractFixer
             $lineDescription = ' ' . trim($lines[1]);
         }
         if (!isset($lineDescription) || trim($lineDescription) === '* [[@doctodo method_description' . $method->getName() . ']]') {
-            $lineDescription = ' * ' . $this->guessMethodDescription($method);
+            $lineDescription = ' * ' . static::guessMethodDescription($method);
         }
 
         foreach (array_slice($lines, 2) as $line) {
@@ -523,7 +523,7 @@ class DocBlockGenerator extends AbstractFixer
             }
         }
         $hasReturnInFunction = false;
-        $methodCode = $this->getMethodCode($method);
+        $methodCode = static::getMethodCode($method);
         // var_dump($methodCode);
         $tokens = token_get_all('<?php ' . $methodCode . ' ?>');
         $returnType = [];
@@ -596,7 +596,7 @@ class DocBlockGenerator extends AbstractFixer
     {
         $ref = new \ReflectionClass($className);
         if (strtolower($ref->getFileName()) != strtolower($file)) {
-            $this->stderr("[ERR] Unable to create ReflectionClass for class: $className loaded class ({$ref->getFileName()}) is not from file: $file\n");
+            static::stderr("[ERR] Unable to create ReflectionClass for class: $className loaded class ({$ref->getFileName()}) is not from file: $file\n");
         }
         $updates = [];
         foreach ($ref->getProperties() as $property) {
@@ -621,7 +621,7 @@ class DocBlockGenerator extends AbstractFixer
             if (!$startLine) {
                 continue;
             }
-            $inheritDocs = $this->isPropertyReplacingParent($ref, $property);
+            $inheritDocs = static::isPropertyReplacingParent($ref, $property);
             $docs = $originalDocs = $property->getDocComment();
             $docsSize = count(preg_split("/\\r\\n|\\r|\\n/", $docs));
             if (empty($docs)) {
@@ -633,7 +633,7 @@ class DocBlockGenerator extends AbstractFixer
                 array_splice($lines, 1, 0, [' * @inheritdoc']);
             }
             if (preg_match('/\@inheritdoc/', implode($lines)) === 0) {
-                $lines = $this->generatePropertyDocs($ref, $property, $lines);
+                $lines = static::generatePropertyDocs($ref, $property, $lines);
             }
             $currentStartLine = $fileContent[$startLine-1];
             preg_match('/^([ \t\r\n\f]*)[a-zA-Z].*/', $currentStartLine, $matches);
@@ -675,7 +675,7 @@ class DocBlockGenerator extends AbstractFixer
     {
         $ref = new \ReflectionClass($className);
         if (strtolower($ref->getFileName()) != strtolower($file->getRealPath())) {
-            $this->stderr("[ERR] Unable to create ReflectionClass for class: $className loaded class ({$ref->getFileName()}) is not from file: $file\n");
+            static::stderr("[ERR] Unable to create ReflectionClass for class: $className loaded class ({$ref->getFileName()}) is not from file: $file\n");
             return [];
         }
         $updates = [];
@@ -684,7 +684,7 @@ class DocBlockGenerator extends AbstractFixer
             if (strtolower($method->getFileName()) != strtolower($file)) {
                 continue;
             }
-            $inheritDocs = $this->isMethodReplacingParent($ref, $method);
+            $inheritDocs = static::isMethodReplacingParent($ref, $method);
             $docs = $originalDocs = $method->getDocComment();
             $docsSize = count(preg_split("/\\r\\n|\\r|\\n/", $docs));
             if (empty($docs)) {
@@ -696,7 +696,7 @@ class DocBlockGenerator extends AbstractFixer
                 array_splice($lines, 1, 0, [' * @inheritdoc']);
             }
             if (preg_match('/\@inheritdoc/', implode($lines)) === 0) {
-                $lines = $this->generateMethodDocs($method, $lines);
+                $lines = static::generateMethodDocs($method, $lines);
             }
             $currentStartLine = $fileContent[$method->getStartLine()-1];
             preg_match('/^([ \t\r\n\f]*)[a-zA-Z].*/', $currentStartLine, $matches);
