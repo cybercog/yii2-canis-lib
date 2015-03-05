@@ -9,7 +9,6 @@
 namespace infinite\setup;
 
 /**
- * Exception [@doctodo write class description for Exception].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

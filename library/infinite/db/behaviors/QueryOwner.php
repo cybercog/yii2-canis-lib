@@ -11,12 +11,15 @@ namespace infinite\db\behaviors;
 use Yii;
 
 /**
- * QueryArchivable [@doctodo write class description for QueryArchivable].
+ * QueryOwner [[@doctodo class_description:infinite\db\behaviors\QueryOwner]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class QueryOwner extends QueryBehavior
 {
+    /**
+     * @var [[@doctodo var_type:paramName]] [[@doctodo var_description:paramName]]
+     */
     public $paramName = '_owner';
 
     /**
@@ -30,7 +33,9 @@ class QueryOwner extends QueryBehavior
     }
 
     /**
+     * [[@doctodo method_description:beforeQuery]].
      *
+     * @return [[@doctodo return_type:beforeQuery]] [[@doctodo return_description:beforeQuery]]
      */
     public function beforeQuery($event)
     {
@@ -51,6 +56,11 @@ class QueryOwner extends QueryBehavior
         return true;
     }
 
+    /**
+     * [[@doctodo method_description:fixOwnerKey]].
+     *
+     * @return [[@doctodo return_type:fixOwnerKey]] [[@doctodo return_description:fixOwnerKey]]
+     */
     public function fixOwnerKey($fieldName, $where)
     {
         $changeKey = function ($array, $old_key, $new_key) {

@@ -5,7 +5,7 @@ namespace infinite\db\models;
 use Yii;
 
 /**
- * This is the model class for table "deferred_action".
+ * DeferredAction is the model class for table "deferred_action".
  *
  * @property string $id
  * @property string $user_id
@@ -14,6 +14,8 @@ use Yii;
  * @property string $created
  * @property string $modified
  * @property User $user
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
  */
 class DeferredAction extends \infinite\db\ActiveRecord
 {
@@ -56,6 +58,8 @@ class DeferredAction extends \infinite\db\ActiveRecord
     }
 
     /**
+     * Get user.
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getUser()
@@ -63,6 +67,11 @@ class DeferredAction extends \infinite\db\ActiveRecord
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
+    /**
+     * Get my recent pending query.
+     *
+     * @return [[@doctodo return_type:getMyRecentPendingQuery]] [[@doctodo return_description:getMyRecentPendingQuery]]
+     */
     public function getMyRecentPendingQuery($type = null, $user = null)
     {
         if (is_null($user) && !empty(Yii::$app->user->id)) {

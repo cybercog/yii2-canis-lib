@@ -5,7 +5,7 @@ namespace infinite\db\models;
 use Yii;
 
 /**
- * This is the model class for table "identity".
+ * Identity is the model class for table "identity".
  *
  * @property string $id
  * @property string $user_id
@@ -17,9 +17,14 @@ use Yii;
  * @property IdentityProvider $identityProvider
  * @property User $id0
  * @property User[] $users
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
  */
 class Identity extends \infinite\db\ActiveRecord
 {
+    /**
+     * @inheritdoc
+     */
     public function init()
     {
         parent::init();
@@ -28,11 +33,17 @@ class Identity extends \infinite\db\ActiveRecord
         $this->on(self::EVENT_AFTER_FIND, [$this, 'metaToArray']);
     }
 
+    /**
+     * [[@doctodo method_description:metaToSerial]].
+     */
     public function metaToSerial()
     {
         $this->meta = serialize($this->meta);
     }
 
+    /**
+     * [[@doctodo method_description:metaToArray]].
+     */
     public function metaToArray()
     {
         $this->meta = unserialize($this->meta);
@@ -90,6 +101,8 @@ class Identity extends \infinite\db\ActiveRecord
     }
 
     /**
+     * Get identity provider.
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getIdentityProvider()
@@ -103,6 +116,8 @@ class Identity extends \infinite\db\ActiveRecord
     }
 
     /**
+     * Get id0.
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getId0()
@@ -111,6 +126,8 @@ class Identity extends \infinite\db\ActiveRecord
     }
 
     /**
+     * Get users.
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getUsers()

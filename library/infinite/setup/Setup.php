@@ -16,7 +16,6 @@ use Yii;
 defined('STDOUT') or define('STDOUT', fopen('php://stdout', 'w'));
 
 /**
- * Setup [@doctodo write class description for Setup].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

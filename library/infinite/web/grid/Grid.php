@@ -12,7 +12,6 @@ use infinite\helpers\Html;
 use Yii;
 
 /**
- * Grid [@doctodo write class description for Grid].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

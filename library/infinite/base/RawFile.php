@@ -12,12 +12,19 @@ use infinite\helpers\FileHelper;
 use Yii;
 
 /**
- * File [@doctodo write class description for File].
+ * RawFile [[@doctodo class_description:infinite\base\RawFile]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class RawFile extends File
 {
+    /**
+     * [[@doctodo method_description:createRawInstance]].
+     *
+     * @param integer $error [[@doctodo param_description:error]] [optional]
+     *
+     * @return [[@doctodo return_type:createRawInstance]] [[@doctodo return_description:createRawInstance]]
+     */
     public static function createRawInstance($rawContent, $type = null, $name = null, $error = UPLOAD_ERR_OK)
     {
         $tmp = Yii::$app->fileStorage->getTempFile();

@@ -27,6 +27,7 @@ class Role extends \infinite\db\ActiveRecord implements \infinite\base\collector
 {
     use CollectedOBjectTrait;
     /**
+     * @var [[@doctodo var_type:roleableEnabled]] [[@doctodo var_description:roleableEnabled]]
      */
     public $roleableEnabled = false;
 

@@ -3,8 +3,16 @@ namespace infinite\action;
 
 use infinite\helpers\Console;
 
+/**
+ * ConsoleAction [[@doctodo class_description:infinite\action\ConsoleAction]].
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+ */
 class ConsoleAction extends Action
 {
+    /**
+     * @inheritdoc
+     */
     public function handleInteractions($sleep = 30)
     {
         foreach ($this->_interactions as $id => $interaction) {

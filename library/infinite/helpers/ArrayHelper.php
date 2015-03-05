@@ -9,7 +9,6 @@
 namespace infinite\helpers;
 
 /**
- * ArrayHelper [@doctodo write class description for ArrayHelper].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

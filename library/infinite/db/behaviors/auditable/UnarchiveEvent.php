@@ -9,7 +9,7 @@
 namespace infinite\db\behaviors\auditable;
 
 /**
- * UnarchiveEvent [@doctodo write class description for DeleteEvent].
+ * UnarchiveEvent [[@doctodo class_description:infinite\db\behaviors\auditable\UnarchiveEvent]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -20,6 +20,7 @@ class UnarchiveEvent extends UpdateEvent
      */
     protected $_id = 'unarchive';
     /**
+     * @var [[@doctodo var_type:_exclusive]] [[@doctodo var_description:_exclusive]]
      */
     protected $_exclusive = true;
 }

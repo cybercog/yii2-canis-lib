@@ -9,7 +9,6 @@
 namespace infinite\security\identity\providers;
 
 /**
- * Ldap [@doctodo write class description for Ldap].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

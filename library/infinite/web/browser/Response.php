@@ -11,7 +11,6 @@ namespace infinite\web\browser;
 use Yii;
 
 /**
- * Response [@doctodo write class description for Response].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

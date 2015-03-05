@@ -11,7 +11,6 @@ namespace infinite\web;
 use infinite\base\ApplicationTrait;
 
 /**
- * Application [@doctodo write class description for Application].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

@@ -17,7 +17,6 @@ use infinite\helpers\ArrayHelper;
 use Yii;
 
 /**
- * Gatekeeper [@doctodo write class description for Gatekeeper].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

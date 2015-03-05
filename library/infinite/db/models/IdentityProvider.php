@@ -6,7 +6,7 @@ use infinite\base\collector\CollectedObjectTrait;
 use Yii;
 
 /**
- * This is the model class for table "identity_provider".
+ * IdentityProvider is the model class for table "identity_provider".
  *
  * @property string $id
  * @property string $name
@@ -16,6 +16,8 @@ use Yii;
  * @property string $modified
  * @property Identity[] $identities
  * @property Registry $id0
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
  */
 class IdentityProvider extends \infinite\db\ActiveRecord implements \infinite\base\collector\CollectedObjectInterface
 {
@@ -72,6 +74,8 @@ class IdentityProvider extends \infinite\db\ActiveRecord implements \infinite\ba
     }
 
     /**
+     * Get identities.
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getIdentities()
@@ -80,6 +84,8 @@ class IdentityProvider extends \infinite\db\ActiveRecord implements \infinite\ba
     }
 
     /**
+     * Get registry.
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getRegistry()

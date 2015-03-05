@@ -13,13 +13,14 @@ use ArrayIterator;
 use IteratorAggregate;
 
 /**
- * ClassManager [@doctodo write class description for ClassManager].
+ * ClassManager [[@doctodo class_description:infinite\base\ClassManager]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class ClassManager extends Component implements IteratorAggregate, ArrayAccess
 {
     /**
+     * @var [[@doctodo var_type:_classes]] [[@doctodo var_description:_classes]]
      */
     protected $_classes = [];
     /**
@@ -31,7 +32,9 @@ class ClassManager extends Component implements IteratorAggregate, ArrayAccess
     }
 
     /**
+     * [[@doctodo method_description:baseClasses]].
      *
+     * @return [[@doctodo return_type:baseClasses]] [[@doctodo return_description:baseClasses]]
      */
     public function baseClasses()
     {
@@ -54,6 +57,8 @@ class ClassManager extends Component implements IteratorAggregate, ArrayAccess
 
     /**
      * Set classes.
+     *
+     * @param boolean $override [[@doctodo param_description:override]] [optional]
      */
     public function setClasses($classes, $override = true)
     {
@@ -96,7 +101,9 @@ class ClassManager extends Component implements IteratorAggregate, ArrayAccess
      *
      * @param mixed $offset the offset to retrieve element.
      *
+     * @throws \ [[@doctodo exception_description:\]]
      * @return mixed the element at the offset, null if no element is found at the offset
+     *
      */
     public function offsetGet($offset)
     {

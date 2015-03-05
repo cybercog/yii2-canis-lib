@@ -11,7 +11,7 @@ namespace infinite\db\behaviors\auditable;
 use Yii;
 
 /**
- * Event [@doctodo write class description for Event].
+ * Event [[@doctodo class_description:infinite\db\behaviors\auditable\Event]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -20,44 +20,66 @@ abstract class Event extends \infinite\base\Component
     const EVENT_AUDIT_HOOK = 'auditHook';
     const EVENT_BEFORE_MODEL_SAVE = 'beforeModelSave';
     /**
+     * @var [[@doctodo var_type:mergeWith]] [[@doctodo var_description:mergeWith]]
      */
     public $mergeWith = false;
     /**
+     * @var [[@doctodo var_type:handleHooksOnCreate]] [[@doctodo var_description:handleHooksOnCreate]]
      */
     public $handleHooksOnCreate = false;
     /**
+     * @var [[@doctodo var_type:saveOnRegister]] [[@doctodo var_description:saveOnRegister]]
      */
     public $saveOnRegister = false;
+    /**
+     * @var [[@doctodo var_type:model]] [[@doctodo var_description:model]]
+     */
     public $model;
+    /**
+     * @var [[@doctodo var_type:context]] [[@doctodo var_description:context]]
+     */
     public $context = false;
     /**
+     * @var [[@doctodo var_type:_exclusive]] [[@doctodo var_description:_exclusive]]
      */
     protected $_exclusive = false;
     /**
+     * @var [[@doctodo var_type:_id]] [[@doctodo var_description:_id]]
      */
     protected $_id;
     /**
+     * @var [[@doctodo var_type:_hash]] [[@doctodo var_description:_hash]]
      */
     protected $_hash;
     /**
+     * @var [[@doctodo var_type:_agent]] [[@doctodo var_description:_agent]]
      */
     protected $_agent;
     /**
+     * @var [[@doctodo var_type:_directObject]] [[@doctodo var_description:_directObject]]
      */
     protected $_directObject;
     /**
+     * @var [[@doctodo var_type:_indirectObject]] [[@doctodo var_description:_indirectObject]]
      */
     protected $_indirectObject;
     /**
+     * @var [[@doctodo var_type:_tmp]] [[@doctodo var_description:_tmp]]
      */
     protected $_tmp = [];
     /**
+     * @var [[@doctodo var_type:_merged]] [[@doctodo var_description:_merged]]
      */
     protected $_merged = [];
+    /**
+     * @var [[@doctodo var_type:_timestamp]] [[@doctodo var_description:_timestamp]]
+     */
     protected $_timestamp;
 
     /**
      * Prepares object for serialization.
+     *
+     * @return [[@doctodo return_type:__sleep]] [[@doctodo return_description:__sleep]]
      */
     public function __sleep()
     {
@@ -85,6 +107,8 @@ abstract class Event extends \infinite\base\Component
 
     /**
      * Get agent.
+     *
+     * @return [[@doctodo return_type:getAgent]] [[@doctodo return_description:getAgent]]
      */
     public function getAgent()
     {
@@ -101,6 +125,8 @@ abstract class Event extends \infinite\base\Component
 
     /**
      * Get agent.
+     *
+     * @return [[@doctodo return_type:getAgentId]] [[@doctodo return_description:getAgentId]]
      */
     public function getAgentId()
     {
@@ -121,6 +147,8 @@ abstract class Event extends \infinite\base\Component
 
     /**
      * Get indirect object.
+     *
+     * @return [[@doctodo return_type:getIndirectObject]] [[@doctodo return_description:getIndirectObject]]
      */
     public function getIndirectObject()
     {
@@ -137,6 +165,8 @@ abstract class Event extends \infinite\base\Component
 
     /**
      * Get indirect object.
+     *
+     * @return [[@doctodo return_type:getIndirectObjectId]] [[@doctodo return_description:getIndirectObjectId]]
      */
     public function getIndirectObjectId()
     {
@@ -157,6 +187,8 @@ abstract class Event extends \infinite\base\Component
 
     /**
      * Get direct object.
+     *
+     * @return [[@doctodo return_type:getDirectObject]] [[@doctodo return_description:getDirectObject]]
      */
     public function getDirectObject()
     {
@@ -173,6 +205,8 @@ abstract class Event extends \infinite\base\Component
 
     /**
      * Get direct object.
+     *
+     * @return [[@doctodo return_type:getDirectObjectId]] [[@doctodo return_description:getDirectObjectId]]
      */
     public function getDirectObjectId()
     {
@@ -185,6 +219,8 @@ abstract class Event extends \infinite\base\Component
 
     /**
      * Set id.
+     *
+     * @return [[@doctodo return_type:setId]] [[@doctodo return_description:setId]]
      */
     public function setId($id)
     {
@@ -193,12 +229,19 @@ abstract class Event extends \infinite\base\Component
 
     /**
      * Get id.
+     *
+     * @return [[@doctodo return_type:getId]] [[@doctodo return_description:getId]]
      */
     public function getId()
     {
         return $this->_id;
     }
 
+    /**
+     * Get timestamp.
+     *
+     * @return [[@doctodo return_type:getTimestamp]] [[@doctodo return_description:getTimestamp]]
+     */
     public function getTimestamp()
     {
         $microtime = microtime(true);
@@ -213,6 +256,9 @@ abstract class Event extends \infinite\base\Component
         return $microtime;
     }
 
+    /**
+     * Set timestamp.
+     */
     public function setTimestamp($timestamp)
     {
         $microtime = microtime(true);
@@ -231,6 +277,8 @@ abstract class Event extends \infinite\base\Component
 
     /**
      * Get hash.
+     *
+     * @return [[@doctodo return_type:getHash]] [[@doctodo return_description:getHash]]
      */
     public function getHash()
     {
@@ -243,6 +291,8 @@ abstract class Event extends \infinite\base\Component
 
     /**
      * Get hash array.
+     *
+     * @return [[@doctodo return_type:getHashArray]] [[@doctodo return_description:getHashArray]]
      */
     public function getHashArray()
     {
@@ -256,6 +306,8 @@ abstract class Event extends \infinite\base\Component
 
     /**
      * Set exclusive.
+     *
+     * @return [[@doctodo return_type:setExclusive]] [[@doctodo return_description:setExclusive]]
      */
     public function setExclusive($exclusive)
     {
@@ -264,6 +316,8 @@ abstract class Event extends \infinite\base\Component
 
     /**
      * Get exclusive.
+     *
+     * @return [[@doctodo return_type:getExclusive]] [[@doctodo return_description:getExclusive]]
      */
     public function getExclusive()
     {
@@ -271,7 +325,9 @@ abstract class Event extends \infinite\base\Component
     }
 
     /**
+     * [[@doctodo method_description:merge]].
      *
+     * @return [[@doctodo return_type:merge]] [[@doctodo return_description:merge]]
      */
     public function merge($with)
     {
@@ -281,7 +337,9 @@ abstract class Event extends \infinite\base\Component
     }
 
     /**
+     * [[@doctodo method_description:isValid]].
      *
+     * @return [[@doctodo return_type:isValid]] [[@doctodo return_description:isValid]]
      */
     public function isValid()
     {
@@ -299,7 +357,9 @@ abstract class Event extends \infinite\base\Component
     }
 
     /**
+     * [[@doctodo method_description:handleHooks]].
      *
+     * @return [[@doctodo return_type:handleHooks]] [[@doctodo return_description:handleHooks]]
      */
     public function handleHooks()
     {
@@ -311,7 +371,9 @@ abstract class Event extends \infinite\base\Component
     }
 
     /**
+     * [[@doctodo method_description:save]].
      *
+     * @return [[@doctodo return_type:save]] [[@doctodo return_description:save]]
      */
     public function save()
     {
@@ -339,11 +401,21 @@ abstract class Event extends \infinite\base\Component
         return $audit;
     }
 
+    /**
+     * Get story.
+     *
+     * @return [[@doctodo return_type:getStory]] [[@doctodo return_description:getStory]]
+     */
     public function getStory()
     {
         return '{{agent}} ' . $this->verb->past . ' {{directObjectType}} {{directObject}}' . $this->indirectStory;
     }
 
+    /**
+     * Get indirect story.
+     *
+     * @return [[@doctodo return_type:getIndirectStory]] [[@doctodo return_description:getIndirectStory]]
+     */
     public function getIndirectStory()
     {
         if (empty($this->indirectObject) || !$this->indirectConnector) {
@@ -357,16 +429,31 @@ abstract class Event extends \infinite\base\Component
         return ' ' . $this->indirectConnector . ' {{indirectObject}}';
     }
 
+    /**
+     * Get indirect connector.
+     *
+     * @return [[@doctodo return_type:getIndirectConnector]] [[@doctodo return_description:getIndirectConnector]]
+     */
     public function getIndirectConnector()
     {
         return 'to';
     }
 
+    /**
+     * Get verb.
+     *
+     * @return [[@doctodo return_type:getVerb]] [[@doctodo return_description:getVerb]]
+     */
     public function getVerb()
     {
         return new \infinite\base\language\Verb('affect');
     }
 
+    /**
+     * Get package.
+     *
+     * @return [[@doctodo return_type:getPackage]] [[@doctodo return_description:getPackage]]
+     */
     public function getPackage()
     {
         $package = ['key' => null, 'story' => $this->story, 'details' => null, 'objects' => [], 'primaryObject' => null, 'agent' => null, 'timestamp' => $this->timestamp];

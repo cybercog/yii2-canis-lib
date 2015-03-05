@@ -9,7 +9,7 @@
 namespace infinite\base\exceptions;
 
 /**
- * Deprecated [@doctodo write class description for Deprecated].
+ * Deprecated [[@doctodo class_description:infinite\base\exceptions\Deprecated]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

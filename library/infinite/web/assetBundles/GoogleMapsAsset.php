@@ -13,7 +13,6 @@ if (!defined('INFINITE_APP_GOOGLE_API_BROWSER_KEY')) {
 }
 
 /**
- * FontAwesomeAsset [@doctodo write class description for FontAwesomeAsset].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

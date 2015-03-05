@@ -11,7 +11,7 @@ namespace infinite\base;
 use infinite\base\exceptions\Exception;
 
 /**
- * Module [@doctodo write class description for Module].
+ * Module [[@doctodo class_description:infinite\base\Module]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -20,6 +20,7 @@ abstract class Module extends \yii\base\Module
     use ObjectTrait;
 
     /**
+     * @var [[@doctodo var_type:_systemId]] [[@doctodo var_description:_systemId]]
      */
     protected $_systemId;
 
@@ -41,8 +42,9 @@ abstract class Module extends \yii\base\Module
     /**
      * Get system.
      *
-     *
+     * @throws Exception [[@doctodo exception_description:Exception]]
      * @return unknown
+     *
      */
     public function getSystemId()
     {

@@ -9,7 +9,7 @@
 namespace infinite\db;
 
 /**
- * ActiveRecord is the model class for table "{{%active_record}}".
+ * ActiveRecordRegistry is the model class for table "{{%active_record_registry}}".
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

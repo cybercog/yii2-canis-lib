@@ -11,7 +11,6 @@ namespace infinite\web;
 use Yii;
 
 /**
- * State [@doctodo write class description for State].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

@@ -9,7 +9,6 @@
 namespace infinite\db;
 
 /**
- * Tree [@doctodo write class description for Tree].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

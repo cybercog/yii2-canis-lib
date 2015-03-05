@@ -13,35 +13,71 @@ use infinite\helpers\Math;
 use Yii;
 
 /**
- * Status [@doctodo write class description for Status].
+ * Task [[@doctodo class_description:infinite\action\Task]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class Task extends \infinite\base\Component
 {
+    /**
+     * @var [[@doctodo var_type:name]] [[@doctodo var_description:name]]
+     */
     public $name;
 
+    /**
+     * @var [[@doctodo var_type:saveEvery]] [[@doctodo var_description:saveEvery]]
+     */
     public $saveEvery = 5;
+    /**
+     * @var [[@doctodo var_type:_weight]] [[@doctodo var_description:_weight]]
+     */
     protected $_weight = 100;
     /**
+     * @var [[@doctodo var_type:_status]] [[@doctodo var_description:_status]]
      */
     protected $_status;
     /**
+     * @var [[@doctodo var_type:_progressTotal]] [[@doctodo var_description:_progressTotal]]
      */
     protected $_progressTotal = 100;
     /**
+     * @var [[@doctodo var_type:_progressRemaining]] [[@doctodo var_description:_progressRemaining]]
      */
     protected $_progressRemaining = 100;
 
+    /**
+     * @var [[@doctodo var_type:_started]] [[@doctodo var_description:_started]]
+     */
     protected $_started;
+    /**
+     * @var [[@doctodo var_type:_ended]] [[@doctodo var_description:_ended]]
+     */
     protected $_ended;
+    /**
+     * @var [[@doctodo var_type:_completed]] [[@doctodo var_description:_completed]]
+     */
     protected $_completed = false;
 
+    /**
+     * @var [[@doctodo var_type:_lastStep]] [[@doctodo var_description:_lastStep]]
+     */
     protected $_lastStep = false;
+    /**
+     * @var [[@doctodo var_type:_averageRateChange]] [[@doctodo var_description:_averageRateChange]]
+     */
     protected $_averageRateChange;
+    /**
+     * @var [[@doctodo var_type:_stepDurations]] [[@doctodo var_description:_stepDurations]]
+     */
     protected $_stepDurations = [];
 
+    /**
+     * @var [[@doctodo var_type:parentTask]] [[@doctodo var_description:parentTask]]
+     */
     public $parentTask;
+    /**
+     * @var [[@doctodo var_type:_subtasks]] [[@doctodo var_description:_subtasks]]
+     */
     protected $_subtasks = [];
 
     /**
@@ -54,6 +90,8 @@ class Task extends \infinite\base\Component
 
     /**
      * Prepares object for serialization.
+     *
+     * @return [[@doctodo return_type:__sleep]] [[@doctodo return_description:__sleep]]
      */
     public function __sleep()
     {
@@ -68,6 +106,9 @@ class Task extends \infinite\base\Component
         return $keys;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function __call($name, $params)
     {
         if (isset($this->status) && $this->status->hasMethod($name)) {
@@ -77,6 +118,11 @@ class Task extends \infinite\base\Component
         return parent::__call($name, $params);
     }
 
+    /**
+     * [[@doctodo method_description:start]].
+     *
+     * @return [[@doctodo return_type:start]] [[@doctodo return_description:start]]
+     */
     public function start()
     {
         $this->_started = microtime(true);
@@ -84,6 +130,11 @@ class Task extends \infinite\base\Component
         return $this;
     }
 
+    /**
+     * [[@doctodo method_description:end]].
+     *
+     * @return [[@doctodo return_type:end]] [[@doctodo return_description:end]]
+     */
     public function end()
     {
         if (!$this->_completed) {
@@ -102,6 +153,11 @@ class Task extends \infinite\base\Component
         return $this;
     }
 
+    /**
+     * Set status.
+     *
+     * @return [[@doctodo return_type:setStatus]] [[@doctodo return_description:setStatus]]
+     */
     public function setStatus($status)
     {
         $this->_status = $status;
@@ -109,6 +165,11 @@ class Task extends \infinite\base\Component
         return $this;
     }
 
+    /**
+     * Get status.
+     *
+     * @return [[@doctodo return_type:getStatus]] [[@doctodo return_description:getStatus]]
+     */
     public function getStatus()
     {
         if (isset($this->parentTask)) {
@@ -118,6 +179,11 @@ class Task extends \infinite\base\Component
         return $this->_status;
     }
 
+    /**
+     * Get progress total weight.
+     *
+     * @return [[@doctodo return_type:getProgressTotalWeight]] [[@doctodo return_description:getProgressTotalWeight]]
+     */
     public function getProgressTotalWeight()
     {
         $n = 0;
@@ -130,6 +196,8 @@ class Task extends \infinite\base\Component
 
     /**
      * Set progress total.
+     *
+     * @return [[@doctodo return_type:setProgressTotal]] [[@doctodo return_description:setProgressTotal]]
      */
     public function setProgressTotal($total)
     {
@@ -139,11 +207,21 @@ class Task extends \infinite\base\Component
         return $this;
     }
 
+    /**
+     * Get percentage done.
+     *
+     * @return [[@doctodo return_type:getPercentageDone]] [[@doctodo return_description:getPercentageDone]]
+     */
     public function getPercentageDone()
     {
         return round(($this->progressDone / $this->progressTotal) * 100, 2);
     }
 
+    /**
+     * Get percentage remaining.
+     *
+     * @return [[@doctodo return_type:getPercentageRemaining]] [[@doctodo return_description:getPercentageRemaining]]
+     */
     public function getPercentageRemaining()
     {
         return round(($this->progressRemaining / $this->progressTotal) * 100, 2);
@@ -151,6 +229,8 @@ class Task extends \infinite\base\Component
 
     /**
      * Get progress total.
+     *
+     * @return [[@doctodo return_type:getProgressTotal]] [[@doctodo return_description:getProgressTotal]]
      */
     public function getProgressTotal()
     {
@@ -163,6 +243,8 @@ class Task extends \infinite\base\Component
 
     /**
      * Get progress done.
+     *
+     * @return [[@doctodo return_type:getProgressDone]] [[@doctodo return_description:getProgressDone]]
      */
     public function getProgressDone()
     {
@@ -187,6 +269,8 @@ class Task extends \infinite\base\Component
 
     /**
      * Get progress remaining.
+     *
+     * @return [[@doctodo return_type:getProgressRemaining]] [[@doctodo return_description:getProgressRemaining]]
      */
     public function getProgressRemaining()
     {
@@ -202,7 +286,11 @@ class Task extends \infinite\base\Component
     }
 
     /**
+     * [[@doctodo method_description:reduceRemaining]].
      *
+     * @param integer $n [[@doctodo param_description:n]] [optional]
+     *
+     * @return [[@doctodo return_type:reduceRemaining]] [[@doctodo return_description:reduceRemaining]]
      */
     public function reduceRemaining($n = 1)
     {
@@ -225,6 +313,11 @@ class Task extends \infinite\base\Component
         return true;
     }
 
+    /**
+     * Get rate.
+     *
+     * @return [[@doctodo return_type:getRate]] [[@doctodo return_description:getRate]]
+     */
     public function getRate($limit = null)
     {
         if (!$this->status->linearTasks) {
@@ -241,6 +334,11 @@ class Task extends \infinite\base\Component
         return array_sum($stepDurations) / count($stepDurations);
     }
 
+    /**
+     * Get rate growth.
+     *
+     * @return [[@doctodo return_type:getRateGrowth]] [[@doctodo return_description:getRateGrowth]]
+     */
     public function getRateGrowth($x)
     {
         if (!$this->status->linearTasks) {
@@ -274,6 +372,11 @@ class Task extends \infinite\base\Component
         return $duration;
     }
 
+    /**
+     * Get duration estimate.
+     *
+     * @return [[@doctodo return_type:getDurationEstimate]] [[@doctodo return_description:getDurationEstimate]]
+     */
     public function getDurationEstimate()
     {
         if (!$this->status->linearTasks) {
@@ -306,16 +409,31 @@ class Task extends \infinite\base\Component
         return $this->getRateGrowth($this->progressRemaining);
     }
 
+    /**
+     * Get log.
+     *
+     * @return [[@doctodo return_type:getLog]] [[@doctodo return_description:getLog]]
+     */
     public function getLog()
     {
         return $this->status->log;
     }
 
+    /**
+     * [[@doctodo method_description:save]].
+     *
+     * @return [[@doctodo return_type:save]] [[@doctodo return_description:save]]
+     */
     public function save()
     {
         return $this->status->save();
     }
 
+    /**
+     * Get started.
+     *
+     * @return [[@doctodo return_type:getStarted]] [[@doctodo return_description:getStarted]]
+     */
     public function getStarted()
     {
         if ($this->tasks) {
@@ -335,6 +453,11 @@ class Task extends \infinite\base\Component
         return $this->_started;
     }
 
+    /**
+     * Get ended.
+     *
+     * @return [[@doctodo return_type:getEnded]] [[@doctodo return_description:getEnded]]
+     */
     public function getEnded()
     {
         if ($this->tasks) {
@@ -354,6 +477,11 @@ class Task extends \infinite\base\Component
         return $this->_ended;
     }
 
+    /**
+     * Get weight.
+     *
+     * @return [[@doctodo return_type:getWeight]] [[@doctodo return_description:getWeight]]
+     */
     public function getWeight()
     {
         if (!isset($this->_weight) && $this->tasks) {
@@ -373,6 +501,11 @@ class Task extends \infinite\base\Component
         return $this->_weight;
     }
 
+    /**
+     * Set weight.
+     *
+     * @return [[@doctodo return_type:setWeight]] [[@doctodo return_description:setWeight]]
+     */
     public function setWeight($weight)
     {
         $this->_weight = $weight;
@@ -380,6 +513,11 @@ class Task extends \infinite\base\Component
         return $this;
     }
 
+    /**
+     * [[@doctodo method_description:addTask]].
+     *
+     * @return [[@doctodo return_type:addTask]] [[@doctodo return_description:addTask]]
+     */
     public function addTask($id, $name)
     {
         if (is_null($this->_subtasks)) {
@@ -393,6 +531,11 @@ class Task extends \infinite\base\Component
         return $task;
     }
 
+    /**
+     * Get tasks.
+     *
+     * @return [[@doctodo return_type:getTasks]] [[@doctodo return_description:getTasks]]
+     */
     public function getTasks()
     {
         if (is_null($this->_subtasks)) {
@@ -402,6 +545,11 @@ class Task extends \infinite\base\Component
         return $this->_subtasks;
     }
 
+    /**
+     * Get task.
+     *
+     * @return [[@doctodo return_type:getTask]] [[@doctodo return_description:getTask]]
+     */
     public function getTask($id)
     {
         if (isset($this->tasks[$id])) {
@@ -411,6 +559,11 @@ class Task extends \infinite\base\Component
         return false;
     }
 
+    /**
+     * Get package.
+     *
+     * @return [[@doctodo return_type:getPackage]] [[@doctodo return_description:getPackage]]
+     */
     public function getPackage()
     {
         $estimate = $this->durationEstimate;

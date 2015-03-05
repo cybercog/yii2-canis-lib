@@ -11,19 +11,22 @@ namespace infinite\db\behaviors;
 use infinite\db\models\Relation;
 
 /**
- * PrimaryRelation [@doctodo write class description for PrimaryRelation].
+ * PrimaryRelation [[@doctodo class_description:infinite\db\behaviors\PrimaryRelation]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
 {
     /**
+     * @var [[@doctodo var_type:primaryChildField]] [[@doctodo var_description:primaryChildField]]
      */
     public $primaryChildField = 'primary_child';
     /**
+     * @var [[@doctodo var_type:primaryParentField]] [[@doctodo var_description:primaryParentField]]
      */
     public $primaryParentField = 'primary_parent';
     /**
+     * @var [[@doctodo var_type:wasPrimary]] [[@doctodo var_description:wasPrimary]]
      */
     public $wasPrimary = ['parent' => false, 'child' => false];
 
@@ -41,13 +44,20 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:handlePrimary]].
      *
+     * @return [[@doctodo return_type:handlePrimary]] [[@doctodo return_description:handlePrimary]]
      */
     public function handlePrimary($role)
     {
         return $this->owner instanceof Relation;
     }
 
+    /**
+     * Get primary field.
+     *
+     * @return [[@doctodo return_type:getPrimaryField]] [[@doctodo return_description:getPrimaryField]]
+     */
     public function getPrimaryField($role)
     {
         if (in_array($role, ['child', 'children'])) {
@@ -59,6 +69,10 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Get siblings.
+     *
+     * @param boolean $primaryOnly [[@doctodo param_description:primaryOnly]] [optional]
+     *
+     * @return [[@doctodo return_type:getSiblings]] [[@doctodo return_description:getSiblings]]
      */
     public function getSiblings($role, $primaryOnly = false)
     {
@@ -77,7 +91,9 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:beforeInsert]].
      *
+     * @return [[@doctodo return_type:beforeInsert]] [[@doctodo return_description:beforeInsert]]
      */
     public function beforeInsert($event = null)
     {
@@ -100,7 +116,9 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:beforeUpdate]].
      *
+     * @return [[@doctodo return_type:beforeUpdate]] [[@doctodo return_description:beforeUpdate]]
      */
     public function beforeUpdate($event = null)
     {
@@ -116,7 +134,9 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:afterUpdate]].
      *
+     * @return [[@doctodo return_type:afterUpdate]] [[@doctodo return_description:afterUpdate]]
      */
     public function afterUpdate($event = null)
     {
@@ -128,7 +148,7 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     *
+     * [[@doctodo method_description:afterDelete]].
      */
     public function afterDelete($event = null)
     {
@@ -136,7 +156,9 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:handOffPrimary]].
      *
+     * @return [[@doctodo return_type:handOffPrimary]] [[@doctodo return_description:handOffPrimary]]
      */
     public function handOffPrimary()
     {
@@ -159,6 +181,8 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Set primary.
+     *
+     * @return [[@doctodo return_type:setPrimary]] [[@doctodo return_description:setPrimary]]
      */
     public function setPrimary($role)
     {
@@ -180,6 +204,8 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Get is primary.
+     *
+     * @return [[@doctodo return_type:isPrimary]] [[@doctodo return_description:isPrimary]]
      */
     public function isPrimary($role)
     {

@@ -11,41 +11,50 @@ namespace infinite\db\behaviors;
 use Yii;
 
 /**
- * Blame [@doctodo write class description for Blame].
+ * Blame [[@doctodo class_description:infinite\db\behaviors\Blame]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class Blame extends \infinite\db\behaviors\ActiveRecord
 {
     /**
+     * @var [[@doctodo var_type:deletedField]] [[@doctodo var_description:deletedField]]
      */
     public $deletedField = 'deleted';
     /**
+     * @var [[@doctodo var_type:deletedByField]] [[@doctodo var_description:deletedByField]]
      */
     public $deletedByField = 'deleted_user_id';
 
     /**
+     * @var [[@doctodo var_type:createdField]] [[@doctodo var_description:createdField]]
      */
     public $createdField = 'created';
     /**
+     * @var [[@doctodo var_type:createdByField]] [[@doctodo var_description:createdByField]]
      */
     public $createdByField = 'created_user_id';
 
     /**
+     * @var [[@doctodo var_type:modifiedField]] [[@doctodo var_description:modifiedField]]
      */
     public $modifiedField = 'modified';
     /**
+     * @var [[@doctodo var_type:modifiedByField]] [[@doctodo var_description:modifiedByField]]
      */
     public $modifiedByField = 'modified_user_id';
 
     /**
+     * @var [[@doctodo var_type:databaseTimeFormat]] [[@doctodo var_description:databaseTimeFormat]]
      */
     public $databaseTimeFormat = 'Y-m-d H:i:s';
 
     /**
+     * @var [[@doctodo var_type:_userID]] [[@doctodo var_description:_userID]]
      */
     public static $_userID;
     /**
+     * @var [[@doctodo var_type:_fields]] [[@doctodo var_description:_fields]]
      */
     protected static $_fields = [];
 
@@ -62,6 +71,8 @@ class Blame extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Get fields.
+     *
+     * @return [[@doctodo return_type:getFields]] [[@doctodo return_description:getFields]]
      */
     public function getFields()
     {
@@ -81,6 +92,11 @@ class Blame extends \infinite\db\behaviors\ActiveRecord
         return self::$_fields[$ownerTable];
     }
 
+    /**
+     * [[@doctodo method_description:isActuallyDirty]].
+     *
+     * @return [[@doctodo return_type:isActuallyDirty]] [[@doctodo return_description:isActuallyDirty]]
+     */
     public function isActuallyDirty()
     {
         $values = $this->owner->getDirtyAttributes();
@@ -100,7 +116,9 @@ class Blame extends \infinite\db\behaviors\ActiveRecord
         return !empty($values);
     }
     /**
+     * [[@doctodo method_description:beforeInsert]].
      *
+     * @return [[@doctodo return_type:beforeInsert]] [[@doctodo return_description:beforeInsert]]
      */
     public function beforeInsert($event)
     {
@@ -126,7 +144,9 @@ class Blame extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:beforeUpdate]].
      *
+     * @return [[@doctodo return_type:beforeUpdate]] [[@doctodo return_description:beforeUpdate]]
      */
     public function beforeUpdate($event)
     {
@@ -145,7 +165,9 @@ class Blame extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:_getUserId]].
      *
+     * @return [[@doctodo return_type:_getUserId]] [[@doctodo return_description:_getUserId]]
      */
     protected static function _getUserId()
     {

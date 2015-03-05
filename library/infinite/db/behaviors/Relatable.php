@@ -15,7 +15,7 @@ use yii\base\Event;
 use yii\db\Query;
 
 /**
- * Relatable [@doctodo write class description for Relatable].
+ * Relatable [[@doctodo class_description:infinite\db\behaviors\Relatable]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -38,51 +38,73 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
      */
     public $updateRelationAuditEventClass = 'infinite\db\behaviors\auditable\UpdateRelationEvent';
     /**
+     * @var [[@doctodo var_type:parentObjectField]] [[@doctodo var_description:parentObjectField]]
      */
     public $parentObjectField = 'parent_object_id';
     /**
+     * @var [[@doctodo var_type:childObjectField]] [[@doctodo var_description:childObjectField]]
      */
     public $childObjectField = 'child_object_id';
     /**
+     * @var [[@doctodo var_type:activeField]] [[@doctodo var_description:activeField]]
      */
     public $activeField = 'active';
     /**
+     * @var [[@doctodo var_type:startDateField]] [[@doctodo var_description:startDateField]]
      */
     public $startDateField = 'start';
     /**
+     * @var [[@doctodo var_type:endDateField]] [[@doctodo var_description:endDateField]]
      */
     public $endDateField = 'end';
     /**
+     * @var [[@doctodo var_type:registryModelField]] [[@doctodo var_description:registryModelField]]
      */
     public $registryModelField = 'object_model';
     /**
+     * @var [[@doctodo var_type:objectAlias]] [[@doctodo var_description:objectAlias]]
      */
     public $objectAlias = 'o';
     /**
+     * @var [[@doctodo var_type:relationAlias]] [[@doctodo var_description:relationAlias]]
      */
     public $relationAlias = 'r';
     /**
+     * @var [[@doctodo var_type:registryAlias]] [[@doctodo var_description:registryAlias]]
      */
     public $registryAlias = 'x';
 
+    /**
+     * @var [[@doctodo var_type:skipUpdateEvent]] [[@doctodo var_description:skipUpdateEvent]]
+     */
     public $skipUpdateEvent = false;
 
     /**
+     * @var [[@doctodo var_type:_relationModels]] [[@doctodo var_description:_relationModels]]
      */
     protected static $_relationModels = [];
     /**
+     * @var [[@doctodo var_type:_relationModelsOld]] [[@doctodo var_description:_relationModelsOld]]
      */
     protected static $_relationModelsOld = [];
     /**
+     * @var [[@doctodo var_type:_relationsKey]] [[@doctodo var_description:_relationsKey]]
      */
     protected $_relationsKey;
     /**
+     * @var [[@doctodo var_type:_relations]] [[@doctodo var_description:_relations]]
      */
     protected $_relations = [];
     /*
      */
+    /**
+     * @var [[@doctodo var_type:_setGlobalEvents]] [[@doctodo var_description:_setGlobalEvents]]
+     */
     public static $_setGlobalEvents = false;
     /*
+     */
+    /**
+     * @var [[@doctodo var_type:debug]] [[@doctodo var_description:debug]]
      */
     public static $debug = [];
 
@@ -97,11 +119,21 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
         ];
     }
 
+    /**
+     * Get inherited parent models.
+     *
+     * @return [[@doctodo return_type:getInheritedParentModels]] [[@doctodo return_description:getInheritedParentModels]]
+     */
     public function getInheritedParentModels($childObject)
     {
         return [];
     }
 
+    /**
+     * Get inherited child models.
+     *
+     * @return [[@doctodo return_type:getInheritedChildModels]] [[@doctodo return_description:getInheritedChildModels]]
+     */
     public function getInheritedChildModels($parentObject)
     {
         return [];
@@ -129,7 +161,9 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:loadAllParentIds]].
      *
+     * @return [[@doctodo return_type:loadAllParentIds]] [[@doctodo return_description:loadAllParentIds]]
      */
     public function loadAllParentIds()
     {
@@ -138,6 +172,8 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Get all parent ids.
+     *
+     * @return [[@doctodo return_type:getAllParentIds]] [[@doctodo return_description:getAllParentIds]]
      */
     public static function getAllParentIds($child)
     {
@@ -167,6 +203,10 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Set all parent ids.
+     *
+     * @param array $parentIds [[@doctodo param_description:parentIds]] [optional]
+     *
+     * @return [[@doctodo return_type:setAllParentIds]] [[@doctodo return_description:setAllParentIds]]
      */
     public static function setAllParentIds($child, $parentIds = [])
     {
@@ -184,6 +224,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 
     // this helps prevent a ton of relation calls later on
     /**
+     * [[@doctodo method_description:loadChildParentIds]].
      */
     public function loadChildParentIds()
     {
@@ -221,7 +262,9 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:cleanupRelations]].
      *
+     * @return [[@doctodo return_type:cleanupRelations]] [[@doctodo return_description:cleanupRelations]]
      */
     public function cleanupRelations($event = null)
     {
@@ -234,7 +277,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     *
+     * [[@doctodo method_description:handleRelationSave]].
      */
     public function handleRelationSave($event)
     {
@@ -341,7 +384,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     *
+     * [[@doctodo method_description:afterSave]].
      */
     public function afterSave($event)
     {
@@ -350,6 +393,8 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Get default relation.
+     *
+     * @return [[@doctodo return_type:getDefaultRelation]] [[@doctodo return_description:getDefaultRelation]]
      */
     public function getDefaultRelation()
     {
@@ -360,6 +405,8 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Get relations key.
+     *
+     * @return [[@doctodo return_type:getRelationsKey]] [[@doctodo return_description:getRelationsKey]]
      */
     public function getRelationsKey()
     {
@@ -376,6 +423,10 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Get relation models.
+     *
+     * @param boolean $activeOnly [[@doctodo param_description:activeOnly]] [optional]
+     *
+     * @return [[@doctodo return_type:getObjectRelationModels]] [[@doctodo return_description:getObjectRelationModels]]
      */
     public function getObjectRelationModels($activeOnly = false)
     {
@@ -408,7 +459,9 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:registerRelationModel]].
      *
+     * @return [[@doctodo return_type:registerRelationModel]] [[@doctodo return_description:registerRelationModel]]
      */
     public function registerRelationModel($model, $key = null)
     {
@@ -448,6 +501,13 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
         return $model;
     }
 
+    /**
+     * [[@doctodo method_description:registerDeleteRelationAuditEvent]].
+     *
+     * @param array $base [[@doctodo param_description:base]] [optional]
+     *
+     * @return [[@doctodo return_type:registerDeleteRelationAuditEvent]] [[@doctodo return_description:registerDeleteRelationAuditEvent]]
+     */
     public function registerDeleteRelationAuditEvent($model, $base = [])
     {
         if ($this->owner->getBehavior('Auditable') === null) {
@@ -462,6 +522,13 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
         return $this->registerRelationAuditEvent($model, $base);
     }
 
+    /**
+     * [[@doctodo method_description:registerEndRelationAuditEvent]].
+     *
+     * @param array $base [[@doctodo param_description:base]] [optional]
+     *
+     * @return [[@doctodo return_type:registerEndRelationAuditEvent]] [[@doctodo return_description:registerEndRelationAuditEvent]]
+     */
     public function registerEndRelationAuditEvent($model, $base = [])
     {
         if ($this->owner->getBehavior('Auditable') === null) {
@@ -477,6 +544,13 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
         return $this->registerRelationAuditEvent($model, $base);
     }
 
+    /**
+     * [[@doctodo method_description:registerUpdateRelationAuditEvent]].
+     *
+     * @param array $base [[@doctodo param_description:base]] [optional]
+     *
+     * @return [[@doctodo return_type:registerUpdateRelationAuditEvent]] [[@doctodo return_description:registerUpdateRelationAuditEvent]]
+     */
     public function registerUpdateRelationAuditEvent($model, $base = [])
     {
         if ($this->owner->getBehavior('Auditable') === null) {
@@ -494,6 +568,13 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
         return $this->registerRelationAuditEvent($model, $base);
     }
 
+    /**
+     * [[@doctodo method_description:registerCreateRelationAuditEvent]].
+     *
+     * @param array $base [[@doctodo param_description:base]] [optional]
+     *
+     * @return [[@doctodo return_type:registerCreateRelationAuditEvent]] [[@doctodo return_description:registerCreateRelationAuditEvent]]
+     */
     public function registerCreateRelationAuditEvent($model, $base = [])
     {
         if ($this->owner->getBehavior('Auditable') === null) {
@@ -512,6 +593,13 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
         return $this->registerRelationAuditEvent($model, $base);
     }
 
+    /**
+     * [[@doctodo method_description:registerRelationAuditEvent]].
+     *
+     * @param array $base [[@doctodo param_description:base]] [optional]
+     *
+     * @return [[@doctodo return_type:registerRelationAuditEvent]] [[@doctodo return_description:registerRelationAuditEvent]]
+     */
     protected function registerRelationAuditEvent($model, $base = [])
     {
         $eventLog = $base;
@@ -536,6 +624,8 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
     /**
      * Get relation model.
+     *
+     * @return [[@doctodo return_type:getObjectRelationModel]] [[@doctodo return_description:getObjectRelationModel]]
      */
     public function getObjectRelationModel($id)
     {
@@ -568,7 +658,12 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:parents]].
      *
+     * @param array $relationOptions [[@doctodo param_description:relationOptions]] [optional]
+     * @param array $objectOptions   [[@doctodo param_description:objectOptions]] [optional]
+     *
+     * @return [[@doctodo return_type:parents]] [[@doctodo return_description:parents]]
      */
     public function parents($model, $relationOptions = [], $objectOptions = [])
     {
@@ -576,7 +671,12 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:parent]].
      *
+     * @param array $relationOptions [[@doctodo param_description:relationOptions]] [optional]
+     * @param array $objectOptions   [[@doctodo param_description:objectOptions]] [optional]
+     *
+     * @return [[@doctodo return_type:parent]] [[@doctodo return_description:parent]]
      */
     public function parent($model, $relationOptions = [], $objectOptions = [])
     {
@@ -589,7 +689,12 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:children]].
      *
+     * @param array $relationOptions [[@doctodo param_description:relationOptions]] [optional]
+     * @param array $objectOptions   [[@doctodo param_description:objectOptions]] [optional]
+     *
+     * @return [[@doctodo return_type:children]] [[@doctodo return_description:children]]
      */
     public function children($model, $relationOptions = [], $objectOptions = [])
     {
@@ -597,7 +702,12 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:child]].
      *
+     * @param array $relationOptions [[@doctodo param_description:relationOptions]] [optional]
+     * @param array $objectOptions   [[@doctodo param_description:objectOptions]] [optional]
+     *
+     * @return [[@doctodo return_type:child]] [[@doctodo return_description:child]]
      */
     public function child($model, $relationOptions = [], $objectOptions = [])
     {
@@ -611,6 +721,11 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Get parent ids.
+     *
+     * @param boolean $model           [[@doctodo param_description:model]] [optional]
+     * @param array   $relationOptions [[@doctodo param_description:relationOptions]] [optional]
+     *
+     * @return [[@doctodo return_type:getParentIds]] [[@doctodo return_description:getParentIds]]
      */
     public function getParentIds($model = false, $relationOptions = [])
     {
@@ -619,6 +734,11 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Get child ids.
+     *
+     * @param boolean $model           [[@doctodo param_description:model]] [optional]
+     * @param array   $relationOptions [[@doctodo param_description:relationOptions]] [optional]
+     *
+     * @return [[@doctodo return_type:getChildIds]] [[@doctodo return_description:getChildIds]]
      */
     public function getChildIds($model = false, $relationOptions = [])
     {
@@ -626,7 +746,12 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:queryParentObjects]].
      *
+     * @param array $relationOptions [[@doctodo param_description:relationOptions]] [optional]
+     * @param array $objectOptions   [[@doctodo param_description:objectOptions]] [optional]
+     *
+     * @return [[@doctodo return_type:queryParentObjects]] [[@doctodo return_description:queryParentObjects]]
      */
     public function queryParentObjects($model, $relationOptions = [], $objectOptions = [])
     {
@@ -634,7 +759,12 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:queryChildObjects]].
      *
+     * @param array $relationOptions [[@doctodo param_description:relationOptions]] [optional]
+     * @param array $objectOptions   [[@doctodo param_description:objectOptions]] [optional]
+     *
+     * @return [[@doctodo return_type:queryChildObjects]] [[@doctodo return_description:queryChildObjects]]
      */
     public function queryChildObjects($model, $relationOptions = [], $objectOptions = [])
     {
@@ -642,7 +772,12 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:queryRelativeObjects]].
      *
+     * @param array $relationOptions [[@doctodo param_description:relationOptions]] [optional]
+     * @param array $objectOptions   [[@doctodo param_description:objectOptions]] [optional]
+     *
+     * @return [[@doctodo return_type:queryRelativeObjects]] [[@doctodo return_description:queryRelativeObjects]]
      */
     public function queryRelativeObjects($relationshipType, $model, $relationOptions = [], $objectOptions = [])
     {
@@ -662,7 +797,12 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:queryParentRelations]].
      *
+     * @param boolean $model           [[@doctodo param_description:model]] [optional]
+     * @param array   $relationOptions [[@doctodo param_description:relationOptions]] [optional]
+     *
+     * @return [[@doctodo return_type:queryParentRelations]] [[@doctodo return_description:queryParentRelations]]
      */
     public function queryParentRelations($model = false, $relationOptions = [])
     {
@@ -670,7 +810,12 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:queryChildRelations]].
      *
+     * @param boolean $model           [[@doctodo param_description:model]] [optional]
+     * @param array   $relationOptions [[@doctodo param_description:relationOptions]] [optional]
+     *
+     * @return [[@doctodo return_type:queryChildRelations]] [[@doctodo return_description:queryChildRelations]]
      */
     public function queryChildRelations($model = false, $relationOptions = [])
     {
@@ -678,7 +823,13 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:queryAllRelations]].
      *
+     * @param boolean $model           [[@doctodo param_description:model]] [optional]
+     * @param array   $relationOptions [[@doctodo param_description:relationOptions]] [optional]
+     * @param array   $objectOptions   [[@doctodo param_description:objectOptions]] [optional]
+     *
+     * @return [[@doctodo return_type:queryAllRelations]] [[@doctodo return_description:queryAllRelations]]
      */
     public function queryAllRelations($model = false, $relationOptions = [], $objectOptions = [])
     {
@@ -686,7 +837,12 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:queryRelations]].
      *
+     * @param boolean $model           [[@doctodo param_description:model]] [optional]
+     * @param array   $relationOptions [[@doctodo param_description:relationOptions]] [optional]
+     *
+     * @return [[@doctodo return_type:queryRelations]] [[@doctodo return_description:queryRelations]]
      */
     public function queryRelations($relationshipType, $model = false, $relationOptions = [])
     {
@@ -701,7 +857,12 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:siblingObjectQuery]].
      *
+     * @param array $relationOptions [[@doctodo param_description:relationOptions]] [optional]
+     * @param array $objectOptions   [[@doctodo param_description:objectOptions]] [optional]
+     *
+     * @return [[@doctodo return_type:siblingObjectQuery]] [[@doctodo return_description:siblingObjectQuery]]
      */
     public function siblingObjectQuery($parent, $relationOptions = [], $objectOptions = [])
     {
@@ -712,7 +873,12 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:siblingRelationQuery]].
      *
+     * @param array $relationOptions [[@doctodo param_description:relationOptions]] [optional]
+     * @param array $objectOptions   [[@doctodo param_description:objectOptions]] [optional]
+     *
+     * @return [[@doctodo return_type:siblingRelationQuery]] [[@doctodo return_description:siblingRelationQuery]]
      */
     public function siblingRelationQuery($parent, $relationOptions = [], $objectOptions = [])
     {
@@ -723,7 +889,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     *
+     * [[@doctodo method_description:_prepareSiblingOptions]].
      */
     protected function _prepareSiblingOptions(&$relationOptions)
     {
@@ -741,7 +907,12 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:hasParent]].
      *
+     * @param array $relationOptions [[@doctodo param_description:relationOptions]] [optional]
+     * @param array $objectOptions   [[@doctodo param_description:objectOptions]] [optional]
+     *
+     * @return [[@doctodo return_type:hasParent]] [[@doctodo return_description:hasParent]]
      */
     public function hasParent($model, $check = null, $relationOptions = [], $objectOptions = [])
     {
@@ -749,7 +920,12 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:hasAncestor]].
      *
+     * @param array $relationOptions [[@doctodo param_description:relationOptions]] [optional]
+     * @param array $objectOptions   [[@doctodo param_description:objectOptions]] [optional]
+     *
+     * @return [[@doctodo return_type:hasAncestor]] [[@doctodo return_description:hasAncestor]]
      */
     public function hasAncestor($model, $check = null, $relationOptions = [], $objectOptions = [], $maxLevels = null)
     {
@@ -770,7 +946,13 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:ancestors]].
      *
+     * @param array   $relationOptions [[@doctodo param_description:relationOptions]] [optional]
+     * @param array   $objectOptions   [[@doctodo param_description:objectOptions]] [optional]
+     * @param integer $currentLevel    [[@doctodo param_description:currentLevel]] [optional]
+     *
+     * @return [[@doctodo return_type:ancestors]] [[@doctodo return_description:ancestors]]
      */
     public function ancestors($model, $relationOptions = [], $objectOptions = [], $maxLevels = null, $currentLevel = 0)
     {
@@ -790,7 +972,13 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:descendants]].
      *
+     * @param array   $relationOptions [[@doctodo param_description:relationOptions]] [optional]
+     * @param array   $objectOptions   [[@doctodo param_description:objectOptions]] [optional]
+     * @param integer $currentLevel    [[@doctodo param_description:currentLevel]] [optional]
+     *
+     * @return [[@doctodo return_type:descendants]] [[@doctodo return_description:descendants]]
      */
     public function descendants($model, $relationOptions = [], $objectOptions = [], $maxLevels = null, $currentLevel = 0)
     {
@@ -810,7 +998,9 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:_aliasKeys]].
      *
+     * @return [[@doctodo return_type:_aliasKeys]] [[@doctodo return_description:_aliasKeys]]
      */
     protected function _aliasKeys($conditions, $alias)
     {
@@ -828,7 +1018,14 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:_prepareObjectQuery]].
      *
+     * @param yii\db\Query $query            [[@doctodo param_description:query]]
+     * @param boolean      $relationshipType [[@doctodo param_description:relationshipType]] [optional]
+     * @param boolean      $model            [[@doctodo param_description:model]] [optional]
+     * @param array        $objectOptions    [[@doctodo param_description:objectOptions]] [optional]
+     *
+     * @return [[@doctodo return_type:_prepareObjectQuery]] [[@doctodo return_description:_prepareObjectQuery]]
      */
     protected function _prepareObjectQuery(Query $query, $relationshipType = false, $model = false, $objectOptions = [])
     {
@@ -848,7 +1045,7 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     *
+     * [[@doctodo method_description:_prepareRegistryModelCheck]].
      */
     protected function _prepareRegistryModelCheck($query, $relationshipType, $model)
     {
@@ -870,7 +1067,14 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:_prepareRelationQuery]].
      *
+     * @param yii\db\Query $query            [[@doctodo param_description:query]]
+     * @param boolean      $relationshipType [[@doctodo param_description:relationshipType]] [optional]
+     * @param boolean      $model            [[@doctodo param_description:model]] [optional]
+     * @param array        $relationOptions  [[@doctodo param_description:relationOptions]] [optional]
+     *
+     * @return [[@doctodo return_type:_prepareRelationQuery]] [[@doctodo return_description:_prepareRelationQuery]]
      */
     protected function _prepareRelationQuery(Query $query, $relationshipType = false, $model = false, $relationOptions = [])
     {
@@ -1013,13 +1217,16 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     *
+     * [[@doctodo method_description:addActiveConditions]].
      */
     public function addActiveConditions($query, $alias = null)
     {
         self::doAddActiveConditions($query, $alias);
     }
 
+    /**
+     * [[@doctodo method_description:doAddActiveConditions]].
+     */
     public static function doAddActiveConditions($query, $alias = null)
     {
         $instance = new static();
@@ -1039,7 +1246,12 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:_applyOptions]].
      *
+     * @param yii\db\Query $query   [[@doctodo param_description:query]]
+     * @param array        $options [[@doctodo param_description:options]] [optional]
+     *
+     * @return [[@doctodo return_type:_applyOptions]] [[@doctodo return_description:_applyOptions]]
      */
     protected function _applyOptions(Query $query, $options = [])
     {
@@ -1053,7 +1265,9 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:isParentPrimary]].
      *
+     * @return [[@doctodo return_type:isParentPrimary]] [[@doctodo return_description:isParentPrimary]]
      */
     public function isParentPrimary($companionId)
     {
@@ -1072,7 +1286,9 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:isChildPrimary]].
      *
+     * @return [[@doctodo return_type:isChildPrimary]] [[@doctodo return_description:isChildPrimary]]
      */
     public function isChildPrimary($companionId)
     {
@@ -1091,7 +1307,9 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:parentModel]].
      *
+     * @return [[@doctodo return_type:parentModel]] [[@doctodo return_description:parentModel]]
      */
     public function parentModel($companionId)
     {
@@ -1110,7 +1328,9 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:childModel]].
      *
+     * @return [[@doctodo return_type:childModel]] [[@doctodo return_description:childModel]]
      */
     public function childModel($companionId)
     {
@@ -1130,6 +1350,8 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Get relation.
+     *
+     * @return [[@doctodo return_type:getObjectRelation]] [[@doctodo return_description:getObjectRelation]]
      */
     public function getObjectRelation($parentObject, $childObject)
     {
@@ -1144,11 +1366,21 @@ class Relatable extends \infinite\db\behaviors\ActiveRecord
         return $relationClass::findOne(['parent_object_id' => $parentObject, 'child_object_id' => $childObject]);
     }
 
+    /**
+     * Get relation cache dependency.
+     *
+     * @return [[@doctodo return_type:getRelationCacheDependency]] [[@doctodo return_description:getRelationCacheDependency]]
+     */
     public function getRelationCacheDependency($object)
     {
         return self::relationCacheDependency($object);
     }
 
+    /**
+     * [[@doctodo method_description:relationCacheDependency]].
+     *
+     * @return [[@doctodo return_type:relationCacheDependency]] [[@doctodo return_description:relationCacheDependency]]
+     */
     public static function relationCacheDependency($object)
     {
         if (is_object($object)) {

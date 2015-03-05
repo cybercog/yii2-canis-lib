@@ -9,13 +9,14 @@
 namespace infinite\db\behaviors;
 
 /**
- * QueryArchivable [@doctodo write class description for QueryArchivable].
+ * QueryArchivable [[@doctodo class_description:infinite\db\behaviors\QueryArchivable]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class QueryArchivable extends QueryBehavior
 {
     /**
+     * @var [[@doctodo var_type:_allowArchives]] [[@doctodo var_description:_allowArchives]]
      */
     protected $_allowArchives;
 
@@ -31,6 +32,8 @@ class QueryArchivable extends QueryBehavior
 
     /**
      * Get allow archives.
+     *
+     * @return [[@doctodo return_type:getAllowArchives]] [[@doctodo return_description:getAllowArchives]]
      */
     public function getAllowArchives()
     {
@@ -39,6 +42,8 @@ class QueryArchivable extends QueryBehavior
 
     /**
      * Set allow archives.
+     *
+     * @return [[@doctodo return_type:setAllowArchives]] [[@doctodo return_description:setAllowArchives]]
      */
     public function setAllowArchives($value)
     {
@@ -48,7 +53,9 @@ class QueryArchivable extends QueryBehavior
     }
 
     /**
+     * [[@doctodo method_description:includeArchives]].
      *
+     * @return [[@doctodo return_type:includeArchives]] [[@doctodo return_description:includeArchives]]
      */
     public function includeArchives()
     {
@@ -58,7 +65,9 @@ class QueryArchivable extends QueryBehavior
     }
 
     /**
+     * [[@doctodo method_description:onlyArchives]].
      *
+     * @return [[@doctodo return_type:onlyArchives]] [[@doctodo return_description:onlyArchives]]
      */
     public function onlyArchives()
     {
@@ -68,7 +77,9 @@ class QueryArchivable extends QueryBehavior
     }
 
     /**
+     * [[@doctodo method_description:excludeArchives]].
      *
+     * @return [[@doctodo return_type:excludeArchives]] [[@doctodo return_description:excludeArchives]]
      */
     public function excludeArchives()
     {
@@ -78,7 +89,9 @@ class QueryArchivable extends QueryBehavior
     }
 
     /**
+     * [[@doctodo method_description:beforeQuery]].
      *
+     * @return [[@doctodo return_type:beforeQuery]] [[@doctodo return_description:beforeQuery]]
      */
     public function beforeQuery($event)
     {

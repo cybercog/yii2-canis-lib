@@ -13,7 +13,6 @@ use infinite\helpers\ArrayHelper;
 use Yii;
 
 /**
- * Collector [@doctodo write class description for Collector].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

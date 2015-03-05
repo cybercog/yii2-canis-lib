@@ -11,7 +11,6 @@ namespace infinite\security;
 use Yii;
 
 /**
- * Access [@doctodo write class description for Access].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

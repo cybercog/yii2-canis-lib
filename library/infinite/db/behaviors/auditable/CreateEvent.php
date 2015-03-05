@@ -9,7 +9,7 @@
 namespace infinite\db\behaviors\auditable;
 
 /**
- * InsertEvent [@doctodo write class description for InsertEvent].
+ * CreateEvent [[@doctodo class_description:infinite\db\behaviors\auditable\CreateEvent]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -24,6 +24,9 @@ class CreateEvent extends AttributesEvent
      */
     public $attributes;
 
+    /**
+     * @inheritdoc
+     */
     public function getVerb()
     {
         if (isset($this->indirectObject)) {

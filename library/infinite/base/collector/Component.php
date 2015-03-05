@@ -17,7 +17,7 @@ use yii\base\BootstrapInterface;
 use yii\base\Event;
 
 /**
- * Component [@doctodo write class description for Component].
+ * Component [[@doctodo class_description:infinite\base\collector\Component]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -26,20 +26,26 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
     const EVENT_AFTER_LOAD = 'afterLoad';
     const EVENT_AFTER_INIT = 'afterInit';
 
+    /**
+     * @var [[@doctodo var_type:cacheTime]] [[@doctodo var_description:cacheTime]]
+     */
     public $cacheTime = false;
 
     /**
+     * @var [[@doctodo var_type:_collectors]] [[@doctodo var_description:_collectors]]
      */
     protected $_collectors = [];
     /**
+     * @var [[@doctodo var_type:_init_collectors]] [[@doctodo var_description:_init_collectors]]
      */
     protected $_init_collectors = [];
     /**
+     * @var [[@doctodo var_type:_loaded]] [[@doctodo var_description:_loaded]]
      */
     protected $_loaded = false;
 
     /**
-     *
+     * [[@doctodo method_description:bootstrap]].
      */
     public function bootstrap($app)
     {
@@ -47,7 +53,9 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
     }
 
     /**
+     * [[@doctodo method_description:beforeRequest]].
      *
+     * @return [[@doctodo return_type:beforeRequest]] [[@doctodo return_description:beforeRequest]]
      */
     public function beforeRequest($event)
     {
@@ -58,6 +66,11 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
         $this->load();
     }
 
+    /**
+     * [[@doctodo method_description:loadFromCache]].
+     *
+     * @return [[@doctodo return_type:loadFromCache]] [[@doctodo return_description:loadFromCache]]
+     */
     protected function loadFromCache($cacheKey)
     {
         if (!$this->cacheTime) {
@@ -76,6 +89,11 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
         return false;
     }
 
+    /**
+     * [[@doctodo method_description:saveCache]].
+     *
+     * @return [[@doctodo return_type:saveCache]] [[@doctodo return_description:saveCache]]
+     */
     protected function saveCache($cacheKey)
     {
         if (!$this->cacheTime) {
@@ -88,6 +106,9 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
     }
 
     /**
+     * [[@doctodo method_description:load]].
+     *
+     * @return [[@doctodo return_type:load]] [[@doctodo return_description:load]]
      */
     public function load()
     {
@@ -121,7 +142,9 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
     }
 
     /**
+     * [[@doctodo method_description:areReady]].
      *
+     * @return [[@doctodo return_type:areReady]] [[@doctodo return_description:areReady]]
      */
     public function areReady()
     {
@@ -146,7 +169,9 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
     }
 
     /**
+     * [[@doctodo method_description:initialize]].
      *
+     * @return [[@doctodo return_type:initialize]] [[@doctodo return_description:initialize]]
      */
     public function initialize()
     {
@@ -164,6 +189,8 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
 
     /**
      * Get collectors.
+     *
+     * @return [[@doctodo return_type:getCollectors]] [[@doctodo return_description:getCollectors]]
      */
     public function getCollectors()
     {
@@ -179,7 +206,9 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
     }
 
     /**
+     * [[@doctodo method_description:onAfterLoad]].
      *
+     * @return [[@doctodo return_type:onAfterLoad]] [[@doctodo return_description:onAfterLoad]]
      */
     public function onAfterLoad($action)
     {
@@ -187,7 +216,9 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
     }
 
     /**
+     * [[@doctodo method_description:onAfterInit]].
      *
+     * @return [[@doctodo return_type:onAfterInit]] [[@doctodo return_description:onAfterInit]]
      */
     public function onAfterInit($action)
     {
@@ -195,7 +226,9 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
     }
 
     /**
+     * [[@doctodo method_description:internalRegisterCollector]].
      *
+     * @return [[@doctodo return_type:internalRegisterCollector]] [[@doctodo return_description:internalRegisterCollector]]
      */
     protected function internalRegisterCollector($id, $collector)
     {
@@ -211,7 +244,9 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
     }
 
     /**
+     * [[@doctodo method_description:toArray]].
      *
+     * @return [[@doctodo return_type:toArray]] [[@doctodo return_description:toArray]]
      */
     public function toArray()
     {
@@ -220,6 +255,8 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
 
     /**
      * Get sleeping count.
+     *
+     * @return [[@doctodo return_type:getSleepingCount]] [[@doctodo return_description:getSleepingCount]]
      */
     public function getSleepingCount()
     {
@@ -227,7 +264,9 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
     }
 
     /**
+     * [[@doctodo method_description:sleeping]].
      *
+     * @return [[@doctodo return_type:sleeping]] [[@doctodo return_description:sleeping]]
      */
     public function sleeping()
     {

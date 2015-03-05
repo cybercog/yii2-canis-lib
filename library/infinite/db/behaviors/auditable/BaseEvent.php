@@ -9,7 +9,7 @@
 namespace infinite\db\behaviors\auditable;
 
 /**
- * BaseEvent [@doctodo write class description for BaseEvent].
+ * BaseEvent [[@doctodo class_description:infinite\db\behaviors\auditable\BaseEvent]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

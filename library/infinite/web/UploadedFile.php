@@ -9,7 +9,6 @@
 namespace infinite\web;
 
 /**
- * UploadedFile [@doctodo write class description for UploadedFile].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

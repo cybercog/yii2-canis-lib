@@ -11,7 +11,6 @@ namespace infinite\web\grid;
 use infinite\helpers\Html;
 
 /**
- * Row [@doctodo write class description for Row].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

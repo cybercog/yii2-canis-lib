@@ -11,7 +11,7 @@ namespace infinite\console;
 use infinite\base\ApplicationTrait;
 
 /**
- * Application [@doctodo write class description for Application].
+ * Application [[@doctodo class_description:infinite\console\Application]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

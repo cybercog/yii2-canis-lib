@@ -11,16 +11,18 @@ namespace infinite\db\behaviors;
 use Yii;
 
 /**
- * Ownable [@doctodo write class description for Ownable].
+ * Ownable [[@doctodo class_description:infinite\db\behaviors\Ownable]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class Ownable extends \infinite\db\behaviors\ActiveRecord
 {
     /**
+     * @var [[@doctodo var_type:_table]] [[@doctodo var_description:_table]]
      */
     public static $_table;
     /**
+     * @var [[@doctodo var_type:ownableEnabled]] [[@doctodo var_description:ownableEnabled]]
      */
     public $ownableEnabled = true;
     const ROLE_OWNER = 'owner';
@@ -48,7 +50,9 @@ class Ownable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:isEnabled]].
      *
+     * @return [[@doctodo return_type:isEnabled]] [[@doctodo return_description:isEnabled]]
      */
     public function isEnabled()
     {
@@ -64,7 +68,9 @@ class Ownable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:determineOwner]].
      *
+     * @return [[@doctodo return_type:determineOwner]] [[@doctodo return_description:determineOwner]]
      */
     public function determineOwner()
     {
@@ -76,7 +82,9 @@ class Ownable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:ownerAccess]].
      *
+     * @return [[@doctodo return_type:ownerAccess]] [[@doctodo return_description:ownerAccess]]
      */
     public function ownerAccess()
     {
@@ -84,7 +92,9 @@ class Ownable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:beforeSave]].
      *
+     * @return [[@doctodo return_type:beforeSave]] [[@doctodo return_description:beforeSave]]
      */
     public function beforeSave($event)
     {
@@ -100,7 +110,9 @@ class Ownable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:hasObjectOwner]].
      *
+     * @return [[@doctodo return_type:hasObjectOwner]] [[@doctodo return_description:hasObjectOwner]]
      */
     public function hasObjectOwner()
     {
@@ -114,6 +126,8 @@ class Ownable extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Set object owner.
+     *
+     * @return [[@doctodo return_type:setObjectOwner]] [[@doctodo return_description:setObjectOwner]]
      */
     public function setObjectOwner($aro)
     {
@@ -126,6 +140,8 @@ class Ownable extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Get object owner.
+     *
+     * @return [[@doctodo return_type:getObjectOwner]] [[@doctodo return_description:getObjectOwner]]
      */
     public function getObjectOwner()
     {
@@ -137,7 +153,9 @@ class Ownable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:afterSave]].
      *
+     * @return [[@doctodo return_type:afterSave]] [[@doctodo return_description:afterSave]]
      */
     public function afterSave($event)
     {

@@ -9,7 +9,7 @@
 namespace infinite\db\behaviors\auditable;
 
 /**
- * DeleteRelationEvent [@doctodo write class description for DeleteRelationEvent].
+ * CreateRelationEvent [[@doctodo class_description:infinite\db\behaviors\auditable\CreateRelationEvent]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -20,6 +20,9 @@ class CreateRelationEvent extends RelationEvent
      */
     protected $_id = 'create_relation';
 
+    /**
+     * @inheritdoc
+     */
     public function getVerb()
     {
         return new \infinite\base\language\Verb('link');

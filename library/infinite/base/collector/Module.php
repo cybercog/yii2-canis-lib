@@ -12,7 +12,7 @@ use Yii;
 use yii\base\Event;
 
 /**
- * Module [@doctodo write class description for Module].
+ * Module [[@doctodo class_description:infinite\base\collector\Module]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -21,9 +21,11 @@ abstract class Module extends Collector
     const EVENT_AFTER_LOAD = 'afterLoad';
 
     /**
+     * @var [[@doctodo var_type:autoload]] [[@doctodo var_description:autoload]]
      */
     public $autoload = true;
     /**
+     * @var [[@doctodo var_type:_loaded]] [[@doctodo var_description:_loaded]]
      */
     protected $_loaded = false;
 
@@ -43,7 +45,9 @@ abstract class Module extends Collector
     }
 
     /**
+     * [[@doctodo method_description:load]].
      *
+     * @param boolean $force [[@doctodo param_description:force]] [optional]
      */
     public function load($force = false)
     {
@@ -64,7 +68,9 @@ abstract class Module extends Collector
     }
 
     /**
+     * [[@doctodo method_description:onAfterLoad]].
      *
+     * @return [[@doctodo return_type:onAfterLoad]] [[@doctodo return_description:onAfterLoad]]
      */
     public function onAfterLoad($action)
     {

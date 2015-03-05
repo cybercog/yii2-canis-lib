@@ -11,26 +11,31 @@ namespace infinite\db\behaviors;
 use infinite\helpers\Date as DateHelper;
 
 /**
- * Date [@doctodo write class description for Date].
+ * Date [[@doctodo class_description:infinite\db\behaviors\Date]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class Date extends \infinite\db\behaviors\ActiveRecord
 {
     /**
+     * @var [[@doctodo var_type:_handle]] [[@doctodo var_description:_handle]]
      */
     protected static $_handle = [];
     /**
+     * @var [[@doctodo var_type:dbTimeFormat]] [[@doctodo var_description:dbTimeFormat]]
      */
     public $dbTimeFormat = "G:i:s";
     /**
+     * @var [[@doctodo var_type:dbDateFormat]] [[@doctodo var_description:dbDateFormat]]
      */
     public $dbDateFormat = "Y-m-d";
 
     /**
+     * @var [[@doctodo var_type:humanTimeFormat]] [[@doctodo var_description:humanTimeFormat]]
      */
     public $humanTimeFormat = "g:i:s a";
     /**
+     * @var [[@doctodo var_type:humanDateFormat]] [[@doctodo var_description:humanDateFormat]]
      */
     public $humanDateFormat = "m/d/Y";
 
@@ -50,7 +55,9 @@ class Date extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:_toDatabase]].
      *
+     * @return [[@doctodo return_type:_toDatabase]] [[@doctodo return_description:_toDatabase]]
      */
     public function _toDatabase($event)
     {
@@ -64,7 +71,7 @@ class Date extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     *
+     * [[@doctodo method_description:_toHumanErrorCheck]].
      */
     public function _toHumanErrorCheck($event)
     {
@@ -74,7 +81,9 @@ class Date extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:_toHuman]].
      *
+     * @return [[@doctodo return_type:_toHuman]] [[@doctodo return_description:_toHuman]]
      */
     public function _toHuman($event)
     {
@@ -86,7 +95,9 @@ class Date extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:_formatForDatabase]].
      *
+     * @return [[@doctodo return_type:_formatForDatabase]] [[@doctodo return_description:_formatForDatabase]]
      */
     protected function _formatForDatabase($field, $format)
     {
@@ -121,7 +132,9 @@ class Date extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:_formatForHuman]].
      *
+     * @return [[@doctodo return_type:_formatForHuman]] [[@doctodo return_description:_formatForHuman]]
      */
     protected function _formatForHuman($field, $format)
     {
@@ -152,6 +165,11 @@ class Date extends \infinite\db\behaviors\ActiveRecord
         return $field;
     }
 
+    /**
+     * [[@doctodo method_description:convertToDatabaseDate]].
+     *
+     * @return [[@doctodo return_type:convertToDatabaseDate]] [[@doctodo return_description:convertToDatabaseDate]]
+     */
     public function convertToDatabaseDate($attributes = null)
     {
         if ($attributes === null) {
@@ -168,6 +186,11 @@ class Date extends \infinite\db\behaviors\ActiveRecord
         return $attributes;
     }
 
+    /**
+     * [[@doctodo method_description:convertToHumanDate]].
+     *
+     * @return [[@doctodo return_type:convertToHumanDate]] [[@doctodo return_description:convertToHumanDate]]
+     */
     public function convertToHumanDate($attributes = null)
     {
         if ($attributes === null) {
@@ -186,6 +209,8 @@ class Date extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Get handle.
+     *
+     * @return [[@doctodo return_type:getHandle]] [[@doctodo return_description:getHandle]]
      */
     public function getHandle()
     {

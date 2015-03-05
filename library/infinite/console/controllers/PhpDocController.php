@@ -31,15 +31,19 @@ class PhpDocController extends Controller
      */
     public $defaultAction = 'property';
     /**
+     * @var [[@doctodo var_type:author]] [[@doctodo var_description:author]]
      */
     public $author = "Jacob Morrison <email@ofjacob.com>";
     /**
+     * @var [[@doctodo var_type:copyright]] [[@doctodo var_description:copyright]]
      */
     public $copyright = "Copyright (c) 2014 Infinite Cascade";
     /**
+     * @var [[@doctodo var_type:link]] [[@doctodo var_description:link]]
      */
     public $link = "http://www.infinitecascade.com/";
     /**
+     * @var [[@doctodo var_type:license]] [[@doctodo var_description:license]]
      */
     public $license = "http://www.infinitecascade.com/license";
     /**
@@ -122,7 +126,9 @@ class PhpDocController extends Controller
     }
 
     /**
+     * [[@doctodo method_description:findFiles]].
      *
+     * @return [[@doctodo return_type:findFiles]] [[@doctodo return_description:findFiles]]
      */
     protected function findFiles($root)
     {
@@ -174,7 +180,7 @@ class PhpDocController extends Controller
     }
 
     /**
-     *
+     * [[@doctodo method_description:fixFileDoc]].
      */
     protected function fixFileDoc(&$lines, $file)
     {
@@ -212,7 +218,9 @@ class PhpDocController extends Controller
     }
 
     /**
+     * [[@doctodo method_description:guessClassDescription]].
      *
+     * @return [[@doctodo return_type:guessClassDescription]] [[@doctodo return_description:guessClassDescription]]
      */
     protected function guessClassDescription($ref)
     {
@@ -227,7 +235,9 @@ class PhpDocController extends Controller
     }
 
     /**
+     * [[@doctodo method_description:updateClassPropertyDocs]].
      *
+     * @return [[@doctodo return_type:updateClassPropertyDocs]] [[@doctodo return_description:updateClassPropertyDocs]]
      */
     protected function updateClassPropertyDocs($file, $className, $propertyDoc, $coveredProperties)
     {
@@ -245,7 +255,6 @@ class PhpDocController extends Controller
         } else {
             $startLine -= $oldDocSize;
         }
-        // * ". $ref->getShortName() ." @doctodo write class description for ". $ref->getShortName() ."\n
 
         if (true || !$ref->isSubclassOf('yii\base\Object') && $className != 'yii\base\Object') {
             $newDoc = $oldDoc;
@@ -314,7 +323,9 @@ class PhpDocController extends Controller
     }
 
     /**
+     * [[@doctodo method_description:guessMethodDescription]].
      *
+     * @return [[@doctodo return_type:guessMethodDescription]] [[@doctodo return_description:guessMethodDescription]]
      */
     public function guessMethodDescription($method)
     {
@@ -336,7 +347,9 @@ class PhpDocController extends Controller
     }
 
     /**
+     * [[@doctodo method_description:generatePropertyDocs]].
      *
+     * @return [[@doctodo return_type:generatePropertyDocs]] [[@doctodo return_description:generatePropertyDocs]]
      */
     public function generatePropertyDocs($class, $property, $lines)
     {
@@ -382,7 +395,9 @@ class PhpDocController extends Controller
     }
 
     /**
+     * [[@doctodo method_description:generateMethodDocs]].
      *
+     * @return [[@doctodo return_type:generateMethodDocs]] [[@doctodo return_description:generateMethodDocs]]
      */
     public function generateMethodDocs($method, $lines)
     {
@@ -513,6 +528,8 @@ class PhpDocController extends Controller
 
     /**
      * Get method code.
+     *
+     * @return [[@doctodo return_type:getMethodCode]] [[@doctodo return_description:getMethodCode]]
      */
     public function getMethodCode($method)
     {
@@ -528,7 +545,9 @@ class PhpDocController extends Controller
     }
 
     /**
+     * [[@doctodo method_description:updatePropertyDocs]].
      *
+     * @return [[@doctodo return_type:updatePropertyDocs]] [[@doctodo return_description:updatePropertyDocs]]
      */
     public function updatePropertyDocs($fileContent, $className, $file)
     {
@@ -604,7 +623,9 @@ class PhpDocController extends Controller
     }
 
     /**
+     * [[@doctodo method_description:updateMethodDocs]].
      *
+     * @return [[@doctodo return_type:updateMethodDocs]] [[@doctodo return_description:updateMethodDocs]]
      */
     public function updateMethodDocs($fileContent, $className, $file)
     {
@@ -662,7 +683,12 @@ class PhpDocController extends Controller
     }
 
     /**
+     * [[@doctodo method_description:isPropertyReplacingParent]].
      *
+     * @param ReflectionClass    $class    [[@doctodo param_description:class]]
+     * @param ReflectionProperty $property [[@doctodo param_description:property]]
+     *
+     * @return [[@doctodo return_type:isPropertyReplacingParent]] [[@doctodo return_description:isPropertyReplacingParent]]
      */
     public function isPropertyReplacingParent(\ReflectionClass $class, \ReflectionProperty $property)
     {
@@ -678,7 +704,12 @@ class PhpDocController extends Controller
     }
 
     /**
+     * [[@doctodo method_description:isMethodReplacingParent]].
      *
+     * @param ReflectionClass  $class  [[@doctodo param_description:class]]
+     * @param ReflectionMethod $method [[@doctodo param_description:method]]
+     *
+     * @return [[@doctodo return_type:isMethodReplacingParent]] [[@doctodo return_description:isMethodReplacingParent]]
      */
     public function isMethodReplacingParent(\ReflectionClass $class, \ReflectionMethod $method)
     {
@@ -764,7 +795,9 @@ class PhpDocController extends Controller
     }
 
     /**
+     * [[@doctodo method_description:generateClassPropertyDocs]].
      *
+     * @return [[@doctodo return_type:generateClassPropertyDocs]] [[@doctodo return_description:generateClassPropertyDocs]]
      */
     protected function generateClassPropertyDocs($fileName)
     {
@@ -896,7 +929,9 @@ class PhpDocController extends Controller
     }
 
     /**
+     * [[@doctodo method_description:match]].
      *
+     * @return [[@doctodo return_type:match]] [[@doctodo return_description:match]]
      */
     protected function match($pattern, $subject)
     {
@@ -914,7 +949,9 @@ class PhpDocController extends Controller
     }
 
     /**
+     * [[@doctodo method_description:fixSentence]].
      *
+     * @return [[@doctodo return_type:fixSentence]] [[@doctodo return_description:fixSentence]]
      */
     protected function fixSentence($str)
     {
@@ -928,6 +965,8 @@ class PhpDocController extends Controller
 
     /**
      * Get prop param.
+     *
+     * @return [[@doctodo return_type:getPropParam]] [[@doctodo return_description:getPropParam]]
      */
     protected function getPropParam($prop, $param)
     {

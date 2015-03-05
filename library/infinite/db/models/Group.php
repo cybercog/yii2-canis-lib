@@ -28,8 +28,14 @@ class Group extends \infinite\db\ActiveRecord implements IdentityInterface
     /*
      * @inheritdoc
      */
+    /*
+     * @inheritdoc
+     */
     static protected $_cache = ['id' => [], 'system' => []];
     /*
+     */
+    /**
+     * @var [[@doctodo var_type:_doCache]] [[@doctodo var_description:_doCache]]
      */
     protected static $_doCache = true;
     /**
@@ -102,6 +108,11 @@ class Group extends \infinite\db\ActiveRecord implements IdentityInterface
      * @param unknown $system
      * @return unknown
      */
+    /**
+     * Get system group.
+     *
+     * @return [[@doctodo return_type:getSystemGroup]] [[@doctodo return_description:getSystemGroup]]
+     */
     public static function getSystemGroup($system)
     {
         // @todo add cache
@@ -112,12 +123,18 @@ class Group extends \infinite\db\ActiveRecord implements IdentityInterface
 
     /*
      */
+    /**
+     * [[@doctodo method_description:enableCache]].
+     */
     public static function enableCache()
     {
         self::$_doCache = true;
     }
 
     /*
+     */
+    /**
+     * [[@doctodo method_description:disableCache]].
      */
     public static function disableCache()
     {
@@ -128,6 +145,7 @@ class Group extends \infinite\db\ActiveRecord implements IdentityInterface
      * Get by.
      *
      * @param unknown $id
+     * @param boolean $checkAccess [[@doctodo param_description:checkAccess]] [optional]
      *
      * @return unknown
      */
@@ -158,6 +176,13 @@ class Group extends \infinite\db\ActiveRecord implements IdentityInterface
      * @param unknown $id
      * @return unknown
      */
+    /**
+     * Get by system name.
+     *
+     * @param boolean $checkAccess [[@doctodo param_description:checkAccess]] [optional]
+     *
+     * @return [[@doctodo return_type:getBySystemName]] [[@doctodo return_description:getBySystemName]]
+     */
     public static function getBySystemName($id, $checkAccess = true)
     {
         if (isset(self::$_cache['system'][$id])) {
@@ -182,6 +207,11 @@ class Group extends \infinite\db\ActiveRecord implements IdentityInterface
         return $group;
     }
 
+    /**
+     * [[@doctodo method_description:findIdentity]].
+     *
+     * @return [[@doctodo return_type:findIdentity]] [[@doctodo return_description:findIdentity]]
+     */
     public static function findIdentity($id)
     {
         $primaryKey = static::primaryKey();
@@ -190,7 +220,7 @@ class Group extends \infinite\db\ActiveRecord implements IdentityInterface
     }
 
     /**
-     *
+     * [[@doctodo method_description:findIdentityByAccessToken]].
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
@@ -217,6 +247,8 @@ class Group extends \infinite\db\ActiveRecord implements IdentityInterface
     }
 
     /**
+     * [[@doctodo method_description:validateAuthKey]].
+     *
      * @param string $authKey
      *
      * @return boolean if auth key is valid for current user

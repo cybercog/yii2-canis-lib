@@ -11,7 +11,7 @@ namespace infinite\data;
 use Yii;
 
 /**
- * ActiveDataProvider [@doctodo write class description for ActiveDataProvider].
+ * ActiveDataProvider [[@doctodo class_description:infinite\data\ActiveDataProvider]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

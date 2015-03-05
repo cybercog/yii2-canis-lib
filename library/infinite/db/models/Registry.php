@@ -89,6 +89,7 @@ class Registry extends \infinite\db\ActiveRecord
      * Get object.
      *
      * @param unknown $id
+     * @param boolean $checkAccess [[@doctodo param_description:checkAccess]] [optional]
      *
      * @return unknown
      */
@@ -118,7 +119,7 @@ class Registry extends \infinite\db\ActiveRecord
     }
 
     /**
-     *
+     * [[@doctodo method_description:registerObject]].
      */
     public static function registerObject($object)
     {

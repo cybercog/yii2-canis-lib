@@ -9,13 +9,14 @@
 namespace infinite\db\behaviors\auditable;
 
 /**
- * DeleteEvent [@doctodo write class description for DeleteEvent].
+ * RelationEvent [[@doctodo class_description:infinite\db\behaviors\auditable\RelationEvent]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class RelationEvent extends AttributesEvent
 {
     /**
+     * @var [[@doctodo var_type:descriptor]] [[@doctodo var_description:descriptor]]
      */
     public $descriptor;
     /**
@@ -27,10 +28,15 @@ class RelationEvent extends AttributesEvent
      */
     protected $_relationObject;
 
+    /**
+     * @inheritdoc
+     */
     public $saveOnRegister = true;
 
     /**
      * Prepares object for serialization.
+     *
+     * @return [[@doctodo return_type:__sleep]] [[@doctodo return_description:__sleep]]
      */
     public function __sleep()
     {
@@ -50,8 +56,6 @@ class RelationEvent extends AttributesEvent
 
     /**
      * Set the relation object.
-     *
-     * @param object Relation model
      */
     public function setRelationObject($object)
     {
@@ -90,6 +94,9 @@ class RelationEvent extends AttributesEvent
         return $this->_relationObject;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getIndirectConnector()
     {
         return 'and';

@@ -9,13 +9,14 @@
 namespace infinite\data;
 
 /**
- * Pagination [@doctodo write class description for Pagination].
+ * Pagination [[@doctodo class_description:infinite\data\Pagination]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class Pagination extends \yii\data\Pagination
 {
     /**
+     * @var [[@doctodo var_type:_state]] [[@doctodo var_description:_state]]
      */
     protected $_state;
 

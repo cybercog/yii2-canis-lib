@@ -66,7 +66,6 @@ class DocBlockGenerator extends AbstractFixer
         } else {
             $startLine -= $oldDocSize;
         }
-        // * ". $ref->getShortName() ." @doctodo write class description for ". $ref->getShortName() ."\n
 
         if (true || !$ref->isSubclassOf('yii\base\Object') && $className != 'yii\base\Object') {
             $newDoc = $oldDoc;

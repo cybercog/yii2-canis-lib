@@ -11,11 +11,14 @@ namespace infinite\db\behaviors\auditable;
 use Yii;
 
 /**
- * Event [@doctodo write class description for Event].
+ * EventEvent [[@doctodo class_description:infinite\db\behaviors\auditable\EventEvent]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class EventEvent extends \yii\base\Event
 {
+    /**
+     * @var [[@doctodo var_type:model]] [[@doctodo var_description:model]]
+     */
     public $model;
 }

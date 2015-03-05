@@ -12,7 +12,7 @@ use infinite\base\exceptions\Exception;
 use Yii;
 
 /**
- * Item [@doctodo write class description for Item].
+ * Item [[@doctodo class_description:infinite\base\collector\Item]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -20,18 +20,23 @@ class Item extends \infinite\base\Object
 {
     //public $name;
     /**
+     * @var [[@doctodo var_type:_owner]] [[@doctodo var_description:_owner]]
      */
     protected $_owner;
     /**
+     * @var [[@doctodo var_type:_collector]] [[@doctodo var_description:_collector]]
      */
     protected $_collector;
     /**
+     * @var [[@doctodo var_type:_settings]] [[@doctodo var_description:_settings]]
      */
     protected $_settings;
     /**
+     * @var [[@doctodo var_type:_object]] [[@doctodo var_description:_object]]
      */
     protected $_object;
     /**
+     * @var [[@doctodo var_type:_systemId]] [[@doctodo var_description:_systemId]]
      */
     protected $_systemId;
 
@@ -45,6 +50,8 @@ class Item extends \infinite\base\Object
 
     /**
      * Get system.
+     *
+     * @return [[@doctodo return_type:getSystemId]] [[@doctodo return_description:getSystemId]]
      */
     public function getSystemId()
     {
@@ -64,7 +71,9 @@ class Item extends \infinite\base\Object
     }
 
     /**
+     * [[@doctodo method_description:hasObject]].
      *
+     * @return [[@doctodo return_type:hasObject]] [[@doctodo return_description:hasObject]]
      */
     public function hasObject()
     {
@@ -73,6 +82,8 @@ class Item extends \infinite\base\Object
 
     /**
      * Get object.
+     *
+     * @return [[@doctodo return_type:getObject]] [[@doctodo return_description:getObject]]
      */
     public function getObject()
     {
@@ -81,6 +92,8 @@ class Item extends \infinite\base\Object
 
     /**
      * Set object.
+     *
+     * @throws Exception [[@doctodo exception_description:Exception]]
      */
     public function setObject($object)
     {
@@ -105,6 +118,8 @@ class Item extends \infinite\base\Object
 
     /**
      * Get owner.
+     *
+     * @return [[@doctodo return_type:getOwner]] [[@doctodo return_description:getOwner]]
      */
     public function getOwner()
     {
@@ -113,6 +128,8 @@ class Item extends \infinite\base\Object
 
     /**
      * Get collector.
+     *
+     * @return [[@doctodo return_type:getCollector]] [[@doctodo return_description:getCollector]]
      */
     public function getCollector()
     {

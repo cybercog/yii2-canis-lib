@@ -12,7 +12,6 @@ use infinite\helpers\ArrayHelper;
 use Yii;
 
 /**
- * Item [@doctodo write class description for Item].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

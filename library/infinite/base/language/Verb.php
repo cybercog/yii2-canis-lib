@@ -9,19 +9,22 @@
 namespace infinite\base\language;
 
 /**
- * Verb [@doctodo write class description for Verb].
+ * Verb [[@doctodo class_description:infinite\base\language\Verb]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class Verb extends \infinite\base\language\Word
 {
     /**
+     * @var [[@doctodo var_type:_base]] [[@doctodo var_description:_base]]
      */
     protected $_base;
     /**
+     * @var [[@doctodo var_type:_active]] [[@doctodo var_description:_active]]
      */
     protected $_active;
     /**
+     * @var [[@doctodo var_type:_past]] [[@doctodo var_description:_past]]
      */
     protected $_past;
 
@@ -56,11 +59,21 @@ class Verb extends \infinite\base\language\Word
         return $this->_base;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getBase()
     {
         return $this->_base;
     }
 
+    /**
+     * Get simple present.
+     *
+     * @param boolean $upper [[@doctodo param_description:upper]] [optional]
+     *
+     * @return [[@doctodo return_type:getSimplePresent]] [[@doctodo return_description:getSimplePresent]]
+     */
     public function getSimplePresent($upper = false)
     {
         return $this->prepare($this->base, $upper);

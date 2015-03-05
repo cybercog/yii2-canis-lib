@@ -11,7 +11,7 @@ namespace infinite\base;
 use Yii;
 
 /**
- * Module [@doctodo write class description for Module].
+ * ModuleSet [[@doctodo class_description:infinite\base\ModuleSet]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -24,6 +24,9 @@ abstract class ModuleSet extends \yii\base\Module
      */
     abstract public function getSubmodules();
 
+    /**
+     * @inheritdoc
+     */
     public function init()
     {
         parent::init();

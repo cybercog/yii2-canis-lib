@@ -9,7 +9,6 @@
 namespace infinite\web\assetBundles;
 
 /**
- * FontAwesomeAsset [@doctodo write class description for FontAwesomeAsset].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

@@ -9,7 +9,6 @@
 namespace infinite\web;
 
 /**
- * Color [@doctodo write class description for Color].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

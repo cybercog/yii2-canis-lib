@@ -13,16 +13,18 @@ use ArrayIterator;
 use IteratorAggregate;
 
 /**
- * Bucket [@doctodo write class description for Bucket].
+ * Bucket [[@doctodo class_description:infinite\base\collector\Bucket]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class Bucket extends \infinite\base\Object implements IteratorAggregate, ArrayAccess
 {
     /**
+     * @var [[@doctodo var_type:_bucket]] [[@doctodo var_description:_bucket]]
      */
     protected $_bucket = [];
     /**
+     * @var [[@doctodo var_type:_collector]] [[@doctodo var_description:_collector]]
      */
     protected $_collector;
 
@@ -35,7 +37,9 @@ class Bucket extends \infinite\base\Object implements IteratorAggregate, ArrayAc
     }
 
     /**
+     * [[@doctodo method_description:add]].
      *
+     * @param infinite\base\collector\Item $item [[@doctodo param_description:item]]
      */
     public function add($offset, Item $item)
     {
@@ -43,7 +47,9 @@ class Bucket extends \infinite\base\Object implements IteratorAggregate, ArrayAc
     }
 
     /**
+     * [[@doctodo method_description:toArray]].
      *
+     * @return [[@doctodo return_type:toArray]] [[@doctodo return_description:toArray]]
      */
     public function toArray()
     {

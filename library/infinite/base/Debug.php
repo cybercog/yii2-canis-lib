@@ -13,14 +13,14 @@ use Yii;
 use yii\helpers\VarDumper;
 
 /**
- * Debug [@doctodo write class description for Debug].
+ * Debug [[@doctodo class_description:infinite\base\Debug]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class Debug extends \infinite\base\Object
 {
     /**
-     *
+     * [[@doctodo method_description:db]].
      */
     public static function db($query)
     {
@@ -37,8 +37,11 @@ class Debug extends \infinite\base\Object
     }
 
     /**
+     * [[@doctodo method_description:d]].
+     *
      * @param unknown $what
-     * @param unknown $showFrom (optional)
+     * @param unknown $showFrom  (optional)
+     * @param integer $stepsBack [[@doctodo param_description:stepsBack]] [optional]
      */
     public static function d($what, $showFrom = true, $stepsBack = 0)
     {
@@ -60,7 +63,11 @@ class Debug extends \infinite\base\Object
     }
 
     /**
+     * [[@doctodo method_description:ar]].
      *
+     * @param boolean $print [[@doctodo param_description:print]] [optional]
+     *
+     * @return [[@doctodo return_type:ar]] [[@doctodo return_description:ar]]
      */
     public static function ar($what, $print = true)
     {
@@ -85,7 +92,7 @@ class Debug extends \infinite\base\Object
     }
 
     /**
-     *
+     * [[@doctodo method_description:clean]].
      */
     public static function clean(&$what)
     {
@@ -99,6 +106,8 @@ class Debug extends \infinite\base\Object
         }
     }
     /**
+     * [[@doctodo method_description:c]].
+     *
      * @param unknown $what
      * @param unknown $showFrom (optional)
      */

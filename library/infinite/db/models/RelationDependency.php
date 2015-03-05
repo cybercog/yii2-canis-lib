@@ -5,13 +5,15 @@ namespace infinite\db\models;
 use Yii;
 
 /**
- * This is the model class for table "relation_dependency".
+ * RelationDependency is the model class for table "relation_dependency".
  *
  * @property string $id
  * @property string $parent_relation_id
  * @property string $child_relation_id
  * @property Relation $childRelation
  * @property Relation $parentRelation
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
  */
 class RelationDependency extends \infinite\db\ActiveRecord
 {
@@ -48,6 +50,8 @@ class RelationDependency extends \infinite\db\ActiveRecord
     }
 
     /**
+     * Get child relation.
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getChildRelation()
@@ -56,6 +60,8 @@ class RelationDependency extends \infinite\db\ActiveRecord
     }
 
     /**
+     * Get parent relation.
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getParentRelation()
@@ -63,6 +69,11 @@ class RelationDependency extends \infinite\db\ActiveRecord
         return $this->hasOne(Yii::$app->classes['Relation'], ['id' => 'parent_relation_id']);
     }
 
+    /**
+     * Get dependency.
+     *
+     * @return [[@doctodo return_type:getDependencyId]] [[@doctodo return_description:getDependencyId]]
+     */
     public function getDependencyId()
     {
         return $this->parent_relation_id . '.' . $this->child_relation_id;

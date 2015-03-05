@@ -9,7 +9,7 @@
 namespace infinite\base;
 
 /**
- * Object [@doctodo write class description for Object].
+ * Object [[@doctodo class_description:infinite\base\Object]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

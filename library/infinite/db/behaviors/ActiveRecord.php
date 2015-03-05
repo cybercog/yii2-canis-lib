@@ -9,7 +9,7 @@
 namespace infinite\db\behaviors;
 
 /**
- * ActiveRecord [@doctodo write class description for ActiveRecord].
+ * ActiveRecord [[@doctodo class_description:infinite\db\behaviors\ActiveRecord]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

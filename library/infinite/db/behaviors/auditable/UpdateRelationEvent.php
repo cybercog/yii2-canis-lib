@@ -9,7 +9,7 @@
 namespace infinite\db\behaviors\auditable;
 
 /**
- * UpdateRelationEvent [@doctodo write class description for UpdateRelationEvent].
+ * UpdateRelationEvent [[@doctodo class_description:infinite\db\behaviors\auditable\UpdateRelationEvent]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -24,11 +24,17 @@ class UpdateRelationEvent extends RelationEvent
      */
     protected $_id = 'update_relation';
 
+    /**
+     * @inheritdoc
+     */
     public function getVerb()
     {
         return new \infinite\base\language\Verb('update');
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getStory()
     {
         return '{{agent}} ' . $this->verb->past . ' link with {{directObject}}' . $this->indirectStory;

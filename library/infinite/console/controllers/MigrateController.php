@@ -12,7 +12,7 @@ use infinite\base\exceptions\Exception;
 use Yii;
 
 /**
- * MigrateController [@doctodo write class description for MigrateController].
+ * MigrateController [[@doctodo class_description:infinite\console\controllers\MigrateController]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -24,6 +24,7 @@ class MigrateController extends \yii\console\controllers\MigrateController
     public $migrationPaths = [];
 
     /**
+     * @var [[@doctodo var_type:migrationsMap]] [[@doctodo var_description:migrationsMap]]
      */
     protected $migrationsMap = [];
 
@@ -49,8 +50,9 @@ class MigrateController extends \yii\console\controllers\MigrateController
     /**
      * Returns the migrations that are not applied.
      *
-     *
+     * @throws Exception [[@doctodo exception_description:Exception]]
      * @return array list of new migrations
+     *
      */
     protected function getNewMigrations()
     {
@@ -88,6 +90,13 @@ class MigrateController extends \yii\console\controllers\MigrateController
         return $migrations;
     }
 
+    /**
+     * [[@doctodo method_description:actionUpPlain]].
+     *
+     * @param integer $limit [[@doctodo param_description:limit]] [optional]
+     *
+     * @return [[@doctodo return_type:actionUpPlain]] [[@doctodo return_description:actionUpPlain]]
+     */
     public function actionUpPlain($limit = 0)
     {
         $result = parent::actionUp($limit);
@@ -98,6 +107,13 @@ class MigrateController extends \yii\console\controllers\MigrateController
         return $result;
     }
 
+    /**
+     * [[@doctodo method_description:actionNewPlain]].
+     *
+     * @param integer $limit [[@doctodo param_description:limit]] [optional]
+     *
+     * @throws Exception [[@doctodo exception_description:Exception]]
+     */
     public function actionNewPlain($limit = 10)
     {
         if ($limit === 'all') {

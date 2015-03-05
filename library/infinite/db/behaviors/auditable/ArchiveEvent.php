@@ -9,7 +9,7 @@
 namespace infinite\db\behaviors\auditable;
 
 /**
- * ArchiveEvent [@doctodo write class description for DeleteEvent].
+ * ArchiveEvent [[@doctodo class_description:infinite\db\behaviors\auditable\ArchiveEvent]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -20,6 +20,7 @@ class ArchiveEvent extends UpdateEvent
      */
     protected $_id = 'archive';
     /**
+     * @var [[@doctodo var_type:_exclusive]] [[@doctodo var_description:_exclusive]]
      */
     protected $_exclusive = true;
 }

@@ -9,7 +9,6 @@
 namespace infinite\web;
 
 /**
- * ResponseOptions [@doctodo write class description for ResponseOptions].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

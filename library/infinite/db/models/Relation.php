@@ -39,13 +39,31 @@ class Relation extends \infinite\db\ActiveRecord
      * @inheritdoc
      */
     public static $relationCache = false;
+    /**
+     * @var [[@doctodo var_type:_enableAuditLogging]] [[@doctodo var_description:_enableAuditLogging]]
+     */
     protected $_enableAuditLogging = true;
+    /**
+     * @var [[@doctodo var_type:_parentModel]] [[@doctodo var_description:_parentModel]]
+     */
     protected $_parentModel;
+    /**
+     * @var [[@doctodo var_type:_dependencies]] [[@doctodo var_description:_dependencies]]
+     */
     protected $_dependencies;
+    /**
+     * @var [[@doctodo var_type:_newDependencies]] [[@doctodo var_description:_newDependencies]]
+     */
     protected $_newDependencies = [];
+    /**
+     * @var [[@doctodo var_type:_dirtyAttributes]] [[@doctodo var_description:_dirtyAttributes]]
+     */
     protected $_dirtyAttributes = [];
 
     /*
+     */
+    /**
+     * @var [[@doctodo var_type:_modelRegistry]] [[@doctodo var_description:_modelRegistry]]
      */
     public static $_modelRegistry = [];
     /**
@@ -64,6 +82,9 @@ class Relation extends \infinite\db\ActiveRecord
         $this->on(self::EVENT_AFTER_DELETE, [$this, 'afterDeleteRelation']);
     }
 
+    /**
+     * @inheritdoc
+     */
     public static function get($id, $checkAccess = false)
     {
         if (!isset(self::$_modelRegistry[$id])) {
@@ -73,6 +94,11 @@ class Relation extends \infinite\db\ActiveRecord
         return self::$_modelRegistry[$id];
     }
 
+    /**
+     * [[@doctodo method_description:registerModel]].
+     *
+     * @return [[@doctodo return_type:registerModel]] [[@doctodo return_description:registerModel]]
+     */
     public static function registerModel($model)
     {
         if (!is_object($model)) {
@@ -89,6 +115,11 @@ class Relation extends \infinite\db\ActiveRecord
         return false;
     }
 
+    /**
+     * Get register model.
+     *
+     * @return [[@doctodo return_type:getRegisterModel]] [[@doctodo return_description:getRegisterModel]]
+     */
     public static function getRegisterModel($model)
     {
         if (is_object($model)) {
@@ -102,6 +133,9 @@ class Relation extends \infinite\db\ActiveRecord
         return $actualModel;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function formName()
     {
         $parentFormName = parent::formName();
@@ -114,6 +148,11 @@ class Relation extends \infinite\db\ActiveRecord
         return $parentFormName;
     }
 
+    /**
+     * Set parent model.
+     *
+     * @param boolean $clearTabularPrefix [[@doctodo param_description:clearTabularPrefix]] [optional]
+     */
     public function setParentModel($parentModel, $clearTabularPrefix = false)
     {
         $this->_parentModel = $parentModel;
@@ -151,6 +190,11 @@ class Relation extends \infinite\db\ActiveRecord
         ];
     }
 
+    /**
+     * [[@doctodo method_description:beforeValidateRelation]].
+     *
+     * @return [[@doctodo return_type:beforeValidateRelation]] [[@doctodo return_description:beforeValidateRelation]]
+     */
     public function beforeValidateRelation($event)
     {
         if (empty($this->start)) {
@@ -167,6 +211,9 @@ class Relation extends \infinite\db\ActiveRecord
         return true;
     }
 
+    /**
+     * [[@doctodo method_description:afterInsertRelation]].
+     */
     public function afterInsertRelation($event)
     {
         if ($this->_enableAuditLogging) {
@@ -178,7 +225,9 @@ class Relation extends \infinite\db\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:afterSaveRelation]].
      *
+     * @return [[@doctodo return_type:afterSaveRelation]] [[@doctodo return_description:afterSaveRelation]]
      */
     public function afterSaveRelation($event)
     {
@@ -198,6 +247,11 @@ class Relation extends \infinite\db\ActiveRecord
         return true;
     }
 
+    /**
+     * [[@doctodo method_description:beforeUpdateRelation]].
+     *
+     * @return [[@doctodo return_type:beforeUpdateRelation]] [[@doctodo return_description:beforeUpdateRelation]]
+     */
     public function beforeUpdateRelation($event)
     {
         $this->_dirtyAttributes = $this->getDirtyAttributes();
@@ -205,6 +259,11 @@ class Relation extends \infinite\db\ActiveRecord
         return true;
     }
 
+    /**
+     * [[@doctodo method_description:afterUpdateRelation]].
+     *
+     * @return [[@doctodo return_type:afterUpdateRelation]] [[@doctodo return_description:afterUpdateRelation]]
+     */
     public function afterUpdateRelation($event)
     {
         $dirty = $this->_dirtyAttributes;
@@ -230,6 +289,11 @@ class Relation extends \infinite\db\ActiveRecord
         return true;
     }
 
+    /**
+     * [[@doctodo method_description:suppressAudit]].
+     *
+     * @return [[@doctodo return_type:suppressAudit]] [[@doctodo return_description:suppressAudit]]
+     */
     public function suppressAudit()
     {
         $this->_enableAuditLogging = false;
@@ -237,6 +301,11 @@ class Relation extends \infinite\db\ActiveRecord
         return $this;
     }
 
+    /**
+     * [[@doctodo method_description:enableLogging]].
+     *
+     * @return [[@doctodo return_type:enableLogging]] [[@doctodo return_description:enableLogging]]
+     */
     public function enableLogging()
     {
         $this->_enableAuditLogging = true;
@@ -244,6 +313,11 @@ class Relation extends \infinite\db\ActiveRecord
         return $this;
     }
 
+    /**
+     * [[@doctodo method_description:beforeDeleteRelation]].
+     *
+     * @return [[@doctodo return_type:beforeDeleteRelation]] [[@doctodo return_description:beforeDeleteRelation]]
+     */
     public function beforeDeleteRelation($event)
     {
         foreach ($this->dependencies as $dependency) {
@@ -254,7 +328,9 @@ class Relation extends \infinite\db\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:afterDeleteRelation]].
      *
+     * @return [[@doctodo return_type:afterDeleteRelation]] [[@doctodo return_description:afterDeleteRelation]]
      */
     public function afterDeleteRelation($event)
     {
@@ -290,6 +366,10 @@ class Relation extends \infinite\db\ActiveRecord
 
     /**
      * Get child object.
+     *
+     * @param boolean $checkAccess [[@doctodo param_description:checkAccess]] [optional]
+     *
+     * @return [[@doctodo return_type:getChildObject]] [[@doctodo return_description:getChildObject]]
      */
     public function getChildObject($checkAccess = true)
     {
@@ -303,6 +383,10 @@ class Relation extends \infinite\db\ActiveRecord
 
     /**
      * Get parent object.
+     *
+     * @param boolean $checkAccess [[@doctodo param_description:checkAccess]] [optional]
+     *
+     * @return [[@doctodo return_type:getParentObject]] [[@doctodo return_description:getParentObject]]
      */
     public function getParentObject($checkAccess = true)
     {
@@ -315,7 +399,9 @@ class Relation extends \infinite\db\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:endRelationship]].
      *
+     * @return [[@doctodo return_type:endRelationship]] [[@doctodo return_description:endRelationship]]
      */
     public function endRelationship()
     {
@@ -333,6 +419,8 @@ class Relation extends \infinite\db\ActiveRecord
 
     /**
      * Get is active.
+     *
+     * @return [[@doctodo return_type:getIsActive]] [[@doctodo return_description:getIsActive]]
      */
     public function getIsActive()
     {
@@ -358,16 +446,25 @@ class Relation extends \infinite\db\ActiveRecord
         return true;
     }
 
+    /**
+     * [[@doctodo method_description:addDependency]].
+     */
     public function addDependency($dependency)
     {
         $this->_newDependencies[] = $dependency;
     }
 
+    /**
+     * [[@doctodo method_description:clearDependencies]].
+     */
     public function clearDependencies()
     {
         $this->_newDependencies = [];
     }
 
+    /**
+     * [[@doctodo method_description:addDependencies]].
+     */
     public function addDependencies($dependencies)
     {
         foreach ($dependencies as $dependency) {
@@ -376,11 +473,21 @@ class Relation extends \infinite\db\ActiveRecord
         $this->_newDependencies = array_unique($this->_newDependencies);
     }
 
+    /**
+     * Get new dependencies.
+     *
+     * @return [[@doctodo return_type:getNewDependencies]] [[@doctodo return_description:getNewDependencies]]
+     */
     public function getNewDependencies()
     {
         return $this->_newDependencies;
     }
 
+    /**
+     * Get dependencies.
+     *
+     * @return [[@doctodo return_type:getDependencies]] [[@doctodo return_description:getDependencies]]
+     */
     public function getDependencies()
     {
         if (!isset($this->_dependencies)) {

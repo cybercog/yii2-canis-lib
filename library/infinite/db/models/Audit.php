@@ -95,6 +95,8 @@ class Audit extends \infinite\db\ActiveRecord
 
     /**
      * Get event object.
+     *
+     * @return [[@doctodo return_type:getEventObject]] [[@doctodo return_description:getEventObject]]
      */
     public function getEventObject()
     {
@@ -109,7 +111,11 @@ class Audit extends \infinite\db\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:handleHooks]].
      *
+     * @param boolean $save [[@doctodo param_description:save]] [optional]
+     *
+     * @return [[@doctodo return_type:handleHooks]] [[@doctodo return_description:handleHooks]]
      */
     public function handleHooks($save = true)
     {

@@ -9,7 +9,7 @@
 namespace infinite\base\exceptions;
 
 /**
- * Exception [@doctodo write class description for Exception].
+ * Exception [[@doctodo class_description:infinite\base\exceptions\Exception]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

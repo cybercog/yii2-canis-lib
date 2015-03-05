@@ -12,7 +12,6 @@ use jom\SubnationalDivisions;
 use Yii;
 
 /**
- * Locations [@doctodo write class description for Locations].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

@@ -9,7 +9,7 @@
 namespace infinite\db\behaviors\auditable;
 
 /**
- * EndRelationEvent [@doctodo write class description for EndRelationEvent].
+ * EndRelationEvent [[@doctodo class_description:infinite\db\behaviors\auditable\EndRelationEvent]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -24,11 +24,17 @@ class EndRelationEvent extends RelationEvent
      */
     protected $_id = 'end_relation';
 
+    /**
+     * @inheritdoc
+     */
     public function getVerb()
     {
         return new \infinite\base\language\Verb('end');
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getStory()
     {
         return '{{agent}} ' . $this->verb->past . ' link with {{directObject}}' . $this->indirectStory;

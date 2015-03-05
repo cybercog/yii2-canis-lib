@@ -9,7 +9,7 @@
 namespace infinite\db\behaviors\auditable;
 
 /**
- * UpdateEvent [@doctodo write class description for UpdateEvent].
+ * UpdateEvent [[@doctodo class_description:infinite\db\behaviors\auditable\UpdateEvent]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -24,11 +24,17 @@ class UpdateEvent extends RelationEvent
      */
     public $attributes;
 
+    /**
+     * @inheritdoc
+     */
     public function getVerb()
     {
         return new \infinite\base\language\Verb('update');
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getIndirectConnector()
     {
         return 'in';

@@ -9,7 +9,7 @@
 namespace infinite\base\collector;
 
 /**
- * Collector [@doctodo write class description for Collector].
+ * Collector [[@doctodo class_description:infinite\base\collector\Collector]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -18,6 +18,7 @@ abstract class Collector extends \infinite\base\Component
     use CollectorTrait;
 
     /**
+     * @var [[@doctodo var_type:_systemId]] [[@doctodo var_description:_systemId]]
      */
     protected $_systemId;
 

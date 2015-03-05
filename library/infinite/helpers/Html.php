@@ -13,7 +13,6 @@ use Yii;
 use yii\base\InvalidParamException;
 
 /**
- * Html [@doctodo write class description for Html].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

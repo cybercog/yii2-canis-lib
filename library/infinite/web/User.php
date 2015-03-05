@@ -11,7 +11,6 @@ namespace infinite\web;
 use Yii;
 
 /**
- * User [@doctodo write class description for User].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

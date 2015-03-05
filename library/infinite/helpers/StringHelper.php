@@ -11,7 +11,6 @@ namespace infinite\helpers;
 use Yii;
 
 /**
- * StringHelper [@doctodo write class description for StringHelper].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

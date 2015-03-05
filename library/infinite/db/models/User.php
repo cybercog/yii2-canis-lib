@@ -42,6 +42,7 @@ use yii\web\IdentityInterface;
 class User extends ActiveRecord implements IdentityInterface
 {
     /**
+     * @var [[@doctodo var_type:_groups]] [[@doctodo var_description:_groups]]
      */
     protected $_groups;
     /**
@@ -49,11 +50,29 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public $password;
 
+    /**
+     * @var [[@doctodo var_type:_identityMeta]] [[@doctodo var_description:_identityMeta]]
+     */
     protected $_identityMeta;
+    /**
+     * @var [[@doctodo var_type:_identities]] [[@doctodo var_description:_identities]]
+     */
     protected $_identities;
+    /**
+     * @var [[@doctodo var_type:_identitiesByProvider]] [[@doctodo var_description:_identitiesByProvider]]
+     */
     protected $_identitiesByProvider;
+    /**
+     * @var [[@doctodo var_type:_activeIdentity]] [[@doctodo var_description:_activeIdentity]]
+     */
     protected $_activeIdentity;
+    /**
+     * @var [[@doctodo var_type:_touchedIdentities]] [[@doctodo var_description:_touchedIdentities]]
+     */
     protected $_touchedIdentities = [];
+    /**
+     * @var [[@doctodo var_type:_primaryIdentity]] [[@doctodo var_description:_primaryIdentity]]
+     */
     protected $_primaryIdentity;
 
     const STATUS_INACTIVE = 0;
@@ -98,17 +117,27 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     *
+     * [[@doctodo method_description:findIdentityByAccessToken]].
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
     }
 
+    /**
+     * [[@doctodo method_description:findByEmail]].
+     *
+     * @return [[@doctodo return_type:findByEmail]] [[@doctodo return_description:findByEmail]]
+     */
     public static function findByEmail($email)
     {
         return static::find()->andWhere(['email' => $email, 'status' => static::STATUS_ACTIVE])->disableAccessCheck()->one();
     }
 
+    /**
+     * Get identity meta.
+     *
+     * @return [[@doctodo return_type:getIdentityMeta]] [[@doctodo return_description:getIdentityMeta]]
+     */
     public function getIdentityMeta()
     {
         if (is_null($this->_identityMeta)) {
@@ -121,6 +150,9 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->_identityMeta;
     }
 
+    /**
+     * Set identity meta.
+     */
     public function setIdentityMeta($meta)
     {
         $this->_identityMeta = $meta;
@@ -146,6 +178,8 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
+     * [[@doctodo method_description:validateAuthKey]].
+     *
      * @param string $authKey
      *
      * @return boolean if auth key is valid for current user
@@ -156,6 +190,8 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
+     * [[@doctodo method_description:validatePassword]].
+     *
      * @param string $password password to validate
      *
      * @return bool if password provided is valid for current user
@@ -227,6 +263,11 @@ class User extends ActiveRecord implements IdentityInterface
         ];
     }
 
+    /**
+     * Get primary identity.
+     *
+     * @return [[@doctodo return_type:getPrimaryIdentity]] [[@doctodo return_description:getPrimaryIdentity]]
+     */
     public function getPrimaryIdentity()
     {
         if (!isset($this->_primaryIdentity) && isset($this->primary_identity_id)) {
@@ -240,6 +281,11 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->_primaryIdentity;
     }
 
+    /**
+     * Set primary identity.
+     *
+     * @return [[@doctodo return_type:setPrimaryIdentity]] [[@doctodo return_description:setPrimaryIdentity]]
+     */
     public function setPrimaryIdentity($identity)
     {
         $identity = $this->setIdentity($identity);
@@ -248,6 +294,11 @@ class User extends ActiveRecord implements IdentityInterface
         return $identity;
     }
 
+    /**
+     * Set identity.
+     *
+     * @return [[@doctodo return_type:setIdentity]] [[@doctodo return_description:setIdentity]]
+     */
     public function setIdentity($identity)
     {
         if (!is_object($identity)) {
@@ -276,6 +327,11 @@ class User extends ActiveRecord implements IdentityInterface
         return $identity;
     }
 
+    /**
+     * Get identities.
+     *
+     * @return [[@doctodo return_type:getIdentities]] [[@doctodo return_description:getIdentities]]
+     */
     public function getIdentities()
     {
         if (!isset($this->_identities)) {
@@ -290,6 +346,11 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->_identities;
     }
 
+    /**
+     * Get identities by provider.
+     *
+     * @return [[@doctodo return_type:getIdentitiesByProvider]] [[@doctodo return_description:getIdentitiesByProvider]]
+     */
     public function getIdentitiesByProvider()
     {
         if (!isset($this->_identitiesByProvider)) {
@@ -299,6 +360,11 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->_identitiesByProvider;
     }
 
+    /**
+     * Get active identity.
+     *
+     * @return [[@doctodo return_type:getActiveIdentity]] [[@doctodo return_description:getActiveIdentity]]
+     */
     public function getActiveIdentity()
     {
         if (!isset($this->_activeIdentity)) {
@@ -311,6 +377,9 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->_activeIdentity;
     }
 
+    /**
+     * Set active identity.
+     */
     public function setActiveIdentity($identity)
     {
         $this->_activeIdentity = $identity;
@@ -362,6 +431,8 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Get groups.
+     *
+     * @return [[@doctodo return_type:getGroups]] [[@doctodo return_description:getGroups]]
      */
     public function getGroups()
     {

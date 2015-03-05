@@ -9,7 +9,7 @@
 namespace infinite\base\language;
 
 /**
- * Inflector [@doctodo write class description for Inflector].
+ * Inflector [[@doctodo class_description:infinite\base\language\Inflector]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

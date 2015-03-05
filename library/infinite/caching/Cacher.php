@@ -14,15 +14,22 @@ use yii\caching\DbDependency;
 use yii\caching\TagDependency;
 
 /**
- * Cacher [@doctodo write class description for Cacher].
+ * Cacher [[@doctodo class_description:infinite\caching\Cacher]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class Cacher extends \infinite\base\Component
 {
+    /**
+     * @var [[@doctodo var_type:component]] [[@doctodo var_description:component]]
+     */
     public static $component = 'cache';
     /**
+     * [[@doctodo method_description:key]].
      *
+     * @param boolean $hash [[@doctodo param_description:hash]] [optional]
+     *
+     * @return [[@doctodo return_type:key]] [[@doctodo return_description:key]]
      */
     public static function key($key, $hash = false)
     {
@@ -68,6 +75,8 @@ class Cacher extends \infinite\base\Component
 
     /**
      * Get.
+     *
+     * @return [[@doctodo return_type:get]] [[@doctodo return_description:get]]
      */
     public static function get($key)
     {
@@ -75,7 +84,9 @@ class Cacher extends \infinite\base\Component
     }
 
     /**
+     * [[@doctodo method_description:exists]].
      *
+     * @return [[@doctodo return_type:exists]] [[@doctodo return_description:exists]]
      */
     public static function exists($key)
     {
@@ -84,6 +95,10 @@ class Cacher extends \infinite\base\Component
 
     /**
      * Set.
+     *
+     * @param integer $expire [[@doctodo param_description:expire]] [optional]
+     *
+     * @return [[@doctodo return_type:set]] [[@doctodo return_description:set]]
      */
     public static function set($key, $value, $expire = 0, $dependency = null)
     {
@@ -97,7 +112,12 @@ class Cacher extends \infinite\base\Component
     }
 
     /**
+     * [[@doctodo method_description:chainedDependency]].
      *
+     * @param array   $chain    [[@doctodo param_description:chain]] [optional]
+     * @param boolean $reusable [[@doctodo param_description:reusable]] [optional]
+     *
+     * @return [[@doctodo return_type:chainedDependency]] [[@doctodo return_description:chainedDependency]]
      */
     public static function chainedDependency($chain = [], $reusable = true)
     {
@@ -105,7 +125,11 @@ class Cacher extends \infinite\base\Component
     }
 
     /**
+     * [[@doctodo method_description:dbDependency]].
      *
+     * @param boolean $reusable [[@doctodo param_description:reusable]] [optional]
+     *
+     * @return [[@doctodo return_type:dbDependency]] [[@doctodo return_description:dbDependency]]
      */
     public static function dbDependency($sql, $reusable = true)
     {
@@ -113,7 +137,11 @@ class Cacher extends \infinite\base\Component
     }
 
     /**
+     * [[@doctodo method_description:groupDependency]].
      *
+     * @param boolean $reusable [[@doctodo param_description:reusable]] [optional]
+     *
+     * @return [[@doctodo return_type:groupDependency]] [[@doctodo return_description:groupDependency]]
      */
     public static function groupDependency($group, $category = null, $reusable = true)
     {
@@ -128,19 +156,29 @@ class Cacher extends \infinite\base\Component
         }
     }
 
+    /**
+     * [[@doctodo method_description:categoryDependency]].
+     *
+     * @param boolean $reusable [[@doctodo param_description:reusable]] [optional]
+     *
+     * @return [[@doctodo return_type:categoryDependency]] [[@doctodo return_description:categoryDependency]]
+     */
     public static function categoryDependency($category, $reusable = true)
     {
         return new TagDependency(['tags' => ['category-' . $category], 'reusable' => $reusable]);
     }
 
     /**
-     *
+     * [[@doctodo method_description:invalidateGroup]].
      */
     public static function invalidateGroup($group)
     {
         TagDependency::invalidate(Yii::$app->{static::$component}, [$group]);
     }
 
+    /**
+     * [[@doctodo method_description:invalidateCategory]].
+     */
     public static function invalidateCategory($category)
     {
         TagDependency::invalidate(Yii::$app->{static::$component}, ['category-' . $category]);

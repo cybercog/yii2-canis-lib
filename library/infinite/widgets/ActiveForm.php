@@ -9,7 +9,6 @@
 namespace infinite\widgets;
 
 /**
- * ActiveForm [@doctodo write class description for ActiveForm].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

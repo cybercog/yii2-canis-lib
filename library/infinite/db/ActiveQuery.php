@@ -11,7 +11,7 @@ namespace infinite\db;
 use infinite\base\ComponentTrait;
 
 /**
- * ActiveQuery [@doctodo write class description for ActiveQuery].
+ * ActiveQuery [[@doctodo class_description:infinite\db\ActiveQuery]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -20,10 +20,13 @@ class ActiveQuery extends \yii\db\ActiveQuery
     use ComponentTrait;
     use QueryTrait;
     /**
+     * @var [[@doctodo var_type:_model]] [[@doctodo var_description:_model]]
      */
     protected $_model;
     /**
      * Get is aco.
+     *
+     * @return [[@doctodo return_type:getIsAco]] [[@doctodo return_description:getIsAco]]
      */
     public function getIsAco()
     {
@@ -34,6 +37,8 @@ class ActiveQuery extends \yii\db\ActiveQuery
 
     /**
      * Get model.
+     *
+     * @return [[@doctodo return_type:getModel]] [[@doctodo return_description:getModel]]
      */
     public function getModel()
     {

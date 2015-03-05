@@ -11,25 +11,30 @@ namespace infinite\db\behaviors;
 use Yii;
 
 /**
- * QueryAccess [@doctodo write class description for QueryAccess].
+ * QueryAccess [[@doctodo class_description:infinite\db\behaviors\QueryAccess]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class QueryAccess extends QueryBehavior
 {
     /**
+     * @var [[@doctodo var_type:_acceptInherit]] [[@doctodo var_description:_acceptInherit]]
      */
     protected static $_acceptInherit = false;
     /**
+     * @var [[@doctodo var_type:_accessingObject]] [[@doctodo var_description:_accessingObject]]
      */
     protected $_accessingObject;
     /**
+     * @var [[@doctodo var_type:_action]] [[@doctodo var_description:_action]]
      */
     protected $_action;
     /**
+     * @var [[@doctodo var_type:accessAdded]] [[@doctodo var_description:accessAdded]]
      */
     public $accessAdded = false;
     /**
+     * @var [[@doctodo var_type:_bannedRoles]] [[@doctodo var_description:_bannedRoles]]
      */
     protected $_bannedRoles;
 
@@ -44,6 +49,7 @@ class QueryAccess extends QueryBehavior
     }
 
     /**
+     * [[@doctodo method_description:allowInherit]].
      */
     public static function allowInherit()
     {
@@ -51,6 +57,7 @@ class QueryAccess extends QueryBehavior
     }
 
     /**
+     * [[@doctodo method_description:denyInherit]].
      */
     public static function denyInherit()
     {
@@ -58,7 +65,9 @@ class QueryAccess extends QueryBehavior
     }
 
     /**
+     * [[@doctodo method_description:asUser]].
      *
+     * @return [[@doctodo return_type:asUser]] [[@doctodo return_description:asUser]]
      */
     public function asUser($userName)
     {
@@ -71,7 +80,9 @@ class QueryAccess extends QueryBehavior
     }
 
     /**
+     * [[@doctodo method_description:asGroup]].
      *
+     * @return [[@doctodo return_type:asGroup]] [[@doctodo return_description:asGroup]]
      */
     public function asGroup($groupSystemName)
     {
@@ -84,7 +95,9 @@ class QueryAccess extends QueryBehavior
     }
 
     /**
+     * [[@doctodo method_description:asInternal]].
      *
+     * @return [[@doctodo return_type:asInternal]] [[@doctodo return_description:asInternal]]
      */
     public function asInternal($acr)
     {
@@ -95,6 +108,8 @@ class QueryAccess extends QueryBehavior
 
     /**
      * Set accessing object.
+     *
+     * @return [[@doctodo return_type:setAccessingObject]] [[@doctodo return_description:setAccessingObject]]
      */
     public function setAccessingObject($value)
     {
@@ -103,6 +118,8 @@ class QueryAccess extends QueryBehavior
 
     /**
      * Get accessing object.
+     *
+     * @return [[@doctodo return_type:getAccessingObject]] [[@doctodo return_description:getAccessingObject]]
      */
     public function getAccessingObject()
     {
@@ -110,7 +127,9 @@ class QueryAccess extends QueryBehavior
     }
 
     /**
+     * [[@doctodo method_description:aclSummary]].
      *
+     * @return [[@doctodo return_type:aclSummary]] [[@doctodo return_description:aclSummary]]
      */
     public function aclSummary()
     {
@@ -133,6 +152,8 @@ class QueryAccess extends QueryBehavior
 
     /**
      * Get query access model.
+     *
+     * @return [[@doctodo return_type:getQueryAccessModel]] [[@doctodo return_description:getQueryAccessModel]]
      */
     public function getQueryAccessModel()
     {
@@ -145,6 +166,8 @@ class QueryAccess extends QueryBehavior
 
     /**
      * Set action.
+     *
+     * @return [[@doctodo return_type:setAction]] [[@doctodo return_description:setAction]]
      */
     public function setAction($action)
     {
@@ -155,6 +178,8 @@ class QueryAccess extends QueryBehavior
 
     /**
      * Get action.
+     *
+     * @return [[@doctodo return_type:getAction]] [[@doctodo return_description:getAction]]
      */
     public function getAction()
     {
@@ -166,6 +191,10 @@ class QueryAccess extends QueryBehavior
     }
 
     /**
+     * [[@doctodo method_description:addCheckAccess]].
+     *
+     * @throws Exception [[@doctodo exception_description:Exception]]
+     * @return [[@doctodo return_type:addCheckAccess]] [[@doctodo return_description:addCheckAccess]]
      *
      */
     public function addCheckAccess($aca = null)
@@ -196,7 +225,9 @@ class QueryAccess extends QueryBehavior
     }
 
     /**
+     * [[@doctodo method_description:can]].
      *
+     * @return [[@doctodo return_type:can]] [[@doctodo return_description:can]]
      */
     public function can($action = null)
     {
@@ -214,7 +245,11 @@ class QueryAccess extends QueryBehavior
     }
 
     /**
+     * [[@doctodo method_description:canPublic]].
      *
+     * @param string $action [[@doctodo param_description:action]] [optional]
+     *
+     * @return [[@doctodo return_type:canPublic]] [[@doctodo return_description:canPublic]]
      */
     public function canPublic($action = 'read')
     {
@@ -222,7 +257,9 @@ class QueryAccess extends QueryBehavior
     }
 
     /**
+     * [[@doctodo method_description:beforeQuery]].
      *
+     * @return [[@doctodo return_type:beforeQuery]] [[@doctodo return_description:beforeQuery]]
      */
     public function beforeQuery($event)
     {
@@ -232,7 +269,9 @@ class QueryAccess extends QueryBehavior
     }
 
     /**
+     * [[@doctodo method_description:assignCreationRole]].
      *
+     * @return [[@doctodo return_type:assignCreationRole]] [[@doctodo return_description:assignCreationRole]]
      */
     public function assignCreationRole()
     {
@@ -240,7 +279,9 @@ class QueryAccess extends QueryBehavior
     }
 
     /**
+     * [[@doctodo method_description:beforeSave]].
      *
+     * @return [[@doctodo return_type:beforeSave]] [[@doctodo return_description:beforeSave]]
      */
     public function beforeSave($event)
     {
@@ -256,7 +297,9 @@ class QueryAccess extends QueryBehavior
     }
 
     /**
+     * [[@doctodo method_description:afterSave]].
      *
+     * @return [[@doctodo return_type:afterSave]] [[@doctodo return_description:afterSave]]
      */
     public function afterSave($event)
     {

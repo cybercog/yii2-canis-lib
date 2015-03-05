@@ -12,14 +12,25 @@ use infinite\base\Daemon;
 
 ini_set('memory_limit', -1);
 
+/**
+ * DaemonController [[@doctodo class_description:infinite\console\controllers\DaemonController]].
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+ */
 class DaemonController extends \infinite\console\Controller
 {
+    /**
+     * [[@doctodo method_description:actionRun]].
+     */
     public function actionRun()
     {
         $this->runTick();
         $this->runPostTick();
     }
 
+    /**
+     * [[@doctodo method_description:runTick]].
+     */
     protected function runTick()
     {
         $cmd = [PHP_BINARY];
@@ -35,6 +46,9 @@ class DaemonController extends \infinite\console\Controller
         }
     }
 
+    /**
+     * [[@doctodo method_description:runPostTick]].
+     */
     protected function runPostTick()
     {
         $cmd = [PHP_BINARY];
@@ -50,16 +64,25 @@ class DaemonController extends \infinite\console\Controller
         }
     }
 
+    /**
+     * [[@doctodo method_description:actionTick]].
+     */
     public function actionTick()
     {
         $this->tick();
     }
 
+    /**
+     * [[@doctodo method_description:actionPostTick]].
+     */
     public function actionPostTick()
     {
         $this->postTick();
     }
 
+    /**
+     * [[@doctodo method_description:tick]].
+     */
     protected function tick()
     {
         $instance = Daemon::getInstance();
@@ -67,6 +90,9 @@ class DaemonController extends \infinite\console\Controller
             $this->stderr("An error has occurred during a daemon tick.");
         }
     }
+    /**
+     * [[@doctodo method_description:postTick]].
+     */
     protected function postTick()
     {
         $instance = Daemon::getInstance();

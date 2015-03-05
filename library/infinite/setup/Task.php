@@ -9,7 +9,6 @@
 namespace infinite\setup;
 
 /**
- * Task [@doctodo write class description for Task].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

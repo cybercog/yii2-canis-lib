@@ -9,13 +9,14 @@
 namespace infinite\data;
 
 /**
- * Sort [@doctodo write class description for Sort].
+ * Sort [[@doctodo class_description:infinite\data\Sort]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class Sort extends \yii\data\Sort
 {
     /**
+     * @var [[@doctodo var_type:sortOrders]] [[@doctodo var_description:sortOrders]]
      */
     public $sortOrders = [];
 

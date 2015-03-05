@@ -13,16 +13,18 @@ use Yii;
 use yii\db\Expression;
 
 /**
- * Registry [@doctodo write class description for Registry].
+ * Registry [[@doctodo class_description:infinite\db\behaviors\Registry]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class Registry extends \infinite\db\behaviors\ActiveRecord
 {
     /**
+     * @var [[@doctodo var_type:_table]] [[@doctodo var_description:_table]]
      */
     public static $_table;
     /**
+     * @var [[@doctodo var_type:_model]] [[@doctodo var_description:_model]]
      */
     protected $_model;
 
@@ -48,6 +50,8 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Get registry model.
+     *
+     * @return [[@doctodo return_type:getRegistryModel]] [[@doctodo return_description:getRegistryModel]]
      */
     public function getRegistryModel()
     {
@@ -68,6 +72,8 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Get table.
+     *
+     * @return [[@doctodo return_type:getTable]] [[@doctodo return_description:getTable]]
      */
     public function getTable()
     {
@@ -80,7 +86,9 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:beforeInsert]].
      *
+     * @throws Exception [[@doctodo exception_description:Exception]]
      */
     public function beforeInsert($event)
     {
@@ -96,7 +104,9 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:uuid]].
      *
+     * @return [[@doctodo return_type:uuid]] [[@doctodo return_description:uuid]]
      */
     public function uuid()
     {
@@ -106,6 +116,8 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:generateUuid]].
+     *
      * @return unknown
      */
     public static function generateUuid($modelPrefix)
@@ -123,6 +135,8 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:afterSaveFail]].
+     *
      * @param unknown $event
      */
     public function afterSaveFail($event)
@@ -133,6 +147,8 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:afterDelete]].
+     *
      * @param unknown $event
      *
      * @return unknown
@@ -143,6 +159,8 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:_deleteRegistry]].
+     *
      * @return unknown
      */
     protected function _deleteRegistry()

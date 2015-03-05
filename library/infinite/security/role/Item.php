@@ -11,7 +11,6 @@ namespace infinite\security\role;
 use infinite\helpers\ArrayHelper;
 
 /**
- * Item [@doctodo write class description for Item].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

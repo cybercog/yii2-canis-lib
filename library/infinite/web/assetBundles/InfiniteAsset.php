@@ -9,7 +9,6 @@
 namespace infinite\web\assetBundles;
 
 /**
- * InfiniteAsset [@doctodo write class description for InfiniteAsset].
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  *

@@ -14,7 +14,6 @@ use Yii;
 use yii\helpers\Url;
 
 /**
- * Response [@doctodo write class description for Response].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

@@ -9,7 +9,6 @@
 namespace infinite\helpers;
 
 /**
- * Date [@doctodo write class description for Date].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

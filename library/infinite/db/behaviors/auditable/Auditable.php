@@ -13,7 +13,7 @@ use Yii;
 use yii\base\InvalidConfigException;
 
 /**
- * Auditable [@doctodo write class description for Auditable].
+ * Auditable [[@doctodo class_description:infinite\db\behaviors\auditable\Auditable]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -75,6 +75,9 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
      * @var object Entity that is making the changes
      */
     protected $_auditAgent;
+    /**
+     * @var [[@doctodo var_type:_auditTimestamp]] [[@doctodo var_description:_auditTimestamp]]
+     */
     protected $_auditTimestamp;
     /**
      * @var array Tracking of event logs
@@ -128,12 +131,19 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Get audit dirty attributes.
+     *
+     * @return [[@doctodo return_type:getAuditDirtyAttributes]] [[@doctodo return_description:getAuditDirtyAttributes]]
      */
     public function getAuditDirtyAttributes()
     {
         return $this->_dirtyAttributes;
     }
 
+    /**
+     * [[@doctodo method_description:suppressAudit]].
+     *
+     * @return [[@doctodo return_type:suppressAudit]] [[@doctodo return_description:suppressAudit]]
+     */
     public function suppressAudit()
     {
         $this->_enableLogging = false;
@@ -141,6 +151,11 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
         return $this->owner;
     }
 
+    /**
+     * [[@doctodo method_description:enableLogging]].
+     *
+     * @return [[@doctodo return_type:enableLogging]] [[@doctodo return_description:enableLogging]]
+     */
     public function enableLogging()
     {
         $this->_enableLogging = true;
@@ -148,6 +163,11 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
         return $this->owner;
     }
 
+    /**
+     * Set enable logging.
+     *
+     * @return [[@doctodo return_type:setEnableLogging]] [[@doctodo return_description:setEnableLogging]]
+     */
     public function setEnableLogging($value)
     {
         $this->_enableLogging = $value;
@@ -155,22 +175,41 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
         return $this->owner;
     }
 
+    /**
+     * Get enable logging.
+     *
+     * @return [[@doctodo return_type:getEnableLogging]] [[@doctodo return_description:getEnableLogging]]
+     */
     public function getEnableLogging()
     {
         return $this->_enableLogging;
     }
 
+    /**
+     * [[@doctodo method_description:behaviors]].
+     *
+     * @return [[@doctodo return_type:behaviors]] [[@doctodo return_description:behaviors]]
+     */
     public function behaviors()
     {
         return [];
     }
 
+    /**
+     * [[@doctodo method_description:prepareEventObject]].
+     *
+     * @return [[@doctodo return_type:prepareEventObject]] [[@doctodo return_description:prepareEventObject]]
+     */
     public function prepareEventObject($event)
     {
         return $event;
     }
 
     /**
+     * [[@doctodo method_description:registerAuditEvent]].
+     *
+     * @throws InvalidConfigException [[@doctodo exception_description:InvalidConfigException]]
+     * @return [[@doctodo return_type:registerAuditEvent]] [[@doctodo return_description:registerAuditEvent]]
      *
      */
     public function registerAuditEvent($event)
@@ -207,7 +246,9 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:handleAuditSave]].
      *
+     * @return [[@doctodo return_type:handleAuditSave]] [[@doctodo return_description:handleAuditSave]]
      */
     public function handleAuditSave()
     {
@@ -257,6 +298,13 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
         return true;
     }
 
+    /**
+     * [[@doctodo method_description:registerRecentEventSave]].
+     *
+     * @param infinite\db\behaviors\auditable\Event $event [[@doctodo param_description:event]]
+     *
+     * @return [[@doctodo return_type:registerRecentEventSave]] [[@doctodo return_description:registerRecentEventSave]]
+     */
     public function registerRecentEventSave($auditModel, Event $event)
     {
         if (empty($auditModel) || !is_object($auditModel)) {
@@ -271,6 +319,13 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
         }
     }
 
+    /**
+     * Get recent event.
+     *
+     * @param string $eventId [[@doctodo param_description:eventId]] [optional]
+     *
+     * @return [[@doctodo return_type:getRecentEvent]] [[@doctodo return_description:getRecentEvent]]
+     */
     public function getRecentEvent($eventId = 'any')
     {
         if (empty($this->owner->primaryKey)) {
@@ -296,6 +351,11 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
         $this->_auditTimestamp = $audit;
     }
 
+    /**
+     * Get audit timestamp.
+     *
+     * @return [[@doctodo return_type:getAuditTimestamp]] [[@doctodo return_description:getAuditTimestamp]]
+     */
     public function getAuditTimestamp()
     {
         return $this->_auditTimestamp;
@@ -303,6 +363,8 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Get audit agent.
+     *
+     * @return [[@doctodo return_type:getAuditAgent]] [[@doctodo return_description:getAuditAgent]]
      */
     public function getAuditAgent()
     {
@@ -328,6 +390,8 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Get direct object.
+     *
+     * @return [[@doctodo return_type:getDirectObject]] [[@doctodo return_description:getDirectObject]]
      */
     public function getDirectObject()
     {
@@ -348,6 +412,8 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Get indirect object.
+     *
+     * @return [[@doctodo return_type:getIndirectObject]] [[@doctodo return_description:getIndirectObject]]
      */
     public function getIndirectObject()
     {
@@ -355,7 +421,9 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:beforeSave]].
      *
+     * @return [[@doctodo return_type:beforeSave]] [[@doctodo return_description:beforeSave]]
      */
     public function beforeSave($event)
     {
@@ -373,7 +441,9 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:afterUpdate]].
      *
+     * @return [[@doctodo return_type:afterUpdate]] [[@doctodo return_description:afterUpdate]]
      */
     public function afterUpdate($event)
     {
@@ -399,7 +469,9 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:afterInsert]].
      *
+     * @return [[@doctodo return_type:afterInsert]] [[@doctodo return_description:afterInsert]]
      */
     public function afterInsert($event)
     {
@@ -425,7 +497,9 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:beforeDelete]].
      *
+     * @return [[@doctodo return_type:beforeDelete]] [[@doctodo return_description:beforeDelete]]
      */
     public function beforeDelete($event)
     {
@@ -437,7 +511,9 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:afterDelete]].
      *
+     * @return [[@doctodo return_type:afterDelete]] [[@doctodo return_description:afterDelete]]
      */
     public function afterDelete($event)
     {
@@ -475,6 +551,8 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Get ignore attributes.
+     *
+     * @return [[@doctodo return_type:getIgnoreAttributes]] [[@doctodo return_description:getIgnoreAttributes]]
      */
     public function getIgnoreAttributes()
     {
@@ -482,7 +560,9 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:isAuditEnabled]].
      *
+     * @return [[@doctodo return_type:isAuditEnabled]] [[@doctodo return_description:isAuditEnabled]]
      */
     public function isAuditEnabled()
     {
@@ -501,7 +581,9 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:muteAudit]].
      *
+     * @return [[@doctodo return_type:muteAudit]] [[@doctodo return_description:muteAudit]]
      */
     public function muteAudit()
     {
@@ -518,7 +600,9 @@ class Auditable extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:unmuteAudit]].
      *
+     * @return [[@doctodo return_type:unmuteAudit]] [[@doctodo return_description:unmuteAudit]]
      */
     public function unmuteAudit()
     {

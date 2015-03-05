@@ -9,7 +9,7 @@
 namespace infinite\base\exceptions;
 
 /**
- * AccessException [@doctodo write class description for AccessException].
+ * AccessException [[@doctodo class_description:infinite\base\exceptions\AccessException]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

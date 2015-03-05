@@ -11,7 +11,6 @@ namespace infinite\web\grid;
 use infinite\helpers\Html;
 
 /**
- * Cell [@doctodo write class description for Cell].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

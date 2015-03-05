@@ -11,28 +11,34 @@ namespace infinite\db\behaviors;
 use infinite\base\Object;
 
 /**
- * SearchTermResult [@doctodo write class description for SearchTermResult].
+ * SearchTermResult [[@doctodo class_description:infinite\db\behaviors\SearchTermResult]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class SearchTermResult extends Object
 {
     /**
+     * @var [[@doctodo var_type:_object]] [[@doctodo var_description:_object]]
      */
     protected $_object;
     /**
+     * @var [[@doctodo var_type:_id]] [[@doctodo var_description:_id]]
      */
     protected $_id;
     /**
+     * @var [[@doctodo var_type:_terms]] [[@doctodo var_description:_terms]]
      */
     protected $_terms;
     /**
+     * @var [[@doctodo var_type:_descriptor]] [[@doctodo var_description:_descriptor]]
      */
     protected $_descriptor;
     /**
+     * @var [[@doctodo var_type:_subdescriptor]] [[@doctodo var_description:_subdescriptor]]
      */
     protected $_subdescriptor;
     /**
+     * @var [[@doctodo var_type:_score]] [[@doctodo var_description:_score]]
      */
     protected $_score;
 
@@ -46,6 +52,8 @@ class SearchTermResult extends Object
 
     /**
      * Get id.
+     *
+     * @return [[@doctodo return_type:getId]] [[@doctodo return_description:getId]]
      */
     public function getId()
     {
@@ -66,6 +74,8 @@ class SearchTermResult extends Object
 
     /**
      * Get object.
+     *
+     * @return [[@doctodo return_type:getObject]] [[@doctodo return_description:getObject]]
      */
     public function getObject()
     {
@@ -82,6 +92,8 @@ class SearchTermResult extends Object
 
     /**
      * Get descriptor.
+     *
+     * @return [[@doctodo return_type:getDescriptor]] [[@doctodo return_description:getDescriptor]]
      */
     public function getDescriptor()
     {
@@ -102,6 +114,8 @@ class SearchTermResult extends Object
 
     /**
      * Get terms.
+     *
+     * @return [[@doctodo return_type:getTerms]] [[@doctodo return_description:getTerms]]
      */
     public function getTerms()
     {
@@ -113,7 +127,7 @@ class SearchTermResult extends Object
     }
 
     /**
-     *
+     * [[@doctodo method_description:mergeTerms]].
      */
     public function mergeTerms($values)
     {
@@ -134,7 +148,9 @@ class SearchTermResult extends Object
     }
 
     /**
+     * [[@doctodo method_description:addSubdescriptorField]].
      *
+     * @return [[@doctodo return_type:addSubdescriptorField]] [[@doctodo return_description:addSubdescriptorField]]
      */
     public function addSubdescriptorField($field)
     {
@@ -154,7 +170,9 @@ class SearchTermResult extends Object
     }
 
     /**
+     * [[@doctodo method_description:addSubdescriptorValue]].
      *
+     * @return [[@doctodo return_type:addSubdescriptorValue]] [[@doctodo return_description:addSubdescriptorValue]]
      */
     public function addSubdescriptorValue($value)
     {
@@ -170,6 +188,8 @@ class SearchTermResult extends Object
 
     /**
      * Get subdescriptor.
+     *
+     * @return [[@doctodo return_type:getSubdescriptor]] [[@doctodo return_description:getSubdescriptor]]
      */
     public function getSubdescriptor()
     {
@@ -202,7 +222,7 @@ class SearchTermResult extends Object
     }
 
     /**
-     *
+     * [[@doctodo method_description:mergeScore]].
      */
     public function mergeScore($value)
     {
@@ -211,6 +231,8 @@ class SearchTermResult extends Object
 
     /**
      * Get score.
+     *
+     * @return [[@doctodo return_type:getScore]] [[@doctodo return_description:getScore]]
      */
     public function getScore()
     {
@@ -221,13 +243,20 @@ class SearchTermResult extends Object
         return $this->_score;
     }
 
+    /**
+     * Get score sort.
+     *
+     * @return [[@doctodo return_type:getScoreSort]] [[@doctodo return_description:getScoreSort]]
+     */
     public function getScoreSort()
     {
         return sprintf('%010f', $this->score/100) . '-' . $this->object->primaryKey;
     }
 
     /**
+     * [[@doctodo method_description:toArray]].
      *
+     * @return [[@doctodo return_type:toArray]] [[@doctodo return_description:toArray]]
      */
     public function toArray()
     {

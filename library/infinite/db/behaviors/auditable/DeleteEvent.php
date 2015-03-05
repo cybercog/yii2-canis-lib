@@ -9,13 +9,14 @@
 namespace infinite\db\behaviors\auditable;
 
 /**
- * DeleteEvent [@doctodo write class description for DeleteEvent].
+ * DeleteEvent [[@doctodo class_description:infinite\db\behaviors\auditable\DeleteEvent]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class DeleteEvent extends AttributesEvent
 {
     /**
+     * @var [[@doctodo var_type:descriptor]] [[@doctodo var_description:descriptor]]
      */
     public $descriptor;
     /**
@@ -28,6 +29,9 @@ class DeleteEvent extends AttributesEvent
      */
     protected $_id = 'delete';
 
+    /**
+     * @inheritdoc
+     */
     public function getVerb()
     {
         return new \infinite\base\language\Verb('delete');
@@ -41,11 +45,17 @@ class DeleteEvent extends AttributesEvent
         $this->descriptor = $object->descriptor;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getIndirectConnector()
     {
         return 'from';
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getStory()
     {
         return '{{agent}} ' . $this->verb->past . ' [[' . $this->descriptor . ']]' . $this->indirectStory;

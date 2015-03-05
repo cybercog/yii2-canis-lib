@@ -9,7 +9,7 @@
 namespace infinite\db;
 
 /**
- * Migration [@doctodo write class description for Migration].
+ * Migration [[@doctodo class_description:infinite\db\Migration]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

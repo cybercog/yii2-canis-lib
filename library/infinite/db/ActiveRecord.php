@@ -29,40 +29,62 @@ class ActiveRecord extends \yii\db\ActiveRecord
     use ModelTrait;
 
     /**
+     * @var [[@doctodo var_type:tabularIdHuman]] [[@doctodo var_description:tabularIdHuman]]
      */
     public $tabularIdHuman;
     /**
+     * @var [[@doctodo var_type:descriptorField]] [[@doctodo var_description:descriptorField]]
      */
     public $descriptorField;
+    /**
+     * @var [[@doctodo var_type:descriptorLabel]] [[@doctodo var_description:descriptorLabel]]
+     */
     public $descriptorLabel = 'Name';
+    /**
+     * @var [[@doctodo var_type:shortDescriptorField]] [[@doctodo var_description:shortDescriptorField]]
+     */
     public $shortDescriptorField = false;
+    /**
+     * @var [[@doctodo var_type:shortDescriptorLength]] [[@doctodo var_description:shortDescriptorLength]]
+     */
     public $shortDescriptorLength = 100;
     /**
+     * @var [[@doctodo var_type:_wasDirty]] [[@doctodo var_description:_wasDirty]]
      */
     protected $_wasDirty = false;
     /**
+     * @var [[@doctodo var_type:_tabularId]] [[@doctodo var_description:_tabularId]]
      */
     protected $_tabularId;
 
     /**
+     * @var [[@doctodo var_type:queryClass]] [[@doctodo var_description:queryClass]]
      */
     public static $queryClass;
     /**
+     * @var [[@doctodo var_type:registryCache]] [[@doctodo var_description:registryCache]]
      */
     public static $registryCache = true;
     /**
+     * @var [[@doctodo var_type:relationCache]] [[@doctodo var_description:relationCache]]
      */
     public static $relationCache = true;
     /**
+     * @var [[@doctodo var_type:isAco]] [[@doctodo var_description:isAco]]
      */
     public static $isAco = true;
     /**
+     * @var [[@doctodo var_type:groupCache]] [[@doctodo var_description:groupCache]]
      */
     public static $groupCache = false;
 
+    /**
+     * @var [[@doctodo var_type:_specialFields]] [[@doctodo var_description:_specialFields]]
+     */
     protected $_specialFields = [];
 
     /**
+     * @var [[@doctodo var_type:_cache]] [[@doctodo var_description:_cache]]
      */
     protected static $_cache = [];
 
@@ -74,6 +96,9 @@ class ActiveRecord extends \yii\db\ActiveRecord
      */
     const EVENT_AFTER_SAVE_FAIL = 'afterSaveFail';
 
+    /**
+     * @inheritdoc
+     */
     public function __get($name)
     {
         if (isset($this->_specialFields[$name])) {
@@ -83,6 +108,9 @@ class ActiveRecord extends \yii\db\ActiveRecord
         }
     }
 
+    /**
+     * @inheritdoc
+     */
     public function __set($name, $value)
     {
         if (substr($name, 0, 2) === '__') {
@@ -101,6 +129,9 @@ class ActiveRecord extends \yii\db\ActiveRecord
         }
     }
 
+    /**
+     * @inheritdoc
+     */
     public function __isset($name)
     {
         if (isset($this->_specialFields[$name])) {
@@ -110,6 +141,9 @@ class ActiveRecord extends \yii\db\ActiveRecord
         }
     }
 
+    /**
+     * @inheritdoc
+     */
     public function __unset($name)
     {
         if (isset($this->_specialFields[$name])) {
@@ -119,6 +153,9 @@ class ActiveRecord extends \yii\db\ActiveRecord
         }
     }
 
+    /**
+     * @inheritdoc
+     */
     public function canSetProperty($name, $checkVars = true, $checkBehaviors = true)
     {
         if (substr($name, 0, 2) === '__') {
@@ -139,6 +176,11 @@ class ActiveRecord extends \yii\db\ActiveRecord
         return parent::beforeSave($insert);
     }
 
+    /**
+     * Get special fields.
+     *
+     * @return [[@doctodo return_type:getSpecialFields]] [[@doctodo return_description:getSpecialFields]]
+     */
     public function getSpecialFields()
     {
         return $this->_specialFields;
@@ -158,11 +200,19 @@ class ActiveRecord extends \yii\db\ActiveRecord
         return $result;
     }
 
+    /**
+     * [[@doctodo method_description:badFields]].
+     *
+     * @return [[@doctodo return_type:badFields]] [[@doctodo return_description:badFields]]
+     */
     public function badFields()
     {
         return [];
     }
 
+    /**
+     * @inheritdoc
+     */
     protected function resolveFields(array $fields, array $expand)
     {
         $fields = parent::resolveFields($fields, $expand);
@@ -177,6 +227,8 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
     /**
      * Get was dirty.
+     *
+     * @return [[@doctodo return_type:getWasDirty]] [[@doctodo return_description:getWasDirty]]
      */
     public function getWasDirty()
     {
@@ -184,7 +236,9 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:modelPrefix]].
      *
+     * @return [[@doctodo return_type:modelPrefix]] [[@doctodo return_description:modelPrefix]]
      */
     public static function modelPrefix()
     {
@@ -192,7 +246,9 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:cacheGroupKey]].
      *
+     * @return [[@doctodo return_type:cacheGroupKey]] [[@doctodo return_description:cacheGroupKey]]
      */
     public static function cacheGroupKey()
     {
@@ -200,7 +256,9 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:cacheDependency]].
      *
+     * @return [[@doctodo return_type:cacheDependency]] [[@doctodo return_description:cacheDependency]]
      */
     public static function cacheDependency()
     {
@@ -221,6 +279,11 @@ class ActiveRecord extends \yii\db\ActiveRecord
         }
     }
 
+    /**
+     * Get human type.
+     *
+     * @return [[@doctodo return_type:getHumanType]] [[@doctodo return_description:getHumanType]]
+     */
     public function getHumanType()
     {
         $reflector = new ReflectionClass(get_called_class());
@@ -237,6 +300,11 @@ class ActiveRecord extends \yii\db\ActiveRecord
         $this->_tabularId = static::generateTabularId($value);
     }
 
+    /**
+     * Get tabular.
+     *
+     * @return [[@doctodo return_type:getTabularId]] [[@doctodo return_description:getTabularId]]
+     */
     public function getTabularId()
     {
         return $this->_tabularId;
@@ -244,6 +312,8 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
     /**
      * Get tabular prefix.
+     *
+     * @return [[@doctodo return_type:getTabularPrefix]] [[@doctodo return_description:getTabularPrefix]]
      */
     public function getTabularPrefix()
     {
@@ -255,7 +325,9 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:generateTabularId]].
      *
+     * @return [[@doctodo return_type:generateTabularId]] [[@doctodo return_description:generateTabularId]]
      */
     public static function generateTabularId($id)
     {
@@ -271,6 +343,8 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
     /**
      * Get primary tabular.
+     *
+     * @return [[@doctodo return_type:getPrimaryTabularId]] [[@doctodo return_description:getPrimaryTabularId]]
      */
     public static function getPrimaryTabularId()
     {
@@ -281,6 +355,8 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
     /**
      * Get primary model.
+     *
+     * @return [[@doctodo return_type:getPrimaryModel]] [[@doctodo return_description:getPrimaryModel]]
      */
     public static function getPrimaryModel($models)
     {
@@ -299,7 +375,9 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:parseModelAlias]].
      *
+     * @return [[@doctodo return_type:parseModelAlias]] [[@doctodo return_description:parseModelAlias]]
      */
     public static function parseModelAlias($alias)
     {
@@ -320,6 +398,8 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
     /**
      * Get model alias.
+     *
+     * @return [[@doctodo return_type:getModelAlias]] [[@doctodo return_description:getModelAlias]]
      */
     public function getModelAlias()
     {
@@ -327,7 +407,9 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:modelAlias]].
      *
+     * @return [[@doctodo return_type:modelAlias]] [[@doctodo return_description:modelAlias]]
      */
     public static function modelAlias($className = null)
     {
@@ -351,7 +433,9 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:clearCache]].
      *
+     * @return [[@doctodo return_type:clearCache]] [[@doctodo return_description:clearCache]]
      */
     public static function clearCache($model = null)
     {
@@ -364,6 +448,11 @@ class ActiveRecord extends \yii\db\ActiveRecord
         return true;
     }
 
+    /**
+     * Get cache size.
+     *
+     * @return [[@doctodo return_type:getCacheSize]] [[@doctodo return_description:getCacheSize]]
+     */
     public function getCacheSize()
     {
         $n = 0;
@@ -376,6 +465,10 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
     /**
      * Get.
+     *
+     * @param boolean $checkAccess [[@doctodo param_description:checkAccess]] [optional]
+     *
+     * @return [[@doctodo return_type:get]] [[@doctodo return_description:get]]
      */
     public static function get($id, $checkAccess = true)
     {
@@ -402,7 +495,12 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:findAllCache]].
      *
+     * @param boolean $where       [[@doctodo param_description:where]] [optional]
+     * @param boolean $checkAccess [[@doctodo param_description:checkAccess]] [optional]
+     *
+     * @return [[@doctodo return_type:findAllCache]] [[@doctodo return_description:findAllCache]]
      */
     public static function findAllCache($where = false, $checkAccess = true)
     {
@@ -410,7 +508,12 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:_findCache]].
      *
+     * @param boolean $where       [[@doctodo param_description:where]] [optional]
+     * @param boolean $checkAccess [[@doctodo param_description:checkAccess]] [optional]
+     *
+     * @return [[@doctodo return_type:_findCache]] [[@doctodo return_description:_findCache]]
      */
     protected static function _findCache($type, $where = false, $checkAccess = true)
     {
@@ -446,7 +549,9 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:tableExists]].
      *
+     * @return [[@doctodo return_type:tableExists]] [[@doctodo return_description:tableExists]]
      */
     public static function tableExists()
     {
@@ -481,7 +586,9 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:isAccessControlled]].
      *
+     * @return [[@doctodo return_type:isAccessControlled]] [[@doctodo return_description:isAccessControlled]]
      */
     public static function isAccessControlled()
     {
@@ -507,7 +614,9 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:queryBehaviors]].
      *
+     * @return [[@doctodo return_type:queryBehaviors]] [[@doctodo return_description:queryBehaviors]]
      */
     public static function queryBehaviors()
     {
@@ -518,6 +627,11 @@ class ActiveRecord extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * Get subdescriptor fields.
+     *
+     * @return [[@doctodo return_type:getSubdescriptorFields]] [[@doctodo return_description:getSubdescriptorFields]]
+     */
     public function getSubdescriptorFields()
     {
         return [];
@@ -525,6 +639,8 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
     /**
      * Get descriptor.
+     *
+     * @return [[@doctodo return_type:getDescriptor]] [[@doctodo return_description:getDescriptor]]
      */
     public function getDescriptor()
     {
@@ -541,6 +657,11 @@ class ActiveRecord extends \yii\db\ActiveRecord
         return false;
     }
 
+    /**
+     * Get sort options.
+     *
+     * @return [[@doctodo return_type:getSortOptions]] [[@doctodo return_description:getSortOptions]]
+     */
     public function getSortOptions()
     {
         $options = [];
@@ -564,6 +685,14 @@ class ActiveRecord extends \yii\db\ActiveRecord
         return $options;
     }
 
+    /**
+     * Get descriptor default order.
+     *
+     * @param string  $alias [[@doctodo param_description:alias]] [optional]
+     * @param integer $order [[@doctodo param_description:order]] [optional]
+     *
+     * @return [[@doctodo return_type:getDescriptorDefaultOrder]] [[@doctodo return_description:getDescriptorDefaultOrder]]
+     */
     public function getDescriptorDefaultOrder($alias = '{alias}', $order = SORT_ASC)
     {
         $descriptorField = $this->descriptorField;
@@ -582,6 +711,13 @@ class ActiveRecord extends \yii\db\ActiveRecord
         return $sortBy;
     }
 
+    /**
+     * Get default order.
+     *
+     * @param string $alias [[@doctodo param_description:alias]] [optional]
+     *
+     * @return [[@doctodo return_type:getDefaultOrder]] [[@doctodo return_description:getDefaultOrder]]
+     */
     public function getDefaultOrder($alias = 't')
     {
         if (is_null($this->_defaultOrder)) {
@@ -595,6 +731,11 @@ class ActiveRecord extends \yii\db\ActiveRecord
         return $sortBy;
     }
 
+    /**
+     * [[@doctodo method_description:parseDescriptorField]].
+     *
+     * @return [[@doctodo return_type:parseDescriptorField]] [[@doctodo return_description:parseDescriptorField]]
+     */
     protected function parseDescriptorField($config)
     {
         if (is_array($config)) {
@@ -611,6 +752,11 @@ class ActiveRecord extends \yii\db\ActiveRecord
         }
     }
 
+    /**
+     * Get short descriptor.
+     *
+     * @return [[@doctodo return_type:getShortDescriptor]] [[@doctodo return_description:getShortDescriptor]]
+     */
     public function getShortDescriptor()
     {
         if ($this->shortDescriptorField === false) {
@@ -627,16 +773,31 @@ class ActiveRecord extends \yii\db\ActiveRecord
         return $value;
     }
 
+    /**
+     * [[@doctodo method_description:hasIcon]].
+     *
+     * @return [[@doctodo return_type:hasIcon]] [[@doctodo return_description:hasIcon]]
+     */
     public function hasIcon()
     {
         return false;
     }
 
+    /**
+     * Get icon.
+     *
+     * @return [[@doctodo return_type:getIcon]] [[@doctodo return_description:getIcon]]
+     */
     public function getIcon()
     {
         return;
     }
 
+    /**
+     * Get primary subdescriptor.
+     *
+     * @return [[@doctodo return_type:getPrimarySubdescriptor]] [[@doctodo return_description:getPrimarySubdescriptor]]
+     */
     public function getPrimarySubdescriptor($context = null)
     {
         $subdescriptor = [];
@@ -657,6 +818,8 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
     /**
      * Get subdescriptor.
+     *
+     * @return [[@doctodo return_type:getSubdescriptor]] [[@doctodo return_description:getSubdescriptor]]
      */
     public function getSubdescriptor($context = null)
     {
@@ -676,7 +839,9 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:isForeignField]].
      *
+     * @return [[@doctodo return_type:isForeignField]] [[@doctodo return_description:isForeignField]]
      */
     public function isForeignField($field)
     {
@@ -685,6 +850,11 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
     /**
      * Get field value.
+     *
+     * @param array   $options   [[@doctodo param_description:options]] [optional]
+     * @param boolean $formatted [[@doctodo param_description:formatted]] [optional]
+     *
+     * @return [[@doctodo return_type:getFieldValue]] [[@doctodo return_description:getFieldValue]]
      */
     public function getFieldValue($field, $options = [], $context = null, $formatted = true)
     {
@@ -712,6 +882,11 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
     /**
      * Get local field value.
+     *
+     * @param array   $options   [[@doctodo param_description:options]] [optional]
+     * @param boolean $formatted [[@doctodo param_description:formatted]] [optional]
+     *
+     * @return [[@doctodo return_type:getLocalFieldValue]] [[@doctodo return_description:getLocalFieldValue]]
      */
     public function getLocalFieldValue($field, $options = [], $context = null, $formatted = true)
     {
@@ -724,6 +899,11 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
     /**
      * Get foreign field value.
+     *
+     * @param array   $options   [[@doctodo param_description:options]] [optional]
+     * @param boolean $formatted [[@doctodo param_description:formatted]] [optional]
+     *
+     * @return [[@doctodo return_type:getForeignFieldValue]] [[@doctodo return_description:getForeignFieldValue]]
      */
     public function getForeignFieldValue($field, $options = [], $context = null, $formatted = true)
     {
@@ -731,7 +911,9 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:checkExistence]].
      *
+     * @return [[@doctodo return_type:checkExistence]] [[@doctodo return_description:checkExistence]]
      */
     public function checkExistence()
     {
@@ -743,6 +925,8 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:quote]].
+     *
      * @param unknown $value
      *
      * @return unknown
@@ -764,6 +948,8 @@ class ActiveRecord extends \yii\db\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:save]].
+     *
      * @param unknown $runValidation (optional)
      * @param unknown $attributes    (optional)
      *
@@ -783,6 +969,13 @@ class ActiveRecord extends \yii\db\ActiveRecord
         }
     }
 
+    /**
+     * Get package.
+     *
+     * @param string $urlAction [[@doctodo param_description:urlAction]] [optional]
+     *
+     * @return [[@doctodo return_type:getPackage]] [[@doctodo return_description:getPackage]]
+     */
     public function getPackage($urlAction = 'view')
     {
         $p = [];

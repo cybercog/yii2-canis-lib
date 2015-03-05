@@ -10,6 +10,11 @@ namespace infinite\base;
 
 use Yii;
 
+/**
+ * Cron [[@doctodo class_description:infinite\base\Cron]].
+ *
+ * @author Jacob Morrison <email@ofjacob.com>
+ */
 class Cron extends Component
 {
     const EVENT_HOURLY = '__CRON_HOURLY';
@@ -19,8 +24,16 @@ class Cron extends Component
     const EVENT_WEEKLY = '__CRON_WEEKLY';
     const EVENT_MONTHLY = '__CRON_MONTHLY';
 
+    /**
+     * @var [[@doctodo var_type:_instance]] [[@doctodo var_description:_instance]]
+     */
     protected static $_instance;
 
+    /**
+     * Get instance.
+     *
+     * @return [[@doctodo return_type:getInstance]] [[@doctodo return_description:getInstance]]
+     */
     public static function getInstance()
     {
         if (!isset(static::$_instance)) {
@@ -30,6 +43,11 @@ class Cron extends Component
         return static::$_instance;
     }
 
+    /**
+     * Get settings.
+     *
+     * @return [[@doctodo return_type:getSettings]] [[@doctodo return_description:getSettings]]
+     */
     public function getSettings()
     {
         if (!isset($this->_settings)) {
@@ -48,6 +66,11 @@ class Cron extends Component
         return $this->_settings;
     }
 
+    /**
+     * [[@doctodo method_description:hourly]].
+     *
+     * @return [[@doctodo return_type:hourly]] [[@doctodo return_description:hourly]]
+     */
     public function hourly()
     {
         $event = new CronEvent();
@@ -71,18 +94,33 @@ class Cron extends Component
         return $event->isValid;
     }
 
+    /**
+     * [[@doctodo method_description:isHour]].
+     *
+     * @return [[@doctodo return_type:isHour]] [[@doctodo return_description:isHour]]
+     */
     public function isHour($hour)
     {
         $currentHour = (int) date("G");
 
         return $currentHour == $hour;
     }
+    /**
+     * [[@doctodo method_description:isDayOfWeek]].
+     *
+     * @return [[@doctodo return_type:isDayOfWeek]] [[@doctodo return_description:isDayOfWeek]]
+     */
     public function isDayOfWeek($dayOfWeek)
     {
         $currentDayOfWeek = (int) date("w");
 
         return $currentDayOfWeek == $dayOfWeek;
     }
+    /**
+     * [[@doctodo method_description:isDayOfMonth]].
+     *
+     * @return [[@doctodo return_type:isDayOfMonth]] [[@doctodo return_description:isDayOfMonth]]
+     */
     public function isDayOfMonth($dayOfMonth)
     {
         $currentDayOfMonth = (int) date("j");

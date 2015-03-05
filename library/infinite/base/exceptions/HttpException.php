@@ -9,7 +9,7 @@
 namespace infinite\base\exceptions;
 
 /**
- * HttpException [@doctodo write class description for HttpException].
+ * HttpException [[@doctodo class_description:infinite\base\exceptions\HttpException]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

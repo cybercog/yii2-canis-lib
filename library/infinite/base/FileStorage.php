@@ -11,24 +11,29 @@ namespace infinite\base;
 use infinite\base\exceptions\Exception;
 
 /**
- * FileStorage [@doctodo write class description for FileStorage].
+ * FileStorage [[@doctodo class_description:infinite\base\FileStorage]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class FileStorage extends \infinite\base\Component
 {
     /**
+     * @var [[@doctodo var_type:_supportedImageTypes]] [[@doctodo var_description:_supportedImageTypes]]
      */
     protected $_supportedImageTypes;
     /**
+     * @var [[@doctodo var_type:_tempPath]] [[@doctodo var_description:_tempPath]]
      */
     protected $_tempPath;
     /**
+     * @var [[@doctodo var_type:_tempFiles]] [[@doctodo var_description:_tempFiles]]
      */
     protected $_tempFiles = [];
 
     /**
      * Initializes the component.
+     *
+     * @return [[@doctodo return_type:init]] [[@doctodo return_description:init]]
      */
     public function init()
     {
@@ -84,8 +89,9 @@ class FileStorage extends \infinite\base\Component
     /**
      * Get a temporary path.
      *
-     *
+     * @throws Exception [[@doctodo exception_description:Exception]]
      * @return string Temporary file path
+     *
      */
     public function getTempPath()
     {

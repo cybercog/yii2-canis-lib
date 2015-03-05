@@ -12,13 +12,19 @@ use Yii;
 use yii\helpers\Console;
 
 /**
- * Controller [@doctodo write class description for Controller].
+ * Controller [[@doctodo class_description:infinite\console\Controller]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class Controller extends \yii\console\Controller
 {
+    /**
+     * @var [[@doctodo var_type:started]] [[@doctodo var_description:started]]
+     */
     public $started = false;
+    /**
+     * @inheritdoc
+     */
     public function runAction($id, $params = [])
     {
         $this->on(self::EVENT_BEFORE_ACTION, function ($event) {
@@ -28,6 +34,7 @@ class Controller extends \yii\console\Controller
         return parent::runAction($id, $params);
     }
     /**
+     * [[@doctodo method_description:hr]].
      */
     public function hr()
     {
@@ -37,7 +44,9 @@ class Controller extends \yii\console\Controller
     }
 
     /**
+     * [[@doctodo method_description:out]].
      *
+     * @return [[@doctodo return_type:out]] [[@doctodo return_description:out]]
      */
     public function out($string)
     {

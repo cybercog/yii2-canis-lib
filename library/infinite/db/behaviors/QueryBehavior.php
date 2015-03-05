@@ -9,7 +9,7 @@
 namespace infinite\db\behaviors;
 
 /**
- * QueryBehavior [@doctodo write class description for QueryBehavior].
+ * QueryBehavior [[@doctodo class_description:infinite\db\behaviors\QueryBehavior]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

@@ -11,7 +11,6 @@ namespace infinite\security\identity\providers;
 use Yii;
 
 /**
- * Provider [@doctodo write class description for Provider].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

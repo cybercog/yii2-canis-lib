@@ -9,7 +9,7 @@
 namespace infinite\base;
 
 /**
- * Component [@doctodo write class description for Component].
+ * Component [[@doctodo class_description:infinite\base\Component]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

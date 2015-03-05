@@ -10,6 +10,7 @@
 		"php": ">=5.4.0",
 		"yiisoft/yii2": "2.0.*",
 		"yiisoft/yii2-redis": "2.0.*",
+		"yiisoft/yii2-mongodb": "2.0.*",
 		"bower-asset/underscore": "1.7.*",
 		"fortawesome/font-awesome": "*",
 		"malsup/form": "3.*",

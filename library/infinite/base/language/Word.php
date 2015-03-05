@@ -9,14 +9,19 @@
 namespace infinite\base\language;
 
 /**
- * Word [@doctodo write class description for Word].
+ * Word [[@doctodo class_description:infinite\base\language\Word]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 abstract class Word extends \infinite\base\Object
 {
+    /**
+     * Get base.
+     */
     abstract public function getBase();
     /**
+     * [[@doctodo method_description:prepare]].
+     *
      * @param unknown $s
      * @param unknown $upper (optional)
      *
@@ -32,6 +37,8 @@ abstract class Word extends \infinite\base\Object
     }
 
     /**
+     * [[@doctodo method_description:vowel]].
+     *
      * @param unknown $l
      * @param unknown $includeY (optional)
      *
@@ -47,6 +54,8 @@ abstract class Word extends \infinite\base\Object
     }
 
     /**
+     * [[@doctodo method_description:isCVC]].
+     *
      * @param unknown $s
      *
      * @return unknown

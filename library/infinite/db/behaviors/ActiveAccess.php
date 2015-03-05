@@ -12,28 +12,34 @@ use infinite\security\Access;
 use Yii;
 
 /**
- * ActiveAccess [@doctodo write class description for ActiveAccess].
+ * ActiveAccess [[@doctodo class_description:infinite\db\behaviors\ActiveAccess]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
 {
     /**
+     * @var [[@doctodo var_type:_debug]] [[@doctodo var_description:_debug]]
      */
     protected static $_debug = false;
     /**
+     * @var [[@doctodo var_type:_objectAccess]] [[@doctodo var_description:_objectAccess]]
      */
     protected $_objectAccess;
     /**
+     * @var [[@doctodo var_type:_access]] [[@doctodo var_description:_access]]
      */
     protected $_access;
     /**
+     * @var [[@doctodo var_type:_acaId]] [[@doctodo var_description:_acaId]]
      */
     protected $_acaId;
     /**
+     * @var [[@doctodo var_type:_accessingObject]] [[@doctodo var_description:_accessingObject]]
      */
     protected $_accessingObject;
     /**
+     * @var [[@doctodo var_type:_accessMap]] [[@doctodo var_description:_accessMap]]
      */
     protected $_accessMap = [];
 
@@ -47,6 +53,9 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
         ];
     }
 
+    /**
+     * [[@doctodo method_description:clearActiveAccessCache]].
+     */
     public function clearActiveAccessCache()
     {
         $this->_objectAccess = null;
@@ -57,7 +66,7 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     *
+     * [[@doctodo method_description:fillAccessMap]].
      */
     public function fillAccessMap($accessingObject = null, $ensureAca = null)
     {
@@ -90,7 +99,11 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:can]].
      *
+     * @param boolean $relatedObject [[@doctodo param_description:relatedObject]] [optional]
+     *
+     * @return [[@doctodo return_type:can]] [[@doctodo return_description:can]]
      */
     public function can($aca, $accessingObject = null, $relatedObject = false)
     {
@@ -124,7 +137,9 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:canDeleteAssociation]].
      *
+     * @return [[@doctodo return_type:canDeleteAssociation]] [[@doctodo return_description:canDeleteAssociation]]
      */
     public function canDeleteAssociation($relatedObject)
     {
@@ -133,7 +148,9 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:canUpdateAssociation]].
      *
+     * @return [[@doctodo return_type:canUpdateAssociation]] [[@doctodo return_description:canUpdateAssociation]]
      */
     public function canUpdateAssociation($relatedObject)
     {
@@ -142,7 +159,9 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:parentCan]].
      *
+     * @return [[@doctodo return_type:parentCan]] [[@doctodo return_description:parentCan]]
      */
     public function parentCan($aca, $accessingObject = null)
     {
@@ -163,7 +182,7 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
-     *
+     * [[@doctodo method_description:afterFind]].
      */
     public function afterFind($event)
     {
@@ -180,6 +199,8 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Get object access.
+     *
+     * @return [[@doctodo return_type:getObjectAccess]] [[@doctodo return_description:getObjectAccess]]
      */
     public function getObjectAccess()
     {
@@ -192,6 +213,8 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Set access level.
+     *
+     * @return [[@doctodo return_type:setAccessLevel]] [[@doctodo return_description:setAccessLevel]]
      */
     public function setAccessLevel($action, $access, $accessingObject = null, $aclRole = null)
     {
@@ -204,7 +227,9 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:allow]].
      *
+     * @return [[@doctodo return_type:allow]] [[@doctodo return_description:allow]]
      */
     public function allow($action, $accessingObject = null, $aclRole = null)
     {
@@ -216,7 +241,9 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:parentAccess]].
      *
+     * @return [[@doctodo return_type:parentAccess]] [[@doctodo return_description:parentAccess]]
      */
     public function parentAccess($action, $accessingObject = null, $aclRole = null)
     {
@@ -228,7 +255,9 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:clear]].
      *
+     * @return [[@doctodo return_type:clear]] [[@doctodo return_description:clear]]
      */
     public function clear($action, $accessingObject = null, $aclRole = null)
     {
@@ -240,7 +269,9 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:requireDirectAdmin]].
      *
+     * @return [[@doctodo return_type:requireDirectAdmin]] [[@doctodo return_description:requireDirectAdmin]]
      */
     public function requireDirectAdmin($action, $accessingObject = null, $aclRole = null)
     {
@@ -252,7 +283,9 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:requireAdmin]].
      *
+     * @return [[@doctodo return_type:requireAdmin]] [[@doctodo return_description:requireAdmin]]
      */
     public function requireAdmin($action, $accessingObject = null, $aclRole = null)
     {
@@ -264,7 +297,9 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:requireSuperAdmin]].
      *
+     * @return [[@doctodo return_type:requireSuperAdmin]] [[@doctodo return_description:requireSuperAdmin]]
      */
     public function requireSuperAdmin($action, $accessingObject = null, $aclRole = null)
     {
@@ -296,7 +331,9 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:asUser]].
      *
+     * @return [[@doctodo return_type:asUser]] [[@doctodo return_description:asUser]]
      */
     public function asUser($userName)
     {
@@ -309,7 +346,9 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:asGroup]].
      *
+     * @return [[@doctodo return_type:asGroup]] [[@doctodo return_description:asGroup]]
      */
     public function asGroup($groupSystemName)
     {
@@ -322,7 +361,9 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
     }
 
     /**
+     * [[@doctodo method_description:asInternal]].
      *
+     * @return [[@doctodo return_type:asInternal]] [[@doctodo return_description:asInternal]]
      */
     public function asInternal($acr)
     {
@@ -333,6 +374,8 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Set accessing object.
+     *
+     * @return [[@doctodo return_type:setAccessingObject]] [[@doctodo return_description:setAccessingObject]]
      */
     public function setAccessingObject($value)
     {
@@ -341,6 +384,8 @@ class ActiveAccess extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Get accessing object.
+     *
+     * @return [[@doctodo return_type:getAccessingObject]] [[@doctodo return_description:getAccessingObject]]
      */
     public function getAccessingObject()
     {

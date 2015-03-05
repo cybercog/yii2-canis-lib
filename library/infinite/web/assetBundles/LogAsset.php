@@ -11,7 +11,6 @@ namespace infinite\web\assetBundles;
 use yii\web\AssetBundle;
 
 /**
- * AppAsset [@doctodo write class description for AppAsset].
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  *

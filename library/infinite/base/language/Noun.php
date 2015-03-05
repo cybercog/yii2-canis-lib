@@ -9,22 +9,26 @@
 namespace infinite\base\language;
 
 /**
- * Noun [@doctodo write class description for Noun].
+ * Noun [[@doctodo class_description:infinite\base\language\Noun]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class Noun extends \infinite\base\language\Word
 {
     /**
+     * @var [[@doctodo var_type:_singular]] [[@doctodo var_description:_singular]]
      */
     protected $_singular;
     /**
+     * @var [[@doctodo var_type:_plural]] [[@doctodo var_description:_plural]]
      */
     protected $_plural;
     /**
+     * @var [[@doctodo var_type:_possessive]] [[@doctodo var_description:_possessive]]
      */
     protected $_possessive;
     /**
+     * @var [[@doctodo var_type:_possessive_plural]] [[@doctodo var_description:_possessive_plural]]
      */
     protected $_possessive_plural;
 
@@ -62,6 +66,9 @@ class Noun extends \infinite\base\language\Word
         return $this->_singular;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getBase()
     {
         return $this->_singular;
@@ -69,6 +76,8 @@ class Noun extends \infinite\base\language\Word
 
     /**
      * Get upper singular.
+     *
+     * @return [[@doctodo return_type:getUpperSingular]] [[@doctodo return_description:getUpperSingular]]
      */
     public function getUpperSingular()
     {
@@ -89,6 +98,8 @@ class Noun extends \infinite\base\language\Word
 
     /**
      * Get upper plural.
+     *
+     * @return [[@doctodo return_type:getUpperPlural]] [[@doctodo return_description:getUpperPlural]]
      */
     public function getUpperPlural()
     {
@@ -151,6 +162,13 @@ class Noun extends \infinite\base\language\Word
         return $this->prepare($this->_possessive_plural, $upper);
     }
 
+    /**
+     * Get package.
+     *
+     * @param boolean $upper [[@doctodo param_description:upper]] [optional]
+     *
+     * @return [[@doctodo return_type:getPackage]] [[@doctodo return_description:getPackage]]
+     */
     public function getPackage($upper = true)
     {
         return [
