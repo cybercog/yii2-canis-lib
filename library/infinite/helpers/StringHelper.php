@@ -30,6 +30,8 @@ class StringHelper extends \yii\helpers\StringHelper
     /**
      * [[@doctodo method_description:neighborWordCombos]].
      *
+     * @param [[@doctodo param_type:parts]] $parts [[@doctodo param_description:parts]]
+     *
      * @return [[@doctodo return_type:neighborWordCombos]] [[@doctodo return_description:neighborWordCombos]]
      */
     public static function neighborWordCombos($parts)
@@ -63,7 +65,8 @@ class StringHelper extends \yii\helpers\StringHelper
     /**
      * [[@doctodo method_description:humanFilesize]].
      *
-     * @param integer $decimals [[@doctodo param_description:decimals]] [optional]
+     * @param [[@doctodo param_type:bytes]] $bytes    [[@doctodo param_description:bytes]]
+     * @param integer                       $decimals [[@doctodo param_description:decimals]] [optional]
      *
      * @return [[@doctodo return_type:humanFilesize]] [[@doctodo return_description:humanFilesize]]
      *
@@ -80,7 +83,8 @@ class StringHelper extends \yii\helpers\StringHelper
     /**
      * [[@doctodo method_description:parseText]].
      *
-     * @param array $variables [[@doctodo param_description:variables]] [optional]
+     * @param [[@doctodo param_type:text]] $text      [[@doctodo param_description:text]]
+     * @param array                        $variables [[@doctodo param_description:variables]] [optional]
      *
      * @return [[@doctodo return_type:parseText]] [[@doctodo return_description:parseText]]
      */
@@ -126,7 +130,9 @@ class StringHelper extends \yii\helpers\StringHelper
     /**
      * [[@doctodo method_description:compareStrings]].
      *
-     * @param array $weights [[@doctodo param_description:weights]] [optional]
+     * @param [[@doctodo param_type:str1]] $str1    [[@doctodo param_description:str1]]
+     * @param [[@doctodo param_type:str2]] $str2    [[@doctodo param_description:str2]]
+     * @param array                        $weights [[@doctodo param_description:weights]] [optional]
      *
      * @return [[@doctodo return_type:compareStrings]] [[@doctodo return_description:compareStrings]]
      */
@@ -170,6 +176,8 @@ class StringHelper extends \yii\helpers\StringHelper
 
     /**
      * [[@doctodo method_description:spellNumber]].
+     *
+     * @param [[@doctodo param_type:number]] $number [[@doctodo param_description:number]]
      *
      * @return [[@doctodo return_type:spellNumber]] [[@doctodo return_description:spellNumber]]
      */

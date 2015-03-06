@@ -183,6 +183,9 @@ class Date extends \infinite\base\Object
     /**
      * [[@doctodo method_description:isToday]].
      *
+     * @param [[@doctodo param_type:date]] $date [[@doctodo param_description:date]]
+     * @param [[@doctodo param_type:time]] $time [[@doctodo param_description:time]] [optional]
+     *
      * @return [[@doctodo return_type:isToday]] [[@doctodo return_description:isToday]]
      */
     public static function isToday($date, $time = null)
@@ -285,6 +288,8 @@ class Date extends \infinite\base\Object
 
     /**
      * [[@doctodo method_description:shortDuration]].
+     *
+     * @param [[@doctodo param_type:seconds]] $seconds [[@doctodo param_description:seconds]]
      *
      * @return [[@doctodo return_type:shortDuration]] [[@doctodo return_description:shortDuration]]
      */

@@ -36,6 +36,8 @@ class Collector extends \infinite\base\collector\Collector
 
     /**
      * Set initial items.
+     *
+     * @param [[@doctodo param_type:value]] $value [[@doctodo param_description:value]]
      */
     public function setInitialItems($value)
     {
@@ -52,6 +54,8 @@ class Collector extends \infinite\base\collector\Collector
 
     /**
      * Get by.
+     *
+     * @param [[@doctodo param_type:id]] $id [[@doctodo param_description:id]]
      *
      * @return [[@doctodo return_type:getById]] [[@doctodo return_description:getById]]
      */

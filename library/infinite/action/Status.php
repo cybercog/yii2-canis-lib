@@ -167,6 +167,10 @@ class Status extends \infinite\base\Component
     }
     /**
      * [[@doctodo method_description:addMessage]].
+     *
+     * @param [[@doctodo param_type:message]]      $message      [[@doctodo param_description:message]]
+     * @param [[@doctodo param_type:data]]         $data         [[@doctodo param_description:data]] [optional]
+     * @param [[@doctodo param_type:messageLevel]] $messageLevel [[@doctodo param_description:messageLevel]] [optional]
      */
     public function addMessage($message, $data = null, $messageLevel = null)
     {
@@ -192,6 +196,9 @@ class Status extends \infinite\base\Component
     /**
      * [[@doctodo method_description:addInfo]].
      *
+     * @param [[@doctodo param_type:message]] $message [[@doctodo param_description:message]]
+     * @param [[@doctodo param_type:data]]    $data    [[@doctodo param_description:data]] [optional]
+     *
      * @return [[@doctodo return_type:addInfo]] [[@doctodo return_description:addInfo]]
      */
     public function addInfo($message, $data = null)
@@ -202,6 +209,9 @@ class Status extends \infinite\base\Component
     /**
      * [[@doctodo method_description:addWarning]].
      *
+     * @param [[@doctodo param_type:message]] $message [[@doctodo param_description:message]]
+     * @param [[@doctodo param_type:data]]    $data    [[@doctodo param_description:data]] [optional]
+     *
      * @return [[@doctodo return_type:addWarning]] [[@doctodo return_description:addWarning]]
      */
     public function addWarning($message, $data = null)
@@ -211,6 +221,9 @@ class Status extends \infinite\base\Component
 
     /**
      * [[@doctodo method_description:addError]].
+     *
+     * @param [[@doctodo param_type:message]] $message [[@doctodo param_description:message]]
+     * @param [[@doctodo param_type:data]]    $data    [[@doctodo param_description:data]] [optional]
      *
      * @return [[@doctodo return_type:addError]] [[@doctodo return_description:addError]]
      */
@@ -305,6 +318,8 @@ class Status extends \infinite\base\Component
     /**
      * Set command output.
      *
+     * @param [[@doctodo param_type:value]] $value [[@doctodo param_description:value]]
+     *
      * @return [[@doctodo return_type:setCommandOutput]] [[@doctodo return_description:setCommandOutput]]
      */
     public function setCommandOutput($value)
@@ -317,6 +332,8 @@ class Status extends \infinite\base\Component
 
     /**
      * Set log.
+     *
+     * @param [[@doctodo param_type:log]] $log [[@doctodo param_description:log]]
      */
     public function setLog($log)
     {
@@ -403,6 +420,8 @@ class Status extends \infinite\base\Component
     /**
      * Get task.
      *
+     * @param [[@doctodo param_type:id]] $id [[@doctodo param_description:id]]
+     *
      * @return [[@doctodo return_type:getTask]] [[@doctodo return_description:getTask]]
      */
     public function getTask($id)
@@ -432,7 +451,9 @@ class Status extends \infinite\base\Component
     /**
      * [[@doctodo method_description:addTask]].
      *
-     * @param boolean $setCurrent [[@doctodo param_description:setCurrent]] [optional]
+     * @param [[@doctodo param_type:id]]   $id         [[@doctodo param_description:id]]
+     * @param [[@doctodo param_type:name]] $name       [[@doctodo param_description:name]]
+     * @param boolean                      $setCurrent [[@doctodo param_description:setCurrent]] [optional]
      *
      * @return [[@doctodo return_type:addTask]] [[@doctodo return_description:addTask]]
      */

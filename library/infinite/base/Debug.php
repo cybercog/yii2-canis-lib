@@ -21,6 +21,8 @@ class Debug extends \infinite\base\Object
 {
     /**
      * [[@doctodo method_description:db]].
+     *
+     * @param [[@doctodo param_type:query]] $query [[@doctodo param_description:query]]
      */
     public static function db($query)
     {
@@ -65,7 +67,8 @@ class Debug extends \infinite\base\Object
     /**
      * [[@doctodo method_description:ar]].
      *
-     * @param boolean $print [[@doctodo param_description:print]] [optional]
+     * @param [[@doctodo param_type:what]] $what  [[@doctodo param_description:what]]
+     * @param boolean                      $print [[@doctodo param_description:print]] [optional]
      *
      * @return [[@doctodo return_type:ar]] [[@doctodo return_description:ar]]
      */
@@ -93,6 +96,8 @@ class Debug extends \infinite\base\Object
 
     /**
      * [[@doctodo method_description:clean]].
+     *
+     * @param [[@doctodo param_type:what]] $what [[@doctodo param_description:what]]
      */
     public static function clean(&$what)
     {

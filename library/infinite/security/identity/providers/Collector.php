@@ -41,6 +41,8 @@ class Collector extends \infinite\base\collector\Collector
     }
     /**
      * Set initial items.
+     *
+     * @param [[@doctodo param_type:value]] $value [[@doctodo param_description:value]]
      */
     public function setInitialItems($value)
     {
@@ -59,6 +61,8 @@ class Collector extends \infinite\base\collector\Collector
 
     /**
      * Set handlers.
+     *
+     * @param [[@doctodo param_type:values]] $values [[@doctodo param_description:values]]
      */
     public function setHandlers($values)
     {
@@ -69,6 +73,9 @@ class Collector extends \infinite\base\collector\Collector
 
     /**
      * [[@doctodo method_description:registerHandler]].
+     *
+     * @param [[@doctodo param_type:key]]     $key     [[@doctodo param_description:key]]
+     * @param [[@doctodo param_type:handler]] $handler [[@doctodo param_description:handler]]
      */
     public function registerHandler($key, $handler)
     {
@@ -90,6 +97,9 @@ class Collector extends \infinite\base\collector\Collector
 
     /**
      * [[@doctodo method_description:attemptCreate]].
+     *
+     * @param [[@doctodo param_type:username]] $username [[@doctodo param_description:username]]
+     * @param [[@doctodo param_type:password]] $password [[@doctodo param_description:password]]
      *
      * @return [[@doctodo return_type:attemptCreate]] [[@doctodo return_description:attemptCreate]]
      */
@@ -121,6 +131,8 @@ class Collector extends \infinite\base\collector\Collector
 
     /**
      * Get by.
+     *
+     * @param [[@doctodo param_type:id]] $id [[@doctodo param_description:id]]
      *
      * @return [[@doctodo return_type:getById]] [[@doctodo return_description:getById]]
      */

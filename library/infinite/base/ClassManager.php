@@ -58,7 +58,8 @@ class ClassManager extends Component implements IteratorAggregate, ArrayAccess
     /**
      * Set classes.
      *
-     * @param boolean $override [[@doctodo param_description:override]] [optional]
+     * @param [[@doctodo param_type:classes]] $classes  [[@doctodo param_description:classes]]
+     * @param boolean                         $override [[@doctodo param_description:override]] [optional]
      */
     public function setClasses($classes, $override = true)
     {

@@ -99,6 +99,8 @@ abstract class Event extends \infinite\base\Component
 
     /**
      * Set agent.
+     *
+     * @param [[@doctodo param_type:agent]] $agent [[@doctodo param_description:agent]]
      */
     public function setAgent($agent)
     {
@@ -139,6 +141,8 @@ abstract class Event extends \infinite\base\Component
 
     /**
      * Set indirect object.
+     *
+     * @param [[@doctodo param_type:object]] $object [[@doctodo param_description:object]]
      */
     public function setIndirectObject($object)
     {
@@ -179,6 +183,8 @@ abstract class Event extends \infinite\base\Component
 
     /**
      * Set direct object.
+     *
+     * @param [[@doctodo param_type:object]] $object [[@doctodo param_description:object]]
      */
     public function setDirectObject($object)
     {
@@ -220,6 +226,8 @@ abstract class Event extends \infinite\base\Component
     /**
      * Set id.
      *
+     * @param [[@doctodo param_type:id]] $id [[@doctodo param_description:id]]
+     *
      * @return [[@doctodo return_type:setId]] [[@doctodo return_description:setId]]
      */
     public function setId($id)
@@ -258,6 +266,8 @@ abstract class Event extends \infinite\base\Component
 
     /**
      * Set timestamp.
+     *
+     * @param [[@doctodo param_type:timestamp]] $timestamp [[@doctodo param_description:timestamp]]
      */
     public function setTimestamp($timestamp)
     {
@@ -307,6 +317,8 @@ abstract class Event extends \infinite\base\Component
     /**
      * Set exclusive.
      *
+     * @param [[@doctodo param_type:exclusive]] $exclusive [[@doctodo param_description:exclusive]]
+     *
      * @return [[@doctodo return_type:setExclusive]] [[@doctodo return_description:setExclusive]]
      */
     public function setExclusive($exclusive)
@@ -326,6 +338,8 @@ abstract class Event extends \infinite\base\Component
 
     /**
      * [[@doctodo method_description:merge]].
+     *
+     * @param [[@doctodo param_type:with]] $with [[@doctodo param_description:with]]
      *
      * @return [[@doctodo return_type:merge]] [[@doctodo return_description:merge]]
      */

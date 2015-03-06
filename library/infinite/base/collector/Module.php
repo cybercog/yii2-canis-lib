@@ -70,6 +70,8 @@ abstract class Module extends Collector
     /**
      * [[@doctodo method_description:onAfterLoad]].
      *
+     * @param [[@doctodo param_type:action]] $action [[@doctodo param_description:action]]
+     *
      * @return [[@doctodo return_type:onAfterLoad]] [[@doctodo return_description:onAfterLoad]]
      */
     public function onAfterLoad($action)

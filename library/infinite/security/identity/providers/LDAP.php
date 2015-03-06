@@ -58,6 +58,8 @@ class LDAP extends \infinite\security\identity\providers\Handler
     /**
      * [[@doctodo method_description:extractOus]].
      *
+     * @param [[@doctodo param_type:dns]] $dns [[@doctodo param_description:dns]]
+     *
      * @return [[@doctodo return_type:extractOus]] [[@doctodo return_description:extractOus]]
      */
     protected function extractOus($dns)
@@ -76,6 +78,8 @@ class LDAP extends \infinite\security\identity\providers\Handler
 
     /**
      * [[@doctodo method_description:extractMembership]].
+     *
+     * @param [[@doctodo param_type:cns]] $cns [[@doctodo param_description:cns]]
      *
      * @return [[@doctodo return_type:extractMembership]] [[@doctodo return_description:extractMembership]]
      */
@@ -113,6 +117,9 @@ class LDAP extends \infinite\security\identity\providers\Handler
     /**
      * [[@doctodo method_description:ldapAuth]].
      *
+     * @param [[@doctodo param_type:username]] $username [[@doctodo param_description:username]]
+     * @param [[@doctodo param_type:password]] $password [[@doctodo param_description:password]]
+     *
      * @return [[@doctodo return_type:ldapAuth]] [[@doctodo return_description:ldapAuth]]
      */
     public function ldapAuth($username, $password)
@@ -140,6 +147,8 @@ class LDAP extends \infinite\security\identity\providers\Handler
 
     /**
      * Get attributes.
+     *
+     * @param [[@doctodo param_type:username]] $username [[@doctodo param_description:username]]
      *
      * @return [[@doctodo return_type:getAttributes]] [[@doctodo return_description:getAttributes]]
      */

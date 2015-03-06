@@ -44,6 +44,8 @@ class SearchTermResult extends Object
 
     /**
      * Set id.
+     *
+     * @param [[@doctodo param_type:value]] $value [[@doctodo param_description:value]]
      */
     public function setId($value)
     {
@@ -66,6 +68,8 @@ class SearchTermResult extends Object
 
     /**
      * Set object.
+     *
+     * @param [[@doctodo param_type:value]] $value [[@doctodo param_description:value]]
      */
     public function setObject($value)
     {
@@ -84,6 +88,8 @@ class SearchTermResult extends Object
 
     /**
      * Set descriptor.
+     *
+     * @param [[@doctodo param_type:value]] $value [[@doctodo param_description:value]]
      */
     public function setDescriptor($value)
     {
@@ -106,6 +112,8 @@ class SearchTermResult extends Object
 
     /**
      * Set terms.
+     *
+     * @param [[@doctodo param_type:value]] $value [[@doctodo param_description:value]]
      */
     public function setTerms($value)
     {
@@ -128,6 +136,8 @@ class SearchTermResult extends Object
 
     /**
      * [[@doctodo method_description:mergeTerms]].
+     *
+     * @param [[@doctodo param_type:values]] $values [[@doctodo param_description:values]]
      */
     public function mergeTerms($values)
     {
@@ -141,6 +151,8 @@ class SearchTermResult extends Object
 
     /**
      * Set subdescriptor.
+     *
+     * @param [[@doctodo param_type:value]] $value [[@doctodo param_description:value]]
      */
     public function setSubdescriptor($value)
     {
@@ -149,6 +161,8 @@ class SearchTermResult extends Object
 
     /**
      * [[@doctodo method_description:addSubdescriptorField]].
+     *
+     * @param [[@doctodo param_type:field]] $field [[@doctodo param_description:field]]
      *
      * @return [[@doctodo return_type:addSubdescriptorField]] [[@doctodo return_description:addSubdescriptorField]]
      */
@@ -171,6 +185,8 @@ class SearchTermResult extends Object
 
     /**
      * [[@doctodo method_description:addSubdescriptorValue]].
+     *
+     * @param [[@doctodo param_type:value]] $value [[@doctodo param_description:value]]
      *
      * @return [[@doctodo return_type:addSubdescriptorValue]] [[@doctodo return_description:addSubdescriptorValue]]
      */
@@ -215,6 +231,8 @@ class SearchTermResult extends Object
 
     /**
      * Set score.
+     *
+     * @param [[@doctodo param_type:value]] $value [[@doctodo param_description:value]]
      */
     public function setScore($value)
     {
@@ -223,6 +241,8 @@ class SearchTermResult extends Object
 
     /**
      * [[@doctodo method_description:mergeScore]].
+     *
+     * @param [[@doctodo param_type:value]] $value [[@doctodo param_description:value]]
      */
     public function mergeScore($value)
     {

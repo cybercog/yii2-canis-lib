@@ -68,6 +68,9 @@ class Interaction extends \infinite\base\Component // implements \infinite\base\
     /**
      * [[@doctodo method_description:saveResolution]].
      *
+     * @param [[@doctodo param_type:id]]         $id         [[@doctodo param_description:id]]
+     * @param [[@doctodo param_type:resolution]] $resolution [[@doctodo param_description:resolution]]
+     *
      * @return [[@doctodo return_type:saveResolution]] [[@doctodo return_description:saveResolution]]
      */
     public static function saveResolution($id, $resolution)
@@ -127,6 +130,8 @@ class Interaction extends \infinite\base\Component // implements \infinite\base\
     /**
      * [[@doctodo method_description:resolve]].
      *
+     * @param [[@doctodo param_type:response]] $response [[@doctodo param_description:response]]
+     *
      * @return [[@doctodo return_type:resolve]] [[@doctodo return_description:resolve]]
      */
     public function resolve($response)
@@ -164,6 +169,8 @@ class Interaction extends \infinite\base\Component // implements \infinite\base\
 
     /**
      * Set callback.
+     *
+     * @param [[@doctodo param_type:callback]] $callback [[@doctodo param_description:callback]]
      *
      * @throws Exception [[@doctodo exception_description:Exception]]
      * @return [[@doctodo return_type:setCallback]] [[@doctodo return_description:setCallback]]

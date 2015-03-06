@@ -160,6 +160,8 @@ class TagBehavior extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Set tags.
+     *
+     * @param [[@doctodo param_type:tags]] $tags [[@doctodo param_description:tags]]
      */
     public function setTags($tags)
     {
@@ -222,6 +224,8 @@ class TagBehavior extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * [[@doctodo method_description:afterSave]].
+     *
+     * @param [[@doctodo param_type:event]] $event [[@doctodo param_description:event]]
      *
      * @throws \         [[@doctodo exception_description:\]]
      * @throws Exception [[@doctodo exception_description:Exception]]

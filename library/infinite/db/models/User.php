@@ -118,6 +118,9 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * [[@doctodo method_description:findIdentityByAccessToken]].
+     *
+     * @param [[@doctodo param_type:token]] $token [[@doctodo param_description:token]]
+     * @param [[@doctodo param_type:type]]  $type  [[@doctodo param_description:type]] [optional]
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
@@ -125,6 +128,8 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * [[@doctodo method_description:findByEmail]].
+     *
+     * @param [[@doctodo param_type:email]] $email [[@doctodo param_description:email]]
      *
      * @return [[@doctodo return_type:findByEmail]] [[@doctodo return_description:findByEmail]]
      */
@@ -152,6 +157,8 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Set identity meta.
+     *
+     * @param [[@doctodo param_type:meta]] $meta [[@doctodo param_description:meta]]
      */
     public function setIdentityMeta($meta)
     {
@@ -284,6 +291,8 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * Set primary identity.
      *
+     * @param [[@doctodo param_type:identity]] $identity [[@doctodo param_description:identity]]
+     *
      * @return [[@doctodo return_type:setPrimaryIdentity]] [[@doctodo return_description:setPrimaryIdentity]]
      */
     public function setPrimaryIdentity($identity)
@@ -296,6 +305,8 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Set identity.
+     *
+     * @param [[@doctodo param_type:identity]] $identity [[@doctodo param_description:identity]]
      *
      * @return [[@doctodo return_type:setIdentity]] [[@doctodo return_description:setIdentity]]
      */
@@ -379,6 +390,8 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Set active identity.
+     *
+     * @param [[@doctodo param_type:identity]] $identity [[@doctodo param_description:identity]]
      */
     public function setActiveIdentity($identity)
     {

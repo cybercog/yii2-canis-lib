@@ -43,7 +43,8 @@ class LinkPager extends \yii\widgets\LinkPager
     /**
      * [[@doctodo method_description:buildButtonAttributes]].
      *
-     * @param array $options [[@doctodo param_description:options]] [optional]
+     * @param [[@doctodo param_type:page]] $page    [[@doctodo param_description:page]]
+     * @param array                        $options [[@doctodo param_description:options]] [optional]
      *
      * @return [[@doctodo return_type:buildButtonAttributes]] [[@doctodo return_description:buildButtonAttributes]]
      */

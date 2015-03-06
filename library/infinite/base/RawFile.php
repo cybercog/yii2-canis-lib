@@ -21,7 +21,10 @@ class RawFile extends File
     /**
      * [[@doctodo method_description:createRawInstance]].
      *
-     * @param integer $error [[@doctodo param_description:error]] [optional]
+     * @param [[@doctodo param_type:rawContent]] $rawContent [[@doctodo param_description:rawContent]]
+     * @param [[@doctodo param_type:type]]       $type       [[@doctodo param_description:type]] [optional]
+     * @param [[@doctodo param_type:name]]       $name       [[@doctodo param_description:name]] [optional]
+     * @param integer                            $error      [[@doctodo param_description:error]] [optional]
      *
      * @return [[@doctodo return_type:createRawInstance]] [[@doctodo return_description:createRawInstance]]
      */

@@ -42,6 +42,8 @@ abstract class Creator extends \infinite\base\Component implements CreatorInterf
 
     /**
      * Set identity provider.
+     *
+     * @param [[@doctodo param_type:idp]] $idp [[@doctodo param_description:idp]]
      */
     public function setIdentityProvider($idp)
     {
@@ -50,6 +52,9 @@ abstract class Creator extends \infinite\base\Component implements CreatorInterf
 
     /**
      * [[@doctodo method_description:attemptCreate]].
+     *
+     * @param [[@doctodo param_type:username]] $username [[@doctodo param_description:username]]
+     * @param [[@doctodo param_type:password]] $password [[@doctodo param_description:password]]
      *
      * @return [[@doctodo return_type:attemptCreate]] [[@doctodo return_description:attemptCreate]]
      */
@@ -62,11 +67,16 @@ abstract class Creator extends \infinite\base\Component implements CreatorInterf
 
     /**
      * [[@doctodo method_description:internalAttemptCreate]].
+     *
+     * @param [[@doctodo param_type:username]] $username [[@doctodo param_description:username]]
+     * @param [[@doctodo param_type:password]] $password [[@doctodo param_description:password]]
      */
     abstract protected function internalAttemptCreate($username, $password);
 
     /**
      * Get username.
+     *
+     * @param [[@doctodo param_type:username]] $username [[@doctodo param_description:username]]
      *
      * @return [[@doctodo return_type:getUsername]] [[@doctodo return_description:getUsername]]
      */
@@ -81,6 +91,8 @@ abstract class Creator extends \infinite\base\Component implements CreatorInterf
 
     /**
      * [[@doctodo method_description:createUser]].
+     *
+     * @param [[@doctodo param_type:attributes]] $attributes [[@doctodo param_description:attributes]]
      *
      * @return [[@doctodo return_type:createUser]] [[@doctodo return_description:createUser]]
      */
@@ -116,6 +128,8 @@ abstract class Creator extends \infinite\base\Component implements CreatorInterf
     }
     /**
      * [[@doctodo method_description:userExists]].
+     *
+     * @param [[@doctodo param_type:email]] $email [[@doctodo param_description:email]]
      *
      * @return [[@doctodo return_type:userExists]] [[@doctodo return_description:userExists]]
      */

@@ -95,6 +95,8 @@ class Relation extends \infinite\db\ActiveRecord
     /**
      * [[@doctodo method_description:registerModel]].
      *
+     * @param [[@doctodo param_type:model]] $model [[@doctodo param_description:model]]
+     *
      * @return [[@doctodo return_type:registerModel]] [[@doctodo return_description:registerModel]]
      */
     public static function registerModel($model)
@@ -115,6 +117,8 @@ class Relation extends \infinite\db\ActiveRecord
 
     /**
      * Get register model.
+     *
+     * @param [[@doctodo param_type:model]] $model [[@doctodo param_description:model]]
      *
      * @return [[@doctodo return_type:getRegisterModel]] [[@doctodo return_description:getRegisterModel]]
      */
@@ -149,7 +153,8 @@ class Relation extends \infinite\db\ActiveRecord
     /**
      * Set parent model.
      *
-     * @param boolean $clearTabularPrefix [[@doctodo param_description:clearTabularPrefix]] [optional]
+     * @param [[@doctodo param_type:parentModel]] $parentModel        [[@doctodo param_description:parentModel]]
+     * @param boolean                             $clearTabularPrefix [[@doctodo param_description:clearTabularPrefix]] [optional]
      */
     public function setParentModel($parentModel, $clearTabularPrefix = false)
     {
@@ -191,6 +196,8 @@ class Relation extends \infinite\db\ActiveRecord
     /**
      * [[@doctodo method_description:beforeValidateRelation]].
      *
+     * @param [[@doctodo param_type:event]] $event [[@doctodo param_description:event]]
+     *
      * @return [[@doctodo return_type:beforeValidateRelation]] [[@doctodo return_description:beforeValidateRelation]]
      */
     public function beforeValidateRelation($event)
@@ -211,6 +218,8 @@ class Relation extends \infinite\db\ActiveRecord
 
     /**
      * [[@doctodo method_description:afterInsertRelation]].
+     *
+     * @param [[@doctodo param_type:event]] $event [[@doctodo param_description:event]]
      */
     public function afterInsertRelation($event)
     {
@@ -224,6 +233,8 @@ class Relation extends \infinite\db\ActiveRecord
 
     /**
      * [[@doctodo method_description:afterSaveRelation]].
+     *
+     * @param [[@doctodo param_type:event]] $event [[@doctodo param_description:event]]
      *
      * @return [[@doctodo return_type:afterSaveRelation]] [[@doctodo return_description:afterSaveRelation]]
      */
@@ -248,6 +259,8 @@ class Relation extends \infinite\db\ActiveRecord
     /**
      * [[@doctodo method_description:beforeUpdateRelation]].
      *
+     * @param [[@doctodo param_type:event]] $event [[@doctodo param_description:event]]
+     *
      * @return [[@doctodo return_type:beforeUpdateRelation]] [[@doctodo return_description:beforeUpdateRelation]]
      */
     public function beforeUpdateRelation($event)
@@ -259,6 +272,8 @@ class Relation extends \infinite\db\ActiveRecord
 
     /**
      * [[@doctodo method_description:afterUpdateRelation]].
+     *
+     * @param [[@doctodo param_type:event]] $event [[@doctodo param_description:event]]
      *
      * @return [[@doctodo return_type:afterUpdateRelation]] [[@doctodo return_description:afterUpdateRelation]]
      */
@@ -314,6 +329,8 @@ class Relation extends \infinite\db\ActiveRecord
     /**
      * [[@doctodo method_description:beforeDeleteRelation]].
      *
+     * @param [[@doctodo param_type:event]] $event [[@doctodo param_description:event]]
+     *
      * @return [[@doctodo return_type:beforeDeleteRelation]] [[@doctodo return_description:beforeDeleteRelation]]
      */
     public function beforeDeleteRelation($event)
@@ -327,6 +344,8 @@ class Relation extends \infinite\db\ActiveRecord
 
     /**
      * [[@doctodo method_description:afterDeleteRelation]].
+     *
+     * @param [[@doctodo param_type:event]] $event [[@doctodo param_description:event]]
      *
      * @return [[@doctodo return_type:afterDeleteRelation]] [[@doctodo return_description:afterDeleteRelation]]
      */
@@ -446,6 +465,8 @@ class Relation extends \infinite\db\ActiveRecord
 
     /**
      * [[@doctodo method_description:addDependency]].
+     *
+     * @param [[@doctodo param_type:dependency]] $dependency [[@doctodo param_description:dependency]]
      */
     public function addDependency($dependency)
     {
@@ -462,6 +483,8 @@ class Relation extends \infinite\db\ActiveRecord
 
     /**
      * [[@doctodo method_description:addDependencies]].
+     *
+     * @param [[@doctodo param_type:dependencies]] $dependencies [[@doctodo param_description:dependencies]]
      */
     public function addDependencies($dependencies)
     {

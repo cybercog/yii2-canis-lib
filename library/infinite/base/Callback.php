@@ -68,6 +68,8 @@ class Callback extends Object
     /**
      * Get.
      *
+     * @param [[@doctodo param_type:callbackId]] $callbackId [[@doctodo param_description:callbackId]]
+     *
      * @return [[@doctodo return_type:get]] [[@doctodo return_description:get]]
      */
     public static function get($callbackId)
@@ -81,6 +83,8 @@ class Callback extends Object
 
     /**
      * Set.
+     *
+     * @param [[@doctodo param_type:callbackParams]] $callbackParams [[@doctodo param_description:callbackParams]]
      *
      * @return [[@doctodo return_type:set]] [[@doctodo return_description:set]]
      */

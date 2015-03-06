@@ -128,6 +128,8 @@ class PhpDocController extends Controller
     /**
      * [[@doctodo method_description:findFiles]].
      *
+     * @param [[@doctodo param_type:root]] $root [[@doctodo param_description:root]]
+     *
      * @return [[@doctodo return_type:findFiles]] [[@doctodo return_description:findFiles]]
      */
     protected function findFiles($root)
@@ -181,6 +183,9 @@ class PhpDocController extends Controller
 
     /**
      * [[@doctodo method_description:fixFileDoc]].
+     *
+     * @param [[@doctodo param_type:lines]] $lines [[@doctodo param_description:lines]]
+     * @param [[@doctodo param_type:file]]  $file  [[@doctodo param_description:file]]
      */
     protected function fixFileDoc(&$lines, $file)
     {
@@ -220,6 +225,8 @@ class PhpDocController extends Controller
     /**
      * [[@doctodo method_description:guessClassDescription]].
      *
+     * @param [[@doctodo param_type:ref]] $ref [[@doctodo param_description:ref]]
+     *
      * @return [[@doctodo return_type:guessClassDescription]] [[@doctodo return_description:guessClassDescription]]
      */
     protected function guessClassDescription($ref)
@@ -236,6 +243,11 @@ class PhpDocController extends Controller
 
     /**
      * [[@doctodo method_description:updateClassPropertyDocs]].
+     *
+     * @param [[@doctodo param_type:file]]              $file              [[@doctodo param_description:file]]
+     * @param [[@doctodo param_type:className]]         $className         [[@doctodo param_description:className]]
+     * @param [[@doctodo param_type:propertyDoc]]       $propertyDoc       [[@doctodo param_description:propertyDoc]]
+     * @param [[@doctodo param_type:coveredProperties]] $coveredProperties [[@doctodo param_description:coveredProperties]]
      *
      * @return [[@doctodo return_type:updateClassPropertyDocs]] [[@doctodo return_description:updateClassPropertyDocs]]
      */
@@ -325,6 +337,8 @@ class PhpDocController extends Controller
     /**
      * [[@doctodo method_description:guessMethodDescription]].
      *
+     * @param [[@doctodo param_type:method]] $method [[@doctodo param_description:method]]
+     *
      * @return [[@doctodo return_type:guessMethodDescription]] [[@doctodo return_description:guessMethodDescription]]
      */
     public function guessMethodDescription($method)
@@ -348,6 +362,10 @@ class PhpDocController extends Controller
 
     /**
      * [[@doctodo method_description:generatePropertyDocs]].
+     *
+     * @param [[@doctodo param_type:class]]    $class    [[@doctodo param_description:class]]
+     * @param [[@doctodo param_type:property]] $property [[@doctodo param_description:property]]
+     * @param [[@doctodo param_type:lines]]    $lines    [[@doctodo param_description:lines]]
      *
      * @return [[@doctodo return_type:generatePropertyDocs]] [[@doctodo return_description:generatePropertyDocs]]
      */
@@ -396,6 +414,9 @@ class PhpDocController extends Controller
 
     /**
      * [[@doctodo method_description:generateMethodDocs]].
+     *
+     * @param [[@doctodo param_type:method]] $method [[@doctodo param_description:method]]
+     * @param [[@doctodo param_type:lines]]  $lines  [[@doctodo param_description:lines]]
      *
      * @return [[@doctodo return_type:generateMethodDocs]] [[@doctodo return_description:generateMethodDocs]]
      */
@@ -529,6 +550,8 @@ class PhpDocController extends Controller
     /**
      * Get method code.
      *
+     * @param [[@doctodo param_type:method]] $method [[@doctodo param_description:method]]
+     *
      * @return [[@doctodo return_type:getMethodCode]] [[@doctodo return_description:getMethodCode]]
      */
     public function getMethodCode($method)
@@ -546,6 +569,10 @@ class PhpDocController extends Controller
 
     /**
      * [[@doctodo method_description:updatePropertyDocs]].
+     *
+     * @param [[@doctodo param_type:fileContent]] $fileContent [[@doctodo param_description:fileContent]]
+     * @param [[@doctodo param_type:className]]   $className   [[@doctodo param_description:className]]
+     * @param [[@doctodo param_type:file]]        $file        [[@doctodo param_description:file]]
      *
      * @return [[@doctodo return_type:updatePropertyDocs]] [[@doctodo return_description:updatePropertyDocs]]
      */
@@ -624,6 +651,10 @@ class PhpDocController extends Controller
 
     /**
      * [[@doctodo method_description:updateMethodDocs]].
+     *
+     * @param [[@doctodo param_type:fileContent]] $fileContent [[@doctodo param_description:fileContent]]
+     * @param [[@doctodo param_type:className]]   $className   [[@doctodo param_description:className]]
+     * @param [[@doctodo param_type:file]]        $file        [[@doctodo param_description:file]]
      *
      * @return [[@doctodo return_type:updateMethodDocs]] [[@doctodo return_description:updateMethodDocs]]
      */
@@ -750,6 +781,8 @@ class PhpDocController extends Controller
      *
      * @param $doc
      * @param $properties
+     * @param [[@doctodo param_type:coveredProperties]] $coveredProperties [[@doctodo param_description:coveredProperties]]
+     * @param [[@doctodo param_type:ref]]               $ref               [[@doctodo param_description:ref]]
      *
      * @return string
      */
@@ -796,6 +829,8 @@ class PhpDocController extends Controller
 
     /**
      * [[@doctodo method_description:generateClassPropertyDocs]].
+     *
+     * @param [[@doctodo param_type:fileName]] $fileName [[@doctodo param_description:fileName]]
      *
      * @return [[@doctodo return_type:generateClassPropertyDocs]] [[@doctodo return_description:generateClassPropertyDocs]]
      */
@@ -931,6 +966,9 @@ class PhpDocController extends Controller
     /**
      * [[@doctodo method_description:match]].
      *
+     * @param [[@doctodo param_type:pattern]] $pattern [[@doctodo param_description:pattern]]
+     * @param [[@doctodo param_type:subject]] $subject [[@doctodo param_description:subject]]
+     *
      * @return [[@doctodo return_type:match]] [[@doctodo return_description:match]]
      */
     protected function match($pattern, $subject)
@@ -951,6 +989,8 @@ class PhpDocController extends Controller
     /**
      * [[@doctodo method_description:fixSentence]].
      *
+     * @param [[@doctodo param_type:str]] $str [[@doctodo param_description:str]]
+     *
      * @return [[@doctodo return_type:fixSentence]] [[@doctodo return_description:fixSentence]]
      */
     protected function fixSentence($str)
@@ -965,6 +1005,9 @@ class PhpDocController extends Controller
 
     /**
      * Get prop param.
+     *
+     * @param [[@doctodo param_type:prop]]  $prop  [[@doctodo param_description:prop]]
+     * @param [[@doctodo param_type:param]] $param [[@doctodo param_description:param]]
      *
      * @return [[@doctodo return_type:getPropParam]] [[@doctodo return_description:getPropParam]]
      */

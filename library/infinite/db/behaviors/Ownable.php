@@ -94,6 +94,8 @@ class Ownable extends \infinite\db\behaviors\ActiveRecord
     /**
      * [[@doctodo method_description:beforeSave]].
      *
+     * @param [[@doctodo param_type:event]] $event [[@doctodo param_description:event]]
+     *
      * @return [[@doctodo return_type:beforeSave]] [[@doctodo return_description:beforeSave]]
      */
     public function beforeSave($event)
@@ -127,6 +129,8 @@ class Ownable extends \infinite\db\behaviors\ActiveRecord
     /**
      * Set object owner.
      *
+     * @param [[@doctodo param_type:aro]] $aro [[@doctodo param_description:aro]]
+     *
      * @return [[@doctodo return_type:setObjectOwner]] [[@doctodo return_description:setObjectOwner]]
      */
     public function setObjectOwner($aro)
@@ -154,6 +158,8 @@ class Ownable extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * [[@doctodo method_description:afterSave]].
+     *
+     * @param [[@doctodo param_type:event]] $event [[@doctodo param_description:event]]
      *
      * @return [[@doctodo return_type:afterSave]] [[@doctodo return_description:afterSave]]
      */

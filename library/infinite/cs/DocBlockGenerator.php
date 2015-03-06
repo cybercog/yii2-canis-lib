@@ -143,8 +143,8 @@ class DocBlockGenerator extends AbstractFixer
 
     public function getParam($param, $default = false)
     {
-        if (static::params[$param] !== null) {
-            return static::params[$param];
+        if ($this->params[$param] !== null) {
+            return $this->params[$param];
         }
         return $default;
     }

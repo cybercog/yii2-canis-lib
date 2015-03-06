@@ -66,6 +66,8 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
     /**
      * [[@doctodo method_description:normalizeRole]].
      *
+     * @param [[@doctodo param_type:role]] $role [[@doctodo param_description:role]] [optional]
+     *
      * @return [[@doctodo return_type:normalizeRole]] [[@doctodo return_description:normalizeRole]]
      */
     public function normalizeRole($role = null)
@@ -97,6 +99,8 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
     /**
      * [[@doctodo method_description:normalizeAro]].
      *
+     * @param [[@doctodo param_type:aro]] $aro [[@doctodo param_description:aro]] [optional]
+     *
      * @return [[@doctodo return_type:normalizeAro]] [[@doctodo return_description:normalizeAro]]
      */
     public function normalizeAro($aro = null)
@@ -115,6 +119,8 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Set roles.
+     *
+     * @param [[@doctodo param_type:roles]] $roles [[@doctodo param_description:roles]]
      */
     public function setRoles($roles)
     {
@@ -129,7 +135,9 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
     /**
      * Set role.
      *
-     * @param boolean $handle [[@doctodo param_description:handle]] [optional]
+     * @param [[@doctodo param_type:role]] $role   [[@doctodo param_description:role]]
+     * @param [[@doctodo param_type:aro]]  $aro    [[@doctodo param_description:aro]] [optional]
+     * @param boolean                      $handle [[@doctodo param_description:handle]] [optional]
      *
      * @return [[@doctodo return_type:setRole]] [[@doctodo return_description:setRole]]
      */
@@ -180,7 +188,8 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
     /**
      * Get role.
      *
-     * @param boolean $includeNew [[@doctodo param_description:includeNew]] [optional]
+     * @param [[@doctodo param_type:aro]] $aro        [[@doctodo param_description:aro]] [optional]
+     * @param boolean                     $includeNew [[@doctodo param_description:includeNew]] [optional]
      *
      * @return [[@doctodo return_type:getRole]] [[@doctodo return_description:getRole]]
      */
@@ -212,6 +221,8 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
     /**
      * Get aro by role.
      *
+     * @param [[@doctodo param_type:role]] $role [[@doctodo param_description:role]]
+     *
      * @return [[@doctodo return_type:getAroByRole]] [[@doctodo return_description:getAroByRole]]
      */
     public function getAroByRole($role)
@@ -240,6 +251,8 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Get first aro by role.
+     *
+     * @param [[@doctodo param_type:role]] $role [[@doctodo param_description:role]]
      *
      * @return [[@doctodo return_type:getFirstAroByRole]] [[@doctodo return_description:getFirstAroByRole]]
      */
@@ -274,6 +287,8 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
     /**
      * [[@doctodo method_description:handleRoleSave]].
      *
+     * @param [[@doctodo param_type:event]] $event [[@doctodo param_description:event]] [optional]
+     *
      * @return [[@doctodo return_type:handleRoleSave]] [[@doctodo return_description:handleRoleSave]]
      */
     public function handleRoleSave($event = null)
@@ -299,6 +314,9 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * [[@doctodo method_description:internalSetRole]].
+     *
+     * @param [[@doctodo param_type:role]] $role [[@doctodo param_description:role]]
+     * @param [[@doctodo param_type:aro]]  $aro  [[@doctodo param_description:aro]]
      *
      * @return [[@doctodo return_type:internalSetRole]] [[@doctodo return_description:internalSetRole]]
      */
@@ -352,6 +370,9 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
     /**
      * [[@doctodo method_description:determineAccessLevel]].
      *
+     * @param [[@doctodo param_type:role]] $role [[@doctodo param_description:role]]
+     * @param [[@doctodo param_type:aro]]  $aro  [[@doctodo param_description:aro]] [optional]
+     *
      * @return [[@doctodo return_type:determineAccessLevel]] [[@doctodo return_description:determineAccessLevel]]
      */
     public function determineAccessLevel($role, $aro = null)
@@ -362,7 +383,8 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
     /**
      * [[@doctodo method_description:ensureRoleAccess]].
      *
-     * @param boolean $existing [[@doctodo param_description:existing]] [optional]
+     * @param [[@doctodo param_type:aclRole]] $aclRole  [[@doctodo param_description:aclRole]]
+     * @param boolean                         $existing [[@doctodo param_description:existing]] [optional]
      *
      * @return [[@doctodo return_type:ensureRoleAccess]] [[@doctodo return_description:ensureRoleAccess]]
      */
@@ -453,6 +475,8 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
     /**
      * [[@doctodo method_description:clearAroRole]].
      *
+     * @param [[@doctodo param_type:aro]] $aro [[@doctodo param_description:aro]]
+     *
      * @return [[@doctodo return_type:clearAroRole]] [[@doctodo return_description:clearAroRole]]
      */
     public function clearAroRole($aro)
@@ -472,6 +496,8 @@ class Roleable extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * [[@doctodo method_description:afterSave]].
+     *
+     * @param [[@doctodo param_type:event]] $event [[@doctodo param_description:event]]
      *
      * @throws \ [[@doctodo exception_description:\]]
      * @return [[@doctodo return_type:afterSave]] [[@doctodo return_description:afterSave]]

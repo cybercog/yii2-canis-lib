@@ -48,7 +48,8 @@ class ICD extends \yii\helpers\VarDumper
     /**
      * Constructor.
      *
-     * @param array $settings [[@doctodo param_description:settings]] [optional]
+     * @param [[@doctodo param_type:var]] $var      [[@doctodo param_description:var]]
+     * @param array                       $settings [[@doctodo param_description:settings]] [optional]
      */
     public function __construct($var, $settings = [])
     {
@@ -65,7 +66,8 @@ class ICD extends \yii\helpers\VarDumper
     /**
      * [[@doctodo method_description:d]].
      *
-     * @param array $settings [[@doctodo param_description:settings]] [optional]
+     * @param [[@doctodo param_type:var]] $var      [[@doctodo param_description:var]]
+     * @param array                       $settings [[@doctodo param_description:settings]] [optional]
      *
      * @return [[@doctodo return_type:d]] [[@doctodo return_description:d]]
      */
@@ -77,7 +79,8 @@ class ICD extends \yii\helpers\VarDumper
     /**
      * [[@doctodo method_description:btnice]].
      *
-     * @param array $settings [[@doctodo param_description:settings]] [optional]
+     * @param [[@doctodo param_type:backtrace]] $backtrace [[@doctodo param_description:backtrace]] [optional]
+     * @param array                             $settings  [[@doctodo param_description:settings]] [optional]
      *
      * @return [[@doctodo return_type:btnice]] [[@doctodo return_description:btnice]]
      */
@@ -104,7 +107,9 @@ class ICD extends \yii\helpers\VarDumper
     /**
      * [[@doctodo method_description:btdiff]].
      *
-     * @param boolean $return [[@doctodo param_description:return]] [optional]
+     * @param [[@doctodo param_type:a]] $a      [[@doctodo param_description:a]]
+     * @param [[@doctodo param_type:b]] $b      [[@doctodo param_description:b]]
+     * @param boolean                   $return [[@doctodo param_description:return]] [optional]
      *
      * @return [[@doctodo return_type:btdiff]] [[@doctodo return_description:btdiff]]
      */
@@ -149,6 +154,8 @@ class ICD extends \yii\helpers\VarDumper
 
     /**
      * [[@doctodo method_description:exclude]].
+     *
+     * @param [[@doctodo param_type:exclude]] $exclude [[@doctodo param_description:exclude]]
      *
      * @return [[@doctodo return_type:exclude]] [[@doctodo return_description:exclude]]
      */

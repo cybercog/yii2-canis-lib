@@ -134,6 +134,8 @@ class Row extends \infinite\base\Object
     /**
      * Get distribution columns.
      *
+     * @param [[@doctodo param_type:size]] $size [[@doctodo param_description:size]] [optional]
+     *
      * @return [[@doctodo return_type:getDistributionColumns]] [[@doctodo return_description:getDistributionColumns]]
      */
     public function getDistributionColumns($size = null)
@@ -179,6 +181,8 @@ class Row extends \infinite\base\Object
     /**
      * [[@doctodo method_description:hasRoom]].
      *
+     * @param [[@doctodo param_type:additional]] $additional [[@doctodo param_description:additional]]
+     *
      * @return [[@doctodo return_type:hasRoom]] [[@doctodo return_description:hasRoom]]
      */
     public function hasRoom($additional)
@@ -211,6 +215,8 @@ class Row extends \infinite\base\Object
 
     /**
      * [[@doctodo method_description:addCells]].
+     *
+     * @param [[@doctodo param_type:items]] $items [[@doctodo param_description:items]]
      */
     public function addCells(&$items)
     {
@@ -225,6 +231,8 @@ class Row extends \infinite\base\Object
 
     /**
      * Set cells.
+     *
+     * @param [[@doctodo param_type:cells]] $cells [[@doctodo param_description:cells]]
      */
     public function setCells($cells)
     {
@@ -249,6 +257,8 @@ class Row extends \infinite\base\Object
 
     /**
      * Set true width.
+     *
+     * @param [[@doctodo param_type:width]] $width [[@doctodo param_description:width]]
      */
     public function setTrueWidth($width)
     {

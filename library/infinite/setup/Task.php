@@ -77,6 +77,8 @@ abstract class Task extends \infinite\base\Object
     /**
      * [[@doctodo method_description:loadInput]].
      *
+     * @param [[@doctodo param_type:input]] $input [[@doctodo param_description:input]]
+     *
      * @return [[@doctodo return_type:loadInput]] [[@doctodo return_description:loadInput]]
      */
     public function loadInput($input)
@@ -166,7 +168,8 @@ abstract class Task extends \infinite\base\Object
     /**
      * [[@doctodo method_description:parseText]].
      *
-     * @param array $variables [[@doctodo param_description:variables]] [optional]
+     * @param [[@doctodo param_type:text]] $text      [[@doctodo param_description:text]]
+     * @param array                        $variables [[@doctodo param_description:variables]] [optional]
      *
      * @return [[@doctodo return_type:parseText]] [[@doctodo return_description:parseText]]
      */

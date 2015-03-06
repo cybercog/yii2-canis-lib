@@ -101,6 +101,8 @@ class Bundle extends \infinite\base\Object
     /**
      * Set instructions.
      *
+     * @param [[@doctodo param_type:instructions]] $instructions [[@doctodo param_description:instructions]]
+     *
      * @throws Exception [[@doctodo exception_description:Exception]]
      */
     public function setInstructions($instructions)
@@ -125,6 +127,8 @@ class Bundle extends \infinite\base\Object
 
     /**
      * [[@doctodo method_description:addItem]].
+     *
+     * @param [[@doctodo param_type:item]] $item [[@doctodo param_description:item]]
      *
      * @return [[@doctodo return_type:addItem]] [[@doctodo return_description:addItem]]
      */
@@ -170,6 +174,8 @@ class Bundle extends \infinite\base\Object
 
     /**
      * Set filter query.
+     *
+     * @param [[@doctodo param_type:value]] $value [[@doctodo param_description:value]]
      */
     public function setFilterQuery($value)
     {
@@ -191,6 +197,8 @@ class Bundle extends \infinite\base\Object
 
     /**
      * Set type options.
+     *
+     * @param [[@doctodo param_type:options]] $options [[@doctodo param_description:options]]
      */
     public function setTypeOptions($options)
     {
@@ -209,6 +217,8 @@ class Bundle extends \infinite\base\Object
 
     /**
      * Set type.
+     *
+     * @param [[@doctodo param_type:type]] $type [[@doctodo param_description:type]]
      *
      * @throws InvalidConfigException [[@doctodo exception_description:InvalidConfigException]]
      */
@@ -271,6 +281,8 @@ class Bundle extends \infinite\base\Object
 
     /**
      * Set total.
+     *
+     * @param [[@doctodo param_type:total]] $total [[@doctodo param_description:total]]
      */
     public function setTotal($total)
     {
@@ -289,6 +301,8 @@ class Bundle extends \infinite\base\Object
 
     /**
      * Set offset.
+     *
+     * @param [[@doctodo param_type:offset]] $offset [[@doctodo param_description:offset]]
      */
     public function setOffset($offset)
     {

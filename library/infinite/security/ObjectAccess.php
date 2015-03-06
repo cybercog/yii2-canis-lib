@@ -65,6 +65,8 @@ class ObjectAccess extends \infinite\base\Component
     /**
      * Get.
      *
+     * @param [[@doctodo param_type:object]] $object [[@doctodo param_description:object]]
+     *
      * @return [[@doctodo return_type:get]] [[@doctodo return_description:get]]
      */
     public static function get($object)
@@ -93,6 +95,8 @@ class ObjectAccess extends \infinite\base\Component
 
     /**
      * [[@doctodo method_description:save]].
+     *
+     * @param [[@doctodo param_type:data]] $data [[@doctodo param_description:data]]
      *
      * @return [[@doctodo return_type:save]] [[@doctodo return_description:save]]
      */
@@ -132,6 +136,8 @@ class ObjectAccess extends \infinite\base\Component
     /**
      * [[@doctodo method_description:fillValidationSettings]].
      *
+     * @param [[@doctodo param_type:validationSettings]] $validationSettings [[@doctodo param_description:validationSettings]]
+     *
      * @return [[@doctodo return_type:fillValidationSettings]] [[@doctodo return_description:fillValidationSettings]]
      */
     protected function fillValidationSettings($validationSettings)
@@ -151,6 +157,9 @@ class ObjectAccess extends \infinite\base\Component
 
     /**
      * [[@doctodo method_description:validateRole]].
+     *
+     * @param [[@doctodo param_type:role]]               $role               [[@doctodo param_description:role]]
+     * @param [[@doctodo param_type:validationSettings]] $validationSettings [[@doctodo param_description:validationSettings]]
      *
      * @return [[@doctodo return_type:validateRole]] [[@doctodo return_description:validateRole]]
      */
@@ -184,6 +193,8 @@ class ObjectAccess extends \infinite\base\Component
 
     /**
      * [[@doctodo method_description:validate]].
+     *
+     * @param [[@doctodo param_type:data]] $data [[@doctodo param_description:data]]
      *
      * @return [[@doctodo return_type:validate]] [[@doctodo return_description:validate]]
      */
@@ -303,7 +314,8 @@ class ObjectAccess extends \infinite\base\Component
     /**
      * Get role object.
      *
-     * @param array $roleSet [[@doctodo param_description:roleSet]] [optional]
+     * @param [[@doctodo param_type:requestorId]] $requestorId [[@doctodo param_description:requestorId]]
+     * @param array                               $roleSet     [[@doctodo param_description:roleSet]] [optional]
      *
      * @return [[@doctodo return_type:getRoleObject]] [[@doctodo return_description:getRoleObject]]
      */
@@ -351,6 +363,8 @@ class ObjectAccess extends \infinite\base\Component
 
     /**
      * Set object.
+     *
+     * @param [[@doctodo param_type:object]] $object [[@doctodo param_description:object]]
      */
     public function setObject($object)
     {
@@ -375,6 +389,8 @@ class ObjectAccess extends \infinite\base\Component
 
     /**
      * Get role help text.
+     *
+     * @param [[@doctodo param_type:roleItem]] $roleItem [[@doctodo param_description:roleItem]]
      *
      * @return [[@doctodo return_type:getRoleHelpText]] [[@doctodo return_description:getRoleHelpText]]
      */
@@ -411,6 +427,8 @@ class ObjectAccess extends \infinite\base\Component
 
     /**
      * Get possible roles.
+     *
+     * @param [[@doctodo param_type:accessingObject]] $accessingObject [[@doctodo param_description:accessingObject]] [optional]
      *
      * @return [[@doctodo return_type:getPossibleRoles]] [[@doctodo return_description:getPossibleRoles]]
      */
@@ -453,6 +471,8 @@ class ObjectAccess extends \infinite\base\Component
 
     /**
      * Get accessor role level.
+     *
+     * @param [[@doctodo param_type:accessingObject]] $accessingObject [[@doctodo param_description:accessingObject]] [optional]
      *
      * @return [[@doctodo return_type:getAccessorRoleLevel]] [[@doctodo return_description:getAccessorRoleLevel]]
      */

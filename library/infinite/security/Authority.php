@@ -25,6 +25,8 @@ class Authority extends \infinite\base\Component
     /**
      * Set handler.
      *
+     * @param [[@doctodo param_type:handler]] $handler [[@doctodo param_description:handler]]
+     *
      * @throws Exception [[@doctodo exception_description:Exception]]
      */
     public function setHandler($handler)
@@ -48,6 +50,8 @@ class Authority extends \infinite\base\Component
     /**
      * Get requestors.
      *
+     * @param [[@doctodo param_type:accessingObject]] $accessingObject [[@doctodo param_description:accessingObject]]
+     *
      * @return [[@doctodo return_type:getRequestors]] [[@doctodo return_description:getRequestors]]
      */
     public function getRequestors($accessingObject)
@@ -61,6 +65,8 @@ class Authority extends \infinite\base\Component
 
     /**
      * Get top requestors.
+     *
+     * @param [[@doctodo param_type:accessingObject]] $accessingObject [[@doctodo param_description:accessingObject]]
      *
      * @return [[@doctodo return_type:getTopRequestors]] [[@doctodo return_description:getTopRequestors]]
      */

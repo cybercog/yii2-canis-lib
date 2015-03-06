@@ -118,6 +118,8 @@ class Blame extends \infinite\db\behaviors\ActiveRecord
     /**
      * [[@doctodo method_description:beforeInsert]].
      *
+     * @param [[@doctodo param_type:event]] $event [[@doctodo param_description:event]]
+     *
      * @return [[@doctodo return_type:beforeInsert]] [[@doctodo return_description:beforeInsert]]
      */
     public function beforeInsert($event)
@@ -145,6 +147,8 @@ class Blame extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * [[@doctodo method_description:beforeUpdate]].
+     *
+     * @param [[@doctodo param_type:event]] $event [[@doctodo param_description:event]]
      *
      * @return [[@doctodo return_type:beforeUpdate]] [[@doctodo return_description:beforeUpdate]]
      */

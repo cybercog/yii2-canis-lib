@@ -88,6 +88,8 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
     /**
      * [[@doctodo method_description:beforeInsert]].
      *
+     * @param [[@doctodo param_type:event]] $event [[@doctodo param_description:event]]
+     *
      * @throws Exception [[@doctodo exception_description:Exception]]
      */
     public function beforeInsert($event)
@@ -117,6 +119,8 @@ class Registry extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * [[@doctodo method_description:generateUuid]].
+     *
+     * @param [[@doctodo param_type:modelPrefix]] $modelPrefix [[@doctodo param_description:modelPrefix]]
      *
      * @return unknown
      */

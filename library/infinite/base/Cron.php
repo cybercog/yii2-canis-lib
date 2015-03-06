@@ -97,6 +97,8 @@ class Cron extends Component
     /**
      * [[@doctodo method_description:isHour]].
      *
+     * @param [[@doctodo param_type:hour]] $hour [[@doctodo param_description:hour]]
+     *
      * @return [[@doctodo return_type:isHour]] [[@doctodo return_description:isHour]]
      */
     public function isHour($hour)
@@ -108,6 +110,8 @@ class Cron extends Component
     /**
      * [[@doctodo method_description:isDayOfWeek]].
      *
+     * @param [[@doctodo param_type:dayOfWeek]] $dayOfWeek [[@doctodo param_description:dayOfWeek]]
+     *
      * @return [[@doctodo return_type:isDayOfWeek]] [[@doctodo return_description:isDayOfWeek]]
      */
     public function isDayOfWeek($dayOfWeek)
@@ -118,6 +122,8 @@ class Cron extends Component
     }
     /**
      * [[@doctodo method_description:isDayOfMonth]].
+     *
+     * @param [[@doctodo param_type:dayOfMonth]] $dayOfMonth [[@doctodo param_description:dayOfMonth]]
      *
      * @return [[@doctodo return_type:isDayOfMonth]] [[@doctodo return_description:isDayOfMonth]]
      */

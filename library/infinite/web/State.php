@@ -26,6 +26,9 @@ class State extends \infinite\base\Object
     /**
      * Get.
      *
+     * @param [[@doctodo param_type:key]]     $key     [[@doctodo param_description:key]]
+     * @param [[@doctodo param_type:default]] $default [[@doctodo param_description:default]] [optional]
+     *
      * @return [[@doctodo return_type:get]] [[@doctodo return_description:get]]
      */
     public function get($key, $default = null)
@@ -45,6 +48,9 @@ class State extends \infinite\base\Object
 
     /**
      * Set.
+     *
+     * @param [[@doctodo param_type:key]]   $key   [[@doctodo param_description:key]]
+     * @param [[@doctodo param_type:value]] $value [[@doctodo param_description:value]]
      *
      * @return [[@doctodo return_type:set]] [[@doctodo return_description:set]]
      */
@@ -68,6 +74,8 @@ class State extends \infinite\base\Object
 
     /**
      * [[@doctodo method_description:isTemporary]].
+     *
+     * @param [[@doctodo param_type:key]] $key [[@doctodo param_description:key]]
      *
      * @return [[@doctodo return_type:isTemporary]] [[@doctodo return_description:isTemporary]]
      */

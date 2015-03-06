@@ -75,6 +75,8 @@ class Item extends \infinite\base\collector\Item
     /**
      * Set creator.
      *
+     * @param [[@doctodo param_type:creator]] $creator [[@doctodo param_description:creator]]
+     *
      * @return [[@doctodo return_type:setCreator]] [[@doctodo return_description:setCreator]]
      */
     public function setCreator($creator)
@@ -132,7 +134,8 @@ class Item extends \infinite\base\collector\Item
     /**
      * Get handler.
      *
-     * @param array $meta [[@doctodo param_description:meta]] [optional]
+     * @param [[@doctodo param_type:token]] $token [[@doctodo param_description:token]]
+     * @param array                         $meta  [[@doctodo param_description:meta]] [optional]
      *
      * @return [[@doctodo return_type:getHandler]] [[@doctodo return_description:getHandler]]
      */

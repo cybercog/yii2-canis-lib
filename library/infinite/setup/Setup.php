@@ -207,7 +207,8 @@ class Setup extends \infinite\base\Object
     /**
      * [[@doctodo method_description:refresh]].
      *
-     * @param boolean $skip [[@doctodo param_description:skip]] [optional]
+     * @param [[@doctodo param_type:message]] $message [[@doctodo param_description:message]] [optional]
+     * @param boolean                         $skip    [[@doctodo param_description:skip]] [optional]
      */
     public function refresh($message = null, $skip = false)
     {
@@ -306,6 +307,8 @@ class Setup extends \infinite\base\Object
     /**
      * Get confirm link.
      *
+     * @param [[@doctodo param_type:task]] $task [[@doctodo param_description:task]]
+     *
      * @return [[@doctodo return_type:getConfirmLink]] [[@doctodo return_description:getConfirmLink]]
      */
     public function getConfirmLink($task)
@@ -316,6 +319,8 @@ class Setup extends \infinite\base\Object
     /**
      * Get confirm salt.
      *
+     * @param [[@doctodo param_type:task]] $task [[@doctodo param_description:task]] [optional]
+     *
      * @return [[@doctodo return_type:getConfirmSalt]] [[@doctodo return_description:getConfirmSalt]]
      */
     public function getConfirmSalt($task = null)
@@ -325,6 +330,8 @@ class Setup extends \infinite\base\Object
 
     /**
      * Get confirmed.
+     *
+     * @param [[@doctodo param_type:task]] $task [[@doctodo param_description:task]]
      *
      * @return [[@doctodo return_type:getConfirmed]] [[@doctodo return_description:getConfirmed]]
      */
@@ -520,6 +527,8 @@ class Setup extends \infinite\base\Object
 
     /**
      * [[@doctodo method_description:render]].
+     *
+     * @param [[@doctodo param_type:view]] $view [[@doctodo param_description:view]]
      *
      * @throws Exception [[@doctodo exception_description:Exception]]
      */

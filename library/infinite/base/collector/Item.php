@@ -42,6 +42,8 @@ class Item extends \infinite\base\Object
 
     /**
      * Set system.
+     *
+     * @param [[@doctodo param_type:id]] $id [[@doctodo param_description:id]]
      */
     public function setSystemId($id)
     {
@@ -64,6 +66,8 @@ class Item extends \infinite\base\Object
 
     /**
      * Set collector.
+     *
+     * @param [[@doctodo param_type:collector]] $collector [[@doctodo param_description:collector]]
      */
     public function setCollector($collector)
     {
@@ -93,6 +97,8 @@ class Item extends \infinite\base\Object
     /**
      * Set object.
      *
+     * @param [[@doctodo param_type:object]] $object [[@doctodo param_description:object]]
+     *
      * @throws Exception [[@doctodo exception_description:Exception]]
      */
     public function setObject($object)
@@ -110,6 +116,8 @@ class Item extends \infinite\base\Object
 
     /**
      * Set owner.
+     *
+     * @param [[@doctodo param_type:owner]] $owner [[@doctodo param_description:owner]]
      */
     public function setOwner($owner)
     {

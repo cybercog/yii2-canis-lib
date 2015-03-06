@@ -70,6 +70,9 @@ class Access extends \infinite\base\Object
     /**
      * [[@doctodo method_description:can]].
      *
+     * @param [[@doctodo param_type:object]]          $object          [[@doctodo param_description:object]]
+     * @param [[@doctodo param_type:accessingObject]] $accessingObject [[@doctodo param_description:accessingObject]] [optional]
+     *
      * @return [[@doctodo return_type:can]] [[@doctodo return_description:can]]
      */
     public function can($object, $accessingObject = null)
@@ -129,6 +132,8 @@ class Access extends \infinite\base\Object
     /**
      * Get human access level.
      *
+     * @param [[@doctodo param_type:accessLevel]] $accessLevel [[@doctodo param_description:accessLevel]] [optional]
+     *
      * @return [[@doctodo return_type:getHumanAccessLevel]] [[@doctodo return_description:getHumanAccessLevel]]
      */
     public function getHumanAccessLevel($accessLevel = null)
@@ -162,6 +167,8 @@ class Access extends \infinite\base\Object
 
     /**
      * Set access level.
+     *
+     * @param [[@doctodo param_type:accessLevel]] $accessLevel [[@doctodo param_description:accessLevel]]
      */
     public function setAccessLevel($accessLevel)
     {
@@ -186,6 +193,8 @@ class Access extends \infinite\base\Object
 
     /**
      * Set acl model.
+     *
+     * @param [[@doctodo param_type:object]] $object [[@doctodo param_description:object]]
      */
     public function setAclModel($object)
     {
@@ -213,6 +222,8 @@ class Access extends \infinite\base\Object
 
     /**
      * Set action.
+     *
+     * @param [[@doctodo param_type:object]] $object [[@doctodo param_description:object]]
      */
     public function setAction($object)
     {
@@ -237,6 +248,8 @@ class Access extends \infinite\base\Object
     /**
      * [[@doctodo method_description:translateTableAccessValue]].
      *
+     * @param [[@doctodo param_type:value]] $value [[@doctodo param_description:value]]
+     *
      * @return [[@doctodo return_type:translateTableAccessValue]] [[@doctodo return_description:translateTableAccessValue]]
      */
     public static function translateTableAccessValue($value)
@@ -258,6 +271,8 @@ class Access extends \infinite\base\Object
 
     /**
      * [[@doctodo method_description:translateAccessValue]].
+     *
+     * @param [[@doctodo param_type:value]] $value [[@doctodo param_description:value]]
      *
      * @return [[@doctodo return_type:translateAccessValue]] [[@doctodo return_description:translateAccessValue]]
      */

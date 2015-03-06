@@ -88,6 +88,8 @@ class Grid extends \infinite\base\Object
 
     /**
      * [[@doctodo method_description:prepend]].
+     *
+     * @param [[@doctodo param_type:item]] $item [[@doctodo param_description:item]]
      */
     public function prepend($item)
     {
@@ -96,6 +98,8 @@ class Grid extends \infinite\base\Object
 
     /**
      * [[@doctodo method_description:append]].
+     *
+     * @param [[@doctodo param_type:item]] $item [[@doctodo param_description:item]]
      */
     public function append($item)
     {
@@ -104,6 +108,8 @@ class Grid extends \infinite\base\Object
 
     /**
      * [[@doctodo method_description:addRow]].
+     *
+     * @param [[@doctodo param_type:item]] $item [[@doctodo param_description:item]]
      *
      * @return [[@doctodo return_type:addRow]] [[@doctodo return_description:addRow]]
      */
@@ -121,6 +127,8 @@ class Grid extends \infinite\base\Object
 
     /**
      * [[@doctodo method_description:addRows]].
+     *
+     * @param [[@doctodo param_type:items]] $items [[@doctodo param_description:items]]
      */
     public function addRows($items)
     {
@@ -132,6 +140,8 @@ class Grid extends \infinite\base\Object
 
     /**
      * Set cells.
+     *
+     * @param [[@doctodo param_type:items]] $items [[@doctodo param_description:items]]
      */
     public function setCells($items)
     {

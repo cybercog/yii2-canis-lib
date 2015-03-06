@@ -57,6 +57,8 @@ class Date extends \infinite\db\behaviors\ActiveRecord
     /**
      * [[@doctodo method_description:_toDatabase]].
      *
+     * @param [[@doctodo param_type:event]] $event [[@doctodo param_description:event]]
+     *
      * @return [[@doctodo return_type:_toDatabase]] [[@doctodo return_description:_toDatabase]]
      */
     public function _toDatabase($event)
@@ -72,6 +74,8 @@ class Date extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * [[@doctodo method_description:_toHumanErrorCheck]].
+     *
+     * @param [[@doctodo param_type:event]] $event [[@doctodo param_description:event]]
      */
     public function _toHumanErrorCheck($event)
     {
@@ -82,6 +86,8 @@ class Date extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * [[@doctodo method_description:_toHuman]].
+     *
+     * @param [[@doctodo param_type:event]] $event [[@doctodo param_description:event]]
      *
      * @return [[@doctodo return_type:_toHuman]] [[@doctodo return_description:_toHuman]]
      */
@@ -96,6 +102,9 @@ class Date extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * [[@doctodo method_description:_formatForDatabase]].
+     *
+     * @param [[@doctodo param_type:field]]  $field  [[@doctodo param_description:field]]
+     * @param [[@doctodo param_type:format]] $format [[@doctodo param_description:format]]
      *
      * @return [[@doctodo return_type:_formatForDatabase]] [[@doctodo return_description:_formatForDatabase]]
      */
@@ -134,6 +143,9 @@ class Date extends \infinite\db\behaviors\ActiveRecord
     /**
      * [[@doctodo method_description:_formatForHuman]].
      *
+     * @param [[@doctodo param_type:field]]  $field  [[@doctodo param_description:field]]
+     * @param [[@doctodo param_type:format]] $format [[@doctodo param_description:format]]
+     *
      * @return [[@doctodo return_type:_formatForHuman]] [[@doctodo return_description:_formatForHuman]]
      */
     protected function _formatForHuman($field, $format)
@@ -168,6 +180,8 @@ class Date extends \infinite\db\behaviors\ActiveRecord
     /**
      * [[@doctodo method_description:convertToDatabaseDate]].
      *
+     * @param [[@doctodo param_type:attributes]] $attributes [[@doctodo param_description:attributes]] [optional]
+     *
      * @return [[@doctodo return_type:convertToDatabaseDate]] [[@doctodo return_description:convertToDatabaseDate]]
      */
     public function convertToDatabaseDate($attributes = null)
@@ -188,6 +202,8 @@ class Date extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * [[@doctodo method_description:convertToHumanDate]].
+     *
+     * @param [[@doctodo param_type:attributes]] $attributes [[@doctodo param_description:attributes]] [optional]
      *
      * @return [[@doctodo return_type:convertToHumanDate]] [[@doctodo return_description:convertToHumanDate]]
      */

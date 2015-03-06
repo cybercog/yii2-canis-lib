@@ -11,6 +11,8 @@ class FileHelper extends \yii\helpers\FileHelper
     /**
      * [[@doctodo method_description:extensionFromMime]].
      *
+     * @param [[@doctodo param_type:mime]] $mime [[@doctodo param_description:mime]]
+     *
      * @return [[@doctodo return_type:extensionFromMime]] [[@doctodo return_description:extensionFromMime]]
      */
     public static function extensionFromMime($mime)

@@ -27,7 +27,8 @@ class Cacher extends \infinite\base\Component
     /**
      * [[@doctodo method_description:key]].
      *
-     * @param boolean $hash [[@doctodo param_description:hash]] [optional]
+     * @param [[@doctodo param_type:key]] $key  [[@doctodo param_description:key]]
+     * @param boolean                     $hash [[@doctodo param_description:hash]] [optional]
      *
      * @return [[@doctodo return_type:key]] [[@doctodo return_description:key]]
      */
@@ -76,6 +77,8 @@ class Cacher extends \infinite\base\Component
     /**
      * Get.
      *
+     * @param [[@doctodo param_type:key]] $key [[@doctodo param_description:key]]
+     *
      * @return [[@doctodo return_type:get]] [[@doctodo return_description:get]]
      */
     public static function get($key)
@@ -85,6 +88,8 @@ class Cacher extends \infinite\base\Component
 
     /**
      * [[@doctodo method_description:exists]].
+     *
+     * @param [[@doctodo param_type:key]] $key [[@doctodo param_description:key]]
      *
      * @return [[@doctodo return_type:exists]] [[@doctodo return_description:exists]]
      */
@@ -96,7 +101,10 @@ class Cacher extends \infinite\base\Component
     /**
      * Set.
      *
-     * @param integer $expire [[@doctodo param_description:expire]] [optional]
+     * @param [[@doctodo param_type:key]]        $key        [[@doctodo param_description:key]]
+     * @param [[@doctodo param_type:value]]      $value      [[@doctodo param_description:value]]
+     * @param integer                            $expire     [[@doctodo param_description:expire]] [optional]
+     * @param [[@doctodo param_type:dependency]] $dependency [[@doctodo param_description:dependency]] [optional]
      *
      * @return [[@doctodo return_type:set]] [[@doctodo return_description:set]]
      */
@@ -127,7 +135,8 @@ class Cacher extends \infinite\base\Component
     /**
      * [[@doctodo method_description:dbDependency]].
      *
-     * @param boolean $reusable [[@doctodo param_description:reusable]] [optional]
+     * @param [[@doctodo param_type:sql]] $sql      [[@doctodo param_description:sql]]
+     * @param boolean                     $reusable [[@doctodo param_description:reusable]] [optional]
      *
      * @return [[@doctodo return_type:dbDependency]] [[@doctodo return_description:dbDependency]]
      */
@@ -139,7 +148,9 @@ class Cacher extends \infinite\base\Component
     /**
      * [[@doctodo method_description:groupDependency]].
      *
-     * @param boolean $reusable [[@doctodo param_description:reusable]] [optional]
+     * @param [[@doctodo param_type:group]]    $group    [[@doctodo param_description:group]]
+     * @param [[@doctodo param_type:category]] $category [[@doctodo param_description:category]] [optional]
+     * @param boolean                          $reusable [[@doctodo param_description:reusable]] [optional]
      *
      * @return [[@doctodo return_type:groupDependency]] [[@doctodo return_description:groupDependency]]
      */
@@ -159,7 +170,8 @@ class Cacher extends \infinite\base\Component
     /**
      * [[@doctodo method_description:categoryDependency]].
      *
-     * @param boolean $reusable [[@doctodo param_description:reusable]] [optional]
+     * @param [[@doctodo param_type:category]] $category [[@doctodo param_description:category]]
+     * @param boolean                          $reusable [[@doctodo param_description:reusable]] [optional]
      *
      * @return [[@doctodo return_type:categoryDependency]] [[@doctodo return_description:categoryDependency]]
      */
@@ -170,6 +182,8 @@ class Cacher extends \infinite\base\Component
 
     /**
      * [[@doctodo method_description:invalidateGroup]].
+     *
+     * @param [[@doctodo param_type:group]] $group [[@doctodo param_description:group]]
      */
     public static function invalidateGroup($group)
     {
@@ -178,6 +192,8 @@ class Cacher extends \infinite\base\Component
 
     /**
      * [[@doctodo method_description:invalidateCategory]].
+     *
+     * @param [[@doctodo param_type:category]] $category [[@doctodo param_description:category]]
      */
     public static function invalidateCategory($category)
     {

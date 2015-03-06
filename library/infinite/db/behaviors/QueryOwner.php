@@ -35,6 +35,8 @@ class QueryOwner extends QueryBehavior
     /**
      * [[@doctodo method_description:beforeQuery]].
      *
+     * @param [[@doctodo param_type:event]] $event [[@doctodo param_description:event]]
+     *
      * @return [[@doctodo return_type:beforeQuery]] [[@doctodo return_description:beforeQuery]]
      */
     public function beforeQuery($event)
@@ -58,6 +60,9 @@ class QueryOwner extends QueryBehavior
 
     /**
      * [[@doctodo method_description:fixOwnerKey]].
+     *
+     * @param [[@doctodo param_type:fieldName]] $fieldName [[@doctodo param_description:fieldName]]
+     * @param [[@doctodo param_type:where]]     $where     [[@doctodo param_description:where]]
      *
      * @return [[@doctodo return_type:fixOwnerKey]] [[@doctodo return_description:fixOwnerKey]]
      */

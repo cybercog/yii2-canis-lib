@@ -103,6 +103,8 @@ class Group extends \infinite\db\ActiveRecord implements IdentityInterface
     /**
      * Get system group.
      *
+     * @param [[@doctodo param_type:system]] $system [[@doctodo param_description:system]]
+     *
      * @return [[@doctodo return_type:getSystemGroup]] [[@doctodo return_description:getSystemGroup]]
      */
     public static function getSystemGroup($system)
@@ -162,7 +164,8 @@ class Group extends \infinite\db\ActiveRecord implements IdentityInterface
     /**
      * Get by system name.
      *
-     * @param boolean $checkAccess [[@doctodo param_description:checkAccess]] [optional]
+     * @param [[@doctodo param_type:id]] $id          [[@doctodo param_description:id]]
+     * @param boolean                    $checkAccess [[@doctodo param_description:checkAccess]] [optional]
      *
      * @return [[@doctodo return_type:getBySystemName]] [[@doctodo return_description:getBySystemName]]
      */
@@ -193,6 +196,8 @@ class Group extends \infinite\db\ActiveRecord implements IdentityInterface
     /**
      * [[@doctodo method_description:findIdentity]].
      *
+     * @param [[@doctodo param_type:id]] $id [[@doctodo param_description:id]]
+     *
      * @return [[@doctodo return_type:findIdentity]] [[@doctodo return_description:findIdentity]]
      */
     public static function findIdentity($id)
@@ -204,6 +209,9 @@ class Group extends \infinite\db\ActiveRecord implements IdentityInterface
 
     /**
      * [[@doctodo method_description:findIdentityByAccessToken]].
+     *
+     * @param [[@doctodo param_type:token]] $token [[@doctodo param_description:token]]
+     * @param [[@doctodo param_type:type]]  $type  [[@doctodo param_description:type]] [optional]
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {

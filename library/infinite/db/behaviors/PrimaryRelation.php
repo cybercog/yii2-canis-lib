@@ -46,6 +46,8 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
     /**
      * [[@doctodo method_description:handlePrimary]].
      *
+     * @param [[@doctodo param_type:role]] $role [[@doctodo param_description:role]]
+     *
      * @return [[@doctodo return_type:handlePrimary]] [[@doctodo return_description:handlePrimary]]
      */
     public function handlePrimary($role)
@@ -55,6 +57,8 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Get primary field.
+     *
+     * @param [[@doctodo param_type:role]] $role [[@doctodo param_description:role]]
      *
      * @return [[@doctodo return_type:getPrimaryField]] [[@doctodo return_description:getPrimaryField]]
      */
@@ -70,7 +74,8 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
     /**
      * Get siblings.
      *
-     * @param boolean $primaryOnly [[@doctodo param_description:primaryOnly]] [optional]
+     * @param [[@doctodo param_type:role]] $role        [[@doctodo param_description:role]]
+     * @param boolean                      $primaryOnly [[@doctodo param_description:primaryOnly]] [optional]
      *
      * @return [[@doctodo return_type:getSiblings]] [[@doctodo return_description:getSiblings]]
      */
@@ -92,6 +97,8 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * [[@doctodo method_description:beforeInsert]].
+     *
+     * @param [[@doctodo param_type:event]] $event [[@doctodo param_description:event]] [optional]
      *
      * @return [[@doctodo return_type:beforeInsert]] [[@doctodo return_description:beforeInsert]]
      */
@@ -118,6 +125,8 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
     /**
      * [[@doctodo method_description:beforeUpdate]].
      *
+     * @param [[@doctodo param_type:event]] $event [[@doctodo param_description:event]] [optional]
+     *
      * @return [[@doctodo return_type:beforeUpdate]] [[@doctodo return_description:beforeUpdate]]
      */
     public function beforeUpdate($event = null)
@@ -136,6 +145,8 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
     /**
      * [[@doctodo method_description:afterUpdate]].
      *
+     * @param [[@doctodo param_type:event]] $event [[@doctodo param_description:event]] [optional]
+     *
      * @return [[@doctodo return_type:afterUpdate]] [[@doctodo return_description:afterUpdate]]
      */
     public function afterUpdate($event = null)
@@ -149,6 +160,8 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * [[@doctodo method_description:afterDelete]].
+     *
+     * @param [[@doctodo param_type:event]] $event [[@doctodo param_description:event]] [optional]
      */
     public function afterDelete($event = null)
     {
@@ -182,6 +195,8 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
     /**
      * Set primary.
      *
+     * @param [[@doctodo param_type:role]] $role [[@doctodo param_description:role]]
+     *
      * @return [[@doctodo return_type:setPrimary]] [[@doctodo return_description:setPrimary]]
      */
     public function setPrimary($role)
@@ -204,6 +219,8 @@ class PrimaryRelation extends \infinite\db\behaviors\ActiveRecord
 
     /**
      * Get is primary.
+     *
+     * @param [[@doctodo param_type:role]] $role [[@doctodo param_description:role]]
      *
      * @return [[@doctodo return_type:isPrimary]] [[@doctodo return_description:isPrimary]]
      */

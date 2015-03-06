@@ -54,7 +54,9 @@ abstract class Response extends \infinite\base\Object
     /**
      * [[@doctodo method_description:handleRequests]].
      *
-     * @param boolean $handle [[@doctodo param_description:handle]] [optional]
+     * @param [[@doctodo param_type:requests]]         $requests         [[@doctodo param_description:requests]]
+     * @param [[@doctodo param_type:baseInstructions]] $baseInstructions [[@doctodo param_description:baseInstructions]]
+     * @param boolean                                  $handle           [[@doctodo param_description:handle]] [optional]
      *
      * @return [[@doctodo return_type:handleRequests]] [[@doctodo return_description:handleRequests]]
      */
@@ -78,7 +80,8 @@ abstract class Response extends \infinite\base\Object
     /**
      * [[@doctodo method_description:handleInstructions]].
      *
-     * @param boolean $handle [[@doctodo param_description:handle]] [optional]
+     * @param [[@doctodo param_type:instructions]] $instructions [[@doctodo param_description:instructions]]
+     * @param boolean                              $handle       [[@doctodo param_description:handle]] [optional]
      *
      * @return [[@doctodo return_type:handleInstructions]] [[@doctodo return_description:handleInstructions]]
      */
@@ -117,6 +120,8 @@ abstract class Response extends \infinite\base\Object
 
     /**
      * [[@doctodo method_description:addBundle]].
+     *
+     * @param [[@doctodo param_type:bundle]] $bundle [[@doctodo param_description:bundle]]
      *
      * @return [[@doctodo return_type:addBundle]] [[@doctodo return_description:addBundle]]
      */

@@ -293,6 +293,8 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
     /**
      * Set tabular.
+     *
+     * @param [[@doctodo param_type:value]] $value [[@doctodo param_description:value]]
      */
     public function setTabularId($value)
     {
@@ -327,6 +329,8 @@ class ActiveRecord extends \yii\db\ActiveRecord
     /**
      * [[@doctodo method_description:generateTabularId]].
      *
+     * @param [[@doctodo param_type:id]] $id [[@doctodo param_description:id]]
+     *
      * @return [[@doctodo return_type:generateTabularId]] [[@doctodo return_description:generateTabularId]]
      */
     public static function generateTabularId($id)
@@ -356,6 +360,8 @@ class ActiveRecord extends \yii\db\ActiveRecord
     /**
      * Get primary model.
      *
+     * @param [[@doctodo param_type:models]] $models [[@doctodo param_description:models]]
+     *
      * @return [[@doctodo return_type:getPrimaryModel]] [[@doctodo return_description:getPrimaryModel]]
      */
     public static function getPrimaryModel($models)
@@ -376,6 +382,8 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
     /**
      * [[@doctodo method_description:parseModelAlias]].
+     *
+     * @param [[@doctodo param_type:alias]] $alias [[@doctodo param_description:alias]]
      *
      * @return [[@doctodo return_type:parseModelAlias]] [[@doctodo return_description:parseModelAlias]]
      */
@@ -409,6 +417,8 @@ class ActiveRecord extends \yii\db\ActiveRecord
     /**
      * [[@doctodo method_description:modelAlias]].
      *
+     * @param [[@doctodo param_type:className]] $className [[@doctodo param_description:className]] [optional]
+     *
      * @return [[@doctodo return_type:modelAlias]] [[@doctodo return_description:modelAlias]]
      */
     public static function modelAlias($className = null)
@@ -434,6 +444,8 @@ class ActiveRecord extends \yii\db\ActiveRecord
 
     /**
      * [[@doctodo method_description:clearCache]].
+     *
+     * @param [[@doctodo param_type:model]] $model [[@doctodo param_description:model]] [optional]
      *
      * @return [[@doctodo return_type:clearCache]] [[@doctodo return_description:clearCache]]
      */
@@ -466,7 +478,8 @@ class ActiveRecord extends \yii\db\ActiveRecord
     /**
      * Get.
      *
-     * @param boolean $checkAccess [[@doctodo param_description:checkAccess]] [optional]
+     * @param [[@doctodo param_type:id]] $id          [[@doctodo param_description:id]]
+     * @param boolean                    $checkAccess [[@doctodo param_description:checkAccess]] [optional]
      *
      * @return [[@doctodo return_type:get]] [[@doctodo return_description:get]]
      */
@@ -510,8 +523,9 @@ class ActiveRecord extends \yii\db\ActiveRecord
     /**
      * [[@doctodo method_description:_findCache]].
      *
-     * @param boolean $where       [[@doctodo param_description:where]] [optional]
-     * @param boolean $checkAccess [[@doctodo param_description:checkAccess]] [optional]
+     * @param [[@doctodo param_type:type]] $type        [[@doctodo param_description:type]]
+     * @param boolean                      $where       [[@doctodo param_description:where]] [optional]
+     * @param boolean                      $checkAccess [[@doctodo param_description:checkAccess]] [optional]
      *
      * @return [[@doctodo return_type:_findCache]] [[@doctodo return_description:_findCache]]
      */
@@ -734,6 +748,8 @@ class ActiveRecord extends \yii\db\ActiveRecord
     /**
      * [[@doctodo method_description:parseDescriptorField]].
      *
+     * @param [[@doctodo param_type:config]] $config [[@doctodo param_description:config]]
+     *
      * @return [[@doctodo return_type:parseDescriptorField]] [[@doctodo return_description:parseDescriptorField]]
      */
     protected function parseDescriptorField($config)
@@ -796,6 +812,8 @@ class ActiveRecord extends \yii\db\ActiveRecord
     /**
      * Get primary subdescriptor.
      *
+     * @param [[@doctodo param_type:context]] $context [[@doctodo param_description:context]] [optional]
+     *
      * @return [[@doctodo return_type:getPrimarySubdescriptor]] [[@doctodo return_description:getPrimarySubdescriptor]]
      */
     public function getPrimarySubdescriptor($context = null)
@@ -819,6 +837,8 @@ class ActiveRecord extends \yii\db\ActiveRecord
     /**
      * Get subdescriptor.
      *
+     * @param [[@doctodo param_type:context]] $context [[@doctodo param_description:context]] [optional]
+     *
      * @return [[@doctodo return_type:getSubdescriptor]] [[@doctodo return_description:getSubdescriptor]]
      */
     public function getSubdescriptor($context = null)
@@ -841,6 +861,8 @@ class ActiveRecord extends \yii\db\ActiveRecord
     /**
      * [[@doctodo method_description:isForeignField]].
      *
+     * @param [[@doctodo param_type:field]] $field [[@doctodo param_description:field]]
+     *
      * @return [[@doctodo return_type:isForeignField]] [[@doctodo return_description:isForeignField]]
      */
     public function isForeignField($field)
@@ -851,8 +873,10 @@ class ActiveRecord extends \yii\db\ActiveRecord
     /**
      * Get field value.
      *
-     * @param array   $options   [[@doctodo param_description:options]] [optional]
-     * @param boolean $formatted [[@doctodo param_description:formatted]] [optional]
+     * @param [[@doctodo param_type:field]]   $field     [[@doctodo param_description:field]]
+     * @param array                           $options   [[@doctodo param_description:options]] [optional]
+     * @param [[@doctodo param_type:context]] $context   [[@doctodo param_description:context]] [optional]
+     * @param boolean                         $formatted [[@doctodo param_description:formatted]] [optional]
      *
      * @return [[@doctodo return_type:getFieldValue]] [[@doctodo return_description:getFieldValue]]
      */
@@ -883,8 +907,10 @@ class ActiveRecord extends \yii\db\ActiveRecord
     /**
      * Get local field value.
      *
-     * @param array   $options   [[@doctodo param_description:options]] [optional]
-     * @param boolean $formatted [[@doctodo param_description:formatted]] [optional]
+     * @param [[@doctodo param_type:field]]   $field     [[@doctodo param_description:field]]
+     * @param array                           $options   [[@doctodo param_description:options]] [optional]
+     * @param [[@doctodo param_type:context]] $context   [[@doctodo param_description:context]] [optional]
+     * @param boolean                         $formatted [[@doctodo param_description:formatted]] [optional]
      *
      * @return [[@doctodo return_type:getLocalFieldValue]] [[@doctodo return_description:getLocalFieldValue]]
      */
@@ -900,8 +926,10 @@ class ActiveRecord extends \yii\db\ActiveRecord
     /**
      * Get foreign field value.
      *
-     * @param array   $options   [[@doctodo param_description:options]] [optional]
-     * @param boolean $formatted [[@doctodo param_description:formatted]] [optional]
+     * @param [[@doctodo param_type:field]]   $field     [[@doctodo param_description:field]]
+     * @param array                           $options   [[@doctodo param_description:options]] [optional]
+     * @param [[@doctodo param_type:context]] $context   [[@doctodo param_description:context]] [optional]
+     * @param boolean                         $formatted [[@doctodo param_description:formatted]] [optional]
      *
      * @return [[@doctodo return_type:getForeignFieldValue]] [[@doctodo return_description:getForeignFieldValue]]
      */

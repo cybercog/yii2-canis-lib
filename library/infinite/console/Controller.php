@@ -46,6 +46,8 @@ class Controller extends \yii\console\Controller
     /**
      * [[@doctodo method_description:out]].
      *
+     * @param [[@doctodo param_type:string]] $string [[@doctodo param_description:string]]
+     *
      * @return [[@doctodo return_type:out]] [[@doctodo return_description:out]]
      */
     public function out($string)

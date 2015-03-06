@@ -156,6 +156,8 @@ class Task extends \infinite\base\Component
     /**
      * Set status.
      *
+     * @param [[@doctodo param_type:status]] $status [[@doctodo param_description:status]]
+     *
      * @return [[@doctodo return_type:setStatus]] [[@doctodo return_description:setStatus]]
      */
     public function setStatus($status)
@@ -196,6 +198,8 @@ class Task extends \infinite\base\Component
 
     /**
      * Set progress total.
+     *
+     * @param [[@doctodo param_type:total]] $total [[@doctodo param_description:total]]
      *
      * @return [[@doctodo return_type:setProgressTotal]] [[@doctodo return_description:setProgressTotal]]
      */
@@ -316,6 +320,8 @@ class Task extends \infinite\base\Component
     /**
      * Get rate.
      *
+     * @param [[@doctodo param_type:limit]] $limit [[@doctodo param_description:limit]] [optional]
+     *
      * @return [[@doctodo return_type:getRate]] [[@doctodo return_description:getRate]]
      */
     public function getRate($limit = null)
@@ -336,6 +342,8 @@ class Task extends \infinite\base\Component
 
     /**
      * Get rate growth.
+     *
+     * @param [[@doctodo param_type:x]] $x [[@doctodo param_description:x]]
      *
      * @return [[@doctodo return_type:getRateGrowth]] [[@doctodo return_description:getRateGrowth]]
      */
@@ -504,6 +512,8 @@ class Task extends \infinite\base\Component
     /**
      * Set weight.
      *
+     * @param [[@doctodo param_type:weight]] $weight [[@doctodo param_description:weight]]
+     *
      * @return [[@doctodo return_type:setWeight]] [[@doctodo return_description:setWeight]]
      */
     public function setWeight($weight)
@@ -515,6 +525,9 @@ class Task extends \infinite\base\Component
 
     /**
      * [[@doctodo method_description:addTask]].
+     *
+     * @param [[@doctodo param_type:id]]   $id   [[@doctodo param_description:id]]
+     * @param [[@doctodo param_type:name]] $name [[@doctodo param_description:name]]
      *
      * @return [[@doctodo return_type:addTask]] [[@doctodo return_description:addTask]]
      */
@@ -547,6 +560,8 @@ class Task extends \infinite\base\Component
 
     /**
      * Get task.
+     *
+     * @param [[@doctodo param_type:id]] $id [[@doctodo param_description:id]]
      *
      * @return [[@doctodo return_type:getTask]] [[@doctodo return_description:getTask]]
      */

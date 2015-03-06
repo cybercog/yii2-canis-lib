@@ -70,6 +70,9 @@ class DeferredAction extends \infinite\db\ActiveRecord
     /**
      * Get my recent pending query.
      *
+     * @param [[@doctodo param_type:type]] $type [[@doctodo param_description:type]] [optional]
+     * @param [[@doctodo param_type:user]] $user [[@doctodo param_description:user]] [optional]
+     *
      * @return [[@doctodo return_type:getMyRecentPendingQuery]] [[@doctodo return_description:getMyRecentPendingQuery]]
      */
     public function getMyRecentPendingQuery($type = null, $user = null)

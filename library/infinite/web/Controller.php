@@ -38,6 +38,8 @@ class Controller extends \yii\web\Controller
 
     /**
      * [[@doctodo method_description:beforeActionResponse]].
+     *
+     * @param [[@doctodo param_type:actionEvent]] $actionEvent [[@doctodo param_description:actionEvent]]
      */
     public function beforeActionResponse($actionEvent)
     {

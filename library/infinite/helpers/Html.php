@@ -30,7 +30,9 @@ class Html extends \yii\helpers\Html
     /**
      * [[@doctodo method_description:registerJsBlock]].
      *
-     * @param integer $position [[@doctodo param_description:position]] [optional]
+     * @param [[@doctodo param_type:script]] $script   [[@doctodo param_description:script]]
+     * @param integer                        $position [[@doctodo param_description:position]] [optional]
+     * @param [[@doctodo param_type:key]]    $key      [[@doctodo param_description:key]] [optional]
      *
      * @return [[@doctodo return_type:registerJsBlock]] [[@doctodo return_description:registerJsBlock]]
      */
@@ -41,6 +43,9 @@ class Html extends \yii\helpers\Html
 
     /**
      * [[@doctodo method_description:addSubAttribute]].
+     *
+     * @param [[@doctodo param_type:attribute]]    $attribute    [[@doctodo param_description:attribute]]
+     * @param [[@doctodo param_type:subattribute]] $subattribute [[@doctodo param_description:subattribute]]
      *
      * @throws InvalidParamException [[@doctodo exception_description:InvalidParamException]]
      * @return [[@doctodo return_type:addSubAttribute]] [[@doctodo return_description:addSubAttribute]]
@@ -60,6 +65,9 @@ class Html extends \yii\helpers\Html
     /**
      * [[@doctodo method_description:addPreAttribute]].
      *
+     * @param [[@doctodo param_type:attribute]]    $attribute    [[@doctodo param_description:attribute]]
+     * @param [[@doctodo param_type:preattribute]] $preattribute [[@doctodo param_description:preattribute]]
+     *
      * @throws InvalidParamException [[@doctodo exception_description:InvalidParamException]]
      * @return [[@doctodo return_type:addPreAttribute]] [[@doctodo return_description:addPreAttribute]]
      *
@@ -78,6 +86,9 @@ class Html extends \yii\helpers\Html
     /**
      * [[@doctodo method_description:changeAttribute]].
      *
+     * @param [[@doctodo param_type:attribute]]    $attribute    [[@doctodo param_description:attribute]]
+     * @param [[@doctodo param_type:newAttribute]] $newAttribute [[@doctodo param_description:newAttribute]]
+     *
      * @throws InvalidParamException [[@doctodo exception_description:InvalidParamException]]
      * @return [[@doctodo return_type:changeAttribute]] [[@doctodo return_description:changeAttribute]]
      *
@@ -95,7 +106,8 @@ class Html extends \yii\helpers\Html
     /**
      * [[@doctodo method_description:pageHeader]].
      *
-     * @param array $options [[@doctodo param_description:options]] [optional]
+     * @param [[@doctodo param_type:title]] $title   [[@doctodo param_description:title]]
+     * @param array                         $options [[@doctodo param_description:options]] [optional]
      *
      * @return [[@doctodo return_type:pageHeader]] [[@doctodo return_description:pageHeader]]
      */
@@ -122,7 +134,8 @@ class Html extends \yii\helpers\Html
     /**
      * [[@doctodo method_description:buttonGroup]].
      *
-     * @param array $htmlOptions [[@doctodo param_description:htmlOptions]] [optional]
+     * @param [[@doctodo param_type:items]] $items       [[@doctodo param_description:items]]
+     * @param array                         $htmlOptions [[@doctodo param_description:htmlOptions]] [optional]
      *
      * @return [[@doctodo return_type:buttonGroup]] [[@doctodo return_description:buttonGroup]]
      */

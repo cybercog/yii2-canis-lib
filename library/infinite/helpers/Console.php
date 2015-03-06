@@ -32,6 +32,10 @@ class Console extends \yii\helpers\Console
 
     /**
      * [[@doctodo method_description:updateProgressSpecial]].
+     *
+     * @param [[@doctodo param_type:done]]   $done   [[@doctodo param_description:done]]
+     * @param [[@doctodo param_type:total]]  $total  [[@doctodo param_description:total]]
+     * @param [[@doctodo param_type:prefix]] $prefix [[@doctodo param_description:prefix]] [optional]
      */
     public static function updateProgressSpecial($done, $total, $prefix = null)
     {
@@ -82,7 +86,10 @@ class Console extends \yii\helpers\Console
     /**
      * [[@doctodo method_description:startProgressSpecial]].
      *
-     * @param string $prefix [[@doctodo param_description:prefix]] [optional]
+     * @param [[@doctodo param_type:done]]  $done   [[@doctodo param_description:done]]
+     * @param [[@doctodo param_type:total]] $total  [[@doctodo param_description:total]]
+     * @param string                        $prefix [[@doctodo param_description:prefix]] [optional]
+     * @param [[@doctodo param_type:width]] $width  [[@doctodo param_description:width]] [optional]
      */
     public static function startProgressSpecial($done, $total, $prefix = '', $width = null)
     {

@@ -103,6 +103,8 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
 
     /**
      * Set content.
+     *
+     * @param [[@doctodo param_type:content]] $content [[@doctodo param_description:content]]
      */
     public function setContent($content)
     {
@@ -119,6 +121,8 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
 
     /**
      * [[@doctodo method_description:prepend]].
+     *
+     * @param [[@doctodo param_type:pre]] $pre [[@doctodo param_description:pre]]
      */
     public function prepend($pre)
     {
@@ -127,6 +131,8 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
 
     /**
      * [[@doctodo method_description:append]].
+     *
+     * @param [[@doctodo param_type:append]] $append [[@doctodo param_description:append]]
      */
     public function append($append)
     {
@@ -263,7 +269,8 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
     /**
      * [[@doctodo method_description:addColumns]].
      *
-     * @param integer $n [[@doctodo param_description:n]] [optional]
+     * @param integer                      $n    [[@doctodo param_description:n]] [optional]
+     * @param [[@doctodo param_type:size]] $size [[@doctodo param_description:size]] [optional]
      *
      * @return [[@doctodo return_type:addColumns]] [[@doctodo return_description:addColumns]]
      */
@@ -285,6 +292,8 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
     /**
      * [[@doctodo method_description:maxColumns]].
      *
+     * @param [[@doctodo param_type:size]] $size [[@doctodo param_description:size]] [optional]
+     *
      * @return [[@doctodo return_type:maxColumns]] [[@doctodo return_description:maxColumns]]
      */
     public function maxColumns($size = null)
@@ -301,6 +310,8 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
 
     /**
      * Get max columns.
+     *
+     * @param [[@doctodo param_type:size]] $size [[@doctodo param_description:size]] [optional]
      *
      * @return [[@doctodo return_type:getMaxColumns]] [[@doctodo return_description:getMaxColumns]]
      */
@@ -319,6 +330,9 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
 
     /**
      * Set max columns.
+     *
+     * @param [[@doctodo param_type:columns]] $columns [[@doctodo param_description:columns]]
+     * @param [[@doctodo param_type:size]]    $size    [[@doctodo param_description:size]] [optional]
      */
     public function setMaxColumns($columns, $size = null)
     {
@@ -331,6 +345,9 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
 
     /**
      * Set columns.
+     *
+     * @param [[@doctodo param_type:columns]] $columns [[@doctodo param_description:columns]]
+     * @param [[@doctodo param_type:size]]    $size    [[@doctodo param_description:size]] [optional]
      */
     public function setColumns($columns, $size = null)
     {
@@ -343,6 +360,8 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
 
     /**
      * Get columns.
+     *
+     * @param [[@doctodo param_type:size]] $size [[@doctodo param_description:size]] [optional]
      *
      * @return [[@doctodo return_type:getColumns]] [[@doctodo return_description:getColumns]]
      */
@@ -362,6 +381,8 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
 
     /**
      * Set phone columns.
+     *
+     * @param [[@doctodo param_type:columns]] $columns [[@doctodo param_description:columns]]
      */
     public function setPhoneColumns($columns)
     {
@@ -371,6 +392,8 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
 
     /**
      * Set tablet columns.
+     *
+     * @param [[@doctodo param_type:columns]] $columns [[@doctodo param_description:columns]]
      */
     public function setTabletColumns($columns)
     {
@@ -380,6 +403,8 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
 
     /**
      * Set medium desktop columns.
+     *
+     * @param [[@doctodo param_type:columns]] $columns [[@doctodo param_description:columns]]
      */
     public function setMediumDesktopColumns($columns)
     {
@@ -389,6 +414,8 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
 
     /**
      * Set large desktop columns.
+     *
+     * @param [[@doctodo param_type:columns]] $columns [[@doctodo param_description:columns]]
      */
     public function setLargeDesktopColumns($columns)
     {
@@ -398,6 +425,8 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
 
     /**
      * Set max phone columns.
+     *
+     * @param [[@doctodo param_type:columns]] $columns [[@doctodo param_description:columns]]
      */
     public function setMaxPhoneColumns($columns)
     {
@@ -406,6 +435,8 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
 
     /**
      * Set max tablet columns.
+     *
+     * @param [[@doctodo param_type:columns]] $columns [[@doctodo param_description:columns]]
      */
     public function setMaxTabletColumns($columns)
     {
@@ -414,6 +445,8 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
 
     /**
      * Set max medium desktop columns.
+     *
+     * @param [[@doctodo param_type:columns]] $columns [[@doctodo param_description:columns]]
      */
     public function setMaxMediumDesktopColumns($columns)
     {
@@ -422,6 +455,8 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
 
     /**
      * Set max large desktop columns.
+     *
+     * @param [[@doctodo param_type:columns]] $columns [[@doctodo param_description:columns]]
      */
     public function setMaxLargeDesktopColumns($columns)
     {
@@ -582,6 +617,8 @@ class Cell extends \infinite\base\Object implements \infinite\web\RenderInterfac
 
     /**
      * Get flex.
+     *
+     * @param [[@doctodo param_type:size]] $size [[@doctodo param_description:size]] [optional]
      *
      * @return [[@doctodo return_type:getFlex]] [[@doctodo return_description:getFlex]]
      */

@@ -20,7 +20,8 @@ class Math extends \yii\base\Object
     /**
      * [[@doctodo method_description:removeOutliers]].
      *
-     * @param integer $magnitude [[@doctodo param_description:magnitude]] [optional]
+     * @param [[@doctodo param_type:dataset]] $dataset   [[@doctodo param_description:dataset]]
+     * @param integer                         $magnitude [[@doctodo param_description:magnitude]] [optional]
      *
      * @return [[@doctodo return_type:removeOutliers]] [[@doctodo return_description:removeOutliers]]
      */

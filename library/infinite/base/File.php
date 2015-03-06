@@ -18,7 +18,11 @@ class File extends \infinite\web\UploadedFile implements FileInterface
     /**
      * [[@doctodo method_description:createInstance]].
      *
-     * @param integer $error [[@doctodo param_description:error]] [optional]
+     * @param [[@doctodo param_type:name]]     $name     [[@doctodo param_description:name]]
+     * @param [[@doctodo param_type:tempName]] $tempName [[@doctodo param_description:tempName]]
+     * @param [[@doctodo param_type:type]]     $type     [[@doctodo param_description:type]]
+     * @param [[@doctodo param_type:size]]     $size     [[@doctodo param_description:size]]
+     * @param integer                          $error    [[@doctodo param_description:error]] [optional]
      *
      * @return [[@doctodo return_type:createInstance]] [[@doctodo return_description:createInstance]]
      */

@@ -34,6 +34,8 @@ class Collection extends \yii\mongodb\Collection
     /**
      * Drops this collection.
      *
+     * @param [[@doctodo param_type:newName]] $newName [[@doctodo param_description:newName]]
+     *
      * @throws Exception [[@doctodo exception_description:Exception]]
      * @return boolean whether the operation successful.
      *

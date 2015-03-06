@@ -46,6 +46,8 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
 
     /**
      * [[@doctodo method_description:bootstrap]].
+     *
+     * @param [[@doctodo param_type:app]] $app [[@doctodo param_description:app]]
      */
     public function bootstrap($app)
     {
@@ -54,6 +56,8 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
 
     /**
      * [[@doctodo method_description:beforeRequest]].
+     *
+     * @param [[@doctodo param_type:event]] $event [[@doctodo param_description:event]]
      *
      * @return [[@doctodo return_type:beforeRequest]] [[@doctodo return_description:beforeRequest]]
      */
@@ -68,6 +72,8 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
 
     /**
      * [[@doctodo method_description:loadFromCache]].
+     *
+     * @param [[@doctodo param_type:cacheKey]] $cacheKey [[@doctodo param_description:cacheKey]]
      *
      * @return [[@doctodo return_type:loadFromCache]] [[@doctodo return_description:loadFromCache]]
      */
@@ -91,6 +97,8 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
 
     /**
      * [[@doctodo method_description:saveCache]].
+     *
+     * @param [[@doctodo param_type:cacheKey]] $cacheKey [[@doctodo param_description:cacheKey]]
      *
      * @return [[@doctodo return_type:saveCache]] [[@doctodo return_description:saveCache]]
      */
@@ -199,6 +207,8 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
 
     /**
      * Set collectors.
+     *
+     * @param [[@doctodo param_type:collectors]] $collectors [[@doctodo param_description:collectors]]
      */
     public function setCollectors($collectors)
     {
@@ -207,6 +217,8 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
 
     /**
      * [[@doctodo method_description:onAfterLoad]].
+     *
+     * @param [[@doctodo param_type:action]] $action [[@doctodo param_description:action]]
      *
      * @return [[@doctodo return_type:onAfterLoad]] [[@doctodo return_description:onAfterLoad]]
      */
@@ -218,6 +230,8 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
     /**
      * [[@doctodo method_description:onAfterInit]].
      *
+     * @param [[@doctodo param_type:action]] $action [[@doctodo param_description:action]]
+     *
      * @return [[@doctodo return_type:onAfterInit]] [[@doctodo return_description:onAfterInit]]
      */
     public function onAfterInit($action)
@@ -227,6 +241,9 @@ class Component extends \infinite\base\Component implements IteratorAggregate, A
 
     /**
      * [[@doctodo method_description:internalRegisterCollector]].
+     *
+     * @param [[@doctodo param_type:id]]        $id        [[@doctodo param_description:id]]
+     * @param [[@doctodo param_type:collector]] $collector [[@doctodo param_description:collector]]
      *
      * @return [[@doctodo return_type:internalRegisterCollector]] [[@doctodo return_description:internalRegisterCollector]]
      */

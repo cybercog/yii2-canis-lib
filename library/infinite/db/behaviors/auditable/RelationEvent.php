@@ -56,6 +56,8 @@ class RelationEvent extends AttributesEvent
 
     /**
      * Set the relation object.
+     *
+     * @param [[@doctodo param_type:object]] $object [[@doctodo param_description:object]]
      */
     public function setRelationObject($object)
     {

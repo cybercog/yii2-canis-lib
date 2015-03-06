@@ -39,7 +39,8 @@ class Bucket extends \infinite\base\Object implements IteratorAggregate, ArrayAc
     /**
      * [[@doctodo method_description:add]].
      *
-     * @param infinite\base\collector\Item $item [[@doctodo param_description:item]]
+     * @param [[@doctodo param_type:offset]] $offset [[@doctodo param_description:offset]]
+     * @param infinite\base\collector\Item   $item   [[@doctodo param_description:item]]
      */
     public function add($offset, Item $item)
     {

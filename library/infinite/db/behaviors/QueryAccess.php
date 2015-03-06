@@ -67,6 +67,8 @@ class QueryAccess extends QueryBehavior
     /**
      * [[@doctodo method_description:asUser]].
      *
+     * @param [[@doctodo param_type:userName]] $userName [[@doctodo param_description:userName]]
+     *
      * @return [[@doctodo return_type:asUser]] [[@doctodo return_description:asUser]]
      */
     public function asUser($userName)
@@ -81,6 +83,8 @@ class QueryAccess extends QueryBehavior
 
     /**
      * [[@doctodo method_description:asGroup]].
+     *
+     * @param [[@doctodo param_type:groupSystemName]] $groupSystemName [[@doctodo param_description:groupSystemName]]
      *
      * @return [[@doctodo return_type:asGroup]] [[@doctodo return_description:asGroup]]
      */
@@ -97,6 +101,8 @@ class QueryAccess extends QueryBehavior
     /**
      * [[@doctodo method_description:asInternal]].
      *
+     * @param [[@doctodo param_type:acr]] $acr [[@doctodo param_description:acr]]
+     *
      * @return [[@doctodo return_type:asInternal]] [[@doctodo return_description:asInternal]]
      */
     public function asInternal($acr)
@@ -108,6 +114,8 @@ class QueryAccess extends QueryBehavior
 
     /**
      * Set accessing object.
+     *
+     * @param [[@doctodo param_type:value]] $value [[@doctodo param_description:value]]
      *
      * @return [[@doctodo return_type:setAccessingObject]] [[@doctodo return_description:setAccessingObject]]
      */
@@ -167,6 +175,8 @@ class QueryAccess extends QueryBehavior
     /**
      * Set action.
      *
+     * @param [[@doctodo param_type:action]] $action [[@doctodo param_description:action]]
+     *
      * @return [[@doctodo return_type:setAction]] [[@doctodo return_description:setAction]]
      */
     public function setAction($action)
@@ -192,6 +202,8 @@ class QueryAccess extends QueryBehavior
 
     /**
      * [[@doctodo method_description:addCheckAccess]].
+     *
+     * @param [[@doctodo param_type:aca]] $aca [[@doctodo param_description:aca]] [optional]
      *
      * @throws Exception [[@doctodo exception_description:Exception]]
      * @return [[@doctodo return_type:addCheckAccess]] [[@doctodo return_description:addCheckAccess]]
@@ -227,6 +239,8 @@ class QueryAccess extends QueryBehavior
     /**
      * [[@doctodo method_description:can]].
      *
+     * @param [[@doctodo param_type:action]] $action [[@doctodo param_description:action]] [optional]
+     *
      * @return [[@doctodo return_type:can]] [[@doctodo return_description:can]]
      */
     public function can($action = null)
@@ -259,6 +273,8 @@ class QueryAccess extends QueryBehavior
     /**
      * [[@doctodo method_description:beforeQuery]].
      *
+     * @param [[@doctodo param_type:event]] $event [[@doctodo param_description:event]]
+     *
      * @return [[@doctodo return_type:beforeQuery]] [[@doctodo return_description:beforeQuery]]
      */
     public function beforeQuery($event)
@@ -281,6 +297,8 @@ class QueryAccess extends QueryBehavior
     /**
      * [[@doctodo method_description:beforeSave]].
      *
+     * @param [[@doctodo param_type:event]] $event [[@doctodo param_description:event]]
+     *
      * @return [[@doctodo return_type:beforeSave]] [[@doctodo return_description:beforeSave]]
      */
     public function beforeSave($event)
@@ -298,6 +316,8 @@ class QueryAccess extends QueryBehavior
 
     /**
      * [[@doctodo method_description:afterSave]].
+     *
+     * @param [[@doctodo param_type:event]] $event [[@doctodo param_description:event]]
      *
      * @return [[@doctodo return_type:afterSave]] [[@doctodo return_description:afterSave]]
      */

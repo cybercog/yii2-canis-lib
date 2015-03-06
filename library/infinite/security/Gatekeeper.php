@@ -86,6 +86,8 @@ class Gatekeeper extends \infinite\base\Component
     }
     /**
      * Set authority.
+     *
+     * @param [[@doctodo param_type:authority]] $authority [[@doctodo param_description:authority]]
      */
     public function setAuthority($authority)
     {
@@ -135,7 +137,8 @@ class Gatekeeper extends \infinite\base\Component
     /**
      * [[@doctodo method_description:canPublic]].
      *
-     * @param string $action [[@doctodo param_description:action]] [optional]
+     * @param [[@doctodo param_type:controlledObject]] $controlledObject [[@doctodo param_description:controlledObject]]
+     * @param string                                   $action           [[@doctodo param_description:action]] [optional]
      *
      * @return [[@doctodo return_type:canPublic]] [[@doctodo return_description:canPublic]]
      */
@@ -166,6 +169,9 @@ class Gatekeeper extends \infinite\base\Component
 
     /**
      * [[@doctodo method_description:is]].
+     *
+     * @param [[@doctodo param_type:group]]           $group           [[@doctodo param_description:group]]
+     * @param [[@doctodo param_type:accessingObject]] $accessingObject [[@doctodo param_description:accessingObject]] [optional]
      *
      * @return [[@doctodo return_type:is]] [[@doctodo return_description:is]]
      */
@@ -207,6 +213,10 @@ class Gatekeeper extends \infinite\base\Component
     /**
      * [[@doctodo method_description:can]].
      *
+     * @param [[@doctodo param_type:action]]           $action           [[@doctodo param_description:action]]
+     * @param [[@doctodo param_type:controlledObject]] $controlledObject [[@doctodo param_description:controlledObject]]
+     * @param [[@doctodo param_type:accessingObject]]  $accessingObject  [[@doctodo param_description:accessingObject]] [optional]
+     *
      * @return [[@doctodo return_type:can]] [[@doctodo return_description:can]]
      */
     public function can($action, $controlledObject, $accessingObject = null)
@@ -231,7 +241,10 @@ class Gatekeeper extends \infinite\base\Component
     /**
      * [[@doctodo method_description:fillActions]].
      *
-     * @param array $baseAccess [[@doctodo param_description:baseAccess]] [optional]
+     * @param [[@doctodo param_type:acls]]             $acls             [[@doctodo param_description:acls]]
+     * @param array                                    $baseAccess       [[@doctodo param_description:baseAccess]] [optional]
+     * @param [[@doctodo param_type:controlledObject]] $controlledObject [[@doctodo param_description:controlledObject]] [optional]
+     * @param [[@doctodo param_type:acaIds]]           $acaIds           [[@doctodo param_description:acaIds]] [optional]
      *
      * @return [[@doctodo return_type:fillActions]] [[@doctodo return_description:fillActions]]
      */
@@ -287,6 +300,8 @@ class Gatekeeper extends \infinite\base\Component
     /**
      * Get action map.
      *
+     * @param [[@doctodo param_type:controlledObject]] $controlledObject [[@doctodo param_description:controlledObject]] [optional]
+     *
      * @return [[@doctodo return_type:getActionMap]] [[@doctodo return_description:getActionMap]]
      */
     protected function getActionMap($controlledObject = null)
@@ -297,7 +312,9 @@ class Gatekeeper extends \infinite\base\Component
     /**
      * Get action link.
      *
-     * @param array $accessMap [[@doctodo param_description:accessMap]] [optional]
+     * @param [[@doctodo param_type:action]]           $action           [[@doctodo param_description:action]]
+     * @param array                                    $accessMap        [[@doctodo param_description:accessMap]] [optional]
+     * @param [[@doctodo param_type:controlledObject]] $controlledObject [[@doctodo param_description:controlledObject]] [optional]
      *
      * @return [[@doctodo return_type:getActionLink]] [[@doctodo return_description:getActionLink]]
      */
@@ -327,6 +344,8 @@ class Gatekeeper extends \infinite\base\Component
     /**
      * Get base action name.
      *
+     * @param [[@doctodo param_type:actionName]] $actionName [[@doctodo param_description:actionName]]
+     *
      * @return [[@doctodo return_type:getBaseActionName]] [[@doctodo return_description:getBaseActionName]]
      */
     protected static function getBaseActionName($actionName)
@@ -339,7 +358,8 @@ class Gatekeeper extends \infinite\base\Component
     /**
      * [[@doctodo method_description:createAccess]].
      *
-     * @param array $config [[@doctodo param_description:config]] [optional]
+     * @param [[@doctodo param_type:acl]] $acl    [[@doctodo param_description:acl]]
+     * @param array                       $config [[@doctodo param_description:config]] [optional]
      *
      * @return [[@doctodo return_type:createAccess]] [[@doctodo return_description:createAccess]]
      */
@@ -374,6 +394,8 @@ class Gatekeeper extends \infinite\base\Component
     /**
      * [[@doctodo method_description:findNullAction]].
      *
+     * @param [[@doctodo param_type:acls]] $acls [[@doctodo param_description:acls]]
+     *
      * @return [[@doctodo return_type:findNullAction]] [[@doctodo return_description:findNullAction]]
      */
     public function findNullAction($acls)
@@ -392,6 +414,10 @@ class Gatekeeper extends \infinite\base\Component
     /**
      * [[@doctodo method_description:canGeneral]].
      *
+     * @param [[@doctodo param_type:action]]          $action          [[@doctodo param_description:action]]
+     * @param [[@doctodo param_type:model]]           $model           [[@doctodo param_description:model]]
+     * @param [[@doctodo param_type:accessingObject]] $accessingObject [[@doctodo param_description:accessingObject]] [optional]
+     *
      * @return [[@doctodo return_type:canGeneral]] [[@doctodo return_description:canGeneral]]
      */
     public function canGeneral($action, $model, $accessingObject = null)
@@ -405,6 +431,9 @@ class Gatekeeper extends \infinite\base\Component
 
     /**
      * Get controlled object.
+     *
+     * @param [[@doctodo param_type:object]]     $object     [[@doctodo param_description:object]]
+     * @param [[@doctodo param_type:modelClass]] $modelClass [[@doctodo param_description:modelClass]] [optional]
      *
      * @return [[@doctodo return_type:getControlledObject]] [[@doctodo return_description:getControlledObject]]
      */
@@ -428,6 +457,10 @@ class Gatekeeper extends \infinite\base\Component
     /**
      * [[@doctodo method_description:buildInnerRoleCheckConditions]].
      *
+     * @param [[@doctodo param_type:innerOnConditions]] $innerOnConditions [[@doctodo param_description:innerOnConditions]]
+     * @param [[@doctodo param_type:innerAlias]]        $innerAlias        [[@doctodo param_description:innerAlias]]
+     * @param [[@doctodo param_type:query]]             $query             [[@doctodo param_description:query]]
+     *
      * @return [[@doctodo return_type:buildInnerRoleCheckConditions]] [[@doctodo return_description:buildInnerRoleCheckConditions]]
      */
     public function buildInnerRoleCheckConditions(&$innerOnConditions, $innerAlias, $query)
@@ -439,8 +472,12 @@ class Gatekeeper extends \infinite\base\Component
     /**
      * [[@doctodo method_description:BADgenerateAclRoleCheckCriteria]].
      *
-     * @param array   $bannedRoles [[@doctodo param_description:bannedRoles]] [optional]
-     * @param boolean $expandAros  [[@doctodo param_description:expandAros]] [optional]
+     * @param [[@doctodo param_type:query]]            $query            [[@doctodo param_description:query]]
+     * @param [[@doctodo param_type:controlledObject]] $controlledObject [[@doctodo param_description:controlledObject]]
+     * @param [[@doctodo param_type:accessingObject]]  $accessingObject  [[@doctodo param_description:accessingObject]] [optional]
+     * @param [[@doctodo param_type:modelClass]]       $modelClass       [[@doctodo param_description:modelClass]] [optional]
+     * @param array                                    $bannedRoles      [[@doctodo param_description:bannedRoles]] [optional]
+     * @param boolean                                  $expandAros       [[@doctodo param_description:expandAros]] [optional]
      *
      * @return [[@doctodo return_type:BADgenerateAclRoleCheckCriteria]] [[@doctodo return_description:BADgenerateAclRoleCheckCriteria]]
      */
@@ -531,9 +568,13 @@ class Gatekeeper extends \infinite\base\Component
     /**
      * [[@doctodo method_description:generateAclCheckCriteria]].
      *
-     * @param boolean $allowParentInherit [[@doctodo param_description:allowParentInherit]] [optional]
-     * @param boolean $expandAros         [[@doctodo param_description:expandAros]] [optional]
-     * @param boolean $limitAccess        [[@doctodo param_description:limitAccess]] [optional]
+     * @param [[@doctodo param_type:query]]            $query              [[@doctodo param_description:query]]
+     * @param [[@doctodo param_type:controlledObject]] $controlledObject   [[@doctodo param_description:controlledObject]]
+     * @param [[@doctodo param_type:accessingObject]]  $accessingObject    [[@doctodo param_description:accessingObject]] [optional]
+     * @param boolean                                  $allowParentInherit [[@doctodo param_description:allowParentInherit]] [optional]
+     * @param [[@doctodo param_type:modelClass]]       $modelClass         [[@doctodo param_description:modelClass]] [optional]
+     * @param boolean                                  $expandAros         [[@doctodo param_description:expandAros]] [optional]
+     * @param boolean                                  $limitAccess        [[@doctodo param_description:limitAccess]] [optional]
      *
      * @return [[@doctodo return_type:generateAclCheckCriteria]] [[@doctodo return_description:generateAclCheckCriteria]]
      */
@@ -663,6 +704,9 @@ class Gatekeeper extends \infinite\base\Component
     /**
      * Get general access.
      *
+     * @param [[@doctodo param_type:model]]           $model           [[@doctodo param_description:model]]
+     * @param [[@doctodo param_type:accessingObject]] $accessingObject [[@doctodo param_description:accessingObject]] [optional]
+     *
      * @return [[@doctodo return_type:getGeneralAccess]] [[@doctodo return_description:getGeneralAccess]]
      */
     public function getGeneralAccess($model, $accessingObject = null)
@@ -685,6 +729,9 @@ class Gatekeeper extends \infinite\base\Component
     /**
      * [[@doctodo method_description:translateParentAction]].
      *
+     * @param [[@doctodo param_type:object]] $object [[@doctodo param_description:object]]
+     * @param [[@doctodo param_type:action]] $action [[@doctodo param_description:action]]
+     *
      * @return [[@doctodo return_type:translateParentAction]] [[@doctodo return_description:translateParentAction]]
      */
     public function translateParentAction($object, $action)
@@ -700,7 +747,10 @@ class Gatekeeper extends \infinite\base\Component
     /**
      * Get access.
      *
-     * @param boolean $expandAros [[@doctodo param_description:expandAros]] [optional]
+     * @param [[@doctodo param_type:controlledObject]] $controlledObject [[@doctodo param_description:controlledObject]]
+     * @param [[@doctodo param_type:accessingObject]]  $accessingObject  [[@doctodo param_description:accessingObject]] [optional]
+     * @param [[@doctodo param_type:acaIds]]           $acaIds           [[@doctodo param_description:acaIds]] [optional]
+     * @param boolean                                  $expandAros       [[@doctodo param_description:expandAros]] [optional]
      *
      * @return [[@doctodo return_type:getAccess]] [[@doctodo return_description:getAccess]]
      */
@@ -751,6 +801,9 @@ class Gatekeeper extends \infinite\base\Component
 
     /**
      * [[@doctodo method_description:clearCanCache]].
+     *
+     * @param [[@doctodo param_type:controlledObject]] $controlledObject [[@doctodo param_description:controlledObject]]
+     * @param [[@doctodo param_type:accessingObject]]  $accessingObject  [[@doctodo param_description:accessingObject]] [optional]
      */
     public function clearCanCache($controlledObject, $accessingObject = null)
     {
@@ -791,6 +844,8 @@ class Gatekeeper extends \infinite\base\Component
     /**
      * Get top requestors.
      *
+     * @param [[@doctodo param_type:accessingObject]] $accessingObject [[@doctodo param_description:accessingObject]] [optional]
+     *
      * @return [[@doctodo return_type:getTopRequestors]] [[@doctodo return_description:getTopRequestors]]
      */
     public function getTopRequestors($accessingObject = null)
@@ -814,6 +869,8 @@ class Gatekeeper extends \infinite\base\Component
 
     /**
      * Get requestors.
+     *
+     * @param [[@doctodo param_type:accessingObject]] $accessingObject [[@doctodo param_description:accessingObject]] [optional]
      *
      * @return [[@doctodo return_type:getRequestors]] [[@doctodo return_description:getRequestors]]
      */
@@ -853,6 +910,9 @@ class Gatekeeper extends \infinite\base\Component
     /**
      * [[@doctodo method_description:accessorHasGroup]].
      *
+     * @param [[@doctodo param_type:accessingObject]] $accessingObject [[@doctodo param_description:accessingObject]]
+     * @param [[@doctodo param_type:groupSystemId]]   $groupSystemId   [[@doctodo param_description:groupSystemId]]
+     *
      * @return [[@doctodo return_type:accessorHasGroup]] [[@doctodo return_description:accessorHasGroup]]
      */
     public function accessorHasGroup($accessingObject, $groupSystemId)
@@ -878,6 +938,8 @@ class Gatekeeper extends \infinite\base\Component
     /**
      * Get accessor groups.
      *
+     * @param [[@doctodo param_type:accessingObject]] $accessingObject [[@doctodo param_description:accessingObject]]
+     *
      * @return [[@doctodo return_type:getAccessorGroups]] [[@doctodo return_description:getAccessorGroups]]
      */
     public function getAccessorGroups($accessingObject)
@@ -895,6 +957,8 @@ class Gatekeeper extends \infinite\base\Component
 
     /**
      * Get accessing object.
+     *
+     * @param [[@doctodo param_type:accessingObject]] $accessingObject [[@doctodo param_description:accessingObject]]
      *
      * @return [[@doctodo return_type:getAccessingObject]] [[@doctodo return_description:getAccessingObject]]
      */
@@ -914,7 +978,8 @@ class Gatekeeper extends \infinite\base\Component
     /**
      * Get groups.
      *
-     * @param boolean $flatten [[@doctodo param_description:flatten]] [optional]
+     * @param [[@doctodo param_type:accessingObject]] $accessingObject [[@doctodo param_description:accessingObject]] [optional]
+     * @param boolean                                 $flatten         [[@doctodo param_description:flatten]] [optional]
      *
      * @return [[@doctodo return_type:getGroups]] [[@doctodo return_description:getGroups]]
      */
@@ -946,6 +1011,8 @@ class Gatekeeper extends \infinite\base\Component
 
     /**
      * Get action object by name.
+     *
+     * @param [[@doctodo param_type:action]] $action [[@doctodo param_description:action]]
      *
      * @throws Exception [[@doctodo exception_description:Exception]]
      * @return [[@doctodo return_type:getActionObjectByName]] [[@doctodo return_description:getActionObjectByName]]
@@ -1048,7 +1115,8 @@ class Gatekeeper extends \infinite\base\Component
     /**
      * Get group.
      *
-     * @param boolean $checkAccess [[@doctodo param_description:checkAccess]] [optional]
+     * @param [[@doctodo param_type:systemName]] $systemName  [[@doctodo param_description:systemName]]
+     * @param boolean                            $checkAccess [[@doctodo param_description:checkAccess]] [optional]
      *
      * @return [[@doctodo return_type:getGroup]] [[@doctodo return_description:getGroup]]
      */
@@ -1062,7 +1130,8 @@ class Gatekeeper extends \infinite\base\Component
     /**
      * [[@doctodo method_description:clearExplicitRules]].
      *
-     * @param boolean $accessingObject [[@doctodo param_description:accessingObject]] [optional]
+     * @param [[@doctodo param_type:controlledObject]] $controlledObject [[@doctodo param_description:controlledObject]]
+     * @param boolean                                  $accessingObject  [[@doctodo param_description:accessingObject]] [optional]
      *
      * @return [[@doctodo return_type:clearExplicitRules]] [[@doctodo return_description:clearExplicitRules]]
      */
@@ -1085,6 +1154,11 @@ class Gatekeeper extends \infinite\base\Component
     /**
      * [[@doctodo method_description:allow]].
      *
+     * @param [[@doctodo param_type:action]]           $action           [[@doctodo param_description:action]]
+     * @param [[@doctodo param_type:controlledObject]] $controlledObject [[@doctodo param_description:controlledObject]] [optional]
+     * @param [[@doctodo param_type:accessingObject]]  $accessingObject  [[@doctodo param_description:accessingObject]] [optional]
+     * @param [[@doctodo param_type:aclRole]]          $aclRole          [[@doctodo param_description:aclRole]] [optional]
+     *
      * @return [[@doctodo return_type:allow]] [[@doctodo return_description:allow]]
      */
     public function allow($action, $controlledObject = null, $accessingObject = null, $aclRole = null)
@@ -1094,6 +1168,11 @@ class Gatekeeper extends \infinite\base\Component
 
     /**
      * [[@doctodo method_description:clear]].
+     *
+     * @param [[@doctodo param_type:action]]           $action           [[@doctodo param_description:action]]
+     * @param [[@doctodo param_type:controlledObject]] $controlledObject [[@doctodo param_description:controlledObject]] [optional]
+     * @param [[@doctodo param_type:accessingObject]]  $accessingObject  [[@doctodo param_description:accessingObject]] [optional]
+     * @param [[@doctodo param_type:aclRole]]          $aclRole          [[@doctodo param_description:aclRole]] [optional]
      *
      * @return [[@doctodo return_type:clear]] [[@doctodo return_description:clear]]
      */
@@ -1105,6 +1184,11 @@ class Gatekeeper extends \infinite\base\Component
     /**
      * [[@doctodo method_description:requireDirectAdmin]].
      *
+     * @param [[@doctodo param_type:action]]           $action           [[@doctodo param_description:action]]
+     * @param [[@doctodo param_type:controlledObject]] $controlledObject [[@doctodo param_description:controlledObject]] [optional]
+     * @param [[@doctodo param_type:accessingObject]]  $accessingObject  [[@doctodo param_description:accessingObject]] [optional]
+     * @param [[@doctodo param_type:aclRole]]          $aclRole          [[@doctodo param_description:aclRole]] [optional]
+     *
      * @return [[@doctodo return_type:requireDirectAdmin]] [[@doctodo return_description:requireDirectAdmin]]
      */
     public function requireDirectAdmin($action, $controlledObject = null, $accessingObject = null, $aclRole = null)
@@ -1114,6 +1198,11 @@ class Gatekeeper extends \infinite\base\Component
 
     /**
      * [[@doctodo method_description:requireAdmin]].
+     *
+     * @param [[@doctodo param_type:action]]           $action           [[@doctodo param_description:action]]
+     * @param [[@doctodo param_type:controlledObject]] $controlledObject [[@doctodo param_description:controlledObject]] [optional]
+     * @param [[@doctodo param_type:accessingObject]]  $accessingObject  [[@doctodo param_description:accessingObject]] [optional]
+     * @param [[@doctodo param_type:aclRole]]          $aclRole          [[@doctodo param_description:aclRole]] [optional]
      *
      * @return [[@doctodo return_type:requireAdmin]] [[@doctodo return_description:requireAdmin]]
      */
@@ -1125,6 +1214,11 @@ class Gatekeeper extends \infinite\base\Component
     /**
      * [[@doctodo method_description:requireSuperAdmin]].
      *
+     * @param [[@doctodo param_type:action]]           $action           [[@doctodo param_description:action]]
+     * @param [[@doctodo param_type:controlledObject]] $controlledObject [[@doctodo param_description:controlledObject]] [optional]
+     * @param [[@doctodo param_type:accessingObject]]  $accessingObject  [[@doctodo param_description:accessingObject]] [optional]
+     * @param [[@doctodo param_type:aclRole]]          $aclRole          [[@doctodo param_description:aclRole]] [optional]
+     *
      * @return [[@doctodo return_type:requireSuperAdmin]] [[@doctodo return_description:requireSuperAdmin]]
      */
     public function requireSuperAdmin($action, $controlledObject = null, $accessingObject = null, $aclRole = null)
@@ -1135,6 +1229,11 @@ class Gatekeeper extends \infinite\base\Component
     /**
      * [[@doctodo method_description:parentAccess]].
      *
+     * @param [[@doctodo param_type:action]]           $action           [[@doctodo param_description:action]]
+     * @param [[@doctodo param_type:controlledObject]] $controlledObject [[@doctodo param_description:controlledObject]] [optional]
+     * @param [[@doctodo param_type:accessingObject]]  $accessingObject  [[@doctodo param_description:accessingObject]] [optional]
+     * @param [[@doctodo param_type:aclRole]]          $aclRole          [[@doctodo param_description:aclRole]] [optional]
+     *
      * @return [[@doctodo return_type:parentAccess]] [[@doctodo return_description:parentAccess]]
      */
     public function parentAccess($action, $controlledObject = null, $accessingObject = null, $aclRole = null)
@@ -1144,6 +1243,12 @@ class Gatekeeper extends \infinite\base\Component
 
     /**
      * Set access.
+     *
+     * @param [[@doctodo param_type:action]]           $action           [[@doctodo param_description:action]]
+     * @param [[@doctodo param_type:access]]           $access           [[@doctodo param_description:access]]
+     * @param [[@doctodo param_type:controlledObject]] $controlledObject [[@doctodo param_description:controlledObject]] [optional]
+     * @param [[@doctodo param_type:accessingObject]]  $accessingObject  [[@doctodo param_description:accessingObject]] [optional]
+     * @param [[@doctodo param_type:aclRole]]          $aclRole          [[@doctodo param_description:aclRole]] [optional]
      *
      * @throws Exception [[@doctodo exception_description:Exception]]
      * @return [[@doctodo return_type:setAccess]] [[@doctodo return_description:setAccess]]
@@ -1223,6 +1328,8 @@ class Gatekeeper extends \infinite\base\Component
     /**
      * Get object access.
      *
+     * @param [[@doctodo param_type:object]] $object [[@doctodo param_description:object]]
+     *
      * @return [[@doctodo return_type:getObjectAccess]] [[@doctodo return_description:getObjectAccess]]
      */
     public function getObjectAccess($object)
@@ -1234,6 +1341,8 @@ class Gatekeeper extends \infinite\base\Component
 
     /**
      * Get object aros.
+     *
+     * @param [[@doctodo param_type:object]] $object [[@doctodo param_description:object]]
      *
      * @return [[@doctodo return_type:getObjectAros]] [[@doctodo return_description:getObjectAros]]
      */
@@ -1251,7 +1360,8 @@ class Gatekeeper extends \infinite\base\Component
     /**
      * Get object inherited roles.
      *
-     * @param array $params [[@doctodo param_description:params]] [optional]
+     * @param [[@doctodo param_type:object]] $object [[@doctodo param_description:object]]
+     * @param array                          $params [[@doctodo param_description:params]] [optional]
      *
      * @return [[@doctodo return_type:getObjectInheritedRoles]] [[@doctodo return_description:getObjectInheritedRoles]]
      */
@@ -1268,7 +1378,8 @@ class Gatekeeper extends \infinite\base\Component
     /**
      * Get object roles.
      *
-     * @param array $params [[@doctodo param_description:params]] [optional]
+     * @param [[@doctodo param_type:object]] $object [[@doctodo param_description:object]]
+     * @param array                          $params [[@doctodo param_description:params]] [optional]
      *
      * @return [[@doctodo return_type:getObjectRoles]] [[@doctodo return_description:getObjectRoles]]
      */

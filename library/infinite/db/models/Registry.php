@@ -120,6 +120,8 @@ class Registry extends \infinite\db\ActiveRecord
 
     /**
      * [[@doctodo method_description:registerObject]].
+     *
+     * @param [[@doctodo param_type:object]] $object [[@doctodo param_description:object]]
      */
     public static function registerObject($object)
     {

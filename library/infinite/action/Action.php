@@ -113,7 +113,10 @@ abstract class Action extends \infinite\base\Object implements InteractiveAction
     /**
      * [[@doctodo method_description:createInteraction]].
      *
-     * @param boolean $handleNow [[@doctodo param_description:handleNow]] [optional]
+     * @param [[@doctodo param_type:label]]    $label     [[@doctodo param_description:label]]
+     * @param [[@doctodo param_type:options]]  $options   [[@doctodo param_description:options]]
+     * @param [[@doctodo param_type:callback]] $callback  [[@doctodo param_description:callback]]
+     * @param boolean                          $handleNow [[@doctodo param_description:handleNow]] [optional]
      *
      * @return [[@doctodo return_type:createInteraction]] [[@doctodo return_description:createInteraction]]
      */
@@ -191,6 +194,8 @@ abstract class Action extends \infinite\base\Object implements InteractiveAction
 
     /**
      * Set config.
+     *
+     * @param [[@doctodo param_type:config]] $config [[@doctodo param_description:config]]
      */
     public function setConfig($config)
     {

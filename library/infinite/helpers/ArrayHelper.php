@@ -18,6 +18,8 @@ class ArrayHelper extends \yii\helpers\ArrayHelper
     /**
      * [[@doctodo method_description:fingerprint]].
      *
+     * @param [[@doctodo param_type:item]] $item [[@doctodo param_description:item]]
+     *
      * @return [[@doctodo return_type:fingerprint]] [[@doctodo return_description:fingerprint]]
      */
     public static function fingerprint($item)
@@ -62,6 +64,11 @@ class ArrayHelper extends \yii\helpers\ArrayHelper
      *
      * 	@see \yii\helpers\ArrayHelper:map
      *
+     * @param [[@doctodo param_type:array]] $array [[@doctodo param_description:array]]
+     * @param [[@doctodo param_type:from]]  $from  [[@doctodo param_description:from]]
+     * @param [[@doctodo param_type:to]]    $to    [[@doctodo param_description:to]] [optional]
+     * @param [[@doctodo param_type:group]] $group [[@doctodo param_description:group]] [optional]
+     *
      * @return [[@doctodo return_type:map]] [[@doctodo return_description:map]]
      */
     public static function map($array, $from, $to = null, $group = null)
@@ -76,7 +83,8 @@ class ArrayHelper extends \yii\helpers\ArrayHelper
     /**
      * [[@doctodo method_description:cartesian]].
      *
-     * @param boolean $first [[@doctodo param_description:first]] [optional]
+     * @param [[@doctodo param_type:arrays]] $arrays [[@doctodo param_description:arrays]]
+     * @param boolean                        $first  [[@doctodo param_description:first]] [optional]
      *
      * @return [[@doctodo return_type:cartesian]] [[@doctodo return_description:cartesian]]
      */
@@ -160,8 +168,9 @@ class ArrayHelper extends \yii\helpers\ArrayHelper
     /**
      * [[@doctodo method_description:permutations]].
      *
-     * @param integer $min [[@doctodo param_description:min]] [optional]
-     * @param boolean $max [[@doctodo param_description:max]] [optional]
+     * @param [[@doctodo param_type:array]] $array [[@doctodo param_description:array]]
+     * @param integer                       $min   [[@doctodo param_description:min]] [optional]
+     * @param boolean                       $max   [[@doctodo param_description:max]] [optional]
      *
      * @return [[@doctodo return_type:permutations]] [[@doctodo return_description:permutations]]
      */

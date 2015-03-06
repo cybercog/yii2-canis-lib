@@ -53,6 +53,8 @@ class ActiveRecord extends \yii\mongodb\ActiveRecord
 
     /**
      * [[@doctodo method_description:prepareNewCollection]].
+     *
+     * @param [[@doctodo param_type:collection]] $collection [[@doctodo param_description:collection]]
      */
     public static function prepareNewCollection($collection)
     {

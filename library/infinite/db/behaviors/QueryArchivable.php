@@ -43,6 +43,8 @@ class QueryArchivable extends QueryBehavior
     /**
      * Set allow archives.
      *
+     * @param [[@doctodo param_type:value]] $value [[@doctodo param_description:value]]
+     *
      * @return [[@doctodo return_type:setAllowArchives]] [[@doctodo return_description:setAllowArchives]]
      */
     public function setAllowArchives($value)
@@ -90,6 +92,8 @@ class QueryArchivable extends QueryBehavior
 
     /**
      * [[@doctodo method_description:beforeQuery]].
+     *
+     * @param [[@doctodo param_type:event]] $event [[@doctodo param_description:event]]
      *
      * @return [[@doctodo return_type:beforeQuery]] [[@doctodo return_description:beforeQuery]]
      */

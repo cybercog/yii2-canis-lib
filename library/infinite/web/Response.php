@@ -217,6 +217,8 @@ class Response extends \yii\web\Response
     /**
      * [[@doctodo method_description:handleFill]].
      *
+     * @param [[@doctodo param_type:i]] $i [[@doctodo param_description:i]]
+     *
      * @return [[@doctodo return_type:handleFill]] [[@doctodo return_description:handleFill]]
      */
     protected function handleFill(&$i)
@@ -226,6 +228,8 @@ class Response extends \yii\web\Response
 
     /**
      * [[@doctodo method_description:handleClient]].
+     *
+     * @param [[@doctodo param_type:i]] $i [[@doctodo param_description:i]]
      *
      * @return [[@doctodo return_type:handleClient]] [[@doctodo return_description:handleClient]]
      */
@@ -238,6 +242,8 @@ class Response extends \yii\web\Response
 
     /**
      * [[@doctodo method_description:handleStatus]].
+     *
+     * @param [[@doctodo param_type:i]] $i [[@doctodo param_description:i]]
      *
      * @return [[@doctodo return_type:handleStatus]] [[@doctodo return_description:handleStatus]]
      */
@@ -257,6 +263,8 @@ class Response extends \yii\web\Response
     /**
      * [[@doctodo method_description:handleTrigger]].
      *
+     * @param [[@doctodo param_type:i]] $i [[@doctodo param_description:i]]
+     *
      * @return [[@doctodo return_type:handleTrigger]] [[@doctodo return_description:handleTrigger]]
      */
     protected function handleTrigger(&$i)
@@ -270,6 +278,8 @@ class Response extends \yii\web\Response
 
     /**
      * [[@doctodo method_description:handleDialog]].
+     *
+     * @param [[@doctodo param_type:i]] $i [[@doctodo param_description:i]]
      *
      * @return [[@doctodo return_type:handleDialog]] [[@doctodo return_description:handleDialog]]
      */
@@ -308,6 +318,8 @@ class Response extends \yii\web\Response
 
     /**
      * [[@doctodo method_description:handleMessage]].
+     *
+     * @param [[@doctodo param_type:i]] $i [[@doctodo param_description:i]]
      *
      * @return [[@doctodo return_type:handleMessage]] [[@doctodo return_description:handleMessage]]
      */
@@ -372,6 +384,8 @@ class Response extends \yii\web\Response
 
     /**
      * [[@doctodo method_description:beforeSend]].
+     *
+     * @param [[@doctodo param_type:event]] $event [[@doctodo param_description:event]] [optional]
      *
      * @return [[@doctodo return_type:beforeSend]] [[@doctodo return_description:beforeSend]]
      */
