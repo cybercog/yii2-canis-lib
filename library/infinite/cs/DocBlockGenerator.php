@@ -476,7 +476,7 @@ class DocBlockGenerator extends AbstractFixer
                     'param',
                     $type . ' $' . $param->getName() . ' [[@doctodo param_description:' . $param->getName() . ']]' . $extra
                 );
-                $currentParams[$paramObject->getVariableName()] = $paramObject;
+                $currentParams['$' . $param->getName()] = $paramObject;
             }
         }
 
@@ -519,6 +519,9 @@ class DocBlockGenerator extends AbstractFixer
             foreach ($parameters as $param) {
                 if (isset($currentParams['$' . $param->getName()])) {
                     $lines[] = ' * @param ' . $currentParams['$' . $param->getName()]->getContent();
+                } else {
+                    var_dump($currentParams);
+                    var_dump([$method->getFileName(), $method->getName(), $param->getName()]); exit;
                 }
             }
         }
@@ -536,7 +539,9 @@ class DocBlockGenerator extends AbstractFixer
                     case T_THROW:
                         if (isset($tokens[$i+4][1])) {
                             $type = $tokens[$i+4][1];
-                            $currentThrows[$type] = new \phpDocumentor\Reflection\DocBlock\Tag\ThrowsTag('throws', $type . ' [[@doctodo exception_description:' . $type . ']]');
+                            if (!isset($currentThrows[$type])) {
+                                $currentThrows[$type] = new \phpDocumentor\Reflection\DocBlock\Tag\ThrowsTag('throws', $type . ' [[@doctodo exception_description:' . $type . ']]');
+                            }
                         }
                     break;
                 }
