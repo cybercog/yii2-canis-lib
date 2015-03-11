@@ -1,4 +1,4 @@
-yii2-teal-core
+yii2-teal-lib
 ==================
 
 My core libraries
