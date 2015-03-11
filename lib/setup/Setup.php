@@ -392,6 +392,9 @@ class Setup extends \teal\base\Object
                 }
                 $_SERVER['argv'] = [];
                 $config = include $configPath;
+                if (isset($config['components']['collectors'])) {
+                    $config['components']['collectors']['cacheTime'] = false;
+                }
                 self::$_app = Yii::$app = new \teal\console\Application($config);
                 Yii::$app->trigger(\yii\base\Application::EVENT_BEFORE_REQUEST);
             }

@@ -67,7 +67,6 @@ trait ApplicationTrait
         if (!in_array($alias, $this->_migrationAliases)) {
             $this->_migrationAliases[] = $alias;
         }
-
         return true;
     }
 

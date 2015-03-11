@@ -8,6 +8,7 @@
 
 namespace teal\base;
 
+use Yii;
 use teal\base\exceptions\Exception;
 
 /**
@@ -28,6 +29,48 @@ abstract class Module extends \yii\base\Module
      * Get module type.
      */
     abstract public function getModuleType();
+
+    public function init()
+    {
+        parent::init();
+        $this->always();
+    }
+    /**
+     * Prepares object for serialization.
+     *
+     * @throws Exception when the module isn't the app
+     * @return array keys to sleep
+     *
+     */
+    public function __sleep()
+    {
+        $keys = array_keys((array) $this);
+        if ($this->module !== Yii::$app) {
+            throw new Exception(get_class($this->module));
+        }
+        $this->module = null;
+
+        return $keys;
+    }
+
+    /**
+     * Actions to take on object wakeup.
+     */
+    public function __wakeup()
+    {
+        $this->module = Yii::$app;
+        $this->always();
+    }
+
+    /**
+     * Prepare the collected module on wakeup and init.
+     *
+     * @return bool ran successfully
+     */
+    public function always()
+    {
+        return true;
+    }
 
     /**
      * Set system.
