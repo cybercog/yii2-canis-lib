@@ -45,9 +45,9 @@ abstract class Module extends \yii\base\Module
     public function __sleep()
     {
         $keys = array_keys((array) $this);
-        if ($this->module !== Yii::$app) {
-            throw new Exception(get_class($this->module));
-        }
+        // if ($this->module === Yii::$app) {
+        //     throw new Exception(get_class($this->module));
+        // }
         $this->module = null;
 
         return $keys;
