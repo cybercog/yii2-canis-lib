@@ -28,7 +28,7 @@
 	},
 	"autoload": {
 		"classmap": ["library/Teal.php", "library/ICD.php"],
-		"psr-0": { "teal\\": "/library" }
+        "psr-4": { "teal\\": "lib" }
 	},
     "extra": {
             "bootstrap": "Teal"
