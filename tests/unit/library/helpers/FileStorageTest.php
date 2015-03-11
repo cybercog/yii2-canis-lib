@@ -1,8 +1,8 @@
 <?php
 
-namespace infiniteunit\library\helpers;
+namespace tealunit\library\helpers;
 
-use infiniteunit\TestCase;
+use tealunit\TestCase;
 use Yii;
 
 class FileStorageTest extends TestCase

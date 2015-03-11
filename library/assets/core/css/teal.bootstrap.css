@@ -1,0 +1,549 @@
+/* Core Helpers */
+a.disabled {
+    color: #b6b6b6;
+}
+
+.preformatted {
+  white-space: pre;
+}
+
+button.disabled,
+input[type="button"].disabled,
+input[type="submit"].disabled {
+
+}
+
+span.empty {
+    color: #dbdbdb;
+}
+
+.center-text {
+    text-align: center;
+}
+
+.modal-xl {
+    width: 95%;
+}
+
+/* Bootstrap Bootstrap */
+@media (min-width: 920px) {
+  .modal-xl {
+      width: 900px;
+  }
+}
+@media (min-width: 1220px) {
+  .modal-xl {
+      width: 1200px;
+  }
+}
+
+.list-group-item-heading .badge, 
+.list-group-item-heading .label {
+    margin-left: 5px;
+}
+
+.panel-title .form-inline .form-group {
+    margin-top: -9px;
+    margin-left: 5px;
+}
+
+.breadcrumb li .dropdown {
+    display: inline-block;
+}
+.breadcrumb li .dropdown span {
+    color: #ccc;
+}
+.panel-title .inline-title {
+  display: inline-block;
+}
+
+.modal-header {
+    padding:9px 15px;
+    border-bottom:1px solid #eee;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+     border-top-left-radius: 5px;
+     border-top-right-radius: 5px;
+ }
+
+.modal-default .modal-header {
+    background-image: linear-gradient(to bottom, #fff 0px, #e0e0e0 100%);
+    background-repeat: repeat-x;
+    border-color: #ccc;
+    text-shadow: 0 1px 0 #fff;
+}
+.modal-primary .modal-header {
+    background-image: linear-gradient(to bottom, #337ab7 0px, #265a88 100%);
+    background-repeat: repeat-x;
+    border-color: #245580;
+}
+.modal-success .modal-header {
+    background-image: linear-gradient(to bottom, #5cb85c 0px, #419641 100%);
+    background-repeat: repeat-x;
+    border-color: #3e8f3e;
+}
+.modal-info .modal-header {
+    background-image: linear-gradient(to bottom, #5bc0de 0px, #2aabd2 100%);
+    background-repeat: repeat-x;
+    border-color: #28a4c9;
+}
+.modal-warning .modal-header {
+    background-image: linear-gradient(to bottom, #f0ad4e 0px, #eb9316 100%);
+    background-repeat: repeat-x;
+    border-color: #e38d13;
+}
+.modal-danger .modal-header {
+    background-image: linear-gradient(to bottom, #d9534f 0px, #c12e2a 100%);
+    background-repeat: repeat-x;
+    border-color: #b92c28;
+    color: #fff;
+    text-shadow: 0 1px 0 #fff;
+}
+
+
+/* Hack for Typeahead */
+.twitter-typeahead {
+  display: block;
+  display: block!important;
+}
+
+.twitter-typeahead .tt-query,
+.twitter-typeahead .tt-hint {
+  margin-bottom: 0;
+}
+
+.tt-hint {
+  display: none;
+}
+.tt-dropdown-menu {
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  background-clip: padding-box;
+  max-height: 300px;
+  padding-right: 5px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.tt-suggestion {
+  display: block;
+  padding: 0;
+  border-bottom: 1px solid #cccccc;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.tt-suggestion:last-child {
+  border-bottom: none;
+}
+
+
+/* Forms */
+.form-vertical .control-label {
+    padding-top: 7px;
+    margin-bottom: 0;
+}
+
+.form-panel {
+    margin: -10px -3px -3px -3px;
+
+}
+
+/* Panels */
+
+.panel {
+}
+
+.panel .panel-icon {
+    width: 16px;
+    text-align: center;
+}
+
+.panel .panel-heading {
+	height: 38px;
+    line-height: 16px;
+    margin-bottom: -1px;
+    padding: 10px;
+
+}
+
+.panel .panel-heading h2 {
+	float: left;
+    margin-top: 0;
+    font-size: 16px;
+    line-height: 16px;
+    font-weight: 300;
+}
+
+.panel-heading h2 i {
+    margin: 0 3px 0 4px;
+    opacity: 0.8;
+    float: left;
+}
+
+.panel-heading .break {
+    border-left: 1px solid rgba(0, 0, 0, 0.05);
+    margin: -9px 10px -9px;
+    padding: 9px 0 9px;
+}
+
+.panel-heading .nav {
+    margin: -10px -10px -10px 0px;
+}
+
+.panel-heading .nav-pills > li + li {
+	margin: 0;
+}
+
+.panel-heading .nav > li > a {
+	padding: 10px 5px;
+}
+
+.panel-heading .nav .dropdown b.caret {
+	display: none;
+}
+.panel-footer {
+    position: relative;
+}
+.panel-footer .pagination {
+    margin: -5px;
+}
+
+/* buttons */
+.btn.disabled .caret {
+    display: none;
+}
+
+/* list-group */
+.list-group-item .btn {
+}
+
+
+.list-group-item .condensed-menu .btn.dropdown-toggle {
+    padding: 0;
+    margin-top: -3px;
+}
+
+.list-group-item .condensed-menu .dropdown-toggle,
+.list-group-item .condensed-menu .dropdown-toggle:active {
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.list-group-item .list-group-item-text.help-text {
+    font-size: .85em;
+    line-height: .9em;
+}
+
+.list-group-item .dropdown-menu {
+    top: 25px;
+}
+.list-group-item .dropdown-menu li > a > span {
+    margin-right: 5px;
+    width: 15px;
+}
+
+.list-group-item.thumbnail {
+  margin: 5px;
+}
+
+.list-group-item.active,
+.list-group-item.active > a,
+.list-group-item.active > h5 > a,
+.list-group-item.active .dropdown-toggle {
+    color: #fff;
+}
+
+.list-group-item.active a {
+    text-shadow: none;
+}
+
+
+h5.list-group-item-heading {
+    font-size: 15px;
+    margin-bottom: 2px;
+}
+
+.list-group-item-text {
+    font-size: 14px;
+}
+
+.list-group-item-pre {
+    color: rgba(0,0,0,.6);
+    font-size: 13px;
+}
+
+.list-group-item.active .list-group-item-pre {
+    color: rgba(255,255,255,.8);
+}
+
+h2.panel-title .btn-group {
+  margin-top: -7px;
+}
+
+h3.panel-title .btn-group {
+  margin-top: -7px;
+}
+
+h4.panel-title .btn-group {
+  margin-top: -7px;
+}
+
+.btn .icon-with-label {
+  margin-right: 5px;
+}
+
+.list-group-item-heading,
+.list-group-item-text,
+.list-group-item-pre {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+}
+.expanded .list-group-item-heading,
+.expanded .list-group-item-text,
+.expanded .list-group-item-pre {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: none;
+    display: block;
+}
+
+.expanded .expanded-pre {
+    white-space: pre-wrap; /* css-3 */
+    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+    white-space: -pre-wrap; /* Opera 4-6 */
+    white-space: -o-pre-wrap; /* Opera 7 */
+    word-wrap: break-word; /* Internet Explorer 5.5+ */
+}
+
+.list-group-sub-label,
+.list-group-sub-value {
+    font-size: 90%;
+}
+
+.list-group-sub-label {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.list-group-label-block .list-group-sub-label {
+    display: block;
+}
+/* Embedded Panels */
+.embedded-panel .panel-heading {
+    background-color: transparent;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    border-bottom-color: rgba(0, 0, 0, 0.05);
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    height: 30px;
+    padding: 7px;
+}
+
+.embedded-panel .panel-heading h2 {
+    font-size: 14px;
+    line-height: 14px;
+    margin-bottom: 6px;
+    /*margin-top: 0;*/
+}
+.embedded-panel .panel-heading h2 .break {
+    margin: -6px 10px;
+    padding: 6px 0;
+}
+.embedded-panel .panel-heading .nav {
+    margin: -6px -6px -6px 0;
+}
+.embedded-panel .panel-heading .nav > li > a {
+    padding: 6px 5px;
+    line-height: 15px;
+}
+/* Navbar */
+.navbar-default  > .active > a {
+  background-image: -webkit-linear-gradient(top, #ebebeb 0%, #f3f3f3 100%);
+  background-image:         linear-gradient(to bottom, #ebebeb 0%, #f3f3f3 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffebebeb', endColorstr='#fff3f3f3', GradientType=0);
+  -webkit-box-shadow: inset 0 3px 9px rgba(0, 0, 0, .075);
+          box-shadow: inset 0 3px 9px rgba(0, 0, 0, .075);
+}
+
+/* Sub-Navbar /*
+
+/* object view dashboard */
+.sub-navbar {
+    z-index: 1020;
+    min-height: 40px;
+}
+
+.sub-navbar .navbar-brand {
+    font-size: 16px;
+    line-height: 18px;
+    padding: 10px;
+}
+
+.sub-navbar .navbar-toggle {
+    padding: 4px 3px;
+    margin-top: 9px;
+}
+
+.sub-navbar .navbar-nav > li > a {
+    line-height: 18px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+/* dropdowns */
+
+.dropleft .dropdown-menu {
+    left: auto;
+    right: 0;
+}
+
+/* forms */
+label.required:after,
+div.required label:after {
+    content: ' *';
+    color: red;
+}
+
+.no-left-padding {
+    padding-left: 0;
+}
+.no-right-padding {
+    padding-right: 0;
+}
+
+/* expandable */
+.expandable {
+    cursor: pointer;
+}
+
+.expanded-only,
+.expanded-only-inline {
+    display: none;
+}
+
+.expanded .expanded-only {
+    display: block;
+}
+.expanded .expanded-only-inline {
+    display: inline;
+}
+.expanded .not-expanded-only {
+    display: none;
+}
+
+.smart-line {
+    white-space:nowrap;
+    overflow: hidden;
+}
+
+.smart-double-line {
+    white-space: normal;
+    max-height: 3em;
+    overflow: hidden;
+}
+
+.expanded .smart-line {
+    overflow: visible;
+    white-space: normal;
+    max-height: none;
+}
+
+.height-controlled {
+  overflow-y: auto;
+  overflow-x: visible;
+}
+
+.fa-spin-slow {
+    animation: 6s linear 0s normal none teal running fa-spin;
+}
+
+/* Bootstrap Select */
+.dropdown-menu > li > a.disabled {
+  color: #b6b6b6;
+  color: #b6b6b6!important;
+}
+/* Search */
+.teal-search-result, 
+.teal-search-result:hover {
+  text-decoration: none;
+  display: block;
+  padding: 10px;
+}
+
+.tt-cursor .teal-search-result {
+  background-color: rgba(0, 0, 0, .1);
+}
+
+.teal-search-empty {
+  padding: 5px;
+}
+
+.teal-search-result .teal-search-header {
+  font-size: 1.1em;
+  font-weight: 600;
+  margin: 1px;
+}
+.teal-search-result .teal-search-sub {
+  font-size: .9em;
+}
+
+.teal-search-result .teal-search-icon {
+  float: left;
+  font-size: 1.1em;
+  margin-right: 5px;
+}
+
+
+@media (max-width: 400px) {
+    .smart-double-line {
+        white-space: normal;
+        max-height: 6em;
+        overflow: hidden;
+    }
+}
+
+@media (min-width: 992px) {
+}
+@media (max-width: 1200px) {
+}
+
+
+.teal-affix.affix {
+
+}
+
+.teal-affix.affix {
+    position: fixed;
+}
+
+.teal-affix.affix-bottom {
+    position: absolute;
+}
+
+.teal-affix .nav {
+    display: block;
+}
+
+
+@media (max-width: 992px) {
+    .teal-affix,
+    .teal-affix.affix,
+    .teal-affix.affix-bottom,
+    .teal-affix.affix-top
+ {
+      position: relative;
+      width: 100%;
+      margin-bottom: 20px;
+      top: auto;
+      left: auto;
+    }
+}

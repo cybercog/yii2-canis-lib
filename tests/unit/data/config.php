@@ -2,7 +2,7 @@
 return [
     'components' => [
         'fileStorage' => [
-            'class' => 'infinite\helpers\FileStorage',
+            'class' => 'teal\helpers\FileStorage',
         ],
     ],
 ];

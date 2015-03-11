@@ -1,4 +1,4 @@
-yii2-infinite-core
+yii2-teal-core
 ==================
 
 My core libraries

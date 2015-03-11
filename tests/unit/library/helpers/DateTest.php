@@ -1,9 +1,9 @@
 <?php
 
-namespace infiniteunit\library\helpers;
+namespace tealunit\library\helpers;
 
-use infinite\helpers\Date;
-use infiniteunit\TestCase;
+use teal\helpers\Date;
+use tealunit\TestCase;
 
 /**
  * @group helpers

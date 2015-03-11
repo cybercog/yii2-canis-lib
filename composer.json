@@ -1,8 +1,8 @@
 {
-	"name": "infiniteCascade/yii2-infinite-core",
-	"description": "Core libraries used in Infinite Cascade Yii2 based products",
+	"name": "teal/yii2-teal-core",
+	"description": "Core libraries used in Teal Yii2 based products",
 	"keywords": ["yii", "libraries"],
-	"homepage": "http://www.infinitecascade.com",
+	"homepage": "http://teal.blue",
 	"type": "yii2-extension",
 	"license": "GPL -2.0",
 	"minimum-stability": "dev",
@@ -27,10 +27,10 @@
 		"fabpot/php-cs-fixer": "@stable"
 	},
 	"autoload": {
-		"classmap": ["library/infinite/Infinite.php", "library/infinite/ICD.php"],
-		"psr-0": { "infinite\\": "/library" }
+		"classmap": ["library/teal/Teal.php", "library/teal/ICD.php"],
+		"psr-0": { "teal\\": "/library" }
 	},
     "extra": {
-            "bootstrap": "Infinite"
+            "bootstrap": "Teal"
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace infiniteunit\library\helpers\testHelpers;
+namespace tealunit\library\helpers\testHelpers;
 
-use Infinite;
+use Teal;
 
-class DummyObject extends \infinite\base\Object
+class DummyObject extends \teal\base\Object
 {
     public $id;
     public $name;

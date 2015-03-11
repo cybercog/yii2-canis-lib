@@ -1,0 +1,72 @@
+.teal-log .teal-log-preformatted {
+	white-space: pre;
+}
+
+.teal-log .list-group-item-heading .badge,
+.teal-log .list-group-item-heading .label {
+	margin-left: 5px;
+}
+
+.teal-log .teal-log-output {
+  overflow: auto;
+  display: block;
+}
+
+.teal-log .teal-sidebar.affix {
+    position: fixed;
+    margin-top: -100px;
+}
+
+.teal-log .teal-sidebar .ic-column{
+  float: none;
+}
+
+.teal-log .teal-sidebar.affix-bottom {
+    position: absolute;
+}
+
+.teal-log .list-group-item.row {
+    margin: 0;
+}
+.teal-log .list-group-item .detail-value {
+    font-weight: bold;
+}
+
+.teal-log .list-group-item .detail-icon {
+    font-size: 120%;
+}
+
+/* Affixed Sidebar */
+/*.teal-log .teal-sidebar {
+    width: 358px;
+    margin: 0;
+    padding: 0;
+}
+
+
+
+@media (max-width: 992px) {
+    .teal-log .teal-sidebar,
+    .teal-log .teal-sidebar.affix,
+    .teal-log .teal-sidebar.affix-bottom,
+    .teal-log .teal-sidebar.affix-top
+ {
+      position: relative;
+      width: 100%;
+      margin-bottom: 20px;
+      top: auto;
+      left: auto;
+    }
+}
+
+@media (min-width: 992px) {
+    .teal-log .teal-sidebar .nav > .active > ul {
+        display: block;
+    }
+}
+@media (max-width: 1200px) {
+	.teal-log .teal-sidebar {
+		width: 291px;
+	}
+
+}*/
