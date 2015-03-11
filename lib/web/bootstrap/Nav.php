@@ -8,12 +8,11 @@
 
 namespace teal\web\bootstrap;
 
+use Yii;
 use teal\helpers\Html;
 
 /**
  * Nav [[@doctodo class_description:teal\web\bootstrap\Nav]].
- /**
- * Nav [[@doctodo class_description:teal\web\bootstrap\Nav]]
  *
  * Any content enclosed between the [[begin()]] and [[end()]] calls of NavBar
  * is treated as the content of the navbar. You may use widgets such as [[Nav]]
