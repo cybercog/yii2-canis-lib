@@ -27,7 +27,7 @@
 		"fabpot/php-cs-fixer": "@stable"
 	},
 	"autoload": {
-		"classmap": ["library/teal/Teal.php", "library/teal/ICD.php"],
+		"classmap": ["library/Teal.php", "library/ICD.php"],
 		"psr-0": { "teal\\": "/library" }
 	},
     "extra": {
