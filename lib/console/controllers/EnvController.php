@@ -10,6 +10,10 @@ namespace teal\console\controllers;
 
 use teal\base\exceptions\Exception;
 use Yii;
+use yii\helpers\FileHelper;
+use yii\helpers\Console;
+use yii\helpers\Inflector;
+use teal\composer\TwigRender;
 
 /**
  * MigrateController [[@doctodo class_description:teal\console\controllers\MigrateController]].
@@ -18,25 +22,96 @@ use Yii;
  */
 class EnvController extends \yii\console\Controller
 {
-	public function actionIndex()
-	{
-		 $env = [];
+    public function actionIndex()
+    {
+        $env = [];
 
         $env['cookieValidationString'] = static::generateRandomString();
         $env['salt'] = static::generateRandomString();
-        $env['debug'] = 'true';
-        $env['traceLevel'] = '3';
-        $env['version'] = '0.0.1';
+        $env['debug'] = Console::select("Debug? ", ['true' => 'true', 'false' => 'false']);
+        if (empty($env['debug'])) {
+            $env['debug'] = 'true';
+        }
+        $env['traceLevel'] = $env['debug'] === 'true' ? '3' : '0';
+        $env['version'] = Console::prompt('Version number: v', ['default' => '0.0.1']);
         $env['app'] = [];
-        $env['app']['id'] = '';
-        $env['app']['name'] = '';
-        
-        $env['db'] = [];
-        $env['db']['username'] = '';
-        $env['db']['password'] = '';
-        $env['db']['host'] = '';
-        $env['db']['port'] = '';
-        $env['db']['dbname'] = '';
+        $namespace = explode('\\', get_class($this));
+        array_pop($namespace);
+        array_pop($namespace);
+        array_pop($namespace);
+        $namespace = ucwords(implode(' ', $namespace));
+        $env['app']['name'] = Console::prompt('Application name: ', ['default' => $namespace]);
+        $env['app']['id'] = Console::prompt('Application id: ', ['default' => Inflector::slug($env['app']['name'])]);
 
-	}
+        $env['db'] = [];
+        $env['db']['host'] = Console::prompt('Database host: ', ['default' => '127.0.0.1']);
+        $env['db']['port'] = Console::prompt('Database port: ', ['default' => '3306']);
+        $env['db']['dbname'] = Console::prompt('Database name: ', ['default' => $env['app']['id']]);
+        $env['db']['username'] = Console::prompt('Database username: ', ['default' => 'root']);
+        $env['db']['password'] = Console::prompt('Database password: ', ['default' => 'root']);
+
+        if (!static::testDatabase($env['db'])) {
+            static::stdout('Database connection failed.'.PHP_EOL, Console::FG_RED, Console::BOLD);
+            if (!Console::confirm('Continue with the given database connection information?', false)) {
+                static::stdout('See ya!'.PHP_EOL, Console::FG_YELLOW, Console::BOLD);
+                return false;
+            }
+        }
+
+        if (static::initEnv($env)) {
+            static::stdout('Environment has been initialized!'.PHP_EOL, Console::FG_CYAN, Console::BOLD);
+        } else {
+            static::stdout('Errors occurred while initializing the environemnt'.PHP_EOL, Console::FG_RED, Console::BOLD);
+        }
+    }
+
+    public static function initEnv($env)
+    {
+        $configDirectory = TEAL_APP_CONFIG_PATH;
+        $renderer = new TwigRender();
+        $parser = function($file) use ($env, $renderer) {
+            $content = file_get_contents($file);
+            return $renderer->renderContent($content, $env);
+        };
+
+        $findOptions = [];
+        $findOptions['only'] = ['*.sample'];
+        $files = FileHelper::findFiles($templateDirectory, $findOptions);
+        foreach ($files as $file) {
+            $newFilePath = strtr($file, ['.sample' => '']);
+            if ($newFilePath === $file) { continue; }
+            static::stdout($file .'...', Console::FG_CYAN);
+            $newContent = $parser($file);
+            file_put_contents($newFilePath, $newContent);
+            if (!is_file($newFilePath)) {
+                static::stdout('failed!' . PHP_EOL, Console::FG_RED);
+                return false;
+            }
+            static::stdout('done!' . PHP_EOL, Console::FG_RED);
+        }
+        return true;
+    }
+
+    public static function testDatabase($db)
+    {
+        try {
+            $oe = ini_set('display_errors', 0);
+            $dbh = new \PDO('mysql:host=' . $db['host'] . ';port=' . $db['port'] . ';dbname=' . $db['dbname'], $db['username'], $db['password']);
+            ini_set('display_errors', $oe);
+        } catch (\Exception $e) {
+            return false;
+        }
+        return true;
+    }
+
+    protected static function generateRandomString()
+    {
+        if (!extension_loaded('openssl')) {
+            throw new \Exception('The OpenSSL PHP extension is required by Yii2.');
+        }
+        $length = 32;
+        $bytes = openssl_random_pseudo_bytes($length);
+        return strtr(substr(base64_encode($bytes), 0, $length), '+/=', '_-.');
+    }
+
 }
