@@ -76,7 +76,7 @@ class EnvController extends \yii\console\Controller
 
         $findOptions = [];
         $findOptions['only'] = ['*.sample'];
-        $files = FileHelper::findFiles($templateDirectory, $findOptions);
+        $files = FileHelper::findFiles($configDirectory, $findOptions);
         foreach ($files as $file) {
             $newFilePath = strtr($file, ['.sample' => '']);
             if ($newFilePath === $file) { continue; }
