@@ -51,21 +51,21 @@ class EnvController extends \yii\console\Controller
         $env['db']['password'] = Console::prompt('Database password: ', ['default' => 'root']);
 
         if (!static::testDatabase($env['db'])) {
-            static::stdout('Database connection failed.'.PHP_EOL, Console::FG_RED, Console::BOLD);
+            $this->stdout('Database connection failed.'.PHP_EOL, Console::FG_RED, Console::BOLD);
             if (!Console::confirm('Continue with the given database connection information?', false)) {
-                static::stdout('See ya!'.PHP_EOL, Console::FG_YELLOW, Console::BOLD);
+                $this->stdout('See ya!'.PHP_EOL, Console::FG_YELLOW, Console::BOLD);
                 return false;
             }
         }
 
-        if (static::initEnv($env)) {
-            static::stdout('Environment has been initialized!'.PHP_EOL, Console::FG_CYAN, Console::BOLD);
+        if ($this->initEnv($env)) {
+            $this->stdout('Environment has been initialized!'.PHP_EOL, Console::FG_CYAN, Console::BOLD);
         } else {
-            static::stdout('Errors occurred while initializing the environemnt'.PHP_EOL, Console::FG_RED, Console::BOLD);
+            $this->stdout('Errors occurred while initializing the environemnt'.PHP_EOL, Console::FG_RED, Console::BOLD);
         }
     }
 
-    public static function initEnv($env)
+    public function initEnv($env)
     {
         $configDirectory = TEAL_APP_CONFIG_PATH;
         $renderer = new TwigRender();
@@ -80,14 +80,14 @@ class EnvController extends \yii\console\Controller
         foreach ($files as $file) {
             $newFilePath = strtr($file, ['.sample' => '']);
             if ($newFilePath === $file) { continue; }
-            static::stdout($file .'...', Console::FG_CYAN);
+            $this->stdout($file .'...', Console::FG_CYAN);
             $newContent = $parser($file);
             file_put_contents($newFilePath, $newContent);
             if (!is_file($newFilePath)) {
-                static::stdout('failed!' . PHP_EOL, Console::FG_RED);
+                $this->stdout('failed!' . PHP_EOL, Console::FG_RED);
                 return false;
             }
-            static::stdout('done!' . PHP_EOL, Console::FG_RED);
+            $this->stdout('done!' . PHP_EOL, Console::FG_RED);
         }
         return true;
     }
