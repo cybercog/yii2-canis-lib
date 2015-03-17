@@ -1,17 +1,17 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\web;
+namespace canis\web;
 
 use Yii;
 
 /**
- * Controller [[@doctodo class_description:teal\web\Controller]].
+ * Controller [[@doctodo class_description:canis\web\Controller]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -50,7 +50,7 @@ class Controller extends \yii\web\Controller
     // public function getResponse() {
     // 	$responseKey = self::className();
     // 	if (!isset(self::$_response[$responseKey])) {
-    // 		self::$_response[$responseKey] = Yii::createObject(['class' => 'teal\web\Response']);
+    // 		self::$_response[$responseKey] = Yii::createObject(['class' => 'canis\web\Response']);
     // 	}
     // 	self::$_response[$responseKey]->controller = $this;
     // 	return self::$_response[$responseKey];

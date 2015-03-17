@@ -1,15 +1,15 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\web;
+namespace canis\web;
 
 /**
- * View [[@doctodo class_description:teal\web\View]].
+ * View [[@doctodo class_description:canis\web\View]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

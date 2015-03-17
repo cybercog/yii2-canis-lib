@@ -1,23 +1,23 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\base;
+namespace canis\base;
 
-use teal\db\ActiveRecord;
+use canis\db\ActiveRecord;
 use Yii;
 use yii\helpers\VarDumper;
 
 /**
- * Debug [[@doctodo class_description:teal\base\Debug]].
+ * Debug [[@doctodo class_description:canis\base\Debug]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class Debug extends \teal\base\Object
+class Debug extends \canis\base\Object
 {
     /**
      * [[@doctodo method_description:db]].

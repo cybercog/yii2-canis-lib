@@ -1,23 +1,23 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\db\behaviors;
+namespace canis\db\behaviors;
 
-use teal\caching\Cacher;
-use teal\helpers\ArrayHelper;
+use canis\caching\Cacher;
+use canis\helpers\ArrayHelper;
 use Yii;
 
 /**
- * Roleable [[@doctodo class_description:teal\db\behaviors\Roleable]].
+ * Roleable [[@doctodo class_description:canis\db\behaviors\Roleable]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class Roleable extends \teal\db\behaviors\ActiveRecord
+class Roleable extends \canis\db\behaviors\ActiveRecord
 {
     /**
      * @var [[@doctodo var_type:accessRoleCheck]] [[@doctodo var_description:accessRoleCheck]]
@@ -50,8 +50,8 @@ class Roleable extends \teal\db\behaviors\ActiveRecord
     public function events()
     {
         return [
-            \teal\db\ActiveRecord::EVENT_AFTER_INSERT => 'afterSave',
-            \teal\db\ActiveRecord::EVENT_AFTER_UPDATE => 'afterSave',
+            \canis\db\ActiveRecord::EVENT_AFTER_INSERT => 'afterSave',
+            \canis\db\ActiveRecord::EVENT_AFTER_UPDATE => 'afterSave',
         ];
     }
 

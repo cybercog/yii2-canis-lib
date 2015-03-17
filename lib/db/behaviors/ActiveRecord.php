@@ -1,15 +1,15 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\db\behaviors;
+namespace canis\db\behaviors;
 
 /**
- * ActiveRecord [[@doctodo class_description:teal\db\behaviors\ActiveRecord]].
+ * ActiveRecord [[@doctodo class_description:canis\db\behaviors\ActiveRecord]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

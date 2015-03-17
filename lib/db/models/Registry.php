@@ -1,12 +1,12 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\db\models;
+namespace canis\db\models;
 
 /**
  * Registry is the model class for table "registry".
@@ -29,7 +29,7 @@ namespace teal\db\models;
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class Registry extends \teal\db\ActiveRecord
+class Registry extends \canis\db\ActiveRecord
 {
     /**
      * @inheritdoc
@@ -80,7 +80,7 @@ class Registry extends \teal\db\ActiveRecord
     {
         return array_merge(parent::behaviors(),
             [
-                'Relatable' => 'teal\db\behaviors\Relatable',
+                'Relatable' => 'canis\db\behaviors\Relatable',
             ]
         );
     }

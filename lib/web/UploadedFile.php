@@ -1,19 +1,19 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\web;
+namespace canis\web;
 
 /**
- * UploadedFile [[@doctodo class_description:teal\web\UploadedFile]].
+ * UploadedFile [[@doctodo class_description:canis\web\UploadedFile]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class UploadedFile extends \yii\web\UploadedFile implements \teal\base\FileInterface
+class UploadedFile extends \yii\web\UploadedFile implements \canis\base\FileInterface
 {
     /**
      * Get error message.

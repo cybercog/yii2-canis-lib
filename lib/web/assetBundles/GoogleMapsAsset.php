@@ -1,19 +1,19 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\web\assetBundles;
+namespace canis\web\assetBundles;
 
 if (!defined('TEAL_APP_GOOGLE_API_BROWSER_KEY')) {
     define('TEAL_APP_GOOGLE_API_BROWSER_KEY', 'NO_API_KEY_SPECIFIED');
 }
 
 /**
- * GoogleMapsAsset [[@doctodo class_description:teal\web\assetBundles\GoogleMapsAsset]].
+ * GoogleMapsAsset [[@doctodo class_description:canis\web\assetBundles\GoogleMapsAsset]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

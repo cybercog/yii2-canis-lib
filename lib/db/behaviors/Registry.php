@@ -1,23 +1,23 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\db\behaviors;
+namespace canis\db\behaviors;
 
-use teal\base\exceptions\Exception;
+use canis\base\exceptions\Exception;
 use Yii;
 use yii\db\Expression;
 
 /**
- * Registry [[@doctodo class_description:teal\db\behaviors\Registry]].
+ * Registry [[@doctodo class_description:canis\db\behaviors\Registry]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class Registry extends \teal\db\behaviors\ActiveRecord
+class Registry extends \canis\db\behaviors\ActiveRecord
 {
     /**
      * @var [[@doctodo var_type:_table]] [[@doctodo var_description:_table]]
@@ -34,9 +34,9 @@ class Registry extends \teal\db\behaviors\ActiveRecord
     public function events()
     {
         return [
-            \teal\db\ActiveRecord::EVENT_BEFORE_INSERT => 'beforeInsert',
-            \teal\db\ActiveRecord::EVENT_AFTER_DELETE => 'afterDelete',
-            \teal\db\ActiveRecord::EVENT_AFTER_SAVE_FAIL => 'afterSaveFail',
+            \canis\db\ActiveRecord::EVENT_BEFORE_INSERT => 'beforeInsert',
+            \canis\db\ActiveRecord::EVENT_AFTER_DELETE => 'afterDelete',
+            \canis\db\ActiveRecord::EVENT_AFTER_SAVE_FAIL => 'afterSaveFail',
         ];
     }
 

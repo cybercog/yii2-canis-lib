@@ -1,5 +1,5 @@
 <?php
-namespace teal\security\identity\providers;
+namespace canis\security\identity\providers;
 
 interface CreatorInterface
 {

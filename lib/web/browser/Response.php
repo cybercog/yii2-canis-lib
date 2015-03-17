@@ -1,26 +1,26 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\web\browser;
+namespace canis\web\browser;
 
 use Yii;
 
 /**
- * Response [[@doctodo class_description:teal\web\browser\Response]].
+ * Response [[@doctodo class_description:canis\web\browser\Response]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-abstract class Response extends \teal\base\Object
+abstract class Response extends \canis\base\Object
 {
     /**
      * @var [[@doctodo var_type:bundleClass]] [[@doctodo var_description:bundleClass]]
      */
-    public $bundleClass = 'teal\web\browser\Bundle';
+    public $bundleClass = 'canis\web\browser\Bundle';
     /**
      * @var [[@doctodo var_type:_instances]] [[@doctodo var_description:_instances]]
      */

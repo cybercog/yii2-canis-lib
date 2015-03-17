@@ -1,21 +1,21 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\web;
+namespace canis\web;
 
-use teal\base\ApplicationTrait;
+use canis\base\ApplicationTrait;
 
 /**
- * Application [[@doctodo class_description:teal\web\Application]].
+ * Application [[@doctodo class_description:canis\web\Application]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class Application extends \yii\web\Application implements \teal\base\ApplicationInterface
+class Application extends \yii\web\Application implements \canis\base\ApplicationInterface
 {
     use ApplicationTrait;
 }

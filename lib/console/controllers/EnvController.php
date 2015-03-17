@@ -1,22 +1,22 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\console\controllers;
+namespace canis\console\controllers;
 
-use teal\base\exceptions\Exception;
+use canis\base\exceptions\Exception;
 use Yii;
 use yii\helpers\FileHelper;
 use yii\helpers\Console;
 use yii\helpers\Inflector;
-use teal\composer\TwigRender;
+use canis\composer\TwigRender;
 
 /**
- * MigrateController [[@doctodo class_description:teal\console\controllers\MigrateController]].
+ * MigrateController [[@doctodo class_description:canis\console\controllers\MigrateController]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

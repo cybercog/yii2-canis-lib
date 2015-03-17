@@ -1,6 +1,6 @@
 <?php
 
-namespace teal\db\models;
+namespace canis\db\models;
 
 use Yii;
 
@@ -15,7 +15,7 @@ use Yii;
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class RelationDependency extends \teal\db\ActiveRecord
+class RelationDependency extends \canis\db\ActiveRecord
 {
     /**
      * @inheritdoc

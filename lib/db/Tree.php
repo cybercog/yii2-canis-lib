@@ -1,19 +1,19 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\db;
+namespace canis\db;
 
 /**
- * Tree [[@doctodo class_description:teal\db\Tree]].
+ * Tree [[@doctodo class_description:canis\db\Tree]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class Tree extends \teal\base\Object
+class Tree extends \canis\base\Object
 {
     /**
      * @var [[@doctodo var_type:object]] [[@doctodo var_description:object]]

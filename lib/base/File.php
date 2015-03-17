@@ -1,19 +1,19 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\base;
+namespace canis\base;
 
 /**
- * File [[@doctodo class_description:teal\base\File]].
+ * File [[@doctodo class_description:canis\base\File]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class File extends \teal\web\UploadedFile implements FileInterface
+class File extends \canis\web\UploadedFile implements FileInterface
 {
     /**
      * [[@doctodo method_description:createInstance]].

@@ -1,16 +1,16 @@
 <?php
 $vendorPath = dirname(dirname(__DIR__));
 include $vendorPath .DIRECTORY_SEPARATOR . 'autoload.php';
-$isTealCascade = false;
+$isCanisCascade = false;
 if (!isset($path)) {
 	$path = __DIR__;
-    $isTealCascade = true;
+    $isCanisCascade = true;
 }
 if (!isset($docBlockSettings)) {
 	$docBlockSettings = [];
 }
 if (!isset($docBlockSettings['package'])) {
-	$docBlockSettings['package'] = 'teal-core';
+	$docBlockSettings['package'] = 'canis-core';
 }
 if (!isset($docBlockSettings['author'])) {
 	$docBlockSettings['author'] = 'Jacob Morrison <email@ofjacob.com>';
@@ -31,8 +31,8 @@ $finder = Symfony\CS\Finder\DefaultFinder::create()
     ->notName('*.phar')
     ->exclude('vendor')
 ;
-if ($isTealCascade) {
-    $finder->exclude('library' . DIRECTORY_SEPARATOR . 'teal' . DIRECTORY_SEPARATOR . 'cs');
+if ($isCanisCascade) {
+    $finder->exclude('library' . DIRECTORY_SEPARATOR . 'canis' . DIRECTORY_SEPARATOR . 'cs');
 }
 if (isset($excludePaths)) {
     foreach ($excludePaths as $path) {
@@ -46,7 +46,7 @@ if (isset($excludeNames)) {
 }
 
 $config = Symfony\CS\Config\Config::create();
-$docBlockGenerator = new teal\cs\DocBlockGenerator();
+$docBlockGenerator = new canis\cs\DocBlockGenerator();
 $docBlockGenerator->params = $docBlockSettings;
 
 $config->addCustomFixer($docBlockGenerator);

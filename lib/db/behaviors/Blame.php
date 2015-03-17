@@ -1,21 +1,21 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\db\behaviors;
+namespace canis\db\behaviors;
 
 use Yii;
 
 /**
- * Blame [[@doctodo class_description:teal\db\behaviors\Blame]].
+ * Blame [[@doctodo class_description:canis\db\behaviors\Blame]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class Blame extends \teal\db\behaviors\ActiveRecord
+class Blame extends \canis\db\behaviors\ActiveRecord
 {
     /**
      * @var [[@doctodo var_type:deletedField]] [[@doctodo var_description:deletedField]]
@@ -64,8 +64,8 @@ class Blame extends \teal\db\behaviors\ActiveRecord
     public function events()
     {
         return [
-            \teal\db\ActiveRecord::EVENT_BEFORE_INSERT => 'beforeInsert',
-            \teal\db\ActiveRecord::EVENT_BEFORE_UPDATE => 'beforeUpdate',
+            \canis\db\ActiveRecord::EVENT_BEFORE_INSERT => 'beforeInsert',
+            \canis\db\ActiveRecord::EVENT_BEFORE_UPDATE => 'beforeUpdate',
         ];
     }
 

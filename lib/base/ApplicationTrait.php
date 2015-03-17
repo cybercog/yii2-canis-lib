@@ -1,12 +1,12 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\base;
+namespace canis\base;
 
 use Yii;
 
@@ -35,10 +35,10 @@ trait ApplicationTrait
         if (!isset($this->db)) {
             return false;
         }
-        $tealSetup = defined('TEAL_SETUP') && TEAL_SETUP;
-        $tealSetupDbReady = defined('TEAL_SETUP_DB_READY') && TEAL_SETUP_DB_READY;
-        $tealSetupDb = $tealSetup && !$tealSetupDbReady;
-        if ($tealSetupDb) {
+        $canisSetup = defined('TEAL_SETUP') && TEAL_SETUP;
+        $canisSetupDbReady = defined('TEAL_SETUP_DB_READY') && TEAL_SETUP_DB_READY;
+        $canisSetupDb = $canisSetup && !$canisSetupDbReady;
+        if ($canisSetupDb) {
             return false;
         }
 

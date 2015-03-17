@@ -1,17 +1,17 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\data;
+namespace canis\data;
 
 use Yii;
 
 /**
- * ActiveDataProvider [[@doctodo class_description:teal\data\ActiveDataProvider]].
+ * ActiveDataProvider [[@doctodo class_description:canis\data\ActiveDataProvider]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

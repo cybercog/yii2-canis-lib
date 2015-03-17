@@ -1,15 +1,15 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\db\models;
+namespace canis\db\models;
 
-use teal\db\ActiveRecord;
-use teal\helpers\ArrayHelper;
+use canis\db\ActiveRecord;
+use canis\helpers\ArrayHelper;
 use Yii;
 use yii\web\IdentityInterface;
 
@@ -96,8 +96,8 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return array_merge(parent::behaviors(),
             [
-                'Registry' => 'teal\db\behaviors\Registry',
-                'Relatable' => 'teal\db\behaviors\Relatable',
+                'Registry' => 'canis\db\behaviors\Registry',
+                'Relatable' => 'canis\db\behaviors\Relatable',
             ]
         );
     }

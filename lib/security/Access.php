@@ -1,21 +1,21 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\security;
+namespace canis\security;
 
 use Yii;
 
 /**
- * Access [[@doctodo class_description:teal\security\Access]].
+ * Access [[@doctodo class_description:canis\security\Access]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class Access extends \teal\base\Object
+class Access extends \canis\base\Object
 {
     /**
      * @var [[@doctodo var_type:_aclModel]] [[@doctodo var_description:_aclModel]]

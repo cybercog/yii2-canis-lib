@@ -1,15 +1,15 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\db\behaviors\auditable;
+namespace canis\db\behaviors\auditable;
 
 /**
- * DeleteEvent [[@doctodo class_description:teal\db\behaviors\auditable\DeleteEvent]].
+ * DeleteEvent [[@doctodo class_description:canis\db\behaviors\auditable\DeleteEvent]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -34,7 +34,7 @@ class DeleteEvent extends AttributesEvent
      */
     public function getVerb()
     {
-        return new \teal\base\language\Verb('delete');
+        return new \canis\base\language\Verb('delete');
     }
 
     /**

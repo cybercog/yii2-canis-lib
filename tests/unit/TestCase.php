@@ -1,6 +1,6 @@
 <?php
 
-namespace tealunit;
+namespace canisunit;
 
 /**
  * This is the base class for all yii framework unit tests.

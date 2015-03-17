@@ -1,21 +1,21 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\web\grid;
+namespace canis\web\grid;
 
-use teal\helpers\Html;
+use canis\helpers\Html;
 
 /**
- * Cell [[@doctodo class_description:teal\web\grid\Cell]].
+ * Cell [[@doctodo class_description:canis\web\grid\Cell]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class Cell extends \teal\base\Object implements \teal\web\RenderInterface
+class Cell extends \canis\base\Object implements \canis\web\RenderInterface
 {
     /**
      * @var [[@doctodo var_type:phoneSize]] [[@doctodo var_description:phoneSize]]

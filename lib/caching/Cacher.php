@@ -1,12 +1,12 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\caching;
+namespace canis\caching;
 
 use Yii;
 use yii\caching\ChainedDependency;
@@ -14,11 +14,11 @@ use yii\caching\DbDependency;
 use yii\caching\TagDependency;
 
 /**
- * Cacher [[@doctodo class_description:teal\caching\Cacher]].
+ * Cacher [[@doctodo class_description:canis\caching\Cacher]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class Cacher extends \teal\base\Component
+class Cacher extends \canis\base\Component
 {
     /**
      * @var [[@doctodo var_type:component]] [[@doctodo var_description:component]]

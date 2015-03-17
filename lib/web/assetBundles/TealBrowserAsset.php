@@ -1,40 +1,40 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\web\assetBundles;
+namespace canis\web\assetBundles;
 
 /**
- * TealBrowserAsset [[@doctodo class_description:teal\web\assetBundles\TealBrowserAsset]].
+ * CanisBrowserAsset [[@doctodo class_description:canis\web\assetBundles\CanisBrowserAsset]].
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  *
  * @since 2.0
  */
-class TealBrowserAsset extends AssetBundle
+class CanisBrowserAsset extends AssetBundle
 {
     /**
      * @inheritdoc
      */
-    public $sourcePath = '@teal/assets/browser';
+    public $sourcePath = '@canis/assets/browser';
     /**
      * @inheritdoc
      */
-    public $css = ['css/teal.browser.css'];
+    public $css = ['css/canis.browser.css'];
     /**
      * @inheritdoc
      */
     public $js = [
-        'js/teal.browser.js',
+        'js/canis.browser.js',
     ];
     /**
      * @inheritdoc
      */
     public $depends = [
-        'teal\web\assetBundles\TealAsset',
+        'canis\web\assetBundles\CanisAsset',
     ];
 }

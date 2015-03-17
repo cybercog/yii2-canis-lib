@@ -1,22 +1,22 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\helpers;
+namespace canis\helpers;
 
 use jom\SubnationalDivisions;
 use Yii;
 
 /**
- * Locations [[@doctodo class_description:teal\helpers\Locations]].
+ * Locations [[@doctodo class_description:canis\helpers\Locations]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class Locations extends \teal\base\Component
+class Locations extends \canis\base\Component
 {
     /**
      * [[@doctodo method_description:countryList]].

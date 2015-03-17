@@ -1,21 +1,21 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\db\behaviors;
+namespace canis\db\behaviors;
 
-use teal\helpers\Date as DateHelper;
+use canis\helpers\Date as DateHelper;
 
 /**
- * Date [[@doctodo class_description:teal\db\behaviors\Date]].
+ * Date [[@doctodo class_description:canis\db\behaviors\Date]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class Date extends \teal\db\behaviors\ActiveRecord
+class Date extends \canis\db\behaviors\ActiveRecord
 {
     /**
      * @var [[@doctodo var_type:_handle]] [[@doctodo var_description:_handle]]
@@ -45,12 +45,12 @@ class Date extends \teal\db\behaviors\ActiveRecord
     public function events()
     {
         return [
-            \teal\db\ActiveRecord::EVENT_BEFORE_VALIDATE => '_toDatabase',
-            \teal\db\ActiveRecord::EVENT_AFTER_VALIDATE => '_toHumanErrorCheck',
-            \teal\db\ActiveRecord::EVENT_AFTER_UPDATE => '_toHuman',
-            \teal\db\ActiveRecord::EVENT_AFTER_INSERT => '_toHuman',
-            // \teal\db\ActiveRecord::EVENT_AFTER_FIND => '_toHuman',
-            // \teal\db\ActiveRecord::EVENT_AFTER_SAVE_FAIL => '_toHuman'
+            \canis\db\ActiveRecord::EVENT_BEFORE_VALIDATE => '_toDatabase',
+            \canis\db\ActiveRecord::EVENT_AFTER_VALIDATE => '_toHumanErrorCheck',
+            \canis\db\ActiveRecord::EVENT_AFTER_UPDATE => '_toHuman',
+            \canis\db\ActiveRecord::EVENT_AFTER_INSERT => '_toHuman',
+            // \canis\db\ActiveRecord::EVENT_AFTER_FIND => '_toHuman',
+            // \canis\db\ActiveRecord::EVENT_AFTER_SAVE_FAIL => '_toHuman'
         ];
     }
 

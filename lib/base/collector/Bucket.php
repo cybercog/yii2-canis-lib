@@ -1,23 +1,23 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\base\collector;
+namespace canis\base\collector;
 
 use ArrayAccess;
 use ArrayIterator;
 use IteratorAggregate;
 
 /**
- * Bucket [[@doctodo class_description:teal\base\collector\Bucket]].
+ * Bucket [[@doctodo class_description:canis\base\collector\Bucket]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class Bucket extends \teal\base\Object implements IteratorAggregate, ArrayAccess
+class Bucket extends \canis\base\Object implements IteratorAggregate, ArrayAccess
 {
     /**
      * @var [[@doctodo var_type:_bucket]] [[@doctodo var_description:_bucket]]
@@ -40,7 +40,7 @@ class Bucket extends \teal\base\Object implements IteratorAggregate, ArrayAccess
      * [[@doctodo method_description:add]].
      *
      * @param [[@doctodo param_type:offset]] $offset [[@doctodo param_description:offset]]
-     * @param teal\base\collector\Item   $item   [[@doctodo param_description:item]]
+     * @param canis\base\collector\Item   $item   [[@doctodo param_description:item]]
      */
     public function add($offset, Item $item)
     {

@@ -1,19 +1,19 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\web;
+namespace canis\web;
 
 /**
- * ResponseOptions [[@doctodo class_description:teal\web\ResponseOptions]].
+ * ResponseOptions [[@doctodo class_description:canis\web\ResponseOptions]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class ResponseOptions extends \teal\base\Object
+class ResponseOptions extends \canis\base\Object
 {
     /**
      * @var [[@doctodo var_type:justStatus]] [[@doctodo var_description:justStatus]]

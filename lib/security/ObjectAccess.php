@@ -1,23 +1,23 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\security;
+namespace canis\security;
 
-use teal\caching\Cacher;
-use teal\helpers\ArrayHelper;
+use canis\caching\Cacher;
+use canis\helpers\ArrayHelper;
 use Yii;
 
 /**
- * ObjectAccess [[@doctodo class_description:teal\security\ObjectAccess]].
+ * ObjectAccess [[@doctodo class_description:canis\security\ObjectAccess]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class ObjectAccess extends \teal\base\Component
+class ObjectAccess extends \canis\base\Component
 {
     /**
      * @var [[@doctodo var_type:_object]] [[@doctodo var_description:_object]]

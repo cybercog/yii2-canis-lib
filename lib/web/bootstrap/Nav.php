@@ -1,18 +1,18 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\web\bootstrap;
+namespace canis\web\bootstrap;
 
 use Yii;
-use teal\helpers\Html;
+use canis\helpers\Html;
 
 /**
- * Nav [[@doctodo class_description:teal\web\bootstrap\Nav]].
+ * Nav [[@doctodo class_description:canis\web\bootstrap\Nav]].
  *
  * Any content enclosed between the [[begin()]] and [[end()]] calls of NavBar
  * is treated as the content of the navbar. You may use widgets such as [[Nav]]
@@ -20,7 +20,7 @@ use teal\helpers\Html;
  *
  * @see http://twitter.github.io/bootstrap/components.html#navbar
  *
- * @author Antonio Ramirez <amigo.cobos@gmail.com>; Jacob Morrison <jacob@tealcascade.org>
+ * @author Antonio Ramirez <amigo.cobos@gmail.com>; Jacob Morrison <jacob@caniscascade.org>
  */
 class Nav extends \yii\bootstrap\Nav
 {

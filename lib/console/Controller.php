@@ -1,18 +1,18 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\console;
+namespace canis\console;
 
 use Yii;
 use yii\helpers\Console;
 
 /**
- * Controller [[@doctodo class_description:teal\console\Controller]].
+ * Controller [[@doctodo class_description:canis\console\Controller]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

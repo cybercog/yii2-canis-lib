@@ -1,14 +1,14 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\web\bootstrap;
+namespace canis\web\bootstrap;
 
-use teal\helpers\Html;
+use canis\helpers\Html;
 
 /**
  * SubNavBar renders a sub-navbar HTML component.
@@ -19,7 +19,7 @@ use teal\helpers\Html;
  *
  * @see http://twitter.github.io/bootstrap/components.html#navbar
  *
- * @author Antonio Ramirez <amigo.cobos@gmail.com>; Jacob Morrison <jacob@tealcascade.org>
+ * @author Antonio Ramirez <amigo.cobos@gmail.com>; Jacob Morrison <jacob@caniscascade.org>
  */
 class SubNavBar extends \yii\bootstrap\NavBar
 {

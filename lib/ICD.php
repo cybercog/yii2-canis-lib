@@ -3,7 +3,7 @@
  * ICD [[@doctodo class_description:ICD]]
  * library/ICD.php.
  *
- * @author Jacob Morrison <jacob@tealcascade.com>
+ * @author Jacob Morrison <jacob@canis.io>
  */
 class ICD extends \yii\helpers\VarDumper
 {

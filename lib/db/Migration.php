@@ -1,21 +1,21 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\db;
+namespace canis\db;
 
 /**
- * Migration [[@doctodo class_description:teal\db\Migration]].
+ * Migration [[@doctodo class_description:canis\db\Migration]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
 class Migration extends \yii\db\Migration
 {
-    use \teal\base\ObjectTrait;
+    use \canis\base\ObjectTrait;
     /**
      * Builds and executes a SQL statement for dropping a DB table.
      *

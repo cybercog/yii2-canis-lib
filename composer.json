@@ -1,8 +1,8 @@
 {
-	"name": "teal/yii2-teal-lib",
-	"description": "Core libraries used in Teal Yii2 based products",
+	"name": "canis/yii2-canis-lib",
+	"description": "Core libraries used in Canis Yii2 based products",
 	"keywords": ["yii", "libraries"],
-	"homepage": "http://teal.blue",
+	"homepage": "http://canis.io",
 	"type": "yii2-extension",
 	"license": "GPL -2.0",
 	"minimum-stability": "dev",
@@ -27,10 +27,10 @@
 		"fabpot/php-cs-fixer": "@stable"
 	},
 	"autoload": {
-		"classmap": ["lib/Teal.php", "lib/ICD.php"],
-        "psr-4": { "teal\\": "lib" }
+		"classmap": ["lib/Canis.php", "lib/ICD.php"],
+        "psr-4": { "canis\\": "lib" }
 	},
     "extra": {
-            "bootstrap": "Teal"
+            "bootstrap": "Canis"
     }
 }

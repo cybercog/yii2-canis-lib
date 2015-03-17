@@ -1,11 +1,11 @@
 <?php
-namespace teal\web\bootstrap;
+namespace canis\web\bootstrap;
 
-use teal\helpers\Html;
+use canis\helpers\Html;
 use yii\bootstrap\Button;
 
 /**
- * ButtonDropdown [[@doctodo class_description:teal\web\bootstrap\ButtonDropdown]].
+ * ButtonDropdown [[@doctodo class_description:canis\web\bootstrap\ButtonDropdown]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

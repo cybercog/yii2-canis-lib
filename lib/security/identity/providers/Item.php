@@ -1,22 +1,22 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\security\identity\providers;
+namespace canis\security\identity\providers;
 
-use teal\helpers\ArrayHelper;
+use canis\helpers\ArrayHelper;
 use Yii;
 
 /**
- * Item [[@doctodo class_description:teal\security\identity\providers\Item]].
+ * Item [[@doctodo class_description:canis\security\identity\providers\Item]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class Item extends \teal\base\collector\Item
+class Item extends \canis\base\collector\Item
 {
     /**
      * @var [[@doctodo var_type:name]] [[@doctodo var_description:name]]

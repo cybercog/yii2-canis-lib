@@ -1,20 +1,20 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\web;
+namespace canis\web;
 
-use teal\base\exceptions\Exception;
-use teal\base\ObjectTrait;
+use canis\base\exceptions\Exception;
+use canis\base\ObjectTrait;
 use Yii;
 use yii\helpers\Url;
 
 /**
- * Response [[@doctodo class_description:teal\web\Response]].
+ * Response [[@doctodo class_description:canis\web\Response]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

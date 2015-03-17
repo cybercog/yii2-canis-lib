@@ -1,12 +1,12 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\setup;
+namespace canis\setup;
 
 use Migrator;
 use Task;
@@ -15,11 +15,11 @@ use Yii;
 defined('STDOUT') or define('STDOUT', fopen('php://stdout', 'w'));
 
 /**
- * Setup [[@doctodo class_description:teal\setup\Setup]].
+ * Setup [[@doctodo class_description:canis\setup\Setup]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class Setup extends \teal\base\Object
+class Setup extends \canis\base\Object
 {
     /**
      * @var [[@doctodo var_type:_instance]] [[@doctodo var_description:_instance]]
@@ -395,7 +395,7 @@ class Setup extends \teal\base\Object
                 if (isset($config['components']['collectors'])) {
                     $config['components']['collectors']['cacheTime'] = false;
                 }
-                self::$_app = Yii::$app = new \teal\console\Application($config);
+                self::$_app = Yii::$app = new \canis\console\Application($config);
                 Yii::$app->trigger(\yii\base\Application::EVENT_BEFORE_REQUEST);
             }
 

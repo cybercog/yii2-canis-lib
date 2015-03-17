@@ -1,9 +1,9 @@
 <?php
 
-namespace tealunit\library\helpers;
+namespace canisunit\library\helpers;
 
-use teal\helpers\Date;
-use tealunit\TestCase;
+use canis\helpers\Date;
+use canisunit\TestCase;
 
 /**
  * @group helpers

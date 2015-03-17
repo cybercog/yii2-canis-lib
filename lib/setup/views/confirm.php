@@ -2,7 +2,7 @@
 /**
  * library/setup/views/confirm.php.
  *
- * @author Jacob Morrison <jacob@tealcascade.com>
+ * @author Jacob Morrison <jacob@canis.io>
  */
 echo '<div class="flash-confirm">';
 if (!isset($question)) {

@@ -1,19 +1,19 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\helpers;
+namespace canis\helpers;
 
-use teal\web\View;
+use canis\web\View;
 use Yii;
 use yii\base\InvalidParamException;
 
 /**
- * Html [[@doctodo class_description:teal\helpers\Html]].
+ * Html [[@doctodo class_description:canis\helpers\Html]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -125,7 +125,7 @@ class Html extends \yii\helpers\Html
         if (!isset($options['wrapperTag'])) {
             $options['wrapperTag'] = 'div';
         }
-        static::addCssClass($options['htmlOptions'], 'teal-page-title');
+        static::addCssClass($options['htmlOptions'], 'canis-page-title');
         static::addCssClass($options['wrapperOptions'], 'panelOptions');
 
         return static::tag($options['wrapperTag'], static::tag('h' . $options['level'], $title, $options['htmlOptions']), $options['wrapperOptions']);

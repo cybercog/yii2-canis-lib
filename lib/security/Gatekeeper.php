@@ -1,27 +1,27 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\security;
+namespace canis\security;
 
-use teal\base\exceptions\Exception;
-use teal\caching\Cacher;
-use teal\db\ActiveQuery;
-use teal\db\ActiveRecord;
-use teal\db\Query;
-use teal\helpers\ArrayHelper;
+use canis\base\exceptions\Exception;
+use canis\caching\Cacher;
+use canis\db\ActiveQuery;
+use canis\db\ActiveRecord;
+use canis\db\Query;
+use canis\helpers\ArrayHelper;
 use Yii;
 
 /**
- * Gatekeeper [[@doctodo class_description:teal\security\Gatekeeper]].
+ * Gatekeeper [[@doctodo class_description:canis\security\Gatekeeper]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class Gatekeeper extends \teal\base\Component
+class Gatekeeper extends \canis\base\Component
 {
     /**
      * @var [[@doctodo var_type:proxy]] [[@doctodo var_description:proxy]]
@@ -60,15 +60,15 @@ class Gatekeeper extends \teal\base\Component
     /**
      * @var [[@doctodo var_type:authorityClass]] [[@doctodo var_description:authorityClass]]
      */
-    public $authorityClass = 'teal\security\Authority';
+    public $authorityClass = 'canis\security\Authority';
     /**
      * @var [[@doctodo var_type:objectAccessClass]] [[@doctodo var_description:objectAccessClass]]
      */
-    public $objectAccessClass = 'teal\security\ObjectAccess';
+    public $objectAccessClass = 'canis\security\ObjectAccess';
     /**
      * @var [[@doctodo var_type:accessClass]] [[@doctodo var_description:accessClass]]
      */
-    public $accessClass = 'teal\security\Access';
+    public $accessClass = 'canis\security\Access';
     /**
      * @var [[@doctodo var_type:_authority]] [[@doctodo var_description:_authority]]
      */

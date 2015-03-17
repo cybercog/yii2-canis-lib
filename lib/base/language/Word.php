@@ -1,19 +1,19 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\base\language;
+namespace canis\base\language;
 
 /**
- * Word [[@doctodo class_description:teal\base\language\Word]].
+ * Word [[@doctodo class_description:canis\base\language\Word]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-abstract class Word extends \teal\base\Object
+abstract class Word extends \canis\base\Object
 {
     /**
      * Get base.

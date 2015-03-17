@@ -1,28 +1,28 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\web\grid;
+namespace canis\web\grid;
 
-use teal\helpers\Html;
+use canis\helpers\Html;
 use Yii;
 
 /**
- * Grid [[@doctodo class_description:teal\web\grid\Grid]].
+ * Grid [[@doctodo class_description:canis\web\grid\Grid]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class Grid extends \teal\base\Object
+class Grid extends \canis\base\Object
 {
     //public $fillPreviousRows = true;
     /**
      * @var [[@doctodo var_type:rowClass]] [[@doctodo var_description:rowClass]]
      */
-    public $rowClass = 'teal\web\grid\Row';
+    public $rowClass = 'canis\web\grid\Row';
 
     /**
      * @var [[@doctodo var_type:baseRow]] [[@doctodo var_description:baseRow]]
@@ -31,7 +31,7 @@ class Grid extends \teal\base\Object
     /**
      * @var [[@doctodo var_type:htmlOptions]] [[@doctodo var_description:htmlOptions]]
      */
-    public $htmlOptions = ['class' => 'teal-grid'];
+    public $htmlOptions = ['class' => 'canis-grid'];
 
     /**
      * @var [[@doctodo var_type:_id]] [[@doctodo var_description:_id]]

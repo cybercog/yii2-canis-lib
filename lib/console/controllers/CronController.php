@@ -1,23 +1,23 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\console\controllers;
+namespace canis\console\controllers;
 
-use teal\base\Cron;
+use canis\base\Cron;
 
 ini_set('memory_limit', -1);
 
 /**
- * CronController [[@doctodo class_description:teal\console\controllers\CronController]].
+ * CronController [[@doctodo class_description:canis\console\controllers\CronController]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class CronController extends \teal\console\Controller
+class CronController extends \canis\console\Controller
 {
     /**
      * [[@doctodo method_description:actionIndex]].

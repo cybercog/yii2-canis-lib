@@ -1,19 +1,19 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\base\language;
+namespace canis\base\language;
 
 /**
- * Noun [[@doctodo class_description:teal\base\language\Noun]].
+ * Noun [[@doctodo class_description:canis\base\language\Noun]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class Noun extends \teal\base\language\Word
+class Noun extends \canis\base\language\Word
 {
     /**
      * @var [[@doctodo var_type:_singular]] [[@doctodo var_description:_singular]]

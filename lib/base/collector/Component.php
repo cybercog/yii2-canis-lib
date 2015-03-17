@@ -1,27 +1,27 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\base\collector;
+namespace canis\base\collector;
 
 use ArrayAccess;
 use ArrayIterator;
-use teal\caching\Cacher;
+use canis\caching\Cacher;
 use IteratorAggregate;
 use Yii;
 use yii\base\BootstrapInterface;
 use yii\base\Event;
 
 /**
- * Component [[@doctodo class_description:teal\base\collector\Component]].
+ * Component [[@doctodo class_description:canis\base\collector\Component]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class Component extends \teal\base\Component implements IteratorAggregate, ArrayAccess, BootstrapInterface
+class Component extends \canis\base\Component implements IteratorAggregate, ArrayAccess, BootstrapInterface
 {
     const EVENT_AFTER_LOAD = 'afterLoad';
     const EVENT_AFTER_INIT = 'afterInit';

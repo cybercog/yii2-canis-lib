@@ -1,10 +1,10 @@
 <?php
 
-namespace tealunit\library\helpers\testHelpers;
+namespace canisunit\library\helpers\testHelpers;
 
-use Teal;
+use Canis;
 
-class DummyObject extends \teal\base\Object
+class DummyObject extends \canis\base\Object
 {
     public $id;
     public $name;

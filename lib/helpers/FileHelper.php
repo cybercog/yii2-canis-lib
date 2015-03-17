@@ -1,8 +1,8 @@
 <?php
-namespace teal\helpers;
+namespace canis\helpers;
 
 /**
- * FileHelper [[@doctodo class_description:teal\helpers\FileHelper]].
+ * FileHelper [[@doctodo class_description:canis\helpers\FileHelper]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

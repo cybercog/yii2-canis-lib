@@ -1,12 +1,12 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\db;
+namespace canis\db;
 
 use Yii;
 use yii\base\ModelEvent;
@@ -99,7 +99,7 @@ trait QueryTrait
     public function getAccessBehaviorConfiguration()
     {
         return [
-            'class' => 'teal\db\behaviors\QueryAccess',
+            'class' => 'canis\db\behaviors\QueryAccess',
         ];
     }
 

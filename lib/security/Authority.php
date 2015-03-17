@@ -1,21 +1,21 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\security;
+namespace canis\security;
 
-use teal\base\exceptions\Exception;
+use canis\base\exceptions\Exception;
 
 /**
- * Authority [[@doctodo class_description:teal\security\Authority]].
+ * Authority [[@doctodo class_description:canis\security\Authority]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class Authority extends \teal\base\Component
+class Authority extends \canis\base\Component
 {
     /**
      * @var [[@doctodo var_type:_handler]] [[@doctodo var_description:_handler]]

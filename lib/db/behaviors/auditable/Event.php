@@ -1,21 +1,21 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\db\behaviors\auditable;
+namespace canis\db\behaviors\auditable;
 
 use Yii;
 
 /**
- * Event [[@doctodo class_description:teal\db\behaviors\auditable\Event]].
+ * Event [[@doctodo class_description:canis\db\behaviors\auditable\Event]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-abstract class Event extends \teal\base\Component
+abstract class Event extends \canis\base\Component
 {
     const EVENT_AUDIT_HOOK = 'auditHook';
     const EVENT_BEFORE_MODEL_SAVE = 'beforeModelSave';
@@ -460,7 +460,7 @@ abstract class Event extends \teal\base\Component
      */
     public function getVerb()
     {
-        return new \teal\base\language\Verb('affect');
+        return new \canis\base\language\Verb('affect');
     }
 
     /**

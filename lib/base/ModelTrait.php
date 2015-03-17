@@ -1,14 +1,14 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\base;
+namespace canis\base;
 
-use teal\db\behaviors\Model as ModelBehavior;
+use canis\db\behaviors\Model as ModelBehavior;
 
 trait ModelTrait
 {

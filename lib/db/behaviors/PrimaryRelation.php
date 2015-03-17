@@ -1,21 +1,21 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\db\behaviors;
+namespace canis\db\behaviors;
 
-use teal\db\models\Relation;
+use canis\db\models\Relation;
 
 /**
- * PrimaryRelation [[@doctodo class_description:teal\db\behaviors\PrimaryRelation]].
+ * PrimaryRelation [[@doctodo class_description:canis\db\behaviors\PrimaryRelation]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class PrimaryRelation extends \teal\db\behaviors\ActiveRecord
+class PrimaryRelation extends \canis\db\behaviors\ActiveRecord
 {
     /**
      * @var [[@doctodo var_type:primaryChildField]] [[@doctodo var_description:primaryChildField]]
@@ -36,10 +36,10 @@ class PrimaryRelation extends \teal\db\behaviors\ActiveRecord
     public function events()
     {
         return [
-            \teal\db\ActiveRecord::EVENT_BEFORE_INSERT => 'beforeInsert',
-            \teal\db\ActiveRecord::EVENT_BEFORE_UPDATE => 'beforeUpdate',
-            \teal\db\ActiveRecord::EVENT_AFTER_UPDATE => 'afterUpdate',
-            \teal\db\ActiveRecord::EVENT_AFTER_DELETE => 'afterDelete',
+            \canis\db\ActiveRecord::EVENT_BEFORE_INSERT => 'beforeInsert',
+            \canis\db\ActiveRecord::EVENT_BEFORE_UPDATE => 'beforeUpdate',
+            \canis\db\ActiveRecord::EVENT_AFTER_UPDATE => 'afterUpdate',
+            \canis\db\ActiveRecord::EVENT_AFTER_DELETE => 'afterDelete',
         ];
     }
 

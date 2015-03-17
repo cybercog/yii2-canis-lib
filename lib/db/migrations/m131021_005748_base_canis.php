@@ -1,8 +1,8 @@
 <?php
 
-namespace teal\db\migrations;
+namespace canis\db\migrations;
 
-class m131021_005748_base_teal extends \teal\db\Migration
+class m131021_005748_base_canis extends \canis\db\Migration
 {
     public function up()
     {

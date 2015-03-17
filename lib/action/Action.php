@@ -1,15 +1,15 @@
 <?php
-namespace teal\action;
+namespace canis\action;
 
 use Yii;
 use yii\base\InvalidConfigException;
 
 /**
- * Action [[@doctodo class_description:teal\action\Action]].
+ * Action [[@doctodo class_description:canis\action\Action]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-abstract class Action extends \teal\base\Object implements InteractiveActionInterface
+abstract class Action extends \canis\base\Object implements InteractiveActionInterface
 {
     /**
      * @var [[@doctodo var_type:_id]] [[@doctodo var_description:_id]]

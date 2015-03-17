@@ -1,19 +1,19 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\helpers;
+namespace canis\helpers;
 
 /**
- * Match [[@doctodo class_description:teal\helpers\Match]].
+ * Match [[@doctodo class_description:canis\helpers\Match]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class Match extends \teal\base\Component
+class Match extends \canis\base\Component
 {
     /**
      * @var [[@doctodo var_type:regex]] [[@doctodo var_description:regex]]

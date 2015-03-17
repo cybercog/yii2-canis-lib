@@ -1,21 +1,21 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\security\identity\providers;
+namespace canis\security\identity\providers;
 
 use Yii;
 
 /**
- * Creator [[@doctodo class_description:teal\security\identity\providers\Creator]].
+ * Creator [[@doctodo class_description:canis\security\identity\providers\Creator]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-abstract class Creator extends \teal\base\Component implements CreatorInterface
+abstract class Creator extends \canis\base\Component implements CreatorInterface
 {
     /**
      * @var [[@doctodo var_type:_identityProvider]] [[@doctodo var_description:_identityProvider]]

@@ -1,23 +1,23 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\console\controllers;
+namespace canis\console\controllers;
 
-use teal\base\Daemon;
+use canis\base\Daemon;
 
 ini_set('memory_limit', -1);
 
 /**
- * DaemonController [[@doctodo class_description:teal\console\controllers\DaemonController]].
+ * DaemonController [[@doctodo class_description:canis\console\controllers\DaemonController]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class DaemonController extends \teal\console\Controller
+class DaemonController extends \canis\console\Controller
 {
     /**
      * [[@doctodo method_description:actionRun]].

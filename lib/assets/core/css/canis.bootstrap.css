@@ -463,7 +463,7 @@ div.required label:after {
 }
 
 .fa-spin-slow {
-    animation: 6s linear 0s normal none teal running fa-spin;
+    animation: 6s linear 0s normal none canis running fa-spin;
 }
 
 /* Bootstrap Select */
@@ -472,31 +472,31 @@ div.required label:after {
   color: #b6b6b6!important;
 }
 /* Search */
-.teal-search-result, 
-.teal-search-result:hover {
+.canis-search-result, 
+.canis-search-result:hover {
   text-decoration: none;
   display: block;
   padding: 10px;
 }
 
-.tt-cursor .teal-search-result {
+.tt-cursor .canis-search-result {
   background-color: rgba(0, 0, 0, .1);
 }
 
-.teal-search-empty {
+.canis-search-empty {
   padding: 5px;
 }
 
-.teal-search-result .teal-search-header {
+.canis-search-result .canis-search-header {
   font-size: 1.1em;
   font-weight: 600;
   margin: 1px;
 }
-.teal-search-result .teal-search-sub {
+.canis-search-result .canis-search-sub {
   font-size: .9em;
 }
 
-.teal-search-result .teal-search-icon {
+.canis-search-result .canis-search-icon {
   float: left;
   font-size: 1.1em;
   margin-right: 5px;
@@ -517,28 +517,28 @@ div.required label:after {
 }
 
 
-.teal-affix.affix {
+.canis-affix.affix {
 
 }
 
-.teal-affix.affix {
+.canis-affix.affix {
     position: fixed;
 }
 
-.teal-affix.affix-bottom {
+.canis-affix.affix-bottom {
     position: absolute;
 }
 
-.teal-affix .nav {
+.canis-affix .nav {
     display: block;
 }
 
 
 @media (max-width: 992px) {
-    .teal-affix,
-    .teal-affix.affix,
-    .teal-affix.affix-bottom,
-    .teal-affix.affix-top
+    .canis-affix,
+    .canis-affix.affix,
+    .canis-affix.affix-bottom,
+    .canis-affix.affix-top
  {
       position: relative;
       width: 100%;

@@ -1,15 +1,15 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\setup;
+namespace canis\setup;
 
 /**
- * Exception [[@doctodo class_description:teal\setup\Exception]].
+ * Exception [[@doctodo class_description:canis\setup\Exception]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

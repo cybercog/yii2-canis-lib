@@ -1,19 +1,19 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\setup;
+namespace canis\setup;
 
 /**
- * Task [[@doctodo class_description:teal\setup\Task]].
+ * Task [[@doctodo class_description:canis\setup\Task]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-abstract class Task extends \teal\base\Object
+abstract class Task extends \canis\base\Object
 {
     /**
      * @var [[@doctodo var_type:_setup]] [[@doctodo var_description:_setup]]

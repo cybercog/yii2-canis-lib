@@ -1,21 +1,21 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\web;
+namespace canis\web;
 
 use Yii;
 
 /**
- * State [[@doctodo class_description:teal\web\State]].
+ * State [[@doctodo class_description:canis\web\State]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class State extends \teal\base\Object
+class State extends \canis\base\Object
 {
     const SESSION_STATE_KEY = '_s';
     /**

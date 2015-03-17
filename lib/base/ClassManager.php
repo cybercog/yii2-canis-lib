@@ -1,19 +1,19 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\base;
+namespace canis\base;
 
 use ArrayAccess;
 use ArrayIterator;
 use IteratorAggregate;
 
 /**
- * ClassManager [[@doctodo class_description:teal\base\ClassManager]].
+ * ClassManager [[@doctodo class_description:canis\base\ClassManager]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -51,7 +51,7 @@ class ClassManager extends Component implements IteratorAggregate, ArrayAccess
             'User' => 'app\\models\\User',
             'Identity' => 'app\\models\\Identity',
             'IdentityProvider' => 'app\\models\\IdentityProvider',
-            'SearchTermResult' => 'teal\db\behaviors\SearchTermResult',
+            'SearchTermResult' => 'canis\db\behaviors\SearchTermResult',
         ];
     }
 

@@ -1,17 +1,17 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\db\behaviors;
+namespace canis\db\behaviors;
 
 use Yii;
 
 /**
- * QueryOwner [[@doctodo class_description:teal\db\behaviors\QueryOwner]].
+ * QueryOwner [[@doctodo class_description:canis\db\behaviors\QueryOwner]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -28,7 +28,7 @@ class QueryOwner extends QueryBehavior
     public function events()
     {
         return [
-            \teal\db\Query::EVENT_BEFORE_QUERY => 'beforeQuery',
+            \canis\db\Query::EVENT_BEFORE_QUERY => 'beforeQuery',
         ];
     }
 

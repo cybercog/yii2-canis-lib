@@ -1,21 +1,21 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\base;
+namespace canis\base;
 
-use teal\base\exceptions\Exception;
+use canis\base\exceptions\Exception;
 
 /**
- * FileStorage [[@doctodo class_description:teal\base\FileStorage]].
+ * FileStorage [[@doctodo class_description:canis\base\FileStorage]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class FileStorage extends \teal\base\Component
+class FileStorage extends \canis\base\Component
 {
     /**
      * @var [[@doctodo var_type:_supportedImageTypes]] [[@doctodo var_description:_supportedImageTypes]]

@@ -1,15 +1,15 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\db\behaviors\auditable;
+namespace canis\db\behaviors\auditable;
 
 /**
- * CreateEvent [[@doctodo class_description:teal\db\behaviors\auditable\CreateEvent]].
+ * CreateEvent [[@doctodo class_description:canis\db\behaviors\auditable\CreateEvent]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -30,9 +30,9 @@ class CreateEvent extends AttributesEvent
     public function getVerb()
     {
         if (isset($this->indirectObject)) {
-            return new \teal\base\language\Verb('add');
+            return new \canis\base\language\Verb('add');
         }
 
-        return new \teal\base\language\Verb('create');
+        return new \canis\base\language\Verb('create');
     }
 }

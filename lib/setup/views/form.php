@@ -2,7 +2,7 @@
 /**
  * library/setup/views/form.php.
  *
- * @author Jacob Morrison <jacob@tealcascade.com>
+ * @author Jacob Morrison <jacob@canis.io>
  */
 echo '<form id="setup-form" name="setup-form" method="post" action="">';
 echo '<input type="hidden" name="confirm" value="' . $this->getConfirmSalt($task->id) . '" />';

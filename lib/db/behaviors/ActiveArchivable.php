@@ -1,18 +1,18 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\db\behaviors;
+namespace canis\db\behaviors;
 
 use Yii;
 use yii\base\ModelEvent;
 
 /**
- * ActiveArchivable [[@doctodo class_description:teal\db\behaviors\ActiveArchivable]].
+ * ActiveArchivable [[@doctodo class_description:canis\db\behaviors\ActiveArchivable]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -45,11 +45,11 @@ class ActiveArchivable extends ActiveRecord
     /**
      * @var string Audit archive event class
      */
-    public $archiveEventClass = 'teal\db\behaviors\auditable\ArchiveEvent';
+    public $archiveEventClass = 'canis\db\behaviors\auditable\ArchiveEvent';
     /**
      * @var string Audit unarchive event class
      */
-    public $unarchiveEventClass = 'teal\db\behaviors\auditable\UnarchiveEvent';
+    public $unarchiveEventClass = 'canis\db\behaviors\auditable\UnarchiveEvent';
 
     /**
      * [[@doctodo method_description:isArchivable]].

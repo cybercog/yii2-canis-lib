@@ -1,12 +1,12 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\db\models;
+namespace canis\db\models;
 
 use yii\web\IdentityInterface;
 
@@ -23,7 +23,7 @@ use yii\web\IdentityInterface;
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class Group extends \teal\db\ActiveRecord implements IdentityInterface
+class Group extends \canis\db\ActiveRecord implements IdentityInterface
 {
     /**
      * @inheritdoc
@@ -51,10 +51,10 @@ class Group extends \teal\db\ActiveRecord implements IdentityInterface
         return array_merge(parent::behaviors(),
             [
                 'Registry' => [
-                    'class' => 'teal\db\behaviors\Registry',
+                    'class' => 'canis\db\behaviors\Registry',
                 ],
                 'Relatable' => [
-                    'class' => 'teal\db\behaviors\Relatable',
+                    'class' => 'canis\db\behaviors\Relatable',
                 ],
             ]
         );

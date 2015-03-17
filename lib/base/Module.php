@@ -1,18 +1,18 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\base;
+namespace canis\base;
 
 use Yii;
-use teal\base\exceptions\Exception;
+use canis\base\exceptions\Exception;
 
 /**
- * Module [[@doctodo class_description:teal\base\Module]].
+ * Module [[@doctodo class_description:canis\base\Module]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

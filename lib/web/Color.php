@@ -1,18 +1,18 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\web;
+namespace canis\web;
 
 /**
- * Color [[@doctodo class_description:teal\web\Color]].
+ * Color [[@doctodo class_description:canis\web\Color]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class Color extends \teal\base\Component
+class Color extends \canis\base\Component
 {
 }

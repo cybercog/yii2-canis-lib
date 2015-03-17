@@ -1,22 +1,22 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\security\role;
+namespace canis\security\role;
 
-use teal\helpers\ArrayHelper;
+use canis\helpers\ArrayHelper;
 use Yii;
 
 /**
- * Collector [[@doctodo class_description:teal\security\role\Collector]].
+ * Collector [[@doctodo class_description:canis\security\role\Collector]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class Collector extends \teal\base\collector\Collector
+class Collector extends \canis\base\collector\Collector
 {
     /**
      * @var [[@doctodo var_type:_tableRegistry]] [[@doctodo var_description:_tableRegistry]]

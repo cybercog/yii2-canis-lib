@@ -1,18 +1,18 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\security\identity;
+namespace canis\security\identity;
 
 /**
- * Identity [[@doctodo class_description:teal\security\identity\Identity]].
+ * Identity [[@doctodo class_description:canis\security\identity\Identity]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class Identity extends \teal\base\Component
+class Identity extends \canis\base\Component
 {
 }

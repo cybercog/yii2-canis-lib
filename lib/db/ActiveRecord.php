@@ -1,18 +1,18 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\db;
+namespace canis\db;
 
-use teal\base\ModelTrait;
-use teal\base\ObjectTrait;
-use teal\caching\Cacher;
-use teal\db\models\Registry;
-use teal\db\models\Relation;
+use canis\base\ModelTrait;
+use canis\base\ObjectTrait;
+use canis\caching\Cacher;
+use canis\db\models\Registry;
+use canis\db\models\Relation;
 use ReflectionClass;
 use Yii;
 use yii\base\ModelEvent;
@@ -589,7 +589,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     public static function find()
     {
         if (is_null(static::$queryClass)) {
-            $queryClass = 'teal\db\ActiveQuery';
+            $queryClass = 'canis\db\ActiveQuery';
         } else {
             $queryClass = static::$queryClass;
         }
@@ -616,13 +616,13 @@ class ActiveRecord extends \yii\db\ActiveRecord
     {
         return [
             'Date' => [
-                'class' => 'teal\db\behaviors\Date',
+                'class' => 'canis\db\behaviors\Date',
             ],
             'Blame' => [
-                'class' => 'teal\db\behaviors\Blame',
+                'class' => 'canis\db\behaviors\Blame',
             ],
             'Archivable' => [
-                'class' => 'teal\db\behaviors\ActiveArchivable',
+                'class' => 'canis\db\behaviors\ActiveArchivable',
             ],
         ];
     }
@@ -636,7 +636,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
     {
         return [
             'Archivable' => [
-                'class' => 'teal\db\behaviors\QueryArchivable',
+                'class' => 'canis\db\behaviors\QueryArchivable',
             ],
         ];
     }

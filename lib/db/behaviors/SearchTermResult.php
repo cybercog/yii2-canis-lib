@@ -1,17 +1,17 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\db\behaviors;
+namespace canis\db\behaviors;
 
-use teal\base\Object;
+use canis\base\Object;
 
 /**
- * SearchTermResult [[@doctodo class_description:teal\db\behaviors\SearchTermResult]].
+ * SearchTermResult [[@doctodo class_description:canis\db\behaviors\SearchTermResult]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

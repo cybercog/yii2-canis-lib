@@ -1,14 +1,14 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\db\models;
+namespace canis\db\models;
 
-use teal\base\collector\CollectedObjectTrait;
+use canis\base\collector\CollectedObjectTrait;
 
 /**
  * Role is the model class for table "role".
@@ -23,7 +23,7 @@ use teal\base\collector\CollectedObjectTrait;
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class Role extends \teal\db\ActiveRecord implements \teal\base\collector\CollectedObjectInterface
+class Role extends \canis\db\ActiveRecord implements \canis\base\collector\CollectedObjectInterface
 {
     use CollectedOBjectTrait;
     /**
@@ -46,8 +46,8 @@ class Role extends \teal\db\ActiveRecord implements \teal\base\collector\Collect
     {
         return array_merge(parent::behaviors(),
             [
-                'Registry' => 'teal\db\behaviors\Registry',
-                'Relatable' => 'teal\db\behaviors\Relatable',
+                'Registry' => 'canis\db\behaviors\Registry',
+                'Relatable' => 'canis\db\behaviors\Relatable',
             ]
         );
     }

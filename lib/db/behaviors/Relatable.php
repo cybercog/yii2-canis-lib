@@ -1,42 +1,42 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\db\behaviors;
+namespace canis\db\behaviors;
 
-use teal\caching\Cacher;
-use teal\helpers\ArrayHelper;
+use canis\caching\Cacher;
+use canis\helpers\ArrayHelper;
 use Yii;
 use yii\base\Event;
 use yii\db\Query;
 
 /**
- * Relatable [[@doctodo class_description:teal\db\behaviors\Relatable]].
+ * Relatable [[@doctodo class_description:canis\db\behaviors\Relatable]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class Relatable extends \teal\db\behaviors\ActiveRecord
+class Relatable extends \canis\db\behaviors\ActiveRecord
 {
     /**
      * @var string Audit event class for relation class
      */
-    public $createRelationAuditEventClass = 'teal\db\behaviors\auditable\CreateRelationEvent';
+    public $createRelationAuditEventClass = 'canis\db\behaviors\auditable\CreateRelationEvent';
     /**
      * @var string Audit event class for relation class
      */
-    public $deleteRelationAuditEventClass = 'teal\db\behaviors\auditable\DeleteRelationEvent';
+    public $deleteRelationAuditEventClass = 'canis\db\behaviors\auditable\DeleteRelationEvent';
     /**
      * @var string Audit event class for relation class
      */
-    public $endRelationAuditEventClass = 'teal\db\behaviors\auditable\EndRelationEvent';
+    public $endRelationAuditEventClass = 'canis\db\behaviors\auditable\EndRelationEvent';
     /**
      * @var string Audit event class for relation class
      */
-    public $updateRelationAuditEventClass = 'teal\db\behaviors\auditable\UpdateRelationEvent';
+    public $updateRelationAuditEventClass = 'canis\db\behaviors\auditable\UpdateRelationEvent';
     /**
      * @var [[@doctodo var_type:parentObjectField]] [[@doctodo var_description:parentObjectField]]
      */
@@ -110,8 +110,8 @@ class Relatable extends \teal\db\behaviors\ActiveRecord
     public function events()
     {
         return [
-            \teal\db\ActiveRecord::EVENT_AFTER_INSERT => 'afterSave',
-            \teal\db\ActiveRecord::EVENT_AFTER_UPDATE => 'afterSave',
+            \canis\db\ActiveRecord::EVENT_AFTER_INSERT => 'afterSave',
+            \canis\db\ActiveRecord::EVENT_AFTER_UPDATE => 'afterSave',
         ];
     }
 

@@ -1,17 +1,17 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\db\behaviors\auditable;
+namespace canis\db\behaviors\auditable;
 
 use yii\base\Event as YiiEvent;
 
 /**
- * AuditHookEvent [[@doctodo class_description:teal\db\behaviors\auditable\AuditHookEvent]].
+ * AuditHookEvent [[@doctodo class_description:canis\db\behaviors\auditable\AuditHookEvent]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

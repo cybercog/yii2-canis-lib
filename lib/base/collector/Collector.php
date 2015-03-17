@@ -1,19 +1,19 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\base\collector;
+namespace canis\base\collector;
 
 /**
- * Collector [[@doctodo class_description:teal\base\collector\Collector]].
+ * Collector [[@doctodo class_description:canis\base\collector\Collector]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-abstract class Collector extends \teal\base\Component
+abstract class Collector extends \canis\base\Component
 {
     use CollectorTrait;
 

@@ -1,18 +1,18 @@
 <?php
-namespace teal\action;
+namespace canis\action;
 
-use teal\base\Callback;
-use teal\base\Exception;
-use teal\caching\Cacher;
+use canis\base\Callback;
+use canis\base\Exception;
+use canis\caching\Cacher;
 
-// use teal\helpers\Console;
+// use canis\helpers\Console;
 
 /**
- * Interaction [[@doctodo class_description:teal\action\Interaction]].
+ * Interaction [[@doctodo class_description:canis\action\Interaction]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class Interaction extends \teal\base\Component // implements \teal\base\InteractionInterface
+class Interaction extends \canis\base\Component // implements \canis\base\InteractionInterface
 {
     /**
      * @var [[@doctodo var_type:_id]] [[@doctodo var_description:_id]]

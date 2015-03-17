@@ -1,8 +1,8 @@
 <?php
 
-namespace tealunit\library\helpers;
+namespace canisunit\library\helpers;
 
-use tealunit\TestCase;
+use canisunit\TestCase;
 use Yii;
 
 class FileStorageTest extends TestCase

@@ -1,19 +1,19 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\base\exceptions;
+namespace canis\base\exceptions;
 
 /**
- * Deprecated [[@doctodo class_description:teal\base\exceptions\Deprecated]].
+ * Deprecated [[@doctodo class_description:canis\base\exceptions\Deprecated]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class Deprecated extends \teal\base\exceptions\Exception
+class Deprecated extends \canis\base\exceptions\Exception
 {
     /**
      * @inheritdoc

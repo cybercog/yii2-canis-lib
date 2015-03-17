@@ -1,18 +1,18 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\base;
+namespace canis\base;
 
-use teal\helpers\FileHelper;
+use canis\helpers\FileHelper;
 use Yii;
 
 /**
- * RawFile [[@doctodo class_description:teal\base\RawFile]].
+ * RawFile [[@doctodo class_description:canis\base\RawFile]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

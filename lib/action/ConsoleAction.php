@@ -1,10 +1,10 @@
 <?php
-namespace teal\action;
+namespace canis\action;
 
-use teal\helpers\Console;
+use canis\helpers\Console;
 
 /**
- * ConsoleAction [[@doctodo class_description:teal\action\ConsoleAction]].
+ * ConsoleAction [[@doctodo class_description:canis\action\ConsoleAction]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

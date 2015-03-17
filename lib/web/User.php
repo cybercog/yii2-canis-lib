@@ -1,17 +1,17 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\web;
+namespace canis\web;
 
 use Yii;
 
 /**
- * User [[@doctodo class_description:teal\web\User]].
+ * User [[@doctodo class_description:canis\web\User]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

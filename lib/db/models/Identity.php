@@ -1,6 +1,6 @@
 <?php
 
-namespace teal\db\models;
+namespace canis\db\models;
 
 use Yii;
 
@@ -20,7 +20,7 @@ use Yii;
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class Identity extends \teal\db\ActiveRecord
+class Identity extends \canis\db\ActiveRecord
 {
     /**
      * @inheritdoc
@@ -65,7 +65,7 @@ class Identity extends \teal\db\ActiveRecord
         return array_merge(parent::behaviors(),
             [
                 'Registry' => [
-                    'class' => 'teal\db\behaviors\Registry',
+                    'class' => 'canis\db\behaviors\Registry',
                 ],
             ]
         );

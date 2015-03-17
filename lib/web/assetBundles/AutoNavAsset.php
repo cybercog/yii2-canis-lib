@@ -1,15 +1,15 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\web\assetBundles;
+namespace canis\web\assetBundles;
 
 /**
- * AutoNavAsset [[@doctodo class_description:teal\web\assetBundles\AutoNavAsset]].
+ * AutoNavAsset [[@doctodo class_description:canis\web\assetBundles\AutoNavAsset]].
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  *
@@ -20,21 +20,21 @@ class AutoNavAsset extends AssetBundle
     /**
      * @inheritdoc
      */
-    public $sourcePath = '@teal/assets/autoNav';
+    public $sourcePath = '@canis/assets/autoNav';
     /**
      * @inheritdoc
      */
-    public $css = ['css/teal.autoNav.css'];
+    public $css = ['css/canis.autoNav.css'];
     /**
      * @inheritdoc
      */
     public $js = [
-        'js/teal.autoNav.js',
+        'js/canis.autoNav.js',
     ];
     /**
      * @inheritdoc
      */
     public $depends = [
-        'teal\web\assetBundles\TealAsset',
+        'canis\web\assetBundles\CanisAsset',
     ];
 }

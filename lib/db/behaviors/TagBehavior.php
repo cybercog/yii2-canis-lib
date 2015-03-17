@@ -1,21 +1,21 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\db\behaviors;
+namespace canis\db\behaviors;
 
-use teal\base\exceptions\Exception;
+use canis\base\exceptions\Exception;
 
 /**
- * TagBehavior [[@doctodo class_description:teal\db\behaviors\TagBehavior]].
+ * TagBehavior [[@doctodo class_description:canis\db\behaviors\TagBehavior]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class TagBehavior extends \teal\db\behaviors\ActiveRecord
+class TagBehavior extends \canis\db\behaviors\ActiveRecord
 {
     /**
      * @var [[@doctodo var_type:tagField]] [[@doctodo var_description:tagField]]
@@ -57,8 +57,8 @@ class TagBehavior extends \teal\db\behaviors\ActiveRecord
     public function events()
     {
         return [
-            \teal\db\ActiveRecord::EVENT_AFTER_INSERT => 'afterSave',
-            \teal\db\ActiveRecord::EVENT_AFTER_UPDATE => 'afterSave',
+            \canis\db\ActiveRecord::EVENT_AFTER_INSERT => 'afterSave',
+            \canis\db\ActiveRecord::EVENT_AFTER_UPDATE => 'afterSave',
         ];
     }
 

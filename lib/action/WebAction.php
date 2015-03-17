@@ -1,8 +1,8 @@
 <?php
-namespace teal\action;
+namespace canis\action;
 
 /**
- * WebAction [[@doctodo class_description:teal\action\WebAction]].
+ * WebAction [[@doctodo class_description:canis\action\WebAction]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

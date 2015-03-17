@@ -1,28 +1,28 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\web\browser;
+namespace canis\web\browser;
 
-use teal\base\exceptions\Exception;
+use canis\base\exceptions\Exception;
 use Yii;
 use yii\base\InvalidConfigException;
 
 /**
- * Bundle [[@doctodo class_description:teal\web\browser\Bundle]].
+ * Bundle [[@doctodo class_description:canis\web\browser\Bundle]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class Bundle extends \teal\base\Object
+class Bundle extends \canis\base\Object
 {
     /**
      * @var [[@doctodo var_type:itemClass]] [[@doctodo var_description:itemClass]]
      */
-    public $itemClass = 'teal\web\browser\Item';
+    public $itemClass = 'canis\web\browser\Item';
     /**
      * @var [[@doctodo var_type:limit]] [[@doctodo var_description:limit]]
      */

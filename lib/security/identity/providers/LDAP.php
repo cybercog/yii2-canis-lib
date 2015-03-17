@@ -1,19 +1,19 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\security\identity\providers;
+namespace canis\security\identity\providers;
 
 /**
- * LDAP [[@doctodo class_description:teal\security\identity\providers\LDAP]].
+ * LDAP [[@doctodo class_description:canis\security\identity\providers\LDAP]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class LDAP extends \teal\security\identity\providers\Handler
+class LDAP extends \canis\security\identity\providers\Handler
 {
     /**
      * @var [[@doctodo var_type:map]] [[@doctodo var_description:map]]

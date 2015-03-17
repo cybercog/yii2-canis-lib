@@ -1,12 +1,12 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\console\controllers;
+namespace canis\console\controllers;
 
 use Yii;
 use yii\console\Controller;
@@ -37,15 +37,15 @@ class PhpDocController extends Controller
     /**
      * @var [[@doctodo var_type:copyright]] [[@doctodo var_description:copyright]]
      */
-    public $copyright = "Copyright (c) 2015 Teal Software";
+    public $copyright = "Copyright (c) 2015 Canis";
     /**
      * @var [[@doctodo var_type:link]] [[@doctodo var_description:link]]
      */
-    public $link = "http://teal.blue/";
+    public $link = "http://canis.io/";
     /**
      * @var [[@doctodo var_type:license]] [[@doctodo var_description:license]]
      */
-    public $license = "http://teal.blue/license";
+    public $license = "http://canis.io/license";
     /**
      * @var boolean whether to update class docs directly. Setting this to false will just output docs for copy and paste.
      */
@@ -136,7 +136,7 @@ class PhpDocController extends Controller
     {
         $except = [];
         if ($root === null) {
-            $root = TEAL_APP_VENDOR_PATH . DIRECTORY_SEPARATOR . 'teal';//. DIRECTORY_SEPARATOR .'cascade-lib';
+            $root = TEAL_APP_VENDOR_PATH . DIRECTORY_SEPARATOR . 'canis';//. DIRECTORY_SEPARATOR .'cascade-lib';
 
             $except = [
                 '.git/',

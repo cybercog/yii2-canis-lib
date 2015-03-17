@@ -1,15 +1,15 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\web\assetBundles;
+namespace canis\web\assetBundles;
 
 /**
- * AssetBundle [[@doctodo class_description:teal\web\assetBundles\AssetBundle]].
+ * AssetBundle [[@doctodo class_description:canis\web\assetBundles\AssetBundle]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

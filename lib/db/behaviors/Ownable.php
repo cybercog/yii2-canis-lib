@@ -1,21 +1,21 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\db\behaviors;
+namespace canis\db\behaviors;
 
 use Yii;
 
 /**
- * Ownable [[@doctodo class_description:teal\db\behaviors\Ownable]].
+ * Ownable [[@doctodo class_description:canis\db\behaviors\Ownable]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class Ownable extends \teal\db\behaviors\ActiveRecord
+class Ownable extends \canis\db\behaviors\ActiveRecord
 {
     /**
      * @var [[@doctodo var_type:_table]] [[@doctodo var_description:_table]]
@@ -33,11 +33,11 @@ class Ownable extends \teal\db\behaviors\ActiveRecord
     public function events()
     {
         return [
-            \teal\db\ActiveRecord::EVENT_BEFORE_INSERT => 'beforeSave',
-            \teal\db\ActiveRecord::EVENT_BEFORE_UPDATE => 'beforeSave',
+            \canis\db\ActiveRecord::EVENT_BEFORE_INSERT => 'beforeSave',
+            \canis\db\ActiveRecord::EVENT_BEFORE_UPDATE => 'beforeSave',
 
-            \teal\db\ActiveRecord::EVENT_AFTER_INSERT => 'afterSave',
-            \teal\db\ActiveRecord::EVENT_AFTER_UPDATE => 'afterSave',
+            \canis\db\ActiveRecord::EVENT_AFTER_INSERT => 'afterSave',
+            \canis\db\ActiveRecord::EVENT_AFTER_UPDATE => 'afterSave',
         ];
     }
 

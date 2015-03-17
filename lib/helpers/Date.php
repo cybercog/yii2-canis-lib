@@ -1,19 +1,19 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\helpers;
+namespace canis\helpers;
 
 /**
- * Date [[@doctodo class_description:teal\helpers\Date]].
+ * Date [[@doctodo class_description:canis\helpers\Date]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class Date extends \teal\base\Object
+class Date extends \canis\base\Object
 {
     /**
      * @var [[@doctodo var_type:_now]] [[@doctodo var_description:_now]]

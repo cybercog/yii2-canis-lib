@@ -1,7 +1,7 @@
 <?php
-namespace teal\db;
+namespace canis\db;
 
-use teal\db\behaviors\SearchTerm;
+use canis\db\behaviors\SearchTerm;
 
 trait ActiveRecordRegistryTrait
 {
@@ -11,16 +11,16 @@ trait ActiveRecordRegistryTrait
     {
         return array_merge(parent::behaviors(), [
             'Registry' => [
-                'class' => 'teal\db\behaviors\Registry',
+                'class' => 'canis\db\behaviors\Registry',
             ],
             'Relatable' => [
-                'class' => 'teal\db\behaviors\Relatable',
+                'class' => 'canis\db\behaviors\Relatable',
             ],
             'ActiveAccess' => [
-                'class' => 'teal\db\behaviors\ActiveAccess',
+                'class' => 'canis\db\behaviors\ActiveAccess',
             ],
             'Roleable' => [
-                'class' => 'teal\db\behaviors\Roleable',
+                'class' => 'canis\db\behaviors\Roleable',
             ],
         ]);
     }

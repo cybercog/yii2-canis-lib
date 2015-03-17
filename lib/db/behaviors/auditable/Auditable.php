@@ -1,23 +1,23 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\db\behaviors\auditable;
+namespace canis\db\behaviors\auditable;
 
-use teal\caching\Cacher;
+use canis\caching\Cacher;
 use Yii;
 use yii\base\InvalidConfigException;
 
 /**
- * Auditable [[@doctodo class_description:teal\db\behaviors\auditable\Auditable]].
+ * Auditable [[@doctodo class_description:canis\db\behaviors\auditable\Auditable]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class Auditable extends \teal\db\behaviors\ActiveRecord
+class Auditable extends \canis\db\behaviors\ActiveRecord
 {
     /**
      * @var int What is defined as recent? Used when ignoring relation saves
@@ -26,19 +26,19 @@ class Auditable extends \teal\db\behaviors\ActiveRecord
     /**
      * @var string Audit event base class
      */
-    public $baseEventClass = 'teal\db\behaviors\auditable\BaseEvent';
+    public $baseEventClass = 'canis\db\behaviors\auditable\BaseEvent';
     /**
      * @var string Audit insert event class
      */
-    public $createEventClass = 'teal\db\behaviors\auditable\CreateEvent';
+    public $createEventClass = 'canis\db\behaviors\auditable\CreateEvent';
     /**
      * @var string Audit uodate event class
      */
-    public $updateEventClass = 'teal\db\behaviors\auditable\UpdateEvent';
+    public $updateEventClass = 'canis\db\behaviors\auditable\UpdateEvent';
     /**
      * @var string Audit delete event class
      */
-    public $deleteEventClass = 'teal\db\behaviors\auditable\DeleteEvent';
+    public $deleteEventClass = 'canis\db\behaviors\auditable\DeleteEvent';
     /**
      * @var bool Enable all log events
      */
@@ -111,13 +111,13 @@ class Auditable extends \teal\db\behaviors\ActiveRecord
     public function events()
     {
         return [
-            \teal\db\ActiveRecord::EVENT_BEFORE_INSERT => 'beforeSave',
-            \teal\db\ActiveRecord::EVENT_BEFORE_UPDATE => 'beforeSave',
-            \teal\db\ActiveRecord::EVENT_AFTER_INSERT => 'afterInsert',
-            \teal\db\ActiveRecord::EVENT_AFTER_UPDATE => 'afterUpdate',
+            \canis\db\ActiveRecord::EVENT_BEFORE_INSERT => 'beforeSave',
+            \canis\db\ActiveRecord::EVENT_BEFORE_UPDATE => 'beforeSave',
+            \canis\db\ActiveRecord::EVENT_AFTER_INSERT => 'afterInsert',
+            \canis\db\ActiveRecord::EVENT_AFTER_UPDATE => 'afterUpdate',
 
-            \teal\db\ActiveRecord::EVENT_BEFORE_DELETE => 'beforeDelete',
-            \teal\db\ActiveRecord::EVENT_AFTER_DELETE => 'afterDelete',
+            \canis\db\ActiveRecord::EVENT_BEFORE_DELETE => 'beforeDelete',
+            \canis\db\ActiveRecord::EVENT_AFTER_DELETE => 'afterDelete',
         ];
     }
 
@@ -308,7 +308,7 @@ class Auditable extends \teal\db\behaviors\ActiveRecord
      * [[@doctodo method_description:registerRecentEventSave]].
      *
      * @param [[@doctodo param_type:auditModel]]    $auditModel [[@doctodo param_description:auditModel]]
-     * @param teal\db\behaviors\auditable\Event $event      [[@doctodo param_description:event]]
+     * @param canis\db\behaviors\auditable\Event $event      [[@doctodo param_description:event]]
      *
      * @return [[@doctodo return_type:registerRecentEventSave]] [[@doctodo return_description:registerRecentEventSave]]
      */

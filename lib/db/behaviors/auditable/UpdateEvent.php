@@ -1,15 +1,15 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\db\behaviors\auditable;
+namespace canis\db\behaviors\auditable;
 
 /**
- * UpdateEvent [[@doctodo class_description:teal\db\behaviors\auditable\UpdateEvent]].
+ * UpdateEvent [[@doctodo class_description:canis\db\behaviors\auditable\UpdateEvent]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -29,7 +29,7 @@ class UpdateEvent extends RelationEvent
      */
     public function getVerb()
     {
-        return new \teal\base\language\Verb('update');
+        return new \canis\base\language\Verb('update');
     }
 
     /**

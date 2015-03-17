@@ -1,8 +1,8 @@
 <?php
 /**
- * library/Teal.php.
+ * library/Canis.php.
  *
- * @author Jacob Morrison <jacob@tealcascade.com>
+ * @author Jacob Morrison <jacob@canis.io>
  */
 defined('TEAL_ROLE_LEVEL_OWNER') || define('TEAL_ROLE_LEVEL_OWNER', 600); // owner levels: 501-600
 defined('TEAL_ROLE_LEVEL_MANAGER') || define('TEAL_ROLE_LEVEL_MANAGER', 500); // manager levels: 401-500
@@ -30,25 +30,25 @@ function b($backtrace)
 }
 
 /**
- * Teal [[@doctodo class_description:Teal]].
+ * Canis [[@doctodo class_description:Canis]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class Teal implements \yii\base\BootstrapInterface
+class Canis implements \yii\base\BootstrapInterface
 {
     /**
      * @inheritdoc
      */
     public function bootstrap($app)
     {
-        Yii::setAlias('@teal', __DIR__);
-        Yii::$app->registerMigrationAlias('@teal/db/migrations');
+        Yii::setAlias('@canis', __DIR__);
+        Yii::$app->registerMigrationAlias('@canis/db/migrations');
         if ($app instanceof \yii\console\Application) {
             $app->controllerMap['cron'] = [
-                'class' => 'teal\console\controllers\CronController',
+                'class' => 'canis\console\controllers\CronController',
             ];
             $app->controllerMap['daemon'] = [
-                'class' => 'teal\console\controllers\DaemonController',
+                'class' => 'canis\console\controllers\DaemonController',
             ];
         }
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace teal\db\models;
+namespace canis\db\models;
 
 use Yii;
 
@@ -17,7 +17,7 @@ use Yii;
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class DeferredAction extends \teal\db\ActiveRecord
+class DeferredAction extends \canis\db\ActiveRecord
 {
     /**
      * @inheritdoc

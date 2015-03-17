@@ -1,5 +1,5 @@
 <?php
-namespace teal\action;
+namespace canis\action;
 
 interface InteractiveActionInterface
 {

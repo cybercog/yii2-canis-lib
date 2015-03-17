@@ -1,19 +1,19 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\web\browser;
+namespace canis\web\browser;
 
 /**
- * Item [[@doctodo class_description:teal\web\browser\Item]].
+ * Item [[@doctodo class_description:canis\web\browser\Item]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class Item extends \teal\base\Object
+class Item extends \canis\base\Object
 {
     /**
      * @var [[@doctodo var_type:type]] [[@doctodo var_description:type]]

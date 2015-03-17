@@ -6,14 +6,14 @@
  * @license http://www.yiiframework.com/license/
  */
 
-namespace teal\debug;
+namespace canis\debug;
 
 use Yii;
 use yii\debug\models\search\Profile;
 use yii\debug\Panel;
 
 /**
- * ProfilingSummaryPanel [[@doctodo class_description:teal\debug\ProfilingSummaryPanel]].
+ * ProfilingSummaryPanel [[@doctodo class_description:canis\debug\ProfilingSummaryPanel]].
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  *
@@ -42,7 +42,7 @@ class ProfilingSummaryPanel extends Panel
         $searchModel = new Profile();
         $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams(), $this->getModels());
 
-        return Yii::$app->view->render('@teal/views/debug/profilingSummary/detail', [
+        return Yii::$app->view->render('@canis/views/debug/profilingSummary/detail', [
             'panel' => $this,
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,

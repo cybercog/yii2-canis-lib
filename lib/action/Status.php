@@ -1,21 +1,21 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\action;
+namespace canis\action;
 
 use Yii;
 
 /**
- * Status [[@doctodo class_description:teal\action\Status]].
+ * Status [[@doctodo class_description:canis\action\Status]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class Status extends \teal\base\Component
+class Status extends \canis\base\Component
 {
     const MESSAGE_LEVEL_INFO = '_i';
     const MESSAGE_LEVEL_WARNING = '_w';

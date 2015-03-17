@@ -1,18 +1,18 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\base\collector;
+namespace canis\base\collector;
 
 use Yii;
 use yii\base\Event;
 
 /**
- * Module [[@doctodo class_description:teal\base\collector\Module]].
+ * Module [[@doctodo class_description:canis\base\collector\Module]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

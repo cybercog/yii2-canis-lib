@@ -1,15 +1,15 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\db\behaviors;
+namespace canis\db\behaviors;
 
 /**
- * QueryArchivable [[@doctodo class_description:teal\db\behaviors\QueryArchivable]].
+ * QueryArchivable [[@doctodo class_description:canis\db\behaviors\QueryArchivable]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -26,7 +26,7 @@ class QueryArchivable extends QueryBehavior
     public function events()
     {
         return [
-            \teal\db\Query::EVENT_BEFORE_QUERY => 'beforeQuery',
+            \canis\db\Query::EVENT_BEFORE_QUERY => 'beforeQuery',
         ];
     }
 

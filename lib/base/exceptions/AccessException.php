@@ -1,18 +1,18 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\base\exceptions;
+namespace canis\base\exceptions;
 
 /**
- * AccessException [[@doctodo class_description:teal\base\exceptions\AccessException]].
+ * AccessException [[@doctodo class_description:canis\base\exceptions\AccessException]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class AccessException extends \teal\base\exceptions\HttpException
+class AccessException extends \canis\base\exceptions\HttpException
 {
 }

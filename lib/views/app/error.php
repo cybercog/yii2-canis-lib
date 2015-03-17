@@ -2,7 +2,7 @@
 /**
  * ./app/views/app/error.php.
  *
- * @author Jacob Morrison <jacob@tealcascade.com>
+ * @author Jacob Morrison <jacob@canis.io>
  */
 
 /* @var $this SiteController */

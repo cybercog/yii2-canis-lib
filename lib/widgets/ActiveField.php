@@ -1,17 +1,17 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\widgets;
+namespace canis\widgets;
 
-use teal\helpers\Html;
+use canis\helpers\Html;
 
 /**
- * ActiveField [[@doctodo class_description:teal\widgets\ActiveField]].
+ * ActiveField [[@doctodo class_description:canis\widgets\ActiveField]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

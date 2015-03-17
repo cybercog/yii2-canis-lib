@@ -1,46 +1,46 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\web\assetBundles;
+namespace canis\web\assetBundles;
 
 /**
- * TealAsset [[@doctodo class_description:teal\web\assetBundles\TealAsset]].
+ * CanisAsset [[@doctodo class_description:canis\web\assetBundles\CanisAsset]].
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  *
  * @since 2.0
  */
-class TealAsset extends AssetBundle
+class CanisAsset extends AssetBundle
 {
     /**
      * @inheritdoc
      */
-    public $sourcePath = '@teal/assets/core';
+    public $sourcePath = '@canis/assets/core';
     /**
      * @inheritdoc
      */
-    public $css = ['css/teal.bootstrap.css'];
+    public $css = ['css/canis.bootstrap.css'];
     /**
      * @inheritdoc
      */
     public $js = [
-        'js/teal.component.js',
-        'js/teal.utils.js',
-        'js/teal.core.js',
-        'js/teal.bootstrap.js',
-        'js/teal.ajax.instructions.js',
-        'js/teal.ajax.js',
-        'js/teal.smart.js',
-        'js/teal.smartLine.js',
-        'js/teal.expandable.js',
-        'js/teal.timing.js',
-        'js/teal.selector.js',
-        'js/teal.search.js',
+        'js/canis.component.js',
+        'js/canis.utils.js',
+        'js/canis.core.js',
+        'js/canis.bootstrap.js',
+        'js/canis.ajax.instructions.js',
+        'js/canis.ajax.js',
+        'js/canis.smart.js',
+        'js/canis.smartLine.js',
+        'js/canis.expandable.js',
+        'js/canis.timing.js',
+        'js/canis.selector.js',
+        'js/canis.search.js',
     ];
     /**
      * @inheritdoc
@@ -49,10 +49,10 @@ class TealAsset extends AssetBundle
         'yii\bootstrap\BootstrapThemeAsset',
         'yii\web\JqueryAsset',
         'yii\jui\JuiAsset',
-        'teal\web\assetBundles\UnderscoreAsset',
-        'teal\web\assetBundles\FontAwesomeAsset',
-        'teal\web\assetBundles\AjaxFormAsset',
-        'teal\web\assetBundles\BootstrapTypeaheadAsset',
+        'canis\web\assetBundles\UnderscoreAsset',
+        'canis\web\assetBundles\FontAwesomeAsset',
+        'canis\web\assetBundles\AjaxFormAsset',
+        'canis\web\assetBundles\BootstrapTypeaheadAsset',
         'yii\bootstrap\BootstrapAsset',
     ];
 }

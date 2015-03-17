@@ -1,22 +1,22 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\db\behaviors;
+namespace canis\db\behaviors;
 
-use teal\security\Access;
+use canis\security\Access;
 use Yii;
 
 /**
- * ActiveAccess [[@doctodo class_description:teal\db\behaviors\ActiveAccess]].
+ * ActiveAccess [[@doctodo class_description:canis\db\behaviors\ActiveAccess]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class ActiveAccess extends \teal\db\behaviors\ActiveRecord
+class ActiveAccess extends \canis\db\behaviors\ActiveRecord
 {
     /**
      * @var [[@doctodo var_type:_debug]] [[@doctodo var_description:_debug]]
@@ -49,7 +49,7 @@ class ActiveAccess extends \teal\db\behaviors\ActiveRecord
     public function events()
     {
         return [
-            \teal\db\ActiveRecord::EVENT_AFTER_FIND => 'afterFind',
+            \canis\db\ActiveRecord::EVENT_AFTER_FIND => 'afterFind',
         ];
     }
 

@@ -1,15 +1,15 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\db\behaviors\auditable;
+namespace canis\db\behaviors\auditable;
 
 /**
- * DeleteRelationEvent [[@doctodo class_description:teal\db\behaviors\auditable\DeleteRelationEvent]].
+ * DeleteRelationEvent [[@doctodo class_description:canis\db\behaviors\auditable\DeleteRelationEvent]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -29,7 +29,7 @@ class DeleteRelationEvent extends RelationEvent
      */
     public function getVerb()
     {
-        return new \teal\base\language\Verb('unlink');
+        return new \canis\base\language\Verb('unlink');
     }
 
     /**

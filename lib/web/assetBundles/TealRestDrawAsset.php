@@ -1,42 +1,42 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\web\assetBundles;
+namespace canis\web\assetBundles;
 
 /**
- * TealRestDrawAsset [[@doctodo class_description:teal\web\assetBundles\TealRestDrawAsset]].
+ * CanisRestDrawAsset [[@doctodo class_description:canis\web\assetBundles\CanisRestDrawAsset]].
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  *
  * @since 2.0
  */
-class TealRestDrawAsset extends AssetBundle
+class CanisRestDrawAsset extends AssetBundle
 {
     /**
      * @inheritdoc
      */
-    public $sourcePath = '@teal/assets/restDraw';
+    public $sourcePath = '@canis/assets/restDraw';
     /**
      * @inheritdoc
      */
     public $css = [
-        'css/teal.restDraw.css',
+        'css/canis.restDraw.css',
     ];
     /**
      * @inheritdoc
      */
     public $js = [
-        'js/teal.restDraw.js',
+        'js/canis.restDraw.js',
     ];
     /**
      * @inheritdoc
      */
     public $depends = [
-        'teal\web\assetBundles\TealAsset',
+        'canis\web\assetBundles\CanisAsset',
     ];
 }

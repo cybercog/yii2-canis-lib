@@ -1,15 +1,15 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\security\identity\providers;
+namespace canis\security\identity\providers;
 
 /**
- * LdapCreator [[@doctodo class_description:teal\security\identity\providers\LdapCreator]].
+ * LdapCreator [[@doctodo class_description:canis\security\identity\providers\LdapCreator]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

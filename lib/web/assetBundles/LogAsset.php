@@ -1,15 +1,15 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\web\assetBundles;
+namespace canis\web\assetBundles;
 
 /**
- * LogAsset [[@doctodo class_description:teal\web\assetBundles\LogAsset]].
+ * LogAsset [[@doctodo class_description:canis\web\assetBundles\LogAsset]].
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  *
@@ -20,7 +20,7 @@ class LogAsset extends AssetBundle
     /**
      * @inheritdoc
      */
-    public $sourcePath = '@teal/assets/log';
+    public $sourcePath = '@canis/assets/log';
 
     // public $basePath = '@webroot';
     // public $baseUrl = '@web';
@@ -28,18 +28,18 @@ class LogAsset extends AssetBundle
      * @inheritdoc
      */
     public $css = [
-        'css/teal.log.css',
+        'css/canis.log.css',
     ];
     /**
      * @inheritdoc
      */
     public $js = [
-        'js/teal.log.js',
+        'js/canis.log.js',
     ];
     /**
      * @inheritdoc
      */
     public $depends = [
-        'teal\web\assetBundles\TealAsset',
+        'canis\web\assetBundles\CanisAsset',
     ];
 }

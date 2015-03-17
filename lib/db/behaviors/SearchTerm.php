@@ -1,15 +1,15 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\db\behaviors;
+namespace canis\db\behaviors;
 
-use teal\helpers\ArrayHelper;
-use teal\helpers\StringHelper;
+use canis\helpers\ArrayHelper;
+use canis\helpers\StringHelper;
 use Yii;
 use yii\db\Query;
 

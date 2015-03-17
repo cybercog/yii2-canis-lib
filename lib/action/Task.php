@@ -1,23 +1,23 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\action;
+namespace canis\action;
 
-use teal\helpers\Date;
-use teal\helpers\Math;
+use canis\helpers\Date;
+use canis\helpers\Math;
 use Yii;
 
 /**
- * Task [[@doctodo class_description:teal\action\Task]].
+ * Task [[@doctodo class_description:canis\action\Task]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class Task extends \teal\base\Component
+class Task extends \canis\base\Component
 {
     /**
      * @var [[@doctodo var_type:name]] [[@doctodo var_description:name]]

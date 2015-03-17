@@ -1,8 +1,8 @@
 <?php
-namespace teal\action;
+namespace canis\action;
 
 /**
- * NonInteractiveAction [[@doctodo class_description:teal\action\NonInteractiveAction]].
+ * NonInteractiveAction [[@doctodo class_description:canis\action\NonInteractiveAction]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */

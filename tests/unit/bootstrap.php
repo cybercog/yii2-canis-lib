@@ -7,7 +7,7 @@ $_SERVER['SCRIPT_FILENAME'] = __FILE__;
 
 require __DIR__ . '/../../vendor/yiisoft/yii2/yii/Yii.php';
 
-require __DIR__ . '/../../library/Teal.php';
-Yii::setAlias('@tealunit', __DIR__);
+require __DIR__ . '/../../library/Canis.php';
+Yii::setAlias('@canisunit', __DIR__);
 
 require_once __DIR__ . '/TestCase.php';

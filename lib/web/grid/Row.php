@@ -1,21 +1,21 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\web\grid;
+namespace canis\web\grid;
 
-use teal\helpers\Html;
+use canis\helpers\Html;
 
 /**
- * Row [[@doctodo class_description:teal\web\grid\Row]].
+ * Row [[@doctodo class_description:canis\web\grid\Row]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class Row extends \teal\base\Object
+class Row extends \canis\base\Object
 {
     const TOTAL_COLUMNS = 12;
 
@@ -197,7 +197,7 @@ class Row extends \teal\base\Object
     /**
      * [[@doctodo method_description:addCell]].
      *
-     * @param teal\web\grid\Cell $item  [[@doctodo param_description:item]]
+     * @param canis\web\grid\Cell $item  [[@doctodo param_description:item]]
      * @param boolean                $check [[@doctodo param_description:check]] [optional]
      *
      * @return [[@doctodo return_type:addCell]] [[@doctodo return_description:addCell]]

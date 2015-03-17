@@ -1,22 +1,22 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\base\collector;
+namespace canis\base\collector;
 
-use teal\base\exceptions\Exception;
+use canis\base\exceptions\Exception;
 use Yii;
 
 /**
- * Item [[@doctodo class_description:teal\base\collector\Item]].
+ * Item [[@doctodo class_description:canis\base\collector\Item]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
-class Item extends \teal\base\Object
+class Item extends \canis\base\Object
 {
     //public $name;
     /**

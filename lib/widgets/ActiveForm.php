@@ -1,15 +1,15 @@
 <?php
 /**
- * @link http://teal.blue/
+ * @link http://canis.io/
  *
- * @copyright Copyright (c) 2015 Teal Software
- * @license http://teal.blue/license/
+ * @copyright Copyright (c) 2015 Canis
+ * @license http://canis.io/license/
  */
 
-namespace teal\widgets;
+namespace canis\widgets;
 
 /**
- * ActiveForm [[@doctodo class_description:teal\widgets\ActiveForm]].
+ * ActiveForm [[@doctodo class_description:canis\widgets\ActiveForm]].
  *
  * @author Jacob Morrison <email@ofjacob.com>
  */
@@ -18,7 +18,7 @@ class ActiveForm extends \yii\widgets\ActiveForm
     /**
      * @inheritdoc
      */
-    public $fieldConfig = ['class' => 'teal\widgets\ActiveField'];
+    public $fieldConfig = ['class' => 'canis\widgets\ActiveField'];
 
     /**
      * @inheritdoc
