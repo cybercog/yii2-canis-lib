@@ -136,7 +136,7 @@ class PhpDocController extends Controller
     {
         $except = [];
         if ($root === null) {
-            $root = TEAL_APP_VENDOR_PATH . DIRECTORY_SEPARATOR . 'canis';//. DIRECTORY_SEPARATOR .'cascade-lib';
+            $root = CANIS_APP_VENDOR_PATH . DIRECTORY_SEPARATOR . 'canis';//. DIRECTORY_SEPARATOR .'cascade-lib';
 
             $except = [
                 '.git/',

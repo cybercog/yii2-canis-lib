@@ -8,8 +8,8 @@
 
 namespace canis\web\assetBundles;
 
-if (!defined('TEAL_APP_GOOGLE_API_BROWSER_KEY')) {
-    define('TEAL_APP_GOOGLE_API_BROWSER_KEY', 'NO_API_KEY_SPECIFIED');
+if (!defined('CANIS_APP_GOOGLE_API_BROWSER_KEY')) {
+    define('CANIS_APP_GOOGLE_API_BROWSER_KEY', 'NO_API_KEY_SPECIFIED');
 }
 
 /**
@@ -23,7 +23,7 @@ class GoogleMapsAsset extends AssetBundle
      * @inheritdoc
      */
     public $js = [
-        'https://maps.googleapis.com/maps/api/js?key=' . TEAL_APP_GOOGLE_API_BROWSER_KEY,
+        'https://maps.googleapis.com/maps/api/js?key=' . CANIS_APP_GOOGLE_API_BROWSER_KEY,
     ];
 
     /**

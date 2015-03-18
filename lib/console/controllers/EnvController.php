@@ -67,7 +67,7 @@ class EnvController extends \yii\console\Controller
 
     public function initEnv($env)
     {
-        $configDirectory = TEAL_APP_CONFIG_PATH;
+        $configDirectory = CANIS_APP_CONFIG_PATH;
         $renderer = new TwigRender();
         $parser = function($file) use ($env, $renderer) {
             $content = file_get_contents($file);

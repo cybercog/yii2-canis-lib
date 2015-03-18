@@ -84,15 +84,15 @@ class Item extends \canis\base\collector\Item
      */
     public function getLevelSection()
     {
-        if ($this->level > TEAL_ROLE_LEVEL_MANAGER) {
+        if ($this->level > CANIS_ROLE_LEVEL_MANAGER) {
             return 'owner';
-        } elseif ($this->level > TEAL_ROLE_LEVEL_EDITOR) {
+        } elseif ($this->level > CANIS_ROLE_LEVEL_EDITOR) {
             return 'manager';
-        } elseif ($this->level > TEAL_ROLE_LEVEL_COMMENTER) {
+        } elseif ($this->level > CANIS_ROLE_LEVEL_COMMENTER) {
             return 'editor';
-        } elseif ($this->level > TEAL_ROLE_LEVEL_VIEWER) {
+        } elseif ($this->level > CANIS_ROLE_LEVEL_VIEWER) {
             return 'commenter';
-        } elseif ($this->level > TEAL_ROLE_LEVEL_BROWSER) {
+        } elseif ($this->level > CANIS_ROLE_LEVEL_BROWSER) {
             return 'viewer';
         } elseif ($this->level > 0) {
             return 'browser';

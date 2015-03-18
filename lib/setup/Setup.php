@@ -72,7 +72,7 @@ class Setup extends \canis\base\Object
     public static function createSetupApplication($config = [])
     {
         defined('YII_DEBUG') or define('YII_DEBUG', true);
-        defined('TEAL_APP_SETUP') or define('TEAL_APP_SETUP', true);
+        defined('CANIS_APP_SETUP') or define('CANIS_APP_SETUP', true);
         if (is_null(self::$_instance)) {
             $className = __CLASS__;
             self::$_instance = new $className($config);
@@ -141,7 +141,7 @@ class Setup extends \canis\base\Object
 
                 return false;
             }
-            if (defined('TEAL_SETUP_DB_READY') && TEAL_SETUP_DB_READY) {
+            if (defined('CANIS_SETUP_DB_READY') && CANIS_SETUP_DB_READY) {
                 $this->app(); //initialize the app
             }
             if (in_array($task->id, $skip) && $task->skipComplete) {
@@ -296,9 +296,9 @@ class Setup extends \canis\base\Object
      */
     public function markDbReady()
     {
-        if (!defined('TEAL_SETUP_DB_READY')) {
+        if (!defined('CANIS_SETUP_DB_READY')) {
             self::$_app = null;
-            define('TEAL_SETUP_DB_READY', true);
+            define('CANIS_SETUP_DB_READY', true);
         }
 
         return true;
@@ -369,7 +369,7 @@ class Setup extends \canis\base\Object
     public function getInstanceVersion()
     {
         if ($this->isEnvironmented) {
-            return TEAL_APP_INSTANCE_VERSION;
+            return CANIS_APP_INSTANCE_VERSION;
         }
 
         return false;
@@ -419,7 +419,7 @@ class Setup extends \canis\base\Object
             //  return false; // don't want to let this just sit here. could be a big security risk.
         }
 
-        return defined('TEAL_APP_INSTANCE_VERSION');
+        return defined('CANIS_APP_INSTANCE_VERSION');
     }
 
     /**
@@ -430,7 +430,7 @@ class Setup extends \canis\base\Object
     public function getEnvironmentPath()
     {
         if ($this->isEnvironmented) {
-            return TEAL_APP_ENVIRONMENT_PATH;
+            return CANIS_APP_ENVIRONMENT_PATH;
         }
 
         return false;
@@ -486,7 +486,7 @@ class Setup extends \canis\base\Object
      */
     public function getLibraryConfigPath()
     {
-        $path = TEAL_APP_PATH . DIRECTORY_SEPARATOR . 'config';
+        $path = CANIS_APP_PATH . DIRECTORY_SEPARATOR . 'config';
         if (!is_dir($path)) {
             throw new Exception("Library config path does not exist: {$path}");
         }

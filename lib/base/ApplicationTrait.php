@@ -35,8 +35,8 @@ trait ApplicationTrait
         if (!isset($this->db)) {
             return false;
         }
-        $canisSetup = defined('TEAL_SETUP') && TEAL_SETUP;
-        $canisSetupDbReady = defined('TEAL_SETUP_DB_READY') && TEAL_SETUP_DB_READY;
+        $canisSetup = defined('CANIS_SETUP') && CANIS_SETUP;
+        $canisSetupDbReady = defined('CANIS_SETUP_DB_READY') && CANIS_SETUP_DB_READY;
         $canisSetupDb = $canisSetup && !$canisSetupDbReady;
         if ($canisSetupDb) {
             return false;
